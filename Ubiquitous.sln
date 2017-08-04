@@ -3,8 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Abstractions", "src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 EndGlobal
