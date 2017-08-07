@@ -8,7 +8,7 @@
     <Authors>Viktor T.</Authors>
     <Company>Viktor T.</Company>
     <Product>Ubiquitous</Product>
-    <Description>Abstractions.</Description>
+    <Description>Models.</Description>
     <RootNamespace>Ubiquitous</RootNamespace>
   </PropertyGroup>
 
