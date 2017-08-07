@@ -7,7 +7,7 @@
     /// </summary>
     /// <typeparam name="TVertexValue">The type of vertex associated data.</typeparam>
     /// <typeparam name="TEdgeKey">The type of edge descriptors.</typeparam>
-    interface IIncidenceVertexValueConcept<TEdgeKey, TVertexValue>
+    public interface IIncidenceVertexValueConcept<TEdgeKey, TVertexValue>
     {
         IEnumerable<TEdgeKey> GetOutEdges(TVertexValue vertexValue);
     }
