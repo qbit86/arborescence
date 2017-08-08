@@ -81,18 +81,4 @@
         public bool TryGetVertexValue(IndexedAdjacencyListGraph graph, int vertex, out IEnumerable<int> vertexValue)
             => graph.TryGetOutEdges(vertex, out vertexValue);
     }
-
-
-    public struct EndpointsInstance : IEdgeConcept<int, SourceTargetPair<int>>
-    {
-        public int GetSource(SourceTargetPair<int> edgeValue) => edgeValue.Source;
-
-        public int GetTarget(SourceTargetPair<int> edgeValue) => edgeValue.Target;
-    }
-
-
-    public struct IncidenceInstance : IIncidenceVertexConcept<int, IEnumerable<int>>
-    {
-        public IEnumerable<int> GetOutEdges(IEnumerable<int> vertexValue) => vertexValue;
-    }
 }
