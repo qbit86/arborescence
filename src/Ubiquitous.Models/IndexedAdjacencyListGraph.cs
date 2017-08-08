@@ -83,7 +83,7 @@
     }
 
 
-    public struct EndpointsInstance : IEdgeValueConcept<int, SourceTargetPair<int>>
+    public struct EndpointsInstance : IEdgeConcept<int, SourceTargetPair<int>>
     {
         public int GetSource(SourceTargetPair<int> edgeValue) => edgeValue.Source;
 
@@ -91,7 +91,7 @@
     }
 
 
-    public struct IncidenceInstance : IIncidenceVertexValueConcept<int, IEnumerable<int>>
+    public struct IncidenceInstance : IIncidenceVertexConcept<int, IEnumerable<int>>
     {
         public IEnumerable<int> GetOutEdges(IEnumerable<int> vertexValue) => vertexValue;
     }
