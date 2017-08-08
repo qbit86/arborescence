@@ -38,7 +38,7 @@
 
         public bool TryGetOutEdges(int vertex, out IEnumerable<int> outEdges)
         {
-            if (vertex < 0 || vertex > OutEdges.Count)
+            if (vertex < 0 || vertex >= OutEdges.Count)
             {
                 outEdges = null;
                 return false;
