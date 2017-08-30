@@ -4,13 +4,13 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Provides the Create factory method for SourceTargetPair&lt;TVertexKey&gt;.
+    /// Provides the Create factory method for SourceTargetPair&lt;TVertex&gt;.
     /// </summary>
     public static class SourceTargetPair
     {
-        public static SourceTargetPair<TVertexKey> Create<TVertexKey>(TVertexKey source, TVertexKey target)
+        public static SourceTargetPair<TVertex> Create<TVertex>(TVertex source, TVertex target)
         {
-            return new SourceTargetPair<TVertexKey>(source, target);
+            return new SourceTargetPair<TVertex>(source, target);
         }
 
         /// <summary>
@@ -43,13 +43,13 @@
     /// A SourceTargetPair holds endpoints of an oriented edge.
     /// </summary>
     /// <seealso cref="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs"/>
-    /// <typeparam name="TVertexKey">The type of the vertex descriptors.</typeparam>
-    public struct SourceTargetPair<TVertexKey> : IEquatable<SourceTargetPair<TVertexKey>>
+    /// <typeparam name="TVertex">The type of the vertex descriptors.</typeparam>
+    public struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
     {
-        public TVertexKey Source { get; }
-        public TVertexKey Target { get; }
+        public TVertex Source { get; }
+        public TVertex Target { get; }
 
-        public SourceTargetPair(TVertexKey source, TVertexKey target)
+        public SourceTargetPair(TVertex source, TVertex target)
         {
             Source = source;
             Target = target;
@@ -61,15 +61,15 @@
         }
 
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Deconstruct(out TVertexKey source, out TVertexKey target)
+        public void Deconstruct(out TVertex source, out TVertex target)
         {
             source = Source;
             target = Target;
         }
 
-        public bool Equals(SourceTargetPair<TVertexKey> other)
+        public bool Equals(SourceTargetPair<TVertex> other)
         {
-            var comparer = EqualityComparer<TVertexKey>.Default;
+            var comparer = EqualityComparer<TVertex>.Default;
 
             if (!comparer.Equals(Source, other.Source))
                 return false;
@@ -82,10 +82,10 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is SourceTargetPair<TVertexKey>))
+            if (!(obj is SourceTargetPair<TVertex>))
                 return false;
 
-            var other = (SourceTargetPair<TVertexKey>)obj;
+            var other = (SourceTargetPair<TVertex>)obj;
             return Equals(other);
         }
 
@@ -94,12 +94,12 @@
             return Source.GetHashCode() ^ Target.GetHashCode();
         }
 
-        public static bool operator ==(SourceTargetPair<TVertexKey> left, SourceTargetPair<TVertexKey> right)
+        public static bool operator ==(SourceTargetPair<TVertex> left, SourceTargetPair<TVertex> right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(SourceTargetPair<TVertexKey> left, SourceTargetPair<TVertexKey> right)
+        public static bool operator !=(SourceTargetPair<TVertex> left, SourceTargetPair<TVertex> right)
         {
             return !left.Equals(right);
         }

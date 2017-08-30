@@ -1,11 +1,9 @@
 ﻿namespace Ubiquitous
 {
-    using System;
-
-    public struct SimpleEdgeInstance<TVertexKey> : IEdgeConcept<TVertexKey, SourceTargetPair<TVertexKey>>
+    public struct SimpleEdgeInstance<TVertex> : IEdgeConcept<TVertex, SourceTargetPair<TVertex>>
     {
-        public TVertexKey GetSource(SourceTargetPair<TVertexKey> edgeData) => edgeData.Source;
+        public TVertex GetSource(SourceTargetPair<TVertex> edgeData) => edgeData.Source;
 
-        public TVertexKey GetTarget(SourceTargetPair<TVertexKey> edgeData) => edgeData.Target;
+        public TVertex GetTarget(SourceTargetPair<TVertex> edgeData) => edgeData.Target;
     }
 }
