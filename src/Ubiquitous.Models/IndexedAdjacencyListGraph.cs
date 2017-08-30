@@ -15,6 +15,7 @@
         {
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
             // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): source(edge) = vertex.
+            // Assert: `outEdges` does not contain null values.
 
             Endpoints = endpoints;
             OutEdges = outEdges;

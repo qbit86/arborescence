@@ -1,8 +1,6 @@
 ﻿namespace Ubiquitous
 {
-    /// <summary>
-    /// Represents a generic graph concept with access to vertex and edge associated data.
-    /// </summary>
+    /// <summary>Represents a generic graph concept with access to vertex and edge associated data.</summary>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of vertex descriptors.</typeparam>
     /// <typeparam name="TEdge">The type of edge descriptors.</typeparam>
