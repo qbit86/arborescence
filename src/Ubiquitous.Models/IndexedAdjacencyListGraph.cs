@@ -75,10 +75,10 @@
     public struct IndexedAdjacencyListGraphInstance : IGraphConcept<
         IndexedAdjacencyListGraph, int, int, IEnumerable<int>, SourceTargetPair<int>>
     {
-        public bool TryGetEdgeValue(IndexedAdjacencyListGraph graph, int edge, out SourceTargetPair<int> edgeValue)
-            => graph.TryGetEndpoints(edge, out edgeValue);
+        public bool TryGetEdgeData(IndexedAdjacencyListGraph graph, int edge, out SourceTargetPair<int> edgeData)
+            => graph.TryGetEndpoints(edge, out edgeData);
 
-        public bool TryGetVertexValue(IndexedAdjacencyListGraph graph, int vertex, out IEnumerable<int> vertexValue)
-            => graph.TryGetOutEdges(vertex, out vertexValue);
+        public bool TryGetVertexData(IndexedAdjacencyListGraph graph, int vertex, out IEnumerable<int> vertexData)
+            => graph.TryGetOutEdges(vertex, out vertexData);
     }
 }

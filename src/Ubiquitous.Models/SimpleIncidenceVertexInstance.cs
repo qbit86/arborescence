@@ -5,6 +5,6 @@
 
     public struct SimpleIncidenceVertexInstance<TEdgeKey> : IIncidenceVertexConcept<TEdgeKey, IEnumerable<TEdgeKey>>
     {
-        public IEnumerable<TEdgeKey> GetOutEdges(IEnumerable<TEdgeKey> vertexValue) => vertexValue;
+        public IEnumerable<TEdgeKey> GetOutEdges(IEnumerable<TEdgeKey> vertexData) => vertexData;
     }
 }

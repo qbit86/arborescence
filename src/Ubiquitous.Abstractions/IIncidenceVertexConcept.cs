@@ -5,10 +5,10 @@
     /// <summary>
     /// Incidence concept for the type of vertex values.
     /// </summary>
-    /// <typeparam name="TVertexValue">The type of vertex associated data.</typeparam>
     /// <typeparam name="TEdgeKey">The type of edge descriptors.</typeparam>
-    public interface IIncidenceVertexConcept<TEdgeKey, TVertexValue>
+    /// <typeparam name="TVertexData">The type of vertex associated data.</typeparam>
+    public interface IIncidenceVertexConcept<TEdgeKey, TVertexData>
     {
-        IEnumerable<TEdgeKey> GetOutEdges(TVertexValue vertexValue);
+        IEnumerable<TEdgeKey> GetOutEdges(TVertexData vertexData);
     }
 }

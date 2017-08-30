@@ -6,11 +6,11 @@
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertexKey">The type of vertex descriptors.</typeparam>
     /// <typeparam name="TEdgeKey">The type of edge descriptors.</typeparam>
-    /// <typeparam name="TVertexValue">The type of vertex associated data.</typeparam>
-    /// <typeparam name="TEdgeValue">The type of edge associated data.</typeparam>
-    public interface IGraphConcept<TGraph, TVertexKey, TEdgeKey, TVertexValue, TEdgeValue>
+    /// <typeparam name="TVertexData">The type of vertex associated data.</typeparam>
+    /// <typeparam name="TEdgeData">The type of edge associated data.</typeparam>
+    public interface IGraphConcept<TGraph, TVertexKey, TEdgeKey, TVertexData, TEdgeData>
     {
-        bool TryGetVertexValue(TGraph graph, TVertexKey vertex, out TVertexValue vertexValue);
-        bool TryGetEdgeValue(TGraph graph, TEdgeKey edge, out TEdgeValue edgeValue);
+        bool TryGetVertexData(TGraph graph, TVertexKey vertex, out TVertexData vertexData);
+        bool TryGetEdgeData(TGraph graph, TEdgeKey edge, out TEdgeData edgeData);
     }
 }
