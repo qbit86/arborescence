@@ -1,13 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Abstractions", "src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Models", "src\Ubiquitous.Models\Ubiquitous.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Models", "src\Ubiquitous.Models\Ubiquitous.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB074B2E-C4E5-49C4-AA6C-9F1EBC5ED673}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +37,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
 	EndGlobalSection
 EndGlobal
