@@ -4,7 +4,8 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge> : IEnumerable<Step<TVertex, TEdge>>
+    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>
+        : IEnumerable<Step<TVertex, TEdge>>
     {
         private TGraph Graph { get; }
 

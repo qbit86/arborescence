@@ -27,7 +27,8 @@
             EdgeConcept = edgeConcept;
         }
 
-        internal DfsRecursiveEnumerable<TGraph, TVertex, TEdge> TraverseRecursively<TColorMap, TColorMapFactoryConcept>(
+        internal DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>
+            TraverseRecursively<TColorMap, TColorMapFactoryConcept>(
             TGraph graph, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : IMapFactoryConcept<TGraph, TVertex, Color, TColorMap>
@@ -36,7 +37,7 @@
             // Assert: `startVertex` != null.
             // Assert: `colorMapFactoryConcept` != null.
 
-            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge>(graph, startVertex);
+            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>(graph, startVertex);
         }
     }
 }
