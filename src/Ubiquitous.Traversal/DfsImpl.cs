@@ -26,8 +26,9 @@
             EdgeConcept = edgeConcept;
         }
 
-        internal IEnumerable<Step<TVertex, TEdge>> TraverseRecursively<TColorMap>(TGraph graph, TVertex startVertex, TColorMap colorMap)
-            where TColorMap: IDictionary<TVertex, Color>
+        internal IEnumerable<Step<TVertex, TEdge>> TraverseRecursively<TColorMapFactoryConcept>(TGraph graph, TVertex startVertex,
+            TColorMapFactoryConcept colorMapFactoryConcept)
+            where TColorMapFactoryConcept : IMapFactoryConcept<TVertex, Color>
         {
             // Assert: `graph` != null.
             // Assert: `startVertex` != null.
