@@ -1,7 +1,7 @@
 ﻿namespace Ubiquitous
 {
-    using System;
     using System.Collections.Generic;
+    using static System.Diagnostics.Debug;
 
     internal struct DfsImpl<TGraph, TVertex, TEdge, TVertexData, TEdgeData, TEdges,
         TGraphConcept, TVertexConcept, TEdgeConcept>
@@ -19,9 +19,9 @@
 
         internal DfsImpl(TGraphConcept graphConcept, TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
-            // Assert: `graphConcept` != null.
-            // Assert: `vertexConcept` != null.
-            // Assert: `edgeConcept` != null.
+            Assert(graphConcept != null);
+            Assert(vertexConcept != null);
+            Assert(edgeConcept != null);
 
             GraphConcept = graphConcept;
             VertexConcept = vertexConcept;
@@ -35,9 +35,9 @@
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
         {
-            // Assert: `graph` != null.
-            // Assert: `startVertex` != null.
-            // Assert: `colorMapFactoryConcept` != null.
+            Assert(graph != null);
+            Assert(startVertex != null);
+            Assert(colorMapFactoryConcept != null);
 
             return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>(
                 graph, startVertex, colorMapFactoryConcept);

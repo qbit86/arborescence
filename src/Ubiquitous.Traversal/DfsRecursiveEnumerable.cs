@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using static System.Diagnostics.Debug;
 
     public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>
         : IEnumerable<Step<TVertex, TEdge>>
@@ -18,9 +19,9 @@
 
         public DfsRecursiveEnumerable(TGraph graph, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
         {
-            // Assert: `graph` != null.
-            // Assert: `startVertex` != null.
-            // Assert: `colorMapFactoryConcept` != null.
+            Assert(graph != null);
+            Assert(startVertex != null);
+            Assert(colorMapFactoryConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
@@ -37,7 +38,7 @@
 
             try
             {
-                var enumerator = TraverseCoroutine(colorMap);
+                var enumerator = ProcessVertexCoroutine(StartVertex, colorMap);
                 while (enumerator.MoveNext())
                     yield return enumerator.Current;
             }
@@ -53,9 +54,15 @@
             return result;
         }
 
-        private IEnumerator<Step<TVertex, TEdge>> TraverseCoroutine(TColorMap colorMap)
+        private IEnumerator<Step<TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
         {
+            colorMap[vertex] = Color.Gray;
+            yield return Step.Create(StepKind.DiscoverVertex, vertex, default(TEdge));
+
             throw new NotImplementedException();
+
+            colorMap[vertex] = Color.Black;
+            yield return Step.Create(StepKind.FinishVertex, vertex, default(TEdge));
         }
     }
 }
