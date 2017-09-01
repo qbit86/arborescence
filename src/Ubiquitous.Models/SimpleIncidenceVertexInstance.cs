@@ -1,9 +1,7 @@
 ﻿namespace Ubiquitous
 {
-    using System.Collections.Generic;
-
-    public struct SimpleIncidenceVertexInstance<TEdge> : IIncidenceVertexConcept<TEdge, IEnumerable<TEdge>>
+    public struct SimpleIncidenceVertexInstance<TEdge, TEdges> : IIncidenceVertexConcept<TEdge, TEdges, TEdges>
     {
-        public IEnumerable<TEdge> GetOutEdges(IEnumerable<TEdge> vertexData) => vertexData;
+        public TEdges GetOutEdges(TEdges vertexData) => vertexData;
     }
 }
