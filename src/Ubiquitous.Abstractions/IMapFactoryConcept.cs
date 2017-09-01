@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
 
-    public interface IMapFactoryConcept<TKey, TValue>
+    public interface IMapFactoryConcept<TGraph, TKey, TValue>
     {
-        IDictionary<TKey, TValue> Acquire();
-        void Release(IDictionary<TKey, TValue> map);
+        IDictionary<TKey, TValue> Acquire(TGraph graph);
+        void Release(TGraph graph, IDictionary<TKey, TValue> map);
     }
 }

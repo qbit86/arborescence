@@ -12,4 +12,8 @@
     <RootNamespace>Ubiquitous</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
