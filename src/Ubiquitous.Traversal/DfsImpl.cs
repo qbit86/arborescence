@@ -31,7 +31,7 @@
             TraverseRecursively<TColorMap, TColorMapFactoryConcept>(
             TGraph graph, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
             where TColorMap : IDictionary<TVertex, Color>
-            where TColorMapFactoryConcept : IMapFactoryConcept<TGraph, TVertex, Color, TColorMap>
+            where TColorMapFactoryConcept : IMapFactoryConcept<TGraph, TColorMap>
         {
             // Assert: `graph` != null.
             // Assert: `startVertex` != null.

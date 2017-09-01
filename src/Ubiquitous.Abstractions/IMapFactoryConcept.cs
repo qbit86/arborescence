@@ -1,8 +1,8 @@
 ﻿namespace Ubiquitous
 {
-    public interface IMapFactoryConcept<TGraph, TKey, TValue, TMap>
+    public interface IMapFactoryConcept<TGraph, TValue>
     {
-        TMap Acquire(TGraph graph);
-        void Release(TGraph graph, TMap map);
+        TValue Acquire(TGraph graph);
+        void Release(TGraph graph, TValue map);
     }
 }
