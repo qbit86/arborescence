@@ -4,6 +4,7 @@
 
     public interface IMapFactoryConcept<TKey, TValue>
     {
-        IDictionary<TKey, TValue> Create();
+        IDictionary<TKey, TValue> Acquire();
+        void Release(IDictionary<TKey, TValue> map);
     }
 }
