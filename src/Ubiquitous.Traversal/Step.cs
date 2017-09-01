@@ -16,12 +16,12 @@
             s.Append('[');
 
             s.Append(kind.ToString());
+            s.Append(", ");
 
             if (vertex != null)
             {
                 s.Append(vertex.ToString());
             }
-
             s.Append(", ");
 
             if (edge != null)
