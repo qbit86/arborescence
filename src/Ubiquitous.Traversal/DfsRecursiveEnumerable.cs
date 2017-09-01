@@ -29,7 +29,22 @@
 
         public IEnumerator<Step<TVertex, TEdge>> GetEnumerator()
         {
-            return TraverseCoroutine();
+            yield return Step.Create(StepKind.StartVertex, StartVertex, default(TEdge));
+
+            TColorMap colorMap = ColorMapFactoryConcept.Acquire(Graph);
+            if (colorMap == null)
+                yield break;
+
+            try
+            {
+                var enumerator = TraverseCoroutine(colorMap);
+                while (enumerator.MoveNext())
+                    yield return enumerator.Current;
+            }
+            finally
+            {
+                ColorMapFactoryConcept.Release(Graph, colorMap);
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -38,20 +53,9 @@
             return result;
         }
 
-        private IEnumerator<Step<TVertex, TEdge>> TraverseCoroutine()
+        private IEnumerator<Step<TVertex, TEdge>> TraverseCoroutine(TColorMap colorMap)
         {
-            TColorMap colorMap = ColorMapFactoryConcept.Acquire(Graph);
-            if (colorMap == null)
-                yield break;
-
-            try
-            {
-                throw new NotImplementedException();
-            }
-            finally
-            {
-                ColorMapFactoryConcept.Release(Graph, colorMap);
-            }
+            throw new NotImplementedException();
         }
     }
 }
