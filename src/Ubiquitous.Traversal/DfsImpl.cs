@@ -5,6 +5,7 @@
 
     internal struct DfsImpl<TGraph, TVertex, TEdge, TVertexData, TEdgeData, TEdges,
         TGraphConcept, TVertexConcept, TEdgeConcept>
+
         where TEdges: IEnumerable<TEdge>
         where TGraphConcept : IGraphConcept<TGraph, TVertex, TEdge, TVertexData, TEdgeData>
         where TVertexConcept : IIncidenceVertexConcept<TVertexData, TEdges>
@@ -30,6 +31,7 @@
         internal DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>
             TraverseRecursively<TColorMap, TColorMapFactoryConcept>(
             TGraph graph, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
+
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
         {
@@ -37,7 +39,8 @@
             // Assert: `startVertex` != null.
             // Assert: `colorMapFactoryConcept` != null.
 
-            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>(graph, startVertex);
+            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>(
+                graph, startVertex, colorMapFactoryConcept);
         }
     }
 }
