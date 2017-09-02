@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous
 {
-    public struct SimpleEdgeInstance<TVertex> : IEdgeDataConcept<TVertex, SourceTargetPair<TVertex>>
+    public struct SimpleEdgeDataInstance<TVertex> : IEdgeDataConcept<TVertex, SourceTargetPair<TVertex>>
     {
         public TVertex GetSource(SourceTargetPair<TVertex> edgeData) => edgeData.Source;
 
