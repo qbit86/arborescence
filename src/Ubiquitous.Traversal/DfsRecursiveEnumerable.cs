@@ -5,9 +5,10 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>
+    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap, TColorMapFactoryConcept>
         : IEnumerable<Step<TVertex, TEdge>>
 
+        where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {

@@ -11,11 +11,11 @@
         where TVertexConcept : IIncidenceVertexConcept<TVertexData, TEdges>
         where TEdgeConcept : IEdgeConcept<TVertex, TEdgeData>
     {
-        private TGraphConcept GraphConcept { get; }
+        internal TGraphConcept GraphConcept { get; }
 
-        private TVertexConcept VertexConcept { get; }
+        internal TVertexConcept VertexConcept { get; }
 
-        private TEdgeConcept EdgeConcept { get; }
+        internal TEdgeConcept EdgeConcept { get; }
 
         internal DfsImpl(TGraphConcept graphConcept, TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
@@ -28,7 +28,7 @@
             EdgeConcept = edgeConcept;
         }
 
-        internal DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>
+        internal DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap, TColorMapFactoryConcept>
             TraverseRecursively<TColorMap, TColorMapFactoryConcept>(
             TGraph graph, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
 
@@ -39,7 +39,7 @@
             Assert(startVertex != null);
             Assert(colorMapFactoryConcept != null);
 
-            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TColorMap, TColorMapFactoryConcept>(
+            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap, TColorMapFactoryConcept>(
                 graph, startVertex, colorMapFactoryConcept);
         }
     }
