@@ -57,9 +57,9 @@
 
             try
             {
-                var enumerator = ProcessVertexCoroutine(StartVertex, colorMap);
-                while (enumerator.MoveNext())
-                    yield return enumerator.Current;
+                IEnumerable<Step<TVertex, TEdge>> steps = ProcessVertexCoroutine(StartVertex, colorMap);
+                foreach (var step in steps)
+                    yield return step;
             }
             finally
             {
@@ -73,15 +73,30 @@
             return result;
         }
 
-        private IEnumerator<Step<TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
+        private IEnumerable<Step<TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
         {
             colorMap[vertex] = Color.Gray;
             yield return Step.Create(StepKind.DiscoverVertex, vertex, default(TEdge));
 
-            throw new NotImplementedException();
+            TVertexData vertexData;
+            if (GraphConcept.TryGetVertexData(Graph, vertex, out vertexData))
+            {
+                TEdges edges = VertexConcept.GetOutEdges(vertexData);
+                foreach (TEdge edge in edges)
+                {
+                    IEnumerable<Step<TVertex, TEdge>> steps = ProcessEdgeCoroutine(edge, colorMap);
+                    foreach (var step in steps)
+                        yield return step;
+                }
+            }
 
             colorMap[vertex] = Color.Black;
             yield return Step.Create(StepKind.FinishVertex, vertex, default(TEdge));
+        }
+
+        private IEnumerable<Step<TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
+        {
+            throw new NotImplementedException();
         }
     }
 }
