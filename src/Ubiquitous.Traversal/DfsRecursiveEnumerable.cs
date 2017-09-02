@@ -5,27 +5,45 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TVertexData, TEdgeData, TEdges, TColorMap, TColorMapFactoryConcept>
+    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TVertexData, TEdgeData, TEdges, TColorMap,
+        TGraphConcept, TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
         : IEnumerable<Step<TVertex, TEdge>>
 
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
+        where TGraphConcept : IGraphConcept<TGraph, TVertex, TEdge, TVertexData, TEdgeData>
+        where TVertexConcept : IIncidenceVertexConcept<TVertexData, TEdges>
+        where TEdgeConcept : IEdgeConcept<TVertex, TEdgeData>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
 
+        internal TGraphConcept GraphConcept { get; }
+
+        internal TVertexConcept VertexConcept { get; }
+
+        internal TEdgeConcept EdgeConcept { get; }
+
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        public DfsRecursiveEnumerable(TGraph graph, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
+        internal DfsRecursiveEnumerable(TGraph graph, TVertex startVertex,
+            TGraphConcept graphConcept, TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
+            TColorMapFactoryConcept colorMapFactoryConcept)
         {
             Assert(graph != null);
             Assert(startVertex != null);
+            Assert(graphConcept != null);
+            Assert(vertexConcept != null);
+            Assert(edgeConcept != null);
             Assert(colorMapFactoryConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
+            GraphConcept = graphConcept;
+            VertexConcept = vertexConcept;
+            EdgeConcept = edgeConcept;
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
