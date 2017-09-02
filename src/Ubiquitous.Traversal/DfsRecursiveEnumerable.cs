@@ -12,7 +12,7 @@
         where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGraphConcept<TGraph, TVertex, TEdge, TVertexData, TEdgeData>
         where TVertexConcept : IIncidenceVertexConcept<TVertexData, TEdges>
-        where TEdgeConcept : IEdgeConcept<TVertex, TEdgeData>
+        where TEdgeConcept : IEdgeDataConcept<TVertex, TEdgeData>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
