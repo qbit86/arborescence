@@ -1,6 +1,5 @@
 ﻿namespace Ubiquitous
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -96,7 +95,35 @@
 
         private IEnumerable<Step<TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
         {
-            throw new NotImplementedException();
+            yield return Step.Create(StepKind.ExamineEdge, default(TVertex), edge);
+
+            TEdgeData edgeData;
+            if (GraphConcept.TryGetEdgeData(Graph, edge, out edgeData))
+            {
+                TVertex target = EdgeConcept.GetTarget(edgeData);
+
+                Color neighborColor;
+                if (!colorMap.TryGetValue(target, out neighborColor))
+                    neighborColor = Color.White;
+
+                switch (neighborColor)
+                {
+                    case Color.White:
+                        yield return Step.Create(StepKind.TreeEdge, default(TVertex), edge);
+                        IEnumerable<Step<TVertex, TEdge>> steps = ProcessVertexCoroutine(target, colorMap);
+                        foreach (var step in steps)
+                            yield return step;
+                        break;
+                    case Color.Gray:
+                        yield return Step.Create(StepKind.BackEdge, default(TVertex), edge);
+                        break;
+                    default:
+                        yield return Step.Create(StepKind.ForwardOrCrossEdge, default(TVertex), edge);
+                        break;
+                }
+            }
+
+            yield return Step.Create(StepKind.FinishEdge, default(TVertex), edge);
         }
     }
 }

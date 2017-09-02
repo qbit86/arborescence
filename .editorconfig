@@ -15,7 +15,7 @@ insert_final_newline = true
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 
 csharp_indent_case_contents = true
-csharp_indent_switch_labels = false
+csharp_indent_switch_labels = true
 csharp_new_line_before_catch = true
 csharp_new_line_before_else = true
 csharp_new_line_before_finally = true
