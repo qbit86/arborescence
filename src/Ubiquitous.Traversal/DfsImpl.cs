@@ -8,7 +8,7 @@
 
         where TEdges: IEnumerable<TEdge>
         where TGraphConcept : IGraphConcept<TGraph, TVertex, TEdge, TVertexData, TEdgeData>
-        where TVertexConcept : IIncidenceVertexConcept<TVertexData, TEdges>
+        where TVertexConcept : IIncidenceVertexDataConcept<TVertexData, TEdges>
         where TEdgeConcept : IEdgeDataConcept<TVertex, TEdgeData>
     {
         private TGraphConcept GraphConcept { get; }

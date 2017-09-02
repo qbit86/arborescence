@@ -11,7 +11,7 @@
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGraphConcept<TGraph, TVertex, TEdge, TVertexData, TEdgeData>
-        where TVertexConcept : IIncidenceVertexConcept<TVertexData, TEdges>
+        where TVertexConcept : IIncidenceVertexDataConcept<TVertexData, TEdges>
         where TEdgeConcept : IEdgeDataConcept<TVertex, TEdgeData>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
