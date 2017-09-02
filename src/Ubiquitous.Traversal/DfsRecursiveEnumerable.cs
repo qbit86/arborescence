@@ -44,6 +44,17 @@
 
         public IEnumerator<Step<TVertex, TEdge>> GetEnumerator()
         {
+            return GetEnumeratorCoroutine();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            IEnumerator<Step<TVertex, TEdge>> result = GetEnumerator();
+            return result;
+        }
+
+        private IEnumerator<Step<TVertex, TEdge>> GetEnumeratorCoroutine()
+        {
             yield return Step.Create(StepKind.StartVertex, StartVertex, default(TEdge));
 
             TColorMap colorMap = ColorMapFactoryConcept.Acquire(Graph);
@@ -60,12 +71,6 @@
             {
                 ColorMapFactoryConcept.Release(Graph, colorMap);
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            IEnumerator<Step<TVertex, TEdge>> result = GetEnumerator();
-            return result;
         }
 
         private IEnumerable<Step<TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)

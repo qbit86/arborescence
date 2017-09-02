@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using System;
     using System.Collections.Generic;
 
     public struct Dfs<TGraph, TVertex, TEdge, TEdges,
@@ -22,6 +23,12 @@
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
+            if (startVertex == null)
+                throw new ArgumentNullException(nameof(startVertex));
+
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
             return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap,
