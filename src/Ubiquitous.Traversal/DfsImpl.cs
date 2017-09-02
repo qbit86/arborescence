@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous
+﻿#if UBIQUITOUS_LEGACY
+
+namespace Ubiquitous
 {
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -47,3 +49,5 @@
         }
     }
 }
+
+#endif

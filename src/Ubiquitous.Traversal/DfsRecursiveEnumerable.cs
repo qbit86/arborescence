@@ -4,22 +4,20 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TVertexData, TEdgeData, TEdges, TColorMap,
-        TGraphConcept, TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
+    public struct DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap,
+        TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
         : IEnumerable<Step<TVertex, TEdge>>
 
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TGraphConcept : IGraphConcept<TGraph, TVertex, TEdge, TVertexData, TEdgeData>
-        where TVertexConcept : IIncidenceVertexDataConcept<TVertexData, TEdges>
-        where TEdgeConcept : IEdgeDataConcept<TVertex, TEdgeData>
+
+        where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
+        where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
-
-        internal TGraphConcept GraphConcept { get; }
 
         internal TVertexConcept VertexConcept { get; }
 
@@ -28,19 +26,17 @@
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
         internal DfsRecursiveEnumerable(TGraph graph, TVertex startVertex,
-            TGraphConcept graphConcept, TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
+            TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactoryConcept colorMapFactoryConcept)
         {
             Assert(graph != null);
             Assert(startVertex != null);
-            Assert(graphConcept != null);
             Assert(vertexConcept != null);
             Assert(edgeConcept != null);
             Assert(colorMapFactoryConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
-            GraphConcept = graphConcept;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
             ColorMapFactoryConcept = colorMapFactoryConcept;
@@ -77,10 +73,9 @@
             colorMap[vertex] = Color.Gray;
             yield return Step.Create(StepKind.DiscoverVertex, vertex, default(TEdge));
 
-            TVertexData vertexData;
-            if (GraphConcept.TryGetVertexData(Graph, vertex, out vertexData))
+            TEdges edges;
+            if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges))
             {
-                TEdges edges = VertexConcept.GetOutEdges(vertexData);
                 foreach (TEdge edge in edges)
                 {
                     IEnumerable<Step<TVertex, TEdge>> steps = ProcessEdgeCoroutine(edge, colorMap);
@@ -97,11 +92,9 @@
         {
             yield return Step.Create(StepKind.ExamineEdge, default(TVertex), edge);
 
-            TEdgeData edgeData;
-            if (GraphConcept.TryGetEdgeData(Graph, edge, out edgeData))
+            TVertex target;
+            if (EdgeConcept.TryGetTarget(Graph, edge, out target))
             {
-                TVertex target = EdgeConcept.GetTarget(edgeData);
-
                 Color neighborColor;
                 if (!colorMap.TryGetValue(target, out neighborColor))
                     neighborColor = Color.White;
