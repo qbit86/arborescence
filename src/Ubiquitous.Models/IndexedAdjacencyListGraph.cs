@@ -21,9 +21,9 @@
             OutEdges = outEdges;
         }
 
-        public IEnumerable<int> GetVertices() => Enumerable.Range(0, OutEdges.Count);
+        public int VertexCount => OutEdges.Count;
 
-        public IEnumerable<int> GetEdges() => Enumerable.Range(0, Endpoints.Count);
+        public IEnumerable<int> GetVertices() => Enumerable.Range(0, OutEdges.Count);
 
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
