@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -15,13 +16,15 @@
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
+        private bool _initialized;
+
         private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
 
-        internal TVertexConcept VertexConcept { get; }
+        private TVertexConcept VertexConcept { get; }
 
-        internal TEdgeConcept EdgeConcept { get; }
+        private TEdgeConcept EdgeConcept { get; }
 
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
@@ -40,10 +43,15 @@
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
             ColorMapFactoryConcept = colorMapFactoryConcept;
+
+            _initialized = true;
         }
 
         public IEnumerator<Step<TVertex, TEdge>> GetEnumerator()
         {
+            if (!_initialized)
+                throw new ObjectDisposedException(GetType().Name);
+
             return GetEnumeratorCoroutine();
         }
 
