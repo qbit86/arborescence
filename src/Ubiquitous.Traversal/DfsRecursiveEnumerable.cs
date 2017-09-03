@@ -102,10 +102,11 @@
             {
                 Color neighborColor;
                 if (!colorMap.TryGetValue(target, out neighborColor))
-                    neighborColor = Color.White;
+                    neighborColor = Color.None;
 
                 switch (neighborColor)
                 {
+                    case Color.None:
                     case Color.White:
                         yield return Step.Create(StepKind.TreeEdge, default(TVertex), edge);
                         IEnumerable<Step<TVertex, TEdge>> steps = ProcessVertexCoroutine(target, colorMap);
