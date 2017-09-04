@@ -16,8 +16,6 @@
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
-        private bool _initialized;
-
         private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
@@ -43,15 +41,10 @@
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
             ColorMapFactoryConcept = colorMapFactoryConcept;
-
-            _initialized = true;
         }
 
         public IEnumerator<Step<TVertex, TEdge>> GetEnumerator()
         {
-            if (!_initialized)
-                throw new ObjectDisposedException(GetType().Name);
-
             return GetEnumeratorCoroutine();
         }
 
