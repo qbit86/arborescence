@@ -9,7 +9,7 @@
         private IReadOnlyList<SourceTargetPair<int>> Endpoints { get; }
         private IReadOnlyList<IEnumerable<int>> OutEdges { get; }
 
-        public IndexedAdjacencyListGraph(
+        internal IndexedAdjacencyListGraph(
             IReadOnlyList<SourceTargetPair<int>> endpoints,
             IReadOnlyList<IEnumerable<int>> outEdges)
         {

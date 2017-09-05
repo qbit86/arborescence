@@ -79,7 +79,7 @@
             yield return Step.Create(StepKind.DiscoverVertex, vertex, default(TEdge));
 
             TEdges edges;
-            if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges))
+            if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
             {
                 foreach (TEdge edge in edges)
                 {
