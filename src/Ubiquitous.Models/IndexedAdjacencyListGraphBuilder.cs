@@ -26,7 +26,7 @@
             Endpoints = edgeCount >= 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
         }
 
-        bool Add(SourceTargetPair<int> edge)
+        public bool Add(SourceTargetPair<int> edge)
         {
             if (Endpoints == null || OutEdges == null)
                 return false;
@@ -52,7 +52,7 @@
             return true;
         }
 
-        IndexedAdjacencyListGraph ToIndexedAdjacencyListGraph()
+        public IndexedAdjacencyListGraph ToIndexedAdjacencyListGraph()
         {
             var endpoints = Endpoints ?? new List<SourceTargetPair<int>>();
             var outEdges = OutEdges ?? new List<int>[0]; // Array.Empty<List<int>>() in .NET Standard 1.3.
