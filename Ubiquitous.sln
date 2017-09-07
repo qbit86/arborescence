@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}"
 EndProject
@@ -16,7 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Traversal", "src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj", "{59271DA1-4B19-4804-962C-DF2791D123A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Traversal", "src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj", "{59271DA1-4B19-4804-962C-DF2791D123A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6561325C-4C3A-4949-81E4-BF8D87ED7F37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.DfsDemo", "test\Ubiquitous.DfsDemo\Ubiquitous.DfsDemo.csproj", "{8FB6DEC3-065C-430E-823D-7212A69BFF9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +40,10 @@ Global
 		{59271DA1-4B19-4804-962C-DF2791D123A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59271DA1-4B19-4804-962C-DF2791D123A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59271DA1-4B19-4804-962C-DF2791D123A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB6DEC3-065C-430E-823D-7212A69BFF9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB6DEC3-065C-430E-823D-7212A69BFF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB6DEC3-065C-430E-823D-7212A69BFF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB6DEC3-065C-430E-823D-7212A69BFF9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{1AFCCDC0-7368-45DF-9B87-C64E05037BA0} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{59271DA1-4B19-4804-962C-DF2791D123A2} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+		{8FB6DEC3-065C-430E-823D-7212A69BFF9E} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

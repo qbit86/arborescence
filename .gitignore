@@ -1,4 +1,6 @@
-.vs/**/v15/sqlite3/storage.ide
+.vs/**/sqlite3/storage.ide
 **/.suo
 src/**/bin/*
 src/**/obj/*
+test/**/bin/*
+test/**/obj/*
