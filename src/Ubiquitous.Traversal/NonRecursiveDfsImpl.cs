@@ -21,7 +21,6 @@
         internal NonRecursiveDfsImpl(TGraph graph,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
-            Assert(graph != null);
             Assert(vertexConcept != null);
             Assert(edgeConcept != null);
 
