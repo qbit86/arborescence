@@ -10,6 +10,22 @@
             return new Step<TVertex, TEdge>(kind, vertex, edge);
         }
 
+        public static bool IsEdge(StepKind stepKind)
+        {
+            switch (stepKind)
+            {
+                case StepKind.ExamineEdge:
+                case StepKind.TreeEdge:
+                case StepKind.BackEdge:
+                case StepKind.ForwardOrCrossEdge:
+                case StepKind.NonTreeEdge:
+                case StepKind.FinishEdge:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         internal static string StepToString(StepKind kind, object vertex, object edge)
         {
             var s = new System.Text.StringBuilder();
