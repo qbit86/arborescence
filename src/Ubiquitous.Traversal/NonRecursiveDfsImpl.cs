@@ -35,7 +35,7 @@
 
             var stack = new Stack<StackFrame>();
 
-            var initialStackFrame = new StackFrame(StackFrameKind.ProcessVertexPrologue, vertex);
+            var initialStackFrame = new StackFrame(StackFrameKind.ProcessVertexPrologue, vertex, null);
             stack.Push(initialStackFrame);
 
             while (stack.Count > 0)
@@ -59,17 +59,31 @@
             switch (stackFrame.Kind)
             {
                 case StackFrameKind.ProcessVertexPrologue:
-                    colorMap[stackFrame.Vertex] = Color.Gray;
-                    yield return Step.Create(DfsStepKind.DiscoverVertex, stackFrame.Vertex, default(TEdge));
-
-                    TEdges edges;
-                    if (VertexConcept.TryGetOutEdges(Graph, stackFrame.Vertex, out edges) && edges != null)
+                    if (stackFrame.EdgeEnumerator == null)
                     {
-                        var enumerator = edges.GetEnumerator();
-                        while (enumerator.MoveNext())
-                        {
+                        colorMap[stackFrame.Vertex] = Color.Gray;
+                        yield return Step.Create(DfsStepKind.DiscoverVertex, stackFrame.Vertex, default(TEdge));
 
+                        TEdges edges;
+                        if (VertexConcept.TryGetOutEdges(Graph, stackFrame.Vertex, out edges) && edges != null)
+                        {
+                            var enumerator = edges.GetEnumerator();
+                            if (enumerator != null)
+                            {
+                                var newStackFrame = new StackFrame(
+                                    StackFrameKind.ProcessVertexPrologue, stackFrame.Vertex, enumerator);
+                                stack.Push(newStackFrame);
+                                yield break;
+                            }
                         }
+                    }
+                    else
+                    {
+                        /*
+                        if (stackFrame.EdgeEnumerator.MoveNext())
+                        {
+                        }
+                        */
                     }
                     break;
                 case StackFrameKind.None:

@@ -1,5 +1,7 @@
 ﻿namespace Ubiquitous
 {
+    using System.Collections.Generic;
+
     internal partial struct NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
     {
@@ -18,10 +20,13 @@
 
             internal TVertex Vertex { get; }
 
-            internal StackFrame(StackFrameKind kind, TVertex vertex)
+            internal IEnumerator<TEdge> EdgeEnumerator { get;}
+
+            internal StackFrame(StackFrameKind kind, TVertex vertex, IEnumerator<TEdge> edgeEnumerator)
             {
                 Kind = kind;
                 Vertex = vertex;
+                EdgeEnumerator = edgeEnumerator;
             }
         }
     }
