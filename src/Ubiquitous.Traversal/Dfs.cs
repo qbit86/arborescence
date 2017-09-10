@@ -38,6 +38,29 @@
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, startVertex, colorMapFactoryConcept);
         }
 
+        public RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+            TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
+        TraverseRecursively<TVertices, TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertices vertices)
+
+            where TVertices : IEnumerable<TVertex>
+            where TColorMap : IDictionary<TVertex, Color>
+            where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
+        {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
+            if (vertices == null)
+                throw new ArgumentNullException(nameof(vertices));
+
+            TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
+
+            var impl = new RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+
+            return new RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, vertices, colorMapFactoryConcept);
+        }
+
         public NonRecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
             TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
         TraverseNonRecursively<TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertex startVertex)

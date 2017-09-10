@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct RecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    public struct RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
+        where TVertices : IEnumerable<TVertex>
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
@@ -18,18 +19,18 @@
     {
         private RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept> Impl { get; }
 
-        private TVertex StartVertex { get; }
+        private TVertices Vertices { get; }
 
         internal TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        internal RecursiveDfsStepCollection(RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
-            TVertexConcept, TEdgeConcept> impl, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
+        internal RecursiveDfsForestStepCollection(RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            TVertexConcept, TEdgeConcept> impl, TVertices vertices, TColorMapFactoryConcept colorMapFactoryConcept)
         {
-            Assert(startVertex != null);
+            Assert(vertices != null);
             Assert(colorMapFactoryConcept != null);
 
             Impl = impl;
-            StartVertex = startVertex;
+            Vertices = vertices;
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
@@ -52,11 +53,21 @@
 
             try
             {
-                yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
+                foreach (var vertex in Vertices)
+                {
+                    Color vertexColor;
+                    if (!colorMap.TryGetValue(vertex, out vertexColor))
+                        vertexColor = Color.None;
 
-                IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Impl.ProcessVertexCoroutine(StartVertex, colorMap);
-                foreach (var step in steps)
-                    yield return step;
+                    if (vertexColor != Color.None && vertexColor != Color.White)
+                        continue;
+
+                    yield return Step.Create(DfsStepKind.StartVertex, vertex, default(TEdge));
+
+                    IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Impl.ProcessVertexCoroutine(vertex, colorMap);
+                    foreach (var step in steps)
+                        yield return step;
+                }
             }
             finally
             {
