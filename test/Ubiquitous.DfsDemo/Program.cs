@@ -3,16 +3,19 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using static System.Diagnostics.Debug;
+    using ColorMap = IndexedDictionary<Color, Color[]>;
+    using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
 
-    internal struct ColorMapFactoryInstance : IFactoryConcept<IndexedAdjacencyListGraph, IndexedDictionary<Color, Color[]>>
+    internal struct ColorMapFactoryInstance : IFactoryConcept<IndexedAdjacencyListGraph, ColorMap>
     {
-        public IndexedDictionary<Color, Color[]> Acquire(IndexedAdjacencyListGraph graph)
+        public ColorMap Acquire(IndexedAdjacencyListGraph graph)
         {
             return IndexedDictionary.Create(new Color[graph.VertexCount]);
         }
 
-        public void Release(IndexedAdjacencyListGraph graph, IndexedDictionary<Color, Color[]> value)
+        public void Release(IndexedAdjacencyListGraph graph, ColorMap value)
         {
         }
     }
@@ -47,26 +50,31 @@
 
             IndexedAdjacencyListGraph graph = builder.ToIndexedAdjacencyListGraph();
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
 
             {
-                var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
+                var steps = dfs.TraverseRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
+                    graph, Enumerable.Range(0, graph.VertexCount));
+                var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
-                FillEdgeKinds(steps, edgeKinds);
+                FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, edgeKinds, "Recursive DFS", Console.Out);
+                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS Forest", Console.Out);
             }
 
             {
-                var steps = dfs.TraverseNonRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
+                var steps = dfs.TraverseNonRecursively<ColorMap, ColorMapFactoryInstance>(graph, 0);
+                var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
-                FillEdgeKinds(steps, edgeKinds);
+                FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, edgeKinds, "Non-recursive DFS", Console.Out);
+                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Non-recursive DFS", Console.Out);
             }
         }
 
-        private static void FillEdgeKinds(IEnumerable<Step<DfsStepKind, int, int>> steps, IndexedDictionary<DfsStepKind, DfsStepKind[]> edgeKinds)
+        private static void FillEdgeKinds(IEnumerable<Step<DfsStepKind, int, int>> steps,
+            StepMap vertexKinds, StepMap edgeKinds)
         {
             Assert(steps != null);
 
@@ -79,51 +87,66 @@
                     case DfsStepKind.ForwardOrCrossEdge:
                         edgeKinds[step.Edge] = step.Kind;
                         break;
+                    case DfsStepKind.StartVertex:
+                        vertexKinds[step.Vertex] = step.Kind;
+                        break;
                     default:
                         continue;
                 }
             }
         }
 
-        private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, IReadOnlyDictionary<int, DfsStepKind> edgeKinds, string graphName, TextWriter textWriter)
+        private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph,
+            IReadOnlyDictionary<int, DfsStepKind> vertexKinds, IReadOnlyDictionary<int, DfsStepKind> edgeKinds,
+            string graphName, TextWriter textWriter)
         {
             Assert(graphName != null);
             Assert(textWriter != null);
 
             textWriter.WriteLine($"digraph \"{graphName}\"{Environment.NewLine}{{");
-            textWriter.WriteLine($"    node [shape=circle]");
             try
             {
+                textWriter.WriteLine($"    node [shape=circle]");
+                for (int v = 0; v < graph.VertexCount; ++v)
+                {
+                    DfsStepKind vertexKind;
+                    if (vertexKinds == null || !vertexKinds.TryGetValue(v, out vertexKind))
+                        continue;
+
+                    if (vertexKind == DfsStepKind.StartVertex)
+                        textWriter.WriteLine($"    {v} [style=filled]");
+                }
+
                 for (int e = 0; e < graph.EdgeCount; ++e)
                 {
                     SourceTargetPair<int> endpoints;
-                    if (graph.TryGetEndpoints(e, out endpoints))
+                    if (!graph.TryGetEndpoints(e, out endpoints))
+                        continue;
+
+                    textWriter.Write($"    {endpoints.Source} -> {endpoints.Target}");
+
+                    DfsStepKind edgeKind;
+                    if (edgeKinds == null || !edgeKinds.TryGetValue(e, out edgeKind))
                     {
-                        textWriter.Write($"    {endpoints.Source} -> {endpoints.Target}");
-
-                        DfsStepKind edgeKind;
-                        if (edgeKinds == null || !edgeKinds.TryGetValue(e, out edgeKind))
-                        {
-                            textWriter.WriteLine();
-                            continue;
-                        }
-
-                        // http://www.graphviz.org/Documentation/dotguide.pdf
-                        switch (edgeKind)
-                        {
-                            case DfsStepKind.TreeEdge:
-                                textWriter.WriteLine($" [style=bold]");
-                                continue;
-                            case DfsStepKind.BackEdge:
-                                textWriter.WriteLine($" [style=dashed]");
-                                continue;
-                            case DfsStepKind.ForwardOrCrossEdge:
-                                textWriter.WriteLine($" [style=solid]");
-                                continue;
-                        }
-
-                        textWriter.WriteLine($" [style=dotted]");
+                        textWriter.WriteLine();
+                        continue;
                     }
+
+                    // http://www.graphviz.org/Documentation/dotguide.pdf
+                    switch (edgeKind)
+                    {
+                        case DfsStepKind.TreeEdge:
+                            textWriter.WriteLine($" [style=bold]");
+                            continue;
+                        case DfsStepKind.BackEdge:
+                            textWriter.WriteLine($" [style=dashed]");
+                            continue;
+                        case DfsStepKind.ForwardOrCrossEdge:
+                            textWriter.WriteLine($" [style=solid]");
+                            continue;
+                    }
+
+                    textWriter.WriteLine($" [style=dotted]");
                 }
             }
             finally
