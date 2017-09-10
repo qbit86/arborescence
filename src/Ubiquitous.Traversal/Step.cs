@@ -5,9 +5,9 @@
 
     public static class Step
     {
-        public static Step<TVertex, TEdge> Create<TVertex, TEdge>(StepKind kind, TVertex vertex, TEdge edge)
+        public static Step<TStepKind, TVertex, TEdge> Create<TStepKind, TVertex, TEdge>(TStepKind kind, TVertex vertex, TEdge edge)
         {
-            return new Step<TVertex, TEdge>(kind, vertex, edge);
+            return new Step<TStepKind, TVertex, TEdge>(kind, vertex, edge);
         }
 
         public static bool IsEdge(StepKind stepKind)
@@ -26,7 +26,7 @@
             }
         }
 
-        internal static string StepToString(StepKind kind, object vertex, object edge)
+        internal static string StepToString(object kind, object vertex, object edge)
         {
             var s = new System.Text.StringBuilder();
             s.Append('[');
@@ -51,15 +51,15 @@
         }
     }
 
-    public struct Step<TVertex, TEdge> : IEquatable<Step<TVertex, TEdge>>
+    public struct Step<TStepKind, TVertex, TEdge> : IEquatable<Step<TStepKind, TVertex, TEdge>>
     {
-        public StepKind Kind { get; }
+        public TStepKind Kind { get; }
 
         public TVertex Vertex { get; }
 
         public TEdge Edge { get; }
 
-        public Step(StepKind kind, TVertex vertex, TEdge edge)
+        public Step(TStepKind kind, TVertex vertex, TEdge edge)
         {
             Kind = kind;
             Vertex = vertex;
@@ -71,9 +71,10 @@
             return Step.StepToString(Kind, Vertex, Edge);
         }
 
-        public bool Equals(Step<TVertex, TEdge> other)
+        public bool Equals(Step<TStepKind, TVertex, TEdge> other)
         {
-            if (Kind != other.Kind)
+            EqualityComparer<TStepKind> kindComparer = EqualityComparer<TStepKind>.Default;
+            if (!kindComparer.Equals(Kind, other.Kind))
                 return false;
 
             EqualityComparer<TVertex> vertexComparer = EqualityComparer<TVertex>.Default;
@@ -89,10 +90,10 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Step<TVertex, TEdge>))
+            if (!(obj is Step<TStepKind, TVertex, TEdge>))
                 return false;
 
-            var other = (Step<TVertex, TEdge>)obj;
+            var other = (Step<TStepKind, TVertex, TEdge>)obj;
             return Equals(other);
         }
 
@@ -101,12 +102,12 @@
             return Kind.GetHashCode();
         }
 
-        public static bool operator ==(Step<TVertex, TEdge> left, Step<TVertex, TEdge> right)
+        public static bool operator ==(Step<TStepKind, TVertex, TEdge> left, Step<TStepKind, TVertex, TEdge> right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Step<TVertex, TEdge> left, Step<TVertex, TEdge> right)
+        public static bool operator !=(Step<TStepKind, TVertex, TEdge> left, Step<TStepKind, TVertex, TEdge> right)
         {
             return !left.Equals(right);
         }

@@ -6,7 +6,7 @@
 
     public struct DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept> :
-        IEnumerable<Step<TVertex, TEdge>>
+        IEnumerable<Step<StepKind, TVertex, TEdge>>
 
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
@@ -42,18 +42,18 @@
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
-        public IEnumerator<Step<TVertex, TEdge>> GetEnumerator()
+        public IEnumerator<Step<StepKind, TVertex, TEdge>> GetEnumerator()
         {
             return GetEnumeratorCoroutine();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            IEnumerator<Step<TVertex, TEdge>> result = GetEnumerator();
+            IEnumerator<Step<StepKind, TVertex, TEdge>> result = GetEnumerator();
             return result;
         }
 
-        private IEnumerator<Step<TVertex, TEdge>> GetEnumeratorCoroutine()
+        private IEnumerator<Step<StepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
             yield return Step.Create(StepKind.StartVertex, StartVertex, default(TEdge));
 
@@ -63,7 +63,7 @@
 
             try
             {
-                IEnumerable<Step<TVertex, TEdge>> steps = ProcessVertexCoroutine(StartVertex, colorMap);
+                IEnumerable<Step<StepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(StartVertex, colorMap);
                 foreach (var step in steps)
                     yield return step;
             }
@@ -73,7 +73,7 @@
             }
         }
 
-        private IEnumerable<Step<TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
+        private IEnumerable<Step<StepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
         {
             colorMap[vertex] = Color.Gray;
             yield return Step.Create(StepKind.DiscoverVertex, vertex, default(TEdge));
@@ -83,7 +83,7 @@
             {
                 foreach (TEdge edge in edges)
                 {
-                    IEnumerable<Step<TVertex, TEdge>> steps = ProcessEdgeCoroutine(edge, colorMap);
+                    IEnumerable<Step<StepKind, TVertex, TEdge>> steps = ProcessEdgeCoroutine(edge, colorMap);
                     foreach (var step in steps)
                         yield return step;
                 }
@@ -93,7 +93,7 @@
             yield return Step.Create(StepKind.FinishVertex, vertex, default(TEdge));
         }
 
-        private IEnumerable<Step<TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
+        private IEnumerable<Step<StepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
         {
             yield return Step.Create(StepKind.ExamineEdge, default(TVertex), edge);
 
@@ -109,7 +109,7 @@
                     case Color.None:
                     case Color.White:
                         yield return Step.Create(StepKind.TreeEdge, default(TVertex), edge);
-                        IEnumerable<Step<TVertex, TEdge>> steps = ProcessVertexCoroutine(target, colorMap);
+                        IEnumerable<Step<StepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(target, colorMap);
                         foreach (var step in steps)
                             yield return step;
                         break;
