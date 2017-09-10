@@ -16,9 +16,12 @@
         {
             internal StackFrameKind Kind { get; }
 
-            internal StackFrame(StackFrameKind kind)
+            internal TVertex Vertex { get; }
+
+            internal StackFrame(StackFrameKind kind, TVertex vertex)
             {
                 Kind = kind;
+                Vertex = vertex;
             }
         }
     }

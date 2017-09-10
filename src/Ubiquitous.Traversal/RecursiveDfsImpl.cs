@@ -31,6 +31,8 @@
 
         internal IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
         {
+            Assert(colorMap != null);
+
             colorMap[vertex] = Color.Gray;
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
@@ -51,6 +53,8 @@
 
         private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
         {
+            Assert(colorMap != null);
+
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 
             TVertex target;
