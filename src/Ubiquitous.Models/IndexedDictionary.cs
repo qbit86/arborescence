@@ -15,6 +15,7 @@
     }
 
     public struct IndexedDictionary<TValue, TValues> :
+        IReadOnlyDictionary<int, TValue>,
         IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue, TValues>>
 
         where TValues : IList<TValue>
@@ -38,6 +39,10 @@
         public int Count => BackingStore.Count;
 
         public bool IsReadOnly => BackingStore.IsReadOnly;
+
+        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
+
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
 
         public void Add(int key, TValue value)
         {
