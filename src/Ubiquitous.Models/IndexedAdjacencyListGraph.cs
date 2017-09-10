@@ -25,6 +25,8 @@
 
         public int VertexCount => OutEdges.Length;
 
+        public int EdgeCount => Endpoints.Count;
+
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
             if (edge < 0 || edge >= Endpoints.Count)
