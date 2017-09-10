@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    public struct RecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept> :
         IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
@@ -25,7 +25,7 @@
 
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        internal DfsRecursiveStepCollection(TGraph graph, TVertex startVertex,
+        internal RecursiveDfsStepCollection(TGraph graph, TVertex startVertex,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactoryConcept colorMapFactoryConcept)
         {
