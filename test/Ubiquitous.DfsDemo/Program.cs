@@ -46,7 +46,6 @@
             }
 
             IndexedAdjacencyListGraph graph = builder.ToIndexedAdjacencyListGraph();
-            SerializeGraphByEdges(graph, null, "Graph", Console.Out);
 
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
             var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
@@ -96,6 +95,13 @@
                         {
                             case StepKind.TreeEdge:
                                 textWriter.WriteLine($" [penwidth = 3]");
+                                continue;
+                            case StepKind.BackEdge:
+                                textWriter.WriteLine($" [style = dotted]");
+                                continue;
+                            case StepKind.ForwardOrCrossEdge:
+                            case StepKind.NonTreeEdge:
+                                textWriter.WriteLine($" [style = dashed]");
                                 continue;
                         }
 
