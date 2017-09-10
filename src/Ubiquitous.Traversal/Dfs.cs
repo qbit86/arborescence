@@ -16,7 +16,7 @@
         private TEdgeConcept EdgeConcept { get; }
 
 
-        public DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap,
+        public DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
             TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
         TraverseRecursively<TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertex startVertex)
 
@@ -31,7 +31,7 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            return new DfsRecursiveEnumerable<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            return new DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
                 VertexConcept, EdgeConcept, colorMapFactoryConcept);
         }
