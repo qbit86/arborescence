@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal partial struct NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
         where TEdges : IEnumerable<TEdge>
@@ -31,6 +31,35 @@
 
         internal IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
         {
+            var stack = new Stack<StackFrame>();
+
+            var initialStackFrame = new StackFrame(StackFrameKind.ProcessVertexPrologue);
+            stack.Push(initialStackFrame);
+
+            while (stack.Count > 0)
+            {
+                var stackFrame = stack.Pop();
+                var steps = ProcessStackFrame(stackFrame, colorMap);
+                foreach (var step in steps)
+                    yield return step;
+            }
+        }
+
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessStackFrame(StackFrame stackFrame, TColorMap colorMap)
+        {
+            // https://www.codeproject.com/Articles/418776/How-to-replace-recursive-functions-using-stack-and
+
+            // TODO: Add actual implementation.
+            switch (stackFrame.Kind)
+            {
+                case StackFrameKind.None:
+                    yield break;
+            }
+        }
+
+        [System.Obsolete]
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(StackFrame stackFrame, TVertex vertex, TColorMap colorMap)
+        {
             colorMap[vertex] = Color.Gray;
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
@@ -39,14 +68,47 @@
             {
                 foreach (TEdge edge in edges)
                 {
-                    // TODO: Add actual implementation.
-                    // https://www.codeproject.com/Articles/418776/How-to-replace-recursive-functions-using-stack-and
-                    yield return Step.Create(DfsStepKind.None, default(TVertex), edge);
+                    IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessEdgeCoroutine(stackFrame, edge, colorMap);
+                    foreach (var step in steps)
+                        yield return step;
                 }
             }
 
             colorMap[vertex] = Color.Black;
             yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
+        }
+
+        [System.Obsolete]
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(StackFrame stackFrame, TEdge edge, TColorMap colorMap)
+        {
+            yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
+
+            TVertex target;
+            if (EdgeConcept.TryGetTarget(Graph, edge, out target))
+            {
+                Color neighborColor;
+                if (!colorMap.TryGetValue(target, out neighborColor))
+                    neighborColor = Color.None;
+
+                switch (neighborColor)
+                {
+                    case Color.None:
+                    case Color.White:
+                        yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
+                        IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(stackFrame, target, colorMap);
+                        foreach (var step in steps)
+                            yield return step;
+                        break;
+                    case Color.Gray:
+                        yield return Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
+                        break;
+                    default:
+                        yield return Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
+                        break;
+                }
+            }
+
+            yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), edge);
         }
     }
 }
