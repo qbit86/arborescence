@@ -7,10 +7,9 @@
 
     public static class IndexedDictionary
     {
-        public static IndexedDictionary<TValue, TValues> Create<TValue, TValues>(TValues backingStore)
-            where TValues : IList<TValue>
+        public static IndexedDictionary<TValue, TValue[]> Create<TValue>(TValue[] backingStore)
         {
-            return new IndexedDictionary<TValue, TValues>(backingStore);
+            return new IndexedDictionary<TValue, TValue[]>(backingStore);
         }
     }
 

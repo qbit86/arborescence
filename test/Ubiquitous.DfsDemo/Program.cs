@@ -9,7 +9,7 @@
     {
         public IndexedDictionary<Color, Color[]> Acquire(IndexedAdjacencyListGraph graph)
         {
-            return IndexedDictionary.Create<Color, Color[]>(new Color[graph.VertexCount]);
+            return IndexedDictionary.Create(new Color[graph.VertexCount]);
         }
 
         public void Release(IndexedAdjacencyListGraph graph, IndexedDictionary<Color, Color[]> value)
@@ -51,7 +51,7 @@
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
             var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
 
-            var edgeKinds = IndexedDictionary.Create<StepKind, StepKind[]>(new StepKind[graph.EdgeCount]);
+            var edgeKinds = IndexedDictionary.Create(new StepKind[graph.EdgeCount]);
             foreach (var step in steps)
             {
                 if (Step.IsEdge(step.Kind))
