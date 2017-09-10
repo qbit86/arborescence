@@ -21,7 +21,6 @@
         internal RecursiveDfsImpl(TGraph graph,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
-            Assert(graph != null);
             Assert(vertexConcept != null);
             Assert(edgeConcept != null);
 
@@ -50,7 +49,7 @@
             yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
         }
 
-        internal IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge, TColorMap colorMap)
         {
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 

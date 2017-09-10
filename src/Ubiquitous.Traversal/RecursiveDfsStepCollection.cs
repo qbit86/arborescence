@@ -25,7 +25,6 @@
         internal RecursiveDfsStepCollection(RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
             TVertexConcept, TEdgeConcept> impl, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
         {
-            Assert(startVertex != null);
             Assert(colorMapFactoryConcept != null);
 
             Impl = impl;

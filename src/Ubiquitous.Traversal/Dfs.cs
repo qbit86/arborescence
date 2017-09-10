@@ -23,12 +23,6 @@
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
-
-            if (startVertex == null)
-                throw new ArgumentNullException(nameof(startVertex));
-
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
             var impl = new RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
@@ -46,9 +40,6 @@
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
-
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
@@ -68,12 +59,6 @@
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
-
-            if (startVertex == null)
-                throw new ArgumentNullException(nameof(startVertex));
-
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
             var impl = new NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
