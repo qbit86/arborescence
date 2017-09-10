@@ -33,7 +33,7 @@
             for (int v = 0; v < vertexCount; ++v)
             {
                 int source = v;
-                int target = (v + 1 + prng.Next(vertexCount - 1)) % vertexCount;
+                int target = (v + prng.Next(1, vertexCount)) % vertexCount;
                 builder.Add(SourceTargetPair.Create(source, target));
             }
 
