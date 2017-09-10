@@ -9,7 +9,7 @@
     {
         public IndexedDictionary<Color, Color[]> Acquire(IndexedAdjacencyListGraph graph)
         {
-            return new IndexedDictionary<Color, Color[]>(new Color[graph.VertexCount]);
+            return IndexedDictionary.Create<Color, Color[]>(new Color[graph.VertexCount]);
         }
 
         public void Release(IndexedAdjacencyListGraph graph, IndexedDictionary<Color, Color[]> value)
@@ -46,22 +46,22 @@
             }
 
             IndexedAdjacencyListGraph graph = builder.ToIndexedAdjacencyListGraph();
-            SerializeGraphByEdges(graph, "Graph", Console.Out);
+            SerializeGraphByEdges(graph, null, "Graph", Console.Out);
 
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
             var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
 
-            var edgeKinds = new StepKind[graph.EdgeCount];
+            var edgeKinds = IndexedDictionary.Create<StepKind, StepKind[]>(new StepKind[graph.EdgeCount]);
             foreach (var step in steps)
             {
                 if (Step.IsEdge(step.Kind))
                     edgeKinds[step.Edge] = step.Kind;
             }
 
-            // TODO: Serialize with edge kinds.
+            SerializeGraphByEdges(graph, edgeKinds, "DFS", Console.Out);
         }
 
-        private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, string graphName, TextWriter textWriter)
+        private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, IReadOnlyDictionary<int, StepKind> edgeKinds, string graphName, TextWriter textWriter)
         {
             Assert(graphName != null);
             Assert(textWriter != null);
@@ -74,7 +74,23 @@
                     SourceTargetPair<int> endpoints;
                     if (graph.TryGetEndpoints(e, out endpoints))
                     {
-                        textWriter.WriteLine($"    {endpoints.Source} -> {endpoints.Target};");
+                        textWriter.Write($"    {endpoints.Source} -> {endpoints.Target}");
+
+                        StepKind edgeKind;
+                        if (edgeKinds == null || !edgeKinds.TryGetValue(e, out edgeKind))
+                        {
+                            textWriter.WriteLine();
+                            continue;
+                        }
+
+                        switch (edgeKind)
+                        {
+                            case StepKind.TreeEdge:
+                                textWriter.WriteLine($" [penwidth = 3]");
+                                continue;
+                        }
+
+                        textWriter.WriteLine();
                     }
                 }
             }
