@@ -48,9 +48,28 @@
             IndexedAdjacencyListGraph graph = builder.ToIndexedAdjacencyListGraph();
 
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
-            var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
 
-            var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+            {
+                var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
+                var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+                FillEdgeKinds(steps, edgeKinds);
+
+                SerializeGraphByEdges(graph, edgeKinds, "Recursive DFS", Console.Out);
+            }
+
+            {
+                var steps = dfs.TraverseNonRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
+                var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+                FillEdgeKinds(steps, edgeKinds);
+
+                SerializeGraphByEdges(graph, edgeKinds, "Non-recursive DFS", Console.Out);
+            }
+        }
+
+        private static void FillEdgeKinds(IEnumerable<Step<DfsStepKind, int, int>> steps, IndexedDictionary<DfsStepKind, DfsStepKind[]> edgeKinds)
+        {
+            Assert(steps != null);
+
             foreach (var step in steps)
             {
                 switch (step.Kind)
@@ -64,8 +83,6 @@
                         continue;
                 }
             }
-
-            SerializeGraphByEdges(graph, edgeKinds, "Recursive DFS", Console.Out);
         }
 
         private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, IReadOnlyDictionary<int, DfsStepKind> edgeKinds, string graphName, TextWriter textWriter)
