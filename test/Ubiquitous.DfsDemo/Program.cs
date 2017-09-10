@@ -21,7 +21,7 @@
     {
         private static void Main(string[] args)
         {
-            const int vertexCount = 10;
+            const int vertexCount = 9;
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.618));
 
             Console.WriteLine($"{nameof(vertexCount)}: {vertexCount}, {nameof(edgeCount)}: {edgeCount}");
@@ -75,6 +75,7 @@
             Assert(textWriter != null);
 
             textWriter.WriteLine($"digraph \"{graphName}\"{Environment.NewLine}{{");
+            textWriter.WriteLine($"    node [shape=circle]");
             try
             {
                 for (int e = 0; e < graph.EdgeCount; ++e)
@@ -94,18 +95,20 @@
                         switch (edgeKind)
                         {
                             case StepKind.TreeEdge:
-                                textWriter.WriteLine($" [penwidth = 3]");
+                                textWriter.WriteLine($" [penwidth=3]");
                                 continue;
                             case StepKind.BackEdge:
-                                textWriter.WriteLine($" [style = dotted]");
+                                textWriter.WriteLine($" [style=dashed]");
                                 continue;
                             case StepKind.ForwardOrCrossEdge:
+                                textWriter.WriteLine();
+                                continue;
                             case StepKind.NonTreeEdge:
-                                textWriter.WriteLine($" [style = dashed]");
+                                textWriter.WriteLine($" [style=dotted]");
                                 continue;
                         }
 
-                        textWriter.WriteLine();
+                        textWriter.WriteLine($" [style=dotted]");
                     }
                 }
             }
