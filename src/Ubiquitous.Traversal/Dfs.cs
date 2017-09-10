@@ -31,9 +31,11 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
+            var impl = new RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+
             return new RecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
-                VertexConcept, EdgeConcept, colorMapFactoryConcept);
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, startVertex, colorMapFactoryConcept);
         }
     }
 }
