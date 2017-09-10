@@ -65,7 +65,7 @@
                 }
             }
 
-            SerializeGraphByEdges(graph, edgeKinds, "DFS", Console.Out);
+            SerializeGraphByEdges(graph, edgeKinds, "Recursive DFS", Console.Out);
         }
 
         private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, IReadOnlyDictionary<int, DfsStepKind> edgeKinds, string graphName, TextWriter textWriter)
