@@ -10,16 +10,15 @@
             return new Step<TStepKind, TVertex, TEdge>(kind, vertex, edge);
         }
 
-        public static bool IsEdge(StepKind stepKind)
+        public static bool IsEdge(DfsStepKind stepKind)
         {
             switch (stepKind)
             {
-                case StepKind.ExamineEdge:
-                case StepKind.TreeEdge:
-                case StepKind.BackEdge:
-                case StepKind.ForwardOrCrossEdge:
-                case StepKind.NonTreeEdge:
-                case StepKind.FinishEdge:
+                case DfsStepKind.ExamineEdge:
+                case DfsStepKind.TreeEdge:
+                case DfsStepKind.BackEdge:
+                case DfsStepKind.ForwardOrCrossEdge:
+                case DfsStepKind.FinishEdge:
                     return true;
                 default:
                     return false;

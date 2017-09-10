@@ -50,15 +50,14 @@
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
             var steps = dfs.TraverseRecursively<IndexedDictionary<Color, Color[]>, ColorMapFactoryInstance>(graph, 0);
 
-            var edgeKinds = IndexedDictionary.Create(new StepKind[graph.EdgeCount]);
+            var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
             foreach (var step in steps)
             {
                 switch (step.Kind)
                 {
-                    case StepKind.TreeEdge:
-                    case StepKind.BackEdge:
-                    case StepKind.ForwardOrCrossEdge:
-                    case StepKind.NonTreeEdge:
+                    case DfsStepKind.TreeEdge:
+                    case DfsStepKind.BackEdge:
+                    case DfsStepKind.ForwardOrCrossEdge:
                         edgeKinds[step.Edge] = step.Kind;
                         break;
                     default:
@@ -69,7 +68,7 @@
             SerializeGraphByEdges(graph, edgeKinds, "DFS", Console.Out);
         }
 
-        private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, IReadOnlyDictionary<int, StepKind> edgeKinds, string graphName, TextWriter textWriter)
+        private static void SerializeGraphByEdges(IndexedAdjacencyListGraph graph, IReadOnlyDictionary<int, DfsStepKind> edgeKinds, string graphName, TextWriter textWriter)
         {
             Assert(graphName != null);
             Assert(textWriter != null);
@@ -85,26 +84,24 @@
                     {
                         textWriter.Write($"    {endpoints.Source} -> {endpoints.Target}");
 
-                        StepKind edgeKind;
+                        DfsStepKind edgeKind;
                         if (edgeKinds == null || !edgeKinds.TryGetValue(e, out edgeKind))
                         {
                             textWriter.WriteLine();
                             continue;
                         }
 
+                        // http://www.graphviz.org/Documentation/dotguide.pdf
                         switch (edgeKind)
                         {
-                            case StepKind.TreeEdge:
-                                textWriter.WriteLine($" [penwidth=3]");
+                            case DfsStepKind.TreeEdge:
+                                textWriter.WriteLine($" [style=bold]");
                                 continue;
-                            case StepKind.BackEdge:
+                            case DfsStepKind.BackEdge:
                                 textWriter.WriteLine($" [style=dashed]");
                                 continue;
-                            case StepKind.ForwardOrCrossEdge:
-                                textWriter.WriteLine();
-                                continue;
-                            case StepKind.NonTreeEdge:
-                                textWriter.WriteLine($" [style=dotted]");
+                            case DfsStepKind.ForwardOrCrossEdge:
+                                textWriter.WriteLine($" [style=solid]");
                                 continue;
                         }
 

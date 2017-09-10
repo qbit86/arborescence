@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous
 {
-    public enum StepKind
+    public enum DfsStepKind
     {
         None = 0,
         StartVertex,
@@ -11,7 +11,6 @@
         TreeEdge,
         BackEdge,
         ForwardOrCrossEdge,
-        NonTreeEdge,
         FinishEdge,
     }
 }
