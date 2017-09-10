@@ -54,8 +54,17 @@
             var edgeKinds = IndexedDictionary.Create(new StepKind[graph.EdgeCount]);
             foreach (var step in steps)
             {
-                if (Step.IsEdge(step.Kind))
-                    edgeKinds[step.Edge] = step.Kind;
+                switch (step.Kind)
+                {
+                    case StepKind.TreeEdge:
+                    case StepKind.BackEdge:
+                    case StepKind.ForwardOrCrossEdge:
+                    case StepKind.NonTreeEdge:
+                        edgeKinds[step.Edge] = step.Kind;
+                        break;
+                    default:
+                        continue;
+                }
             }
 
             SerializeGraphByEdges(graph, edgeKinds, "DFS", Console.Out);
