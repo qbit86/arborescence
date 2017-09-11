@@ -22,11 +22,14 @@
 
             internal IEnumerator<TEdge> EdgeEnumerator { get;}
 
-            internal StackFrame(StackFrameKind kind, TVertex vertex, IEnumerator<TEdge> edgeEnumerator)
+            internal TEdge Edge { get; }
+
+            internal StackFrame(StackFrameKind kind, TVertex vertex, IEnumerator<TEdge> edgeEnumerator, TEdge edge)
             {
                 Kind = kind;
                 Vertex = vertex;
                 EdgeEnumerator = edgeEnumerator;
+                Edge = edge;
             }
         }
     }

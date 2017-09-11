@@ -35,7 +35,9 @@
 
             var stack = new Stack<StackFrame>();
 
-            var initialStackFrame = new StackFrame(StackFrameKind.ProcessVertexPrologue, vertex, null);
+            var initialStackFrame = new StackFrame(
+                StackFrameKind.ProcessVertexPrologue, vertex, null,
+                default(TEdge));
             stack.Push(initialStackFrame);
 
             while (stack.Count > 0)
@@ -59,40 +61,63 @@
             switch (stackFrame.Kind)
             {
                 case StackFrameKind.ProcessVertexPrologue:
-                    if (stackFrame.EdgeEnumerator == null)
-                    {
-                        colorMap[stackFrame.Vertex] = Color.Gray;
-                        yield return Step.Create(DfsStepKind.DiscoverVertex, stackFrame.Vertex, default(TEdge));
+                    Assert(stackFrame.EdgeEnumerator == null);
 
-                        TEdges edges;
-                        if (VertexConcept.TryGetOutEdges(Graph, stackFrame.Vertex, out edges) && edges != null)
-                        {
-                            var enumerator = edges.GetEnumerator();
-                            if (enumerator != null)
-                            {
-                                var newStackFrame = new StackFrame(
-                                    StackFrameKind.ProcessVertexPrologue, stackFrame.Vertex, enumerator);
-                                stack.Push(newStackFrame);
-                                yield break;
-                            }
-                        }
-                    }
-                    else
+                    colorMap[stackFrame.Vertex] = Color.Gray;
+                    yield return Step.Create(DfsStepKind.DiscoverVertex, stackFrame.Vertex, default(TEdge));
+
+                    TEdges edges;
+                    if (!VertexConcept.TryGetOutEdges(Graph, stackFrame.Vertex, out edges) || edges == null)
                     {
-                        /*
-                        if (stackFrame.EdgeEnumerator.MoveNext())
-                        {
-                        }
-                        */
+                        colorMap[stackFrame.Vertex] = Color.Black;
+                        yield return Step.Create(DfsStepKind.FinishVertex, stackFrame.Vertex, default(TEdge));
+                        yield break;
                     }
-                    break;
-                case StackFrameKind.None:
+
+                    var enumerator = edges.GetEnumerator();
+                    if (enumerator == null)
+                    {
+                        colorMap[stackFrame.Vertex] = Color.Black;
+                        yield return Step.Create(DfsStepKind.FinishVertex, stackFrame.Vertex, default(TEdge));
+                        yield break;
+                    }
+
+                    var processVertexEpilogueStackFrame = new StackFrame(
+                        StackFrameKind.ProcessVertexEpilogue, stackFrame.Vertex, enumerator,
+                        default(TEdge));
+                    stack.Push(processVertexEpilogueStackFrame);
+
+                    yield break;
+                case StackFrameKind.ProcessVertexEpilogue:
+                    Assert(stackFrame.EdgeEnumerator != null);
+
+                    if (!stackFrame.EdgeEnumerator.MoveNext())
+                    {
+                        colorMap[stackFrame.Vertex] = Color.Black;
+                        yield return Step.Create(DfsStepKind.FinishVertex, stackFrame.Vertex, default(TEdge));
+                        yield break;
+                    }
+
+                    var currentStackFrame = new StackFrame(
+                        StackFrameKind.ProcessVertexPrologue, stackFrame.Vertex, stackFrame.EdgeEnumerator,
+                        default(TEdge));
+                    stack.Push(currentStackFrame);
+                    var processEdgePrologueStackFrame = new StackFrame(
+                        StackFrameKind.ProcessEdgePrologue, stackFrame.Vertex, stackFrame.EdgeEnumerator,
+                        stackFrame.EdgeEnumerator.Current);
+                    stack.Push(processEdgePrologueStackFrame);
+
+                    yield break;
+                case StackFrameKind.ProcessEdgePrologue:
+                    yield break;
+                default:
                     yield break;
             }
         }
 
         [System.Obsolete]
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(StackFrame stackFrame, TVertex vertex, TColorMap colorMap)
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(
+            StackFrame stackFrame, TVertex vertex, TColorMap colorMap)
         {
             colorMap[vertex] = Color.Gray;
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
@@ -113,7 +138,8 @@
         }
 
         [System.Obsolete]
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(StackFrame stackFrame, TEdge edge, TColorMap colorMap)
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(
+            StackFrame stackFrame, TEdge edge, TColorMap colorMap)
         {
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 
