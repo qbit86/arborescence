@@ -87,6 +87,7 @@
                     stack.Push(processVertexEpilogueStackFrame);
 
                     yield break;
+
                 case StackFrameKind.ProcessVertexEpilogue:
                     Assert(stackFrame.EdgeEnumerator != null);
 
@@ -107,6 +108,7 @@
                     stack.Push(processEdgePrologueStackFrame);
 
                     yield break;
+
                 case StackFrameKind.ProcessEdgePrologue:
                     yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), stackFrame.Edge);
                     TVertex target;
@@ -141,11 +143,12 @@
                             break;
                     }
                     yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), stackFrame.Edge);
+
                     yield break;
+
                 case StackFrameKind.ProcessEdgeEpilogue:
                     yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), stackFrame.Edge);
-                    yield break;
-                default:
+
                     yield break;
             }
         }
