@@ -57,7 +57,6 @@
 
             StackFrame stackFrame = stack.Pop();
 
-            // TODO: Add actual implementation.
             switch (stackFrame.Kind)
             {
                 case StackFrameKind.ProcessVertexPrologue:
@@ -98,10 +97,10 @@
                         yield break;
                     }
 
-                    var currentStackFrame = new StackFrame(
-                        StackFrameKind.ProcessVertexPrologue, stackFrame.Vertex, stackFrame.EdgeEnumerator,
+                    var processVertexEpilogueStackFrame_ = new StackFrame(
+                        StackFrameKind.ProcessVertexEpilogue, stackFrame.Vertex, stackFrame.EdgeEnumerator,
                         default(TEdge));
-                    stack.Push(currentStackFrame);
+                    stack.Push(processVertexEpilogueStackFrame_);
                     var processEdgePrologueStackFrame = new StackFrame(
                         StackFrameKind.ProcessEdgePrologue, stackFrame.Vertex, stackFrame.EdgeEnumerator,
                         stackFrame.EdgeEnumerator.Current);
@@ -109,6 +108,42 @@
 
                     yield break;
                 case StackFrameKind.ProcessEdgePrologue:
+                    yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), stackFrame.Edge);
+                    TVertex target;
+                    if (!EdgeConcept.TryGetTarget(Graph, stackFrame.Edge, out target))
+                    {
+                        yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), stackFrame.Edge);
+                        yield break;
+                    }
+
+                    Color neighborColor;
+                    if (!colorMap.TryGetValue(target, out neighborColor))
+                        neighborColor = Color.None;
+
+                    switch (neighborColor)
+                    {
+                        case Color.None:
+                        case Color.White:
+                            yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), stackFrame.Edge);
+                            var processEdgeEpilogueStackFrame = new StackFrame(
+                                StackFrameKind.ProcessEdgeEpilogue, default(TVertex), null, stackFrame.Edge);
+                            stack.Push(processEdgeEpilogueStackFrame);
+                            var processVertexPrologueStackFrame = new StackFrame(
+                                StackFrameKind.ProcessVertexPrologue, target, null,
+                                default(TEdge));
+                            stack.Push(processVertexPrologueStackFrame);
+                            yield break;
+                        case Color.Gray:
+                            yield return Step.Create(DfsStepKind.BackEdge, default(TVertex), stackFrame.Edge);
+                            break;
+                        default:
+                            yield return Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), stackFrame.Edge);
+                            break;
+                    }
+                    yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), stackFrame.Edge);
+                    yield break;
+                case StackFrameKind.ProcessEdgeEpilogue:
+                    yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), stackFrame.Edge);
                     yield break;
                 default:
                     yield break;
