@@ -53,7 +53,7 @@
             {
                 yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
 
-                IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Impl.ProcessVertexCoroutine(StartVertex, colorMap);
+                IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Impl.Traverse(StartVertex, colorMap);
                 foreach (var step in steps)
                     yield return step;
             }

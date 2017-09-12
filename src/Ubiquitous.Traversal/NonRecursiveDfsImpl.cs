@@ -6,6 +6,8 @@
     internal partial struct NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
+        : ITraversal<TVertex, TEdge, TColorMap>
+
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
@@ -29,7 +31,14 @@
             EdgeConcept = edgeConcept;
         }
 
-        internal IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>> Traverse(TVertex vertex, TColorMap colorMap)
+        {
+            Assert(colorMap != null);
+
+            return ProcessVertexCoroutine(vertex, colorMap);
+        }
+
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
         {
             Assert(colorMap != null);
 
