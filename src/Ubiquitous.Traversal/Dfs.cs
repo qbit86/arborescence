@@ -16,9 +16,8 @@
         private TEdgeConcept EdgeConcept { get; }
 
 
-        public RecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-            TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
-        TraverseRecursively<TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertex startVertex)
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TraverseRecursively<TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertex startVertex)
 
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
@@ -32,9 +31,8 @@
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, startVertex, colorMapFactoryConcept);
         }
 
-        public RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-            TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
-        TraverseRecursively<TVertices, TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertices vertices)
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TraverseRecursively<TVertices, TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertices vertices)
 
             where TVertices : IEnumerable<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
@@ -52,9 +50,8 @@
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, vertices, colorMapFactoryConcept);
         }
 
-        public NonRecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-            TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
-        TraverseNonRecursively<TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertex startVertex)
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TraverseNonRecursively<TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertex startVertex)
 
             where TColorMap : IDictionary<TVertex, Color>
             where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>

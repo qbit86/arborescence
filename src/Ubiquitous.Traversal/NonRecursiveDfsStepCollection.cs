@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct NonRecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal sealed class NonRecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -20,7 +20,7 @@
 
         private TVertex StartVertex { get; }
 
-        internal TColorMapFactoryConcept ColorMapFactoryConcept { get; }
+        private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
         internal NonRecursiveDfsStepCollection(NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
             TVertexConcept, TEdgeConcept> impl, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
