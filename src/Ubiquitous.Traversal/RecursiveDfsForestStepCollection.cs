@@ -21,7 +21,7 @@
 
         private TVertices Vertices { get; }
 
-        internal TColorMapFactoryConcept ColorMapFactoryConcept { get; }
+        private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
         internal RecursiveDfsForestStepCollection(RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
             TVertexConcept, TEdgeConcept> impl, TVertices vertices, TColorMapFactoryConcept colorMapFactoryConcept)
