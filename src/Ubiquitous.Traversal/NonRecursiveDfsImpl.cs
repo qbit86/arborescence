@@ -131,8 +131,7 @@
                                 StackFrameKind.ProcessEdgeEpilogue, default(TVertex), null, stackFrame.Edge);
                             stack.Push(processEdgeEpilogueStackFrame);
                             var processVertexPrologueStackFrame = new StackFrame(
-                                StackFrameKind.ProcessVertexPrologue, target, null,
-                                default(TEdge));
+                                StackFrameKind.ProcessVertexPrologue, target, null, default(TEdge));
                             stack.Push(processVertexPrologueStackFrame);
                             yield break;
                         case Color.Gray:
@@ -151,62 +150,6 @@
 
                     yield break;
             }
-        }
-
-        [System.Obsolete]
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(
-            StackFrame stackFrame, TVertex vertex, TColorMap colorMap)
-        {
-            colorMap[vertex] = Color.Gray;
-            yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
-
-            TEdges edges;
-            if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
-            {
-                foreach (TEdge edge in edges)
-                {
-                    IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessEdgeCoroutine(stackFrame, edge, colorMap);
-                    foreach (var step in steps)
-                        yield return step;
-                }
-            }
-
-            colorMap[vertex] = Color.Black;
-            yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
-        }
-
-        [System.Obsolete]
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(
-            StackFrame stackFrame, TEdge edge, TColorMap colorMap)
-        {
-            yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
-
-            TVertex target;
-            if (EdgeConcept.TryGetTarget(Graph, edge, out target))
-            {
-                Color neighborColor;
-                if (!colorMap.TryGetValue(target, out neighborColor))
-                    neighborColor = Color.None;
-
-                switch (neighborColor)
-                {
-                    case Color.None:
-                    case Color.White:
-                        yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
-                        IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(stackFrame, target, colorMap);
-                        foreach (var step in steps)
-                            yield return step;
-                        break;
-                    case Color.Gray:
-                        yield return Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
-                        break;
-                    default:
-                        yield return Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
-                        break;
-                }
-            }
-
-            yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), edge);
         }
     }
 }
