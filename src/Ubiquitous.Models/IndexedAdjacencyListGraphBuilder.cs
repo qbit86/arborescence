@@ -52,7 +52,7 @@
             return true;
         }
 
-        public IndexedAdjacencyListGraph ToIndexedAdjacencyListGraph()
+        public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
             var endpoints = Endpoints ?? new List<SourceTargetPair<int>>();
             var outEdges = OutEdges ?? new List<int>[0]; // Array.Empty<List<int>>() in .NET Standard 1.3.

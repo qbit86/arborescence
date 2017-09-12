@@ -48,7 +48,7 @@
                 builder.Add(SourceTargetPair.Create(source, target));
             }
 
-            IndexedAdjacencyListGraph graph = builder.ToIndexedAdjacencyListGraph();
+            IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
