@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+    internal sealed class RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
