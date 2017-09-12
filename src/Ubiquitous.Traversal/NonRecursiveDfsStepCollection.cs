@@ -45,14 +45,14 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
-            yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
-
             TColorMap colorMap = ColorMapFactoryConcept.Acquire(Impl.Graph);
             if (colorMap == null)
                 yield break;
 
             try
             {
+                yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
+
                 IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Impl.ProcessVertexCoroutine(StartVertex, colorMap);
                 foreach (var step in steps)
                     yield return step;
