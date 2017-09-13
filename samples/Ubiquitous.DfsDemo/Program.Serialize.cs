@@ -17,15 +17,18 @@
             textWriter.WriteLine($"digraph \"{graphName}\"{Environment.NewLine}{{");
             try
             {
-                textWriter.WriteLine($"    node [shape=circle]");
-                for (int v = 0; v < graph.VertexCount; ++v)
+                textWriter.WriteLine("    node [shape=circle]");
+                if (vertexKinds != null)
                 {
-                    DfsStepKind vertexKind;
-                    if (vertexKinds == null || !vertexKinds.TryGetValue(v, out vertexKind))
-                        continue;
+                    for (int v = 0; v < graph.VertexCount; ++v)
+                    {
+                        DfsStepKind vertexKind;
+                        if (!vertexKinds.TryGetValue(v, out vertexKind))
+                            continue;
 
-                    if (vertexKind == DfsStepKind.StartVertex)
-                        textWriter.WriteLine($"    {v} [style=filled]");
+                        if (vertexKind == DfsStepKind.StartVertex)
+                            textWriter.WriteLine($"    {v} [style=filled]");
+                    }
                 }
 
                 for (int e = 0; e < graph.EdgeCount; ++e)
@@ -47,17 +50,17 @@
                     switch (edgeKind)
                     {
                         case DfsStepKind.TreeEdge:
-                            textWriter.WriteLine($" [style=bold]");
+                            textWriter.WriteLine(" [style=bold]");
                             continue;
                         case DfsStepKind.BackEdge:
-                            textWriter.WriteLine($" [style=dashed]");
+                            textWriter.WriteLine(" [style=dashed]");
                             continue;
                         case DfsStepKind.ForwardOrCrossEdge:
-                            textWriter.WriteLine($" [style=solid]");
+                            textWriter.WriteLine(" [style=solid]");
                             continue;
                     }
 
-                    textWriter.WriteLine($" [style=dotted]");
+                    textWriter.WriteLine(" [style=dotted]");
                 }
             }
             finally
