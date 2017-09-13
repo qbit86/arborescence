@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.DfsDemo", "sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Traversal.Tests", "test\Ubiquitous.Traversal.Tests\Ubiquitous.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Traversal.Benchmarks", "test\Ubiquitous.Traversal.Benchmarks\Ubiquitous.Traversal.Benchmarks.csproj", "{F1DC9B56-9C0B-4FD7-A971-321A93155129}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DC9B56-9C0B-4FD7-A971-321A93155129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DC9B56-9C0B-4FD7-A971-321A93155129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DC9B56-9C0B-4FD7-A971-321A93155129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DC9B56-9C0B-4FD7-A971-321A93155129}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{59271DA1-4B19-4804-962C-DF2791D123A2} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{F2190E07-B264-4DD2-BD2E-90F1B6E1C902} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
+		{F1DC9B56-9C0B-4FD7-A971-321A93155129} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
