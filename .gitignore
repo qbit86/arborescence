@@ -1,6 +1,10 @@
 .vs/**/sqlite3/storage.ide
 **/.suo
+samples/**/bin/*
+samples/**/obj/*
 src/**/bin/*
 src/**/obj/*
+test/**/bin/*
+test/**/obj/*
 tests/**/bin/*
 tests/**/obj/*
