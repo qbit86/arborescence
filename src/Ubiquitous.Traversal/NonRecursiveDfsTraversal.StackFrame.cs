@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    internal partial struct NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal partial struct NonRecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
     {
         internal enum StackFrameKind

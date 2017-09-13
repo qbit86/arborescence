@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal partial struct NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal partial struct NonRecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
         : ITraversal<TVertex, TEdge, TColorMap>
@@ -20,8 +20,7 @@
 
         private TEdgeConcept EdgeConcept { get; }
 
-        internal NonRecursiveDfsImpl(TGraph graph,
-            TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+        internal NonRecursiveDfsTraversal(TGraph graph, TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
             Assert(vertexConcept != null);
             Assert(edgeConcept != null);
@@ -38,7 +37,8 @@
             return ProcessVertexCoroutine(vertex, colorMap);
         }
 
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(
+            TVertex vertex, TColorMap colorMap)
         {
             Assert(colorMap != null);
 
@@ -57,7 +57,8 @@
             }
         }
 
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessStackFrame(Stack<StackFrame> stack, TColorMap colorMap)
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessStackFrame(
+            Stack<StackFrame> stack, TColorMap colorMap)
         {
             Assert(stack != null);
             Assert(colorMap != null);

@@ -64,12 +64,13 @@
             }
 
             {
-                var steps = dfs.TraverseNonRecursively<ColorMap, ColorMapFactoryInstance>(graph, 0);
+                var steps = dfs.TraverseNonRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
+                    graph, Enumerable.Range(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Non-recursive DFS", Console.Out);
+                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Non-recursive DFS Forest", Console.Out);
             }
         }
 

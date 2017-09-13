@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal struct RecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
         : ITraversal<TVertex, TEdge, TColorMap>
@@ -20,7 +20,7 @@
 
         private TEdgeConcept EdgeConcept { get; }
 
-        internal RecursiveDfsImpl(TGraph graph,
+        internal RecursiveDfsTraversal(TGraph graph,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
             Assert(vertexConcept != null);
@@ -38,7 +38,8 @@
             return ProcessVertexCoroutine(vertex, colorMap);
         }
 
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex, TColorMap colorMap)
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(
+            TVertex vertex, TColorMap colorMap)
         {
             Assert(colorMap != null);
 
