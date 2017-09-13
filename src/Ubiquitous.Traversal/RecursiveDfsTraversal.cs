@@ -51,7 +51,7 @@
             {
                 foreach (TEdge edge in edges)
                 {
-                    IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessEdgeCoroutine(edge, colorMap);
+                    var steps = ProcessEdgeCoroutine(edge, colorMap);
                     foreach (var step in steps)
                         yield return step;
                 }
@@ -79,7 +79,7 @@
                     case Color.None:
                     case Color.White:
                         yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
-                        IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(target, colorMap);
+                        var steps = ProcessVertexCoroutine(target, colorMap);
                         foreach (var step in steps)
                             yield return step;
                         break;
