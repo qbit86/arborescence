@@ -4,31 +4,36 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal sealed class NonRecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal sealed class DfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap, TTraversal,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
         where TEdges : IEnumerable<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
+        where TTraversal : ITraversal<TVertex, TEdge, TColorMap>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {
-        private NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept> Impl { get; }
+        private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
 
+        private TTraversal Traversal { get; }
+
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        internal NonRecursiveDfsStepCollection(NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
-            TVertexConcept, TEdgeConcept> impl, TVertex startVertex, TColorMapFactoryConcept colorMapFactoryConcept)
+        internal DfsStepCollection(TGraph graph, TVertex startVertex, TTraversal traversal,
+            TColorMapFactoryConcept colorMapFactoryConcept)
         {
+            Assert(traversal != null);
             Assert(colorMapFactoryConcept != null);
 
-            Impl = impl;
+            Graph = graph;
             StartVertex = startVertex;
+            Traversal = traversal;
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
@@ -45,7 +50,7 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
-            TColorMap colorMap = ColorMapFactoryConcept.Acquire(Impl.Graph);
+            TColorMap colorMap = ColorMapFactoryConcept.Acquire(Graph);
             if (colorMap == null)
                 yield break;
 
@@ -53,13 +58,13 @@
             {
                 yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
 
-                IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Impl.Traverse(StartVertex, colorMap);
+                IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Traversal.Traverse(StartVertex, colorMap);
                 foreach (var step in steps)
                     yield return step;
             }
             finally
             {
-                ColorMapFactoryConcept.Release(Impl.Graph, colorMap);
+                ColorMapFactoryConcept.Release(Graph, colorMap);
             }
         }
     }

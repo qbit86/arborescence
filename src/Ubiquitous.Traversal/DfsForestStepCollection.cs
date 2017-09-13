@@ -34,8 +34,8 @@
             Assert(colorMapFactoryConcept != null);
 
             Graph = graph;
-            Traversal = traversal;
             Vertices = vertices;
+            Traversal = traversal;
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
