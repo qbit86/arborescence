@@ -45,13 +45,18 @@
 
     public class DfsTest
     {
-        [Fact]
-        public void Recursive_and_non_recursive_implementations_should_match()
+        [Theory]
+        [InlineData(1.0)]
+        [InlineData(1.414)]
+        [InlineData(1.5)]
+        [InlineData(1.618)]
+        [InlineData(2.0)]
+        public void Recursive_and_non_recursive_implementations_should_match(double densityPower)
         {
             // Arrange
 
             const int vertexCount = 100;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
 
             var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
             var prng = new Random(1729);
