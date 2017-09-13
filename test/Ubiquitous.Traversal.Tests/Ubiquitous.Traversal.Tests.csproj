@@ -12,4 +12,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
+    <ProjectReference Include="..\..\src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
+  </ItemGroup>
+
 </Project>
