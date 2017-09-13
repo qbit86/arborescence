@@ -5,7 +5,6 @@
     using System.Linq;
     using Xunit;
     using ColorMap = IndexedDictionary<Color, Color[]>;
-    using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
 
     internal struct ColorMapFactoryInstance : IFactoryConcept<IndexedAdjacencyListGraph, ColorMap>
     {
