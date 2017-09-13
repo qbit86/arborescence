@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.DfsDemo", "samples\Ubiquitous.DfsDemo\Ubiquitous.DfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Traversal.Tests", "test\Ubiquitous.Traversal.Tests\Ubiquitous.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{59271DA1-4B19-4804-962C-DF2791D123A2} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{F2190E07-B264-4DD2-BD2E-90F1B6E1C902} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
+		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
