@@ -14,7 +14,7 @@
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
     {
-        internal TGraph Graph { get; }
+        private TGraph Graph { get; }
 
         private TVertexConcept VertexConcept { get; }
 
