@@ -23,8 +23,8 @@
     {
         private static void Main(string[] args)
         {
-            const int vertexCount = 8;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.618));
+            const int vertexCount = 10;
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
 
             Console.WriteLine($"{nameof(vertexCount)}: {vertexCount}, {nameof(edgeCount)}: {edgeCount}");
 
