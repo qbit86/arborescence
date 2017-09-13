@@ -43,11 +43,12 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var impl = new RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            var traversal = new RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
 
-            return new RecursiveDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, vertices, colorMapFactoryConcept);
+            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+                RecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices, traversal, colorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -63,6 +64,26 @@
 
             return new NonRecursiveDfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(impl, startVertex, colorMapFactoryConcept);
+        }
+
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TraverseNonRecursively<TVertices, TColorMap, TColorMapFactoryConcept>(TGraph graph, TVertices vertices)
+
+            where TVertices : IEnumerable<TVertex>
+            where TColorMap : IDictionary<TVertex, Color>
+            where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
+        {
+            if (vertices == null)
+                throw new ArgumentNullException(nameof(vertices));
+
+            TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
+
+            var traversal = new NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+
+            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+                NonRecursiveDfsImpl<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices, traversal, colorMapFactoryConcept);
         }
     }
 }
