@@ -23,7 +23,7 @@
     {
         private static void Main(string[] args)
         {
-            const int vertexCount = 9;
+            const int vertexCount = 8;
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.618));
 
             Console.WriteLine($"{nameof(vertexCount)}: {vertexCount}, {nameof(edgeCount)}: {edgeCount}");
@@ -31,16 +31,7 @@
             var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
             var prng = new Random(1729);
 
-            // Making sure that each vertex has at least one nontrivial out-edge.
-            for (int v = 0; v < vertexCount; ++v)
-            {
-                int source = v;
-                int target = (v + prng.Next(1, vertexCount)) % vertexCount;
-                builder.Add(SourceTargetPair.Create(source, target));
-            }
-
-            // Adding the rest of vertices.
-            for (int e = vertexCount; e < edgeCount; ++e)
+            for (int e = 0; e < edgeCount; ++e)
             {
                 int source = prng.Next(vertexCount);
                 int target = prng.Next(vertexCount);
