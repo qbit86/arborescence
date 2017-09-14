@@ -20,7 +20,7 @@
     [BenchmarkDotNet.Attributes.MemoryDiagnoser]
     public abstract class DfsBenchmark
     {
-        [BenchmarkDotNet.Attributes.Params(10000, 100000)]
+        [BenchmarkDotNet.Attributes.Params(10, 100)]
         public int VertexCount { get; set; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>,
