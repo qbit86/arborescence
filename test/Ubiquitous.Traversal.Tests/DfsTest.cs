@@ -74,11 +74,11 @@
 
             // Act
 
-            var recursiveSteps = dfs.TraverseRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
-                graph, Enumerable.Range(0, graph.VertexCount)).ToList();
+            var recursiveSteps = dfs.TraverseRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                graph, new RangeCollection(0, graph.VertexCount)).ToList();
 
-            var nonRecursiveSteps = dfs.TraverseNonRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
-                graph, Enumerable.Range(0, graph.VertexCount)).ToList();
+            var nonRecursiveSteps = dfs.TraverseNonRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                graph, new RangeCollection(0, graph.VertexCount)).ToList();
 
             // Assert
 

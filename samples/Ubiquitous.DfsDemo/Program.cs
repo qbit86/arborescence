@@ -44,8 +44,8 @@
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
 
             {
-                var steps = dfs.TraverseRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
-                    graph, Enumerable.Range(0, graph.VertexCount));
+                var steps = dfs.TraverseRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                    graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
@@ -54,8 +54,8 @@
             }
 
             {
-                var steps = dfs.TraverseNonRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
-                    graph, Enumerable.Range(0, graph.VertexCount));
+                var steps = dfs.TraverseNonRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                    graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);

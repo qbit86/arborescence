@@ -56,8 +56,8 @@
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
         public int RecursiveDfs()
         {
-            var steps = Dfs.TraverseRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
-                Graph, Enumerable.Range(0, Graph.VertexCount));
+            var steps = Dfs.TraverseRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                Graph, new RangeCollection(0, Graph.VertexCount));
 
             return steps.Count();
         }
@@ -65,8 +65,8 @@
         [BenchmarkDotNet.Attributes.Benchmark]
         public int NonRecursiveDfs()
         {
-            var steps = Dfs.TraverseNonRecursively<IEnumerable<int>, ColorMap, ColorMapFactoryInstance>(
-                Graph, Enumerable.Range(0, Graph.VertexCount));
+            var steps = Dfs.TraverseNonRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                Graph, new RangeCollection(0, Graph.VertexCount));
 
             return steps.Count();
         }
