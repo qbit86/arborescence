@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
+    // TODO: Optimize: http://csharpindepth.com/Articles/Chapter6/IteratorBlockImplementation.aspx
     internal sealed class DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap, TTraversal,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
