@@ -2,22 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using static System.Diagnostics.Debug;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
-
-    internal struct ColorMapFactoryInstance : IFactoryConcept<IndexedAdjacencyListGraph, ColorMap>
-    {
-        public ColorMap Acquire(IndexedAdjacencyListGraph graph)
-        {
-            return IndexedDictionary.Create(new Color[graph.VertexCount]);
-        }
-
-        public void Release(IndexedAdjacencyListGraph graph, ColorMap value)
-        {
-        }
-    }
+    using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
 
     internal static partial class Program
     {

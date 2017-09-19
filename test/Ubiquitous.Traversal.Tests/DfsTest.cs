@@ -5,18 +5,7 @@
     using System.Linq;
     using Xunit;
     using ColorMap = IndexedDictionary<Color, Color[]>;
-
-    internal struct ColorMapFactoryInstance : IFactoryConcept<IndexedAdjacencyListGraph, ColorMap>
-    {
-        public ColorMap Acquire(IndexedAdjacencyListGraph graph)
-        {
-            return IndexedDictionary.Create(new Color[graph.VertexCount]);
-        }
-
-        public void Release(IndexedAdjacencyListGraph graph, ColorMap value)
-        {
-        }
-    }
+    using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {
