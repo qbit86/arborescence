@@ -27,7 +27,7 @@
             var traversal = new RecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
 
-            return new DfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 RecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex, traversal, colorMapFactoryConcept);
         }
@@ -63,7 +63,7 @@
             var traversal = new NonRecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
 
-            return new DfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 NonRecursiveDfsTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex, traversal, colorMapFactoryConcept);
         }

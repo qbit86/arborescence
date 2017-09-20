@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal sealed class DfsStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap, TTraversal,
+    internal sealed class DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap, TTraversal,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -25,7 +25,7 @@
 
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        internal DfsStepCollection(TGraph graph, TVertex startVertex, TTraversal traversal,
+        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, TTraversal traversal,
             TColorMapFactoryConcept colorMapFactoryConcept)
         {
             Assert(traversal != null);
