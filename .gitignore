@@ -1,10 +1,10 @@
 .vs/**/sqlite3/storage.ide
 **/.suo
+**/BenchmarkDotNet.Artifacts/**
 samples/**/bin/*
 samples/**/obj/*
 src/**/bin/*
 src/**/obj/*
-test/**/*.Artifacts/
 test/**/bin/*
 test/**/obj/*
 tests/**/bin/*
