@@ -53,10 +53,10 @@
                             textWriter.WriteLine(" [style=bold]");
                             continue;
                         case DfsStepKind.BackEdge:
-                            textWriter.WriteLine(" [style=dashed]");
+                            textWriter.WriteLine(" [style=dotted]");
                             continue;
                         case DfsStepKind.ForwardOrCrossEdge:
-                            textWriter.WriteLine(" [style=solid]");
+                            textWriter.WriteLine(" [style=dashed]");
                             continue;
                     }
 
