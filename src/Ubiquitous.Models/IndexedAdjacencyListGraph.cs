@@ -2,16 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Immutable;
     using static System.Diagnostics.Debug;
 
     public struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
     {
         private List<SourceTargetPair<int>> Endpoints { get; }
-        private List<int>[] OutEdges { get; }
+        private ImmutableArray<int>[] OutEdges { get; }
 
         internal IndexedAdjacencyListGraph(
             List<SourceTargetPair<int>> endpoints,
-            List<int>[] outEdges)
+            ImmutableArray<int>[] outEdges)
         {
             Assert(endpoints != null);
             Assert(outEdges != null);
@@ -39,11 +40,11 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out IEnumerable<int> outEdges)
+        public bool TryGetOutEdges(int vertex, out ImmutableArray<int> outEdges)
         {
             if (vertex < 0 || vertex >= VertexCount)
             {
-                outEdges = null;
+                outEdges = default(ImmutableArray<int>);
                 return false;
             }
 

@@ -1,10 +1,10 @@
 ﻿namespace Ubiquitous
 {
-    using System.Collections.Generic;
+    using System.Collections.Immutable;
 
     public struct IndexedAdjacencyListGraphInstance :
         IEdgeConcept<IndexedAdjacencyListGraph, int, int>,
-        IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, IEnumerable<int>>
+        IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, ImmutableArray<int>>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {
@@ -22,7 +22,7 @@
             return result;
         }
 
-        public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex, out IEnumerable<int> edges)
+        public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex, out ImmutableArray<int> edges)
         {
             return graph.TryGetOutEdges(vertex, out edges);
         }

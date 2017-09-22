@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Immutable;
     using System.Linq;
     using Xunit;
     using ColorMap = IndexedDictionary<Color, Color[]>;
@@ -58,7 +59,7 @@
 
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>,
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArray<int>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
 
             // Act

@@ -1,7 +1,7 @@
 ﻿namespace Ubiquitous
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.Immutable;
     using System.Linq;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
@@ -12,14 +12,14 @@
         [BenchmarkDotNet.Attributes.Params(10, 100, 1000)]
         public int VertexCount { get; set; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>,
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArray<int>,
             IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance> Dfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
 
         public DfsBenchmark()
         {
-            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, IEnumerable<int>,
+            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArray<int>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
         }
 

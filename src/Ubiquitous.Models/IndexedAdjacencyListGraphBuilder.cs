@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Immutable;
+    using System.Linq;
 
     public sealed class IndexedAdjacencyListGraphBuilder
     {
         private List<SourceTargetPair<int>> Endpoints { get; set; }
-        private List<int>[] OutEdges { get; set; }
+        private ImmutableArray<int>.Builder[] OutEdges { get; set; }
 
         public int VertexCount => OutEdges?.Length ?? 0;
 
@@ -22,7 +24,7 @@
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException("Non-negative number required.", nameof(edgeCount));
 
-            OutEdges = new List<int>[vertexCount];
+            OutEdges = new ImmutableArray<int>.Builder[vertexCount];
             Endpoints = edgeCount >= 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
         }
 
@@ -42,20 +44,20 @@
 
             if (OutEdges[edge.Source] == null)
             {
-                OutEdges[edge.Source] = new List<int> { newEdgeIndex };
+                OutEdges[edge.Source] = ImmutableArray.CreateBuilder<int>(1);
             }
-            else
-            {
-                OutEdges[edge.Source].Add(newEdgeIndex);
-            }
+
+            OutEdges[edge.Source].Add(newEdgeIndex);
 
             return true;
         }
 
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
-            var endpoints = Endpoints ?? new List<SourceTargetPair<int>>();
-            var outEdges = OutEdges ?? new List<int>[0]; // Array.Empty<List<int>>() in .NET Standard 1.3.
+            var endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
+            ImmutableArray<int>[] outEdges = OutEdges
+                ?.Select(item => item.Count == item.Capacity ? item.MoveToImmutable() : item.ToImmutable())?.ToArray()
+                ?? new ImmutableArray<int>[0]; // Array.Empty<ImmutableArray<int>>() in .NET Standard 1.3.
 
             Endpoints = null;
             OutEdges = null;
