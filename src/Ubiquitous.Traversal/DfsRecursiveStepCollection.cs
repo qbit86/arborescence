@@ -1,6 +1,5 @@
 ﻿namespace Ubiquitous
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -9,6 +8,12 @@
         TVertexConcept, TEdgeConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+
+        where TEdges : IEnumerable<TEdge>
+        where TColorMap : IDictionary<TVertex, Color>
+
+        where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
+        where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
     {
         private TGraph Graph { get; }
 
@@ -36,13 +41,66 @@
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            var steps = ProcessVertexCoroutine(StartVertex);
+            return steps.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             IEnumerator<Step<DfsStepKind, TVertex, TEdge>> result = GetEnumerator();
             return result;
+        }
+
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex)
+        {
+            ColorMap[vertex] = Color.Gray;
+            yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
+
+            TEdges edges;
+            if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
+            {
+                foreach (TEdge edge in edges)
+                {
+                    var steps = ProcessEdgeCoroutine(edge);
+                    foreach (var step in steps)
+                        yield return step;
+                }
+            }
+
+            ColorMap[vertex] = Color.Black;
+            yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
+        }
+
+        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge)
+        {
+            yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
+
+            TVertex target;
+            if (EdgeConcept.TryGetTarget(Graph, edge, out target))
+            {
+                Color neighborColor;
+                if (!ColorMap.TryGetValue(target, out neighborColor))
+                    neighborColor = Color.None;
+
+                switch (neighborColor)
+                {
+                    case Color.None:
+                    case Color.White:
+                        yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
+                        var steps = ProcessVertexCoroutine(target);
+                        foreach (var step in steps)
+                            yield return step;
+                        break;
+                    case Color.Gray:
+                        yield return Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
+                        break;
+                    default:
+                        yield return Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
+                        break;
+                }
+            }
+
+            yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), edge);
         }
     }
 }
