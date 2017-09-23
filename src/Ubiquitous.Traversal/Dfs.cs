@@ -6,7 +6,7 @@
     public struct Dfs<TGraph, TVertex, TEdge, TEdges,
         TVertexConcept, TEdgeConcept>
 
-        where TEdges : IEnumerable<TEdge>
+        where TEdges : IEnumerator<TEdge>
 
         where TVertexConcept : struct, IIncidenceVertexConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : struct, IEdgeConcept<TGraph, TVertex, TEdge>

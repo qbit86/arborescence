@@ -29,7 +29,7 @@
 
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArray<int>,
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
 
             {

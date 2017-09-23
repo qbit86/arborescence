@@ -40,15 +40,15 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ImmutableArray<int> outEdges)
+        public bool TryGetOutEdges(int vertex, out ImmutableArrayEnumeratorAdapter<int> outEdges)
         {
             if (vertex < 0 || vertex >= VertexCount)
             {
-                outEdges = default(ImmutableArray<int>);
+                outEdges = default(ImmutableArrayEnumeratorAdapter<int>);
                 return false;
             }
 
-            outEdges = OutEdges[vertex];
+            outEdges = new ImmutableArrayEnumeratorAdapter<int>(OutEdges[vertex].GetEnumerator());
             return true;
         }
 

@@ -8,7 +8,7 @@
 
         : ITraversal<TVertex, TEdge, TColorMap>
 
-        where TEdges : IEnumerable<TEdge>
+        where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
@@ -83,14 +83,7 @@
                         yield break;
                     }
 
-                    var enumerator = edges.GetEnumerator();
-                    if (enumerator == null)
-                    {
-                        colorMap[stackFrame.Vertex] = Color.Black;
-                        yield return Step.Create(DfsStepKind.FinishVertex, stackFrame.Vertex, default(TEdge));
-                        yield break;
-                    }
-
+                    var enumerator = edges;
                     var processVertexEpilogueStackFrame = new StackFrame(
                         StackFrameKind.ProcessVertexEpilogue, stackFrame.Vertex, enumerator,
                         default(TEdge));
