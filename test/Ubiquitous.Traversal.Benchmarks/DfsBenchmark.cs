@@ -1,7 +1,6 @@
 ﻿namespace Ubiquitous
 {
     using System;
-    using System.Collections.Immutable;
     using System.Linq;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;

@@ -6,7 +6,6 @@
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
     using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
-    using System.Collections.Immutable;
 
     internal static partial class Program
     {
