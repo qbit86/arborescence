@@ -4,7 +4,7 @@
 
     public struct IndexedAdjacencyListGraphInstance :
         IEdgeConcept<IndexedAdjacencyListGraph, int, int>,
-        IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, ImmutableArray<int>>
+        IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, ImmutableArrayEnumeratorAdapter<int>>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {
@@ -22,7 +22,7 @@
             return result;
         }
 
-        public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex, out ImmutableArray<int> edges)
+        public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex, out ImmutableArrayEnumeratorAdapter<int> edges)
         {
             return graph.TryGetOutEdges(vertex, out edges);
         }

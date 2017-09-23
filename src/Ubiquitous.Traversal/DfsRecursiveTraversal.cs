@@ -8,7 +8,7 @@
 
         : ITraversal<TVertex, TEdge, TColorMap>
 
-        where TEdges : IEnumerable<TEdge>
+        where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>

@@ -9,7 +9,7 @@
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TEdges : IEnumerable<TEdge>
+        where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
@@ -59,8 +59,9 @@
             TEdges edges;
             if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
             {
-                foreach (TEdge edge in edges)
+                while (edges.MoveNext())
                 {
+                    TEdge edge = edges.Current;
                     var steps = ProcessEdgeCoroutine(edge);
                     foreach (var step in steps)
                         yield return step;

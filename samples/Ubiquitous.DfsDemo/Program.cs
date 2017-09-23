@@ -6,7 +6,6 @@
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
     using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
-    using System.Collections.Immutable;
 
     internal static partial class Program
     {
@@ -29,7 +28,7 @@
 
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArray<int>,
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
 
             {

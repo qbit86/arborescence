@@ -9,7 +9,7 @@
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TEdges : IEnumerable<TEdge>
+        where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TTraversal : ITraversal<TVertex, TEdge, TColorMap>
 
