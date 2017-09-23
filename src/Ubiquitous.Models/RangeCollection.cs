@@ -47,20 +47,40 @@
 
         IEnumerator<int> IEnumerable<int>.GetEnumerator()
         {
-            return new Enumerator(this);
+            return new EnumeratorObject(this);
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new Enumerator(this);
+            return new EnumeratorObject(this);
         }
 
-        public struct Enumerator : IEnumerator<int>
+        public struct Enumerator
         {
             RangeCollection _range;
             private int _current;
 
             public Enumerator(RangeCollection range)
+            {
+                _range = range;
+                _current = range.Start - 1;
+            }
+
+            public int Current => _current;
+
+            public bool MoveNext()
+            {
+                ++_current;
+                return _current < _range.Start + _range.Count;
+            }
+        }
+
+        private class EnumeratorObject : IEnumerator<int>
+        {
+            RangeCollection _range;
+            private int _current;
+
+            public EnumeratorObject(RangeCollection range)
             {
                 _range = range;
                 _current = range.Start - 1;
