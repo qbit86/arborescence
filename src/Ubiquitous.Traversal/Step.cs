@@ -10,21 +10,6 @@
             return new Step<TStepKind, TVertex, TEdge>(kind, vertex, edge);
         }
 
-        public static bool IsEdge(DfsStepKind stepKind)
-        {
-            switch (stepKind)
-            {
-                case DfsStepKind.ExamineEdge:
-                case DfsStepKind.TreeEdge:
-                case DfsStepKind.BackEdge:
-                case DfsStepKind.ForwardOrCrossEdge:
-                case DfsStepKind.FinishEdge:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
         internal static string StepToString(object kind, object vertex, object edge)
         {
             var s = new System.Text.StringBuilder();
