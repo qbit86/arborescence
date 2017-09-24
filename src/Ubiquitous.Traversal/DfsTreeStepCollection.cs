@@ -4,15 +4,17 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal sealed class DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap, TTraversal,
+    internal sealed class DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+        TStepEnumeratorProviderConcept,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
         where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TTraversal : ITraversal<DfsStepKind, TVertex, TEdge, TColorMap>
 
+        where TStepEnumeratorProviderConcept : IStepEnumeratorProviderConcept<
+            TGraph, TVertex, TColorMap, IEnumerator<Step<DfsStepKind, TVertex, TEdge>>, TVertexConcept, TEdgeConcept>
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
@@ -21,19 +23,27 @@
 
         private TVertex StartVertex { get; }
 
-        private TTraversal Traversal { get; }
+        private TVertexConcept VertexConcept { get; }
+
+        private TEdgeConcept EdgeConcept { get; }
+
+        private TStepEnumeratorProviderConcept StepEnumeratorProviderConcept { get; }
 
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, TTraversal traversal,
+        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex,
+            TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
+            TStepEnumeratorProviderConcept stepEnumeratorProviderConcept,
             TColorMapFactoryConcept colorMapFactoryConcept)
         {
-            Assert(traversal != null);
+            Assert(stepEnumeratorProviderConcept != null);
             Assert(colorMapFactoryConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
-            Traversal = traversal;
+            VertexConcept = vertexConcept;
+            EdgeConcept = edgeConcept;
+            StepEnumeratorProviderConcept = stepEnumeratorProviderConcept;
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
@@ -58,7 +68,7 @@
             {
                 yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
 
-                var steps = Traversal.CreateEnumerator(StartVertex, colorMap);
+                var steps = StepEnumeratorProviderConcept.GetEnumerator(Graph, StartVertex, colorMap, VertexConcept, EdgeConcept);
                 while (steps.MoveNext())
                     yield return steps.Current;
             }
