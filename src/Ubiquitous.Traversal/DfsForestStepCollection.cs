@@ -5,16 +5,17 @@
     using static System.Diagnostics.Debug;
 
     // TODO: Optimize: http://csharpindepth.com/Articles/Chapter6/IteratorBlockImplementation.aspx
-    internal sealed class DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap, TTraversal,
-        TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
+    internal sealed class DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+        TStepEnumeratorProviderConcept, TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
         where TVertices : IEnumerable<TVertex>
         where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TTraversal : ITraversal<DfsStepKind, TVertex, TEdge, TColorMap>
 
+        where TStepEnumeratorProviderConcept : IStepEnumeratorProviderConcept<
+            TGraph, TVertex, TColorMap, IEnumerator<Step<DfsStepKind, TVertex, TEdge>>, TVertexConcept, TEdgeConcept>
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
@@ -23,20 +24,27 @@
 
         private TVertices Vertices { get; }
 
-        private TTraversal Traversal { get; }
+        private TVertexConcept VertexConcept { get; }
+
+        private TEdgeConcept EdgeConcept { get; }
+
+        private TStepEnumeratorProviderConcept StepEnumeratorProviderConcept { get; }
 
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
 
-        internal DfsForestStepCollection(TGraph graph, TVertices vertices, TTraversal traversal,
+        internal DfsForestStepCollection(TGraph graph, TVertices vertices,
+            TVertexConcept vertexConcept, TEdgeConcept edgeConcept, TStepEnumeratorProviderConcept stepEnumeratorProviderConcept,
             TColorMapFactoryConcept colorMapFactoryConcept)
         {
             Assert(vertices != null);
-            Assert(traversal != null);
+            Assert(stepEnumeratorProviderConcept != null);
             Assert(colorMapFactoryConcept != null);
 
             Graph = graph;
             Vertices = vertices;
-            Traversal = traversal;
+            VertexConcept = vertexConcept;
+            EdgeConcept = edgeConcept;
+            StepEnumeratorProviderConcept = stepEnumeratorProviderConcept;
             ColorMapFactoryConcept = colorMapFactoryConcept;
         }
 
@@ -70,7 +78,7 @@
 
                     yield return Step.Create(DfsStepKind.StartVertex, vertex, default(TEdge));
 
-                    var steps = Traversal.CreateEnumerator(vertex, colorMap);
+                    var steps = StepEnumeratorProviderConcept.GetEnumerator(Graph, vertex, colorMap, VertexConcept, EdgeConcept);
                     while (steps.MoveNext())
                         yield return steps.Current;
                 }

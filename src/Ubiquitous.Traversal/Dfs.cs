@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using static System.Diagnostics.Debug;
 
     public struct Dfs<TGraph, TVertex, TEdge, TEdges,
         TVertexConcept, TEdgeConcept>
@@ -24,12 +25,12 @@
         {
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var traversal = new DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+            var enumeratorProviderConcept = new DfsRecursiveStepEnumeratorProviderConcept<TColorMap>();
 
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex, traversal, colorMapFactoryConcept);
+                DfsRecursiveStepEnumeratorProviderConcept<TColorMap>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, colorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -44,12 +45,12 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var traversal = new DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+            var enumeratorProviderConcept = new DfsRecursiveStepEnumeratorProviderConcept<TColorMap>();
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices, traversal, colorMapFactoryConcept);
+                DfsRecursiveStepEnumeratorProviderConcept<TColorMap>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, colorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -60,12 +61,12 @@
         {
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var traversal = new DfsNonRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+            var enumeratorProviderConcept = new DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>();
 
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                DfsNonRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex, traversal, colorMapFactoryConcept);
+                DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, colorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -80,12 +81,55 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var traversal = new DfsNonRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+            var enumeratorProviderConcept = new DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>();
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                DfsNonRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices, traversal, colorMapFactoryConcept);
+                DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, colorMapFactoryConcept);
+        }
+
+
+        private struct DfsRecursiveStepEnumeratorProviderConcept<TColorMap>
+            : IStepEnumeratorProviderConcept<TGraph, TVertex, TColorMap,
+                IEnumerator<Step<DfsStepKind, TVertex, TEdge>>,
+                TVertexConcept, TEdgeConcept>
+
+            where TColorMap : IDictionary<TVertex, Color>
+        {
+            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator(
+                TGraph graph, TVertex vertex, TColorMap colorMap,
+                TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+            {
+                Assert(colorMap != null);
+
+                var steps = new DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                    TVertexConcept, TEdgeConcept>(
+                    graph, vertex, colorMap, vertexConcept, edgeConcept);
+
+                return steps.GetEnumerator();
+            }
+        }
+
+        private struct DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>
+            : IStepEnumeratorProviderConcept<TGraph, TVertex, TColorMap,
+                IEnumerator<Step<DfsStepKind, TVertex, TEdge>>,
+                TVertexConcept, TEdgeConcept>
+
+            where TColorMap : IDictionary<TVertex, Color>
+        {
+            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator(
+                TGraph graph, TVertex vertex, TColorMap colorMap,
+                TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+            {
+                Assert(colorMap != null);
+
+                var steps = new DfsNonRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                    TVertexConcept, TEdgeConcept>(
+                    graph, vertex, colorMap, vertexConcept, edgeConcept);
+
+                return steps.GetEnumerator();
+            }
         }
     }
 }
