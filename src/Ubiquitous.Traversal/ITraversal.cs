@@ -4,6 +4,6 @@
 
     internal interface ITraversal<TVertex, TEdge, TColorMap>
     {
-        IEnumerable<Step<DfsStepKind, TVertex, TEdge>> Traverse(TVertex vertex, TColorMap colorMap);
+        IEnumerator<Step<DfsStepKind, TVertex, TEdge>> CreateEnumerator(TVertex vertex, TColorMap colorMap);
     }
 }

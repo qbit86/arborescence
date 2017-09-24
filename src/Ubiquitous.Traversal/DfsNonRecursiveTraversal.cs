@@ -30,14 +30,14 @@
             EdgeConcept = edgeConcept;
         }
 
-        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>> Traverse(TVertex vertex, TColorMap colorMap)
+        public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> CreateEnumerator(TVertex vertex, TColorMap colorMap)
         {
             Assert(colorMap != null);
 
             return ProcessVertexCoroutine(vertex, colorMap);
         }
 
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(
+        private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(
             TVertex vertex, TColorMap colorMap)
         {
             Assert(colorMap != null);

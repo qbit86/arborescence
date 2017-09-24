@@ -70,9 +70,9 @@
 
                     yield return Step.Create(DfsStepKind.StartVertex, vertex, default(TEdge));
 
-                    IEnumerable<Step<DfsStepKind, TVertex, TEdge>> steps = Traversal.Traverse(vertex, colorMap);
-                    foreach (var step in steps)
-                        yield return step;
+                    var steps = Traversal.CreateEnumerator(vertex, colorMap);
+                    while (steps.MoveNext())
+                        yield return steps.Current;
                 }
             }
             finally

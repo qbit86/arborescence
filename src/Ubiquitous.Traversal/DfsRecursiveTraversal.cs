@@ -31,13 +31,15 @@
             EdgeConcept = edgeConcept;
         }
 
-        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>> Traverse(TVertex vertex, TColorMap colorMap)
+        public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> CreateEnumerator(TVertex vertex, TColorMap colorMap)
         {
             Assert(colorMap != null);
 
-            return new DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            var steps = new DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept>(
                 Graph, vertex, colorMap, VertexConcept, EdgeConcept);
+
+            return steps.GetEnumerator();
         }
     }
 }
