@@ -39,24 +39,39 @@
         [InlineData(1.5)]
         [InlineData(1.618)]
         [InlineData(2.0)]
-        public void Recursive_and_non_recursive_implementations_should_match(double densityPower)
+        public void Recursive_and_non_recursive_implementations_should_match_for_tree(double densityPower)
         {
             // Arrange
 
-            const int vertexCount = 100;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
+            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
 
-            var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
-            var prng = new Random(1729);
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
 
-            for (int e = 0; e < edgeCount; ++e)
-            {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
-                builder.Add(SourceTargetPair.Create(source, target));
-            }
+            // Act
 
-            IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
+            var recursiveSteps = dfs.TraverseRecursively<ColorMap, ColorMapFactoryInstance>(
+                graph, 0).ToList();
+
+            var nonRecursiveSteps = dfs.TraverseNonRecursively<ColorMap, ColorMapFactoryInstance>(
+                graph, 0).ToList();
+
+            // Assert
+
+            Assert.Equal(recursiveSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
+        }
+
+        [Theory]
+        [InlineData(1.0)]
+        [InlineData(1.414)]
+        [InlineData(1.5)]
+        [InlineData(1.618)]
+        [InlineData(2.0)]
+        public void Recursive_and_non_recursive_implementations_should_match_for_forest(double densityPower)
+        {
+            // Arrange
+
+            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
 
             var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
@@ -72,6 +87,25 @@
             // Assert
 
             Assert.Equal(recursiveSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
+        }
+
+        private IndexedAdjacencyListGraph CreateGraph(double densityPower)
+        {
+            const int vertexCount = 100;
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
+
+            var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
+            var prng = new Random(1729);
+
+            for (int e = 0; e < edgeCount; ++e)
+            {
+                int source = prng.Next(vertexCount);
+                int target = prng.Next(vertexCount);
+                builder.Add(SourceTargetPair.Create(source, target));
+            }
+
+            var result = builder.MoveToIndexedAdjacencyListGraph();
+            return result;
         }
     }
 }
