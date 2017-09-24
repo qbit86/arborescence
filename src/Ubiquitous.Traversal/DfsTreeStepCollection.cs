@@ -11,7 +11,7 @@
 
         where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TTraversal : ITraversal<TVertex, TEdge, TColorMap>
+        where TTraversal : ITraversal<DfsStepKind, TVertex, TEdge, TColorMap>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>

@@ -6,7 +6,7 @@
     internal struct DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
-        : ITraversal<TVertex, TEdge, TColorMap>
+        : ITraversal<DfsStepKind, TVertex, TEdge, TColorMap>
 
         where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
