@@ -45,12 +45,12 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var traversal = new DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+            var enumeratorProviderConcept = new DfsRecursiveStepEnumeratorProviderConcept<TColorMap>();
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                DfsRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices, traversal, colorMapFactoryConcept);
+                DfsRecursiveStepEnumeratorProviderConcept<TColorMap>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, colorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -81,12 +81,12 @@
 
             TColorMapFactoryConcept colorMapFactoryConcept = default(TColorMapFactoryConcept);
 
-            var traversal = new DfsNonRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept>(graph, VertexConcept, EdgeConcept);
+            var enumeratorProviderConcept = new DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>();
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                DfsNonRecursiveTraversal<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices, traversal, colorMapFactoryConcept);
+                DfsNonRecursiveStepEnumeratorProviderConcept<TColorMap>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, colorMapFactoryConcept);
         }
 
 
