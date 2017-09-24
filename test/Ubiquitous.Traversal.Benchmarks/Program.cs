@@ -10,11 +10,8 @@
         {
             // http://benchmarkdotnet.org/Configs/Configs.htm
             Job job = new Job(Job.Default)
-                // .With(BenchmarkDotNet.Environments.Jit.RyuJit)
-                // .With(BenchmarkDotNet.Environments.Platform.X64)
-                // .With(BenchmarkDotNet.Environments.Runtime.Clr)
-                .ApplyAndFreeze(RunMode.Short)
-                ;
+                .ApplyAndFreeze(RunMode.Short);
+
             IConfig config = ManualConfig.Create(DefaultConfig.Instance)
                 .With(job);
 

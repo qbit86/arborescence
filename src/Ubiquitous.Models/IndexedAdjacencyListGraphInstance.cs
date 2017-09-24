@@ -1,7 +1,5 @@
 ﻿namespace Ubiquitous
 {
-    using System.Collections.Immutable;
-
     public struct IndexedAdjacencyListGraphInstance :
         IEdgeConcept<IndexedAdjacencyListGraph, int, int>,
         IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, ImmutableArrayEnumeratorAdapter<int>>

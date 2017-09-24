@@ -41,8 +41,7 @@
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
         {
-            var steps = ProcessVertexCoroutine(StartVertex);
-            return steps.GetEnumerator();
+            return ProcessVertexCoroutine(StartVertex);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -51,7 +50,7 @@
             return result;
         }
 
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex)
+        private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex)
         {
             ColorMap[vertex] = Color.Gray;
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
@@ -63,8 +62,8 @@
                 {
                     TEdge edge = edges.Current;
                     var steps = ProcessEdgeCoroutine(edge);
-                    foreach (var step in steps)
-                        yield return step;
+                    while (steps.MoveNext())
+                        yield return steps.Current;
                 }
             }
 
@@ -72,7 +71,7 @@
             yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
         }
 
-        private IEnumerable<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge)
+        private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge)
         {
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 
@@ -89,8 +88,8 @@
                     case Color.White:
                         yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
                         var steps = ProcessVertexCoroutine(target);
-                        foreach (var step in steps)
-                            yield return step;
+                        while (steps.MoveNext())
+                            yield return steps.Current;
                         break;
                     case Color.Gray:
                         yield return Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
