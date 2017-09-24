@@ -88,7 +88,7 @@
 
             public int Current => _current;
 
-            object System.Collections.IEnumerator.Current => Current;
+            object System.Collections.IEnumerator.Current => _current;
 
             public void Dispose()
             {
