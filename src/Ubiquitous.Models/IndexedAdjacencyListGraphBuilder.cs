@@ -55,14 +55,24 @@
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
             var endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
-            ImmutableArray<int>[] outEdges = OutEdges
-                ?.Select(item => item.Count == item.Capacity ? item.MoveToImmutable() : item.ToImmutable())?.ToArray()
+            ImmutableArray<int>[] outEdges = OutEdges?.Select(CreateImmutableArray)?.ToArray()
                 ?? new ImmutableArray<int>[0]; // Array.Empty<ImmutableArray<int>>() in .NET Standard 1.3.
 
             Endpoints = null;
             OutEdges = null;
 
             return new IndexedAdjacencyListGraph(endpoints, outEdges);
+        }
+
+        private ImmutableArray<int> CreateImmutableArray(ImmutableArray<int>.Builder builder)
+        {
+            if (builder == null)
+                return ImmutableArray<int>.Empty;
+
+            if (builder.Count == builder.Capacity)
+                return builder.MoveToImmutable();
+
+            return builder.ToImmutable();
         }
     }
 }
