@@ -11,15 +11,15 @@
         [BenchmarkDotNet.Attributes.Params(10, 100, 1000)]
         public int VertexCount { get; set; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-            IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance> Dfs { get; set; }
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+            IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance> Dfs { get; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
 
         public DfsBenchmark()
         {
-            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
+            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
         }
 
         [BenchmarkDotNet.Attributes.GlobalSetup]
@@ -44,7 +44,7 @@
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
         public int RecursiveDfs()
         {
-            var steps = Dfs.TraverseRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+            var steps = Dfs.TraverseRecursively(
                 Graph, new RangeCollection(0, Graph.VertexCount));
 
             return steps.Count();
@@ -53,7 +53,7 @@
         [BenchmarkDotNet.Attributes.Benchmark]
         public int NonRecursiveDfs()
         {
-            var steps = Dfs.TraverseNonRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+            var steps = Dfs.TraverseNonRecursively(
                 Graph, new RangeCollection(0, Graph.VertexCount));
 
             return steps.Count();
