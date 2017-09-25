@@ -28,11 +28,11 @@
 
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
 
             {
-                var steps = dfs.TraverseRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                var steps = dfs.TraverseRecursively(
                     graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
@@ -42,7 +42,7 @@
             }
 
             {
-                var steps = dfs.TraverseNonRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+                var steps = dfs.TraverseNonRecursively(
                     graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);

@@ -45,15 +45,15 @@
 
             IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
 
             // Act
 
-            var recursiveSteps = dfs.TraverseRecursively<ColorMap, ColorMapFactoryInstance>(
+            var recursiveSteps = dfs.TraverseRecursively(
                 graph, 0).ToList();
 
-            var nonRecursiveSteps = dfs.TraverseNonRecursively<ColorMap, ColorMapFactoryInstance>(
+            var nonRecursiveSteps = dfs.TraverseNonRecursively(
                 graph, 0).ToList();
 
             // Assert
@@ -73,15 +73,15 @@
 
             IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
 
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance>();
+            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
 
             // Act
 
-            var recursiveSteps = dfs.TraverseRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+            var recursiveSteps = dfs.TraverseRecursively(
                 graph, new RangeCollection(0, graph.VertexCount)).ToList();
 
-            var nonRecursiveSteps = dfs.TraverseNonRecursively<RangeCollection, ColorMap, ColorMapFactoryInstance>(
+            var nonRecursiveSteps = dfs.TraverseNonRecursively(
                 graph, new RangeCollection(0, graph.VertexCount)).ToList();
 
             // Assert
