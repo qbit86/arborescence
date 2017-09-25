@@ -49,6 +49,33 @@
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TraverseRecursivelyOptimized(TGraph graph, TVertex startVertex)
+        {
+            var enumeratorProviderConcept = new DfsRecursiveManuallyCraftedStepEnumeratorProviderConcept();
+
+            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                DfsRecursiveManuallyCraftedStepEnumeratorProviderConcept,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
+        }
+
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TraverseRecursivelyOptimized<TVertices>(TGraph graph, TVertices vertices)
+
+            where TVertices : IEnumerable<TVertex>
+        {
+            if (vertices == null)
+                throw new ArgumentNullException(nameof(vertices));
+
+            var enumeratorProviderConcept = new DfsRecursiveManuallyCraftedStepEnumeratorProviderConcept();
+
+            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+                DfsRecursiveManuallyCraftedStepEnumeratorProviderConcept,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
+                VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
+        }
+
+        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             TraverseNonRecursively(TGraph graph, TVertex startVertex)
         {
             var enumeratorProviderConcept = new DfsNonRecursiveStepEnumeratorProviderConcept();
@@ -88,6 +115,25 @@
                 Assert(colorMap != null);
 
                 var steps = new DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                    TVertexConcept, TEdgeConcept>(
+                    graph, vertex, colorMap, vertexConcept, edgeConcept);
+
+                return steps.GetEnumerator();
+            }
+        }
+
+        private struct DfsRecursiveManuallyCraftedStepEnumeratorProviderConcept
+            : IStepEnumeratorProviderConcept<TGraph, TVertex, TColorMap,
+                IEnumerator<Step<DfsStepKind, TVertex, TEdge>>,
+                TVertexConcept, TEdgeConcept>
+        {
+            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator(
+                TGraph graph, TVertex vertex, TColorMap colorMap,
+                TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+            {
+                Assert(colorMap != null);
+
+                var steps = new DfsRecursiveManuallyCraftedStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                     TVertexConcept, TEdgeConcept>(
                     graph, vertex, colorMap, vertexConcept, edgeConcept);
 

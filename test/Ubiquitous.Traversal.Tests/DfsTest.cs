@@ -33,6 +33,16 @@
 
     public class DfsTest
     {
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>
+            Dfs { get; }
+
+        public DfsTest()
+        {
+            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
+        }
+
         [Theory]
         [InlineData(1.0)]
         [InlineData(1.414)]
@@ -44,17 +54,12 @@
             // Arrange
 
             IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
-
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
+            int vertex = 0;
 
             // Act
 
-            var recursiveSteps = dfs.TraverseRecursively(
-                graph, 0).ToList();
-
-            var nonRecursiveSteps = dfs.TraverseNonRecursively(
-                graph, 0).ToList();
+            var recursiveSteps = Dfs.TraverseRecursively(graph, vertex).ToList();
+            var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertex).ToList();
 
             // Assert
 
@@ -72,21 +77,39 @@
             // Arrange
 
             IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
-
-            var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
+            var vertices = new RangeCollection(0, graph.VertexCount);
 
             // Act
 
-            var recursiveSteps = dfs.TraverseRecursively(
-                graph, new RangeCollection(0, graph.VertexCount)).ToList();
-
-            var nonRecursiveSteps = dfs.TraverseNonRecursively(
-                graph, new RangeCollection(0, graph.VertexCount)).ToList();
+            var recursiveSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
+            var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertices).ToList();
 
             // Assert
 
             Assert.Equal(recursiveSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
+        }
+
+        [Theory]
+        [InlineData(1.0)]
+        [InlineData(1.414)]
+        [InlineData(1.5)]
+        [InlineData(1.618)]
+        [InlineData(2.0)]
+        public void Manual_and_automatic_recursive_implementations_should_match_for_forest(double densityPower)
+        {
+            // Arrange
+
+            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
+            var vertices = new RangeCollection(0, graph.VertexCount);
+
+            // Act
+
+            var recursiveSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
+            var recursiveOptimizedSteps = Dfs.TraverseRecursivelyOptimized(graph, vertices).ToList();
+
+            // Assert
+
+            Assert.Equal(recursiveSteps, recursiveOptimizedSteps, DfsStepEqualityComparer.Default);
         }
 
         private IndexedAdjacencyListGraph CreateGraph(double densityPower)
