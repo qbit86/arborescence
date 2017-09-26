@@ -44,7 +44,7 @@
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
         public int RecursiveDfs()
         {
-            var steps = Dfs.TraverseRecursively(
+            var steps = Dfs.TraverseBaseline(
                 Graph, new RangeCollection(0, Graph.VertexCount));
 
             return steps.Count();

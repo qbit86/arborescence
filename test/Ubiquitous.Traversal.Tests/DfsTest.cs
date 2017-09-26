@@ -58,7 +58,7 @@
 
             // Act
 
-            var recursiveSteps = Dfs.TraverseRecursively(graph, vertex).ToList();
+            var recursiveSteps = Dfs.TraverseBaseline(graph, vertex).ToList();
             var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertex).ToList();
 
             // Assert
@@ -81,7 +81,7 @@
 
             // Act
 
-            var recursiveSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
+            var recursiveSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
             var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertices).ToList();
 
             // Assert
@@ -104,8 +104,8 @@
 
             // Act
 
-            var recursiveSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
-            var recursiveOptimizedSteps = Dfs.TraverseRecursivelyOptimized(graph, vertices).ToList();
+            var recursiveSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
+            var recursiveOptimizedSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
 
             // Assert
 
