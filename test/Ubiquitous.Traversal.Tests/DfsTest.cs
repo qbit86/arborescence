@@ -49,7 +49,7 @@
         [InlineData(1.5)]
         [InlineData(1.618)]
         [InlineData(2.0)]
-        public void Recursive_and_non_recursive_implementations_should_match_for_tree(double densityPower)
+        public void Baseline_and_recursive_implementations_should_match_for_tree(double densityPower)
         {
             // Arrange
 
@@ -58,12 +58,58 @@
 
             // Act
 
-            var recursiveSteps = Dfs.TraverseBaseline(graph, vertex).ToList();
+            var baselineSteps = Dfs.TraverseBaseline(graph, vertex).ToList();
+            var recursiveSteps = Dfs.TraverseRecursively(graph, vertex).ToList();
+
+            // Assert
+
+            Assert.Equal(baselineSteps, recursiveSteps, DfsStepEqualityComparer.Default);
+        }
+
+        [Theory]
+        [InlineData(1.0)]
+        [InlineData(1.414)]
+        [InlineData(1.5)]
+        [InlineData(1.618)]
+        [InlineData(2.0)]
+        public void Baseline_and_recursive_implementations_should_match_for_forest(double densityPower)
+        {
+            // Arrange
+
+            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
+            var vertices = new RangeCollection(0, graph.VertexCount);
+
+            // Act
+
+            var baselineSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
+            var recursiveSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
+
+            // Assert
+
+            Assert.Equal(baselineSteps, recursiveSteps, DfsStepEqualityComparer.Default);
+        }
+
+        [Theory]
+        [InlineData(1.0)]
+        [InlineData(1.414)]
+        [InlineData(1.5)]
+        [InlineData(1.618)]
+        [InlineData(2.0)]
+        public void Baseline_and_non_recursive_implementations_should_match_for_tree(double densityPower)
+        {
+            // Arrange
+
+            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
+            int vertex = 0;
+
+            // Act
+
+            var baselineSteps = Dfs.TraverseBaseline(graph, vertex).ToList();
             var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertex).ToList();
 
             // Assert
 
-            Assert.Equal(recursiveSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
+            Assert.Equal(baselineSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
         }
 
         [Theory]
@@ -72,7 +118,7 @@
         [InlineData(1.5)]
         [InlineData(1.618)]
         [InlineData(2.0)]
-        public void Recursive_and_non_recursive_implementations_should_match_for_forest(double densityPower)
+        public void Baseline_and_non_recursive_implementations_should_match_for_forest(double densityPower)
         {
             // Arrange
 
@@ -81,35 +127,12 @@
 
             // Act
 
-            var recursiveSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
+            var baselineSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
             var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertices).ToList();
 
             // Assert
 
-            Assert.Equal(recursiveSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
-        }
-
-        [Theory]
-        [InlineData(1.0)]
-        [InlineData(1.414)]
-        [InlineData(1.5)]
-        [InlineData(1.618)]
-        [InlineData(2.0)]
-        public void Manual_and_automatic_recursive_implementations_should_match_for_forest(double densityPower)
-        {
-            // Arrange
-
-            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
-            var vertices = new RangeCollection(0, graph.VertexCount);
-
-            // Act
-
-            var recursiveSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
-            var recursiveOptimizedSteps = Dfs.TraverseRecursively(graph, vertices).ToList();
-
-            // Assert
-
-            Assert.Equal(recursiveSteps, recursiveOptimizedSteps, DfsStepEqualityComparer.Default);
+            Assert.Equal(baselineSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
         }
 
         private IndexedAdjacencyListGraph CreateGraph(double densityPower)
