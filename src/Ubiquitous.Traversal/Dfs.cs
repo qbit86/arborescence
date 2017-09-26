@@ -114,7 +114,7 @@
             {
                 Assert(colorMap != null);
 
-                var steps = new DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                var steps = new DfsBaselineStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                     TVertexConcept, TEdgeConcept>(
                     graph, vertex, colorMap, vertexConcept, edgeConcept);
 
