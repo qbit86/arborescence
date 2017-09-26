@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct DfsRecursiveManuallyCraftedStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal struct DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -25,7 +25,7 @@
 
         private TEdgeConcept EdgeConcept { get; }
 
-        public DfsRecursiveManuallyCraftedStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
+        public DfsRecursiveStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
             Assert(colorMap != null);
@@ -91,7 +91,7 @@
         // http://csharpindepth.com/Articles/Chapter6/IteratorBlockImplementation.aspx
         internal struct ProcessVertexEnumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
-            private readonly DfsRecursiveManuallyCraftedStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            private readonly DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept> _steps;
             private readonly TVertex _vertex;
             private TEdges _edges;
@@ -100,7 +100,7 @@
             private int _state;
 
             public ProcessVertexEnumerator(
-                DfsRecursiveManuallyCraftedStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                     TVertexConcept, TEdgeConcept> steps,
                 TVertex vertex)
             {

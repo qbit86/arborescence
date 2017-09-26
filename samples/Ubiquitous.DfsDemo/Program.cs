@@ -32,7 +32,7 @@
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
 
             {
-                var steps = dfs.TraverseRecursively(
+                var steps = dfs.TraverseBaseline(
                     graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
