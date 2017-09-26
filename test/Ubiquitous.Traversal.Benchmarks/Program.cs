@@ -15,7 +15,7 @@
             IConfig config = ManualConfig.Create(DefaultConfig.Instance)
                 .With(job);
 
-            Summary insertEnumSummary = BenchmarkDotNet.Running.BenchmarkRunner.Run<DfsBenchmark>(config);
+            Summary insertEnumSummary = BenchmarkDotNet.Running.BenchmarkRunner.Run<DfsTreeBaselineVsNonRecursiveBenchmark>(config);
         }
     }
 }

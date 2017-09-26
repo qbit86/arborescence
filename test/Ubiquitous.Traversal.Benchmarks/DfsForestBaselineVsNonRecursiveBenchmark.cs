@@ -6,7 +6,7 @@
     using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
 
     [BenchmarkDotNet.Attributes.MemoryDiagnoser]
-    public abstract class DfsBenchmark
+    public abstract class DfsForestBaselineVsNonRecursiveBenchmark
     {
         [BenchmarkDotNet.Attributes.Params(10, 100, 1000)]
         public int VertexCount { get; set; }
@@ -16,7 +16,7 @@
 
         private IndexedAdjacencyListGraph Graph { get; set; }
 
-        public DfsBenchmark()
+        public DfsForestBaselineVsNonRecursiveBenchmark()
         {
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
