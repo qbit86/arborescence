@@ -6,7 +6,7 @@
     using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
 
     [BenchmarkDotNet.Attributes.MemoryDiagnoser]
-    public abstract class DfsForestBaselineVsNonRecursiveBenchmark
+    public abstract class DfsTreeBaselineVsRecursiveBenchmark
     {
         [BenchmarkDotNet.Attributes.Params(10, 100, 1000)]
         public int VertexCount { get; set; }
@@ -16,7 +16,7 @@
 
         private IndexedAdjacencyListGraph Graph { get; set; }
 
-        public DfsForestBaselineVsNonRecursiveBenchmark()
+        public DfsTreeBaselineVsRecursiveBenchmark()
         {
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
@@ -42,19 +42,17 @@
         }
 
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
-        public int DfsForestBaseline()
+        public int DfsTreeBaseline()
         {
-            var steps = Dfs.TraverseBaseline(
-                Graph, new RangeCollection(0, Graph.VertexCount));
+            var steps = Dfs.TraverseBaseline(Graph, 0);
 
             return steps.Count();
         }
 
         [BenchmarkDotNet.Attributes.Benchmark]
-        public int DfsForestNonRecursive()
+        public int DfsTreeRecursive()
         {
-            var steps = Dfs.TraverseNonRecursively(
-                Graph, new RangeCollection(0, Graph.VertexCount));
+            var steps = Dfs.TraverseRecursively(Graph, 0);
 
             return steps.Count();
         }
