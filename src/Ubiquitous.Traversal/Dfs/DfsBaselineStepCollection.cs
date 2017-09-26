@@ -1,6 +1,5 @@
 ﻿namespace Ubiquitous
 {
-    using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
@@ -44,7 +43,7 @@
             return ProcessVertexCoroutine(StartVertex);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             IEnumerator<Step<DfsStepKind, TVertex, TEdge>> result = GetEnumerator();
             return result;
