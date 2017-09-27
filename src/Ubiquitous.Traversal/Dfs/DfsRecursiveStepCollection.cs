@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
+    [System.Obsolete("Use `DfsBaselineStepCollection<...>` for recursive DFS.")]
     internal struct DfsRecursiveStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept>
 
