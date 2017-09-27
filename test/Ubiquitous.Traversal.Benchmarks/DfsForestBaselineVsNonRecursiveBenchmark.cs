@@ -25,20 +25,7 @@
         [BenchmarkDotNet.Attributes.GlobalSetup]
         public void GlobalSetup()
         {
-            int vertexCount = VertexCount;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, 1.618));
-
-            var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
-            var prng = new Random(1729);
-
-            for (int e = 0; e < edgeCount; ++e)
-            {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
-                builder.Add(SourceTargetPair.Create(source, target));
-            }
-
-            Graph = builder.MoveToIndexedAdjacencyListGraph();
+            Graph = GraphHelper.Default.GetGraph(VertexCount);
         }
 
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
