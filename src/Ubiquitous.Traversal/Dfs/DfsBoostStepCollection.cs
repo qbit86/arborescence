@@ -85,6 +85,8 @@
 
             public bool MoveNext()
             {
+                // With `while (true)` we can avoid `goto label`,
+                // simulating the latter with `_state = label; continue;`.
                 while (true)
                 {
                     switch (_state)
@@ -94,6 +96,22 @@
                             _current = Step.Create(DfsStepKind.DiscoverVertex, _steps.StartVertex, default(TEdge));
                             _state = 1;
                             return true;
+                        case 1:
+                            TEdges edges;
+                            bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _steps.StartVertex, out edges);
+                            if (!hasOutEdges)
+                            {
+                                _steps.ColorMap[_steps.StartVertex] = Color.Gray;
+                                _current = Step.Create(DfsStepKind.FinishVertex, _steps.StartVertex, default(TEdge));
+                                _state = int.MaxValue;
+                                return true;
+                            }
+                            var stackFrame = new StackFrame(StackFrameKind.None, _steps.StartVertex, edges);
+                            _stack.Push(stackFrame);
+                            _state = 2;
+                            continue;
+                        case 2:
+                            // TODO:
                         default:
                             _current = default(Step<DfsStepKind, TVertex, TEdge>);
                             _state = -1;
@@ -121,16 +139,16 @@
 
             internal TVertex Vertex { get; }
 
-            internal IEnumerator<TEdge> EdgeEnumerator { get; }
+            internal TEdges EdgeEnumerator { get; }
 
-            internal TEdge Edge { get; }
+            // internal TEdge Edge { get; }
 
-            internal StackFrame(StackFrameKind kind, TVertex vertex, IEnumerator<TEdge> edgeEnumerator, TEdge edge)
+            internal StackFrame(StackFrameKind kind, TVertex vertex, TEdges edgeEnumerator /*, TEdge edge */)
             {
                 Kind = kind;
                 Vertex = vertex;
                 EdgeEnumerator = edgeEnumerator;
-                Edge = edge;
+                // Edge = edge;
             }
         }
     }
