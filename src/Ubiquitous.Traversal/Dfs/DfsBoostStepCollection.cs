@@ -40,7 +40,7 @@
 
         public Enumerator GetEnumerator()
         {
-            return new Enumerator(this, StartVertex);
+            return new Enumerator(this);
         }
 
         IEnumerator<Step<DfsStepKind, TVertex, TEdge>> IEnumerable<Step<DfsStepKind, TVertex, TEdge>>.GetEnumerator()
@@ -61,21 +61,22 @@
         {
             private readonly DfsBoostStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept> _steps;
-            private readonly TVertex _vertex;
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
+            private Stack<StackFrame> _stack;
 
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
             object System.Collections.IEnumerator.Current => _current;
 
             public Enumerator(DfsBoostStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept> steps, TVertex vertex)
+                TVertexConcept, TEdgeConcept> steps)
             {
                 _steps = steps;
-                _vertex = vertex;
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;
+
+                _stack = new Stack<StackFrame>();
             }
 
             public void Dispose()
@@ -84,13 +85,52 @@
 
             public bool MoveNext()
             {
-                throw new System.NotImplementedException();
+                while (true)
+                {
+                    switch (_state)
+                    {
+                        case 0:
+                            _steps.ColorMap[_steps.StartVertex] = Color.Gray;
+                            _current = Step.Create(DfsStepKind.DiscoverVertex, _steps.StartVertex, default(TEdge));
+                            _state = 1;
+                            return true;
+                        default:
+                            _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                            _state = -1;
+                            return false;
+                    }
+                }
             }
 
             public void Reset()
             {
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;
+            }
+        }
+
+        internal enum StackFrameKind
+        {
+            None = 0,
+            Some = 1,
+        }
+
+        internal struct StackFrame
+        {
+            internal StackFrameKind Kind { get; }
+
+            internal TVertex Vertex { get; }
+
+            internal IEnumerator<TEdge> EdgeEnumerator { get; }
+
+            internal TEdge Edge { get; }
+
+            internal StackFrame(StackFrameKind kind, TVertex vertex, IEnumerator<TEdge> edgeEnumerator, TEdge edge)
+            {
+                Kind = kind;
+                Vertex = vertex;
+                EdgeEnumerator = edgeEnumerator;
+                Edge = edge;
             }
         }
     }
