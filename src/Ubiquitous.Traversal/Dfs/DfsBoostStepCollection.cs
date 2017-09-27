@@ -63,13 +63,14 @@
                 TVertexConcept, TEdgeConcept> _steps;
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
-            private Stack<StackFrame> _stack;
+            private readonly Stack<StackFrame> _stack;
+            private StackFrame _poppedStackFrame;
 
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
             object System.Collections.IEnumerator.Current => _current;
 
-            public Enumerator(DfsBoostStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            internal Enumerator(DfsBoostStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept> steps)
             {
                 _steps = steps;
@@ -77,6 +78,7 @@
                 _state = 0;
 
                 _stack = new Stack<StackFrame>();
+                _poppedStackFrame = default(StackFrame);
             }
 
             public void Dispose()
@@ -106,11 +108,26 @@
                                 _state = int.MaxValue;
                                 return true;
                             }
-                            var stackFrame = new StackFrame(StackFrameKind.None, _steps.StartVertex, edges);
-                            _stack.Push(stackFrame);
+                            var pushingStackFrame = new StackFrame(_steps.StartVertex, false, default(TEdge), edges);
+                            _stack.Push(pushingStackFrame);
                             _state = 2;
                             continue;
                         case 2:
+                            if (_stack.Count == 0)
+                            {
+                                _state = int.MaxValue;
+                                continue;
+                            }
+                            var _poppedStackFrame = _stack.Pop();
+                            if (_poppedStackFrame.HasEdge)
+                            {
+                                _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _poppedStackFrame.Edge);
+                                _state = 3;
+                                return true;
+                            }
+                            _state = 3;
+                            continue;
+                        case 3:
                             // TODO:
                         default:
                             _current = default(Step<DfsStepKind, TVertex, TEdge>);
@@ -127,28 +144,22 @@
             }
         }
 
-        internal enum StackFrameKind
-        {
-            None = 0,
-            Some = 1,
-        }
-
         internal struct StackFrame
         {
-            internal StackFrameKind Kind { get; }
-
             internal TVertex Vertex { get; }
+
+            internal bool HasEdge { get; }
+
+            internal TEdge Edge { get; }
 
             internal TEdges EdgeEnumerator { get; }
 
-            // internal TEdge Edge { get; }
-
-            internal StackFrame(StackFrameKind kind, TVertex vertex, TEdges edgeEnumerator /*, TEdge edge */)
+            internal StackFrame(TVertex vertex, bool hasEdge, TEdge edge, TEdges edgeEnumerator)
             {
-                Kind = kind;
                 Vertex = vertex;
+                HasEdge = hasEdge;
+                Edge = edge;
                 EdgeEnumerator = edgeEnumerator;
-                // Edge = edge;
             }
         }
     }
