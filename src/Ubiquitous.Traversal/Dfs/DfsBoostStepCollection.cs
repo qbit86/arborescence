@@ -95,93 +95,93 @@
                 {
                     switch (_state)
                     {
-                        case 0:
+                    case 0:
+                        {
+                            _steps.ColorMap[_steps.StartVertex] = Color.Gray;
+                            _current = Step.Create(DfsStepKind.DiscoverVertex, _steps.StartVertex, default(TEdge));
+                            _state = 1;
+                            return true;
+                        }
+                    case 1:
+                        {
+                            TEdges edges;
+                            bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _steps.StartVertex, out edges);
+                            if (!hasOutEdges)
                             {
                                 _steps.ColorMap[_steps.StartVertex] = Color.Gray;
-                                _current = Step.Create(DfsStepKind.DiscoverVertex, _steps.StartVertex, default(TEdge));
-                                _state = 1;
+                                _current = Step.Create(DfsStepKind.FinishVertex, _steps.StartVertex, default(TEdge));
+                                _state = int.MaxValue;
                                 return true;
                             }
-                        case 1:
+                            var pushingStackFrame = new StackFrame(_steps.StartVertex, false, default(TEdge), edges);
+                            _stack.Push(pushingStackFrame);
+                            _state = 2;
+                            continue;
+                        }
+                    case 2:
+                        {
+                            if (_stack.Count == 0)
                             {
-                                TEdges edges;
-                                bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _steps.StartVertex, out edges);
-                                if (!hasOutEdges)
-                                {
-                                    _steps.ColorMap[_steps.StartVertex] = Color.Gray;
-                                    _current = Step.Create(DfsStepKind.FinishVertex, _steps.StartVertex, default(TEdge));
-                                    _state = int.MaxValue;
-                                    return true;
-                                }
-                                var pushingStackFrame = new StackFrame(_steps.StartVertex, false, default(TEdge), edges);
-                                _stack.Push(pushingStackFrame);
-                                _state = 2;
+                                _state = int.MaxValue;
                                 continue;
                             }
-                        case 2:
+                            _poppedStackFrame = _stack.Pop();
+                            if (_poppedStackFrame.HasEdge)
                             {
-                                if (_stack.Count == 0)
-                                {
-                                    _state = int.MaxValue;
-                                    continue;
-                                }
-                                _poppedStackFrame = _stack.Pop();
-                                if (_poppedStackFrame.HasEdge)
-                                {
-                                    _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _poppedStackFrame.Edge);
-                                    _state = 3;
-                                    return true;
-                                }
+                                _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _poppedStackFrame.Edge);
                                 _state = 3;
+                                return true;
+                            }
+                            _state = 3;
+                            continue;
+                        }
+                    case 3:
+                        {
+                            _edges = _poppedStackFrame.EdgeEnumerator;
+                            _state = 4;
+                            continue;
+                        }
+                    case 4:
+                        {
+                            if (!_edges.MoveNext())
+                            {
+                                _state = short.MaxValue;
                                 continue;
                             }
-                        case 3:
+                            TVertex target;
+                            bool isValid = _steps.EdgeConcept.TryGetTarget(_steps.Graph, _edges.Current, out target);
+                            if (!isValid)
                             {
-                                _edges = _poppedStackFrame.EdgeEnumerator;
                                 _state = 4;
                                 continue;
                             }
-                        case 4:
-                            {
-                                if (!_edges.MoveNext())
-                                {
-                                    _state = short.MaxValue;
-                                    continue;
-                                }
-                                TVertex target;
-                                bool isValid = _steps.EdgeConcept.TryGetTarget(_steps.Graph, _edges.Current, out target);
-                                if (!isValid)
-                                {
-                                    _state = 4;
-                                    continue;
-                                }
-                                _current = Step.Create(DfsStepKind.ExamineEdge, default(TVertex), _edges.Current);
-                                _state = 5;
-                                return true;
-                            }
-                        case 5:
-                            {
-                                // TODO:
-                                throw new System.NotImplementedException();
-                            }
-                        case short.MaxValue:
-                            {
-                                _steps.ColorMap[_steps.StartVertex] = Color.Black;
-                                _current = Step.Create(DfsStepKind.FinishVertex, _poppedStackFrame.Vertex, default(TEdge));
-                                _state = 2;
-                                return true;
-                            }
-                        case int.MaxValue:
-                            {
-                                _current = default(Step<DfsStepKind, TVertex, TEdge>);
-                                _state = -1;
-                                return false;
-                            }
-                        default:
-                            {
-                                string message = $"{nameof(Enumerator)} is in unexpected state {_state}";
-                                throw new System.InvalidOperationException(message);
-                            }
+                            _current = Step.Create(DfsStepKind.ExamineEdge, default(TVertex), _edges.Current);
+                            _state = 5;
+                            return true;
+                        }
+                    case 5:
+                        {
+                            // TODO:
+                            throw new System.NotImplementedException();
+                        }
+                    case short.MaxValue:
+                        {
+                            _steps.ColorMap[_steps.StartVertex] = Color.Black;
+                            _current = Step.Create(DfsStepKind.FinishVertex, _poppedStackFrame.Vertex, default(TEdge));
+                            _state = 2;
+                            return true;
+                        }
+                    case int.MaxValue:
+                        {
+                            _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                            _state = -1;
+                            return false;
+                        }
+                    default:
+                        {
+                            string message = $"{nameof(Enumerator)} is in unexpected state {_state}";
+                            throw new System.InvalidOperationException(message);
+                        }
                     }
                 }
             }
