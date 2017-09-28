@@ -148,6 +148,19 @@
                                     _state = short.MaxValue;
                                     continue;
                                 }
+                                TVertex target;
+                                bool isValid = _steps.EdgeConcept.TryGetTarget(_steps.Graph, _edges.Current, out target);
+                                if (!isValid)
+                                {
+                                    _state = 4;
+                                    continue;
+                                }
+                                _current = Step.Create(DfsStepKind.ExamineEdge, default(TVertex), _edges.Current);
+                                _state = 5;
+                                return true;
+                            }
+                        case 5:
+                            {
                                 // TODO:
                                 throw new System.NotImplementedException();
                             }
