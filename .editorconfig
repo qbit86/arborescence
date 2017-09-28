@@ -2,21 +2,22 @@
 
 root = true
 
-[*.cs]
-indent_style = space
-indent_size = 4
-end_of_line = crlf
+[*]
 charset = utf-8-bom
-
-trim_trailing_whitespace = true
+end_of_line = crlf
 insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.cs]
+indent_size = 4
+indent_style = space
 
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 
 csharp_indent_block_contents = true
 csharp_indent_braces = false
 csharp_indent_case_contents = true
-csharp_indent_switch_labels = true
+csharp_indent_switch_labels = false
 csharp_new_line_before_catch = true
 csharp_new_line_before_else = true
 csharp_new_line_before_finally = true
