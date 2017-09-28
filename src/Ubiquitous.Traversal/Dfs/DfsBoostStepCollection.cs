@@ -65,6 +65,7 @@
             private int _state;
             private readonly Stack<StackFrame> _stack;
             private StackFrame _poppedStackFrame;
+            private TEdges _edges;
 
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
@@ -79,6 +80,7 @@
 
                 _stack = new Stack<StackFrame>();
                 _poppedStackFrame = default(StackFrame);
+                _edges = default(TEdges);
             }
 
             public void Dispose()
@@ -94,45 +96,61 @@
                     switch (_state)
                     {
                         case 0:
-                            _steps.ColorMap[_steps.StartVertex] = Color.Gray;
-                            _current = Step.Create(DfsStepKind.DiscoverVertex, _steps.StartVertex, default(TEdge));
-                            _state = 1;
-                            return true;
-                        case 1:
-                            TEdges edges;
-                            bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _steps.StartVertex, out edges);
-                            if (!hasOutEdges)
                             {
                                 _steps.ColorMap[_steps.StartVertex] = Color.Gray;
-                                _current = Step.Create(DfsStepKind.FinishVertex, _steps.StartVertex, default(TEdge));
-                                _state = int.MaxValue;
+                                _current = Step.Create(DfsStepKind.DiscoverVertex, _steps.StartVertex, default(TEdge));
+                                _state = 1;
                                 return true;
                             }
-                            var pushingStackFrame = new StackFrame(_steps.StartVertex, false, default(TEdge), edges);
-                            _stack.Push(pushingStackFrame);
-                            _state = 2;
-                            continue;
-                        case 2:
-                            if (_stack.Count == 0)
+                        case 1:
                             {
-                                _state = int.MaxValue;
+                                TEdges edges;
+                                bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _steps.StartVertex, out edges);
+                                if (!hasOutEdges)
+                                {
+                                    _steps.ColorMap[_steps.StartVertex] = Color.Gray;
+                                    _current = Step.Create(DfsStepKind.FinishVertex, _steps.StartVertex, default(TEdge));
+                                    _state = int.MaxValue;
+                                    return true;
+                                }
+                                var pushingStackFrame = new StackFrame(_steps.StartVertex, false, default(TEdge), edges);
+                                _stack.Push(pushingStackFrame);
+                                _state = 2;
                                 continue;
                             }
-                            var _poppedStackFrame = _stack.Pop();
-                            if (_poppedStackFrame.HasEdge)
+                        case 2:
                             {
-                                _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _poppedStackFrame.Edge);
+                                if (_stack.Count == 0)
+                                {
+                                    _state = int.MaxValue;
+                                    continue;
+                                }
+                                _poppedStackFrame = _stack.Pop();
+                                if (_poppedStackFrame.HasEdge)
+                                {
+                                    _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _poppedStackFrame.Edge);
+                                    _state = 3;
+                                    return true;
+                                }
                                 _state = 3;
-                                return true;
+                                continue;
                             }
-                            _state = 3;
-                            continue;
                         case 3:
-                            // TODO:
+                            {
+                                _edges = _poppedStackFrame.EdgeEnumerator;
+                                _state = 4;
+                                continue;
+                            }
+                        case 4:
+                            {
+                                // TODO:
+                            }
                         default:
-                            _current = default(Step<DfsStepKind, TVertex, TEdge>);
-                            _state = -1;
-                            return false;
+                            {
+                                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                                _state = -1;
+                                return false;
+                            }
                     }
                 }
             }
