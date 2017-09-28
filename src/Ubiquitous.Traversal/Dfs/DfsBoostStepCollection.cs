@@ -66,6 +66,7 @@
             private readonly Stack<StackFrame> _stack;
             private StackFrame _poppedStackFrame;
             private TEdges _edges;
+            private TVertex _target;
 
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
@@ -81,6 +82,7 @@
                 _stack = new Stack<StackFrame>();
                 _poppedStackFrame = default(StackFrame);
                 _edges = default(TEdges);
+                _target = default(TVertex);
             }
 
             public void Dispose()
@@ -148,8 +150,7 @@
                                 _state = short.MaxValue;
                                 continue;
                             }
-                            TVertex target;
-                            bool isValid = _steps.EdgeConcept.TryGetTarget(_steps.Graph, _edges.Current, out target);
+                            bool isValid = _steps.EdgeConcept.TryGetTarget(_steps.Graph, _edges.Current, out _target);
                             if (!isValid)
                             {
                                 _state = 4;
@@ -161,7 +162,26 @@
                         }
                     case 5:
                         {
+                            Color neighborColor;
+                            if (!_steps.ColorMap.TryGetValue(_target, out neighborColor))
+                                neighborColor = Color.None;
+                            TEdge edge = _edges.Current;
                             // TODO:
+                            switch (neighborColor)
+                            {
+                            case Color.None:
+                            case Color.White:
+                                throw new System.NotImplementedException();
+                            case Color.Gray:
+                                throw new System.NotImplementedException();
+                            default:
+                                _current = Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
+                                _state = 6;
+                                return true;
+                            }
+                        }
+                    case 6:
+                        {
                             throw new System.NotImplementedException();
                         }
                     case short.MaxValue:
@@ -175,6 +195,10 @@
                         {
                             _current = default(Step<DfsStepKind, TVertex, TEdge>);
                             _state = -1;
+                            return false;
+                        }
+                    case -1:
+                        {
                             return false;
                         }
                     default:
