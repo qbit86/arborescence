@@ -57,7 +57,7 @@
 
 
         // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-        internal struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
+        public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
             private readonly DfsBoostStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept> _steps;
@@ -143,13 +143,31 @@
                             }
                         case 4:
                             {
+                                if (!_edges.MoveNext())
+                                {
+                                    _state = short.MaxValue;
+                                    continue;
+                                }
                                 // TODO:
+                                throw new System.NotImplementedException();
                             }
-                        default:
+                        case short.MaxValue:
+                            {
+                                _steps.ColorMap[_steps.StartVertex] = Color.Black;
+                                _current = Step.Create(DfsStepKind.FinishVertex, _poppedStackFrame.Vertex, default(TEdge));
+                                _state = 2;
+                                return true;
+                            }
+                        case int.MaxValue:
                             {
                                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                                 _state = -1;
                                 return false;
+                            }
+                        default:
+                            {
+                                string message = $"{nameof(Enumerator)} is in unexpected state {_state}";
+                                throw new System.InvalidOperationException(message);
                             }
                     }
                 }
