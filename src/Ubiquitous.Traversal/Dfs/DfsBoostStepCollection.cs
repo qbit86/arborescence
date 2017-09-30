@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Dfs
+﻿namespace Ubiquitous
 {
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
