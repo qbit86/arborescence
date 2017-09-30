@@ -179,11 +179,11 @@
                                 return true;
                             case Color.Gray:
                                 _current = Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
-                                _state = byte.MaxValue;
+                                _state = 7;
                                 return true;
                             default:
                                 _current = Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
-                                _state = byte.MaxValue;
+                                _state = 7;
                                 return true;
                             }
                         }
@@ -198,7 +198,7 @@
                             _state = 4;
                             continue;
                         }
-                    case byte.MaxValue:
+                    case 7:
                         {
                             _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _edges.Current);
                             _state = 4;
