@@ -166,27 +166,47 @@
                             if (!_steps.ColorMap.TryGetValue(_target, out neighborColor))
                                 neighborColor = Color.None;
                             TEdge edge = _edges.Current;
-                            // TODO:
                             switch (neighborColor)
                             {
                             case Color.None:
                             case Color.White:
-                                throw new System.NotImplementedException();
+                                _current = Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
+                                var pushingStackFrame = new StackFrame(_poppedStackFrame.Vertex, true, edge, _edges);
+                                _stack.Push(pushingStackFrame);
+                                _steps.ColorMap[_target] = Color.Gray;
+                                _current = Step.Create(DfsStepKind.DiscoverVertex, _target, default(TEdge));
+                                _state = 6;
+                                return true;
                             case Color.Gray:
-                                throw new System.NotImplementedException();
+                                _current = Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
+                                _state = byte.MaxValue;
+                                return true;
                             default:
                                 _current = Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
-                                _state = 6;
+                                _state = byte.MaxValue;
                                 return true;
                             }
                         }
                     case 6:
                         {
-                            throw new System.NotImplementedException();
+                            bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _target, out _edges);
+                            if (!hasOutEdges)
+                            {
+                                _state = short.MaxValue;
+                                continue;
+                            }
+                            _state = 4;
+                            continue;
+                        }
+                    case byte.MaxValue:
+                        {
+                            _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _edges.Current);
+                            _state = 4;
+                            return true;
                         }
                     case short.MaxValue:
                         {
-                            _steps.ColorMap[_steps.StartVertex] = Color.Black;
+                            _steps.ColorMap[_poppedStackFrame.Vertex] = Color.Black;
                             _current = Step.Create(DfsStepKind.FinishVertex, _poppedStackFrame.Vertex, default(TEdge));
                             _state = 2;
                             return true;
