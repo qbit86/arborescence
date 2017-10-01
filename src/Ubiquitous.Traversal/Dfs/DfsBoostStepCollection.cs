@@ -171,23 +171,28 @@
                             case Color.None:
                             case Color.White:
                                 _current = Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
-                                var pushingStackFrame = new StackFrame(_poppedStackFrame.Vertex, true, edge, _edges);
-                                _stack.Push(pushingStackFrame);
-                                _steps.ColorMap[_target] = Color.Gray;
-                                _current = Step.Create(DfsStepKind.DiscoverVertex, _target, default(TEdge));
                                 _state = 6;
                                 return true;
                             case Color.Gray:
                                 _current = Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
-                                _state = 7;
+                                _state = 8;
                                 return true;
                             default:
                                 _current = Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
-                                _state = 7;
+                                _state = 8;
                                 return true;
                             }
                         }
                     case 6:
+                        {
+                            var pushingStackFrame = new StackFrame(_poppedStackFrame.Vertex, true, _edges.Current, _edges);
+                            _stack.Push(pushingStackFrame);
+                            _steps.ColorMap[_target] = Color.Gray;
+                            _current = Step.Create(DfsStepKind.DiscoverVertex, _target, default(TEdge));
+                            _state = 7;
+                            return true;
+                        }
+                    case 7:
                         {
                             bool hasOutEdges = _steps.VertexConcept.TryGetOutEdges(_steps.Graph, _target, out _edges);
                             if (!hasOutEdges)
@@ -198,7 +203,7 @@
                             _state = 4;
                             continue;
                         }
-                    case 7:
+                    case 8:
                         {
                             _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _edges.Current);
                             _state = 4;
