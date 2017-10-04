@@ -37,10 +37,14 @@
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>
             Dfs { get; }
 
-        public DfsTest()
+        private Xunit.Abstractions.ITestOutputHelper Output { get; }
+
+        public DfsTest(Xunit.Abstractions.ITestOutputHelper output)
         {
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
+
+            Output = output;
         }
 
         [Theory]
@@ -151,11 +155,32 @@
             // Act
 
             var baselineSteps = Dfs.TraverseBaseline(graph, vertex).ToList();
-            var nonRecursiveSteps = Dfs.TraverseBoost(graph, vertex).ToList();
+            var boostSteps = Dfs.TraverseBoost(graph, vertex).ToList();
 
             // Assert
 
-            Assert.Equal(baselineSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
+            int baselineStepCount = baselineSteps.Count;
+            int boostStepCount = boostSteps.Count;
+            if (baselineStepCount != boostStepCount)
+            {
+                Output.WriteLine($"{nameof(baselineStepCount)}: {baselineStepCount}, "
+                    + $"{nameof(boostStepCount)}: {boostStepCount}");
+            }
+
+            int count = Math.Min(baselineStepCount, boostStepCount);
+            for (int i = 0; i != count; ++i)
+            {
+                var baselineStep = baselineSteps[i];
+                var boostStep = boostSteps[i];
+
+                if (baselineStep == boostStep)
+                    continue;
+
+                Output.WriteLine($"{nameof(i)}: {i}, "
+                    + $"{nameof(baselineStep)}: {baselineStep}, {nameof(boostStep)}: {boostStep}");
+            }
+
+            Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
         }
 
         [Theory]
@@ -174,11 +199,11 @@
             // Act
 
             var baselineSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
-            var nonRecursiveSteps = Dfs.TraverseBoost(graph, vertices).ToList();
+            var boostSteps = Dfs.TraverseBoost(graph, vertices).ToList();
 
             // Assert
 
-            Assert.Equal(baselineSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
+            Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
         }
 
         private IndexedAdjacencyListGraph CreateGraph(double densityPower)
