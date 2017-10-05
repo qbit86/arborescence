@@ -53,52 +53,6 @@
         [InlineData(1.5)]
         [InlineData(1.618)]
         [InlineData(2.0)]
-        public void Baseline_and_non_recursive_implementations_should_match_for_tree(double densityPower)
-        {
-            // Arrange
-
-            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
-            int vertex = 0;
-
-            // Act
-
-            var baselineSteps = Dfs.TraverseBaseline(graph, vertex).ToList();
-            var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertex).ToList();
-
-            // Assert
-
-            Assert.Equal(baselineSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
-        }
-
-        [Theory]
-        [InlineData(1.0)]
-        [InlineData(1.414)]
-        [InlineData(1.5)]
-        [InlineData(1.618)]
-        [InlineData(2.0)]
-        public void Baseline_and_non_recursive_implementations_should_match_for_forest(double densityPower)
-        {
-            // Arrange
-
-            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
-            var vertices = new RangeCollection(0, graph.VertexCount);
-
-            // Act
-
-            var baselineSteps = Dfs.TraverseBaseline(graph, vertices).ToList();
-            var nonRecursiveSteps = Dfs.TraverseNonRecursively(graph, vertices).ToList();
-
-            // Assert
-
-            Assert.Equal(baselineSteps, nonRecursiveSteps, DfsStepEqualityComparer.Default);
-        }
-
-        [Theory]
-        [InlineData(1.0)]
-        [InlineData(1.414)]
-        [InlineData(1.5)]
-        [InlineData(1.618)]
-        [InlineData(2.0)]
         public void Baseline_and_boost_implementations_should_match_for_tree(double densityPower)
         {
             // Arrange

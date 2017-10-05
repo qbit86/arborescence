@@ -42,13 +42,13 @@
             }
 
             {
-                var steps = dfs.TraverseNonRecursively(
+                var steps = dfs.TraverseBoost(
                     graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Non-recursive DFS Forest", Console.Out);
+                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS Forest", Console.Out);
             }
         }
 

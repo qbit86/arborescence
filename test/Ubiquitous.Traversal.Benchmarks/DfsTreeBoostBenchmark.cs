@@ -36,14 +36,6 @@
         }
 
         [BenchmarkDotNet.Attributes.Benchmark]
-        public int DfsTreeNonRecursive()
-        {
-            var steps = Dfs.TraverseNonRecursively(Graph, 0);
-
-            return steps.Count();
-        }
-
-        [BenchmarkDotNet.Attributes.Benchmark]
         public int DfsTreeBoost()
         {
             var steps = Dfs.TraverseBoost(Graph, 0);
