@@ -101,15 +101,16 @@
                 IEnumerator<Step<DfsStepKind, TVertex, TEdge>>,
                 TVertexConcept, TEdgeConcept>
         {
-            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator(TGraph graph, TVertex vertex, TColorMap colorMap, TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
+                GetEnumerator(TGraph graph, TVertex vertex, TColorMap colorMap, TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
             {
                 Assert(colorMap != null);
 
-                var steps = new DfsBoostStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                    TVertexConcept, TEdgeConcept>(
+                var result =
+                    new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>(
                     graph, vertex, colorMap, vertexConcept, edgeConcept);
 
-                return steps.GetEnumerator();
+                return result;
             }
         }
     }
