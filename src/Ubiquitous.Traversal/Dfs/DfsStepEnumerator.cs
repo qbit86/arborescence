@@ -33,6 +33,7 @@
         private TEdgeConcept EdgeConcept { get; }
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex, TColorMap colorMap,
+            Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
             Assert(colorMap != null);
@@ -41,7 +42,7 @@
 
             Graph = graph;
             ColorMap = colorMap;
-            Stack = new Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+            Stack = stack;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
 
