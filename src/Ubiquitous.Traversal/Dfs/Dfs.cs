@@ -106,9 +106,10 @@
             {
                 Assert(colorMap != null);
 
-                var stack = new Stack<DfsStackFrame<TVertex, TEdge, TEdges>>();
+                var stack = new List<DfsStackFrame<TVertex, TEdge, TEdges>>();
                 var result =
-                    new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdges, TColorMap, TVertexConcept, TEdgeConcept>(
+                    new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdges, TColorMap,
+                    List<DfsStackFrame<TVertex, TEdge, TEdges>>, TVertexConcept, TEdgeConcept>(
                     graph, vertex, colorMap, stack, vertexConcept, edgeConcept);
 
                 return result;
