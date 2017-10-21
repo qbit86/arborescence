@@ -26,7 +26,7 @@
 
         private TColorMap ColorMap { get; }
 
-        private Stack<StackFrame> Stack { get; }
+        private Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> Stack { get; }
 
         private TVertexConcept VertexConcept { get; }
 
@@ -41,7 +41,7 @@
 
             Graph = graph;
             ColorMap = colorMap;
-            Stack = new Stack<StackFrame>();
+            Stack = new Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
 
@@ -87,7 +87,7 @@
                             _state = int.MaxValue;
                             return true;
                         }
-                        var pushingStackFrame = new StackFrame(_currentVertex, false, default(TEdge), edges);
+                        var pushingStackFrame = DfsStackFrame.Create(_currentVertex, false, default(TEdge), edges);
                         Stack.Push(pushingStackFrame);
                         _state = 2;
                         continue;
@@ -99,7 +99,7 @@
                             _state = int.MaxValue;
                             continue;
                         }
-                        StackFrame poppedStackFrame = Stack.Pop();
+                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = Stack.Pop();
                         _currentVertex = poppedStackFrame.Vertex;
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
@@ -153,7 +153,7 @@
                     }
                 case 6:
                     {
-                        var pushingStackFrame = new StackFrame(_currentVertex, true, _edgeEnumerator.Current, _edgeEnumerator);
+                        var pushingStackFrame = DfsStackFrame.Create(_currentVertex, true, _edgeEnumerator.Current, _edgeEnumerator);
                         Stack.Push(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         ColorMap[_currentVertex] = Color.Gray;
@@ -208,25 +208,6 @@
         {
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
-        }
-
-        private struct StackFrame
-        {
-            internal TVertex Vertex { get; }
-
-            internal bool HasEdge { get; }
-
-            internal TEdge Edge { get; }
-
-            internal TEdgeEnumerator EdgeEnumerator { get; }
-
-            internal StackFrame(TVertex vertex, bool hasEdge, TEdge edge, TEdgeEnumerator edgeEnumerator)
-            {
-                Vertex = vertex;
-                HasEdge = hasEdge;
-                Edge = edge;
-                EdgeEnumerator = edgeEnumerator;
-            }
         }
     }
 }
