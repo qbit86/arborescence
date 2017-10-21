@@ -1,8 +1,8 @@
 ﻿namespace Ubiquitous
 {
-    public interface IFactoryConcept<TGraph, TValue>
+    public interface IFactoryConcept<TContext, TValue>
     {
-        TValue Acquire(TGraph graph);
-        void Release(TGraph graph, TValue value);
+        TValue Acquire(TContext graph);
+        void Release(TContext graph, TValue value);
     }
 }
