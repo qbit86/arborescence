@@ -4,13 +4,14 @@
     using static System.Diagnostics.Debug;
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-    public struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
         TVertexConcept, TEdgeConcept>
 
         : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
 
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
+        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
@@ -26,13 +27,13 @@
 
         private TColorMap ColorMap { get; }
 
-        private Stack<StackFrame> Stack { get; }
+        private TStack Stack { get; }
 
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
 
-        internal DfsStepEnumerator(TGraph graph, TVertex startVertex, TColorMap colorMap,
+        internal DfsStepEnumerator(TGraph graph, TVertex startVertex, TColorMap colorMap, TStack stack,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
             Assert(colorMap != null);
@@ -41,7 +42,7 @@
 
             Graph = graph;
             ColorMap = colorMap;
-            Stack = new Stack<StackFrame>();
+            Stack = stack;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
 
@@ -87,19 +88,20 @@
                             _state = int.MaxValue;
                             return true;
                         }
-                        var pushingStackFrame = new StackFrame(_currentVertex, false, default(TEdge), edges);
-                        Stack.Push(pushingStackFrame);
+                        var pushingStackFrame = DfsStackFrame.Create(_currentVertex, false, default(TEdge), edges);
+                        Stack.Add(pushingStackFrame);
                         _state = 2;
                         continue;
                     }
                 case 2:
                     {
-                        if (Stack.Count == 0)
+                        if (Stack.Count <= 0)
                         {
                             _state = int.MaxValue;
                             continue;
                         }
-                        StackFrame poppedStackFrame = Stack.Pop();
+                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = Stack[Stack.Count - 1];
+                        Stack.RemoveAt(Stack.Count - 1);
                         _currentVertex = poppedStackFrame.Vertex;
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
@@ -153,8 +155,8 @@
                     }
                 case 6:
                     {
-                        var pushingStackFrame = new StackFrame(_currentVertex, true, _edgeEnumerator.Current, _edgeEnumerator);
-                        Stack.Push(pushingStackFrame);
+                        var pushingStackFrame = DfsStackFrame.Create(_currentVertex, true, _edgeEnumerator.Current, _edgeEnumerator);
+                        Stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         ColorMap[_currentVertex] = Color.Gray;
                         _current = Step.Create(DfsStepKind.DiscoverVertex, _currentVertex, default(TEdge));
@@ -208,25 +210,6 @@
         {
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
-        }
-
-        private struct StackFrame
-        {
-            internal TVertex Vertex { get; }
-
-            internal bool HasEdge { get; }
-
-            internal TEdge Edge { get; }
-
-            internal TEdgeEnumerator EdgeEnumerator { get; }
-
-            internal StackFrame(TVertex vertex, bool hasEdge, TEdge edge, TEdgeEnumerator edgeEnumerator)
-            {
-                Vertex = vertex;
-                HasEdge = hasEdge;
-                Edge = edge;
-                EdgeEnumerator = edgeEnumerator;
-            }
         }
     }
 }
