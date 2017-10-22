@@ -4,7 +4,7 @@
     using static System.Diagnostics.Debug;
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-    public struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
         TVertexConcept, TEdgeConcept>
 
         : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
