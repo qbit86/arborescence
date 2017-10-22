@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using static System.Diagnostics.Debug;
 
     public struct Dfs<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
@@ -46,14 +45,9 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             TraverseBoost(TGraph graph, TVertex startVertex)
         {
-            var stack = new List<DfsStackFrame<TVertex, TEdge, TEdges>>();
-            var enumeratorProviderConcept =
-                new DfsBoostStepEnumeratorProviderConcept<List<DfsStackFrame<TVertex, TEdge, TEdges>>>(stack);
-
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                DfsBoostStepEnumeratorProviderConcept<List<DfsStackFrame<TVertex, TEdge, TEdges>>>,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
-                VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
+                VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -64,45 +58,9 @@
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
-            var stack = new List<DfsStackFrame<TVertex, TEdge, TEdges>>();
-            var enumeratorProviderConcept =
-                new DfsBoostStepEnumeratorProviderConcept<List<DfsStackFrame<TVertex, TEdge, TEdges>>>(stack);
-
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                DfsBoostStepEnumeratorProviderConcept<List<DfsStackFrame<TVertex, TEdge, TEdges>>>,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
-                VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
-        }
-
-
-        private struct DfsBoostStepEnumeratorProviderConcept<TStack>
-            : IStepEnumeratorProviderConcept<TGraph, TVertex, TColorMap,
-                IEnumerator<Step<DfsStepKind, TVertex, TEdge>>,
-                TVertexConcept, TEdgeConcept>
-
-            where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdges>>
-        {
-            private TStack Stack { get; }
-
-            public DfsBoostStepEnumeratorProviderConcept(TStack stack)
-            {
-                Assert(stack != null);
-
-                Stack = stack;
-            }
-
-            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
-                GetEnumerator(TGraph graph, TVertex vertex, TColorMap colorMap, TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
-            {
-                Assert(colorMap != null);
-
-                var result =
-                    new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdges, TColorMap, TStack,
-                    TVertexConcept, TEdgeConcept>(
-                    graph, vertex, colorMap, Stack, vertexConcept, edgeConcept);
-
-                return result;
-            }
+                VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
     }
 }
