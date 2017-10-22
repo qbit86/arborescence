@@ -24,12 +24,9 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             TraverseBaseline(TGraph graph, TVertex startVertex)
         {
-            var enumeratorProviderConcept = new DfsBaselineStepEnumeratorProviderConcept();
-
-            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                DfsBaselineStepEnumeratorProviderConcept,
+            return new DfsBaselineTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
-                VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
+                VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -77,25 +74,6 @@
                 VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
         }
 
-
-        private struct DfsBaselineStepEnumeratorProviderConcept
-            : IStepEnumeratorProviderConcept<TGraph, TVertex, TColorMap,
-                IEnumerator<Step<DfsStepKind, TVertex, TEdge>>,
-                TVertexConcept, TEdgeConcept>
-        {
-            public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator(
-                TGraph graph, TVertex vertex, TColorMap colorMap,
-                TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
-            {
-                Assert(colorMap != null);
-
-                var steps = new DfsBaselineStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                    TVertexConcept, TEdgeConcept>(
-                    graph, vertex, colorMap, vertexConcept, edgeConcept);
-
-                return steps.GetEnumerator();
-            }
-        }
 
         private struct DfsBoostStepEnumeratorProviderConcept<TStack>
             : IStepEnumeratorProviderConcept<TGraph, TVertex, TColorMap,
