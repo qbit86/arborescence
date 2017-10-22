@@ -40,12 +40,9 @@
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
-            var enumeratorProviderConcept = new DfsBaselineStepEnumeratorProviderConcept();
-
-            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                DfsBaselineStepEnumeratorProviderConcept,
+            return new DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
-                VertexConcept, EdgeConcept, enumeratorProviderConcept, ColorMapFactoryConcept);
+                VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
 
 
