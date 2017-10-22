@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal sealed class DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TStepEnumeratorProviderConcept,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
