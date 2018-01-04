@@ -15,18 +15,18 @@
             var s = new System.Text.StringBuilder();
             s.Append('[');
 
-            s.Append(kind.ToString());
+            s.Append(kind);
             s.Append(", ");
 
             if (vertex != null)
             {
-                s.Append(vertex.ToString());
+                s.Append(vertex);
             }
             s.Append(", ");
 
             if (edge != null)
             {
-                s.Append(edge.ToString());
+                s.Append(edge);
             }
 
             s.Append(']');

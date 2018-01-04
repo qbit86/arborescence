@@ -19,10 +19,10 @@
         public IndexedAdjacencyListGraphBuilder(int vertexCount, int edgeCount)
         {
             if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException("Non-negative number required.", nameof(vertexCount));
+                throw new ArgumentOutOfRangeException(nameof(vertexCount), "Non-negative number required.");
 
             if (edgeCount < 0)
-                throw new ArgumentOutOfRangeException("Non-negative number required.", nameof(edgeCount));
+                throw new ArgumentOutOfRangeException(nameof(edgeCount), "Non-negative number required.");
 
             OutEdges = new ImmutableArray<int>.Builder[vertexCount];
             Endpoints = edgeCount >= 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
@@ -55,7 +55,7 @@
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
             var endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
-            ImmutableArray<int>[] outEdges = OutEdges?.Select(CreateImmutableArray)?.ToArray()
+            ImmutableArray<int>[] outEdges = OutEdges?.Select(CreateImmutableArray).ToArray()
                 ?? new ImmutableArray<int>[0]; // Array.Empty<ImmutableArray<int>>() in .NET Standard 1.3.
 
             Endpoints = null;

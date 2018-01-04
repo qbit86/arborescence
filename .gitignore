@@ -1,4 +1,4 @@
-.idea/**/workspace.xml
+.idea/**/workspace.xml*
 .vs/**/sqlite3/
 **/.suo
 **/BenchmarkDotNet.Artifacts/

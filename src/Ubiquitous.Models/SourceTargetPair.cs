@@ -23,14 +23,14 @@
 
             if (source != null)
             {
-                s.Append(source.ToString());
+                s.Append(source);
             }
 
             s.Append(", ");
 
             if (target != null)
             {
-                s.Append(target.ToString());
+                s.Append(target);
             }
 
             s.Append(']');
@@ -42,8 +42,10 @@
     /// <summary>
     /// A SourceTargetPair holds endpoints of an oriented edge.
     /// </summary>
-    /// <seealso cref="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs"/>
     /// <typeparam name="TVertex">The type of the vertex descriptors.</typeparam>
+    /// <remarks>
+    /// See also: <a href="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs">KeyValuePair.cs</a>
+    /// </remarks>
     public struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
     {
         public TVertex Source { get; }
