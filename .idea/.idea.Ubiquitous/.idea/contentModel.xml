@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Viktor\.nuget\packages\xunit.runner.visualstudio\2.2.0\build\netcoreapp1.0\xunit.runner.reporters.netstandard15.dll" t="Include" />
+    <e p="C:\Users\Viktor\.nuget\packages\xunit.runner.visualstudio\2.2.0\build\netcoreapp1.0\xunit.runner.utility.netstandard15.dll" t="Include" />
+    <e p="C:\Users\Viktor\.nuget\packages\xunit.runner.visualstudio\2.2.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\Viktor\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_Ubiquitous.102198803.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Viktor\Documents\GitHub\ubiquitous-graphs" t="IncludeFlat">
+      <e p=".editorconfig" t="Include" />
+      <e p=".gitignore" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="README.md" t="Include" />
+      <e p="samples" t="Include">
+        <e p="Ubiquitous.DfsDemo" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp2.0" t="Include">
+                <e p="Ubiquitous.DfsDemo.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Program.cs" t="Include" />
+          <e p="Program.Serialize.cs" t="Include" />
+          <e p="Ubiquitous.DfsDemo.csproj" t="IncludeRecursive" />
+        </e>
+      </e>
+      <e p="Solution Items" t="Include" />
+      <e p="src" t="Include">
+        <e p="Ubiquitous.Abstractions" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="IEdgeConcept.cs" t="Include" />
+          <e p="IFactoryConcept.cs" t="Include" />
+          <e p="IIncidenceVertexConcept.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netstandard1.0" t="Include">
+                <e p="Ubiquitous.Abstractions.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Ubiquitous.Abstractions.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Ubiquitous.Models" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="ImmutableArrayEnumeratorAdapter.cs" t="Include" />
+          <e p="IndexedAdjacencyListGraph.cs" t="Include" />
+          <e p="IndexedAdjacencyListGraphBuilder.cs" t="Include" />
+          <e p="IndexedAdjacencyListGraphInstance.cs" t="Include" />
+          <e p="IndexedDictionary.cs" t="Include" />
+          <e p="IndexedDictionaryFactoryInstance.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netstandard1.0" t="Include">
+                <e p="Ubiquitous.Models.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="RangeCollection.cs" t="Include" />
+          <e p="SourceTargetPair.cs" t="Include" />
+          <e p="Ubiquitous.Models.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Ubiquitous.Traversal" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Color.cs" t="Include" />
+          <e p="Dfs" t="Include">
+            <e p="Dfs.cs" t="Include" />
+            <e p="DfsBaselineForestStepCollection.cs" t="Include" />
+            <e p="DfsBaselineStepCollection.cs" t="Include" />
+            <e p="DfsBaselineTreeStepCollection.cs" t="Include" />
+            <e p="DfsForestStepCollection.cs" t="Include" />
+            <e p="DfsStackFrame.cs" t="Include" />
+            <e p="DfsStepEnumerator.cs" t="Include" />
+            <e p="DfsStepKind.cs" t="Include" />
+            <e p="DfsTreeStepCollection.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netstandard1.0" t="Include">
+                <e p="Ubiquitous.Traversal.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Step.cs" t="Include" />
+          <e p="Ubiquitous.Traversal.csproj" t="IncludeRecursive" />
+        </e>
+      </e>
+      <e p="test" t="Include">
+        <e p="Ubiquitous.Traversal.Benchmarks" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="DfsTreeBoostBenchmark.cs" t="Include" />
+          <e p="GraphHelper.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp2.0" t="Include">
+                <e p="Ubiquitous.Traversal.Benchmarks.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Program.cs" t="Include" />
+          <e p="Ubiquitous.Traversal.Benchmarks.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Ubiquitous.Traversal.Tests" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="DfsTest.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp2.0" t="Include">
+                <e p="Ubiquitous.Traversal.Tests.AssemblyInfo.cs" t="Include" />
+                <e p="Ubiquitous.Traversal.Tests.Program.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Ubiquitous.Traversal.Tests.csproj" t="IncludeRecursive" />
+        </e>
+      </e>
+      <e p="Ubiquitous.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
