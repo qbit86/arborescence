@@ -62,9 +62,11 @@
 
                 var steps = new DfsBaselineStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                     TVertexConcept, TEdgeConcept>(Graph, StartVertex, colorMap, VertexConcept, EdgeConcept);
-                IEnumerator<Step<DfsStepKind, TVertex, TEdge>> stepEnumerator = steps.GetEnumerator();
-                while (stepEnumerator.MoveNext())
-                    yield return stepEnumerator.Current;
+                using (IEnumerator<Step<DfsStepKind, TVertex, TEdge>> stepEnumerator = steps.GetEnumerator())
+                {
+                    while (stepEnumerator.MoveNext())
+                        yield return stepEnumerator.Current;
+                }
             }
             finally
             {

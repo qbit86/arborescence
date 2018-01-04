@@ -9,7 +9,7 @@
 
     internal static partial class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             const int vertexCount = 10;
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
