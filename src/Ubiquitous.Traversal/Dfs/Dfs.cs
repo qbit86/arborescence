@@ -13,7 +13,7 @@
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
     {
-        private struct ListStackFactoryInstance: IFactory<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>>
+        private struct ListStackFactory: IFactory<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>>
         {
             public List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> Acquire(TGraph context)
             {
@@ -37,11 +37,11 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
         {
-            var stackFactory = default(ListStackFactoryInstance);
+            var stackFactory = default(ListStackFactory);
 
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>,
-                TVertexConcept, TEdgeConcept, TColorMapFactory, ListStackFactoryInstance>(graph, startVertex,
+                TVertexConcept, TEdgeConcept, TColorMapFactory, ListStackFactory>(graph, startVertex,
                 VertexConcept, EdgeConcept, ColorMapFactory, stackFactory);
         }
 
@@ -53,11 +53,11 @@
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
-            var stackFactory = default(ListStackFactoryInstance);
+            var stackFactory = default(ListStackFactory);
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
                 List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>,
-                TVertexConcept, TEdgeConcept, TColorMapFactory, ListStackFactoryInstance>(graph, vertices,
+                TVertexConcept, TEdgeConcept, TColorMapFactory, ListStackFactory>(graph, vertices,
                 VertexConcept, EdgeConcept, ColorMapFactory, stackFactory);
         }
     }

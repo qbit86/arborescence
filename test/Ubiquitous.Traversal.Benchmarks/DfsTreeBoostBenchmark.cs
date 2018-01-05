@@ -29,7 +29,7 @@
                 ColorMapFactoryInstance>();
 
             DfsBaseline = new DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap,IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
+                ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
                 ColorMapFactoryInstance>();
         }
 
