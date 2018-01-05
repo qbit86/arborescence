@@ -88,7 +88,7 @@
       </e>
       <e p="test" t="Include">
         <e p="Ubiquitous.Traversal.Benchmarks" t="IncludeRecursive">
-          <e p="BenchmarkDotNet.Artifacts" t="ExcludeRecursive"/>
+          <e p="BenchmarkDotNet.Artifacts" t="ExcludeRecursive" />
           <e p="bin" t="ExcludeRecursive" />
           <e p="DfsTreeBoostBenchmark.cs" t="Include" />
           <e p="GraphHelper.cs" t="Include" />
