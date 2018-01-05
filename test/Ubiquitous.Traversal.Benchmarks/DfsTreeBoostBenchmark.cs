@@ -50,7 +50,7 @@
         [BenchmarkDotNet.Attributes.Benchmark]
         public int DfsTreeBoost()
         {
-            var steps = Dfs.TraverseBoost(Graph, 0);
+            var steps = Dfs.Traverse(Graph, 0);
 
             return steps.Count();
         }

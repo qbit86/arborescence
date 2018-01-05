@@ -22,7 +22,7 @@
         // ReSharper restore UnassignedGetOnlyAutoProperty
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-            TraverseBoost(TGraph graph, TVertex startVertex)
+            Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
@@ -30,7 +30,7 @@
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-            TraverseBoost<TVertices>(TGraph graph, TVertices vertices)
+            Traverse<TVertices>(TGraph graph, TVertices vertices)
 
             where TVertices : IEnumerable<TVertex>
         {

@@ -70,7 +70,7 @@
             // Act
 
             var baselineSteps = DfsBaseline.Traverse(graph, vertex).ToList();
-            var boostSteps = Dfs.TraverseBoost(graph, vertex).ToList();
+            var boostSteps = Dfs.Traverse(graph, vertex).ToList();
 
             // Assert
 
@@ -114,7 +114,7 @@
             // Act
 
             var baselineSteps = DfsBaseline.Traverse(graph, vertices).ToList();
-            var boostSteps = Dfs.TraverseBoost(graph, vertices).ToList();
+            var boostSteps = Dfs.Traverse(graph, vertices).ToList();
 
             // Assert
 

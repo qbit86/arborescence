@@ -45,7 +45,7 @@
                 var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                     IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
 
-                var steps = dfs.TraverseBoost(
+                var steps = dfs.Traverse(
                     graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
