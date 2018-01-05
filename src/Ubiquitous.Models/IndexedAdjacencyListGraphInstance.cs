@@ -1,7 +1,7 @@
 ﻿namespace Ubiquitous
 {
     public struct IndexedAdjacencyListGraphInstance :
-        IEdgeConcept<IndexedAdjacencyListGraph, int, int>,
+        IGetTargetConcept<IndexedAdjacencyListGraph, int, int>,
         IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, ImmutableArrayEnumeratorAdapter<int>>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)

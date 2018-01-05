@@ -14,7 +14,7 @@
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
+        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
     {
         private Step<DfsStepKind, TVertex, TEdge> _current;
         private int _state;

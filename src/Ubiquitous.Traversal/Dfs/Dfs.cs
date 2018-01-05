@@ -10,7 +10,7 @@
         where TColorMap : IDictionary<TVertex, Color>
 
         where TVertexConcept : struct, IIncidenceVertexConcept<TGraph, TVertex, TEdges>
-        where TEdgeConcept : struct, IEdgeConcept<TGraph, TVertex, TEdge>
+        where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
     {
         // ReSharper disable UnassignedGetOnlyAutoProperty

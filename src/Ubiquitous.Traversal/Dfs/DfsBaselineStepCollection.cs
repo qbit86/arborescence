@@ -12,7 +12,7 @@
         where TColorMap : IDictionary<TVertex, Color>
 
         where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
-        where TEdgeConcept : IEdgeConcept<TGraph, TVertex, TEdge>
+        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
     {
         private TGraph Graph { get; }
 
