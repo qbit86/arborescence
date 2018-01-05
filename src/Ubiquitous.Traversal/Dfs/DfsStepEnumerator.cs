@@ -88,7 +88,7 @@
                             _state = int.MaxValue;
                             return true;
                         }
-                        var pushingStackFrame = DfsStackFrame.Create(_currentVertex, false, default(TEdge), edges);
+                        var pushingStackFrame = CreateVertexStackFrame(_currentVertex, edges);
                         Stack.Add(pushingStackFrame);
                         _state = 2;
                         continue;
@@ -155,7 +155,7 @@
                     }
                 case 6:
                     {
-                        var pushingStackFrame = DfsStackFrame.Create(_currentVertex, true, _edgeEnumerator.Current, _edgeEnumerator);
+                        var pushingStackFrame = CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         Stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         ColorMap[_currentVertex] = Color.Gray;
@@ -210,6 +210,18 @@
         {
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
+        }
+
+        private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
+            TVertex vertex, TEdgeEnumerator edgeEnumerator)
+        {
+            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default(TEdge), edgeEnumerator);
+        }
+
+        private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateEdgeStackFrame(
+            TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
+        {
+            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
         }
     }
 }

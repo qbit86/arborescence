@@ -1,15 +1,6 @@
 ﻿namespace Ubiquitous
 {
-    internal static class DfsStackFrame
-    {
-        public static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> Create<TVertex, TEdge, TEdgeEnumerator>(
-            TVertex vertex, bool hasEdge, TEdge edge, TEdgeEnumerator edgeEnumerator)
-        {
-            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, hasEdge, edge, edgeEnumerator);
-        }
-    }
-
-    public struct DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>
+    internal struct DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>
     {
         internal TVertex Vertex { get; }
 
