@@ -9,7 +9,7 @@
         where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
-        where TVertexConcept : struct, IIncidenceVertexConcept<TGraph, TVertex, TEdges>
+        where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
     {

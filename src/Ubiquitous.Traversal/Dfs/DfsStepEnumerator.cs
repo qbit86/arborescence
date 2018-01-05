@@ -13,7 +13,7 @@
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
 
-        where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdgeEnumerator>
+        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
     {
         private Step<DfsStepKind, TVertex, TEdge> _current;

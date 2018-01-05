@@ -12,7 +12,7 @@
         where TEdges : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
-        where TVertexConcept : IIncidenceVertexConcept<TGraph, TVertex, TEdges>
+        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdges>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
     {

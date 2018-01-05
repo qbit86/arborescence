@@ -2,7 +2,7 @@
 {
     public struct IndexedAdjacencyListGraphInstance :
         IGetTargetConcept<IndexedAdjacencyListGraph, int, int>,
-        IIncidenceVertexConcept<IndexedAdjacencyListGraph, int, ImmutableArrayEnumeratorAdapter<int>>
+        IGetOutEdgesConcept<IndexedAdjacencyListGraph, int, ImmutableArrayEnumeratorAdapter<int>>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {
