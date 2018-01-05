@@ -13,12 +13,13 @@
         where TEdgeConcept : struct, IEdgeConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
     {
+        // ReSharper disable UnassignedGetOnlyAutoProperty
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
 
         private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
-
+        // ReSharper restore UnassignedGetOnlyAutoProperty
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             TraverseBaseline(TGraph graph, TVertex startVertex)
