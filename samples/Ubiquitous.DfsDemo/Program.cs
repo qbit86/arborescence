@@ -5,7 +5,7 @@
     using static System.Diagnostics.Debug;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
-    using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
+    using ColorMapFactory = IndexedDictionaryFactory<Color>;
 
     internal static partial class Program
     {
@@ -30,7 +30,7 @@
 
             {
                 var dfs = new DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
+                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
 
                 var steps = dfs.Traverse(
                     graph, new RangeCollection(0, graph.VertexCount));
@@ -43,7 +43,7 @@
 
             {
                 var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>();
+                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
 
                 var steps = dfs.Traverse(
                     graph, new RangeCollection(0, graph.VertexCount));

@@ -48,7 +48,7 @@
           <e p="IndexedAdjacencyListGraphBuilder.cs" t="Include" />
           <e p="IndexedAdjacencyListGraphInstance.cs" t="Include" />
           <e p="IndexedDictionary.cs" t="Include" />
-          <e p="IndexedDictionaryFactoryInstance.cs" t="Include" />
+          <e p="IndexedDictionaryFactory.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netstandard1.0" t="Include">

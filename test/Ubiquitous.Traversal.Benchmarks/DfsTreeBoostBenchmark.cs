@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using ColorMap = IndexedDictionary<Color, Color[]>;
-    using ColorMapFactoryInstance = IndexedDictionaryFactoryInstance<Color>;
+    using ColorMapFactory = IndexedDictionaryFactory<Color>;
 
     [BenchmarkDotNet.Attributes.MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
@@ -13,11 +13,11 @@
         public int VertexCount { get; set; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
             Dfs { get; }
 
         private DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactoryInstance>
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
             DfsBaseline { get; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -26,11 +26,11 @@
         {
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactoryInstance>();
+                ColorMapFactory>();
 
             DfsBaseline = new DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactoryInstance>();
+                ColorMapFactory>();
         }
 
         [BenchmarkDotNet.Attributes.GlobalSetup]
