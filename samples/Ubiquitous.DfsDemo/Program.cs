@@ -29,11 +29,11 @@
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             {
-                var dfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                var dfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
+                    ColorMap,
                     IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
 
-                var steps = dfs.Traverse(
-                    graph, new RangeCollection(0, graph.VertexCount));
+                var steps = dfs.Traverse(graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
@@ -42,11 +42,14 @@
             }
 
             {
-                var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
+                var dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
+                    ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
+                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
+                    ColorMapFactory,
+                    ListFactory<IndexedAdjacencyListGraph,
+                        DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
 
-                var steps = dfs.Traverse(
-                    graph, new RangeCollection(0, graph.VertexCount));
+                var steps = dfs.Traverse(graph, new RangeCollection(0, graph.VertexCount));
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);

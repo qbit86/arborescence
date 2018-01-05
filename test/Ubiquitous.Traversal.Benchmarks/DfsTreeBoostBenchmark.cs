@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using System.Collections.Generic;
     using System.Linq;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using ColorMapFactory = IndexedDictionaryFactory<Color>;
@@ -12,8 +13,11 @@
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
+                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
+                ListFactory<IndexedAdjacencyListGraph,
+                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
             Dfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
@@ -25,8 +29,11 @@
         public DfsTreeBoostBenchmark()
         {
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory>();
+                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
+                ColorMapFactory,
+                ListFactory<IndexedAdjacencyListGraph,
+                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
 
             BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,

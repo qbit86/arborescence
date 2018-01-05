@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous
 {
-    internal struct DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>
+    public struct DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>
     {
         internal TVertex Vertex { get; }
 
