@@ -10,10 +10,9 @@
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
         where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
-        where TStackFactory : struct, IFactory<TGraph, TStack>
+        where TColorMapFactory : IFactory<TGraph, TColorMap>
+        where TStackFactory : IFactory<TGraph, TStack>
     {
-        // ReSharper disable UnassignedGetOnlyAutoProperty
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
@@ -21,10 +20,15 @@
         private TColorMapFactory ColorMapFactory { get; }
 
         private TStackFactory StackFactory { get; }
-        // ReSharper restore UnassignedGetOnlyAutoProperty
 
         public Dfs(TColorMapFactory colorMapFactory, TStackFactory stackFactory)
         {
+            if (colorMapFactory == null)
+                throw new ArgumentNullException(nameof(colorMapFactory));
+
+            if (stackFactory == null)
+                throw new ArgumentNullException(nameof(stackFactory));
+
             VertexConcept = default(TVertexConcept);
             EdgeConcept = default(TEdgeConcept);
             ColorMapFactory = colorMapFactory;

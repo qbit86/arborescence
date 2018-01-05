@@ -11,15 +11,23 @@
 
         where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
+        where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
-        // ReSharper disable UnassignedGetOnlyAutoProperty
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
 
         private TColorMapFactory ColorMapFactory { get; }
-        // ReSharper restore UnassignedGetOnlyAutoProperty
+
+        public BaselineDfs(TColorMapFactory colorMapFactory)
+        {
+            if (colorMapFactory == null)
+                throw new ArgumentNullException(nameof(colorMapFactory));
+
+            VertexConcept = default(TVertexConcept);
+            EdgeConcept = default(TEdgeConcept);
+            ColorMapFactory = colorMapFactory;
+        }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
