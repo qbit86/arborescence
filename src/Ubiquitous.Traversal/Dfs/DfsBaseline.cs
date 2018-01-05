@@ -24,7 +24,7 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
         {
-            return new DfsBaselineTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, startVertex,
                 VertexConcept, EdgeConcept, ColorMapFactory);
         }
