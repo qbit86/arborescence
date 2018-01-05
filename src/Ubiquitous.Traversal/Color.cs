@@ -5,8 +5,6 @@
         None = 0,
         White,
         Gray,
-        Green,
-        Red,
         Black,
     }
 }

@@ -5,7 +5,6 @@
         None = 0,
         StartVertex,
         DiscoverVertex,
-        ExamineVertex,
         FinishVertex,
         ExamineEdge,
         TreeEdge,
