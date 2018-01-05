@@ -2,12 +2,12 @@
 {
     public struct IndexedDictionaryFactoryInstance<T> : IFactoryConcept<IndexedAdjacencyListGraph, IndexedDictionary<T, T[]>>
     {
-        public IndexedDictionary<T, T[]> Acquire(IndexedAdjacencyListGraph graph)
+        public IndexedDictionary<T, T[]> Acquire(IndexedAdjacencyListGraph context)
         {
-            return IndexedDictionary.Create(new T[graph.VertexCount]);
+            return IndexedDictionary.Create(new T[context.VertexCount]);
         }
 
-        public void Release(IndexedAdjacencyListGraph graph, IndexedDictionary<T, T[]> value)
+        public void Release(IndexedAdjacencyListGraph context, IndexedDictionary<T, T[]> value)
         {
         }
     }
