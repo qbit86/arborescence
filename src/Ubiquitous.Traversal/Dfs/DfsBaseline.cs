@@ -37,7 +37,7 @@
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
-            return new DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, vertices,
                 VertexConcept, EdgeConcept, ColorMapFactory);
         }

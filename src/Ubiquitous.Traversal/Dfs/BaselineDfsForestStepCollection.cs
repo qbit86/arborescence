@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
+    internal struct BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactory>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -27,7 +27,7 @@
 
         private TColorMapFactory ColorMapFactory { get; }
 
-        internal DfsBaselineForestStepCollection(TGraph graph, TVertices vertices,
+        internal BaselineDfsForestStepCollection(TGraph graph, TVertices vertices,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactory colorMapFactory)
         {
