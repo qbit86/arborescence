@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
@@ -11,13 +10,10 @@
     <Description>Models.</Description>
     <RootNamespace>Ubiquitous</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>
