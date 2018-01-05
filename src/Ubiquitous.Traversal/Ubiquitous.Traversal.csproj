@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
@@ -11,9 +10,7 @@
     <Description>Traversal.</Description>
     <RootNamespace>Ubiquitous</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>

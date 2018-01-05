@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public struct Dfs<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    public struct DfsBaseline<TGraph, TVertex, TEdge, TEdges, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
         where TEdges : IEnumerator<TEdge>
@@ -22,22 +22,22 @@
         // ReSharper restore UnassignedGetOnlyAutoProperty
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-            TraverseBoost(TGraph graph, TVertex startVertex)
+            Traverse(TGraph graph, TVertex startVertex)
         {
-            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            return new DfsBaselineTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
                 VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-            TraverseBoost<TVertices>(TGraph graph, TVertices vertices)
+            Traverse<TVertices>(TGraph graph, TVertices vertices)
 
             where TVertices : IEnumerable<TVertex>
         {
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
-            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+            return new DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
                 VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
