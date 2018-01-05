@@ -11,9 +11,9 @@
 
         where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : struct, IFactoryConcept<TGraph, TColorMap>
+        where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
     {
-        private struct ListStackFactoryInstance: IFactoryConcept<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>>
+        private struct ListStackFactoryInstance: IFactory<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>>
         {
             public List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> Acquire(TGraph context)
             {

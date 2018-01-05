@@ -11,7 +11,7 @@
 
         where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : struct, IFactoryConcept<TGraph, TColorMap>
+        where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
     {
         // ReSharper disable UnassignedGetOnlyAutoProperty
         private TVertexConcept VertexConcept { get; }

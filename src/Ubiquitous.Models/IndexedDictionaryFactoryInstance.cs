@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous
 {
-    public struct IndexedDictionaryFactoryInstance<T> : IFactoryConcept<IndexedAdjacencyListGraph, IndexedDictionary<T, T[]>>
+    public struct IndexedDictionaryFactoryInstance<T> : IFactory<IndexedAdjacencyListGraph, IndexedDictionary<T, T[]>>
     {
         public IndexedDictionary<T, T[]> Acquire(IndexedAdjacencyListGraph context)
         {

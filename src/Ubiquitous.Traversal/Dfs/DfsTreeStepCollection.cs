@@ -15,8 +15,8 @@
 
         where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IFactoryConcept<TGraph, TColorMap>
-        where TStackFactory : IFactoryConcept<TGraph, TStack>
+        where TColorMapFactory : IFactory<TGraph, TColorMap>
+        where TStackFactory : IFactory<TGraph, TStack>
     {
         private TGraph Graph { get; }
 
