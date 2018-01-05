@@ -16,9 +16,9 @@
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
             Dfs { get; }
 
-        private DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
-            DfsBaseline { get; }
+            BaselineDfs { get; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
 
@@ -28,7 +28,7 @@
                 ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
                 ColorMapFactory>();
 
-            DfsBaseline = new DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
+            BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
                 ColorMapFactory>();
         }
@@ -42,7 +42,7 @@
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
         public int DfsTreeBaseline()
         {
-            var steps = DfsBaseline.Traverse(Graph, 0);
+            var steps = BaselineDfs.Traverse(Graph, 0);
 
             return steps.Count();
         }

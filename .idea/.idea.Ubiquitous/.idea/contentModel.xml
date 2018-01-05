@@ -64,11 +64,11 @@
           <e p="bin" t="ExcludeRecursive" />
           <e p="Color.cs" t="Include" />
           <e p="Dfs" t="Include">
+            <e p="BaselineDfs.cs" t="Include" />
             <e p="BaselineDfsForestStepCollection.cs" t="Include" />
             <e p="BaselineDfsStepCollection.cs" t="Include" />
             <e p="BaselineDfsTreeStepCollection.cs" t="Include" />
             <e p="Dfs.cs" t="Include" />
-            <e p="DfsBaseline.cs" t="Include" />
             <e p="DfsForestStepCollection.cs" t="Include" />
             <e p="DfsStackFrame.cs" t="Include" />
             <e p="DfsStepEnumerator.cs" t="Include" />

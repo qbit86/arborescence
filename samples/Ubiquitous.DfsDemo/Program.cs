@@ -29,7 +29,7 @@
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             {
-                var dfs = new DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                var dfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                     IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
 
                 var steps = dfs.Traverse(

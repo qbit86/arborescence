@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public struct DfsBaseline<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public struct BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactory>
 
         where TEdgeEnumerator : IEnumerator<TEdge>
