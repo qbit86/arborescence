@@ -4,14 +4,14 @@
     using System.Collections.Generic;
 
     public struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
+        TVertexConcept, TEdgeConcept, TColorMapFactory>
 
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
         where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
+        where TColorMapFactory : struct, IFactoryConcept<TGraph, TColorMap>
     {
         private struct ListStackFactoryInstance: IFactoryConcept<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>>
         {
@@ -31,7 +31,7 @@
 
         private TEdgeConcept EdgeConcept { get; }
 
-        private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
+        private TColorMapFactory ColorMapFactory { get; }
         // ReSharper restore UnassignedGetOnlyAutoProperty
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -41,8 +41,8 @@
 
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, ListStackFactoryInstance>(graph, startVertex,
-                VertexConcept, EdgeConcept, ColorMapFactoryConcept, stackFactory);
+                TVertexConcept, TEdgeConcept, TColorMapFactory, ListStackFactoryInstance>(graph, startVertex,
+                VertexConcept, EdgeConcept, ColorMapFactory, stackFactory);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -57,8 +57,8 @@
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
                 List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, ListStackFactoryInstance>(graph, vertices,
-                VertexConcept, EdgeConcept, ColorMapFactoryConcept, stackFactory);
+                TVertexConcept, TEdgeConcept, TColorMapFactory, ListStackFactoryInstance>(graph, vertices,
+                VertexConcept, EdgeConcept, ColorMapFactory, stackFactory);
         }
     }
 }

@@ -5,7 +5,7 @@
     using static System.Diagnostics.Debug;
 
     internal struct DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
-        TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
+        TVertexConcept, TEdgeConcept, TColorMapFactory>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
@@ -15,7 +15,7 @@
 
         where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
+        where TColorMapFactory : IFactoryConcept<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
 
@@ -25,20 +25,20 @@
 
         private TEdgeConcept EdgeConcept { get; }
 
-        private TColorMapFactoryConcept ColorMapFactoryConcept { get; }
+        private TColorMapFactory ColorMapFactory { get; }
 
         internal DfsBaselineForestStepCollection(TGraph graph, TVertices vertices,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
-            TColorMapFactoryConcept colorMapFactoryConcept)
+            TColorMapFactory colorMapFactory)
         {
             Assert(vertices != null);
-            Assert(colorMapFactoryConcept != null);
+            Assert(colorMapFactory != null);
 
             Graph = graph;
             Vertices = vertices;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
-            ColorMapFactoryConcept = colorMapFactoryConcept;
+            ColorMapFactory = colorMapFactory;
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -54,7 +54,7 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
-            TColorMap colorMap = ColorMapFactoryConcept.Acquire(Graph);
+            TColorMap colorMap = ColorMapFactory.Acquire(Graph);
             if (colorMap == null)
                 yield break;
 
@@ -82,7 +82,7 @@
             }
             finally
             {
-                ColorMapFactoryConcept.Release(Graph, colorMap);
+                ColorMapFactory.Release(Graph, colorMap);
             }
         }
     }
