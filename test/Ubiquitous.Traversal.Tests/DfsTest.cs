@@ -37,9 +37,9 @@
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
             Dfs { get; }
 
-        private DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
-            DfsBaseline { get; }
+            BaselineDfs { get; }
 
         private Xunit.Abstractions.ITestOutputHelper Output { get; }
 
@@ -48,7 +48,7 @@
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
 
-            DfsBaseline = new DfsBaseline<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+            BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
 
             Output = output;
@@ -69,7 +69,7 @@
 
             // Act
 
-            var baselineSteps = DfsBaseline.Traverse(graph, vertex).ToList();
+            var baselineSteps = BaselineDfs.Traverse(graph, vertex).ToList();
             var boostSteps = Dfs.Traverse(graph, vertex).ToList();
 
             // Assert
@@ -113,7 +113,7 @@
 
             // Act
 
-            var baselineSteps = DfsBaseline.Traverse(graph, vertices).ToList();
+            var baselineSteps = BaselineDfs.Traverse(graph, vertices).ToList();
             var boostSteps = Dfs.Traverse(graph, vertices).ToList();
 
             // Assert
