@@ -13,6 +13,19 @@
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
     {
+        private struct ListStackFactoryInstance: IFactoryConcept<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdges>>>
+        {
+            public List<DfsStackFrame<TVertex, TEdge, TEdges>> Acquire(TGraph context)
+            {
+                return new List<DfsStackFrame<TVertex, TEdge, TEdges>>();
+            }
+
+            public void Release(TGraph context, List<DfsStackFrame<TVertex, TEdge, TEdges>> value)
+            {
+                value.Clear();
+            }
+        }
+
         // ReSharper disable UnassignedGetOnlyAutoProperty
         private TVertexConcept VertexConcept { get; }
 
@@ -24,9 +37,12 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
         {
+            var stackFactory = default(ListStackFactoryInstance);
+
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
-                VertexConcept, EdgeConcept, ColorMapFactoryConcept);
+                List<DfsStackFrame<TVertex, TEdge, TEdges>>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, ListStackFactoryInstance>(graph, startVertex,
+                VertexConcept, EdgeConcept, ColorMapFactoryConcept, stackFactory);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
