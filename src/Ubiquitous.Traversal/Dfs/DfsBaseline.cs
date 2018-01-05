@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
 
-    public struct DfsBaseline<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    public struct DfsBaseline<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
-        where TEdges : IEnumerator<TEdge>
+        where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
-        where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdges>
+        where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
     {
@@ -24,7 +24,7 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
         {
-            return new DfsBaselineTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+            return new DfsBaselineTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, startVertex,
                 VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }
@@ -37,7 +37,7 @@
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
-            return new DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
+            return new DfsBaselineForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
                 VertexConcept, EdgeConcept, ColorMapFactoryConcept);
         }

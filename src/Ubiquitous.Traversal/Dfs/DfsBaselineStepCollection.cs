@@ -3,15 +3,15 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct DfsBaselineStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    internal struct DfsBaselineStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TEdges : IEnumerator<TEdge>
+        where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdges>
+        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
     {
         private TGraph Graph { get; }
@@ -54,7 +54,7 @@
             ColorMap[vertex] = Color.Gray;
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
-            TEdges edges;
+            TEdgeEnumerator edges;
             if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
             {
                 while (edges.MoveNext())

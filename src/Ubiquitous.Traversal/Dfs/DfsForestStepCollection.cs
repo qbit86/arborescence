@@ -4,17 +4,17 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap, TStack,
+    internal struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, TStackFactoryConcept>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
         where TVertices : IEnumerable<TVertex>
-        where TEdges : IEnumerator<TEdge>
+        where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdges>>
+        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
 
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdges>
+        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : IFactoryConcept<TGraph, TColorMap>
         where TStackFactoryConcept : IFactoryConcept<TGraph, TStack>
@@ -83,7 +83,7 @@
 
                     try
                     {
-                        var steps = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdges,
+                        var steps = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
                             TColorMap, TStack,
                             TVertexConcept, TEdgeConcept>(
                             Graph, vertex, colorMap, stack, VertexConcept, EdgeConcept);

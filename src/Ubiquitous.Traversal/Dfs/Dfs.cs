@@ -3,24 +3,24 @@
     using System;
     using System.Collections.Generic;
 
-    public struct Dfs<TGraph, TVertex, TEdge, TEdges, TColorMap,
+    public struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>
 
-        where TEdges : IEnumerator<TEdge>
+        where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
-        where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdges>
+        where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactoryConcept : struct, IFactoryConcept<TGraph, TColorMap>
     {
-        private struct ListStackFactoryInstance: IFactoryConcept<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdges>>>
+        private struct ListStackFactoryInstance: IFactoryConcept<TGraph, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>>
         {
-            public List<DfsStackFrame<TVertex, TEdge, TEdges>> Acquire(TGraph context)
+            public List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> Acquire(TGraph context)
             {
-                return new List<DfsStackFrame<TVertex, TEdge, TEdges>>();
+                return new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
             }
 
-            public void Release(TGraph context, List<DfsStackFrame<TVertex, TEdge, TEdges>> value)
+            public void Release(TGraph context, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> value)
             {
                 value.Clear();
             }
@@ -39,8 +39,8 @@
         {
             var stackFactory = default(ListStackFactoryInstance);
 
-            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdges, TColorMap,
-                List<DfsStackFrame<TVertex, TEdge, TEdges>>,
+            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, ListStackFactoryInstance>(graph, startVertex,
                 VertexConcept, EdgeConcept, ColorMapFactoryConcept, stackFactory);
         }
@@ -55,8 +55,8 @@
 
             var stackFactory = default(ListStackFactoryInstance);
 
-            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                List<DfsStackFrame<TVertex, TEdge, TEdges>>,
+            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
+                List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>,
                 TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, ListStackFactoryInstance>(graph, vertices,
                 VertexConcept, EdgeConcept, ColorMapFactoryConcept, stackFactory);
         }
