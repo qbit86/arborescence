@@ -53,9 +53,12 @@
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
 
+            var stackFactory = default(ListStackFactoryInstance);
+
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdges, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept>(graph, vertices,
-                VertexConcept, EdgeConcept, ColorMapFactoryConcept);
+                List<DfsStackFrame<TVertex, TEdge, TEdges>>,
+                TVertexConcept, TEdgeConcept, TColorMapFactoryConcept, ListStackFactoryInstance>(graph, vertices,
+                VertexConcept, EdgeConcept, ColorMapFactoryConcept, stackFactory);
         }
     }
 }
