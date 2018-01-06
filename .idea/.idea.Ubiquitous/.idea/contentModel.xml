@@ -43,6 +43,7 @@
         </e>
         <e p="Ubiquitous.Models" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
+          <e p="CachingListFactory.cs" t="Include" />
           <e p="ImmutableArrayEnumeratorAdapter.cs" t="Include" />
           <e p="IndexedAdjacencyListGraph.cs" t="Include" />
           <e p="IndexedAdjacencyListGraphBuilder.cs" t="Include" />
