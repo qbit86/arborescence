@@ -5,14 +5,11 @@
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-        TVertexConcept, TEdgeConcept>
-
+            TVertexConcept, TEdgeConcept>
         : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
-
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
-
         where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
     {
@@ -64,6 +61,12 @@
 
         public bool MoveNext()
         {
+            // Conventions for state “naming” is taken from here:
+            // http://csharpindepth.com/Articles/Chapter6/IteratorBlockImplementation.aspx
+            // • -1: "After" - the iterator has finished, either by reaching the end of the method or by hitting yield break
+            // • 0: "Before" - MoveNext() hasn't been called yet
+            // • Anything positive: indicates where to resume from.
+
             // With `while (true)` we can avoid `goto label`,
             // simulating the latter with `_state = label; continue;`.
             while (true)
@@ -155,7 +158,8 @@
                     }
                 case 5:
                     {
-                        var pushingStackFrame = CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
+                        var pushingStackFrame =
+                            CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         Stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         ColorMap[_currentVertex] = Color.Gray;
@@ -193,16 +197,9 @@
                         _state = -1;
                         return false;
                     }
-                case -1:
-                    {
-                        return false;
-                    }
-                default:
-                    {
-                        string message = $"Enumerator is in unexpected state {_state}";
-                        throw new System.InvalidOperationException(message);
-                    }
                 }
+
+                return false;
             }
         }
 
