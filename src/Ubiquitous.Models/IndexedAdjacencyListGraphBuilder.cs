@@ -19,10 +19,10 @@
         public IndexedAdjacencyListGraphBuilder(int vertexCount, int edgeCount)
         {
             if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount), "Non-negative number required.");
+                throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
             if (edgeCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(edgeCount), "Non-negative number required.");
+                throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
             OutEdges = new ImmutableArray<int>.Builder[vertexCount];
             Endpoints = edgeCount >= 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
