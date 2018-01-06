@@ -107,13 +107,13 @@
                         if (poppedStackFrame.HasEdge)
                         {
                             _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), poppedStackFrame.Edge);
-                            _state = 4;
+                            _state = 3;
                             return true;
                         }
-                        _state = 4;
+                        _state = 3;
                         continue;
                     }
-                case 4:
+                case 3:
                     {
                         if (!_edgeEnumerator.MoveNext())
                         {
@@ -123,7 +123,7 @@
                         bool isValid = EdgeConcept.TryGetTarget(Graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
                         {
-                            _state = 4;
+                            _state = 3;
                             continue;
                         }
                         _current = Step.Create(DfsStepKind.ExamineEdge, default(TVertex), _edgeEnumerator.Current);
@@ -171,13 +171,13 @@
                             _state = short.MaxValue;
                             continue;
                         }
-                        _state = 4;
+                        _state = 3;
                         continue;
                     }
                 case 8:
                     {
                         _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _edgeEnumerator.Current);
-                        _state = 4;
+                        _state = 3;
                         return true;
                     }
                 case short.MaxValue:
