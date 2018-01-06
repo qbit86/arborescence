@@ -127,10 +127,10 @@
                             continue;
                         }
                         _current = Step.Create(DfsStepKind.ExamineEdge, default(TVertex), _edgeEnumerator.Current);
-                        _state = 5;
+                        _state = 4;
                         return true;
                     }
-                case 5:
+                case 4:
                     {
                         Color neighborColor;
                         if (!ColorMap.TryGetValue(_neighborVertex, out neighborColor))
