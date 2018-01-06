@@ -145,11 +145,11 @@
                             return true;
                         case Color.Gray:
                             _current = Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
-                            _state = 8;
+                            _state = 7;
                             return true;
                         default:
                             _current = Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
-                            _state = 8;
+                            _state = 7;
                             return true;
                         }
                     }
@@ -174,7 +174,7 @@
                         _state = 3;
                         continue;
                     }
-                case 8:
+                case 7:
                     {
                         _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _edgeEnumerator.Current);
                         _state = 3;
