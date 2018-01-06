@@ -1,9 +1,13 @@
 ﻿namespace Ubiquitous
 {
-    using System.Collections.Generic;
     using System.Linq;
     using ColorMap = IndexedDictionary<Color, Color[]>;
+    using Stack = System.Collections.Generic.List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using ColorMapFactory = IndexedDictionaryFactory<Color>;
+    using ListFactory = ListFactory<IndexedAdjacencyListGraph,
+        DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
+    using CachingListFactory = CachingListFactory<IndexedAdjacencyListGraph,
+        DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
 
     [BenchmarkDotNet.Attributes.MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
@@ -18,17 +22,15 @@
             BaselineDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
-                ListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
+                ColorMap, Stack,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
+                ColorMapFactory, ListFactory>
             DefaultDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
-                CachingListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
+                ColorMap, Stack,
+                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
+                ColorMapFactory, CachingListFactory>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -40,11 +42,9 @@
                 ColorMapFactory>();
 
             DefaultDfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
+                ColorMap, Stack,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory,
-                ListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
+                ColorMapFactory, ListFactory>();
         }
 
         [BenchmarkDotNet.Attributes.GlobalSetup]
@@ -53,16 +53,13 @@
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
             var colorMapFactory = default(ColorMapFactory);
-            var stackFactory = new CachingListFactory<IndexedAdjacencyListGraph,
-                DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>(VertexCount);
+            var stackFactory = new CachingListFactory(VertexCount);
             stackFactory.Warmup();
 
             CachingDfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
+                ColorMap, Stack,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory,
-                CachingListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>(colorMapFactory, stackFactory);
+                ColorMapFactory, CachingListFactory>(colorMapFactory, stackFactory);
         }
 
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
