@@ -1,7 +1,7 @@
 .idea/**/workspace.xml*
 .vs/**/sqlite3/
 **/.suo
-**/BenchmarkDotNet.Artifacts/
+**/BenchmarkDotNet.Artifacts*/
 samples/**/bin/
 samples/**/obj/
 src/**/bin/
