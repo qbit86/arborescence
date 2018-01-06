@@ -141,7 +141,7 @@
                         case Color.None:
                         case Color.White:
                             _current = Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
-                            _state = 6;
+                            _state = 5;
                             return true;
                         case Color.Gray:
                             _current = Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
@@ -153,7 +153,7 @@
                             return true;
                         }
                     }
-                case 6:
+                case 5:
                     {
                         var pushingStackFrame = CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         Stack.Add(pushingStackFrame);
