@@ -160,10 +160,10 @@
                         _currentVertex = _neighborVertex;
                         ColorMap[_currentVertex] = Color.Gray;
                         _current = Step.Create(DfsStepKind.DiscoverVertex, _currentVertex, default(TEdge));
-                        _state = 7;
+                        _state = 6;
                         return true;
                     }
-                case 7:
+                case 6:
                     {
                         bool hasOutEdges = VertexConcept.TryGetOutEdges(Graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
