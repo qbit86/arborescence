@@ -73,7 +73,7 @@
                 case 0:
                     {
                         ColorMap[_currentVertex] = Color.Gray;
-                        _current = Step.Create(DfsStepKind.DiscoverVertex, _currentVertex, default(TEdge));
+                        _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 1;
                         return true;
                     }
@@ -84,7 +84,7 @@
                         if (!hasOutEdges)
                         {
                             ColorMap[_currentVertex] = Color.Black;
-                            _current = Step.Create(DfsStepKind.FinishVertex, _currentVertex, default(TEdge));
+                            _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                             _state = int.MaxValue;
                             return true;
                         }
@@ -106,7 +106,7 @@
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
                         {
-                            _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), poppedStackFrame.Edge);
+                            _current = CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge);
                             _state = 3;
                             return true;
                         }
@@ -126,7 +126,7 @@
                             _state = 3;
                             continue;
                         }
-                        _current = Step.Create(DfsStepKind.ExamineEdge, default(TVertex), _edgeEnumerator.Current);
+                        _current = CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current);
                         _state = 4;
                         return true;
                     }
@@ -140,15 +140,15 @@
                         {
                         case Color.None:
                         case Color.White:
-                            _current = Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
+                            _current = CreateEdgeStep(DfsStepKind.TreeEdge, edge);
                             _state = 5;
                             return true;
                         case Color.Gray:
-                            _current = Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
+                            _current = CreateEdgeStep(DfsStepKind.BackEdge, edge);
                             _state = 7;
                             return true;
                         default:
-                            _current = Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
+                            _current = CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge);
                             _state = 7;
                             return true;
                         }
@@ -159,7 +159,7 @@
                         Stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         ColorMap[_currentVertex] = Color.Gray;
-                        _current = Step.Create(DfsStepKind.DiscoverVertex, _currentVertex, default(TEdge));
+                        _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 6;
                         return true;
                     }
@@ -176,14 +176,14 @@
                     }
                 case 7:
                     {
-                        _current = Step.Create(DfsStepKind.FinishEdge, default(TVertex), _edgeEnumerator.Current);
+                        _current = CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current);
                         _state = 3;
                         return true;
                     }
                 case short.MaxValue:
                     {
                         ColorMap[_currentVertex] = Color.Black;
-                        _current = Step.Create(DfsStepKind.FinishVertex, _currentVertex, default(TEdge));
+                        _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                         _state = 2;
                         return true;
                     }
@@ -210,6 +210,16 @@
         {
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
+        }
+
+        private static Step<DfsStepKind, TVertex, TEdge> CreateVertexStep(DfsStepKind kind, TVertex vertex)
+        {
+            return new Step<DfsStepKind, TVertex, TEdge>(kind, vertex, default(TEdge));
+        }
+
+        private static Step<DfsStepKind, TVertex, TEdge> CreateEdgeStep(DfsStepKind kind, TEdge edge)
+        {
+            return new Step<DfsStepKind, TVertex, TEdge>(kind, default(TVertex), edge);
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
