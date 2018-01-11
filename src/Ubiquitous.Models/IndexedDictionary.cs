@@ -19,7 +19,7 @@
 
         where TValues : IList<TValue>
     {
-        private TValues BackingStore { get; }
+        internal TValues BackingStore { get; }
 
         public IndexedDictionary(TValues backingStore)
         {
