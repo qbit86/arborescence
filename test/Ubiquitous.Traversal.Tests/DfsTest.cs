@@ -5,7 +5,7 @@
     using System.Linq;
     using Xunit;
     using ColorMap = IndexedDictionary<Color, Color[]>;
-    using ColorMapFactory = IndexedDictionaryFactory<Color>;
+    using ColorMapFactory = CachingIndexedDictionaryFactory<Color>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {

@@ -4,6 +4,7 @@
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using Stack = System.Collections.Generic.List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using ColorMapFactory = IndexedDictionaryFactory<Color>;
+    using CachingColorMapFactory = CachingIndexedDictionaryFactory<Color>;
     using ListFactory = ListFactory<IndexedAdjacencyListGraph,
         DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using CachingListFactory = CachingListFactory<IndexedAdjacencyListGraph,
@@ -30,7 +31,7 @@
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, Stack,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory, CachingListFactory>
+                CachingColorMapFactory, CachingListFactory>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -52,14 +53,15 @@
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            var colorMapFactory = default(ColorMapFactory);
+            var colorMapFactory = new CachingColorMapFactory();
+            colorMapFactory.Warmup(VertexCount);
             var stackFactory = new CachingListFactory(VertexCount);
             stackFactory.Warmup();
 
             CachingDfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, Stack,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory, CachingListFactory>(colorMapFactory, stackFactory);
+                CachingColorMapFactory, CachingListFactory>(colorMapFactory, stackFactory);
         }
 
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
