@@ -1,7 +1,7 @@
-﻿using System.Collections;
-
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     internal partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -14,26 +14,42 @@ namespace Ubiquitous
             private DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
 
+            public Enumerator(DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+                TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
+            {
+                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                _state = 0;
+                _collection = collection;
+            }
+
             public bool MoveNext()
             {
-                throw new System.NotImplementedException();
+                while (true)
+                {
+                    switch (_state)
+                    {
+                        case 0:
+                        {
+                            throw new NotImplementedException();
+                        }
+                    }
+
+                    return false;
+                }
             }
 
             public void Reset()
             {
-                throw new System.NotImplementedException();
+                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                _state = 0;
             }
 
-            public Step<DfsStepKind, TVertex, TEdge> Current { get; }
+            public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
-            object IEnumerator.Current
-            {
-                get { return Current; }
-            }
+            object IEnumerator.Current => _current;
 
             public void Dispose()
             {
-                throw new System.NotImplementedException();
             }
         }
     }
