@@ -33,6 +33,8 @@
 
     public class DfsTest
     {
+        private const int VertexCount = 100;
+
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
                 IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
@@ -121,24 +123,25 @@
 
             var baselineSteps = BaselineDfs.Traverse(graph, vertices).ToList();
             var boostSteps = Dfs.Traverse(graph, vertices).ToList();
+            var discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
 
             // Assert
 
             Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
+            Assert.Equal(VertexCount, discoveredVertexCount);
         }
 
         private IndexedAdjacencyListGraph CreateGraph(double densityPower)
         {
-            const int vertexCount = 100;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
+            int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, densityPower));
 
-            var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
+            var builder = new IndexedAdjacencyListGraphBuilder(VertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
             {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
+                int source = prng.Next(VertexCount);
+                int target = prng.Next(VertexCount);
                 builder.Add(SourceTargetPair.Create(source, target));
             }
 
