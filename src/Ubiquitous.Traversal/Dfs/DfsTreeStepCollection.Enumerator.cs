@@ -32,6 +32,12 @@
                         {
                             throw new NotImplementedException();
                         }
+                        case int.MaxValue:
+                        {
+                            _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                            _state = -1;
+                            return false;
+                        }
                     }
 
                     return false;
