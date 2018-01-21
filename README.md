@@ -1,6 +1,6 @@
 # Ubiquitous Graphs
 
-Generic graph library.
+Generic graph library inspired by [Concept C#: Type Classes for the Masses](https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md).
 
 |          Method | VertexCount |             Mean |          Error |        StdDev | Scaled |     Gen 0 |    Gen 1 | Allocated |
 |---------------- |------------ |-----------------:|---------------:|--------------:|-------:|----------:|---------:|----------:|
