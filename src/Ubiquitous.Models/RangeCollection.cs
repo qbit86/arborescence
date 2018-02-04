@@ -40,7 +40,7 @@
             return Start.GetHashCode() ^ Count.GetHashCode();
         }
 
-        public Enumerator GetConvenientEnumerator()
+        public Enumerator GetConventionalEnumerator()
         {
             return new Enumerator(this);
         }
@@ -52,12 +52,12 @@
 
         IEnumerator<int> IEnumerable<int>.GetEnumerator()
         {
-            return new EnumeratorObject(this);
+            return new Enumerator(this);
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new EnumeratorObject(this);
+            return new Enumerator(this);
         }
 
         /// <summary>
@@ -117,37 +117,6 @@
 
             public void Dispose()
             {
-            }
-        }
-
-        private class EnumeratorObject : IEnumerator<int>
-        {
-            RangeCollection _range;
-            private int _current;
-
-            public EnumeratorObject(RangeCollection range)
-            {
-                _range = range;
-                _current = range.Start - 1;
-            }
-
-            public int Current => _current;
-
-            object System.Collections.IEnumerator.Current => _current;
-
-            public void Dispose()
-            {
-            }
-
-            public bool MoveNext()
-            {
-                ++_current;
-                return _current < _range.Start + _range.Count;
-            }
-
-            public void Reset()
-            {
-                _current = _range.Start - 1;
             }
         }
     }
