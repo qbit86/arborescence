@@ -45,7 +45,12 @@
             StackFactory = stackFactory;
         }
 
-        public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
+        public Enumerator GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+
+        IEnumerator<Step<DfsStepKind, TVertex, TEdge>> IEnumerable<Step<DfsStepKind, TVertex, TEdge>>.GetEnumerator()
         {
             return new Enumerator(this);
         }
