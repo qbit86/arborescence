@@ -29,7 +29,45 @@
             BackingStore = backingStore;
         }
 
-        public TValue this[int key] { get => BackingStore[key]; set => BackingStore[key] = value; }
+        public TValue this[int key]
+        {
+            get
+            {
+#if DEBUG
+                if (key < 0)
+                {
+                    throw new IndexOutOfRangeException("Index was out of range."
+                        + $"Must be non-negative, but was {key}.");
+                }
+
+                if (key > BackingStore.Count)
+                {
+                    throw new IndexOutOfRangeException("Index was out of range."
+                        + $"Must be less than the size of the collection, but was {key}.");
+                }
+#endif
+
+                return BackingStore[key];
+            }
+            set
+            {
+#if DEBUG
+                if (key < 0)
+                {
+                    throw new IndexOutOfRangeException("Index was out of range."
+                        + $"Must be non-negative, but was {key}.");
+                }
+
+                if (key > BackingStore.Count)
+                {
+                    throw new IndexOutOfRangeException("Index was out of range."
+                        + $"Must be less than the size of the collection, but was {key}.");
+                }
+#endif
+
+                BackingStore[key] = value;
+            }
+        }
 
         public ICollection<int> Keys => Enumerable.Range(0, BackingStore.Count).ToList();
 
