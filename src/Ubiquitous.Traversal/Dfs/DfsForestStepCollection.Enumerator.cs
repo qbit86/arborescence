@@ -67,6 +67,16 @@
                         }
                         case 1:
                         {
+                            if (!_collection.VertexEnumerator.MoveNext())
+                            {
+                                _state = int.MaxValue;
+                                continue;
+                            }
+                            _state = 2;
+                            continue;
+                        }
+                        case 2:
+                        {
                             throw new NotImplementedException();
                         }
                         case int.MaxValue:
