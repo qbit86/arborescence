@@ -24,6 +24,8 @@
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
+            private TStack _stack;
+            private DisposalStatus _stackDisposalStatus;
 
             internal Enumerator(DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
@@ -37,6 +39,8 @@
                 _collection = collection;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
+                _stack = default(TStack);
+                _stackDisposalStatus = DisposalStatus.None;
             }
 
             public bool MoveNext()
@@ -56,7 +60,6 @@
                                 return false;
                             }
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
-                            _current = default(Step<DfsStepKind, TVertex, TEdge>);
                             _state = 1;
                             continue;
                         }
@@ -67,6 +70,20 @@
                             return true;
                         }
                         case 2:
+                        {
+                            _stack = _collection.StackFactory.Acquire(_collection.Graph);
+                            if (_stack == null)
+                            {
+                                DisposeCore();
+                                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                                _state = -1;
+                                return false;
+                            }
+                            _stackDisposalStatus = DisposalStatus.Initialized;
+                            _state = 3;
+                            continue;
+                        }
+                        case 3:
                         {
                             throw new NotImplementedException();
                         }
@@ -107,6 +124,13 @@
                     _collection.ColorMapFactory.Release(_collection.Graph, _colorMap);
                     _colorMap = default(TColorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
+                }
+
+                if (_stackDisposalStatus == DisposalStatus.Initialized)
+                {
+                    _collection.StackFactory.Release(_collection.Graph, _stack);
+                    _stack = default(TStack);
+                    _stackDisposalStatus = DisposalStatus.Disposed;
                 }
             }
         }
