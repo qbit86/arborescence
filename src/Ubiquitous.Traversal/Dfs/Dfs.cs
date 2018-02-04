@@ -44,7 +44,8 @@
                 VertexConcept, EdgeConcept, ColorMapFactory, StackFactory);
         }
 
-        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+        public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
+            TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
             Traverse<TVertices>(TGraph graph, TVertices vertices)
             where TVertices : IEnumerable<TVertex>
         {
