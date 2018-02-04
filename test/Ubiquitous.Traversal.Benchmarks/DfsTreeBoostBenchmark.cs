@@ -1,6 +1,5 @@
 ﻿namespace Ubiquitous
 {
-    using System.Linq;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using Stack = System.Collections.Generic.List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using ColorMapFactory = IndexedDictionaryFactory<Color>;
@@ -67,25 +66,40 @@
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
         public int BaselineDfsTree()
         {
+            int count = 0;
             var steps = BaselineDfs.Traverse(Graph, 0);
+            foreach (var unused in steps)
+            {
+                ++count;
+            }
 
-            return steps.Count();
+            return count;
         }
 
         [BenchmarkDotNet.Attributes.Benchmark]
         public int DefaultDfsTree()
         {
+            int count = 0;
             var steps = DefaultDfs.Traverse(Graph, 0);
+            foreach (var unused in steps)
+            {
+                ++count;
+            }
 
-            return steps.Count();
+            return count;
         }
 
         [BenchmarkDotNet.Attributes.Benchmark]
         public int CachingDfsTree()
         {
+            int count = 0;
             var steps = CachingDfs.Traverse(Graph, 0);
+            foreach (var unused in steps)
+            {
+                ++count;
+            }
 
-            return steps.Count();
+            return count;
         }
     }
 }
