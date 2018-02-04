@@ -108,8 +108,8 @@
 
         [Theory]
         [InlineData(1.0)]
+        [InlineData(1.059)]
         [InlineData(1.414)]
-        [InlineData(1.5)]
         [InlineData(1.618)]
         [InlineData(2.0)]
         public void Baseline_and_boost_implementations_should_match_for_forest(double densityPower)
@@ -125,11 +125,14 @@
             var vertexEnumerator = (vertices as IEnumerable<int>).GetEnumerator();
             var boostSteps = Dfs.Traverse(graph, vertexEnumerator).ToList();
             var discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
+            var expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
+            var actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
 
             // Assert
 
             Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
             Assert.Equal(VertexCount, discoveredVertexCount);
+            Assert.Equal(expectedStartVertexCount, actualStartVertexCount);
         }
 
         private IndexedAdjacencyListGraph CreateGraph(double densityPower)
