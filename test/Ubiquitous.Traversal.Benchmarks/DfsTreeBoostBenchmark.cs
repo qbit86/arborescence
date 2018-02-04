@@ -35,7 +35,7 @@
 
         private IndexedAdjacencyListGraph Graph { get; set; }
 
-        public DfsTreeBoostBenchmark()
+        protected DfsTreeBoostBenchmark()
         {
             BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
