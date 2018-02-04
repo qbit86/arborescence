@@ -62,16 +62,16 @@
                                 continue;
                             }
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
-                            _state = 1;
+                            _state = 2;
                             continue;
                         }
-                        case 1:
+                        case 2:
                         {
                             _current = Step.Create(DfsStepKind.StartVertex, _collection.StartVertex, default(TEdge));
-                            _state = 2;
+                            _state = 3;
                             return true;
                         }
-                        case 2:
+                        case 3:
                         {
                             _stack = _collection.StackFactory.Acquire(_collection.Graph);
                             if (_stack == null)
@@ -80,20 +80,20 @@
                                 continue;
                             }
                             _stackDisposalStatus = DisposalStatus.Initialized;
-                            _state = 3;
+                            _state = 4;
                             continue;
                         }
-                        case 3:
+                        case 4:
                         {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
                                 TColorMap, TStack, TVertexConcept, TEdgeConcept>(
                                 _collection.Graph, _collection.StartVertex, _colorMap, _stack,
                                 _collection.VertexConcept, _collection.EdgeConcept);
-                            _state = 4;
+                            _state = 5;
                             continue;
                         }
-                        case 4:
+                        case 5:
                         {
                             ThrowIfDisposed();
                             if (!_stepEnumerator.MoveNext())
@@ -102,7 +102,7 @@
                                 continue;
                             }
                             _current = _stepEnumerator.Current;
-                            _state = 4;
+                            _state = 5;
                             return true;
                         }
                         case int.MaxValue:
