@@ -71,7 +71,7 @@
         /// </remarks>
         public struct ForEachEnumerator
         {
-            RangeCollection _range;
+            private readonly RangeCollection _range;
             private int _current;
 
             public ForEachEnumerator(RangeCollection range)
@@ -91,7 +91,7 @@
 
         public struct Enumerator : IEnumerator<int>
         {
-            RangeCollection _range;
+            private readonly RangeCollection _range;
             private int _current;
 
             public Enumerator(RangeCollection range)
@@ -117,6 +117,7 @@
 
             public void Dispose()
             {
+                _current = _range.Start + _range.Count;
             }
         }
     }
