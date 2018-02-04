@@ -58,10 +58,8 @@
                             _colorMap = _collection.ColorMapFactory.Acquire(_collection.Graph);
                             if (_colorMap == null)
                             {
-                                DisposeCore();
-                                _current = default(Step<DfsStepKind, TVertex, TEdge>);
-                                _state = -1;
-                                return false;
+                                _state = int.MaxValue;
+                                continue;
                             }
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
                             _state = 1;
@@ -78,10 +76,8 @@
                             _stack = _collection.StackFactory.Acquire(_collection.Graph);
                             if (_stack == null)
                             {
-                                DisposeCore();
-                                _current = default(Step<DfsStepKind, TVertex, TEdge>);
-                                _state = -1;
-                                return false;
+                                _state = int.MaxValue;
+                                continue;
                             }
                             _stackDisposalStatus = DisposalStatus.Initialized;
                             _state = 3;
@@ -100,7 +96,14 @@
                         case 4:
                         {
                             ThrowIfDisposed();
-                            throw new NotImplementedException();
+                            if (!_stepEnumerator.MoveNext())
+                            {
+                                _state = int.MaxValue;
+                                continue;
+                            }
+                            _current = _stepEnumerator.Current;
+                            _state = 4;
+                            return true;
                         }
                         case int.MaxValue:
                         {
@@ -130,6 +133,8 @@
             public void Dispose()
             {
                 DisposeCore();
+                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                _state = -1;
             }
 
             private void DisposeCore()
