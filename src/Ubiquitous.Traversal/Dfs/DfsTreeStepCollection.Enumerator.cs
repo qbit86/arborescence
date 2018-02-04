@@ -26,6 +26,8 @@
             private DisposalStatus _colorMapDisposalStatus;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
+            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+                TVertexConcept, TEdgeConcept> _stepEnumerator;
 
             internal Enumerator(DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
@@ -41,6 +43,8 @@
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = default(TStack);
                 _stackDisposalStatus = DisposalStatus.None;
+                _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                    TColorMap, TStack, TVertexConcept, TEdgeConcept>);
             }
 
             public bool MoveNext()
@@ -85,6 +89,17 @@
                         }
                         case 3:
                         {
+                            ThrowIfDisposed();
+                            _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                                TColorMap, TStack, TVertexConcept, TEdgeConcept>(
+                                _collection.Graph, _collection.StartVertex, _colorMap, _stack,
+                                _collection.VertexConcept, _collection.EdgeConcept);
+                            _state = 3;
+                            continue;
+                        }
+                        case 4:
+                        {
+                            ThrowIfDisposed();
                             throw new NotImplementedException();
                         }
                         case int.MaxValue:
@@ -132,6 +147,16 @@
                     _stack = default(TStack);
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
+
+                _stepEnumerator.Dispose();
+            }
+
+            private void ThrowIfDisposed()
+            {
+                if (_colorMapDisposalStatus != DisposalStatus.Initialized)
+                    throw new ObjectDisposedException(nameof(_colorMap));
+                if (_stackDisposalStatus != DisposalStatus.Initialized)
+                    throw new ObjectDisposedException(nameof(_stack));
             }
         }
     }
