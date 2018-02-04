@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -52,6 +53,22 @@
                 {
                     switch (_state)
                     {
+                        case 0:
+                        {
+                            _colorMap = _collection.ColorMapFactory.Acquire(_collection.Graph);
+                            if (_colorMap == null)
+                            {
+                                _state = int.MaxValue;
+                                continue;
+                            }
+                            _colorMapDisposalStatus = DisposalStatus.Initialized;
+                            _state = 1;
+                            continue;
+                        }
+                        case 1:
+                        {
+                            throw new NotImplementedException();
+                        }
                         case int.MaxValue:
                         {
                             DisposeCore();
