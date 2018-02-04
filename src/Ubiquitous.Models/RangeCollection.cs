@@ -40,9 +40,14 @@
             return Start.GetHashCode() ^ Count.GetHashCode();
         }
 
-        public Enumerator GetEnumerator()
+        public Enumerator GetConvenientEnumerator()
         {
             return new Enumerator(this);
+        }
+
+        public ForEachEnumerator GetEnumerator()
+        {
+            return new ForEachEnumerator(this);
         }
 
         IEnumerator<int> IEnumerable<int>.GetEnumerator()
@@ -55,12 +60,21 @@
             return new EnumeratorObject(this);
         }
 
-        public struct Enumerator
+        /// <summary>
+        /// An effective enumerator similar.
+        /// </summary>
+        /// <remarks>
+        /// It is important that this enumerator does NOT implement <see cref="IDisposable"/>.
+        /// We want the iterator to inline when we do foreach and to not result in
+        /// a try/finally frame in the client.
+        /// See also: https://github.com/dotnet/corefx/blob/master/src/System.Collections.Immutable/src/System/Collections/Immutable/ImmutableArray_1.Enumerator.cs.
+        /// </remarks>
+        public struct ForEachEnumerator
         {
             RangeCollection _range;
             private int _current;
 
-            public Enumerator(RangeCollection range)
+            public ForEachEnumerator(RangeCollection range)
             {
                 _range = range;
                 _current = range.Start - 1;
@@ -72,6 +86,37 @@
             {
                 ++_current;
                 return _current < _range.Start + _range.Count;
+            }
+        }
+
+        public struct Enumerator : IEnumerator<int>
+        {
+            RangeCollection _range;
+            private int _current;
+
+            public Enumerator(RangeCollection range)
+            {
+                _range = range;
+                _current = range.Start - 1;
+            }
+
+            public void Reset()
+            {
+                _current = _range.Start - 1;
+            }
+
+            object System.Collections.IEnumerator.Current => _current;
+
+            public int Current => _current;
+
+            public bool MoveNext()
+            {
+                ++_current;
+                return _current < _range.Start + _range.Count;
+            }
+
+            public void Dispose()
+            {
             }
         }
 
