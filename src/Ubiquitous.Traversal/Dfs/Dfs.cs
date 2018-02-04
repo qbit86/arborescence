@@ -35,12 +35,12 @@
             StackFactory = stackFactory;
         }
 
-        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+        public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+            TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TVertexConcept, TEdgeConcept, TColorMapFactory,
-                TStackFactory>(graph, startVertex,
+                TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>(graph, startVertex,
                 VertexConcept, EdgeConcept, ColorMapFactory, StackFactory);
         }
 
@@ -52,8 +52,7 @@
                 throw new ArgumentNullException(nameof(vertices));
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
-                TVertexConcept, TEdgeConcept, TColorMapFactory,
-                TStackFactory>(graph, vertices,
+                TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>(graph, vertices,
                 VertexConcept, EdgeConcept, ColorMapFactory, StackFactory);
         }
     }
