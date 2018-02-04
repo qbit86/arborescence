@@ -122,6 +122,7 @@
             {
                 DisposeCore();
                 _colorMapDisposalStatus = DisposalStatus.None;
+                _stackDisposalStatus = DisposalStatus.None;
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;
             }
