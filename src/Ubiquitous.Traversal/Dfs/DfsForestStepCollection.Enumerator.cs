@@ -77,6 +77,21 @@
                         }
                         case 2:
                         {
+                            Color vertexColor;
+                            if (!_colorMap.TryGetValue(_collection.VertexEnumerator.Current, out vertexColor))
+                                vertexColor = Color.None;
+                            if (vertexColor != Color.None && vertexColor != Color.White)
+                            {
+                                _state = 1;
+                                continue;
+                            }
+                            _current = Step.Create(DfsStepKind.StartVertex, _collection.VertexEnumerator.Current,
+                                default(TEdge));
+                            _state = 3;
+                            return true;
+                        }
+                        case 3:
+                        {
                             throw new NotImplementedException();
                         }
                         case int.MaxValue:
