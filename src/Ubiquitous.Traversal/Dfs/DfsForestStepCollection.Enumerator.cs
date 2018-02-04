@@ -105,7 +105,26 @@
                         }
                         case 4:
                         {
-                            throw new NotImplementedException();
+                            ThrowIfDisposed();
+                            _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                                TColorMap, TStack, TVertexConcept, TEdgeConcept>(
+                                _collection.Graph, _collection.VertexEnumerator.Current, _colorMap, _stack,
+                                _collection.VertexConcept, _collection.EdgeConcept);
+                            _state = 5;
+                            continue;
+                        }
+                        case 5:
+                        {
+                            ThrowIfDisposed();
+                            if (!_stepEnumerator.MoveNext())
+                            {
+                                DisposeStack();
+                                _state = 1;
+                                continue;
+                            }
+                            _current = _stepEnumerator.Current;
+                            _state = 5;
+                            return true;
                         }
                         case int.MaxValue:
                         {
@@ -140,6 +159,16 @@
                 _state = -1;
             }
 
+            private void DisposeStack()
+            {
+                if (_stackDisposalStatus == DisposalStatus.Initialized)
+                {
+                    _collection.StackFactory.Release(_collection.Graph, _stack);
+                    _stack = default(TStack);
+                    _stackDisposalStatus = DisposalStatus.Disposed;
+                }
+            }
+
             private void DisposeCore()
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
@@ -149,14 +178,17 @@
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
 
-                if (_stackDisposalStatus == DisposalStatus.Initialized)
-                {
-                    _collection.StackFactory.Release(_collection.Graph, _stack);
-                    _stack = default(TStack);
-                    _stackDisposalStatus = DisposalStatus.Disposed;
-                }
+                DisposeStack();
 
                 _stepEnumerator.Dispose();
+            }
+
+            private void ThrowIfDisposed()
+            {
+                if (_colorMapDisposalStatus != DisposalStatus.Initialized)
+                    throw new ObjectDisposedException(nameof(_colorMap));
+                if (_stackDisposalStatus != DisposalStatus.Initialized)
+                    throw new ObjectDisposedException(nameof(_stack));
             }
         }
     }
