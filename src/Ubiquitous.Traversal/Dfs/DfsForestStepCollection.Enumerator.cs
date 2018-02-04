@@ -22,8 +22,11 @@
 
             private DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
+            private TVertexEnumerator _vertexEnumerator;
+            private TColorMapFactory _colorMapFactory;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
+            private TStackFactory _stackFactory;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -39,8 +42,11 @@
                 _state = 0;
 
                 _collection = collection;
+                _vertexEnumerator = collection.VertexEnumerator;
+                _colorMapFactory = collection.ColorMapFactory;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
+                _stackFactory = collection.StackFactory;
                 _stack = default(TStack);
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
@@ -55,7 +61,7 @@
                     {
                         case 0:
                         {
-                            _colorMap = _collection.ColorMapFactory.Acquire(_collection.Graph);
+                            _colorMap = _colorMapFactory.Acquire(_collection.Graph);
                             if (_colorMap == null)
                             {
                                 _state = int.MaxValue;
@@ -67,7 +73,7 @@
                         }
                         case 1:
                         {
-                            if (!_collection.VertexEnumerator.MoveNext())
+                            if (!_vertexEnumerator.MoveNext())
                             {
                                 _state = int.MaxValue;
                                 continue;
@@ -79,21 +85,21 @@
                         {
                             Color vertexColor;
                             Assert(_colorMap != null, nameof(_colorMap) + " != null");
-                            if (_colorMap.TryGetValue(_collection.VertexEnumerator.Current, out vertexColor))
+                            if (_colorMap.TryGetValue(_vertexEnumerator.Current, out vertexColor))
                                 vertexColor = Color.None;
                             if (vertexColor != Color.None && vertexColor != Color.White)
                             {
                                 _state = 1;
                                 continue;
                             }
-                            _current = Step.Create(DfsStepKind.StartVertex, _collection.VertexEnumerator.Current,
+                            _current = Step.Create(DfsStepKind.StartVertex, _vertexEnumerator.Current,
                                 default(TEdge));
                             _state = 3;
                             return true;
                         }
                         case 3:
                         {
-                            _stack = _collection.StackFactory.Acquire(_collection.Graph);
+                            _stack = _stackFactory.Acquire(_collection.Graph);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;
@@ -108,7 +114,7 @@
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
                                 TColorMap, TStack, TVertexConcept, TEdgeConcept>(
-                                _collection.Graph, _collection.VertexEnumerator.Current, _colorMap, _stack,
+                                _collection.Graph, _vertexEnumerator.Current, _colorMap, _stack,
                                 _collection.VertexConcept, _collection.EdgeConcept);
                             _state = 5;
                             continue;
@@ -163,7 +169,7 @@
             {
                 if (_stackDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _collection.StackFactory.Release(_collection.Graph, _stack);
+                    _stackFactory.Release(_collection.Graph, _stack);
                     _stack = default(TStack);
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
@@ -173,7 +179,7 @@
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _collection.ColorMapFactory.Release(_collection.Graph, _colorMap);
+                    _colorMapFactory.Release(_collection.Graph, _colorMap);
                     _colorMap = default(TColorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
