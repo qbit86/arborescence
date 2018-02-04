@@ -22,11 +22,11 @@
 
             private DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
-            private TVertexEnumerator _vertexEnumerator;
-            private TColorMapFactory _colorMapFactory;
+            private readonly TVertexEnumerator _vertexEnumerator;
+            private readonly TColorMapFactory _colorMapFactory;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
-            private TStackFactory _stackFactory;
+            private readonly TStackFactory _stackFactory;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -85,7 +85,7 @@
                         {
                             Color vertexColor;
                             Assert(_colorMap != null, nameof(_colorMap) + " != null");
-                            if (_colorMap.TryGetValue(_vertexEnumerator.Current, out vertexColor))
+                            if (!_colorMap.TryGetValue(_vertexEnumerator.Current, out vertexColor))
                                 vertexColor = Color.None;
                             if (vertexColor != Color.None && vertexColor != Color.White)
                             {
@@ -173,6 +173,8 @@
                     _stack = default(TStack);
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
+
+                _stepEnumerator.Dispose();
             }
 
             private void DisposeCore()
@@ -185,8 +187,6 @@
                 }
 
                 DisposeStack();
-
-                _stepEnumerator.Dispose();
             }
 
             private void ThrowIfDisposed()
