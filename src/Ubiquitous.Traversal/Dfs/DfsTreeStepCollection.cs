@@ -66,7 +66,7 @@
             {
                 yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
 
-                var stack = StackFactory.Acquire(Graph);
+                TStack stack = StackFactory.Acquire(Graph);
                 if (stack == null)
                     yield break;
 
