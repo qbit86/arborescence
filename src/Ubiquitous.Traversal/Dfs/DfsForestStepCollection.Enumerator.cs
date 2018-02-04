@@ -78,7 +78,8 @@
                         case 2:
                         {
                             Color vertexColor;
-                            if (!_colorMap.TryGetValue(_collection.VertexEnumerator.Current, out vertexColor))
+                            Assert(_colorMap != null, nameof(_colorMap) + " != null");
+                            if (_colorMap.TryGetValue(_collection.VertexEnumerator.Current, out vertexColor))
                                 vertexColor = Color.None;
                             if (vertexColor != Color.None && vertexColor != Color.White)
                             {
@@ -91,6 +92,18 @@
                             return true;
                         }
                         case 3:
+                        {
+                            _stack = _collection.StackFactory.Acquire(_collection.Graph);
+                            if (_stack == null)
+                            {
+                                _state = int.MaxValue;
+                                continue;
+                            }
+                            _stackDisposalStatus = DisposalStatus.Initialized;
+                            _state = 4;
+                            continue;
+                        }
+                        case 4:
                         {
                             throw new NotImplementedException();
                         }
