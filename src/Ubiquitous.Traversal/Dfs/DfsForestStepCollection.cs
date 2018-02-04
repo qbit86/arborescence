@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
-        TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
+    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
+            TColorMap, TStack, TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TVertices : IEnumerable<TVertex>
+        where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
@@ -21,7 +21,7 @@
     {
         private TGraph Graph { get; }
 
-        private TVertices Vertices { get; }
+        private TVertexEnumerator VertexEnumerator { get; }
 
         private TVertexConcept VertexConcept { get; }
 
@@ -31,75 +31,35 @@
 
         private TStackFactory StackFactory { get; }
 
-        internal DfsForestStepCollection(TGraph graph, TVertices vertices,
+        internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactory colorMapFactory, TStackFactory stackFactory)
         {
-            Assert(vertices != null);
+            Assert(vertexEnumerator != null);
             Assert(colorMapFactory != null);
             Assert(stackFactory != null);
 
             Graph = graph;
-            Vertices = vertices;
+            VertexEnumerator = vertexEnumerator;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
             ColorMapFactory = colorMapFactory;
             StackFactory = stackFactory;
         }
 
-        public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
+        public Enumerator GetEnumerator()
         {
-            return GetEnumeratorCoroutine();
+            return new Enumerator(this);
+        }
+
+        IEnumerator<Step<DfsStepKind, TVertex, TEdge>> IEnumerable<Step<DfsStepKind, TVertex, TEdge>>.GetEnumerator()
+        {
+            return new Enumerator(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            IEnumerator<Step<DfsStepKind, TVertex, TEdge>> result = GetEnumerator();
-            return result;
-        }
-
-        private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
-        {
-            TColorMap colorMap = ColorMapFactory.Acquire(Graph);
-            if (colorMap == null)
-                yield break;
-
-            try
-            {
-                foreach (var vertex in Vertices)
-                {
-                    Color vertexColor;
-                    if (!colorMap.TryGetValue(vertex, out vertexColor))
-                        vertexColor = Color.None;
-
-                    if (vertexColor != Color.None && vertexColor != Color.White)
-                        continue;
-
-                    yield return Step.Create(DfsStepKind.StartVertex, vertex, default(TEdge));
-
-                    var stack = StackFactory.Acquire(Graph);
-                    if (stack == null)
-                        yield break;
-
-                    try
-                    {
-                        var steps = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                            TColorMap, TStack,
-                            TVertexConcept, TEdgeConcept>(
-                            Graph, vertex, colorMap, stack, VertexConcept, EdgeConcept);
-                        while (steps.MoveNext())
-                            yield return steps.Current;
-                    }
-                    finally
-                    {
-                        StackFactory.Release(Graph, stack);
-                    }
-                }
-            }
-            finally
-            {
-                ColorMapFactory.Release(Graph, colorMap);
-            }
+            return new Enumerator(this);
         }
     }
 }

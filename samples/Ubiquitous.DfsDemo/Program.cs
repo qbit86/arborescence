@@ -49,7 +49,9 @@
                     ListFactory<IndexedAdjacencyListGraph,
                         DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
 
-                var steps = dfs.Traverse(graph, new RangeCollection(0, graph.VertexCount));
+                var vertices = new RangeCollection(0, graph.VertexCount);
+                var vertexEnumerator = (vertices as IEnumerable<int>).GetEnumerator();
+                var steps = dfs.Traverse(graph, vertexEnumerator);
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
