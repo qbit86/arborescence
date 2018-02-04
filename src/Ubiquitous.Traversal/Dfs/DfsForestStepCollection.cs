@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
+    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
         TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -77,7 +77,7 @@
 
                     yield return Step.Create(DfsStepKind.StartVertex, vertex, default(TEdge));
 
-                    var stack = StackFactory.Acquire(Graph);
+                    TStack stack = StackFactory.Acquire(Graph);
                     if (stack == null)
                         yield break;
 
