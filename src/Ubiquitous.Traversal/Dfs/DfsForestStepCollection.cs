@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
-        TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
+    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
+            TColorMap, TStack, TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TVertices : IEnumerable<TVertex>
+        where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
@@ -21,7 +21,7 @@
     {
         private TGraph Graph { get; }
 
-        private TVertices Vertices { get; }
+        private TVertexEnumerator VertexEnumerator { get; }
 
         private TVertexConcept VertexConcept { get; }
 
@@ -31,16 +31,16 @@
 
         private TStackFactory StackFactory { get; }
 
-        internal DfsForestStepCollection(TGraph graph, TVertices vertices,
+        internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactory colorMapFactory, TStackFactory stackFactory)
         {
-            Assert(vertices != null);
+            Assert(vertexEnumerator != null);
             Assert(colorMapFactory != null);
             Assert(stackFactory != null);
 
             Graph = graph;
-            Vertices = vertices;
+            VertexEnumerator = vertexEnumerator;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
             ColorMapFactory = colorMapFactory;
@@ -66,8 +66,10 @@
 
             try
             {
-                foreach (var vertex in Vertices)
+                while (VertexEnumerator.MoveNext())
                 {
+                    var vertex = VertexEnumerator.Current;
+
                     Color vertexColor;
                     if (!colorMap.TryGetValue(vertex, out vertexColor))
                         vertexColor = Color.None;

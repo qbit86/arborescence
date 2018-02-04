@@ -5,8 +5,8 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
-        TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
+    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
+        TColorMap, TStack, TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
     {
         public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
@@ -20,7 +20,7 @@
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
 
-            private DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
+            private DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
@@ -29,7 +29,7 @@
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept> _stepEnumerator;
 
-            public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap, TStack,
+            public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
             {
                 Assert(collection.ColorMapFactory != null);
