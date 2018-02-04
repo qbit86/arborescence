@@ -90,7 +90,7 @@
                                 TColorMap, TStack, TVertexConcept, TEdgeConcept>(
                                 _collection.Graph, _collection.StartVertex, _colorMap, _stack,
                                 _collection.VertexConcept, _collection.EdgeConcept);
-                            _state = 3;
+                            _state = 4;
                             continue;
                         }
                         case 4:
