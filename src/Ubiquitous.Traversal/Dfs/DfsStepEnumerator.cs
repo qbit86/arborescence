@@ -6,7 +6,7 @@
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
             TVertexConcept, TEdgeConcept>
-        : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
+
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
@@ -52,12 +52,6 @@
         }
 
         public Step<DfsStepKind, TVertex, TEdge> Current => _current;
-
-        object System.Collections.IEnumerator.Current => _current;
-
-        public void Dispose()
-        {
-        }
 
         public bool MoveNext()
         {
@@ -201,12 +195,6 @@
 
                 return false;
             }
-        }
-
-        public void Reset()
-        {
-            _current = default(Step<DfsStepKind, TVertex, TEdge>);
-            _state = 0;
         }
 
         private static Step<DfsStepKind, TVertex, TEdge> CreateVertexStep(DfsStepKind kind, TVertex vertex)

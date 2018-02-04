@@ -121,10 +121,16 @@
             public void Reset()
             {
                 DisposeCore();
-                _colorMapDisposalStatus = DisposalStatus.None;
-                _stackDisposalStatus = DisposalStatus.None;
+
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;
+
+                _colorMap = default(TColorMap);
+                _colorMapDisposalStatus = DisposalStatus.None;
+                _stack = default(TStack);
+                _stackDisposalStatus = DisposalStatus.None;
+                _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                    TColorMap, TStack, TVertexConcept, TEdgeConcept>);
             }
 
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
@@ -153,8 +159,6 @@
                     _stack = default(TStack);
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
-
-                _stepEnumerator.Dispose();
             }
 
             private void ThrowIfDisposed()
