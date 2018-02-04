@@ -62,6 +62,12 @@
                         }
                         case 1:
                         {
+                            _current = Step.Create(DfsStepKind.StartVertex, _collection.StartVertex, default(TEdge));
+                            _state = 2;
+                            return true;
+                        }
+                        case 2:
+                        {
                             throw new NotImplementedException();
                         }
                         case int.MaxValue:
