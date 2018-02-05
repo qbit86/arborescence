@@ -22,7 +22,10 @@
 
             private DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
-            private readonly TVertexEnumerator _vertexEnumerator;
+            // See related explanations here:
+            // https://codeblog.jonskeet.uk/2014/07/16/micro-optimization-the-surprising-inefficiency-of-readonly-fields/
+            // ReSharper disable once FieldCanBeMadeReadOnly.Local
+            private TVertexEnumerator _vertexEnumerator;
             private readonly TColorMapFactory _colorMapFactory;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
@@ -32,8 +35,8 @@
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept> _stepEnumerator;
 
-            public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
-                TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
+            public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TStack, TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
             {
                 Assert(collection.ColorMapFactory != null);
                 Assert(collection.StackFactory != null);

@@ -50,7 +50,7 @@
                         DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
 
                 var vertices = new RangeCollection(0, graph.VertexCount);
-                var vertexEnumerator = vertices.GetConventionalEnumerator() as IEnumerator<int>;
+                var vertexEnumerator = vertices.GetConventionalEnumerator();
                 var steps = dfs.Traverse(graph, vertexEnumerator);
                 var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
