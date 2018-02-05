@@ -1,4 +1,5 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
+namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
@@ -13,11 +14,11 @@
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
+        private TColorMapFactory _colorMapFactory;
+
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
-
-        private TColorMapFactory ColorMapFactory { get; }
 
         public BaselineDfs(TColorMapFactory colorMapFactory)
         {
@@ -26,7 +27,7 @@
 
             VertexConcept = default(TVertexConcept);
             EdgeConcept = default(TEdgeConcept);
-            ColorMapFactory = colorMapFactory;
+            _colorMapFactory = colorMapFactory;
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -34,7 +35,7 @@
         {
             return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, startVertex,
-                VertexConcept, EdgeConcept, ColorMapFactory);
+                VertexConcept, EdgeConcept, _colorMapFactory);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -47,7 +48,7 @@
 
             return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, vertexEnumerator,
-                VertexConcept, EdgeConcept, ColorMapFactory);
+                VertexConcept, EdgeConcept, _colorMapFactory);
         }
     }
 }
