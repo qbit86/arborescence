@@ -175,6 +175,7 @@
             return Equals(other);
         }
 
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
         public override int GetHashCode() => _backingStore.GetHashCode();
     }
 }
