@@ -20,11 +20,12 @@
         private TVertex _neighborVertex; // Corresponds to `v` in Boost implementation.
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
 
+        // ReSharper disable FieldCanBeMadeReadOnly.Local
+        private TColorMap _colorMap;
+        private TStack _stack;
+        // ReSharper restore FieldCanBeMadeReadOnly.Local
+
         private TGraph Graph { get; }
-
-        private TColorMap ColorMap { get; }
-
-        private TStack Stack { get; }
 
         private TVertexConcept VertexConcept { get; }
 
@@ -38,8 +39,8 @@
             Assert(edgeConcept != null);
 
             Graph = graph;
-            ColorMap = colorMap;
-            Stack = stack;
+            _colorMap = colorMap;
+            _stack = stack;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
 
@@ -69,7 +70,7 @@
                 {
                 case 0:
                     {
-                        ColorMap[_currentVertex] = Color.Gray;
+                        _colorMap[_currentVertex] = Color.Gray;
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 1;
                         return true;
@@ -80,25 +81,25 @@
                         bool hasOutEdges = VertexConcept.TryGetOutEdges(Graph, _currentVertex, out edges);
                         if (!hasOutEdges)
                         {
-                            ColorMap[_currentVertex] = Color.Black;
+                            _colorMap[_currentVertex] = Color.Black;
                             _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                             _state = int.MaxValue;
                             return true;
                         }
                         var pushingStackFrame = CreateVertexStackFrame(_currentVertex, edges);
-                        Stack.Add(pushingStackFrame);
+                        _stack.Add(pushingStackFrame);
                         _state = 2;
                         continue;
                     }
                 case 2:
                     {
-                        if (Stack.Count <= 0)
+                        if (_stack.Count <= 0)
                         {
                             _state = int.MaxValue;
                             continue;
                         }
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = Stack[Stack.Count - 1];
-                        Stack.RemoveAt(Stack.Count - 1);
+                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = _stack[_stack.Count - 1];
+                        _stack.RemoveAt(_stack.Count - 1);
                         _currentVertex = poppedStackFrame.Vertex;
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
@@ -130,7 +131,7 @@
                 case 4:
                     {
                         Color neighborColor;
-                        if (!ColorMap.TryGetValue(_neighborVertex, out neighborColor))
+                        if (!_colorMap.TryGetValue(_neighborVertex, out neighborColor))
                             neighborColor = Color.None;
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
@@ -154,9 +155,9 @@
                     {
                         var pushingStackFrame =
                             CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
-                        Stack.Add(pushingStackFrame);
+                        _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
-                        ColorMap[_currentVertex] = Color.Gray;
+                        _colorMap[_currentVertex] = Color.Gray;
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 6;
                         return true;
@@ -180,7 +181,7 @@
                     }
                 case short.MaxValue:
                     {
-                        ColorMap[_currentVertex] = Color.Black;
+                        _colorMap[_currentVertex] = Color.Black;
                         _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                         _state = 2;
                         return true;
