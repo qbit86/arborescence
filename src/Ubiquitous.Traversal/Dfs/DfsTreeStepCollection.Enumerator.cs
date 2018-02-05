@@ -1,5 +1,4 @@
-﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
     using System;
     using System.Collections;
@@ -23,10 +22,14 @@ namespace Ubiquitous
 
             private DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
-            private TColorMap _colorMap;
+
+            // ReSharper disable FieldCanBeMadeReadOnly.Local
             private TColorMapFactory _colorMapFactory;
-            private DisposalStatus _colorMapDisposalStatus;
             private TStackFactory _stackFactory;
+            // ReSharper restore FieldCanBeMadeReadOnly.Local
+
+            private TColorMap _colorMap;
+            private DisposalStatus _colorMapDisposalStatus;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
