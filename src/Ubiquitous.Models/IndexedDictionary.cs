@@ -19,14 +19,17 @@
 
         where TValues : IList<TValue>
     {
-        internal TValues BackingStore { get; }
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        private TValues _backingStore;
+
+        internal TValues BackingStore => _backingStore;
 
         public IndexedDictionary(TValues backingStore)
         {
             if (backingStore == null)
                 throw new ArgumentNullException(nameof(backingStore));
 
-            BackingStore = backingStore;
+            _backingStore = backingStore;
         }
 
         public TValue this[int key]
@@ -40,14 +43,14 @@
                         + $"Must be non-negative, but was {key}.");
                 }
 
-                if (key > BackingStore.Count)
+                if (key > _backingStore.Count)
                 {
                     throw new IndexOutOfRangeException("Index was out of range. "
                         + $"Must be less than the size of the collection, but was {key}.");
                 }
 #endif
 
-                return BackingStore[key];
+                return _backingStore[key];
             }
             set
             {
@@ -58,24 +61,24 @@
                         + $"Must be non-negative, but was {key}.");
                 }
 
-                if (key > BackingStore.Count)
+                if (key > _backingStore.Count)
                 {
                     throw new IndexOutOfRangeException("Index was out of range. "
                         + $"Must be less than the size of the collection, but was {key}.");
                 }
 #endif
 
-                BackingStore[key] = value;
+                _backingStore[key] = value;
             }
         }
 
-        public ICollection<int> Keys => Enumerable.Range(0, BackingStore.Count).ToList();
+        public ICollection<int> Keys => Enumerable.Range(0, _backingStore.Count).ToList();
 
-        public ICollection<TValue> Values => BackingStore;
+        public ICollection<TValue> Values => _backingStore;
 
-        public int Count => BackingStore.Count;
+        public int Count => _backingStore.Count;
 
-        public bool IsReadOnly => BackingStore.IsReadOnly;
+        public bool IsReadOnly => _backingStore.IsReadOnly;
 
         IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
 
@@ -93,7 +96,7 @@
 
         public void Clear()
         {
-            BackingStore.Clear();
+            _backingStore.Clear();
         }
 
         public bool Contains(KeyValuePair<int, TValue> item)
@@ -106,7 +109,7 @@
             if (key < 0)
                 return false;
 
-            if (key >= BackingStore.Count)
+            if (key >= _backingStore.Count)
                 return false;
 
             return true;
@@ -119,10 +122,10 @@
 
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            int count = BackingStore.Count;
+            int count = _backingStore.Count;
             for (int i = 0; i != count; ++i)
             {
-                var item = BackingStore[i];
+                var item = _backingStore[i];
                 yield return new KeyValuePair<int, TValue>(i, item);
             }
         }
@@ -145,7 +148,7 @@
                 return false;
             }
 
-            value = BackingStore[key];
+            value = _backingStore[key];
             return true;
         }
 
@@ -157,7 +160,7 @@
 
         public bool Equals(IndexedDictionary<TValue, TValues> other)
         {
-            if (!BackingStore.Equals(other.BackingStore))
+            if (!_backingStore.Equals(other._backingStore))
                 return false;
 
             return true;
@@ -172,6 +175,6 @@
             return Equals(other);
         }
 
-        public override int GetHashCode() => BackingStore.GetHashCode();
+        public override int GetHashCode() => _backingStore.GetHashCode();
     }
 }
