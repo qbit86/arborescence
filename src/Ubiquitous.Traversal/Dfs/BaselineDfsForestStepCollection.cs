@@ -1,4 +1,5 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
+namespace Ubiquitous
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -9,7 +10,7 @@
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TVertices : IEnumerable<TVertex>
+        where TVertices : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
@@ -17,9 +18,9 @@
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
-        private TGraph Graph { get; }
+        private TVertices _vertexEnumerator;
 
-        private TVertices Vertices { get; }
+        private TGraph Graph { get; }
 
         private TVertexConcept VertexConcept { get; }
 
@@ -34,8 +35,9 @@
             Assert(vertices != null);
             Assert(colorMapFactory != null);
 
+            _vertexEnumerator = vertices;
+
             Graph = graph;
-            Vertices = vertices;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
             ColorMapFactory = colorMapFactory;
@@ -60,8 +62,10 @@
 
             try
             {
-                foreach (var vertex in Vertices)
+                while (_vertexEnumerator.MoveNext())
                 {
+                    var vertex = _vertexEnumerator.Current;
+
                     Color vertexColor;
                     if (!colorMap.TryGetValue(vertex, out vertexColor))
                         vertexColor = Color.None;

@@ -121,8 +121,8 @@
 
             // Act
 
-            var baselineSteps = BaselineDfs.Traverse(graph, vertices).ToList();
             var vertexEnumerator = vertices.GetConventionalEnumerator();
+            var baselineSteps = BaselineDfs.Traverse(graph, vertexEnumerator).ToList();
             var boostSteps = Dfs.Traverse(graph, vertexEnumerator).ToList();
             var discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             var expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);

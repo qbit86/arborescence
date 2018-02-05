@@ -40,7 +40,7 @@
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse<TVertices>(TGraph graph, TVertices vertices)
 
-            where TVertices : IEnumerable<TVertex>
+            where TVertices : IEnumerator<TVertex>
         {
             if (vertices == null)
                 throw new ArgumentNullException(nameof(vertices));
