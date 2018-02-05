@@ -1,4 +1,5 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
+namespace Ubiquitous
 {
     using System;
     using System.Collections;
@@ -23,7 +24,9 @@
             private DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
             private TColorMap _colorMap;
+            private TColorMapFactory _colorMapFactory;
             private DisposalStatus _colorMapDisposalStatus;
+            private TStackFactory _stackFactory;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -39,8 +42,10 @@
                 _state = 0;
 
                 _collection = collection;
+                _colorMapFactory = collection.ColorMapFactory;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
+                _stackFactory = collection.StackFactory;
                 _stack = default(TStack);
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
@@ -55,7 +60,7 @@
                     {
                         case 0:
                         {
-                            _colorMap = _collection.ColorMapFactory.Acquire(_collection.Graph);
+                            _colorMap = _colorMapFactory.Acquire(_collection.Graph);
                             if (_colorMap == null)
                             {
                                 _state = int.MaxValue;
@@ -73,7 +78,7 @@
                         }
                         case 3:
                         {
-                            _stack = _collection.StackFactory.Acquire(_collection.Graph);
+                            _stack = _stackFactory.Acquire(_collection.Graph);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;
@@ -148,14 +153,14 @@
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _collection.ColorMapFactory.Release(_collection.Graph, _colorMap);
+                    _colorMapFactory.Release(_collection.Graph, _colorMap);
                     _colorMap = default(TColorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
 
                 if (_stackDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _collection.StackFactory.Release(_collection.Graph, _stack);
+                    _stackFactory.Release(_collection.Graph, _stack);
                     _stack = default(TStack);
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
