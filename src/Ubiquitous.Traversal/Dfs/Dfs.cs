@@ -1,5 +1,4 @@
-﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
@@ -14,12 +13,13 @@ namespace Ubiquitous
         where TColorMapFactory : IFactory<TGraph, TColorMap>
         where TStackFactory : IFactory<TGraph, TStack>
     {
-        private TColorMapFactory _colorMapFactory;
-        private TStackFactory _stackFactory { get; }
-
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
+
+        private TColorMapFactory ColorMapFactory { get; }
+
+        private TStackFactory StackFactory { get; }
 
         public Dfs(TColorMapFactory colorMapFactory, TStackFactory stackFactory)
         {
@@ -31,8 +31,8 @@ namespace Ubiquitous
 
             VertexConcept = default(TVertexConcept);
             EdgeConcept = default(TEdgeConcept);
-            _colorMapFactory = colorMapFactory;
-            _stackFactory = stackFactory;
+            ColorMapFactory = colorMapFactory;
+            StackFactory = stackFactory;
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -41,7 +41,7 @@ namespace Ubiquitous
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>(graph, startVertex,
-                VertexConcept, EdgeConcept, _colorMapFactory, _stackFactory);
+                VertexConcept, EdgeConcept, ColorMapFactory, StackFactory);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
@@ -54,7 +54,7 @@ namespace Ubiquitous
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TStack, TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>(graph,
-                vertexEnumerator, VertexConcept, EdgeConcept, _colorMapFactory, _stackFactory);
+                vertexEnumerator, VertexConcept, EdgeConcept, ColorMapFactory, StackFactory);
         }
     }
 }
