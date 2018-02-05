@@ -16,6 +16,10 @@
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
+        // ReSharper disable FieldCanBeMadeReadOnly.Local
+        private TColorMapFactory _colorMapFactory;
+        // ReSharper restore FieldCanBeMadeReadOnly.Local
+
         private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
@@ -23,8 +27,6 @@
         private TVertexConcept VertexConcept { get; }
 
         private TEdgeConcept EdgeConcept { get; }
-
-        private TColorMapFactory ColorMapFactory { get; }
 
         internal BaselineDfsTreeStepCollection(TGraph graph, TVertex startVertex,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
@@ -36,7 +38,7 @@
             StartVertex = startVertex;
             VertexConcept = vertexConcept;
             EdgeConcept = edgeConcept;
-            ColorMapFactory = colorMapFactory;
+            _colorMapFactory = colorMapFactory;
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -52,7 +54,7 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
-            TColorMap colorMap = ColorMapFactory.Acquire(Graph);
+            TColorMap colorMap = _colorMapFactory.Acquire(Graph);
             if (colorMap == null)
                 yield break;
 
@@ -70,7 +72,7 @@
             }
             finally
             {
-                ColorMapFactory.Release(Graph, colorMap);
+                _colorMapFactory.Release(Graph, colorMap);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +13,9 @@ namespace Ubiquitous
         where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
+        // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TColorMapFactory _colorMapFactory;
+        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         private TVertexConcept VertexConcept { get; }
 
