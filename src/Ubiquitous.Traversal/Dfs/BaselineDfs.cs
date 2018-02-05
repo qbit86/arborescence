@@ -38,15 +38,15 @@
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-            Traverse<TVertices>(TGraph graph, TVertices vertices)
+            Traverse<TVertexEnumerator>(TGraph graph, TVertexEnumerator vertexEnumerator)
 
-            where TVertices : IEnumerator<TVertex>
+            where TVertexEnumerator : IEnumerator<TVertex>
         {
-            if (vertices == null)
-                throw new ArgumentNullException(nameof(vertices));
+            if (vertexEnumerator == null)
+                throw new ArgumentNullException(nameof(vertexEnumerator));
 
-            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, vertices,
+            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
+                TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, vertexEnumerator,
                 VertexConcept, EdgeConcept, ColorMapFactory);
         }
     }

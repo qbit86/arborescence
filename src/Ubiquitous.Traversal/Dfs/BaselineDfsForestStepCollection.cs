@@ -5,12 +5,12 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertices, TEdgeEnumerator, TColorMap,
+    internal struct BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactory>
 
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
 
-        where TVertices : IEnumerator<TVertex>
+        where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
@@ -18,7 +18,7 @@ namespace Ubiquitous
         where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
-        private TVertices _vertexEnumerator;
+        private TVertexEnumerator _vertexEnumerator;
 
         private TGraph Graph { get; }
 
@@ -28,14 +28,14 @@ namespace Ubiquitous
 
         private TColorMapFactory ColorMapFactory { get; }
 
-        internal BaselineDfsForestStepCollection(TGraph graph, TVertices vertices,
+        internal BaselineDfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator,
             TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactory colorMapFactory)
         {
-            Assert(vertices != null);
+            Assert(vertexEnumerator != null);
             Assert(colorMapFactory != null);
 
-            _vertexEnumerator = vertices;
+            _vertexEnumerator = vertexEnumerator;
 
             Graph = graph;
             VertexConcept = vertexConcept;
