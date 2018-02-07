@@ -10,13 +10,6 @@
     {
         public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
-            private enum DisposalStatus
-            {
-                None = 0,
-                Initialized,
-                Disposed,
-            }
-
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
 
