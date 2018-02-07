@@ -13,17 +13,17 @@
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
 
-            private DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
-                TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> _collection;
-
             // See explanations why fields are not readonly here:
             // https://codeblog.jonskeet.uk/2014/07/16/micro-optimization-the-surprising-inefficiency-of-readonly-fields/
             // ReSharper disable FieldCanBeMadeReadOnly.Local
             private TVertexEnumerator _vertexEnumerator;
             private TColorMapFactory _colorMapFactory;
             private TStackFactory _stackFactory;
+            private TVertexConcept _vertexConcept;
+            private TEdgeConcept _edgeConcept;
             // ReSharper restore FieldCanBeMadeReadOnly.Local
 
+            private readonly TGraph _graph;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
             private TStack _stack;
@@ -40,8 +40,10 @@
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;
 
-                _collection = collection;
+                _graph = collection.Graph;
                 _vertexEnumerator = collection.VertexEnumerator;
+                _vertexConcept = collection.VertexConcept;
+                _edgeConcept = collection.EdgeConcept;
                 _colorMapFactory = collection.ColorMapFactory;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
@@ -60,7 +62,7 @@
                     {
                         case 0:
                         {
-                            _colorMap = _colorMapFactory.Acquire(_collection.Graph);
+                            _colorMap = _colorMapFactory.Acquire(_graph);
                             if (_colorMap == null)
                             {
                                 _state = int.MaxValue;
@@ -98,7 +100,7 @@
                         }
                         case 3:
                         {
-                            _stack = _stackFactory.Acquire(_collection.Graph);
+                            _stack = _stackFactory.Acquire(_graph);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;
@@ -113,8 +115,8 @@
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
                                 TColorMap, TStack, TVertexConcept, TEdgeConcept>(
-                                _collection.Graph, _vertexEnumerator.Current, _colorMap, _stack,
-                                _collection.VertexConcept, _collection.EdgeConcept);
+                                _graph, _vertexEnumerator.Current, _colorMap, _stack,
+                                _vertexConcept, _edgeConcept);
                             _state = 5;
                             continue;
                         }
@@ -174,7 +176,7 @@
             {
                 if (_stackDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _stackFactory.Release(_collection.Graph, _stack);
+                    _stackFactory.Release(_graph, _stack);
                     _stack = default(TStack);
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
@@ -184,7 +186,7 @@
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _colorMapFactory.Release(_collection.Graph, _colorMap);
+                    _colorMapFactory.Release(_graph, _colorMap);
                     _colorMap = default(TColorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
