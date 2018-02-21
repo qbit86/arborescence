@@ -37,7 +37,7 @@
 
         protected DfsTreeBoostBenchmark()
         {
-            BaselineDfs = BaselineDfsFactory.WithGraph<IndexedAdjacencyListGraph>()
+            BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()

@@ -31,7 +31,7 @@
             var vertices = new RangeCollection(0, graph.VertexCount);
 
             {
-                var dfs = BaselineDfsFactory.WithGraph<IndexedAdjacencyListGraph>()
+                var dfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
