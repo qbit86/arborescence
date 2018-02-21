@@ -31,9 +31,14 @@
             var vertices = new RangeCollection(0, graph.VertexCount);
 
             {
-                var dfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                    ColorMap,
-                    IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>();
+                var dfs = BaselineDfsFactory.WithGraph<IndexedAdjacencyListGraph>()
+                    .WithVertex<int>().WithEdge<int>()
+                    .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                    .WithColorMap<ColorMap>()
+                    .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithColorMapFactory<ColorMapFactory>()
+                    .Create();
 
                 var vertexEnumerator = vertices.GetConventionalEnumerator();
                 var steps = dfs.Traverse(graph, vertexEnumerator);
