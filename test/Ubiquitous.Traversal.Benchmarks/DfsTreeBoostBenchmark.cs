@@ -46,10 +46,15 @@
                 .WithColorMapFactory<ColorMapFactory>()
                 .Create();
 
-            DefaultDfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, Stack,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory, ListFactory>();
+            DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
+                .WithVertex<int>().WithEdge<int>()
+                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithColorMap<ColorMap>().WithStack<Stack>()
+                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
+                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithColorMapFactory<ColorMapFactory>()
+                .WithStackFactory<ListFactory>()
+                .Create();
         }
 
         [BenchmarkDotNet.Attributes.GlobalSetup]
@@ -62,10 +67,15 @@
             var stackFactory = new CachingListFactory(VertexCount);
             stackFactory.Warmup();
 
-            CachingDfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, Stack,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                CachingColorMapFactory, CachingListFactory>(colorMapFactory, stackFactory);
+            CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
+                .WithVertex<int>().WithEdge<int>()
+                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithColorMap<ColorMap>().WithStack<Stack>()
+                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
+                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithColorMapFactory(colorMapFactory)
+                .WithStackFactory(stackFactory)
+                .Create();
         }
 
         [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]

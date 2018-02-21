@@ -42,21 +42,6 @@
             StackFactory = stackFactory;
         }
 
-        [Obsolete]
-        public Dfs(TColorMapFactory colorMapFactory, TStackFactory stackFactory)
-        {
-            if (colorMapFactory == null)
-                throw new ArgumentNullException(nameof(colorMapFactory));
-
-            if (stackFactory == null)
-                throw new ArgumentNullException(nameof(stackFactory));
-
-            VertexConcept = default(TVertexConcept);
-            EdgeConcept = default(TEdgeConcept);
-            ColorMapFactory = colorMapFactory;
-            StackFactory = stackFactory;
-        }
-
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
             TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
             Traverse(TGraph graph, TVertex startVertex)
