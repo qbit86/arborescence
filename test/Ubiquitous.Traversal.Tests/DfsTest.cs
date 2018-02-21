@@ -50,11 +50,17 @@
 
         public DfsTest(Xunit.Abstractions.ITestOutputHelper output)
         {
-            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
-                ListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
+            Dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
+                .WithVertex<int>().WithEdge<int>()
+                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithColorMap<ColorMap>()
+                .WithStack<List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
+                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
+                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithColorMapFactory<ColorMapFactory>()
+                .WithStackFactory<ListFactory<IndexedAdjacencyListGraph,
+                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
+                .Create();
 
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
