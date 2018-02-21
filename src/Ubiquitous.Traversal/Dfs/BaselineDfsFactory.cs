@@ -112,7 +112,7 @@
         public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept, TEdgeConcept> WithEdgeConcept<TEdgeConcept>(
             TEdgeConcept edgeConcept)
-            where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
+            where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         {
             return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept>(VertexConcept, edgeConcept);
@@ -126,7 +126,7 @@
     {
         public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept> WithVertexConcept<TVertexConcept>()
-            where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
+            where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         {
             return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept>(default(TVertexConcept));
