@@ -9,8 +9,8 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
 
-        where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
+        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
         private TVertexConcept VertexConcept { get; }
@@ -19,13 +19,19 @@
 
         private TColorMapFactory ColorMapFactory { get; }
 
-        public BaselineDfs(TColorMapFactory colorMapFactory)
+        public BaselineDfs(TVertexConcept vertexConcept, TEdgeConcept edgeConcept, TColorMapFactory colorMapFactory)
         {
+            if (vertexConcept == null)
+                throw new ArgumentNullException(nameof(vertexConcept));
+
+            if (edgeConcept == null)
+                throw new ArgumentNullException(nameof(edgeConcept));
+
             if (colorMapFactory == null)
                 throw new ArgumentNullException(nameof(colorMapFactory));
 
-            VertexConcept = default(TVertexConcept);
-            EdgeConcept = default(TEdgeConcept);
+            VertexConcept = vertexConcept;
+            EdgeConcept = edgeConcept;
             ColorMapFactory = colorMapFactory;
         }
 
