@@ -56,7 +56,7 @@
                 ListFactory<IndexedAdjacencyListGraph,
                     DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>();
 
-            BaselineDfs = BaselineDfsFactory.WithGraph<IndexedAdjacencyListGraph>()
+            BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()

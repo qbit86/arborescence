@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public struct BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept, TColorMapFactory>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
@@ -17,7 +17,7 @@
 
         private TColorMapFactory ColorMapFactory { get; }
 
-        public BaselineDfsFactory(TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
+        public BaselineDfsBuilder(TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
             TColorMapFactory colorMapFactory)
         {
             if (vertexConcept == null)
@@ -43,7 +43,7 @@
     }
 
 
-    public struct BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept, TEdgeConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
@@ -54,7 +54,7 @@
 
         private TEdgeConcept EdgeConcept { get; }
 
-        public BaselineDfsFactory(TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+        public BaselineDfsBuilder(TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
         {
             if (vertexConcept == null)
                 throw new ArgumentNullException(nameof(vertexConcept));
@@ -66,26 +66,26 @@
             EdgeConcept = edgeConcept;
         }
 
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept, TEdgeConcept, TColorMapFactory> WithColorMapFactory<TColorMapFactory>()
             where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactory>(VertexConcept, EdgeConcept, default(TColorMapFactory));
         }
 
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept, TEdgeConcept, TColorMapFactory> WithColorMapFactory<TColorMapFactory>(
             TColorMapFactory colorMapFactory)
             where TColorMapFactory : IFactory<TGraph, TColorMap>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept, TColorMapFactory>(VertexConcept, EdgeConcept, colorMapFactory);
         }
     }
 
 
-    public struct BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TVertexConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
@@ -93,7 +93,7 @@
     {
         private TVertexConcept VertexConcept { get; }
 
-        public BaselineDfsFactory(TVertexConcept vertexConcept)
+        public BaselineDfsBuilder(TVertexConcept vertexConcept)
         {
             if (vertexConcept == null)
                 throw new ArgumentNullException(nameof(vertexConcept));
@@ -101,92 +101,92 @@
             VertexConcept = vertexConcept;
         }
 
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept, TEdgeConcept> WithEdgeConcept<TEdgeConcept>()
             where TEdgeConcept : struct, IGetTargetConcept<TGraph, TVertex, TEdge>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept>(VertexConcept, default(TEdgeConcept));
         }
 
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept, TEdgeConcept> WithEdgeConcept<TEdgeConcept>(
             TEdgeConcept edgeConcept)
             where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept, TEdgeConcept>(VertexConcept, edgeConcept);
         }
     }
 
 
-    public struct BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
+    public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
     {
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept> WithVertexConcept<TVertexConcept>()
             where TVertexConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept>(default(TVertexConcept));
         }
 
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TVertexConcept> WithVertexConcept<TVertexConcept>(
             TVertexConcept vertexConcept)
             where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TVertexConcept>(vertexConcept);
         }
     }
 
 
-    public struct BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator>
+    public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap> WithColorMap<TColorMap>()
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap> WithColorMap<TColorMap>()
             where TColorMap : IDictionary<TVertex, Color>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>();
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>();
         }
     }
 
 
-    public struct BaselineDfsFactory<TGraph, TVertex, TEdge>
+    public struct BaselineDfsBuilder<TGraph, TVertex, TEdge>
     {
-        public BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator> WithEdgeEnumerator<TEdgeEnumerator>()
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator> WithEdgeEnumerator<TEdgeEnumerator>()
             where TEdgeEnumerator : IEnumerator<TEdge>
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge, TEdgeEnumerator>();
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator>();
         }
     }
 
 
-    public struct BaselineDfsFactory<TGraph, TVertex>
+    public struct BaselineDfsBuilder<TGraph, TVertex>
     {
-        public BaselineDfsFactory<TGraph, TVertex, TEdge> WithEdge<TEdge>()
+        public BaselineDfsBuilder<TGraph, TVertex, TEdge> WithEdge<TEdge>()
         {
-            return new BaselineDfsFactory<TGraph, TVertex, TEdge>();
+            return new BaselineDfsBuilder<TGraph, TVertex, TEdge>();
         }
     }
 
 
-    public struct BaselineDfsFactory<TGraph>
+    public struct BaselineDfsBuilder<TGraph>
     {
-        public BaselineDfsFactory<TGraph, TVertex> WithVertex<TVertex>()
+        public BaselineDfsBuilder<TGraph, TVertex> WithVertex<TVertex>()
         {
-            return new BaselineDfsFactory<TGraph, TVertex>();
+            return new BaselineDfsBuilder<TGraph, TVertex>();
         }
     }
 
 
-    public struct BaselineDfsFactory
+    public struct BaselineDfsBuilder
     {
-        public static BaselineDfsFactory<TGraph> WithGraph<TGraph>()
+        public static BaselineDfsBuilder<TGraph> WithGraph<TGraph>()
         {
-            return new BaselineDfsFactory<TGraph>();
+            return new BaselineDfsBuilder<TGraph>();
         }
     }
 }
