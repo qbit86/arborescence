@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
+    using System;
+
     public struct CachingIndexedDictionaryFactory<T> : IFactory<IndexedAdjacencyListGraph, IndexedDictionary<T, T[]>>
     {
         private IndexedDictionary<T, T[]>? _cachedInstance;
