@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Pragmatic
+﻿namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
