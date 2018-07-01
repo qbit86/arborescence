@@ -71,7 +71,7 @@
                 int u = queue.Dequeue();
                 if (GraphConcept.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
                 {
-                    while (TryMoveNext(outEdges, out TEdge e))
+                    while (outEdges.TryMoveNext(out TEdge e))
                     {
                         if (!GraphConcept.TryGetTarget(Graph, e, out int v))
                             continue;
@@ -120,17 +120,6 @@
                 return;
 
             colorMap[key] = value;
-        }
-
-        private static bool TryMoveNext(TEdgeEnumerator enumerator, out TEdge current)
-        {
-            Debug.Assert(enumerator != null);
-
-            bool result = enumerator.MoveNext();
-
-            current = result ? enumerator.Current : default(TEdge);
-
-            return result;
         }
     }
 }
