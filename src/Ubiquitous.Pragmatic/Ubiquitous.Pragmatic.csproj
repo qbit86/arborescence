@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.4</TargetFrameworks>
     <LangVersion>latest</LangVersion>
+    <RootNamespace>Ubiquitous</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
