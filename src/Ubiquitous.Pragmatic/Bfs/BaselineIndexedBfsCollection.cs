@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
     public readonly struct BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>
@@ -60,10 +61,76 @@
         private IEnumerator<TEdge> GetEnumeratorCoroutine()
         {
             var colorMap = new Color[VertexCount];
+            var queue = new Queue<int>();
 
-            colorMap[StartVertex] = Color.Gray;
+            Put(colorMap, StartVertex, Color.Gray);
+            queue.Enqueue(StartVertex);
 
-            throw new NotImplementedException();
+            while (queue.Count > 0)
+            {
+                int u = queue.Dequeue();
+                if (GraphConcept.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
+                {
+                    while (TryMoveNext(outEdges, out TEdge e))
+                    {
+                        if (!GraphConcept.TryGetTarget(Graph, e, out int v))
+                            continue;
+
+                        Color color = Get(colorMap, v);
+
+                        switch (color)
+                        {
+                            case Color.None:
+                            case Color.White:
+                            {
+                                Put(colorMap, v, Color.Gray);
+                                queue.Enqueue(v);
+                                yield return e;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                Put(colorMap, u, Color.Black);
+            }
+        }
+
+        private static Color Get(Color[] colorMap, int key)
+        {
+            Debug.Assert(colorMap != null);
+
+            if (key < 0)
+                return Color.None;
+
+            if (colorMap.Length <= key)
+                return Color.None;
+
+            return colorMap[key];
+        }
+
+        private static void Put(Color[] colorMap, int key, Color value)
+        {
+            Debug.Assert(colorMap != null);
+
+            if (key < 0)
+                return;
+
+            if (colorMap.Length <= key)
+                return;
+
+            colorMap[key] = value;
+        }
+
+        private static bool TryMoveNext(TEdgeEnumerator enumerator, out TEdge current)
+        {
+            Debug.Assert(enumerator != null);
+
+            bool result = enumerator.MoveNext();
+
+            current = result ? enumerator.Current : default(TEdge);
+
+            return result;
         }
     }
 }
