@@ -17,7 +17,8 @@
 
         public TGraphConcept GraphConcept { get; }
 
-        public IEnumerable<TEdge> Traverse(TGraph graph, int startVertex, int vertexCount)
+        public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept> Traverse(
+            TGraph graph, int startVertex, int vertexCount)
         {
             return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>(
                 graph, startVertex, vertexCount, GraphConcept);
