@@ -8,7 +8,7 @@
     <Company>Viktor T.</Company>
     <Product>Ubiquitous</Product>
     <Description>Traversal.</Description>
-    <RootNamespace>Ubiquitous</RootNamespace>
+    <RootNamespace>Ubiquitous.Traversal.Advanced</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj"/>
