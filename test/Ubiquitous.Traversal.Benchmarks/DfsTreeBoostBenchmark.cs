@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using Traversal.Advanced;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using Stack = System.Collections.Generic.List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using ColorMapFactory = IndexedDictionaryFactory<Color>;

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Traversal.Advanced;
     using Xunit;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using ColorMapFactory = CachingIndexedDictionaryFactory<Color>;

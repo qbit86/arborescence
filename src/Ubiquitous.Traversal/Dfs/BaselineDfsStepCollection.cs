@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Ubiquitous.Traversal.Advanced
 {
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;

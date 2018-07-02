@@ -5,7 +5,8 @@
 
     public static class Step
     {
-        public static Step<TStepKind, TVertex, TEdge> Create<TStepKind, TVertex, TEdge>(TStepKind kind, TVertex vertex, TEdge edge)
+        public static Step<TStepKind, TVertex, TEdge> Create<TStepKind, TVertex, TEdge>(
+            TStepKind kind, TVertex vertex, TEdge edge)
         {
             return new Step<TStepKind, TVertex, TEdge>(kind, vertex, edge);
         }

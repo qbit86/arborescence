@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Traversal.Advanced;
     using static System.Diagnostics.Debug;
     using ColorMap = IndexedDictionary<Color, Color[]>;
     using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
