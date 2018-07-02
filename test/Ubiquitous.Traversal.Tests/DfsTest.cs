@@ -5,8 +5,8 @@
     using System.Linq;
     using Traversal.Advanced;
     using Xunit;
-    using ColorMap = IndexedDictionary<Color, Color[]>;
-    using ColorMapFactory = CachingIndexedDictionaryFactory<Color>;
+    using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
+    using ColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {

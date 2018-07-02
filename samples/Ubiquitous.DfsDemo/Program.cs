@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using Traversal.Advanced;
     using static System.Diagnostics.Debug;
-    using ColorMap = IndexedDictionary<Color, Color[]>;
-    using StepMap = IndexedDictionary<DfsStepKind, DfsStepKind[]>;
-    using ColorMapFactory = IndexedDictionaryFactory<Color>;
+    using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
+    using StepMap = IndexedDictionary<Traversal.Advanced.DfsStepKind, Traversal.Advanced.DfsStepKind[]>;
+    using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
 
     internal static partial class Program
     {

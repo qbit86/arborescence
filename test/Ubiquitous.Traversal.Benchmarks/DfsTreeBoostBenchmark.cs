@@ -1,14 +1,15 @@
 ﻿namespace Ubiquitous
 {
     using Traversal.Advanced;
-    using ColorMap = IndexedDictionary<Color, Color[]>;
-    using Stack = System.Collections.Generic.List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
-    using ColorMapFactory = IndexedDictionaryFactory<Color>;
-    using CachingColorMapFactory = CachingIndexedDictionaryFactory<Color>;
+    using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
+    using Stack = System.Collections.Generic.List<Traversal.Advanced.DfsStackFrame<
+        int, int, ImmutableArrayEnumeratorAdapter<int>>>;
+    using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
+    using CachingColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
     using ListFactory = ListFactory<IndexedAdjacencyListGraph,
-        DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
+        Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using CachingListFactory = CachingListFactory<IndexedAdjacencyListGraph,
-        DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
+        Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
 
     [BenchmarkDotNet.Attributes.MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
