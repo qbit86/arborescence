@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>Ubiquitous</RootNamespace>
+    <RootNamespace>Ubiquitous.Traversal.Pragmatic</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
