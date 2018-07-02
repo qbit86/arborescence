@@ -6,7 +6,7 @@
     using static System.Diagnostics.Debug;
 
     public partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-        TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
+        TGraphConcept, TColorMapFactory, TStackFactory>
     {
         public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
@@ -16,8 +16,7 @@
             // ReSharper disable FieldCanBeMadeReadOnly.Local
             private TColorMapFactory _colorMapFactory;
             private TStackFactory _stackFactory;
-            private TVertexConcept _vertexConcept;
-            private TEdgeConcept _edgeConcept;
+            private TGraphConcept _graphConcept;
             // ReSharper restore FieldCanBeMadeReadOnly.Local
 
             private readonly TGraph _graph;
@@ -27,10 +26,10 @@
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TVertexConcept, TEdgeConcept> _stepEnumerator;
+                    TGraphConcept, TGraphConcept> _stepEnumerator;
 
             internal Enumerator(DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory> collection)
+                TGraphConcept, TColorMapFactory, TStackFactory> collection)
             {
                 Assert(collection.ColorMapFactory != null);
                 Assert(collection.StackFactory != null);
@@ -40,8 +39,7 @@
 
                 _graph = collection.Graph;
                 _startVertex = collection.StartVertex;
-                _vertexConcept = collection.VertexConcept;
-                _edgeConcept = collection.EdgeConcept;
+                _graphConcept = collection.GraphConcept;
                 _colorMapFactory = collection.ColorMapFactory;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
@@ -49,7 +47,7 @@
                 _stack = default(TStack);
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                    TColorMap, TStack, TVertexConcept, TEdgeConcept>);
+                    TColorMap, TStack, TGraphConcept, TGraphConcept>);
             }
 
             public bool MoveNext()
@@ -92,8 +90,8 @@
                         {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                                TColorMap, TStack, TVertexConcept, TEdgeConcept>(
-                                _graph, _startVertex, _colorMap, _stack, _vertexConcept, _edgeConcept);
+                                TColorMap, TStack, TGraphConcept, TGraphConcept>(
+                                _graph, _startVertex, _colorMap, _stack, _graphConcept, _graphConcept);
                             _state = 5;
                             continue;
                         }
@@ -134,7 +132,7 @@
                 _stack = default(TStack);
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                    TColorMap, TStack, TVertexConcept, TEdgeConcept>);
+                    TColorMap, TStack, TGraphConcept, TGraphConcept>);
             }
 
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
