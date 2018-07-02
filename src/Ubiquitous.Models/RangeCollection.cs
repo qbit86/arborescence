@@ -61,7 +61,7 @@
         }
 
         /// <summary>
-        /// An effective enumerator similar.
+        /// An effective enumerator similar to ImmutableArray_1.Enumerator.
         /// </summary>
         /// <remarks>
         /// It is important that this enumerator does NOT implement <see cref="IDisposable"/>.
