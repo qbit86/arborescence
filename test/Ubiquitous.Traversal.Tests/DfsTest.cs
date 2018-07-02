@@ -44,7 +44,7 @@
             Dfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapFactory>
             BaselineDfs { get; }
 
         private Xunit.Abstractions.ITestOutputHelper Output { get; }
@@ -67,8 +67,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
                 .Create();
 

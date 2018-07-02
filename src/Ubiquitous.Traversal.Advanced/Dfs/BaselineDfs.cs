@@ -4,34 +4,26 @@
     using System.Collections.Generic;
 
     public struct BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TVertexConcept, TEdgeConcept, TColorMapFactory>
-
+        TGraphConcept, TColorMapFactory>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+            IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
-        private TVertexConcept VertexConcept { get; }
-
-        private TEdgeConcept EdgeConcept { get; }
+        private TGraphConcept GraphConcept { get; }
 
         private TColorMapFactory ColorMapFactory { get; }
 
-        public BaselineDfs(TVertexConcept vertexConcept, TEdgeConcept edgeConcept, TColorMapFactory colorMapFactory)
+        public BaselineDfs(TGraphConcept graphConcept, TColorMapFactory colorMapFactory)
         {
-            if (vertexConcept == null)
-                throw new ArgumentNullException(nameof(vertexConcept));
-
-            if (edgeConcept == null)
-                throw new ArgumentNullException(nameof(edgeConcept));
+            if (graphConcept == null)
+                throw new ArgumentNullException(nameof(graphConcept));
 
             if (colorMapFactory == null)
                 throw new ArgumentNullException(nameof(colorMapFactory));
 
-            VertexConcept = vertexConcept;
-            EdgeConcept = edgeConcept;
+            GraphConcept = graphConcept;
             ColorMapFactory = colorMapFactory;
         }
 
@@ -39,21 +31,21 @@
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, startVertex,
-                VertexConcept, EdgeConcept, ColorMapFactory);
+                TGraphConcept, TGraphConcept, TColorMapFactory>(graph, startVertex,
+                GraphConcept, GraphConcept, ColorMapFactory);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse<TVertexEnumerator>(TGraph graph, TVertexEnumerator vertexEnumerator)
-
             where TVertexEnumerator : IEnumerator<TVertex>
         {
             if (vertexEnumerator == null)
                 throw new ArgumentNullException(nameof(vertexEnumerator));
 
-            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-                TVertexConcept, TEdgeConcept, TColorMapFactory>(graph, vertexEnumerator,
-                VertexConcept, EdgeConcept, ColorMapFactory);
+            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap,
+                TGraphConcept, TGraphConcept, TColorMapFactory>(graph, vertexEnumerator,
+                GraphConcept, GraphConcept, ColorMapFactory);
         }
     }
 }

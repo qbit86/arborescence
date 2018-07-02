@@ -36,8 +36,7 @@
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
-                    .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                     .WithColorMapFactory<ColorMapFactory>()
                     .Create();
 
