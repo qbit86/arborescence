@@ -30,8 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Traversal.Benchm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Models.Tests", "test\Ubiquitous.Models.Tests\Ubiquitous.Models.Tests.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Pragmatic", "src\Ubiquitous.Pragmatic\Ubiquitous.Pragmatic.csproj", "{D430EB13-8C14-4EFB-A4E6-E0037C66819C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,10 +64,6 @@ Global
 		{68408E95-6D55-47EF-97D7-C766613C8CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68408E95-6D55-47EF-97D7-C766613C8CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68408E95-6D55-47EF-97D7-C766613C8CA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D430EB13-8C14-4EFB-A4E6-E0037C66819C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D430EB13-8C14-4EFB-A4E6-E0037C66819C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D430EB13-8C14-4EFB-A4E6-E0037C66819C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D430EB13-8C14-4EFB-A4E6-E0037C66819C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,7 +76,6 @@ Global
 		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{F1DC9B56-9C0B-4FD7-A971-321A93155129} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{68408E95-6D55-47EF-97D7-C766613C8CA2} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
-		{D430EB13-8C14-4EFB-A4E6-E0037C66819C} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
