@@ -38,7 +38,7 @@
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
+                IndexedAdjacencyListGraphInstance, ColorMapFactory,
                 ListFactory<IndexedAdjacencyListGraph,
                     DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
             Dfs { get; }
@@ -56,8 +56,7 @@
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithStack<List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
                 .WithStackFactory<ListFactory<IndexedAdjacencyListGraph,
                     DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
