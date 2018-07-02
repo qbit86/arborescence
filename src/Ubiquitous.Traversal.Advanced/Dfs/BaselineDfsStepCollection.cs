@@ -3,16 +3,12 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TVertexConcept, TEdgeConcept>
-
+    internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetConcept<TGraph, TVertex, TEdge>
     {
         // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TColorMap _colorMap;
@@ -22,22 +18,18 @@
 
         private TVertex StartVertex { get; }
 
-        private TVertexConcept VertexConcept { get; }
-
-        private TEdgeConcept EdgeConcept { get; }
+        private TGraphConcept GraphConcept { get; }
 
         public BaselineDfsStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
-            TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+            TGraphConcept graphConcept)
         {
             Assert(colorMap != null);
-            Assert(vertexConcept != null);
-            Assert(edgeConcept != null);
+            Assert(graphConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
             _colorMap = colorMap;
-            VertexConcept = vertexConcept;
-            EdgeConcept = edgeConcept;
+            GraphConcept = graphConcept;
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -57,7 +49,7 @@
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
             TEdgeEnumerator edges;
-            if (VertexConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
+            if (GraphConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
             {
                 while (edges.MoveNext())
                 {
@@ -77,7 +69,7 @@
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 
             TVertex target;
-            if (EdgeConcept.TryGetTarget(Graph, edge, out target))
+            if (GraphConcept.TryGetTarget(Graph, edge, out target))
             {
                 Color neighborColor;
                 if (!_colorMap.TryGetValue(target, out neighborColor))

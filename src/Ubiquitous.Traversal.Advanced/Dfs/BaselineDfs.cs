@@ -8,7 +8,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-            IGetTargetConcept<TGraph, TVertex, TEdge>
+        IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
         private TGraphConcept GraphConcept { get; }
@@ -31,8 +31,7 @@
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TGraphConcept, TColorMapFactory>(graph, startVertex,
-                GraphConcept, GraphConcept, ColorMapFactory);
+                TGraphConcept, TColorMapFactory>(graph, startVertex, GraphConcept, ColorMapFactory);
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -43,9 +42,7 @@
                 throw new ArgumentNullException(nameof(vertexEnumerator));
 
             return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap,
-                TGraphConcept, TGraphConcept, TColorMapFactory>(graph, vertexEnumerator,
-                GraphConcept, GraphConcept, ColorMapFactory);
+                TColorMap, TGraphConcept, TColorMapFactory>(graph, vertexEnumerator, GraphConcept, ColorMapFactory);
         }
     }
 }

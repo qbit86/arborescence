@@ -5,15 +5,12 @@
     using static System.Diagnostics.Debug;
 
     internal struct BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TVertexConcept, TEdgeConcept, TColorMapFactory>
-
+            TGraphConcept, TColorMapFactory>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
         // ReSharper disable FieldCanBeMadeReadOnly.Local
@@ -24,20 +21,16 @@
 
         private TVertex StartVertex { get; }
 
-        private TVertexConcept VertexConcept { get; }
-
-        private TEdgeConcept EdgeConcept { get; }
+        private TGraphConcept GraphConcept { get; }
 
         internal BaselineDfsTreeStepCollection(TGraph graph, TVertex startVertex,
-            TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
-            TColorMapFactory colorMapFactory)
+            TGraphConcept graphConcept, TColorMapFactory colorMapFactory)
         {
             Assert(colorMapFactory != null);
 
             Graph = graph;
             StartVertex = startVertex;
-            VertexConcept = vertexConcept;
-            EdgeConcept = edgeConcept;
+            GraphConcept = graphConcept;
             _colorMapFactory = colorMapFactory;
         }
 
@@ -63,7 +56,7 @@
                 yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
 
                 var steps = new BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                    TVertexConcept, TEdgeConcept>(Graph, StartVertex, colorMap, VertexConcept, EdgeConcept);
+                    TGraphConcept>(Graph, StartVertex, colorMap, GraphConcept);
                 using (IEnumerator<Step<DfsStepKind, TVertex, TEdge>> stepEnumerator = steps.GetEnumerator())
                 {
                     while (stepEnumerator.MoveNext())
