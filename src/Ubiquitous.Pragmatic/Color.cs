@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Ubiquitous.Traversal.Pragmatic
 {
     internal enum Color
     {
