@@ -38,13 +38,13 @@
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory,
+                IndexedAdjacencyListGraphInstance, ColorMapFactory,
                 ListFactory<IndexedAdjacencyListGraph,
                     DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
             Dfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapFactory>
             BaselineDfs { get; }
 
         private Xunit.Abstractions.ITestOutputHelper Output { get; }
@@ -56,8 +56,7 @@
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithStack<List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
                 .WithStackFactory<ListFactory<IndexedAdjacencyListGraph,
                     DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
@@ -67,8 +66,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
                 .Create();
 

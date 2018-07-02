@@ -20,19 +20,17 @@
         public int VertexCount { get; set; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance, ColorMapFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapFactory>
             BaselineDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, Stack,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                ColorMapFactory, ListFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapFactory, ListFactory>
             DefaultDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
                 ColorMap, Stack,
-                IndexedAdjacencyListGraphInstance, IndexedAdjacencyListGraphInstance,
-                CachingColorMapFactory, CachingListFactory>
+                IndexedAdjacencyListGraphInstance, CachingColorMapFactory, CachingListFactory>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -43,8 +41,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
                 .Create();
 
@@ -52,8 +49,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>().WithStack<Stack>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
                 .WithStackFactory<ListFactory>()
                 .Create();
@@ -73,8 +69,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>().WithStack<Stack>()
-                .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory(colorMapFactory)
                 .WithStackFactory(stackFactory)
                 .Create();

@@ -36,8 +36,7 @@
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
-                    .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                     .WithColorMapFactory<ColorMapFactory>()
                     .Create();
 
@@ -56,8 +55,7 @@
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
                     .WithStack<List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
-                    .WithVertexConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithEdgeConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                     .WithColorMapFactory<ColorMapFactory>()
                     .WithStackFactory<ListFactory<IndexedAdjacencyListGraph,
                         DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()

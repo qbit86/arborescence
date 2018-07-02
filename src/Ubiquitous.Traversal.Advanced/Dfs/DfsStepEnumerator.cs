@@ -4,14 +4,12 @@
     using static System.Diagnostics.Debug;
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-            TVertexConcept, TEdgeConcept>
-
+    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetConcept<TGraph, TVertex, TEdge>
     {
         private Step<DfsStepKind, TVertex, TEdge> _current;
         private int _state;
@@ -24,22 +22,19 @@
         // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TColorMap _colorMap;
         private TStack _stack;
-        private TVertexConcept _vertexConcept;
-        private TEdgeConcept _edgeConcept;
+        private TGraphConcept _graphConcept;
         // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex, TColorMap colorMap, TStack stack,
-            TVertexConcept vertexConcept, TEdgeConcept edgeConcept)
+            TGraphConcept graphConcept)
         {
             Assert(colorMap != null);
-            Assert(vertexConcept != null);
-            Assert(edgeConcept != null);
+            Assert(graphConcept != null);
 
             _graph = graph;
             _colorMap = colorMap;
             _stack = stack;
-            _vertexConcept = vertexConcept;
-            _edgeConcept = edgeConcept;
+            _graphConcept = graphConcept;
 
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
@@ -75,7 +70,7 @@
                 case 1:
                     {
                         TEdgeEnumerator edges;
-                        bool hasOutEdges = _vertexConcept.TryGetOutEdges(_graph, _currentVertex, out edges);
+                        bool hasOutEdges = _graphConcept.TryGetOutEdges(_graph, _currentVertex, out edges);
                         if (!hasOutEdges)
                         {
                             _colorMap[_currentVertex] = Color.Black;
@@ -115,7 +110,7 @@
                             _state = short.MaxValue;
                             continue;
                         }
-                        bool isValid = _edgeConcept.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
+                        bool isValid = _graphConcept.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
                         {
                             _state = 3;
@@ -161,7 +156,7 @@
                     }
                 case 6:
                     {
-                        bool hasOutEdges = _vertexConcept.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
+                        bool hasOutEdges = _graphConcept.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
                         {
                             _state = short.MaxValue;

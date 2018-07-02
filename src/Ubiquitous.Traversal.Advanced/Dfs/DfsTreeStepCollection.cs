@@ -5,16 +5,13 @@
     using static System.Diagnostics.Debug;
 
     public partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-        TVertexConcept, TEdgeConcept, TColorMapFactory, TStackFactory>
-
+        TGraphConcept, TColorMapFactory, TStackFactory>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
-
-        where TVertexConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TEdgeConcept : IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
         where TStackFactory : IFactory<TGraph, TStack>
     {
@@ -22,25 +19,21 @@
 
         private TVertex StartVertex { get; }
 
-        private TVertexConcept VertexConcept { get; }
-
-        private TEdgeConcept EdgeConcept { get; }
+        private TGraphConcept GraphConcept { get; }
 
         private TColorMapFactory ColorMapFactory { get; }
 
         private TStackFactory StackFactory { get; }
 
         internal DfsTreeStepCollection(TGraph graph, TVertex startVertex,
-            TVertexConcept vertexConcept, TEdgeConcept edgeConcept,
-            TColorMapFactory colorMapFactory, TStackFactory stackFactory)
+            TGraphConcept graphConcept, TColorMapFactory colorMapFactory, TStackFactory stackFactory)
         {
             Assert(colorMapFactory != null);
             Assert(stackFactory != null);
 
             Graph = graph;
             StartVertex = startVertex;
-            VertexConcept = vertexConcept;
-            EdgeConcept = edgeConcept;
+            GraphConcept = graphConcept;
             ColorMapFactory = colorMapFactory;
             StackFactory = stackFactory;
         }
