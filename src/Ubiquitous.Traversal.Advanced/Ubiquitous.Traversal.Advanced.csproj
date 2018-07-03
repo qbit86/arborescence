@@ -11,6 +11,6 @@
     <RootNamespace>Ubiquitous.Traversal.Advanced</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj"/>
+    <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
   </ItemGroup>
 </Project>

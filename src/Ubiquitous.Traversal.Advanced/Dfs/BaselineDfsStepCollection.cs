@@ -53,8 +53,7 @@
             {
                 while (edges.MoveNext())
                 {
-                    TEdge edge = edges.Current;
-                    var steps = ProcessEdgeCoroutine(edge);
+                    var steps = ProcessEdgeCoroutine(edges.Current);
                     while (steps.MoveNext())
                         yield return steps.Current;
                 }
