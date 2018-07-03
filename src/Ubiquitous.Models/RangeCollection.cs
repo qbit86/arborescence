@@ -1,6 +1,7 @@
 ﻿namespace Ubiquitous
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     public struct RangeCollection : IReadOnlyCollection<int>, IEquatable<RangeCollection>
@@ -28,11 +29,10 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is RangeCollection))
-                return false;
+            if (obj is RangeCollection other)
+                return Equals(other);
 
-            var other = (RangeCollection)obj;
-            return Equals(other);
+            return false;
         }
 
         public override int GetHashCode()
@@ -55,7 +55,7 @@
             return new Enumerator(this);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return new Enumerator(this);
         }
@@ -105,7 +105,7 @@
                 _current = _range.Start - 1;
             }
 
-            object System.Collections.IEnumerator.Current => _current;
+            object IEnumerator.Current => _current;
 
             public int Current => _current;
 
