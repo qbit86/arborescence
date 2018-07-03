@@ -5,6 +5,7 @@
     using System.Linq;
     using Traversal.Advanced;
     using Xunit;
+    using Xunit.Abstractions;
     using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
     using ColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
 
@@ -47,9 +48,9 @@
                 IndexedAdjacencyListGraphInstance, ColorMapFactory>
             BaselineDfs { get; }
 
-        private Xunit.Abstractions.ITestOutputHelper Output { get; }
+        private ITestOutputHelper Output { get; }
 
-        public DfsTest(Xunit.Abstractions.ITestOutputHelper output)
+        public DfsTest(ITestOutputHelper output)
         {
             Dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
