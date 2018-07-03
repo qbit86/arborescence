@@ -71,8 +71,10 @@
                 int u = queue.Dequeue();
                 if (GraphConcept.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
                 {
-                    while (outEdges.TryMoveNext(out TEdge e))
+                    while (outEdges.MoveNext())
                     {
+                        TEdge e = outEdges.Current;
+
                         if (!GraphConcept.TryGetTarget(Graph, e, out int v))
                             continue;
 
