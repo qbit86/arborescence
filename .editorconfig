@@ -11,6 +11,9 @@ trim_trailing_whitespace = true
 [*.csproj]
 indent_size = 2
 
+[*.sln.DotSettings]
+indent_style = tab
+
 [*.cs]
 
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
