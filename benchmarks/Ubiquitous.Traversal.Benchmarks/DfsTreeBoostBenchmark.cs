@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
     using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
@@ -7,14 +8,36 @@
         int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
     using CachingColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
-    using ListFactory = ListFactory<IndexedAdjacencyListGraph,
-        Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
-    using CachingListFactory = CachingListFactory<IndexedAdjacencyListGraph,
-        Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
+    using ListFactory =
+        ListFactory<IndexedAdjacencyListGraph,
+            Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
+    using CachingListFactory =
+        CachingListFactory<IndexedAdjacencyListGraph,
+            Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
     {
+        protected DfsTreeBoostBenchmark()
+        {
+            BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
+                .WithVertex<int>().WithEdge<int>()
+                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithColorMap<ColorMap>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithColorMapFactory<ColorMapFactory>()
+                .Create();
+
+            DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
+                .WithVertex<int>().WithEdge<int>()
+                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithColorMap<ColorMap>().WithStack<Stack>()
+                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithColorMapFactory<ColorMapFactory>()
+                .WithStackFactory<ListFactory>()
+                .Create();
+        }
+
         [Params(10, 100, 1000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -35,26 +58,6 @@
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
-
-        protected DfsTreeBoostBenchmark()
-        {
-            BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory<ColorMapFactory>()
-                .Create();
-
-            DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                .WithColorMap<ColorMap>().WithStack<Stack>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory<ColorMapFactory>()
-                .WithStackFactory<ListFactory>()
-                .Create();
-        }
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -80,11 +83,9 @@
         public int BaselineDfsTree()
         {
             int count = 0;
-            var steps = BaselineDfs.Traverse(Graph, 0);
-            foreach (var unused in steps)
-            {
+            IEnumerable<Step<DfsStepKind, int, int>> steps = BaselineDfs.Traverse(Graph, 0);
+            foreach (Step<DfsStepKind, int, int> _ in steps)
                 ++count;
-            }
 
             return count;
         }
@@ -93,11 +94,10 @@
         public int DefaultDfsTree()
         {
             int count = 0;
+            // ReSharper disable once SuggestVarOrType_Elsewhere
             var steps = DefaultDfs.Traverse(Graph, 0);
-            foreach (var unused in steps)
-            {
+            foreach (Step<DfsStepKind, int, int> _ in steps)
                 ++count;
-            }
 
             return count;
         }
@@ -106,11 +106,10 @@
         public int CachingDfsTree()
         {
             int count = 0;
+            // ReSharper disable once SuggestVarOrType_Elsewhere
             var steps = CachingDfs.Traverse(Graph, 0);
-            foreach (var unused in steps)
-            {
+            foreach (Step<DfsStepKind, int, int> _ in steps)
                 ++count;
-            }
 
             return count;
         }
