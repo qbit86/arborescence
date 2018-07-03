@@ -3,11 +3,11 @@
 .vs/**/sqlite3/
 **/.suo
 **/BenchmarkDotNet.Artifacts*/
+benchmarks/**/bin/
+benchmarks/**/obj/
 samples/**/bin/
 samples/**/obj/
 src/**/bin/
 src/**/obj/
 test/**/bin/
 test/**/obj/
-tests/**/bin/
-tests/**/obj/
