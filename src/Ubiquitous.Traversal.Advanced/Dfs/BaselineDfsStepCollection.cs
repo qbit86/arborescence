@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous.Traversal.Advanced
 {
+    using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
@@ -37,7 +38,7 @@
             return ProcessVertexCoroutine(StartVertex);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             IEnumerator<Step<DfsStepKind, TVertex, TEdge>> result = GetEnumerator();
             return result;
@@ -53,7 +54,7 @@
             {
                 while (edges.MoveNext())
                 {
-                    var steps = ProcessEdgeCoroutine(edges.Current);
+                    IEnumerator<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessEdgeCoroutine(edges.Current);
                     while (steps.MoveNext())
                         yield return steps.Current;
                 }
@@ -79,7 +80,7 @@
                     case Color.None:
                     case Color.White:
                         yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
-                        var steps = ProcessVertexCoroutine(target);
+                        IEnumerator<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(target);
                         while (steps.MoveNext())
                             yield return steps.Current;
                         break;

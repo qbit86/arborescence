@@ -22,7 +22,7 @@
 
             if (vertex != null)
                 s.Append(vertex);
-            
+
             s.Append(", ");
 
             if (edge != null)
