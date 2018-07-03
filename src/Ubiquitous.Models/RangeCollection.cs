@@ -1,4 +1,7 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable ConvertToAutoPropertyWhenPossible
+// ReSharper disable ConvertToAutoPropertyWithPrivateSetter
+
+namespace Ubiquitous
 {
     using System;
     using System.Collections;
