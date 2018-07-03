@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Text;
 
     /// <summary>
     /// Provides the Create factory method for SourceTargetPair&lt;TVertex&gt;.
@@ -18,20 +20,16 @@
         /// </summary>
         internal static string PairToString(object source, object target)
         {
-            var s = new System.Text.StringBuilder();
+            var s = new StringBuilder();
             s.Append('[');
 
             if (source != null)
-            {
                 s.Append(source);
-            }
 
             s.Append(", ");
 
             if (target != null)
-            {
                 s.Append(target);
-            }
 
             s.Append(']');
 
@@ -62,7 +60,7 @@
             return SourceTargetPair.PairToString(Source, Target);
         }
 
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void Deconstruct(out TVertex source, out TVertex target)
         {
             source = Source;
@@ -71,7 +69,7 @@
 
         public bool Equals(SourceTargetPair<TVertex> other)
         {
-            var comparer = EqualityComparer<TVertex>.Default;
+            EqualityComparer<TVertex> comparer = EqualityComparer<TVertex>.Default;
 
             if (!comparer.Equals(Source, other.Source))
                 return false;
