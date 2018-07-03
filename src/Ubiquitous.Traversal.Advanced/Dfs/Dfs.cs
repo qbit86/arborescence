@@ -36,7 +36,7 @@
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-            TGraphConcept, TColorMapFactory, TStackFactory>
+                TGraphConcept, TColorMapFactory, TStackFactory>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -45,7 +45,7 @@
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
-            TGraphConcept, TColorMapFactory, TStackFactory>
+                TGraphConcept, TColorMapFactory, TStackFactory>
             Traverse<TVertexEnumerator>(TGraph graph, TVertexEnumerator vertexEnumerator)
             where TVertexEnumerator : IEnumerator<TVertex>
         {

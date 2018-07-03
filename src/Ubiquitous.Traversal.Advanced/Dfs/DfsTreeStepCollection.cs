@@ -5,7 +5,7 @@
     using static System.Diagnostics.Debug;
 
     public partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-        TGraphConcept, TColorMapFactory, TStackFactory>
+            TGraphConcept, TColorMapFactory, TStackFactory>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>

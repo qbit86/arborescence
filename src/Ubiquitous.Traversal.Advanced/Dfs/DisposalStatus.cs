@@ -4,6 +4,6 @@
     {
         None = 0,
         Initialized,
-        Disposed,
+        Disposed
     }
 }

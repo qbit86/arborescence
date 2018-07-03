@@ -10,6 +10,6 @@
         TreeEdge,
         BackEdge,
         ForwardOrCrossEdge,
-        FinishEdge,
+        FinishEdge
     }
 }

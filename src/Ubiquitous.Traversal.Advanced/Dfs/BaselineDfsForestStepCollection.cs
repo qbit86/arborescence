@@ -16,6 +16,7 @@
     {
         // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TVertexEnumerator _vertexEnumerator;
+
         private TColorMapFactory _colorMapFactory;
         // ReSharper restore FieldCanBeMadeReadOnly.Local
 
@@ -57,7 +58,7 @@
             {
                 while (_vertexEnumerator.MoveNext())
                 {
-                    var vertex = _vertexEnumerator.Current;
+                    TVertex vertex = _vertexEnumerator.Current;
 
                     Color vertexColor;
                     if (!colorMap.TryGetValue(vertex, out vertexColor))

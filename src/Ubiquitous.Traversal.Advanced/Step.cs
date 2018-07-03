@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     public static class Step
     {
@@ -13,22 +14,19 @@
 
         internal static string StepToString(object kind, object vertex, object edge)
         {
-            var s = new System.Text.StringBuilder();
+            var s = new StringBuilder();
             s.Append('[');
 
             s.Append(kind);
             s.Append(", ");
 
             if (vertex != null)
-            {
                 s.Append(vertex);
-            }
+            
             s.Append(", ");
 
             if (edge != null)
-            {
                 s.Append(edge);
-            }
 
             s.Append(']');
 
