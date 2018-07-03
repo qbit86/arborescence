@@ -16,7 +16,6 @@
     public struct IndexedDictionary<TValue, TValues> :
         IReadOnlyDictionary<int, TValue>,
         IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue, TValues>>
-
         where TValues : IList<TValue>
     {
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
@@ -125,7 +124,7 @@
             int count = _backingStore.Count;
             for (int i = 0; i != count; ++i)
             {
-                var item = _backingStore[i];
+                TValue item = _backingStore[i];
                 yield return new KeyValuePair<int, TValue>(i, item);
             }
         }
@@ -176,6 +175,9 @@
         }
 
         // ReSharper disable once NonReadonlyMemberInGetHashCode
-        public override int GetHashCode() => _backingStore.GetHashCode();
+        public override int GetHashCode()
+        {
+            return _backingStore.GetHashCode();
+        }
     }
 }
