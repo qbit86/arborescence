@@ -32,6 +32,7 @@
             var vertices = new RangeCollection(0, graph.VertexCount);
 
             {
+                // ReSharper disable once SuggestVarOrType_Elsewhere
                 var dfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
@@ -40,16 +41,17 @@
                     .WithColorMapFactory<ColorMapFactory>()
                     .Create();
 
-                var vertexEnumerator = vertices.GetConventionalEnumerator();
-                var steps = dfs.Traverse(graph, vertexEnumerator);
-                var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
-                var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+                RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
+                IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertexEnumerator);
+                StepMap vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
+                StepMap edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS Forest", Console.Out);
             }
 
             {
+                // ReSharper disable once SuggestVarOrType_Elsewhere
                 var dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
@@ -61,10 +63,11 @@
                         DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
                     .Create();
 
-                var vertexEnumerator = vertices.GetConventionalEnumerator();
+                RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
+                // ReSharper disable once SuggestVarOrType_Elsewhere
                 var steps = dfs.Traverse(graph, vertexEnumerator);
-                var vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
-                var edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+                StepMap vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
+                StepMap edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS Forest", Console.Out);
@@ -76,7 +79,7 @@
         {
             Assert(steps != null);
 
-            foreach (var step in steps)
+            foreach (Step<DfsStepKind, int, int> step in steps)
             {
                 switch (step.Kind)
                 {
