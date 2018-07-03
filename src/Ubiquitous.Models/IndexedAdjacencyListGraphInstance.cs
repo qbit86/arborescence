@@ -20,7 +20,8 @@
             return result;
         }
 
-        public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex, out ImmutableArrayEnumeratorAdapter<int> edges)
+        public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex,
+            out ImmutableArrayEnumeratorAdapter<int> edges)
         {
             return graph.TryGetOutEdges(vertex, out edges);
         }

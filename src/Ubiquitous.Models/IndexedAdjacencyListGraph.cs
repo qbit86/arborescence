@@ -72,6 +72,9 @@
             return Equals(other);
         }
 
-        public override int GetHashCode() => Endpoints.GetHashCode() ^ OutEdges.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Endpoints.GetHashCode() ^ OutEdges.GetHashCode();
+        }
     }
 }

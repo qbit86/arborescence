@@ -7,11 +7,6 @@
 
     public sealed class IndexedAdjacencyListGraphBuilder
     {
-        private List<SourceTargetPair<int>> Endpoints { get; set; }
-        private ImmutableArray<int>.Builder[] OutEdges { get; set; }
-
-        public int VertexCount => OutEdges?.Length ?? 0;
-
         public IndexedAdjacencyListGraphBuilder(int vertexCount) : this(vertexCount, 0)
         {
         }
@@ -28,6 +23,11 @@
             Endpoints = edgeCount >= 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
         }
 
+        private List<SourceTargetPair<int>> Endpoints { get; set; }
+        private ImmutableArray<int>.Builder[] OutEdges { get; set; }
+
+        public int VertexCount => OutEdges?.Length ?? 0;
+
         public bool Add(SourceTargetPair<int> edge)
         {
             if (Endpoints == null || OutEdges == null)
@@ -43,9 +43,7 @@
             Endpoints.Add(edge);
 
             if (OutEdges[edge.Source] == null)
-            {
                 OutEdges[edge.Source] = ImmutableArray.CreateBuilder<int>(1);
-            }
 
             OutEdges[edge.Source].Add(newEdgeIndex);
 
@@ -54,7 +52,7 @@
 
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
-            var endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
+            List<SourceTargetPair<int>> endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
             ImmutableArray<int>[] outEdges = OutEdges?.Select(CreateImmutableArray).ToArray()
                 ?? new ImmutableArray<int>[0]; // Array.Empty<ImmutableArray<int>>() in .NET Standard 1.3.
 

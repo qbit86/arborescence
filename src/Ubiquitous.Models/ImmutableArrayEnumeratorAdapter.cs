@@ -1,6 +1,7 @@
 ﻿namespace Ubiquitous
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Immutable;
 
@@ -16,7 +17,7 @@
 
         public T Current => _enumerator.Current;
 
-        object System.Collections.IEnumerator.Current => _enumerator.Current;
+        object IEnumerator.Current => _enumerator.Current;
 
         public void Dispose()
         {

@@ -23,9 +23,7 @@
         public void Release(IndexedAdjacencyListGraph context, IndexedDictionary<T, T[]> value)
         {
             if (value.BackingStore != null)
-            {
                 Array.Clear(value.BackingStore, 0, value.BackingStore.Length);
-            }
 
             _cachedInstance = null;
         }
