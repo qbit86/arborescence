@@ -1,5 +1,6 @@
 ﻿namespace Ubiquitous
 {
+    using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
     using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
     using Stack = System.Collections.Generic.List<Traversal.Advanced.DfsStackFrame<
@@ -11,10 +12,10 @@
     using CachingListFactory = CachingListFactory<IndexedAdjacencyListGraph,
         Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
 
-    [BenchmarkDotNet.Attributes.MemoryDiagnoser]
+    [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
     {
-        [BenchmarkDotNet.Attributes.Params(10, 100, 1000)]
+        [Params(10, 100, 1000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
@@ -55,7 +56,7 @@
                 .Create();
         }
 
-        [BenchmarkDotNet.Attributes.GlobalSetup]
+        [GlobalSetup]
         public void GlobalSetup()
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
@@ -75,7 +76,7 @@
                 .Create();
         }
 
-        [BenchmarkDotNet.Attributes.Benchmark(Baseline = true)]
+        [Benchmark(Baseline = true)]
         public int BaselineDfsTree()
         {
             int count = 0;
@@ -88,7 +89,7 @@
             return count;
         }
 
-        [BenchmarkDotNet.Attributes.Benchmark]
+        [Benchmark]
         public int DefaultDfsTree()
         {
             int count = 0;
@@ -101,7 +102,7 @@
             return count;
         }
 
-        [BenchmarkDotNet.Attributes.Benchmark]
+        [Benchmark]
         public int CachingDfsTree()
         {
             int count = 0;
