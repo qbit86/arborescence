@@ -37,19 +37,6 @@
     {
         private const int VertexCount = 100;
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory,
-                ListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
-            Dfs { get; }
-
-        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory>
-            BaselineDfs { get; }
-
-        private ITestOutputHelper Output { get; }
-
         public DfsTest(ITestOutputHelper output)
         {
             Dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -74,6 +61,19 @@
             Output = output;
         }
 
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
+                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
+                IndexedAdjacencyListGraphInstance, ColorMapFactory,
+                ListFactory<IndexedAdjacencyListGraph,
+                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
+            Dfs { get; }
+
+        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, ColorMapFactory>
+            BaselineDfs { get; }
+
+        private ITestOutputHelper Output { get; }
+
         [Theory]
         [InlineData(1.0)]
         [InlineData(1.414)]
@@ -89,8 +89,8 @@
 
             // Act
 
-            var baselineSteps = BaselineDfs.Traverse(graph, vertex).ToList();
-            var boostSteps = Dfs.Traverse(graph, vertex).ToList();
+            List<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertex).ToList();
+            List<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertex).ToList();
 
             // Assert
 
@@ -105,8 +105,8 @@
             int count = Math.Min(baselineStepCount, boostStepCount);
             for (int i = 0; i != count; ++i)
             {
-                var baselineStep = baselineSteps[i];
-                var boostStep = boostSteps[i];
+                Step<DfsStepKind, int, int> baselineStep = baselineSteps[i];
+                Step<DfsStepKind, int, int> boostStep = boostSteps[i];
 
                 if (baselineStep == boostStep)
                     continue;
@@ -133,12 +133,12 @@
 
             // Act
 
-            var vertexEnumerator = vertices.GetConventionalEnumerator();
-            var baselineSteps = BaselineDfs.Traverse(graph, vertexEnumerator).ToList();
-            var boostSteps = Dfs.Traverse(graph, vertexEnumerator).ToList();
-            var discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
-            var expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
-            var actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
+            RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
+            List<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertexEnumerator).ToList();
+            List<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertexEnumerator).ToList();
+            int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
+            int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
+            int actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
 
             // Assert
 
@@ -161,7 +161,7 @@
                 builder.Add(SourceTargetPair.Create(source, target));
             }
 
-            var result = builder.MoveToIndexedAdjacencyListGraph();
+            IndexedAdjacencyListGraph result = builder.MoveToIndexedAdjacencyListGraph();
             return result;
         }
     }
