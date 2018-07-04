@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous.Traversal.Advanced
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
+
+namespace Ubiquitous.Traversal.Advanced
 {
     using System;
     using System.Collections;
@@ -13,11 +15,9 @@
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
 
-            // ReSharper disable FieldCanBeMadeReadOnly.Local
             private TColorMapFactory _colorMapFactory;
             private TStackFactory _stackFactory;
             private TGraphConcept _graphConcept;
-            // ReSharper restore FieldCanBeMadeReadOnly.Local
 
             private readonly TGraph _graph;
             private readonly TVertex _startVertex;
@@ -135,6 +135,7 @@
                     TColorMap, TStack, TGraphConcept>);
             }
 
+            // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
             public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
             object IEnumerator.Current => _current;
