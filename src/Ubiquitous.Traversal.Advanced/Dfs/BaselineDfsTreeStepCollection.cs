@@ -13,9 +13,7 @@
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
-        // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TColorMapFactory _colorMapFactory;
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         private TGraph Graph { get; }
 
