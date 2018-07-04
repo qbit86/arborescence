@@ -19,11 +19,9 @@
         private TVertex _neighborVertex; // Corresponds to `v` in Boost implementation.
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
 
-        // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TColorMap _colorMap;
         private TStack _stack;
         private TGraphConcept _graphConcept;
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex, TColorMap colorMap, TStack stack,
             TGraphConcept graphConcept)
@@ -44,6 +42,7 @@
             _currentVertex = startVertex;
         }
 
+        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
         public Step<DfsStepKind, TVertex, TEdge> Current => _current;
 
         public bool MoveNext()
@@ -60,14 +59,14 @@
             {
                 switch (_state)
                 {
-                case 0:
+                    case 0:
                     {
                         _colorMap[_currentVertex] = Color.Gray;
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 1;
                         return true;
                     }
-                case 1:
+                    case 1:
                     {
                         TEdgeEnumerator edges;
                         bool hasOutEdges = _graphConcept.TryGetOutEdges(_graph, _currentVertex, out edges);
@@ -78,18 +77,21 @@
                             _state = int.MaxValue;
                             return true;
                         }
-                        var pushingStackFrame = CreateVertexStackFrame(_currentVertex, edges);
+
+                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
+                            CreateVertexStackFrame(_currentVertex, edges);
                         _stack.Add(pushingStackFrame);
                         _state = 2;
                         continue;
                     }
-                case 2:
+                    case 2:
                     {
                         if (_stack.Count <= 0)
                         {
                             _state = int.MaxValue;
                             continue;
                         }
+
                         DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = _stack[_stack.Count - 1];
                         _stack.RemoveAt(_stack.Count - 1);
                         _currentVertex = poppedStackFrame.Vertex;
@@ -100,27 +102,30 @@
                             _state = 3;
                             return true;
                         }
+
                         _state = 3;
                         continue;
                     }
-                case 3:
+                    case 3:
                     {
                         if (!_edgeEnumerator.MoveNext())
                         {
                             _state = short.MaxValue;
                             continue;
                         }
+
                         bool isValid = _graphConcept.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
                         {
                             _state = 3;
                             continue;
                         }
+
                         _current = CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current);
                         _state = 4;
                         return true;
                     }
-                case 4:
+                    case 4:
                     {
                         Color neighborColor;
                         if (!_colorMap.TryGetValue(_neighborVertex, out neighborColor))
@@ -128,24 +133,24 @@
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
                         {
-                        case Color.None:
-                        case Color.White:
-                            _current = CreateEdgeStep(DfsStepKind.TreeEdge, edge);
-                            _state = 5;
-                            return true;
-                        case Color.Gray:
-                            _current = CreateEdgeStep(DfsStepKind.BackEdge, edge);
-                            _state = 7;
-                            return true;
-                        default:
-                            _current = CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge);
-                            _state = 7;
-                            return true;
+                            case Color.None:
+                            case Color.White:
+                                _current = CreateEdgeStep(DfsStepKind.TreeEdge, edge);
+                                _state = 5;
+                                return true;
+                            case Color.Gray:
+                                _current = CreateEdgeStep(DfsStepKind.BackEdge, edge);
+                                _state = 7;
+                                return true;
+                            default:
+                                _current = CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge);
+                                _state = 7;
+                                return true;
                         }
                     }
-                case 5:
+                    case 5:
                     {
-                        var pushingStackFrame =
+                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
                             CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
@@ -154,7 +159,7 @@
                         _state = 6;
                         return true;
                     }
-                case 6:
+                    case 6:
                     {
                         bool hasOutEdges = _graphConcept.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
@@ -162,23 +167,24 @@
                             _state = short.MaxValue;
                             continue;
                         }
+
                         _state = 3;
                         continue;
                     }
-                case 7:
+                    case 7:
                     {
                         _current = CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current);
                         _state = 3;
                         return true;
                     }
-                case short.MaxValue:
+                    case short.MaxValue:
                     {
                         _colorMap[_currentVertex] = Color.Black;
                         _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                         _state = 2;
                         return true;
                     }
-                case int.MaxValue:
+                    case int.MaxValue:
                     {
                         _current = default(Step<DfsStepKind, TVertex, TEdge>);
                         _state = -1;
