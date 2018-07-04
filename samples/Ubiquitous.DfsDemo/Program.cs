@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable SuggestVarOrType_Elsewhere
+
+namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +34,6 @@
             var vertices = new RangeCollection(0, graph.VertexCount);
 
             {
-                // ReSharper disable once SuggestVarOrType_Elsewhere
                 var dfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
@@ -51,7 +52,6 @@
             }
 
             {
-                // ReSharper disable once SuggestVarOrType_Elsewhere
                 var dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
@@ -64,7 +64,6 @@
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
-                // ReSharper disable once SuggestVarOrType_Elsewhere
                 var steps = dfs.Traverse(graph, vertexEnumerator);
                 StepMap vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
