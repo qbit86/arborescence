@@ -11,9 +11,7 @@
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
     {
-        // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TColorMap _colorMap;
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         private TGraph Graph { get; }
 
@@ -49,8 +47,7 @@
             _colorMap[vertex] = Color.Gray;
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
-            TEdgeEnumerator edges;
-            if (GraphConcept.TryGetOutEdges(Graph, vertex, out edges) && edges != null)
+            if (GraphConcept.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
             {
                 while (edges.MoveNext())
                 {
@@ -68,11 +65,9 @@
         {
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 
-            TVertex target;
-            if (GraphConcept.TryGetTarget(Graph, edge, out target))
+            if (GraphConcept.TryGetTarget(Graph, edge, out TVertex target))
             {
-                Color neighborColor;
-                if (!_colorMap.TryGetValue(target, out neighborColor))
+                if (!_colorMap.TryGetValue(target, out Color neighborColor))
                     neighborColor = Color.None;
 
                 switch (neighborColor)

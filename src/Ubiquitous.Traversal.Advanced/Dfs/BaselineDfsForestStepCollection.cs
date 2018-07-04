@@ -14,11 +14,9 @@
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
     {
-        // ReSharper disable FieldCanBeMadeReadOnly.Local
         private TVertexEnumerator _vertexEnumerator;
 
         private TColorMapFactory _colorMapFactory;
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         private TGraph Graph { get; }
 
@@ -60,8 +58,7 @@
                 {
                     TVertex vertex = _vertexEnumerator.Current;
 
-                    Color vertexColor;
-                    if (!colorMap.TryGetValue(vertex, out vertexColor))
+                    if (!colorMap.TryGetValue(vertex, out Color vertexColor))
                         vertexColor = Color.None;
 
                     if (vertexColor != Color.None && vertexColor != Color.White)
