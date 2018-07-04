@@ -68,8 +68,8 @@
                     }
                     case 1:
                     {
-                        TEdgeEnumerator edges;
-                        bool hasOutEdges = _graphConcept.TryGetOutEdges(_graph, _currentVertex, out edges);
+                        bool hasOutEdges =
+                            _graphConcept.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
                         {
                             _colorMap[_currentVertex] = Color.Black;
@@ -127,8 +127,7 @@
                     }
                     case 4:
                     {
-                        Color neighborColor;
-                        if (!_colorMap.TryGetValue(_neighborVertex, out neighborColor))
+                        if (!_colorMap.TryGetValue(_neighborVertex, out Color neighborColor))
                             neighborColor = Color.None;
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
