@@ -11,7 +11,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
     {
-        public BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, TGraphConcept graphConcept)
+        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, TGraphConcept graphConcept)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -87,7 +87,7 @@
 
             public ArraySegment<Color> Acquire(TGraph context)
             {
-                var array = ArrayPool<Color>.Shared.Rent(VertexCount);
+                Color[] array = ArrayPool<Color>.Shared.Rent(VertexCount);
                 return new ArraySegment<Color>(array, 0, VertexCount);
             }
 
