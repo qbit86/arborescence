@@ -42,6 +42,11 @@
 
         public IEnumerator<TEdge> GetEnumerator()
         {
+            return GetEnumerator(0);
+        }
+
+        public IEnumerator<TEdge> GetEnumerator(int queueCapacity)
+        {
             if (Graph == null)
                 throw new InvalidOperationException($"{nameof(Graph)}: null");
 
@@ -54,18 +59,22 @@
             if (ColorMapConcept == null)
                 throw new InvalidOperationException($"{nameof(ColorMapConcept)}: null");
 
-            return GetEnumeratorCoroutine();
+            if (queueCapacity < 0)
+                throw new ArgumentOutOfRangeException(nameof(queueCapacity));
+
+            Queue<TVertex> preallocatedQueue = queueCapacity > 0 ? new Queue<TVertex>(queueCapacity) : null;
+            return GetEnumeratorCoroutine(preallocatedQueue);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return GetEnumerator(0);
         }
 
-        private IEnumerator<TEdge> GetEnumeratorCoroutine()
+        private IEnumerator<TEdge> GetEnumeratorCoroutine(Queue<TVertex> preallocatedQueue)
         {
             TColorMap colorMap = ColorMapConcept.Acquire(Graph);
-            Queue<TVertex> queue = QueuePool<TVertex>.Shared.Rent();
+            Queue<TVertex> queue = preallocatedQueue ?? QueuePool<TVertex>.Shared.Rent();
             try
             {
                 if (!ColorMapConcept.TryPut(colorMap, StartVertex, Color.Gray))
