@@ -22,7 +22,6 @@
 
         private TGraphConcept GraphConcept { get; }
 
-
         private TColorMapFactory ColorMapFactory { get; }
 
         private TStackFactory StackFactory { get; }
