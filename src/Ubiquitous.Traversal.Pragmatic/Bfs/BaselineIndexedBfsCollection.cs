@@ -38,10 +38,10 @@
 
         public IEnumerator<TEdge> GetEnumerator()
         {
-            var colorMapConcept = new IndexedColorMapConcept(VertexCount);
+            var colorMapConcept = new IndexedMapConcept<Color>(VertexCount);
 
             var steps = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
-                TGraphConcept, IndexedColorMapConcept>(Graph, StartVertex, GraphConcept, colorMapConcept);
+                TGraphConcept, IndexedMapConcept<Color>>(Graph, StartVertex, GraphConcept, colorMapConcept);
             return steps.GetEnumerator();
         }
 
@@ -50,25 +50,24 @@
             return GetEnumerator();
         }
 
-        // TODO: Refactor via IndexedMapConcept<T>.
-        private readonly struct IndexedColorMapConcept
-            : IMapConcept<ArraySegment<Color>, int, Color>, IFactory<TGraph, ArraySegment<Color>>
+        private readonly struct IndexedMapConcept<T>
+            : IMapConcept<ArraySegment<T>, int, T>, IFactory<TGraph, ArraySegment<T>>
         {
-            public IndexedColorMapConcept(int vertexCount)
+            public IndexedMapConcept(int count)
             {
-                if (vertexCount < 0)
-                    throw new ArgumentOutOfRangeException(nameof(vertexCount));
+                if (count < 0)
+                    throw new ArgumentOutOfRangeException(nameof(count));
 
-                VertexCount = vertexCount;
+                Count = count;
             }
 
-            public int VertexCount { get; }
+            public int Count { get; }
 
-            public bool TryGet(ArraySegment<Color> map, int key, out Color value)
+            public bool TryGet(ArraySegment<T> map, int key, out T value)
             {
                 if ((uint)key >= (uint)map.Count || map.Array == null)
                 {
-                    value = default(Color);
+                    value = default(T);
                     return false;
                 }
 
@@ -76,7 +75,7 @@
                 return true;
             }
 
-            public bool TryPut(ArraySegment<Color> map, int key, Color value)
+            public bool TryPut(ArraySegment<T> map, int key, T value)
             {
                 if ((uint)key >= (uint)map.Count || map.Array == null)
                     return false;
@@ -85,15 +84,15 @@
                 return true;
             }
 
-            public ArraySegment<Color> Acquire(TGraph context)
+            public ArraySegment<T> Acquire(TGraph context)
             {
-                Color[] array = ArrayPool<Color>.Shared.Rent(VertexCount);
-                return new ArraySegment<Color>(array, 0, VertexCount);
+                T[] array = ArrayPool<T>.Shared.Rent(Count);
+                return new ArraySegment<T>(array, 0, Count);
             }
 
-            public void Release(TGraph context, ArraySegment<Color> value)
+            public void Release(TGraph context, ArraySegment<T> value)
             {
-                ArrayPool<Color>.Shared.Return(value.Array);
+                ArrayPool<T>.Shared.Return(value.Array);
             }
         }
     }
