@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Traversal.Benchmarks", "benchmarks\Ubiquitous.Traversal.Benchmarks\Ubiquitous.Traversal.Benchmarks.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Internal", "src\Ubiquitous.Internal\Ubiquitous.Internal.shproj", "{625CAE8B-4025-45E6-A282-693D067FEBF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,7 @@ Global
 		{820237AA-E7F9-44E6-A1E4-F817838F7FB3} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{FC43C720-FA61-4D4A-A99D-00E9A49A7287} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9} = {4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}
+		{625CAE8B-4025-45E6-A282-693D067FEBF8} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
