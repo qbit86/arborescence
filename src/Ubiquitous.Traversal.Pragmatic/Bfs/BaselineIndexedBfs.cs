@@ -15,13 +15,20 @@
             GraphConcept = graphConcept;
         }
 
-        public TGraphConcept GraphConcept { get; }
+        private TGraphConcept GraphConcept { get; }
 
         public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept> Traverse(
             TGraph graph, int startVertex, int vertexCount)
         {
             return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>(
-                graph, startVertex, vertexCount, GraphConcept);
+                graph, startVertex, vertexCount, 0, GraphConcept);
+        }
+
+        public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept> Traverse(
+            TGraph graph, int startVertex, int vertexCount, int queueCapacity)
+        {
+            return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>(
+                graph, startVertex, vertexCount, queueCapacity, GraphConcept);
         }
     }
 }

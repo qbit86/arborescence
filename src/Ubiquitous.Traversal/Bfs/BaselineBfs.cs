@@ -19,15 +19,23 @@
             ColorMapConcept = colorMapConcept;
         }
 
-        public TGraphConcept GraphConcept { get; }
-        public TColorMapConcept ColorMapConcept { get; }
+        private TGraphConcept GraphConcept { get; }
+        private TColorMapConcept ColorMapConcept { get; }
 
         public BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphConcept, TColorMapConcept>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex, GraphConcept, ColorMapConcept);
+                TGraphConcept, TColorMapConcept>(graph, startVertex, 0, GraphConcept, ColorMapConcept);
+        }
+
+        public BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapConcept>
+            Traverse(TGraph graph, TVertex startVertex, int queueCapacity)
+        {
+            return new BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapConcept>(graph, startVertex, queueCapacity, GraphConcept, ColorMapConcept);
         }
     }
 }

@@ -14,7 +14,7 @@
         IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
-        public BaselineBfsCollection(TGraph graph, TVertex startVertex,
+        public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,
             TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             if (graph == null)
@@ -22,6 +22,9 @@
 
             if (startVertex == null)
                 throw new ArgumentNullException(nameof(startVertex));
+
+            if (queueCapacity < 0)
+                throw new ArgumentOutOfRangeException(nameof(queueCapacity));
 
             if (graphConcept == null)
                 throw new ArgumentNullException(nameof(graphConcept));
@@ -33,19 +36,16 @@
             StartVertex = startVertex;
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
+            QueueCapacity = queueCapacity;
         }
 
-        public TGraph Graph { get; }
-        public TVertex StartVertex { get; }
-        public TGraphConcept GraphConcept { get; }
-        public TColorMapConcept ColorMapConcept { get; }
+        private TGraph Graph { get; }
+        private TVertex StartVertex { get; }
+        private TGraphConcept GraphConcept { get; }
+        private TColorMapConcept ColorMapConcept { get; }
+        private int QueueCapacity { get; }
 
         public IEnumerator<TEdge> GetEnumerator()
-        {
-            return GetEnumerator(0);
-        }
-
-        public IEnumerator<TEdge> GetEnumerator(int queueCapacity)
         {
             if (Graph == null)
                 throw new InvalidOperationException($"{nameof(Graph)}: null");
@@ -59,16 +59,13 @@
             if (ColorMapConcept == null)
                 throw new InvalidOperationException($"{nameof(ColorMapConcept)}: null");
 
-            if (queueCapacity < 0)
-                throw new ArgumentOutOfRangeException(nameof(queueCapacity));
-
-            Queue<TVertex> preallocatedQueue = queueCapacity > 0 ? new Queue<TVertex>(queueCapacity) : null;
+            Queue<TVertex> preallocatedQueue = QueueCapacity > 0 ? new Queue<TVertex>(QueueCapacity) : null;
             return GetEnumeratorCoroutine(preallocatedQueue);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator(0);
+            return GetEnumerator();
         }
 
         private IEnumerator<TEdge> GetEnumeratorCoroutine(Queue<TVertex> preallocatedQueue)

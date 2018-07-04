@@ -10,38 +10,21 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
     {
-        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount,
+        private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
+            TGraphConcept, IndexedMapConcept<TGraph, Color>> _impl;
+
+        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, int queueCapacity,
             TGraphConcept graphConcept)
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
-
-            if (startVertex < 0)
-                throw new ArgumentOutOfRangeException(nameof(startVertex));
-
-            if (vertexCount <= startVertex)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
-
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
-
-            Graph = graph;
-            StartVertex = startVertex;
-            VertexCount = vertexCount;
-            GraphConcept = graphConcept;
+            var colorMapConcept = new IndexedMapConcept<TGraph, Color>(vertexCount);
+            _impl = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
+                TGraphConcept, IndexedMapConcept<TGraph, Color>>(
+                graph, startVertex, queueCapacity, graphConcept, colorMapConcept);
         }
-
-        public TGraph Graph { get; }
-        public int StartVertex { get; }
-        public int VertexCount { get; }
-        public TGraphConcept GraphConcept { get; }
 
         public IEnumerator<TEdge> GetEnumerator()
         {
-            var colorMapConcept = new IndexedMapConcept<TGraph, Color>(VertexCount);
-            var steps = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
-                TGraphConcept, IndexedMapConcept<TGraph, Color>>(Graph, StartVertex, GraphConcept, colorMapConcept);
-            return steps.GetEnumerator();
+            return _impl.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
