@@ -1,9 +1,9 @@
 ﻿namespace Ubiquitous.Traversal.Pragmatic
 {
     using System;
+    using System.Buffers;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
     public readonly struct BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>
@@ -38,19 +38,11 @@
 
         public IEnumerator<TEdge> GetEnumerator()
         {
-            if (Graph == null)
-                throw new InvalidOperationException($"{nameof(Graph)}: null");
+            var colorMapConcept = new IndexedColorMapConcept(VertexCount);
 
-            if (StartVertex < 0)
-                throw new InvalidOperationException($"{nameof(StartVertex)}: {StartVertex}");
-
-            if (VertexCount <= StartVertex)
-                throw new InvalidOperationException($"{nameof(VertexCount)}: {VertexCount}");
-
-            if (GraphConcept == null)
-                throw new InvalidOperationException($"{nameof(GraphConcept)}: null");
-
-            return GetEnumeratorCoroutine();
+            var steps = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
+                TGraphConcept, IndexedColorMapConcept>(Graph, StartVertex, GraphConcept, colorMapConcept);
+            return steps.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -58,70 +50,51 @@
             return GetEnumerator();
         }
 
-        private IEnumerator<TEdge> GetEnumeratorCoroutine()
+        // TODO: Refactor via IndexedMapConcept<T>.
+        private readonly struct IndexedColorMapConcept
+            : IMapConcept<ArraySegment<Color>, int, Color>, IFactory<TGraph, ArraySegment<Color>>
         {
-            var colorMap = new Color[VertexCount];
-            var queue = new Queue<int>();
-
-            Put(colorMap, StartVertex, Color.Gray);
-            queue.Enqueue(StartVertex);
-
-            while (queue.Count > 0)
+            public IndexedColorMapConcept(int vertexCount)
             {
-                int u = queue.Dequeue();
-                if (GraphConcept.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
+                if (vertexCount < 0)
+                    throw new ArgumentOutOfRangeException(nameof(vertexCount));
+
+                VertexCount = vertexCount;
+            }
+
+            public int VertexCount { get; }
+
+            public bool TryGet(ArraySegment<Color> map, int key, out Color value)
+            {
+                if ((uint)key >= (uint)map.Count || map.Array == null)
                 {
-                    while (outEdges.MoveNext())
-                    {
-                        TEdge e = outEdges.Current;
-
-                        if (!GraphConcept.TryGetTarget(Graph, e, out int v))
-                            continue;
-
-                        Color color = Get(colorMap, v);
-
-                        switch (color)
-                        {
-                            case Color.None:
-                            case Color.White:
-                            {
-                                Put(colorMap, v, Color.Gray);
-                                queue.Enqueue(v);
-                                yield return e;
-                                break;
-                            }
-                        }
-                    }
+                    value = default(Color);
+                    return false;
                 }
 
-                Put(colorMap, u, Color.Black);
+                value = map.Array[key];
+                return true;
             }
-        }
 
-        private static Color Get(Color[] colorMap, int key)
-        {
-            Debug.Assert(colorMap != null);
+            public bool TryPut(ArraySegment<Color> map, int key, Color value)
+            {
+                if ((uint)key >= (uint)map.Count || map.Array == null)
+                    return false;
 
-            if (key < 0)
-                return Color.None;
+                map.Array[key] = value;
+                return true;
+            }
 
-            if (colorMap.Length <= key)
-                return Color.None;
+            public ArraySegment<Color> Acquire(TGraph context)
+            {
+                var array = ArrayPool<Color>.Shared.Rent(VertexCount);
+                return new ArraySegment<Color>(array, 0, VertexCount);
+            }
 
-            return colorMap[key];
-        }
-
-        private static void Put(Color[] colorMap, int key, Color value)
-        {
-            Debug.Assert(colorMap != null);
-
-            if (key < 0)
-                return;
-
-            if (colorMap.Length <= key)
-                return;
-
-            colorMap[key] = value;
+            public void Release(TGraph context, ArraySegment<Color> value)
+            {
+                ArrayPool<Color>.Shared.Return(value.Array);
+            }
         }
     }
 }
