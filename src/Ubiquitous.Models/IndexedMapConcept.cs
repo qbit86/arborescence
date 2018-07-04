@@ -20,7 +20,7 @@
         {
             if ((uint)key >= (uint)map.Count || map.Array == null)
             {
-                value = default(T);
+                value = default;
                 return false;
             }
 

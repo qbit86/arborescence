@@ -32,7 +32,7 @@
         {
             if (edge < 0 || edge >= Endpoints.Count)
             {
-                endpoints = default(SourceTargetPair<int>);
+                endpoints = default;
                 return false;
             }
 
@@ -44,7 +44,7 @@
         {
             if (vertex < 0 || vertex >= VertexCount)
             {
-                outEdges = default(ImmutableArrayEnumeratorAdapter<int>);
+                outEdges = default;
                 return false;
             }
 

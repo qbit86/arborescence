@@ -10,7 +10,8 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
     {
-        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, TGraphConcept graphConcept)
+        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount,
+            TGraphConcept graphConcept)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));

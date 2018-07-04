@@ -143,7 +143,7 @@
         {
             if (!ContainsKey(key))
             {
-                value = default(TValue);
+                value = default;
                 return false;
             }
 

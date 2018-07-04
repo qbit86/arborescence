@@ -8,7 +8,7 @@
         {
             SourceTargetPair<int> endpoints;
             bool result = graph.TryGetEndpoints(edge, out endpoints);
-            source = result ? endpoints.Source : default(int);
+            source = result ? endpoints.Source : default;
             return result;
         }
 
@@ -16,7 +16,7 @@
         {
             SourceTargetPair<int> endpoints;
             bool result = graph.TryGetEndpoints(edge, out endpoints);
-            target = result ? endpoints.Target : default(int);
+            target = result ? endpoints.Target : default;
             return result;
         }
 
