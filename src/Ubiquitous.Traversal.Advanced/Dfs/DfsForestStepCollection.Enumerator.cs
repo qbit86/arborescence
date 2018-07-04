@@ -27,6 +27,7 @@ namespace Ubiquitous.Traversal.Advanced
             private DisposalStatus _colorMapDisposalStatus;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
+
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>
                 _stepEnumerator;
 
@@ -66,6 +67,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = int.MaxValue;
                                 continue;
                             }
+
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
                             _state = 1;
                             continue;
@@ -77,6 +79,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = int.MaxValue;
                                 continue;
                             }
+
                             _state = 2;
                             continue;
                         }
@@ -91,6 +94,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = 1;
                                 continue;
                             }
+
                             _current = Step.Create(DfsStepKind.StartVertex, _vertexEnumerator.Current,
                                 default(TEdge));
                             _state = 3;
@@ -104,6 +108,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = int.MaxValue;
                                 continue;
                             }
+
                             _stackDisposalStatus = DisposalStatus.Initialized;
                             _state = 4;
                             continue;
@@ -126,6 +131,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = 1;
                                 continue;
                             }
+
                             _current = _stepEnumerator.Current;
                             _state = 5;
                             return true;

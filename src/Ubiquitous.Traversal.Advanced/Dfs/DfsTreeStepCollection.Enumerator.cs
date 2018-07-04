@@ -25,8 +25,9 @@ namespace Ubiquitous.Traversal.Advanced
             private DisposalStatus _colorMapDisposalStatus;
             private TStack _stack;
             private DisposalStatus _stackDisposalStatus;
+
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                    TGraphConcept> _stepEnumerator;
+                TGraphConcept> _stepEnumerator;
 
             internal Enumerator(DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TGraphConcept, TColorMapFactory, TStackFactory> collection)
@@ -64,6 +65,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = int.MaxValue;
                                 continue;
                             }
+
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
                             _state = 2;
                             continue;
@@ -82,6 +84,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = int.MaxValue;
                                 continue;
                             }
+
                             _stackDisposalStatus = DisposalStatus.Initialized;
                             _state = 4;
                             continue;
@@ -103,6 +106,7 @@ namespace Ubiquitous.Traversal.Advanced
                                 _state = int.MaxValue;
                                 continue;
                             }
+
                             _current = _stepEnumerator.Current;
                             _state = 5;
                             return true;
