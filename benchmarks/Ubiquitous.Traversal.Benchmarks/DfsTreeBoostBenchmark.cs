@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable SuggestVarOrType_Elsewhere
+
+namespace Ubiquitous
 {
     using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
@@ -94,7 +96,6 @@
         public int DefaultDfsTree()
         {
             int count = 0;
-            // ReSharper disable once SuggestVarOrType_Elsewhere
             var steps = DefaultDfs.Traverse(Graph, 0);
             foreach (Step<DfsStepKind, int, int> _ in steps)
                 ++count;
@@ -106,7 +107,6 @@
         public int CachingDfsTree()
         {
             int count = 0;
-            // ReSharper disable once SuggestVarOrType_Elsewhere
             var steps = CachingDfs.Traverse(Graph, 0);
             foreach (Step<DfsStepKind, int, int> _ in steps)
                 ++count;
