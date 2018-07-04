@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Internal;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
     public readonly struct BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -64,10 +65,9 @@
         private IEnumerator<TEdge> GetEnumeratorCoroutine()
         {
             TColorMap colorMap = ColorMapConcept.Acquire(Graph);
+            Queue<TVertex> queue = QueuePool<TVertex>.Shared.Rent();
             try
             {
-                var queue = new Queue<TVertex>();
-
                 if (!ColorMapConcept.TryPut(colorMap, StartVertex, Color.Gray))
                     yield break;
 
@@ -107,6 +107,7 @@
             }
             finally
             {
+                QueuePool<TVertex>.Shared.Return(queue);
                 ColorMapConcept.Release(Graph, colorMap);
             }
         }
