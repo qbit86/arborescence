@@ -24,7 +24,7 @@
                 return false;
             }
 
-            value = map.Array[key];
+            value = map.Array[key + map.Offset];
             return true;
         }
 
@@ -33,7 +33,7 @@
             if ((uint)key >= (uint)map.Count || map.Array == null)
                 return false;
 
-            map.Array[key] = value;
+            map.Array[key + map.Offset] = value;
             return true;
         }
 
