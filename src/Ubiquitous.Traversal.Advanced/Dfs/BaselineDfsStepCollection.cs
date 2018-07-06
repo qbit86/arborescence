@@ -4,12 +4,13 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
+    internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            TGraphConcept, TColorMapConcept>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>
     {
         private TColorMap _colorMap;
 
@@ -19,16 +20,20 @@
 
         private TGraphConcept GraphConcept { get; }
 
+        private TColorMapConcept ColorMapConcept { get; }
+
         public BaselineDfsStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
-            TGraphConcept graphConcept)
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             Assert(colorMap != null);
             Assert(graphConcept != null);
+            Assert(colorMapConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
             _colorMap = colorMap;
             GraphConcept = graphConcept;
+            ColorMapConcept = colorMapConcept;
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -44,7 +49,9 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex)
         {
-            _colorMap[vertex] = Color.Gray;
+            if (!ColorMapConcept.TryPut(_colorMap, vertex, Color.Gray))
+                yield break;
+
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
             if (GraphConcept.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
@@ -57,7 +64,9 @@
                 }
             }
 
-            _colorMap[vertex] = Color.Black;
+            if (!ColorMapConcept.TryPut(_colorMap, vertex, Color.Black))
+                yield break;
+
             yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
         }
 
@@ -67,7 +76,7 @@
 
             if (GraphConcept.TryGetTarget(Graph, edge, out TVertex target))
             {
-                if (!_colorMap.TryGetValue(target, out Color neighborColor))
+                if (!ColorMapConcept.TryGet(_colorMap, target, out Color neighborColor))
                     neighborColor = Color.None;
 
                 switch (neighborColor)

@@ -9,10 +9,9 @@
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IFactory<TGraph, TColorMap>
+        where TColorMapFactory : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
         private TVertexEnumerator _vertexEnumerator;
 
@@ -58,7 +57,7 @@
                 {
                     TVertex vertex = _vertexEnumerator.Current;
 
-                    if (!colorMap.TryGetValue(vertex, out Color vertexColor))
+                    if (!_colorMapFactory.TryGet(colorMap, vertex, out Color vertexColor))
                         vertexColor = Color.None;
 
                     if (vertexColor != Color.None && vertexColor != Color.White)
@@ -67,7 +66,7 @@
                     yield return Step.Create(DfsStepKind.StartVertex, vertex, default(TEdge));
 
                     var steps = new BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                        TGraphConcept>(Graph, vertex, colorMap, GraphConcept);
+                        TGraphConcept, TColorMapFactory>(Graph, vertex, colorMap, GraphConcept, _colorMapFactory);
                     using (IEnumerator<Step<DfsStepKind, TVertex, TEdge>> stepEnumerator = steps.GetEnumerator())
                     {
                         while (stepEnumerator.MoveNext())
