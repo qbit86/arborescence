@@ -24,8 +24,20 @@
         public override List<T> Rent(int desiredCapacity)
         {
             bool isCached = CachedInstanceReference.TryGetTarget(out List<T> result);
+            CachedInstanceReference.SetTarget(null);
+
             if (desiredCapacity > 0)
-                return result.Capacity >= desiredCapacity ? result : new List<T>(desiredCapacity);
+            {
+                if (isCached)
+                {
+                    if (result.Capacity < desiredCapacity)
+                        result.Capacity = desiredCapacity;
+
+                    return result;
+                }
+
+                return new List<T>(desiredCapacity);
+            }
 
             return isCached ? result : new List<T>();
         }
