@@ -5,6 +5,7 @@ namespace Ubiquitous.Traversal.Advanced
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Internal;
     using static System.Diagnostics.Debug;
 
     public partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
@@ -16,18 +17,18 @@ namespace Ubiquitous.Traversal.Advanced
             private int _state;
 
             private TColorMapFactory _colorMapFactory;
-            private TStackFactory _stackFactory;
             private TGraphConcept _graphConcept;
 
             private readonly TGraph _graph;
             private readonly TVertex _startVertex;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
-            private TStack _stack;
+            private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
 
-            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept> _stepEnumerator;
+            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                    List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>, TGraphConcept>
+                _stepEnumerator;
 
             internal Enumerator(DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
                 TGraphConcept, TColorMapFactory, TStackFactory> collection)
@@ -44,11 +45,9 @@ namespace Ubiquitous.Traversal.Advanced
                 _colorMapFactory = collection.ColorMapFactory;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
-                _stackFactory = collection.StackFactory;
-                _stack = default(TStack);
+                _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                    TColorMap, TStack, TGraphConcept>);
+                _stepEnumerator = default;
             }
 
             public bool MoveNext()
@@ -78,7 +77,7 @@ namespace Ubiquitous.Traversal.Advanced
                         }
                         case 3:
                         {
-                            _stack = _stackFactory.Acquire(_graph);
+                            _stack = ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Rent(0);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;
@@ -93,7 +92,7 @@ namespace Ubiquitous.Traversal.Advanced
                         {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                                TColorMap, TStack, TGraphConcept>(
+                                TColorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>, TGraphConcept>(
                                 _graph, _startVertex, _colorMap, _stack, _graphConcept);
                             _state = 5;
                             continue;
@@ -133,10 +132,9 @@ namespace Ubiquitous.Traversal.Advanced
 
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
-                _stack = default(TStack);
+                _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator = default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                    TColorMap, TStack, TGraphConcept>);
+                _stepEnumerator = default;
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -162,8 +160,8 @@ namespace Ubiquitous.Traversal.Advanced
 
                 if (_stackDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _stackFactory.Release(_graph, _stack);
-                    _stack = default(TStack);
+                    ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Return(_stack);
+                    _stack = null;
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
             }
