@@ -5,12 +5,12 @@
     using static System.Diagnostics.Debug;
 
     public partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphConcept, TColorMapFactory>
+            TGraphConcept, TColorMapConcept>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
 
@@ -18,17 +18,17 @@
 
         private TGraphConcept GraphConcept { get; }
 
-        private TColorMapFactory ColorMapFactory { get; }
+        private TColorMapConcept ColorMapConcept { get; }
 
         internal DfsTreeStepCollection(TGraph graph, TVertex startVertex,
-            TGraphConcept graphConcept, TColorMapFactory colorMapFactory)
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
-            Assert(colorMapFactory != null);
+            Assert(colorMapConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
             GraphConcept = graphConcept;
-            ColorMapFactory = colorMapFactory;
+            ColorMapConcept = colorMapConcept;
         }
 
         public Enumerator GetEnumerator()
