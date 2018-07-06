@@ -158,8 +158,9 @@ namespace Ubiquitous.Traversal.Advanced
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator = default(
-                    DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept, TColorMapFactory>);
+                _stepEnumerator =
+                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
+                        TColorMapFactory>);
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
