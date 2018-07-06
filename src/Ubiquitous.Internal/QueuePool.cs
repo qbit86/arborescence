@@ -27,6 +27,7 @@
                 return new Queue<T>(desiredCapacity);
 
             bool isCached = CachedInstanceReference.TryGetTarget(out Queue<T> result);
+            CachedInstanceReference.SetTarget(null);
             return isCached ? result : new Queue<T>();
         }
 
