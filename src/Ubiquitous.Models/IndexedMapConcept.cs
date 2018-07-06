@@ -47,5 +47,11 @@
         {
             ArrayPool<T>.Shared.Return(value.Array);
         }
+
+        public void Warmup()
+        {
+            T[] array = ArrayPool<T>.Shared.Rent(Count);
+            ArrayPool<T>.Shared.Return(array);
+        }
     }
 }

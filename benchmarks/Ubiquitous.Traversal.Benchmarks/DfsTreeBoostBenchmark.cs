@@ -5,10 +5,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
-    using LegacyColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
-    using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
-    using CachingColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
     using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
 
     [MemoryDiagnoser]
@@ -48,9 +45,8 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphInstance, ColorMapConcept>
             DefaultDfs { get; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                LegacyColorMap,
-                IndexedAdjacencyListGraphInstance, CachingColorMapFactory>
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, ColorMapConcept>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -60,15 +56,15 @@ namespace Ubiquitous
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            var colorMapFactory = new CachingColorMapFactory();
-            colorMapFactory.Warmup(VertexCount);
+            var indexedMapConcept = new IndexedMapConcept<IndexedAdjacencyListGraph, Color>(VertexCount);
+            indexedMapConcept.Warmup();
 
             CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                .WithColorMap<LegacyColorMap>()
+                .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(colorMapFactory)
+                .WithColorMapFactory(indexedMapConcept)
                 .Create();
         }
 
