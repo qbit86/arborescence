@@ -4,7 +4,8 @@
     using static System.Diagnostics.Debug;
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
+    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
@@ -21,10 +22,11 @@
         private TColorMap _colorMap;
         private readonly List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
         private TGraphConcept _graphConcept;
+        private TColorMapConcept _colorMapConcept;
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
             TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
-            TGraphConcept graphConcept)
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             Assert(colorMap != null);
             Assert(graphConcept != null);
@@ -33,6 +35,7 @@
             _colorMap = colorMap;
             _stack = stack;
             _graphConcept = graphConcept;
+            _colorMapConcept = colorMapConcept;
 
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;

@@ -28,8 +28,8 @@ namespace Ubiquitous.Traversal.Advanced
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
 
-            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
-                _stepEnumerator;
+            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
+                TColorMapFactory> _stepEnumerator;
 
             public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TGraphConcept, TColorMapFactory> collection)
@@ -47,8 +47,9 @@ namespace Ubiquitous.Traversal.Advanced
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator = default(
-                    DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>);
+                _stepEnumerator =
+                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
+                        TColorMapFactory>);
             }
 
             public bool MoveNext()
@@ -114,8 +115,8 @@ namespace Ubiquitous.Traversal.Advanced
                         {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                                TColorMap, TGraphConcept>(
-                                _graph, _vertexEnumerator.Current, _colorMap, _stack, _graphConcept);
+                                TColorMap, TGraphConcept, TColorMapFactory>(
+                                _graph, _vertexEnumerator.Current, _colorMap, _stack, _graphConcept, _colorMapFactory);
                             _state = 5;
                             continue;
                         }
@@ -158,7 +159,7 @@ namespace Ubiquitous.Traversal.Advanced
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator = default(
-                    DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>);
+                    DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept, TColorMapFactory>);
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
