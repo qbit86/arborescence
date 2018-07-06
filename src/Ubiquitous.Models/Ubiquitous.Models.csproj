@@ -19,7 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>$(ProgramFiles)\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Buffers.dll</HintPath>
+      <HintPath>$(MSBuildExtensionsPath64)\..\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Buffers.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
