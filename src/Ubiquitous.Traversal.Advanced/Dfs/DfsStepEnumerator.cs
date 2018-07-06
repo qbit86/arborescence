@@ -1,14 +1,17 @@
-﻿namespace Ubiquitous.Traversal.Advanced
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
+
+namespace Ubiquitous.Traversal.Advanced
 {
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
+    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+        TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>
     {
         private Step<DfsStepKind, TVertex, TEdge> _current;
         private int _state;
@@ -21,10 +24,11 @@
         private TColorMap _colorMap;
         private readonly List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
         private TGraphConcept _graphConcept;
+        private TColorMapConcept _colorMapConcept;
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
             TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
-            TGraphConcept graphConcept)
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             Assert(colorMap != null);
             Assert(graphConcept != null);
@@ -33,6 +37,7 @@
             _colorMap = colorMap;
             _stack = stack;
             _graphConcept = graphConcept;
+            _colorMapConcept = colorMapConcept;
 
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
@@ -61,7 +66,7 @@
                 {
                     case 0:
                     {
-                        _colorMap[_currentVertex] = Color.Gray;
+                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Gray);
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 1;
                         return true;
@@ -72,7 +77,7 @@
                             _graphConcept.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
                         {
-                            _colorMap[_currentVertex] = Color.Black;
+                            _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Black);
                             _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                             _state = int.MaxValue;
                             return true;
@@ -127,7 +132,7 @@
                     }
                     case 4:
                     {
-                        if (!_colorMap.TryGetValue(_neighborVertex, out Color neighborColor))
+                        if (!_colorMapConcept.TryGet(_colorMap, _neighborVertex, out Color neighborColor))
                             neighborColor = Color.None;
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
@@ -153,7 +158,7 @@
                             CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
-                        _colorMap[_currentVertex] = Color.Gray;
+                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Gray);
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 6;
                         return true;
@@ -178,7 +183,7 @@
                     }
                     case short.MaxValue:
                     {
-                        _colorMap[_currentVertex] = Color.Black;
+                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Black);
                         _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                         _state = 2;
                         return true;

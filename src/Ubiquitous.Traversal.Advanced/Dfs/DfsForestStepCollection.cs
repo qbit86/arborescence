@@ -5,14 +5,13 @@
     using static System.Diagnostics.Debug;
 
     public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-            TColorMap, TGraphConcept, TColorMapFactory>
+            TColorMap, TGraphConcept, TColorMapConcept>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
 
@@ -20,18 +19,18 @@
 
         private TGraphConcept GraphConcept { get; }
 
-        private TColorMapFactory ColorMapFactory { get; }
+        private TColorMapConcept ColorMapConcept { get; }
 
         internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator,
-            TGraphConcept graphConcept, TColorMapFactory colorMapFactory)
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             Assert(vertexEnumerator != null);
-            Assert(colorMapFactory != null);
+            Assert(colorMapConcept != null);
 
             Graph = graph;
             VertexEnumerator = vertexEnumerator;
             GraphConcept = graphConcept;
-            ColorMapFactory = colorMapFactory;
+            ColorMapConcept = colorMapConcept;
         }
 
         public Enumerator GetEnumerator()

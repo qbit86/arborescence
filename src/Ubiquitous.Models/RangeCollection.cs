@@ -7,7 +7,7 @@ namespace Ubiquitous
     using System.Collections;
     using System.Collections.Generic;
 
-    public struct RangeCollection : IReadOnlyCollection<int>, IEquatable<RangeCollection>
+    public readonly struct RangeCollection : IReadOnlyCollection<int>, IEquatable<RangeCollection>
     {
         public int Start { get; }
 

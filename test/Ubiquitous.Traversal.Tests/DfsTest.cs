@@ -6,8 +6,8 @@
     using Traversal.Advanced;
     using Xunit;
     using Xunit.Abstractions;
-    using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
-    using ColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
+    using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {
@@ -39,12 +39,14 @@
 
         public DfsTest(ITestOutputHelper output)
         {
+            var colorMapConcept = new ColorMapConcept(VertexCount);
+
             Dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory<ColorMapFactory>()
+                .WithColorMapConcept(colorMapConcept)
                 .Create();
 
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -52,18 +54,18 @@
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory<ColorMapFactory>()
+                .WithColorMapConcept(colorMapConcept)
                 .Create();
 
             Output = output;
         }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapConcept>
             Dfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapConcept>
             BaselineDfs { get; }
 
         private ITestOutputHelper Output { get; }

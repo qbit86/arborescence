@@ -6,9 +6,9 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using Traversal.Advanced;
     using static System.Diagnostics.Debug;
-    using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
+    using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
     using StepMap = IndexedDictionary<Traversal.Advanced.DfsStepKind, Traversal.Advanced.DfsStepKind[]>;
-    using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
 
     internal static partial class Program
     {
@@ -32,6 +32,7 @@ namespace Ubiquitous
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             var vertices = new RangeCollection(0, graph.VertexCount);
+            var indexedMapConcept = new IndexedMapConcept<IndexedAdjacencyListGraph, Color>(graph.VertexCount);
 
             {
                 var dfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -39,7 +40,7 @@ namespace Ubiquitous
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithColorMapFactory<ColorMapFactory>()
+                    .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
@@ -57,7 +58,7 @@ namespace Ubiquitous
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithColorMapFactory<ColorMapFactory>()
+                    .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
