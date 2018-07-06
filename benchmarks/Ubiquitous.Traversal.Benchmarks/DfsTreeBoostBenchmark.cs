@@ -8,9 +8,6 @@ namespace Ubiquitous
     using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
     using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
     using CachingColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
-    using ListFactory =
-        ListFactory<IndexedAdjacencyListGraph,
-            Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
