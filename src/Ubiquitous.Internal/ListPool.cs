@@ -25,7 +25,7 @@
         {
             bool isCached = CachedInstanceReference.TryGetTarget(out List<T> result);
             if (desiredCapacity > 0)
-                return result.Capacity >= desiredCapacity ? result : new List<T>(desiredCapacity);
+                return (isCached && result.Capacity >= desiredCapacity) ? result : new List<T>(desiredCapacity);
 
             return isCached ? result : new List<T>();
         }
