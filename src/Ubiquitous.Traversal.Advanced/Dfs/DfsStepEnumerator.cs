@@ -19,7 +19,7 @@
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
 
         private TColorMap _colorMap;
-        private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
+        private readonly List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
         private TGraphConcept _graphConcept;
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
