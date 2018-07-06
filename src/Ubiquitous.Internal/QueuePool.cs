@@ -26,10 +26,8 @@
             if (desiredCapacity > 0)
                 return new Queue<T>(desiredCapacity);
 
-            if (CachedInstanceReference.TryGetTarget(out Queue<T> result))
-                return result;
-
-            return new Queue<T>();
+            bool isCached = CachedInstanceReference.TryGetTarget(out Queue<T> result);
+            return isCached ? result : new Queue<T>();
         }
 
         public override void Return(Queue<T> queue)
