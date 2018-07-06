@@ -46,7 +46,7 @@
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(colorMapConcept)
+                .WithColorMapConcept(colorMapConcept)
                 .Create();
 
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -54,7 +54,7 @@
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(colorMapConcept)
+                .WithColorMapConcept(colorMapConcept)
                 .Create();
 
             Output = output;

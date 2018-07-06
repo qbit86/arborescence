@@ -40,7 +40,7 @@ namespace Ubiquitous
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithColorMapFactory(indexedMapConcept)
+                    .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
@@ -58,7 +58,7 @@ namespace Ubiquitous
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithColorMapFactory(indexedMapConcept)
+                    .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();

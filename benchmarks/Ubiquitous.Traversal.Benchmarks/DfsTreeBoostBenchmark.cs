@@ -20,7 +20,7 @@ namespace Ubiquitous
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(colorMapConcept)
+                .WithColorMapConcept(colorMapConcept)
                 .Create();
 
             DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -28,7 +28,7 @@ namespace Ubiquitous
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(colorMapConcept)
+                .WithColorMapConcept(colorMapConcept)
                 .Create();
         }
 
@@ -64,7 +64,7 @@ namespace Ubiquitous
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(indexedMapConcept)
+                .WithColorMapConcept(indexedMapConcept)
                 .Create();
         }
 

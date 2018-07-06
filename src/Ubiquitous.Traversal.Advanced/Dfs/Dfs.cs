@@ -4,39 +4,39 @@
     using System.Collections.Generic;
 
     public struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphConcept, TColorMapFactory>
+        TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
         private TGraphConcept GraphConcept { get; }
 
-        private TColorMapFactory ColorMapFactory { get; }
+        private TColorMapConcept ColorMapConcept { get; }
 
-        public Dfs(TGraphConcept graphConcept, TColorMapFactory colorMapFactory)
+        public Dfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             if (graphConcept == null)
                 throw new ArgumentNullException(nameof(graphConcept));
 
-            if (colorMapFactory == null)
-                throw new ArgumentNullException(nameof(colorMapFactory));
+            if (colorMapConcept == null)
+                throw new ArgumentNullException(nameof(colorMapConcept));
 
             GraphConcept = graphConcept;
-            ColorMapFactory = colorMapFactory;
+            ColorMapConcept = colorMapConcept;
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapFactory>
+                TGraphConcept, TColorMapConcept>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapFactory>(graph, startVertex,
-                GraphConcept, ColorMapFactory);
+                TGraphConcept, TColorMapConcept>(graph, startVertex,
+                GraphConcept, ColorMapConcept);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapFactory>
+                TGraphConcept, TColorMapConcept>
             Traverse<TVertexEnumerator>(TGraph graph, TVertexEnumerator vertexEnumerator)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
@@ -44,8 +44,8 @@
                 throw new ArgumentNullException(nameof(vertexEnumerator));
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapFactory>(graph,
-                vertexEnumerator, GraphConcept, ColorMapFactory);
+                TColorMap, TGraphConcept, TColorMapConcept>(graph,
+                vertexEnumerator, GraphConcept, ColorMapConcept);
         }
     }
 }
