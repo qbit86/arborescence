@@ -6,8 +6,6 @@ namespace Ubiquitous
     using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
     using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
-    using Stack = System.Collections.Generic.List<Traversal.Advanced.DfsStackFrame<
-        int, int, ImmutableArrayEnumeratorAdapter<int>>>;
     using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
     using CachingColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
     using ListFactory =
@@ -33,10 +31,9 @@ namespace Ubiquitous
             DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                .WithColorMap<ColorMap>().WithStack<Stack>()
+                .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
-                .WithStackFactory<ListFactory>()
                 .Create();
         }
 
@@ -50,13 +47,13 @@ namespace Ubiquitous
             BaselineDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, Stack,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory, ListFactory>
+                ColorMap,
+                IndexedAdjacencyListGraphInstance, ColorMapFactory>
             DefaultDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, Stack,
-                IndexedAdjacencyListGraphInstance, CachingColorMapFactory, CachingListFactory>
+                ColorMap,
+                IndexedAdjacencyListGraphInstance, CachingColorMapFactory>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -74,10 +71,9 @@ namespace Ubiquitous
             CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                .WithColorMap<ColorMap>().WithStack<Stack>()
+                .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory(colorMapFactory)
-                .WithStackFactory(stackFactory)
                 .Create();
         }
 
