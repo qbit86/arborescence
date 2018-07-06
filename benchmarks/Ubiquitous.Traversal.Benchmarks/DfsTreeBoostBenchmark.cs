@@ -11,9 +11,6 @@ namespace Ubiquitous
     using ListFactory =
         ListFactory<IndexedAdjacencyListGraph,
             Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
-    using CachingListFactory =
-        CachingListFactory<IndexedAdjacencyListGraph,
-            Traversal.Advanced.DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
@@ -65,8 +62,6 @@ namespace Ubiquitous
 
             var colorMapFactory = new CachingColorMapFactory();
             colorMapFactory.Warmup(VertexCount);
-            var stackFactory = new CachingListFactory(VertexCount);
-            stackFactory.Warmup();
 
             CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
