@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Internal;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
@@ -34,16 +35,16 @@
 
             Graph = graph;
             StartVertex = startVertex;
+            QueueCapacity = queueCapacity;
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
-            QueueCapacity = queueCapacity;
         }
 
         private TGraph Graph { get; }
         private TVertex StartVertex { get; }
+        private int QueueCapacity { get; }
         private TGraphConcept GraphConcept { get; }
         private TColorMapConcept ColorMapConcept { get; }
-        private int QueueCapacity { get; }
 
         public IEnumerator<TEdge> GetEnumerator()
         {
@@ -59,8 +60,9 @@
             if (ColorMapConcept == null)
                 throw new InvalidOperationException($"{nameof(ColorMapConcept)}: null");
 
-            Queue<TVertex> preallocatedQueue = QueueCapacity > 0 ? new Queue<TVertex>(QueueCapacity) : null;
-            return GetEnumeratorCoroutine(preallocatedQueue);
+            TColorMap colorMap = ColorMapConcept.Acquire(Graph);
+            Queue<TVertex> queue = QueuePool<TVertex>.Shared.Rent(QueueCapacity);
+            return GetEnumeratorCoroutine(colorMap, queue);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -68,10 +70,11 @@
             return GetEnumerator();
         }
 
-        private IEnumerator<TEdge> GetEnumeratorCoroutine(Queue<TVertex> preallocatedQueue)
+        private IEnumerator<TEdge> GetEnumeratorCoroutine(TColorMap colorMap, Queue<TVertex> queue)
         {
-            TColorMap colorMap = ColorMapConcept.Acquire(Graph);
-            Queue<TVertex> queue = preallocatedQueue ?? QueuePool<TVertex>.Shared.Rent();
+            Debug.Assert(colorMap != null);
+            Debug.Assert(queue != null);
+
             try
             {
                 if (!ColorMapConcept.TryPut(colorMap, StartVertex, Color.Gray))

@@ -9,7 +9,7 @@
 
         public static QueuePool<T> Shared => s_sharedInstance ?? (s_sharedInstance = new DefaultQueuePool<T>());
 
-        public abstract Queue<T> Rent();
+        public abstract Queue<T> Rent(int desiredCapacity);
 
         public abstract void Return(Queue<T> queue);
     }
@@ -21,9 +21,15 @@
         private WeakReference<Queue<T>> CachedInstanceReference => _cachedInstanceReference
             ?? (_cachedInstanceReference = new WeakReference<Queue<T>>(null, false));
 
-        public override Queue<T> Rent()
+        public override Queue<T> Rent(int desiredCapacity)
         {
-            return CachedInstanceReference.TryGetTarget(out Queue<T> result) ? result : new Queue<T>();
+            if (desiredCapacity > 0)
+                return new Queue<T>(desiredCapacity);
+
+            if (CachedInstanceReference.TryGetTarget(out Queue<T> result))
+                return result;
+
+            return new Queue<T>();
         }
 
         public override void Return(Queue<T> queue)
