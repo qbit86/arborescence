@@ -6,10 +6,8 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using Traversal.Advanced;
     using static System.Diagnostics.Debug;
-    using LegacyColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
     using StepMap = IndexedDictionary<Traversal.Advanced.DfsStepKind, Traversal.Advanced.DfsStepKind[]>;
-    using LegacyColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
     using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
 
     internal static partial class Program
@@ -58,9 +56,9 @@ namespace Ubiquitous
                 var dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                    .WithColorMap<LegacyColorMap>()
+                    .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                    .WithColorMapFactory<LegacyColorMapFactory>()
+                    .WithColorMapFactory(indexedMapConcept)
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
