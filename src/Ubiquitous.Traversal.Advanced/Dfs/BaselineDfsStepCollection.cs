@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous.Traversal.Advanced
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
+
+namespace Ubiquitous.Traversal.Advanced
 {
     using System.Collections;
     using System.Collections.Generic;
