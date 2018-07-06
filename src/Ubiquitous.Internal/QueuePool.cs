@@ -2,27 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
 
     internal abstract class QueuePool<T>
     {
-        [ThreadStatic] private static WeakReference<QueuePool<T>> s_reference;
+        [ThreadStatic] private static QueuePool<T> s_sharedInstance;
 
-        private static WeakReference<QueuePool<T>> Reference =>
-            s_reference ?? (s_reference = new WeakReference<QueuePool<T>>(null, false));
-
-        public static QueuePool<T> Shared
-        {
-            get
-            {
-                if (Reference.TryGetTarget(out QueuePool<T> pool))
-                    return pool;
-
-                pool = new DefaultQueuePool<T>();
-                Reference.SetTarget(pool);
-                return pool;
-            }
-        }
+        public static QueuePool<T> Shared => s_sharedInstance ?? (s_sharedInstance = new DefaultQueuePool<T>());
 
         public abstract Queue<T> Rent();
 
@@ -31,15 +16,14 @@
 
     internal sealed class DefaultQueuePool<T> : QueuePool<T>
     {
-        private Queue<T> _sharedInstance;
+        private WeakReference<Queue<T>> _cachedInstanceReference;
+
+        private WeakReference<Queue<T>> CachedInstanceReference => _cachedInstanceReference
+            ?? (_cachedInstanceReference = new WeakReference<Queue<T>>(null, false));
 
         public override Queue<T> Rent()
         {
-            Queue<T> result = Interlocked.Exchange(ref _sharedInstance, null);
-            if (result == null)
-                return new Queue<T>();
-
-            return result;
+            return CachedInstanceReference.TryGetTarget(out Queue<T> result) ? result : new Queue<T>();
         }
 
         public override void Return(Queue<T> queue)
@@ -48,8 +32,7 @@
                 throw new ArgumentNullException(nameof(queue));
 
             queue.Clear();
-
-            _sharedInstance = queue;
+            CachedInstanceReference.SetTarget(queue);
         }
     }
 }
