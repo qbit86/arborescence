@@ -40,18 +40,19 @@
         public ArraySegment<T> Acquire(TGraph context)
         {
             T[] array = ArrayPool<T>.Shared.Rent(Count);
+            Array.Clear(array, 0, Count);
             return new ArraySegment<T>(array, 0, Count);
         }
 
         public void Release(TGraph context, ArraySegment<T> value)
         {
-            ArrayPool<T>.Shared.Return(value.Array);
+            ArrayPool<T>.Shared.Return(value.Array, true);
         }
 
         public void Warmup()
         {
             T[] array = ArrayPool<T>.Shared.Rent(Count);
-            ArrayPool<T>.Shared.Return(array);
+            ArrayPool<T>.Shared.Return(array, true);
         }
     }
 }
