@@ -9,7 +9,7 @@ namespace Ubiquitous.Traversal.Advanced
     using static System.Diagnostics.Debug;
 
     public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-        TColorMap, TStack, TGraphConcept, TColorMapFactory, TStackFactory>
+        TColorMap, TGraphConcept, TColorMapFactory>
     {
         public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
@@ -32,10 +32,9 @@ namespace Ubiquitous.Traversal.Advanced
                 _stepEnumerator;
 
             public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TStack, TGraphConcept, TColorMapFactory, TStackFactory> collection)
+                TColorMap, TGraphConcept, TColorMapFactory> collection)
             {
                 Assert(collection.ColorMapFactory != null);
-                Assert(collection.StackFactory != null);
 
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;

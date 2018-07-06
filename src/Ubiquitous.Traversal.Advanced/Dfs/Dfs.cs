@@ -44,8 +44,8 @@
                 GraphConcept, ColorMapFactory, StackFactory);
         }
 
-        public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept, TColorMapFactory, TStackFactory>
+        public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapFactory>
             Traverse<TVertexEnumerator>(TGraph graph, TVertexEnumerator vertexEnumerator)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
@@ -53,8 +53,8 @@
                 throw new ArgumentNullException(nameof(vertexEnumerator));
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TStack, TGraphConcept, TColorMapFactory, TStackFactory>(graph,
-                vertexEnumerator, GraphConcept, ColorMapFactory, StackFactory);
+                TColorMap, TGraphConcept, TColorMapFactory>(graph,
+                vertexEnumerator, GraphConcept, ColorMapFactory);
         }
     }
 }
