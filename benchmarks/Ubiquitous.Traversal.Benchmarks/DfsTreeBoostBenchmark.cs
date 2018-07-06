@@ -13,14 +13,14 @@ namespace Ubiquitous
     {
         protected DfsTreeBoostBenchmark()
         {
-            var indexedMapConcept = new IndexedMapConcept<IndexedAdjacencyListGraph, Color>(VertexCount);
+            var colorMapConcept = new ColorMapConcept(VertexCount);
 
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(indexedMapConcept)
+                .WithColorMapFactory(colorMapConcept)
                 .Create();
 
             DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -28,7 +28,7 @@ namespace Ubiquitous
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory(indexedMapConcept)
+                .WithColorMapFactory(colorMapConcept)
                 .Create();
         }
 
