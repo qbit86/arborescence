@@ -5,21 +5,25 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
-    using ColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
+    using LegacyColorMap = IndexedDictionary<Traversal.Advanced.Color, Traversal.Advanced.Color[]>;
+    using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
     using ColorMapFactory = IndexedDictionaryFactory<Traversal.Advanced.Color>;
     using CachingColorMapFactory = CachingIndexedDictionaryFactory<Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
     {
         protected DfsTreeBoostBenchmark()
         {
+            var indexedMapConcept = new IndexedMapConcept<IndexedAdjacencyListGraph, Color>(VertexCount);
+
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory<ColorMapFactory>()
+                .WithColorMapFactory(indexedMapConcept)
                 .Create();
 
             DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -27,7 +31,7 @@ namespace Ubiquitous
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
-                .WithColorMapFactory<ColorMapFactory>()
+                .WithColorMapFactory(indexedMapConcept)
                 .Create();
         }
 
@@ -37,16 +41,15 @@ namespace Ubiquitous
         public int VertexCount { get; set; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory>
+                IndexedAdjacencyListGraphInstance, ColorMapConcept>
             BaselineDfs { get; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory>
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, ColorMapConcept>
             DefaultDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap,
+                LegacyColorMap,
                 IndexedAdjacencyListGraphInstance, CachingColorMapFactory>
             CachingDfs { get; set; }
 
@@ -63,7 +66,7 @@ namespace Ubiquitous
             CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
-                .WithColorMap<ColorMap>()
+                .WithColorMap<LegacyColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory(colorMapFactory)
                 .Create();
