@@ -9,7 +9,7 @@
     <Product>Ubiquitous</Product>
     <Description>Traversal.</Description>
     <RootNamespace>Ubiquitous.Traversal.Advanced</RootNamespace>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />

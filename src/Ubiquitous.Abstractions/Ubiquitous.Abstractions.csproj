@@ -9,5 +9,6 @@
     <Product>Ubiquitous</Product>
     <Description>Abstractions.</Description>
     <RootNamespace>Ubiquitous</RootNamespace>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
 </Project>
