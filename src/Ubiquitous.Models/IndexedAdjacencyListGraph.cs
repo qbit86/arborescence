@@ -65,11 +65,10 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is IndexedAdjacencyListGraph))
-                return false;
+            if (obj is IndexedAdjacencyListGraph other)
+                return Equals(other);
 
-            var other = (IndexedAdjacencyListGraph)obj;
-            return Equals(other);
+            return false;
         }
 
         public override int GetHashCode()
