@@ -38,7 +38,6 @@
 
     public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
     {
@@ -73,7 +72,6 @@
 
     public struct BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
     {
         public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphConcept> WithGraphConcept<TGraphConcept>()
@@ -99,7 +97,6 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap> WithColorMap<TColorMap>()
-            where TColorMap : IDictionary<TVertex, Color>
         {
             return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>();
         }
