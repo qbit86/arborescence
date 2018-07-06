@@ -6,10 +6,9 @@
     public struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphConcept, TColorMapFactory>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IFactory<TGraph, TColorMap>
+        where TColorMapFactory : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
         private TGraphConcept GraphConcept { get; }
 

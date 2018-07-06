@@ -9,10 +9,9 @@
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IFactory<TGraph, TColorMap>
+        where TColorMapFactory : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
     {
         private TGraph Graph { get; }
 

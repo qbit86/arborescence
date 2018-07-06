@@ -7,9 +7,9 @@
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>
     {
         private Step<DfsStepKind, TVertex, TEdge> _current;
         private int _state;
@@ -64,7 +64,7 @@
                 {
                     case 0:
                     {
-                        _colorMap[_currentVertex] = Color.Gray;
+                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Gray);
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 1;
                         return true;
@@ -75,7 +75,7 @@
                             _graphConcept.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
                         {
-                            _colorMap[_currentVertex] = Color.Black;
+                            _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Black);
                             _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                             _state = int.MaxValue;
                             return true;
@@ -130,7 +130,7 @@
                     }
                     case 4:
                     {
-                        if (!_colorMap.TryGetValue(_neighborVertex, out Color neighborColor))
+                        if (!_colorMapConcept.TryGet(_colorMap, _neighborVertex, out Color neighborColor))
                             neighborColor = Color.None;
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
@@ -156,7 +156,7 @@
                             CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
-                        _colorMap[_currentVertex] = Color.Gray;
+                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Gray);
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 6;
                         return true;
@@ -181,7 +181,7 @@
                     }
                     case short.MaxValue:
                     {
-                        _colorMap[_currentVertex] = Color.Black;
+                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Black);
                         _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                         _state = 2;
                         return true;
