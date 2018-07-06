@@ -6,16 +6,14 @@
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {
-            SourceTargetPair<int> endpoints;
-            bool result = graph.TryGetEndpoints(edge, out endpoints);
+            bool result = graph.TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
             source = result ? endpoints.Source : default;
             return result;
         }
 
         public bool TryGetTarget(IndexedAdjacencyListGraph graph, int edge, out int target)
         {
-            SourceTargetPair<int> endpoints;
-            bool result = graph.TryGetEndpoints(edge, out endpoints);
+            bool result = graph.TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
             target = result ? endpoints.Target : default;
             return result;
         }

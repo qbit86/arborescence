@@ -4,10 +4,9 @@
     using static System.Diagnostics.Debug;
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
-    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>
+    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
     {
@@ -20,10 +19,11 @@
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
 
         private TColorMap _colorMap;
-        private TStack _stack;
+        private readonly List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
         private TGraphConcept _graphConcept;
 
-        internal DfsStepEnumerator(TGraph graph, TVertex startVertex, TColorMap colorMap, TStack stack,
+        internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
+            TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
             TGraphConcept graphConcept)
         {
             Assert(colorMap != null);

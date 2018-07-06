@@ -3,53 +3,10 @@
     using System;
     using System.Collections.Generic;
 
-    public struct DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-        TGraphConcept, TColorMapFactory, TStackFactory>
-        where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
-        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
-        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapFactory : IFactory<TGraph, TColorMap>
-        where TStackFactory : IFactory<TGraph, TStack>
-    {
-        private TGraphConcept GraphConcept { get; }
-
-        private TColorMapFactory ColorMapFactory { get; }
-
-        private TStackFactory StackFactory { get; }
-
-        public DfsBuilder(TGraphConcept graphConcept, TColorMapFactory colorMapFactory, TStackFactory stackFactory)
-        {
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
-
-            if (colorMapFactory == null)
-                throw new ArgumentNullException(nameof(colorMapFactory));
-
-            if (stackFactory == null)
-                throw new ArgumentNullException(nameof(stackFactory));
-
-            GraphConcept = graphConcept;
-            ColorMapFactory = colorMapFactory;
-            StackFactory = stackFactory;
-        }
-
-        public Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-            TGraphConcept, TColorMapFactory, TStackFactory> Create()
-        {
-            return new Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept, TColorMapFactory, TStackFactory>(
-                GraphConcept, ColorMapFactory, StackFactory);
-        }
-    }
-
-
-    public struct DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+    public struct DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphConcept, TColorMapFactory>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapFactory : IFactory<TGraph, TColorMap>
@@ -70,31 +27,19 @@
             ColorMapFactory = colorMapFactory;
         }
 
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-            TGraphConcept, TColorMapFactory, TStackFactory> WithStackFactory<TStackFactory>()
-            where TStackFactory : struct, IFactory<TGraph, TStack>
+        public Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            TGraphConcept, TColorMapFactory> Create()
         {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept, TColorMapFactory, TStackFactory>(
-                GraphConcept, ColorMapFactory, default(TStackFactory));
-        }
-
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-            TGraphConcept, TColorMapFactory, TStackFactory> WithStackFactory<TStackFactory>(
-            TStackFactory stackFactory)
-            where TStackFactory : IFactory<TGraph, TStack>
-        {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept, TColorMapFactory, TStackFactory>(
-                GraphConcept, ColorMapFactory, stackFactory);
+            return new Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapFactory>(
+                GraphConcept, ColorMapFactory);
         }
     }
 
 
-    public struct DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>
+    public struct DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
-        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
     {
@@ -108,46 +53,21 @@
             GraphConcept = graphConcept;
         }
 
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphConcept, TColorMapFactory> WithColorMapFactory<TColorMapFactory>()
             where TColorMapFactory : struct, IFactory<TGraph, TColorMap>
         {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphConcept, TColorMapFactory>(GraphConcept, default(TColorMapFactory));
         }
 
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphConcept, TColorMapFactory> WithColorMapFactory<TColorMapFactory>(
             TColorMapFactory colorMapFactory)
             where TColorMapFactory : IFactory<TGraph, TColorMap>
         {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
+            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphConcept, TColorMapFactory>(GraphConcept, colorMapFactory);
-        }
-    }
-
-
-    public struct DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack>
-        where TEdgeEnumerator : IEnumerator<TEdge>
-        where TColorMap : IDictionary<TVertex, Color>
-        where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
-    {
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>
-            WithGraphConcept<TGraphConcept>()
-            where TGraphConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-            IGetTargetConcept<TGraph, TVertex, TEdge>
-        {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>(
-                default(TGraphConcept));
-        }
-
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>
-            WithGraphConcept<TGraphConcept>(TGraphConcept graphConcept)
-            where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-            IGetTargetConcept<TGraph, TVertex, TEdge>
-        {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack, TGraphConcept>(
-                graphConcept);
         }
     }
 
@@ -156,10 +76,22 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMap : IDictionary<TVertex, Color>
     {
-        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack> WithStack<TStack>()
-            where TStack : IList<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>
+        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
+            WithGraphConcept<TGraphConcept>()
+            where TGraphConcept : struct, IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+            IGetTargetConcept<TGraph, TVertex, TEdge>
         {
-            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack>();
+            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>(
+                default(TGraphConcept));
+        }
+
+        public DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>
+            WithGraphConcept<TGraphConcept>(TGraphConcept graphConcept)
+            where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+            IGetTargetConcept<TGraph, TVertex, TEdge>
+        {
+            return new DfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept>(
+                graphConcept);
         }
     }
 

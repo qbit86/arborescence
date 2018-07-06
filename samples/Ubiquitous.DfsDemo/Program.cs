@@ -56,11 +56,8 @@ namespace Ubiquitous
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                     .WithColorMap<ColorMap>()
-                    .WithStack<List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                     .WithColorMapFactory<ColorMapFactory>()
-                    .WithStackFactory<ListFactory<IndexedAdjacencyListGraph,
-                        DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
                     .Create();
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();

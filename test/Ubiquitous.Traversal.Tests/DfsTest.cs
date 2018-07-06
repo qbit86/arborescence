@@ -43,11 +43,8 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
                 .WithColorMap<ColorMap>()
-                .WithStack<List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapFactory<ColorMapFactory>()
-                .WithStackFactory<ListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>()
                 .Create();
 
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
@@ -61,11 +58,8 @@
             Output = output;
         }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>,
-                ColorMap, List<DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>,
-                IndexedAdjacencyListGraphInstance, ColorMapFactory,
-                ListFactory<IndexedAdjacencyListGraph,
-                    DfsStackFrame<int, int, ImmutableArrayEnumeratorAdapter<int>>>>
+        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+                IndexedAdjacencyListGraphInstance, ColorMapFactory>
             Dfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
