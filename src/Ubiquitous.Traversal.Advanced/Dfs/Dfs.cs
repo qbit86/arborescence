@@ -17,8 +17,6 @@
 
         private TColorMapFactory ColorMapFactory { get; }
 
-        private TStackFactory StackFactory { get; }
-
         public Dfs(TGraphConcept graphConcept, TColorMapFactory colorMapFactory, TStackFactory stackFactory)
         {
             if (graphConcept == null)
@@ -32,16 +30,15 @@
 
             GraphConcept = graphConcept;
             ColorMapFactory = colorMapFactory;
-            StackFactory = stackFactory;
         }
 
-        public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept, TColorMapFactory, TStackFactory>
+        public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapFactory>
             Traverse(TGraph graph, TVertex startVertex)
         {
-            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStack,
-                TGraphConcept, TColorMapFactory, TStackFactory>(graph, startVertex,
-                GraphConcept, ColorMapFactory, StackFactory);
+            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapFactory>(graph, startVertex,
+                GraphConcept, ColorMapFactory);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
