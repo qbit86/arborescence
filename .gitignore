@@ -1,6 +1,6 @@
 .idea/**/contentModel.xml
 .idea/**/workspace.xml*
-.vs/**/sqlite3/
+.vs/
 **/.suo
 **/BenchmarkDotNet.Artifacts*/
 benchmarks/**/bin/
