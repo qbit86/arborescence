@@ -23,8 +23,7 @@
                 {
                     for (int v = 0; v < graph.VertexCount; ++v)
                     {
-                        DfsStepKind vertexKind;
-                        if (!vertexKinds.TryGetValue(v, out vertexKind))
+                        if (!vertexKinds.TryGetValue(v, out DfsStepKind vertexKind))
                             continue;
 
                         if (vertexKind == DfsStepKind.StartVertex)
@@ -34,14 +33,12 @@
 
                 for (int e = 0; e < graph.EdgeCount; ++e)
                 {
-                    SourceTargetPair<int> endpoints;
-                    if (!graph.TryGetEndpoints(e, out endpoints))
+                    if (!graph.TryGetEndpoints(e, out SourceTargetPair<int> endpoints))
                         continue;
 
                     textWriter.Write($"    {endpoints.Source} -> {endpoints.Target}");
 
-                    DfsStepKind edgeKind;
-                    if (edgeKinds == null || !edgeKinds.TryGetValue(e, out edgeKind))
+                    if (edgeKinds == null || !edgeKinds.TryGetValue(e, out DfsStepKind edgeKind))
                     {
                         textWriter.WriteLine();
                         continue;
