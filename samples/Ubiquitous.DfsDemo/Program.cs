@@ -7,7 +7,7 @@ namespace Ubiquitous
     using Traversal.Advanced;
     using static System.Diagnostics.Debug;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
-    using StepMap = IndexedDictionary<Traversal.Advanced.DfsStepKind, Traversal.Advanced.DfsStepKind[]>;
+    using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
 
     internal static partial class Program
@@ -45,8 +45,8 @@ namespace Ubiquitous
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
                 IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertexEnumerator);
-                StepMap vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
-                StepMap edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
+                StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS Forest", Console.Out);
@@ -63,8 +63,8 @@ namespace Ubiquitous
 
                 RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
                 var steps = dfs.Traverse(graph, vertexEnumerator);
-                StepMap vertexKinds = IndexedDictionary.Create(new DfsStepKind[graph.VertexCount]);
-                StepMap edgeKinds = IndexedDictionary.Create(new DfsStepKind[graph.EdgeCount]);
+                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
+                StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS Forest", Console.Out);
