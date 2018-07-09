@@ -8,7 +8,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetConcept<TGraph, TVertex, TEdge>,
         IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         public BaselineBfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {

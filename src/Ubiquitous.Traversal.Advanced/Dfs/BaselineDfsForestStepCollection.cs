@@ -11,7 +11,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         private TVertexEnumerator _vertexEnumerator;
 
@@ -47,7 +47,7 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
-            TColorMap colorMap = _colorMapConcept.Acquire(Graph);
+            TColorMap colorMap = _colorMapConcept.Acquire();
             if (colorMap == null)
                 yield break;
 
@@ -76,7 +76,7 @@
             }
             finally
             {
-                _colorMapConcept.Release(Graph, colorMap);
+                _colorMapConcept.Release(colorMap);
             }
         }
     }

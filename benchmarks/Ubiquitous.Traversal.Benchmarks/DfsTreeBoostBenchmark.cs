@@ -6,7 +6,7 @@ namespace Ubiquitous
     using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
-    using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
@@ -56,7 +56,7 @@ namespace Ubiquitous
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            var indexedMapConcept = new IndexedMapConcept<IndexedAdjacencyListGraph, Color>(VertexCount);
+            var indexedMapConcept = new ColorMapConcept(VertexCount);
             indexedMapConcept.Warmup();
 
             CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()

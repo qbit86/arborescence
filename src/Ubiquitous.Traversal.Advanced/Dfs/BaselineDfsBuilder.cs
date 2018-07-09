@@ -8,7 +8,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         private TGraphConcept GraphConcept { get; }
 
@@ -52,7 +52,7 @@
 
         public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphConcept, TColorMapConcept> WithColorMapConcept<TColorMapConcept>()
-            where TColorMapConcept : struct, IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+            where TColorMapConcept : struct, IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
         {
             return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphConcept, TColorMapConcept>(GraphConcept, default(TColorMapConcept));
@@ -61,7 +61,7 @@
         public BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphConcept, TColorMapConcept> WithColorMapConcept<TColorMapConcept>(
             TColorMapConcept colorMapConcept)
-            where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+            where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
         {
             return new BaselineDfsBuilder<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphConcept, TColorMapConcept>(GraphConcept, colorMapConcept);

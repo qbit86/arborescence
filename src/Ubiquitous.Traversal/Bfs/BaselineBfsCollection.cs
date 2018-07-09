@@ -13,7 +13,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetConcept<TGraph, TVertex, TEdge>,
         IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TGraph, TColorMap>
+        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,
             TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
@@ -60,7 +60,7 @@
             if (ColorMapConcept == null)
                 throw new InvalidOperationException($"{nameof(ColorMapConcept)}: null");
 
-            TColorMap colorMap = ColorMapConcept.Acquire(Graph);
+            TColorMap colorMap = ColorMapConcept.Acquire();
             Queue<TVertex> queue = QueuePool<TVertex>.Shared.Rent(QueueCapacity);
             return GetEnumeratorCoroutine(colorMap, queue);
         }
@@ -117,7 +117,7 @@
             finally
             {
                 QueuePool<TVertex>.Shared.Return(queue);
-                ColorMapConcept.Release(Graph, colorMap);
+                ColorMapConcept.Release(colorMap);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Ubiquitous
     using static System.Diagnostics.Debug;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
-    using ColorMapConcept = IndexedMapConcept<IndexedAdjacencyListGraph, Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
 
     internal static partial class Program
     {
@@ -32,7 +32,7 @@ namespace Ubiquitous
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             var vertices = new RangeCollection(0, graph.VertexCount);
-            var indexedMapConcept = new IndexedMapConcept<IndexedAdjacencyListGraph, Color>(graph.VertexCount);
+            var indexedMapConcept = new ColorMapConcept(graph.VertexCount);
 
             {
                 var dfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()

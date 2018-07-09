@@ -1,8 +1,8 @@
 ﻿namespace Ubiquitous
 {
-    public interface IFactory<in TContext, TValue>
+    public interface IFactory<TValue>
     {
-        TValue Acquire(TContext context);
-        void Release(TContext context, TValue value);
+        TValue Acquire();
+        void Release(TValue value);
     }
 }

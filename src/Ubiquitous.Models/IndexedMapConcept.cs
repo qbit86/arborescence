@@ -3,8 +3,8 @@
     using System;
     using System.Buffers;
 
-    public readonly struct IndexedMapConcept<TGraph, T>
-        : IMapConcept<ArraySegment<T>, int, T>, IFactory<TGraph, ArraySegment<T>>
+    public readonly struct IndexedMapConcept<T>
+        : IMapConcept<ArraySegment<T>, int, T>, IFactory<ArraySegment<T>>
     {
         public IndexedMapConcept(int count)
         {
@@ -37,14 +37,14 @@
             return true;
         }
 
-        public ArraySegment<T> Acquire(TGraph context)
+        public ArraySegment<T> Acquire()
         {
             T[] array = ArrayPool<T>.Shared.Rent(Count);
             Array.Clear(array, 0, Count);
             return new ArraySegment<T>(array, 0, Count);
         }
 
-        public void Release(TGraph context, ArraySegment<T> value)
+        public void Release(ArraySegment<T> value)
         {
             ArrayPool<T>.Shared.Return(value.Array, true);
         }

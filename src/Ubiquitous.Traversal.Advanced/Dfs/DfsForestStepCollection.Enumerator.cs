@@ -60,7 +60,7 @@ namespace Ubiquitous.Traversal.Advanced
                     {
                         case 0:
                         {
-                            _colorMap = _colorMapConcept.Acquire(_graph);
+                            _colorMap = _colorMapConcept.Acquire();
                             if (_colorMap == null)
                             {
                                 _state = int.MaxValue;
@@ -189,7 +189,7 @@ namespace Ubiquitous.Traversal.Advanced
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _colorMapConcept.Release(_graph, _colorMap);
+                    _colorMapConcept.Release(_colorMap);
                     _colorMap = default(TColorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
