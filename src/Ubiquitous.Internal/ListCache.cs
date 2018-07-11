@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/Text/StringBuilderCache.cs
     internal static class ListCache<T>
     {
         [ThreadStatic] private static WeakReference<List<T>> s_cachedInstanceReference;

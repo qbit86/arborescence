@@ -10,6 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ListCache.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)QueuePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QueueCache.cs" />
   </ItemGroup>
 </Project>

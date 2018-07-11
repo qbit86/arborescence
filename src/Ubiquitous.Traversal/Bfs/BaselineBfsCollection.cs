@@ -61,7 +61,7 @@
                 throw new InvalidOperationException($"{nameof(ColorMapConcept)}: null");
 
             TColorMap colorMap = ColorMapConcept.Acquire();
-            Queue<TVertex> queue = QueuePool<TVertex>.Shared.Rent(QueueCapacity);
+            Queue<TVertex> queue = QueueCache<TVertex>.Acquire(QueueCapacity);
             return GetEnumeratorCoroutine(colorMap, queue);
         }
 
@@ -116,7 +116,7 @@
             }
             finally
             {
-                QueuePool<TVertex>.Shared.Return(queue);
+                QueueCache<TVertex>.Release(queue);
                 ColorMapConcept.Release(colorMap);
             }
         }
