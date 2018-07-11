@@ -9,7 +9,7 @@
     <Import_RootNamespace>Ubiquitous.Internal</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)ListPool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ListCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueuePool.cs" />
   </ItemGroup>
 </Project>

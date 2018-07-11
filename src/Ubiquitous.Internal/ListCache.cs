@@ -3,25 +3,15 @@
     using System;
     using System.Collections.Generic;
 
-    internal abstract class ListPool<T>
+    // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/Text/StringBuilderCache.cs
+    internal static class ListCache<T>
     {
-        [ThreadStatic] private static ListPool<T> s_sharedInstance;
+        [ThreadStatic] private static WeakReference<List<T>> s_cachedInstanceReference;
 
-        public static ListPool<T> Shared => s_sharedInstance ?? (s_sharedInstance = new DefaultListPool<T>());
+        private static WeakReference<List<T>> CachedInstanceReference => s_cachedInstanceReference
+            ?? (s_cachedInstanceReference = new WeakReference<List<T>>(null, false));
 
-        public abstract List<T> Rent(int desiredCapacity);
-
-        public abstract void Return(List<T> list);
-    }
-
-    internal sealed class DefaultListPool<T> : ListPool<T>
-    {
-        private WeakReference<List<T>> _cachedInstanceReference;
-
-        private WeakReference<List<T>> CachedInstanceReference => _cachedInstanceReference
-            ?? (_cachedInstanceReference = new WeakReference<List<T>>(null, false));
-
-        public override List<T> Rent(int desiredCapacity)
+        public static List<T> Acquire(int desiredCapacity = 0)
         {
             bool isCached = CachedInstanceReference.TryGetTarget(out List<T> result);
             CachedInstanceReference.SetTarget(null);
@@ -42,7 +32,7 @@
             return isCached ? result : new List<T>();
         }
 
-        public override void Return(List<T> list)
+        public static void Release(List<T> list)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));

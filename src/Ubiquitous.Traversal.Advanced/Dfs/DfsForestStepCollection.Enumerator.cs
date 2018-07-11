@@ -104,7 +104,7 @@ namespace Ubiquitous.Traversal.Advanced
                         case 3:
                         {
                             _stack =
-                                ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Rent(_stackCapacity);
+                                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire(_stackCapacity);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;
@@ -183,7 +183,7 @@ namespace Ubiquitous.Traversal.Advanced
             {
                 if (_stackDisposalStatus == DisposalStatus.Initialized)
                 {
-                    ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Return(_stack);
+                    ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
                     _stack = null;
                     _stackDisposalStatus = DisposalStatus.Disposed;
                 }
