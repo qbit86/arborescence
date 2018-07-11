@@ -16,13 +16,15 @@ namespace Ubiquitous.Traversal.Advanced
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
 
-            // See explanations why fields are not readonly here:
-            // https://codeblog.jonskeet.uk/2014/07/16/micro-optimization-the-surprising-inefficiency-of-readonly-fields/
-            private TVertexEnumerator _vertexEnumerator;
             private TColorMapConcept _colorMapConcept;
             private TGraphConcept _graphConcept;
 
             private readonly TGraph _graph;
+
+            // See explanations why fields are not readonly here:
+            // https://codeblog.jonskeet.uk/2014/07/16/micro-optimization-the-surprising-inefficiency-of-readonly-fields/
+            private TVertexEnumerator _vertexEnumerator;
+            private readonly int _stackCapacity;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
@@ -41,6 +43,7 @@ namespace Ubiquitous.Traversal.Advanced
 
                 _graph = collection.Graph;
                 _vertexEnumerator = collection.VertexEnumerator;
+                _stackCapacity = collection.StackCapacity;
                 _graphConcept = collection.GraphConcept;
                 _colorMapConcept = collection.ColorMapConcept;
                 _colorMap = default(TColorMap);
@@ -100,7 +103,8 @@ namespace Ubiquitous.Traversal.Advanced
                         }
                         case 3:
                         {
-                            _stack = ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Rent(0);
+                            _stack =
+                                ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Rent(_stackCapacity);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;

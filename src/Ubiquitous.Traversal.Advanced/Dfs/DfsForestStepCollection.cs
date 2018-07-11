@@ -13,15 +13,8 @@
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
-        private TGraph Graph { get; }
-
-        private TVertexEnumerator VertexEnumerator { get; }
-
-        private TGraphConcept GraphConcept { get; }
-
-        private TColorMapConcept ColorMapConcept { get; }
-
-        internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator,
+        // TODO: Replace passing enumerator because it's not reenumeratable.
+        internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator, int stackCapacity,
             TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             Assert(vertexEnumerator != null);
@@ -29,9 +22,16 @@
 
             Graph = graph;
             VertexEnumerator = vertexEnumerator;
+            StackCapacity = stackCapacity;
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
         }
+
+        private TGraph Graph { get; }
+        private TVertexEnumerator VertexEnumerator { get; }
+        public int StackCapacity { get; }
+        private TGraphConcept GraphConcept { get; }
+        private TColorMapConcept ColorMapConcept { get; }
 
         public Enumerator GetEnumerator()
         {
