@@ -21,6 +21,7 @@ namespace Ubiquitous.Traversal.Advanced
 
             private readonly TGraph _graph;
             private readonly TVertex _startVertex;
+            private readonly int _stackCapacity;
             private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
@@ -39,6 +40,7 @@ namespace Ubiquitous.Traversal.Advanced
 
                 _graph = collection.Graph;
                 _startVertex = collection.StartVertex;
+                _stackCapacity = collection.StackCapacity;
                 _graphConcept = collection.GraphConcept;
                 _colorMapConcept = collection.ColorMapConcept;
                 _colorMap = default(TColorMap);
@@ -77,7 +79,8 @@ namespace Ubiquitous.Traversal.Advanced
                         }
                         case 3:
                         {
-                            _stack = ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Rent(0);
+                            _stack =
+                                ListPool<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Shared.Rent(_stackCapacity);
                             if (_stack == null)
                             {
                                 _state = int.MaxValue;

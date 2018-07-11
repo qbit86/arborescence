@@ -12,24 +12,23 @@
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
-        private TGraph Graph { get; }
-
-        private TVertex StartVertex { get; }
-
-        private TGraphConcept GraphConcept { get; }
-
-        private TColorMapConcept ColorMapConcept { get; }
-
-        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex,
+        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, int stackCapacity,
             TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
         {
             Assert(colorMapConcept != null);
 
             Graph = graph;
             StartVertex = startVertex;
+            StackCapacity = stackCapacity;
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
         }
+
+        private TGraph Graph { get; }
+        private TVertex StartVertex { get; }
+        private int StackCapacity { get; }
+        private TGraphConcept GraphConcept { get; }
+        private TColorMapConcept ColorMapConcept { get; }
 
         public Enumerator GetEnumerator()
         {

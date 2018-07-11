@@ -31,7 +31,16 @@
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex,
+                TGraphConcept, TColorMapConcept>(graph, startVertex, 0,
+                GraphConcept, ColorMapConcept);
+        }
+
+        public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapConcept>
+            Traverse(TGraph graph, TVertex startVertex, int stackCapacity)
+        {
+            return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphConcept, TColorMapConcept>(graph, startVertex, stackCapacity,
                 GraphConcept, ColorMapConcept);
         }
 
