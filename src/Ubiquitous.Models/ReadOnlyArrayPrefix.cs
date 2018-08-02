@@ -12,13 +12,11 @@ namespace Ubiquitous
         public static ReadOnlyArrayPrefix<T> Empty { get; } = new ReadOnlyArrayPrefix<T>(new T[0]);
 
         private readonly T[] _array;
-        private readonly int _offset;
         private readonly int _count;
 
         public ReadOnlyArrayPrefix(T[] array)
         {
             _array = array ?? throw new ArgumentNullException(nameof(array));
-            _offset = 0;
             _count = array.Length;
         }
 
@@ -28,13 +26,10 @@ namespace Ubiquitous
                 ThrowArraySegmentCtorValidationFailedExceptions(array, offset, count);
 
             _array = array;
-            _offset = offset;
             _count = count;
         }
 
         internal T[] Array => _array;
-
-        public int Offset => _offset;
 
         public int Count => _count;
 
@@ -45,7 +40,7 @@ namespace Ubiquitous
                 if ((uint)index >= (uint)_count)
                     ThrowArgumentOutOfRange_IndexException();
 
-                return _array[_offset + index];
+                return _array[index];
             }
         }
 
@@ -61,7 +56,6 @@ namespace Ubiquitous
                 return 0;
 
             int hash = 5381;
-            hash = Combine(hash, _offset);
             hash = Combine(hash, _count);
 
             hash ^= _array.GetHashCode();
@@ -76,7 +70,7 @@ namespace Ubiquitous
         public void CopyTo(T[] destination, int destinationIndex)
         {
             ThrowInvalidOperationIfDefault();
-            System.Array.Copy(_array, _offset, destination, destinationIndex, _count);
+            System.Array.Copy(_array, 0, destination, destinationIndex, _count);
         }
 
         public void CopyTo(ArraySegment<T> destination)
@@ -89,7 +83,7 @@ namespace Ubiquitous
             if (_count > destination.Count)
                 ThrowArgumentException_DestinationTooShort();
 
-            System.Array.Copy(_array, _offset, destination.Array, destination.Offset, _count);
+            System.Array.Copy(_array, 0, destination.Array, destination.Offset, _count);
         }
 
         public override bool Equals(object obj)
@@ -102,7 +96,7 @@ namespace Ubiquitous
 
         public bool Equals(ReadOnlyArrayPrefix<T> other)
         {
-            return other._array == _array && other._offset == _offset && other._count == _count;
+            return other._array == _array && other._count == _count;
         }
 
         public T[] ToArray()
@@ -113,7 +107,7 @@ namespace Ubiquitous
                 return Empty._array;
 
             var array = new T[_count];
-            System.Array.Copy(_array, _offset, array, 0, _count);
+            System.Array.Copy(_array, 0, array, 0, _count);
             return array;
         }
 
@@ -142,7 +136,7 @@ namespace Ubiquitous
                 if (index < 0 || index >= _count)
                     ThrowArgumentOutOfRange_IndexException();
 
-                return _array[_offset + index];
+                return _array[index];
             }
         }
 
@@ -217,21 +211,18 @@ namespace Ubiquitous
         public struct Enumerator : IEnumerator<T>
         {
             private readonly T[] _array;
-            private readonly int _start;
             private readonly int _end;
             private int _current;
 
             internal Enumerator(ReadOnlyArrayPrefix<T> arraySegment)
             {
                 Debug.Assert(arraySegment.Array != null);
-                Debug.Assert(arraySegment.Offset >= 0);
                 Debug.Assert(arraySegment.Count >= 0);
-                Debug.Assert(arraySegment.Offset + arraySegment.Count <= arraySegment.Array.Length);
+                Debug.Assert(arraySegment.Count <= arraySegment.Array.Length);
 
                 _array = arraySegment.Array;
-                _start = arraySegment.Offset;
-                _end = arraySegment.Offset + arraySegment.Count;
-                _current = arraySegment.Offset - 1;
+                _end = arraySegment.Count;
+                _current = -1;
             }
 
             public bool MoveNext()
@@ -249,7 +240,7 @@ namespace Ubiquitous
             {
                 get
                 {
-                    if (_current < _start)
+                    if (_current < 0)
                         throw new InvalidOperationException("Enumeration has not started. Call MoveNext.");
 
                     if (_current >= _end)
@@ -263,7 +254,7 @@ namespace Ubiquitous
 
             void IEnumerator.Reset()
             {
-                _current = _start - 1;
+                _current = -1;
             }
 
             public void Dispose()
