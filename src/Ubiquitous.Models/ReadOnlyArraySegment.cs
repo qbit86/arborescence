@@ -47,13 +47,6 @@ namespace Ubiquitous
 
                 return _array[_offset + index];
             }
-            set
-            {
-                if ((uint)index >= (uint)_count)
-                    ThrowArgumentOutOfRange_IndexException();
-
-                _array[_offset + index] = value;
-            }
         }
 
         public Enumerator GetEnumerator()
@@ -107,9 +100,9 @@ namespace Ubiquitous
             return false;
         }
 
-        public bool Equals(ReadOnlyArraySegment<T> obj)
+        public bool Equals(ReadOnlyArraySegment<T> other)
         {
-            return obj._array == _array && obj._offset == _offset && obj._count == _count;
+            return other._array == _array && other._offset == _offset && other._count == _count;
         }
 
         public ReadOnlyArraySegment<T> Slice(int index)
