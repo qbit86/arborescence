@@ -103,7 +103,7 @@ namespace Ubiquitous
         {
             if (obj is ReadOnlyArraySegment<T> other)
                 return Equals(other);
-            
+
             return false;
         }
 
