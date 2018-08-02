@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous
+﻿// ReSharper disable ConvertToAutoPropertyWhenPossible
+
+namespace Ubiquitous
 {
     using System;
     using System.Collections;
@@ -41,18 +43,14 @@
             get
             {
                 if ((uint)index >= (uint)_count)
-                {
                     ThrowArgumentOutOfRange_IndexException();
-                }
 
                 return _array[_offset + index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
-                {
                     ThrowArgumentOutOfRange_IndexException();
-                }
 
                 _array[_offset + index] = value;
             }
@@ -67,9 +65,7 @@
         public override int GetHashCode()
         {
             if (_array == null)
-            {
                 return 0;
-            }
 
             int hash = 5381;
             hash = Combine(hash, _offset);
@@ -79,7 +75,10 @@
             return hash;
         }
 
-        public void CopyTo(T[] destination) => CopyTo(destination, 0);
+        public void CopyTo(T[] destination)
+        {
+            CopyTo(destination, 0);
+        }
 
         public void CopyTo(T[] destination, int destinationIndex)
         {
@@ -95,19 +94,17 @@
                 throw new InvalidOperationException("The underlying array is null.");
 
             if (_count > destination.Count)
-            {
                 ThrowArgumentException_DestinationTooShort();
-            }
 
             System.Array.Copy(_array, _offset, destination.Array, destination.Offset, _count);
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (obj is ReadOnlyArraySegment<T> other)
                 return Equals(other);
-            else
-                return false;
+            
+            return false;
         }
 
         public bool Equals(ReadOnlyArraySegment<T> obj)
@@ -120,9 +117,7 @@
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count)
-            {
                 ThrowArgumentOutOfRange_IndexException();
-            }
 
             return new ReadOnlyArraySegment<T>(_array, _offset + index, _count - index);
         }
@@ -132,9 +127,7 @@
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
-            {
                 ThrowArgumentOutOfRange_IndexException();
-            }
 
             return new ReadOnlyArraySegment<T>(_array, _offset + index, count);
         }
@@ -144,9 +137,7 @@
             ThrowInvalidOperationIfDefault();
 
             if (_count == 0)
-            {
                 return Empty._array;
-            }
 
             var array = new T[_count];
             System.Array.Copy(_array, _offset, array, 0, _count);
@@ -163,9 +154,13 @@
             return !(a == b);
         }
 
-        public static implicit operator ReadOnlyArraySegment<T>(T[] array) => array != null ? new ReadOnlyArraySegment<T>(array) : default;
+        public static implicit operator ReadOnlyArraySegment<T>(T[] array)
+        {
+            return array != null ? new ReadOnlyArraySegment<T>(array) : default;
+        }
 
         #region IReadOnlyList<T>
+
         T IReadOnlyList<T>.this[int index]
         {
             get
@@ -177,15 +172,25 @@
                 return _array[_offset + index];
             }
         }
+
         #endregion IReadOnlyList<T>
 
         #region IEnumerable<T>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         #endregion
 
         #region IEnumerable
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         #endregion
 
         private static int Combine(int h1, int h2)
@@ -214,7 +219,8 @@
                 return new ArgumentOutOfRangeException(nameof(count), "Non-negative number required.");
 
             Debug.Assert(array.Length - offset < count);
-            return new ArgumentException("Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
+            return new ArgumentException(
+                "Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
         }
 
         private static void ThrowArgumentOutOfRange_IndexException()
@@ -232,9 +238,7 @@
         private void ThrowInvalidOperationIfDefault()
         {
             if (_array == null)
-            {
                 throw new InvalidOperationException("The underlying array is null.");
-            }
         }
 
         public struct Enumerator : IEnumerator<T>
@@ -262,8 +266,9 @@
                 if (_current < _end)
                 {
                     _current++;
-                    return (_current < _end);
+                    return _current < _end;
                 }
+
                 return false;
             }
 
