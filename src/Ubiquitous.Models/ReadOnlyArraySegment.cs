@@ -32,7 +32,7 @@ namespace Ubiquitous
             _count = count;
         }
 
-        public T[] Array => _array;
+        internal T[] Array => _array;
 
         public int Offset => _offset;
 
