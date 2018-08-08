@@ -20,10 +20,10 @@ namespace Ubiquitous
             _count = array.Length;
         }
 
-        public ReadOnlyArrayPrefix(T[] array, int offset, int count)
+        public ReadOnlyArrayPrefix(T[] array, int count)
         {
-            if (array == null || (uint)offset > (uint)array.Length || (uint)count > (uint)(array.Length - offset))
-                ThrowArraySegmentCtorValidationFailedExceptions(array, offset, count);
+            if (array == null || (uint)count >= (uint)array.Length)
+                ThrowArraySegmentCtorValidationFailedExceptions(array, count);
 
             _array = array;
             _count = count;
@@ -169,23 +169,20 @@ namespace Ubiquitous
             }
         }
 
-        private static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
+        private static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int count)
         {
-            throw GetArraySegmentCtorValidationFailedException(array, offset, count);
+            throw GetArraySegmentCtorValidationFailedException(array, count);
         }
 
-        private static Exception GetArraySegmentCtorValidationFailedException(Array array, int offset, int count)
+        private static Exception GetArraySegmentCtorValidationFailedException(Array array, int count)
         {
             if (array == null)
                 return new ArgumentNullException(nameof(array));
 
-            if (offset < 0)
-                return new ArgumentOutOfRangeException(nameof(offset), "Non-negative number required.");
-
             if (count < 0)
                 return new ArgumentOutOfRangeException(nameof(count), "Non-negative number required.");
 
-            Debug.Assert(array.Length - offset < count);
+            Debug.Assert(array.Length < count);
             return new ArgumentException(
                 "Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
         }
