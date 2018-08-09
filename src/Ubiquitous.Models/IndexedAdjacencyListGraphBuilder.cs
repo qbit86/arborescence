@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Immutable;
-    using System.Linq;
 
     public sealed class IndexedAdjacencyListGraphBuilder
     {
@@ -19,12 +17,12 @@
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            OutEdges = new ImmutableArray<int>.Builder[vertexCount];
-            Endpoints = edgeCount >= 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
+            OutEdges = new List<int>[vertexCount];
+            Endpoints = edgeCount > 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
         }
 
         private List<SourceTargetPair<int>> Endpoints { get; set; }
-        private ImmutableArray<int>.Builder[] OutEdges { get; set; }
+        private List<int>[] OutEdges { get; set; }
 
         public int VertexCount => OutEdges?.Length ?? 0;
 
@@ -33,17 +31,17 @@
             if (Endpoints == null || OutEdges == null)
                 return false;
 
-            if (edge.Source < 0 || edge.Source >= VertexCount)
+            if ((uint)edge.Source >= (uint)VertexCount)
                 return false;
 
-            if (edge.Target < 0 || edge.Target >= VertexCount)
+            if ((uint)edge.Target >= (uint)VertexCount)
                 return false;
 
             int newEdgeIndex = Endpoints.Count;
             Endpoints.Add(edge);
 
             if (OutEdges[edge.Source] == null)
-                OutEdges[edge.Source] = ImmutableArray.CreateBuilder<int>(1);
+                OutEdges[edge.Source] = new List<int>(1);
 
             OutEdges[edge.Source].Add(newEdgeIndex);
 
@@ -53,24 +51,12 @@
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
             List<SourceTargetPair<int>> endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
-            ImmutableArray<int>[] outEdges = OutEdges?.Select(CreateImmutableArray).ToArray()
-                ?? new ImmutableArray<int>[0]; // Array.Empty<ImmutableArray<int>>() in .NET Standard 1.3.
+            List<int>[] outEdges = OutEdges ?? new List<int>[0];
 
             Endpoints = null;
             OutEdges = null;
 
             return new IndexedAdjacencyListGraph(endpoints, outEdges);
-        }
-
-        private ImmutableArray<int> CreateImmutableArray(ImmutableArray<int>.Builder builder)
-        {
-            if (builder == null)
-                return ImmutableArray<int>.Empty;
-
-            if (builder.Count == builder.Capacity)
-                return builder.MoveToImmutable();
-
-            return builder.ToImmutable();
         }
     }
 }
