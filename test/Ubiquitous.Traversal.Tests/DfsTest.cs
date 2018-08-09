@@ -125,11 +125,11 @@
             // Arrange
 
             IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
-            var vertices = new RangeCollection(0, graph.VertexCount);
+            var vertices = new RangeCollection(graph.VertexCount);
 
             // Act
 
-            RangeCollection.Enumerator vertexEnumerator = vertices.GetConventionalEnumerator();
+            RangeCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
             List<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertexEnumerator).ToList();
             List<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertexEnumerator).ToList();
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
