@@ -39,7 +39,7 @@ namespace Ubiquitous
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<List<int>.Enumerator>()
                     .WithColorMap<ColorMap>()
-                    .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                     .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
@@ -57,7 +57,7 @@ namespace Ubiquitous
                     .WithVertex<int>().WithEdge<int>()
                     .WithEdgeEnumerator<List<int>.Enumerator>()
                     .WithColorMap<ColorMap>()
-                    .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                    .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                     .WithColorMapConcept(indexedMapConcept)
                     .Create();
 

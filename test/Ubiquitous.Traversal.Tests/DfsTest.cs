@@ -45,7 +45,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                 .WithColorMapConcept(colorMapConcept)
                 .Create();
 
@@ -53,7 +53,7 @@
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                 .WithColorMapConcept(colorMapConcept)
                 .Create();
 
@@ -61,11 +61,11 @@
         }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapConcept>
+                IndexedAdjacencyListGraphConcept, ColorMapConcept>
             Dfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapConcept>
+                IndexedAdjacencyListGraphConcept, ColorMapConcept>
             BaselineDfs { get; }
 
         private ITestOutputHelper Output { get; }

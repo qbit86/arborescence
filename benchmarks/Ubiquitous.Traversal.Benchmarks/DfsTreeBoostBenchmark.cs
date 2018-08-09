@@ -19,7 +19,7 @@ namespace Ubiquitous
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                 .WithColorMapConcept(colorMapConcept)
                 .Create();
 
@@ -27,7 +27,7 @@ namespace Ubiquitous
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                 .WithColorMapConcept(colorMapConcept)
                 .Create();
         }
@@ -38,15 +38,15 @@ namespace Ubiquitous
         public int VertexCount { get; set; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapConcept>
+                IndexedAdjacencyListGraphConcept, ColorMapConcept>
             BaselineDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapConcept>
+                IndexedAdjacencyListGraphConcept, ColorMapConcept>
             DefaultDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphInstance, ColorMapConcept>
+                IndexedAdjacencyListGraphConcept, ColorMapConcept>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -63,7 +63,7 @@ namespace Ubiquitous
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
+                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
                 .WithColorMapConcept(indexedMapConcept)
                 .Create();
         }

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public struct IndexedAdjacencyListGraphInstance :
+    public struct IndexedAdjacencyListGraphConcept :
         IGetTargetConcept<IndexedAdjacencyListGraph, int, int>,
         IGetOutEdgesConcept<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
     {
