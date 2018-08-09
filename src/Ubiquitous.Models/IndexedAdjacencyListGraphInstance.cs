@@ -1,8 +1,10 @@
 ﻿namespace Ubiquitous
 {
+    using System.Collections.Generic;
+
     public struct IndexedAdjacencyListGraphInstance :
         IGetTargetConcept<IndexedAdjacencyListGraph, int, int>,
-        IGetOutEdgesConcept<IndexedAdjacencyListGraph, int, ImmutableArrayEnumeratorAdapter<int>>
+        IGetOutEdgesConcept<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {
@@ -19,7 +21,7 @@
         }
 
         public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex,
-            out ImmutableArrayEnumeratorAdapter<int> edges)
+            out List<int>.Enumerator edges)
         {
             return graph.TryGetOutEdges(vertex, out edges);
         }
