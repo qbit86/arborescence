@@ -42,27 +42,27 @@ namespace Ubiquitous
 
         public Enumerator GetEnumerator()
         {
-            return new Enumerator(this);
+            return new Enumerator(Count);
         }
 
         IEnumerator<int> IEnumerable<int>.GetEnumerator()
         {
-            return new Enumerator(this);
+            return new Enumerator(Count);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new Enumerator(this);
+            return new Enumerator(Count);
         }
 
         public struct Enumerator : IEnumerator<int>
         {
-            private readonly IndexCollection _indexCollection;
+            private readonly int _count;
             private int _current;
 
-            public Enumerator(IndexCollection indexCollection)
+            public Enumerator(int count)
             {
-                _indexCollection = indexCollection;
+                _count = count;
                 _current = -1;
             }
 
@@ -78,12 +78,12 @@ namespace Ubiquitous
             public bool MoveNext()
             {
                 ++_current;
-                return _current < _indexCollection.Count;
+                return _current < _count;
             }
 
             public void Dispose()
             {
-                _current = _indexCollection.Count;
+                _current = _count;
             }
         }
     }
