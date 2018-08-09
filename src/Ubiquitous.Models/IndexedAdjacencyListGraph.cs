@@ -2,17 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Immutable;
     using static System.Diagnostics.Debug;
 
     public struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
     {
         private List<SourceTargetPair<int>> Endpoints { get; }
-        private ImmutableArray<int>[] OutEdges { get; }
+        private List<int>[] OutEdges { get; }
 
-        internal IndexedAdjacencyListGraph(
-            List<SourceTargetPair<int>> endpoints,
-            ImmutableArray<int>[] outEdges)
+        internal IndexedAdjacencyListGraph(List<SourceTargetPair<int>> endpoints, List<int>[] outEdges)
         {
             Assert(endpoints != null);
             Assert(outEdges != null);
@@ -30,7 +27,7 @@
 
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
-            if (edge < 0 || edge >= Endpoints.Count)
+            if ((uint)edge >= (uint)Endpoints.Count)
             {
                 endpoints = default;
                 return false;
@@ -40,15 +37,21 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ImmutableArrayEnumeratorAdapter<int> outEdges)
+        public bool TryGetOutEdges(int vertex, out List<int>.Enumerator outEdges)
         {
-            if (vertex < 0 || vertex >= VertexCount)
+            if ((uint)vertex >= (uint)VertexCount)
             {
                 outEdges = default;
                 return false;
             }
 
-            outEdges = new ImmutableArrayEnumeratorAdapter<int>(OutEdges[vertex].GetEnumerator());
+            if (OutEdges[vertex] == null)
+            {
+                outEdges = default;
+                return false;
+            }
+
+            outEdges = OutEdges[vertex].GetEnumerator();
             return true;
         }
 

@@ -37,7 +37,7 @@ namespace Ubiquitous
             {
                 var dfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
-                    .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                    .WithEdgeEnumerator<List<int>.Enumerator>()
                     .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                     .WithColorMapConcept(indexedMapConcept)
@@ -55,7 +55,7 @@ namespace Ubiquitous
             {
                 var dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                     .WithVertex<int>().WithEdge<int>()
-                    .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                    .WithEdgeEnumerator<List<int>.Enumerator>()
                     .WithColorMap<ColorMap>()
                     .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                     .WithColorMapConcept(indexedMapConcept)
