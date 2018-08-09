@@ -17,7 +17,7 @@ namespace Ubiquitous
 
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapConcept(colorMapConcept)
@@ -25,7 +25,7 @@ namespace Ubiquitous
 
             DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapConcept(colorMapConcept)
@@ -37,15 +37,15 @@ namespace Ubiquitous
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+        private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
                 IndexedAdjacencyListGraphInstance, ColorMapConcept>
             BaselineDfs { get; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+        private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
                 IndexedAdjacencyListGraphInstance, ColorMapConcept>
             DefaultDfs { get; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ImmutableArrayEnumeratorAdapter<int>, ColorMap,
+        private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
                 IndexedAdjacencyListGraphInstance, ColorMapConcept>
             CachingDfs { get; set; }
 
@@ -61,7 +61,7 @@ namespace Ubiquitous
 
             CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<ImmutableArrayEnumeratorAdapter<int>>()
+                .WithEdgeEnumerator<List<int>.Enumerator>()
                 .WithColorMap<ColorMap>()
                 .WithGraphConcept<IndexedAdjacencyListGraphInstance>()
                 .WithColorMapConcept(indexedMapConcept)
