@@ -7,11 +7,11 @@ namespace Ubiquitous
     using System.Collections;
     using System.Collections.Generic;
 
-    public readonly struct RangeCollection : IReadOnlyCollection<int>, IEquatable<RangeCollection>
+    public readonly struct IndexCollection : IReadOnlyCollection<int>, IEquatable<IndexCollection>
     {
         public int Count { get; }
 
-        public RangeCollection(int count)
+        public IndexCollection(int count)
         {
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));
@@ -19,7 +19,7 @@ namespace Ubiquitous
             Count = count;
         }
 
-        public bool Equals(RangeCollection other)
+        public bool Equals(IndexCollection other)
         {
             if (Count != other.Count)
                 return false;
@@ -29,7 +29,7 @@ namespace Ubiquitous
 
         public override bool Equals(object obj)
         {
-            if (obj is RangeCollection other)
+            if (obj is IndexCollection other)
                 return Equals(other);
 
             return false;
@@ -57,12 +57,12 @@ namespace Ubiquitous
 
         public struct Enumerator : IEnumerator<int>
         {
-            private readonly RangeCollection _range;
+            private readonly IndexCollection _indexCollection;
             private int _current;
 
-            public Enumerator(RangeCollection range)
+            public Enumerator(IndexCollection indexCollection)
             {
-                _range = range;
+                _indexCollection = indexCollection;
                 _current = -1;
             }
 
@@ -78,12 +78,12 @@ namespace Ubiquitous
             public bool MoveNext()
             {
                 ++_current;
-                return _current < _range.Count;
+                return _current < _indexCollection.Count;
             }
 
             public void Dispose()
             {
-                _current = _range.Count;
+                _current = _indexCollection.Count;
             }
         }
     }

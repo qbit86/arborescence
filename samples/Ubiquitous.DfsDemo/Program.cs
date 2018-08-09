@@ -31,7 +31,7 @@ namespace Ubiquitous
 
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
-            var vertices = new RangeCollection(graph.VertexCount);
+            var vertices = new IndexCollection(graph.VertexCount);
             var indexedMapConcept = new ColorMapConcept(graph.VertexCount);
 
             {
@@ -43,7 +43,7 @@ namespace Ubiquitous
                     .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
-                RangeCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
+                IndexCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
                 IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertexEnumerator);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
@@ -61,7 +61,7 @@ namespace Ubiquitous
                     .WithColorMapConcept(indexedMapConcept)
                     .Create();
 
-                RangeCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
+                IndexCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
                 var steps = dfs.Traverse(graph, vertexEnumerator);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
