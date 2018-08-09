@@ -45,6 +45,12 @@
                 return false;
             }
 
+            if (OutEdges[vertex] == null)
+            {
+                outEdges = default;
+                return false;
+            }
+
             outEdges = OutEdges[vertex].GetEnumerator();
             return true;
         }
