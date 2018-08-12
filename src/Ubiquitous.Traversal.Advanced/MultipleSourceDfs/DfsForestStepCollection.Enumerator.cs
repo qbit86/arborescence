@@ -34,7 +34,7 @@ namespace Ubiquitous.Traversal.Advanced
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
                 TColorMapConcept> _stepEnumerator;
 
-            public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge,
+            internal Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept> collection)
             {
