@@ -49,6 +49,11 @@
                 .WithColorMapConcept(colorMapConcept)
                 .Create();
 
+            MultipleSourceDfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator,
+                IndexCollection, IndexCollection.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept,
+                ColorMapConcept, IndexCollectionEnumerableConcept>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
+
             BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()
                 .WithEdgeEnumerator<List<int>.Enumerator>()
@@ -63,6 +68,11 @@
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
                 IndexedAdjacencyListGraphConcept, ColorMapConcept>
             Dfs { get; }
+
+        private MultipleSourceDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, IndexCollection,
+                IndexCollection.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept,
+                IndexCollectionEnumerableConcept>
+            MultipleSourceDfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
                 IndexedAdjacencyListGraphConcept, ColorMapConcept>
@@ -131,7 +141,7 @@
 
             IndexCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
             List<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertexEnumerator).ToList();
-            List<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertexEnumerator).ToList();
+            List<Step<DfsStepKind, int, int>> boostSteps = MultipleSourceDfs.Traverse(graph, vertices).ToList();
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
             int actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);

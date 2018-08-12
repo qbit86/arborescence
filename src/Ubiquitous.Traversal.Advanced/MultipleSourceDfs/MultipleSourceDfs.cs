@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal.Advanced.MultipleSourceDfs
+﻿namespace Ubiquitous.Traversal.Advanced
 {
     using System;
     using System.Collections.Generic;

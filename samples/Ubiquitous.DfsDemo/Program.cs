@@ -53,16 +53,13 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                    .WithVertex<int>().WithEdge<int>()
-                    .WithEdgeEnumerator<List<int>.Enumerator>()
-                    .WithColorMap<ColorMap>()
-                    .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
-                    .WithColorMapConcept(indexedMapConcept)
-                    .Create();
+                var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator,
+                    IndexCollection, IndexCollection.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept,
+                    ColorMapConcept, IndexCollectionEnumerableConcept>(
+                    default(IndexedAdjacencyListGraphConcept), indexedMapConcept,
+                    default(IndexCollectionEnumerableConcept));
 
-                IndexCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
-                var steps = dfs.Traverse(graph, vertexEnumerator);
+                var steps = dfs.Traverse(graph, vertices);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
