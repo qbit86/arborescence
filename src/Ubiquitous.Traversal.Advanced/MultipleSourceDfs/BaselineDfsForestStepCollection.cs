@@ -4,14 +4,17 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-            TColorMap, TGraphConcept, TColorMapConcept>
+    internal struct BaselineDfsForestStepCollection<TGraph, TVertex, TEdge,
+            TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+            TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+        where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TVertexEnumerableConcept : IEnumerableConcept<TVertexEnumerable, TVertexEnumerator>
     {
         private TVertexEnumerator _vertexEnumerator;
 
@@ -21,17 +24,22 @@
 
         private TGraphConcept GraphConcept { get; }
 
-        internal BaselineDfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
-        {
-            Assert(vertexEnumerator != null);
-            Assert(colorMapConcept != null);
+        private TVertexEnumerableConcept VertexEnumerableConcept { get; }
 
-            _vertexEnumerator = vertexEnumerator;
+        internal BaselineDfsForestStepCollection(TGraph graph, TVertexEnumerable vertexCollection,
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept,
+            TVertexEnumerableConcept vertexEnumerableConcept)
+        {
+            Assert(vertexCollection != null);
+            Assert(colorMapConcept != null);
 
             Graph = graph;
             GraphConcept = graphConcept;
             _colorMapConcept = colorMapConcept;
+            VertexEnumerableConcept = vertexEnumerableConcept;
+
+            // TODO: Delay requesting enumerator.
+            _vertexEnumerator = VertexEnumerableConcept.GetEnumerator(vertexCollection);
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()

@@ -43,10 +43,10 @@
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
-            // TODO: Delay requesting enumerator.
-            TVertexEnumerator vertexEnumerator = VertexEnumerableConcept.GetEnumerator(vertexCollection);
-            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept>(graph, vertexEnumerator, GraphConcept, ColorMapConcept);
+            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge,
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>(graph, vertexCollection,
+                GraphConcept, ColorMapConcept, VertexEnumerableConcept);
         }
     }
 }
