@@ -4,18 +4,22 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-            TColorMap, TGraphConcept, TColorMapConcept>
+    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
+            TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+            TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+        where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TVertexEnumerableConcept : IEnumerableConcept<TVertexEnumerable, TVertexEnumerator>
     {
         // TODO: Replace passing enumerator because it's not reenumeratable.
         internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator, int stackCapacity,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+            TGraphConcept graphConcept, TColorMapConcept colorMapConcept,
+            TVertexEnumerableConcept vertexCollectionConcept)
         {
             Assert(vertexEnumerator != null);
             Assert(colorMapConcept != null);
@@ -25,6 +29,7 @@
             StackCapacity = stackCapacity;
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
+            VertexCollectionConcept = vertexCollectionConcept;
         }
 
         private TGraph Graph { get; }
@@ -32,6 +37,7 @@
         public int StackCapacity { get; }
         private TGraphConcept GraphConcept { get; }
         private TColorMapConcept ColorMapConcept { get; }
+        private TVertexEnumerableConcept VertexCollectionConcept { get; }
 
         public Enumerator GetEnumerator()
         {

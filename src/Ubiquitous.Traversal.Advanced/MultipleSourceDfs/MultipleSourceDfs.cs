@@ -36,30 +36,34 @@
             VertexCollectionConcept = vertexCollectionConcept;
         }
 
-        public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>
+        public DfsForestStepCollection<TGraph, TVertex, TEdge,
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
             Traverse(TGraph graph, TVertexEnumerable vertexCollection)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
             TVertexEnumerator vertexEnumerator = VertexCollectionConcept.GetEnumerator(vertexCollection);
-            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept>(graph,
-                vertexEnumerator, 0, GraphConcept, ColorMapConcept);
+            return new DfsForestStepCollection<TGraph, TVertex, TEdge,
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>(graph,
+                vertexEnumerator, 0, GraphConcept, ColorMapConcept, VertexCollectionConcept);
         }
 
-        public DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>
+        public DfsForestStepCollection<TGraph, TVertex, TEdge,
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
             Traverse(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
             TVertexEnumerator vertexEnumerator = VertexCollectionConcept.GetEnumerator(vertexCollection);
-            return new DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept>(graph,
-                vertexEnumerator, stackCapacity, GraphConcept, ColorMapConcept);
+            return new DfsForestStepCollection<TGraph, TVertex, TEdge,
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>(graph,
+                vertexEnumerator, stackCapacity, GraphConcept, ColorMapConcept, VertexCollectionConcept);
         }
     }
 }
