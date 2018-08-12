@@ -15,13 +15,9 @@ namespace Ubiquitous
         {
             var colorMapConcept = new ColorMapConcept(VertexCount);
 
-            BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<List<int>.Enumerator>()
-                .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
-                .WithColorMapConcept(colorMapConcept)
-                .Create();
+            BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
 
             DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
                 .WithVertex<int>().WithEdge<int>()

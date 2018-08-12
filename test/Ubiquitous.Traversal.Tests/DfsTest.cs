@@ -54,13 +54,9 @@
                 ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
                 default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
 
-            BaselineDfs = BaselineDfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<List<int>.Enumerator>()
-                .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
-                .WithColorMapConcept(colorMapConcept)
-                .Create();
+            BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
 
             BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
