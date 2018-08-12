@@ -8,8 +8,9 @@ namespace Ubiquitous.Traversal.Advanced
     using Internal;
     using static System.Diagnostics.Debug;
 
-    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-        TColorMap, TGraphConcept, TColorMapConcept>
+    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
+        TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+        TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
     {
         public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
@@ -33,8 +34,9 @@ namespace Ubiquitous.Traversal.Advanced
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
                 TColorMapConcept> _stepEnumerator;
 
-            public Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept> collection)
+            internal Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge,
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
+                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept> collection)
             {
                 Assert(collection.ColorMapConcept != null);
 
@@ -42,7 +44,7 @@ namespace Ubiquitous.Traversal.Advanced
                 _state = 0;
 
                 _graph = collection.Graph;
-                _vertexEnumerator = collection.VertexEnumerator;
+                _vertexEnumerator = collection.VertexEnumerableConcept.GetEnumerator(collection.VertexCollection);
                 _stackCapacity = collection.StackCapacity;
                 _graphConcept = collection.GraphConcept;
                 _colorMapConcept = collection.ColorMapConcept;
