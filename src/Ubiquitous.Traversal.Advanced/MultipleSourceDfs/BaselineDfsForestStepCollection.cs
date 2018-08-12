@@ -16,11 +16,11 @@
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TVertexEnumerableConcept : IEnumerableConcept<TVertexEnumerable, TVertexEnumerator>
     {
-        private TVertexEnumerator _vertexEnumerator;
-
         private TColorMapConcept _colorMapConcept;
 
         private TGraph Graph { get; }
+
+        private TVertexEnumerable VertexCollection { get; }
 
         private TGraphConcept GraphConcept { get; }
 
@@ -34,12 +34,10 @@
             Assert(colorMapConcept != null);
 
             Graph = graph;
+            VertexCollection = vertexCollection;
             GraphConcept = graphConcept;
             _colorMapConcept = colorMapConcept;
             VertexEnumerableConcept = vertexEnumerableConcept;
-
-            // TODO: Delay requesting enumerator.
-            _vertexEnumerator = VertexEnumerableConcept.GetEnumerator(vertexCollection);
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -59,11 +57,15 @@
             if (colorMap == null)
                 yield break;
 
+            TVertexEnumerator vertexEnumerator = VertexEnumerableConcept.GetEnumerator(VertexCollection);
             try
             {
-                while (_vertexEnumerator.MoveNext())
+                if (vertexEnumerator == null)
+                    yield break;
+
+                while (vertexEnumerator.MoveNext())
                 {
-                    TVertex vertex = _vertexEnumerator.Current;
+                    TVertex vertex = vertexEnumerator.Current;
 
                     if (!_colorMapConcept.TryGet(colorMap, vertex, out Color vertexColor))
                         vertexColor = Color.None;
@@ -84,6 +86,7 @@
             }
             finally
             {
+                vertexEnumerator?.Dispose();
                 _colorMapConcept.Release(colorMap);
             }
         }
