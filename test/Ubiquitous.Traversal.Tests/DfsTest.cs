@@ -41,13 +41,9 @@
         {
             var colorMapConcept = new ColorMapConcept(VertexCount);
 
-            Dfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<List<int>.Enumerator>()
-                .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
-                .WithColorMapConcept(colorMapConcept)
-                .Create();
+            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int,
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
 
             MultipleSourceDfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,

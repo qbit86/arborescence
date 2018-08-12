@@ -19,13 +19,9 @@ namespace Ubiquitous
                 List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
                 default(IndexedAdjacencyListGraphConcept), colorMapConcept);
 
-            DefaultDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<List<int>.Enumerator>()
-                .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
-                .WithColorMapConcept(colorMapConcept)
-                .Create();
+            DefaultDfs = new Dfs<IndexedAdjacencyListGraph, int, int,
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
         }
 
         [Params(10, 100, 1000)]
@@ -55,13 +51,9 @@ namespace Ubiquitous
             var indexedMapConcept = new ColorMapConcept(VertexCount);
             indexedMapConcept.Warmup();
 
-            CachingDfs = DfsBuilder.WithGraph<IndexedAdjacencyListGraph>()
-                .WithVertex<int>().WithEdge<int>()
-                .WithEdgeEnumerator<List<int>.Enumerator>()
-                .WithColorMap<ColorMap>()
-                .WithGraphConcept<IndexedAdjacencyListGraphConcept>()
-                .WithColorMapConcept(indexedMapConcept)
-                .Create();
+            CachingDfs = new Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
+                IndexedAdjacencyListGraphConcept, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphConcept), indexedMapConcept);
         }
 
         [Benchmark(Baseline = true)]
