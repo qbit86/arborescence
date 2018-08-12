@@ -62,6 +62,11 @@
                 .WithColorMapConcept(colorMapConcept)
                 .Create();
 
+            BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+                IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
+
             Output = output;
         }
 
@@ -77,6 +82,11 @@
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
                 IndexedAdjacencyListGraphConcept, ColorMapConcept>
             BaselineDfs { get; }
+
+        private BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+                IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator, ColorMap,
+                IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>
+            BaselineMultipleSourceDfs { get; }
 
         private ITestOutputHelper Output { get; }
 
@@ -139,8 +149,8 @@
 
             // Act
 
-            IndexCollection.Enumerator vertexEnumerator = vertices.GetEnumerator();
-            List<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertexEnumerator).ToList();
+            List<Step<DfsStepKind, int, int>> baselineSteps =
+                BaselineMultipleSourceDfs.Traverse(graph, vertices).ToList();
             List<Step<DfsStepKind, int, int>> boostSteps = MultipleSourceDfs.Traverse(graph, vertices).ToList();
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);

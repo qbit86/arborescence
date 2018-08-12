@@ -32,16 +32,5 @@
             return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphConcept, TColorMapConcept>(graph, startVertex, GraphConcept, ColorMapConcept);
         }
-
-        public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
-            Traverse<TVertexEnumerator>(TGraph graph, TVertexEnumerator vertexEnumerator)
-            where TVertexEnumerator : IEnumerator<TVertex>
-        {
-            if (vertexEnumerator == null)
-                throw new ArgumentNullException(nameof(vertexEnumerator));
-
-            return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept>(graph, vertexEnumerator, GraphConcept, ColorMapConcept);
-        }
     }
 }
