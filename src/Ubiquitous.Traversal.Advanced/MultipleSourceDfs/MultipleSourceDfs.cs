@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
 
-    public struct MultipleSourceDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TVertexEnumerable, TVertexEnumerator,
+    public struct MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
         TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
-        where TEdgeEnumerator : IEnumerator<TEdge>
         where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
+        where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>

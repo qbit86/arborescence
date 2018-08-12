@@ -53,9 +53,9 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator,
-                    IndexCollection, IndexCollection.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept,
-                    ColorMapConcept, IndexCollectionEnumerableConcept>(
+                var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+                    IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                    ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
                     default(IndexedAdjacencyListGraphConcept), indexedMapConcept,
                     default(IndexCollectionEnumerableConcept));
 
