@@ -17,10 +17,10 @@
 
         private TColorMapConcept ColorMapConcept { get; }
 
-        private TVertexEnumerableConcept VertexCollectionConcept { get; }
+        private TVertexEnumerableConcept VertexEnumerableConcept { get; }
 
         public MultipleSourceDfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept,
-            TVertexEnumerableConcept vertexCollectionConcept)
+            TVertexEnumerableConcept vertexEnumerableConcept)
         {
             if (graphConcept == null)
                 throw new ArgumentNullException(nameof(graphConcept));
@@ -28,12 +28,12 @@
             if (colorMapConcept == null)
                 throw new ArgumentNullException(nameof(colorMapConcept));
 
-            if (vertexCollectionConcept == null)
-                throw new ArgumentNullException(nameof(vertexCollectionConcept));
+            if (vertexEnumerableConcept == null)
+                throw new ArgumentNullException(nameof(vertexEnumerableConcept));
 
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
-            VertexCollectionConcept = vertexCollectionConcept;
+            VertexEnumerableConcept = vertexEnumerableConcept;
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
@@ -44,11 +44,10 @@
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
-            TVertexEnumerator vertexEnumerator = VertexCollectionConcept.GetEnumerator(vertexCollection);
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>(graph,
-                vertexEnumerator, 0, GraphConcept, ColorMapConcept, VertexCollectionConcept);
+                vertexCollection, 0, GraphConcept, ColorMapConcept, VertexEnumerableConcept);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
@@ -59,11 +58,10 @@
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
-            TVertexEnumerator vertexEnumerator = VertexCollectionConcept.GetEnumerator(vertexCollection);
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>(graph,
-                vertexEnumerator, stackCapacity, GraphConcept, ColorMapConcept, VertexCollectionConcept);
+                vertexCollection, stackCapacity, GraphConcept, ColorMapConcept, VertexEnumerableConcept);
         }
     }
 }

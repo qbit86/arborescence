@@ -44,7 +44,7 @@ namespace Ubiquitous.Traversal.Advanced
                 _state = 0;
 
                 _graph = collection.Graph;
-                _vertexEnumerator = collection.VertexEnumerator;
+                _vertexEnumerator = collection.VertexEnumerableConcept.GetEnumerator(collection.VertexCollection);
                 _stackCapacity = collection.StackCapacity;
                 _graphConcept = collection.GraphConcept;
                 _colorMapConcept = collection.ColorMapConcept;

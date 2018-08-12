@@ -16,28 +16,27 @@
         where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TVertexEnumerableConcept : IEnumerableConcept<TVertexEnumerable, TVertexEnumerator>
     {
-        // TODO: Replace passing enumerator because it's not reenumeratable.
-        internal DfsForestStepCollection(TGraph graph, TVertexEnumerator vertexEnumerator, int stackCapacity,
+        internal DfsForestStepCollection(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity,
             TGraphConcept graphConcept, TColorMapConcept colorMapConcept,
-            TVertexEnumerableConcept vertexCollectionConcept)
+            TVertexEnumerableConcept vertexEnumerableConcept)
         {
-            Assert(vertexEnumerator != null);
+            Assert(vertexCollection != null);
             Assert(colorMapConcept != null);
 
             Graph = graph;
-            VertexEnumerator = vertexEnumerator;
+            VertexCollection = vertexCollection;
             StackCapacity = stackCapacity;
             GraphConcept = graphConcept;
             ColorMapConcept = colorMapConcept;
-            VertexCollectionConcept = vertexCollectionConcept;
+            VertexEnumerableConcept = vertexEnumerableConcept;
         }
 
         private TGraph Graph { get; }
-        private TVertexEnumerator VertexEnumerator { get; }
+        private TVertexEnumerable VertexCollection { get; }
         public int StackCapacity { get; }
         private TGraphConcept GraphConcept { get; }
         private TColorMapConcept ColorMapConcept { get; }
-        private TVertexEnumerableConcept VertexCollectionConcept { get; }
+        private TVertexEnumerableConcept VertexEnumerableConcept { get; }
 
         public Enumerator GetEnumerator()
         {
