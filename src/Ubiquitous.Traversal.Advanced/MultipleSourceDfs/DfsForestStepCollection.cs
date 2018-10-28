@@ -6,37 +6,37 @@
 
     public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
             TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-            TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
+            TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
-        where TVertexEnumerableConcept : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
     {
         internal DfsForestStepCollection(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept,
-            TVertexEnumerableConcept vertexEnumerableConcept)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
+            TVertexEnumerablePolicy vertexEnumerablePolicy)
         {
             Assert(vertexCollection != null);
-            Assert(colorMapConcept != null);
+            Assert(colorMapPolicy != null);
 
             Graph = graph;
             VertexCollection = vertexCollection;
             StackCapacity = stackCapacity;
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
-            VertexEnumerableConcept = vertexEnumerableConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
+            VertexEnumerablePolicy = vertexEnumerablePolicy;
         }
 
         private TGraph Graph { get; }
         private TVertexEnumerable VertexCollection { get; }
         public int StackCapacity { get; }
-        private TGraphConcept GraphConcept { get; }
-        private TColorMapConcept ColorMapConcept { get; }
-        private TVertexEnumerableConcept VertexEnumerableConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
+        private TVertexEnumerablePolicy VertexEnumerablePolicy { get; }
 
         public Enumerator GetEnumerator()
         {

@@ -10,15 +10,15 @@ namespace Ubiquitous.Traversal.Advanced
 
     public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
         TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-        TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
+        TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
     {
         public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
         {
             private Step<DfsStepKind, TVertex, TEdge> _current;
             private int _state;
 
-            private TColorMapConcept _colorMapConcept;
-            private TGraphConcept _graphConcept;
+            private TColorMapPolicy _colorMapPolicy;
+            private TGraphPolicy _graphPolicy;
 
             private readonly TGraph _graph;
 
@@ -31,30 +31,30 @@ namespace Ubiquitous.Traversal.Advanced
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
 
-            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
-                TColorMapConcept> _stepEnumerator;
+            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
+                TColorMapPolicy> _stepEnumerator;
 
             internal Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept> collection)
+                TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy> collection)
             {
-                Assert(collection.ColorMapConcept != null);
+                Assert(collection.ColorMapPolicy != null);
 
                 _current = default(Step<DfsStepKind, TVertex, TEdge>);
                 _state = 0;
 
                 _graph = collection.Graph;
-                _vertexEnumerator = collection.VertexEnumerableConcept.GetEnumerator(collection.VertexCollection);
+                _vertexEnumerator = collection.VertexEnumerablePolicy.GetEnumerator(collection.VertexCollection);
                 _stackCapacity = collection.StackCapacity;
-                _graphConcept = collection.GraphConcept;
-                _colorMapConcept = collection.ColorMapConcept;
+                _graphPolicy = collection.GraphPolicy;
+                _colorMapPolicy = collection.ColorMapPolicy;
                 _colorMap = default(TColorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator =
-                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
-                        TColorMapConcept>);
+                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
+                        TColorMapPolicy>);
             }
 
             public bool MoveNext()
@@ -65,7 +65,7 @@ namespace Ubiquitous.Traversal.Advanced
                     {
                         case 0:
                         {
-                            _colorMap = _colorMapConcept.Acquire();
+                            _colorMap = _colorMapPolicy.Acquire();
                             if (_colorMap == null)
                             {
                                 _state = int.MaxValue;
@@ -90,7 +90,7 @@ namespace Ubiquitous.Traversal.Advanced
                         case 2:
                         {
                             Assert(_colorMap != null, nameof(_colorMap) + " != null");
-                            if (!_colorMapConcept.TryGet(_colorMap, _vertexEnumerator.Current, out Color vertexColor))
+                            if (!_colorMapPolicy.TryGet(_colorMap, _vertexEnumerator.Current, out Color vertexColor))
                                 vertexColor = Color.None;
                             if (vertexColor != Color.None && vertexColor != Color.White)
                             {
@@ -121,8 +121,8 @@ namespace Ubiquitous.Traversal.Advanced
                         {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                                TColorMap, TGraphConcept, TColorMapConcept>(
-                                _graph, _vertexEnumerator.Current, _colorMap, _stack, _graphConcept, _colorMapConcept);
+                                TColorMap, TGraphPolicy, TColorMapPolicy>(
+                                _graph, _vertexEnumerator.Current, _colorMap, _stack, _graphPolicy, _colorMapPolicy);
                             _state = 5;
                             continue;
                         }
@@ -165,8 +165,8 @@ namespace Ubiquitous.Traversal.Advanced
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
                 _stepEnumerator =
-                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphConcept,
-                        TColorMapConcept>);
+                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
+                        TColorMapPolicy>);
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -195,7 +195,7 @@ namespace Ubiquitous.Traversal.Advanced
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _colorMapConcept.Release(_colorMap);
+                    _colorMapPolicy.Release(_colorMap);
                     _colorMap = default(TColorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
