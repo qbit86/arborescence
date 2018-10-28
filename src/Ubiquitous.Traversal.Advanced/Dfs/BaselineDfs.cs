@@ -4,33 +4,33 @@
     using System.Collections.Generic;
 
     public struct BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphConcept, TColorMapConcept>
+        TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
-        private TGraphConcept GraphConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
 
-        private TColorMapConcept ColorMapConcept { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
-        public BaselineDfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+        public BaselineDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
 
-            if (colorMapConcept == null)
-                throw new ArgumentNullException(nameof(colorMapConcept));
+            if (colorMapPolicy == null)
+                throw new ArgumentNullException(nameof(colorMapPolicy));
 
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex, GraphConcept, ColorMapConcept);
+                TGraphPolicy, TColorMapPolicy>(graph, startVertex, GraphPolicy, ColorMapPolicy);
         }
     }
 }
