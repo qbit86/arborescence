@@ -7,11 +7,11 @@ namespace Ubiquitous.Traversal.Advanced
 
     // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphConcept, TColorMapConcept>
+        TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private Step<DfsStepKind, TVertex, TEdge> _current;
         private int _state;
@@ -23,21 +23,21 @@ namespace Ubiquitous.Traversal.Advanced
 
         private TColorMap _colorMap;
         private readonly List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
-        private TGraphConcept _graphConcept;
-        private TColorMapConcept _colorMapConcept;
+        private TGraphPolicy _graphPolicy;
+        private TColorMapPolicy _colorMapPolicy;
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
             TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             Assert(colorMap != null);
-            Assert(graphConcept != null);
+            Assert(graphPolicy != null);
 
             _graph = graph;
             _colorMap = colorMap;
             _stack = stack;
-            _graphConcept = graphConcept;
-            _colorMapConcept = colorMapConcept;
+            _graphPolicy = graphPolicy;
+            _colorMapPolicy = colorMapPolicy;
 
             _current = default(Step<DfsStepKind, TVertex, TEdge>);
             _state = 0;
@@ -66,7 +66,7 @@ namespace Ubiquitous.Traversal.Advanced
                 {
                     case 0:
                     {
-                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Gray);
+                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 1;
                         return true;
@@ -74,10 +74,10 @@ namespace Ubiquitous.Traversal.Advanced
                     case 1:
                     {
                         bool hasOutEdges =
-                            _graphConcept.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
+                            _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
                         {
-                            _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Black);
+                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
                             _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                             _state = int.MaxValue;
                             return true;
@@ -119,7 +119,7 @@ namespace Ubiquitous.Traversal.Advanced
                             continue;
                         }
 
-                        bool isValid = _graphConcept.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
+                        bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
                         {
                             _state = 3;
@@ -132,7 +132,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 4:
                     {
-                        if (!_colorMapConcept.TryGet(_colorMap, _neighborVertex, out Color neighborColor))
+                        if (!_colorMapPolicy.TryGet(_colorMap, _neighborVertex, out Color neighborColor))
                             neighborColor = Color.None;
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
@@ -158,14 +158,14 @@ namespace Ubiquitous.Traversal.Advanced
                             CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
-                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Gray);
+                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
                         _current = CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
                         _state = 6;
                         return true;
                     }
                     case 6:
                     {
-                        bool hasOutEdges = _graphConcept.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
+                        bool hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
                         {
                             _state = short.MaxValue;
@@ -183,7 +183,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case short.MaxValue:
                     {
-                        _colorMapConcept.TryPut(_colorMap, _currentVertex, Color.Black);
+                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
                         _current = CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
                         _state = 2;
                         return true;
