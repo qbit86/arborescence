@@ -12,6 +12,7 @@ namespace Ubiquitous
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 
+        // ReSharper disable once InconsistentNaming
         private const int _offset = 0;
         private readonly T[] _array;
         private readonly int _count;
@@ -170,7 +171,8 @@ namespace Ubiquitous
             return !(a == b);
         }
 
-        public static implicit operator ArrayPrefix<T>(T[] array) => array != null ? new ArrayPrefix<T>(array) : default;
+        public static implicit operator ArrayPrefix<T>(T[] array) =>
+            array != null ? new ArrayPrefix<T>(array) : default;
 
         #region IList<T>
 
@@ -201,8 +203,7 @@ namespace Ubiquitous
 
             int index = System.Array.IndexOf(_array, item, _offset, _count);
 
-            Debug.Assert(index == -1 ||
-                            (index >= _offset && index < _offset + _count));
+            Debug.Assert(index == -1 || (index >= _offset && index < _offset + _count));
 
             return index >= 0 ? index - _offset : -1;
         }
@@ -263,8 +264,7 @@ namespace Ubiquitous
 
             int index = System.Array.IndexOf(_array, item, _offset, _count);
 
-            Debug.Assert(index == -1 ||
-                            (index >= _offset && index < _offset + _count));
+            Debug.Assert(index == -1 || (index >= _offset && index < _offset + _count));
 
             return index >= 0;
         }
