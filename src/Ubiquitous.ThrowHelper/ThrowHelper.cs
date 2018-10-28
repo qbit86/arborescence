@@ -64,11 +64,11 @@
         }
     }
 
+    // ReSharper disable InconsistentNaming
     internal enum ExceptionArgument
     {
-        // ReSharper disable InconsistentNaming
         array,
         count
-        // ReSharper restore InconsistentNaming
     }
+    // ReSharper restore InconsistentNaming
 }
