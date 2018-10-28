@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
+    <LangVersion>6</LangVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <Authors>Viktor T.</Authors>
+    <Description>Stable primitive types.
+Commonly used types: SourceTargetPair&lt;TVertex&gt;.</Description>
+    <PackageLicenseUrl>https://github.com/qbit86/ubiquitous-graphs/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageTags>primitive;graph</PackageTags>
+    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
+    <PackageReleaseNotes>https://github.com/qbit86/ubiquitous-graphs/blob/master/src/Ubiquitous.Primitives/CHANGELOG.md</PackageReleaseNotes>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DebugType)' == 'portable'">
+    <EmbedAllSources>true</EmbedAllSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+</Project>

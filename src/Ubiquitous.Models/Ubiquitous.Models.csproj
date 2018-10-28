@@ -16,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+    <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
   </ItemGroup>
 </Project>
