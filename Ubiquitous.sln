@@ -40,7 +40,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Internal", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Primitives", "src\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.ThrowHelper", "src\Ubiquitous.ThrowHelper\Ubiquitous.ThrowHelper.shproj", "{4341AE5A-0459-488E-AFE6-E075E645E3BD}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Helpers", "src\Ubiquitous.ThrowHelper\Ubiquitous.Helpers.shproj", "{4341AE5A-0459-488E-AFE6-E075E645E3BD}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
