@@ -5,30 +5,30 @@
     using static System.Diagnostics.Debug;
 
     public partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphConcept, TColorMapConcept>
+            TGraphPolicy, TColorMapPolicy>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, int stackCapacity,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
-            Assert(colorMapConcept != null);
+            Assert(colorMapPolicy != null);
 
             Graph = graph;
             StartVertex = startVertex;
             StackCapacity = stackCapacity;
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
         }
 
         private TGraph Graph { get; }
         private TVertex StartVertex { get; }
         private int StackCapacity { get; }
-        private TGraphConcept GraphConcept { get; }
-        private TColorMapConcept ColorMapConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
         public Enumerator GetEnumerator()
         {
