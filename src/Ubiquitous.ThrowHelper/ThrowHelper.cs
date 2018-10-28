@@ -7,6 +7,11 @@
     // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/Resources/Strings.resx
     internal static class ThrowHelper
     {
+        internal static void ThrowArgumentException_DestinationTooShort()
+        {
+            throw new ArgumentException("Destination is too short.");
+        }
+
         internal static void ThrowArgumentNullException(ExceptionArgument argument)
         {
             throw new ArgumentNullException(GetArgumentName(argument));
@@ -17,7 +22,7 @@
             throw new ArgumentOutOfRangeException(GetArgumentName(argument));
         }
 
-        public static void ThrowArgumentOutOfRange_IndexException()
+        internal static void ThrowArgumentOutOfRange_IndexException()
         {
             throw GetArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_Index);
         }
@@ -25,6 +30,11 @@
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
+        }
+
+        internal static void ThrowInvalidOperationException(ExceptionResource resource)
+        {
+            throw new InvalidOperationException(GetResourceString(resource));
         }
 
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()
@@ -35,6 +45,11 @@
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
         {
             throw new InvalidOperationException("Enumeration has not started. Call MoveNext.");
+        }
+
+        internal static void ThrowNotSupportedException()
+        {
+            throw new NotImplementedException();
         }
 
         private static Exception GetArraySegmentCtorValidationFailedException(Array array, int offset, int count)
