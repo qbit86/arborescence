@@ -44,6 +44,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.ThrowHelper", "s
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Ubiquitous.ThrowHelper\Ubiquitous.ThrowHelper.projitems*{4341ae5a-0459-488e-afe6-e075e645e3bd}*SharedItemsImports = 13
 		src\Ubiquitous.Internal\Ubiquitous.Internal.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
