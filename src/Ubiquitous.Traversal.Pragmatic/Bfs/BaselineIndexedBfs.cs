@@ -3,32 +3,32 @@
     using System;
     using System.Collections.Generic;
 
-    public readonly struct BaselineIndexedBfs<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>
+    public readonly struct BaselineIndexedBfs<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetPolicy<TGraph, int, TEdge>, IGetOutEdgesPolicy<TGraph, int, TEdgeEnumerator>
+        where TGraphPolicy : IGetTargetPolicy<TGraph, int, TEdge>, IGetOutEdgesPolicy<TGraph, int, TEdgeEnumerator>
     {
-        public BaselineIndexedBfs(TGraphConcept graphConcept)
+        public BaselineIndexedBfs(TGraphPolicy graphPolicy)
         {
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
 
-            GraphConcept = graphConcept;
+            GraphPolicy = graphPolicy;
         }
 
-        private TGraphConcept GraphConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
 
-        public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept> Traverse(
+        public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy> Traverse(
             TGraph graph, int startVertex, int vertexCount)
         {
-            return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>(
-                graph, startVertex, vertexCount, 0, GraphConcept);
+            return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy>(
+                graph, startVertex, vertexCount, 0, GraphPolicy);
         }
 
-        public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept> Traverse(
+        public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy> Traverse(
             TGraph graph, int startVertex, int vertexCount, int queueCapacity)
         {
-            return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>(
-                graph, startVertex, vertexCount, queueCapacity, GraphConcept);
+            return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy>(
+                graph, startVertex, vertexCount, queueCapacity, GraphPolicy);
         }
     }
 }
