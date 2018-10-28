@@ -17,6 +17,11 @@
             throw new ArgumentOutOfRangeException(GetArgumentName(argument));
         }
 
+        public static void ThrowArgumentOutOfRange_IndexException()
+        {
+            throw GetArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_Index);
+        }
+
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
@@ -49,6 +54,11 @@
                 "Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
         }
 
+        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+        {
+            return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
+        }
+
         private static string GetArgumentName(ExceptionArgument argument)
         {
             switch (argument)
@@ -57,8 +67,24 @@
                     return "array";
                 case ExceptionArgument.count:
                     return "count";
+                case ExceptionArgument.index:
+                    return "index";
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
+                    return "";
+            }
+        }
+
+        private static string GetResourceString(ExceptionResource resource)
+        {
+            switch (resource)
+            {
+                case ExceptionResource.ArgumentOutOfRange_Index:
+                    return "Index was out of range. Must be non-negative and less than the size of the collection.";
+                case ExceptionResource.InvalidOperation_NullArray:
+                    return "The underlying array is null.";
+                default:
+                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource Enum.");
                     return "";
             }
         }
@@ -68,7 +94,14 @@
     internal enum ExceptionArgument
     {
         array,
-        count
+        count,
+        index
+    }
+
+    internal enum ExceptionResource
+    {
+        ArgumentOutOfRange_Index,
+        InvalidOperation_NullArray
     }
     // ReSharper restore InconsistentNaming
 }
