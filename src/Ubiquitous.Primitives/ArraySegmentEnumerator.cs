@@ -30,8 +30,9 @@ namespace Ubiquitous
             if (_current < _end)
             {
                 _current++;
-                return (_current < _end);
+                return _current < _end;
             }
+
             return false;
         }
 
