@@ -44,7 +44,7 @@
     /// <remarks>
     /// See also: <a href="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs">KeyValuePair.cs</a>
     /// </remarks>
-    public struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
+    public readonly struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
     {
         public TVertex Source { get; }
         public TVertex Target { get; }

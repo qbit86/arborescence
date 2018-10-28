@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public struct IndexedAdjacencyListGraphPolicy :
+    public readonly struct IndexedAdjacencyListGraphPolicy :
         IGetTargetPolicy<IndexedAdjacencyListGraph, int, int>,
         IGetOutEdgesPolicy<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
     {

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    public struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
+    public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
     {
         private List<SourceTargetPair<int>> Endpoints { get; }
         private List<int>[] OutEdges { get; }
