@@ -5,30 +5,30 @@
     using static System.Diagnostics.Debug;
 
     internal struct BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphConcept, TColorMapConcept>
+            TGraphPolicy, TColorMapPolicy>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
-        private TColorMapConcept _colorMapConcept;
+        private TColorMapPolicy _colorMapPolicy;
 
         private TGraph Graph { get; }
 
         private TVertex StartVertex { get; }
 
-        private TGraphConcept GraphConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
 
         internal BaselineDfsTreeStepCollection(TGraph graph, TVertex startVertex,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
-            Assert(colorMapConcept != null);
+            Assert(colorMapPolicy != null);
 
             Graph = graph;
             StartVertex = startVertex;
-            GraphConcept = graphConcept;
-            _colorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            _colorMapPolicy = colorMapPolicy;
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -44,7 +44,7 @@
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumeratorCoroutine()
         {
-            TColorMap colorMap = _colorMapConcept.Acquire();
+            TColorMap colorMap = _colorMapPolicy.Acquire();
             if (colorMap == null)
                 yield break;
 
@@ -53,7 +53,7 @@
                 yield return Step.Create(DfsStepKind.StartVertex, StartVertex, default(TEdge));
 
                 var steps = new BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                    TGraphConcept, TColorMapConcept>(Graph, StartVertex, colorMap, GraphConcept, _colorMapConcept);
+                    TGraphPolicy, TColorMapPolicy>(Graph, StartVertex, colorMap, GraphPolicy, _colorMapPolicy);
                 using (IEnumerator<Step<DfsStepKind, TVertex, TEdge>> stepEnumerator = steps.GetEnumerator())
                 {
                     while (stepEnumerator.MoveNext())
@@ -62,7 +62,7 @@
             }
             finally
             {
-                _colorMapConcept.Release(colorMap);
+                _colorMapPolicy.Release(colorMap);
             }
         }
     }

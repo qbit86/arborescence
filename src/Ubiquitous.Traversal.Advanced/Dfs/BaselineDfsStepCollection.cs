@@ -7,12 +7,12 @@ namespace Ubiquitous.Traversal.Advanced
     using static System.Diagnostics.Debug;
 
     internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphConcept, TColorMapConcept>
+            TGraphPolicy, TColorMapPolicy>
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TColorMap _colorMap;
 
@@ -20,22 +20,22 @@ namespace Ubiquitous.Traversal.Advanced
 
         private TVertex StartVertex { get; }
 
-        private TGraphConcept GraphConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
 
-        private TColorMapConcept ColorMapConcept { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
         public BaselineDfsStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             Assert(colorMap != null);
-            Assert(graphConcept != null);
-            Assert(colorMapConcept != null);
+            Assert(graphPolicy != null);
+            Assert(colorMapPolicy != null);
 
             Graph = graph;
             StartVertex = startVertex;
             _colorMap = colorMap;
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
         }
 
         public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
@@ -51,12 +51,12 @@ namespace Ubiquitous.Traversal.Advanced
 
         private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex)
         {
-            if (!ColorMapConcept.TryPut(_colorMap, vertex, Color.Gray))
+            if (!ColorMapPolicy.TryPut(_colorMap, vertex, Color.Gray))
                 yield break;
 
             yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
 
-            if (GraphConcept.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
+            if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
             {
                 while (edges.MoveNext())
                 {
@@ -66,7 +66,7 @@ namespace Ubiquitous.Traversal.Advanced
                 }
             }
 
-            if (!ColorMapConcept.TryPut(_colorMap, vertex, Color.Black))
+            if (!ColorMapPolicy.TryPut(_colorMap, vertex, Color.Black))
                 yield break;
 
             yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
@@ -76,9 +76,9 @@ namespace Ubiquitous.Traversal.Advanced
         {
             yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
 
-            if (GraphConcept.TryGetTarget(Graph, edge, out TVertex target))
+            if (GraphPolicy.TryGetTarget(Graph, edge, out TVertex target))
             {
-                if (!ColorMapConcept.TryGet(_colorMap, target, out Color neighborColor))
+                if (!ColorMapPolicy.TryGet(_colorMap, target, out Color neighborColor))
                     neighborColor = Color.None;
 
                 switch (neighborColor)
