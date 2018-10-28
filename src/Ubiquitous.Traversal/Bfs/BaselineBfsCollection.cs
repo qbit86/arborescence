@@ -8,15 +8,15 @@
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
     public readonly struct BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphConcept, TColorMapConcept>
+            TGraphPolicy, TColorMapPolicy>
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetPolicy<TGraph, TVertex, TEdge>,
+        where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,
-            TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -27,24 +27,24 @@
             if (queueCapacity < 0)
                 throw new ArgumentOutOfRangeException(nameof(queueCapacity));
 
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
 
-            if (colorMapConcept == null)
-                throw new ArgumentNullException(nameof(colorMapConcept));
+            if (colorMapPolicy == null)
+                throw new ArgumentNullException(nameof(colorMapPolicy));
 
             Graph = graph;
             StartVertex = startVertex;
             QueueCapacity = queueCapacity;
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
         }
 
         private TGraph Graph { get; }
         private TVertex StartVertex { get; }
         private int QueueCapacity { get; }
-        private TGraphConcept GraphConcept { get; }
-        private TColorMapConcept ColorMapConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
         public IEnumerator<TEdge> GetEnumerator()
         {
@@ -54,13 +54,13 @@
             if (StartVertex == null)
                 throw new InvalidOperationException($"{nameof(StartVertex)}: null");
 
-            if (GraphConcept == null)
-                throw new InvalidOperationException($"{nameof(GraphConcept)}: null");
+            if (GraphPolicy == null)
+                throw new InvalidOperationException($"{nameof(GraphPolicy)}: null");
 
-            if (ColorMapConcept == null)
-                throw new InvalidOperationException($"{nameof(ColorMapConcept)}: null");
+            if (ColorMapPolicy == null)
+                throw new InvalidOperationException($"{nameof(ColorMapPolicy)}: null");
 
-            TColorMap colorMap = ColorMapConcept.Acquire();
+            TColorMap colorMap = ColorMapPolicy.Acquire();
             Queue<TVertex> queue = QueueCache<TVertex>.Acquire(QueueCapacity);
             return GetEnumeratorCoroutine(colorMap, queue);
         }
@@ -77,7 +77,7 @@
 
             try
             {
-                if (!ColorMapConcept.TryPut(colorMap, StartVertex, Color.Gray))
+                if (!ColorMapPolicy.TryPut(colorMap, StartVertex, Color.Gray))
                     yield break;
 
                 queue.Enqueue(StartVertex);
@@ -85,22 +85,22 @@
                 while (queue.Count > 0)
                 {
                     TVertex u = queue.Dequeue();
-                    if (GraphConcept.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
+                    if (GraphPolicy.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
                     {
                         while (outEdges.MoveNext())
                         {
                             TEdge e = outEdges.Current;
 
-                            if (!GraphConcept.TryGetTarget(Graph, e, out TVertex v))
+                            if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
                                 continue;
 
-                            ColorMapConcept.TryGet(colorMap, v, out Color color);
+                            ColorMapPolicy.TryGet(colorMap, v, out Color color);
                             switch (color)
                             {
                                 case Color.None:
                                 case Color.White:
                                 {
-                                    if (!ColorMapConcept.TryPut(colorMap, v, Color.Gray))
+                                    if (!ColorMapPolicy.TryPut(colorMap, v, Color.Gray))
                                         continue;
 
                                     queue.Enqueue(v);
@@ -111,13 +111,13 @@
                         }
                     }
 
-                    ColorMapConcept.TryPut(colorMap, u, Color.Black);
+                    ColorMapPolicy.TryPut(colorMap, u, Color.Black);
                 }
             }
             finally
             {
                 QueueCache<TVertex>.Release(queue);
-                ColorMapConcept.Release(colorMap);
+                ColorMapPolicy.Release(colorMap);
             }
         }
     }

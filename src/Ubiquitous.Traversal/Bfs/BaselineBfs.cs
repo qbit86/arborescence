@@ -4,38 +4,38 @@
     using System.Collections.Generic;
 
     public readonly struct BaselineBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphConcept, TColorMapConcept>
+        TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetPolicy<TGraph, TVertex, TEdge>,
+        where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
-        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
-        public BaselineBfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+        public BaselineBfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
 
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
         }
 
-        private TGraphConcept GraphConcept { get; }
-        private TColorMapConcept ColorMapConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
         public BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>
+                TGraphPolicy, TColorMapPolicy>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex, 0, GraphConcept, ColorMapConcept);
+                TGraphPolicy, TColorMapPolicy>(graph, startVertex, 0, GraphPolicy, ColorMapPolicy);
         }
 
         public BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>
+                TGraphPolicy, TColorMapPolicy>
             Traverse(TGraph graph, TVertex startVertex, int queueCapacity)
         {
             return new BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex, queueCapacity, GraphConcept, ColorMapConcept);
+                TGraphPolicy, TColorMapPolicy>(graph, startVertex, queueCapacity, GraphPolicy, ColorMapPolicy);
         }
     }
 }
