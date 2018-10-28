@@ -7,7 +7,7 @@
     using Xunit;
     using Xunit.Abstractions;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
-    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
+    using ColorMapPolicy = IndexedMapPolicy<Traversal.Advanced.Color>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {
@@ -39,45 +39,45 @@
 
         public DfsTest(ITestOutputHelper output)
         {
-            var colorMapConcept = new ColorMapConcept(VertexCount);
+            var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int,
-                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
+                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             MultipleSourceDfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
+                ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
+                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
             BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
-                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
+                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
+                ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
+                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
             Output = output;
         }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept>
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             Dfs { get; }
 
         private MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>
+                ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             MultipleSourceDfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept>
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             BaselineMultipleSourceDfs { get; }
 
         private ITestOutputHelper Output { get; }

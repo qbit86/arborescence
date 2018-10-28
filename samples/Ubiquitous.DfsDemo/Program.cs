@@ -8,7 +8,7 @@ namespace Ubiquitous
     using static System.Diagnostics.Debug;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
-    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
+    using ColorMapPolicy = IndexedMapPolicy<Traversal.Advanced.Color>;
 
     internal static partial class Program
     {
@@ -32,14 +32,14 @@ namespace Ubiquitous
             IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             var vertices = new IndexCollection(graph.VertexCount);
-            var indexedMapConcept = new ColorMapConcept(graph.VertexCount);
+            var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
 
             {
                 var dfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                     IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                    ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
-                    default(IndexedAdjacencyListGraphConcept), indexedMapConcept,
-                    default(IndexCollectionEnumerableConcept));
+                    ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
+                    default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
+                    default(IndexCollectionEnumerablePolicy));
 
                 IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertices);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
@@ -52,9 +52,9 @@ namespace Ubiquitous
             {
                 var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                     IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                    ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
-                    default(IndexedAdjacencyListGraphConcept), indexedMapConcept,
-                    default(IndexCollectionEnumerableConcept));
+                    ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
+                    default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
+                    default(IndexCollectionEnumerablePolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);

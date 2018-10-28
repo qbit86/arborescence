@@ -5,36 +5,36 @@
 
     public struct BaselineMultipleSourceDfs<TGraph, TVertex, TEdge,
         TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-        TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>
+        TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
         where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
-        where TVertexEnumerableConcept : IEnumerableConcept<TVertexEnumerable, TVertexEnumerator>
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetPolicy<TGraph, TVertex, TEdge>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
     {
-        private TGraphConcept GraphConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
 
-        private TColorMapConcept ColorMapConcept { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
-        private TVertexEnumerableConcept VertexEnumerableConcept { get; }
+        private TVertexEnumerablePolicy VertexEnumerablePolicy { get; }
 
-        public BaselineMultipleSourceDfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept,
-            TVertexEnumerableConcept vertexEnumerableConcept)
+        public BaselineMultipleSourceDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
+            TVertexEnumerablePolicy vertexEnumerablePolicy)
         {
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
 
-            if (colorMapConcept == null)
-                throw new ArgumentNullException(nameof(colorMapConcept));
+            if (colorMapPolicy == null)
+                throw new ArgumentNullException(nameof(colorMapPolicy));
 
-            if (vertexEnumerableConcept == null)
-                throw new ArgumentNullException(nameof(vertexEnumerableConcept));
+            if (vertexEnumerablePolicy == null)
+                throw new ArgumentNullException(nameof(vertexEnumerablePolicy));
 
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
-            VertexEnumerableConcept = vertexEnumerableConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
+            VertexEnumerablePolicy = vertexEnumerablePolicy;
         }
 
         public IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
@@ -45,8 +45,8 @@
 
             return new BaselineDfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphConcept, TColorMapConcept, TVertexEnumerableConcept>(graph, vertexCollection,
-                GraphConcept, ColorMapConcept, VertexEnumerableConcept);
+                TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>(graph, vertexCollection,
+                GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy);
         }
     }
 }

@@ -4,44 +4,44 @@
     using System.Collections.Generic;
 
     public struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphConcept, TColorMapConcept>
+        TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetPolicy<TGraph, TVertex, TEdge>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
-        private TGraphConcept GraphConcept { get; }
+        private TGraphPolicy GraphPolicy { get; }
 
-        private TColorMapConcept ColorMapConcept { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
-        public Dfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept)
+        public Dfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
-            if (graphConcept == null)
-                throw new ArgumentNullException(nameof(graphConcept));
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
 
-            if (colorMapConcept == null)
-                throw new ArgumentNullException(nameof(colorMapConcept));
+            if (colorMapPolicy == null)
+                throw new ArgumentNullException(nameof(colorMapPolicy));
 
-            GraphConcept = graphConcept;
-            ColorMapConcept = colorMapConcept;
+            GraphPolicy = graphPolicy;
+            ColorMapPolicy = colorMapPolicy;
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>
+                TGraphPolicy, TColorMapPolicy>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex, 0,
-                GraphConcept, ColorMapConcept);
+                TGraphPolicy, TColorMapPolicy>(graph, startVertex, 0,
+                GraphPolicy, ColorMapPolicy);
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>
+                TGraphPolicy, TColorMapPolicy>
             Traverse(TGraph graph, TVertex startVertex, int stackCapacity)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphConcept, TColorMapConcept>(graph, startVertex, stackCapacity,
-                GraphConcept, ColorMapConcept);
+                TGraphPolicy, TColorMapPolicy>(graph, startVertex, stackCapacity,
+                GraphPolicy, ColorMapPolicy);
         }
     }
 }

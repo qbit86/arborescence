@@ -5,21 +5,21 @@
     using System.Collections.Generic;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
-    public readonly struct BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>
+    public readonly struct BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy>
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
+        where TGraphPolicy : IGetTargetPolicy<TGraph, int, TEdge>, IGetOutEdgesPolicy<TGraph, int, TEdgeEnumerator>
     {
         private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
-            TGraphConcept, IndexedMapConcept<Color>> _impl;
+            TGraphPolicy, IndexedMapPolicy<Color>> _impl;
 
         internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, int queueCapacity,
-            TGraphConcept graphConcept)
+            TGraphPolicy graphPolicy)
         {
-            var colorMapConcept = new IndexedMapConcept<Color>(vertexCount);
+            var colorMapPolicy = new IndexedMapPolicy<Color>(vertexCount);
             _impl = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
-                TGraphConcept, IndexedMapConcept<Color>>(
-                graph, startVertex, queueCapacity, graphConcept, colorMapConcept);
+                TGraphPolicy, IndexedMapPolicy<Color>>(
+                graph, startVertex, queueCapacity, graphPolicy, colorMapPolicy);
         }
 
         public IEnumerator<TEdge> GetEnumerator()
