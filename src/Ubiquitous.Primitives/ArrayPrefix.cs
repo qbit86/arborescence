@@ -50,18 +50,14 @@ namespace Ubiquitous
             get
             {
                 if ((uint)index >= (uint)_count)
-                {
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
-                }
 
                 return _array[_offset + index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
-                {
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
-                }
 
                 _array[_offset + index] = value;
             }
@@ -76,9 +72,7 @@ namespace Ubiquitous
         public override int GetHashCode()
         {
             if (_array == null)
-            {
                 return 0;
-            }
 
             int hash = 5381;
             hash = HashHelpers.Combine(hash, _count);
@@ -89,7 +83,10 @@ namespace Ubiquitous
             return hash;
         }
 
-        public void CopyTo(T[] destination) => CopyTo(destination, 0);
+        public void CopyTo(T[] destination)
+        {
+            CopyTo(destination, 0);
+        }
 
         public void CopyTo(T[] destination, int destinationIndex)
         {
@@ -103,9 +100,7 @@ namespace Ubiquitous
             destination.ThrowInvalidOperationIfDefault();
 
             if (_count > destination._count)
-            {
                 ThrowHelper.ThrowArgumentException_DestinationTooShort();
-            }
 
             System.Array.Copy(_array, _offset, destination._array, _offset, _count);
         }
@@ -128,9 +123,7 @@ namespace Ubiquitous
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count)
-            {
                 ThrowHelper.ThrowArgumentOutOfRange_IndexException();
-            }
 
             return new ArraySegment<T>(_array, _offset + index, _count - index);
         }
@@ -140,9 +133,7 @@ namespace Ubiquitous
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
-            {
                 ThrowHelper.ThrowArgumentOutOfRange_IndexException();
-            }
 
             return new ArraySegment<T>(_array, _offset + index, count);
         }
@@ -152,9 +143,7 @@ namespace Ubiquitous
             ThrowInvalidOperationIfDefault();
 
             if (_count == 0)
-            {
                 return Empty._array;
-            }
 
             var array = new T[_count];
             System.Array.Copy(_array, _offset, array, 0, _count);
@@ -171,8 +160,10 @@ namespace Ubiquitous
             return !(a == b);
         }
 
-        public static implicit operator ArrayPrefix<T>(T[] array) =>
-            array != null ? new ArrayPrefix<T>(array) : default;
+        public static implicit operator ArrayPrefix<T>(T[] array)
+        {
+            return array != null ? new ArrayPrefix<T>(array) : default;
+        }
 
         #region IList<T>
 
@@ -203,7 +194,7 @@ namespace Ubiquitous
 
             int index = System.Array.IndexOf(_array, item, _offset, _count);
 
-            Debug.Assert(index == -1 || (index >= _offset && index < _offset + _count));
+            Debug.Assert(index == -1 || index >= _offset && index < _offset + _count);
 
             return index >= 0 ? index - _offset : -1;
         }
@@ -238,15 +229,7 @@ namespace Ubiquitous
 
         #region ICollection<T>
 
-        bool ICollection<T>.IsReadOnly
-        {
-            get
-            {
-                // the indexer setter does not throw an exception although IsReadOnly is true.
-                // This is to match the behavior of arrays.
-                return true;
-            }
-        }
+        bool ICollection<T>.IsReadOnly => true;
 
         void ICollection<T>.Add(T item)
         {
@@ -264,7 +247,7 @@ namespace Ubiquitous
 
             int index = System.Array.IndexOf(_array, item, _offset, _count);
 
-            Debug.Assert(index == -1 || (index >= _offset && index < _offset + _count));
+            Debug.Assert(index == -1 || index >= _offset && index < _offset + _count);
 
             return index >= 0;
         }
@@ -279,22 +262,26 @@ namespace Ubiquitous
 
         #region IEnumerable<T>
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         #endregion
 
         #region IEnumerable
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         #endregion
 
         private void ThrowInvalidOperationIfDefault()
         {
             if (_array == null)
-            {
                 ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
-            }
         }
     }
 }
