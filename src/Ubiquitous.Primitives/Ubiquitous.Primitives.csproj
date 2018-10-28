@@ -23,4 +23,5 @@ Commonly used types: SourceTargetPair&lt;TVertex&gt;.</Description>
     <EmbedAllSources>true</EmbedAllSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+  <Import Project="..\Ubiquitous.ThrowHelper\Ubiquitous.ThrowHelper.projitems" Label="Shared" />
 </Project>
