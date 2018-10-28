@@ -8,7 +8,7 @@
     public readonly struct BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
+        where TGraphConcept : IGetTargetPolicy<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
     {
         private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
             TGraphConcept, IndexedMapPolicy<Color>> _impl;

@@ -5,7 +5,7 @@
 
     public readonly struct BaselineIndexedBfs<TGraph, TEdge, TEdgeEnumerator, TGraphConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
+        where TGraphConcept : IGetTargetPolicy<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
     {
         public BaselineIndexedBfs(TGraphConcept graphConcept)
         {

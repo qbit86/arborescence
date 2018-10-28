@@ -6,7 +6,7 @@
     public readonly struct BaselineBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetTargetConcept<TGraph, TVertex, TEdge>,
+        where TGraphConcept : IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {

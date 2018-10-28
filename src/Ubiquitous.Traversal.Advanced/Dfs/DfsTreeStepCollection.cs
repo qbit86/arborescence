@@ -9,7 +9,7 @@
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetConcept<TGraph, TVertex, TEdge>
+        IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, int stackCapacity,

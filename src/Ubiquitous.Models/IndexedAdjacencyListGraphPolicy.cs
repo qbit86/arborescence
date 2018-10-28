@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public struct IndexedAdjacencyListGraphConcept :
-        IGetTargetConcept<IndexedAdjacencyListGraph, int, int>,
+    public struct IndexedAdjacencyListGraphPolicy :
+        IGetTargetPolicy<IndexedAdjacencyListGraph, int, int>,
         IGetOutEdgesConcept<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)

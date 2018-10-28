@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal.Advanced
         : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetConcept<TGraph, TVertex, TEdge>
+        IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TColorMap _colorMap;

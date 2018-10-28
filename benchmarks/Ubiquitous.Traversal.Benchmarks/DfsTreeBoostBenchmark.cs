@@ -16,12 +16,12 @@ namespace Ubiquitous
             var colorMapConcept = new ColorMapConcept(VertexCount);
 
             BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
-                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphPolicy), colorMapConcept);
 
             DefaultDfs = new Dfs<IndexedAdjacencyListGraph, int, int,
-                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept);
+                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphPolicy), colorMapConcept);
         }
 
         [Params(10, 100, 1000)]
@@ -30,15 +30,15 @@ namespace Ubiquitous
         public int VertexCount { get; set; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept>
+                IndexedAdjacencyListGraphPolicy, ColorMapConcept>
             BaselineDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept>
+                IndexedAdjacencyListGraphPolicy, ColorMapConcept>
             DefaultDfs { get; }
 
         private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept>
+                IndexedAdjacencyListGraphPolicy, ColorMapConcept>
             CachingDfs { get; set; }
 
         private IndexedAdjacencyListGraph Graph { get; set; }
@@ -52,8 +52,8 @@ namespace Ubiquitous
             indexedMapConcept.Warmup();
 
             CachingDfs = new Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept>(
-                default(IndexedAdjacencyListGraphConcept), indexedMapConcept);
+                IndexedAdjacencyListGraphPolicy, ColorMapConcept>(
+                default(IndexedAdjacencyListGraphPolicy), indexedMapConcept);
         }
 
         [Benchmark(Baseline = true)]

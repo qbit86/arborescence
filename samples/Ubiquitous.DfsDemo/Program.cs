@@ -37,8 +37,8 @@ namespace Ubiquitous
             {
                 var dfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                     IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                    ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerablePolicy>(
-                    default(IndexedAdjacencyListGraphConcept), indexedMapConcept,
+                    ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapConcept, IndexCollectionEnumerablePolicy>(
+                    default(IndexedAdjacencyListGraphPolicy), indexedMapConcept,
                     default(IndexCollectionEnumerablePolicy));
 
                 IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertices);
@@ -52,8 +52,8 @@ namespace Ubiquitous
             {
                 var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                     IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                    ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerablePolicy>(
-                    default(IndexedAdjacencyListGraphConcept), indexedMapConcept,
+                    ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapConcept, IndexCollectionEnumerablePolicy>(
+                    default(IndexedAdjacencyListGraphPolicy), indexedMapConcept,
                     default(IndexCollectionEnumerablePolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
