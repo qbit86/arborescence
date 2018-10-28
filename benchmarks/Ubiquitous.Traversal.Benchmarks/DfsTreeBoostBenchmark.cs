@@ -6,7 +6,7 @@ namespace Ubiquitous
     using BenchmarkDotNet.Attributes;
     using Traversal.Advanced;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
-    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapPolicy<Traversal.Advanced.Color>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark

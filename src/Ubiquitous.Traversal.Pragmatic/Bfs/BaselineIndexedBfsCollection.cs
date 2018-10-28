@@ -11,14 +11,14 @@
         where TGraphConcept : IGetTargetConcept<TGraph, int, TEdge>, IGetOutEdgesConcept<TGraph, int, TEdgeEnumerator>
     {
         private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
-            TGraphConcept, IndexedMapConcept<Color>> _impl;
+            TGraphConcept, IndexedMapPolicy<Color>> _impl;
 
         internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, int queueCapacity,
             TGraphConcept graphConcept)
         {
-            var colorMapConcept = new IndexedMapConcept<Color>(vertexCount);
+            var colorMapConcept = new IndexedMapPolicy<Color>(vertexCount);
             _impl = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
-                TGraphConcept, IndexedMapConcept<Color>>(
+                TGraphConcept, IndexedMapPolicy<Color>>(
                 graph, startVertex, queueCapacity, graphConcept, colorMapConcept);
         }
 

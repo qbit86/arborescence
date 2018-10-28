@@ -10,7 +10,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         private TColorMapConcept _colorMapConcept;
 

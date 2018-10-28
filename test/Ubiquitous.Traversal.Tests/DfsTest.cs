@@ -7,7 +7,7 @@
     using Xunit;
     using Xunit.Abstractions;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
-    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapPolicy<Traversal.Advanced.Color>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {

@@ -13,7 +13,7 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetConcept<TGraph, TVertex, TEdge>,
         IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,
             TGraphConcept graphConcept, TColorMapConcept colorMapConcept)

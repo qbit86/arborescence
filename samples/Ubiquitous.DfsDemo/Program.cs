@@ -8,7 +8,7 @@ namespace Ubiquitous
     using static System.Diagnostics.Debug;
     using ColorMap = System.ArraySegment<Traversal.Advanced.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
-    using ColorMapConcept = IndexedMapConcept<Traversal.Advanced.Color>;
+    using ColorMapConcept = IndexedMapPolicy<Traversal.Advanced.Color>;
 
     internal static partial class Program
     {

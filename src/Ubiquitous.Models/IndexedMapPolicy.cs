@@ -3,10 +3,10 @@
     using System;
     using System.Buffers;
 
-    public readonly struct IndexedMapConcept<T>
-        : IMapConcept<ArraySegment<T>, int, T>, IFactory<ArraySegment<T>>
+    public readonly struct IndexedMapPolicy<T>
+        : IMapPolicy<ArraySegment<T>, int, T>, IFactory<ArraySegment<T>>
     {
-        public IndexedMapConcept(int count)
+        public IndexedMapPolicy(int count)
         {
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));

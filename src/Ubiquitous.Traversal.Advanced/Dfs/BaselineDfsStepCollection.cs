@@ -12,7 +12,7 @@ namespace Ubiquitous.Traversal.Advanced
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetConcept<TGraph, TVertex, TEdge>
-        where TColorMapConcept : IMapConcept<TColorMap, TVertex, Color>
+        where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TColorMap _colorMap;
 
