@@ -12,6 +12,11 @@
             throw new ArgumentNullException(GetArgumentName(argument));
         }
 
+        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument)
+        {
+            throw new ArgumentOutOfRangeException(GetArgumentName(argument));
+        }
+
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
@@ -50,6 +55,8 @@
             {
                 case ExceptionArgument.array:
                     return "array";
+                case ExceptionArgument.count:
+                    return "count";
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
                     return "";
@@ -60,7 +67,8 @@
     internal enum ExceptionArgument
     {
         // ReSharper disable InconsistentNaming
-        array
+        array,
+        count
         // ReSharper restore InconsistentNaming
     }
 }
