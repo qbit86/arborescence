@@ -47,8 +47,8 @@
 
             MultipleSourceDfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
+                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerablePolicy>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerablePolicy));
 
             BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
                 List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept>(
@@ -56,8 +56,8 @@
 
             BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>(
-                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerableConcept));
+                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerablePolicy>(
+                default(IndexedAdjacencyListGraphConcept), colorMapConcept, default(IndexCollectionEnumerablePolicy));
 
             Output = output;
         }
@@ -68,7 +68,7 @@
 
         private MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
-                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>
+                ColorMap, IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerablePolicy>
             MultipleSourceDfs { get; }
 
         private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
@@ -77,7 +77,7 @@
 
         private BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator, ColorMap,
-                IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerableConcept>
+                IndexedAdjacencyListGraphConcept, ColorMapConcept, IndexCollectionEnumerablePolicy>
             BaselineMultipleSourceDfs { get; }
 
         private ITestOutputHelper Output { get; }
