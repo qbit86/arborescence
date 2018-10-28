@@ -7,7 +7,7 @@
         TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
+        IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         public BaselineBfs(TGraphConcept graphConcept, TColorMapConcept colorMapConcept)

@@ -4,7 +4,7 @@
 
     public struct IndexedAdjacencyListGraphPolicy :
         IGetTargetPolicy<IndexedAdjacencyListGraph, int, int>,
-        IGetOutEdgesConcept<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
+        IGetOutEdgesPolicy<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {

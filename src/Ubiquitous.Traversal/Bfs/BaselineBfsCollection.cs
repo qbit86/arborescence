@@ -12,7 +12,7 @@
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphConcept : IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>
+        IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
     {
         public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,

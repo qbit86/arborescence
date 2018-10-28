@@ -9,7 +9,7 @@ namespace Ubiquitous.Traversal.Advanced
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphConcept, TColorMapConcept>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphConcept : IGetOutEdgesConcept<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphConcept : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapConcept : IMapPolicy<TColorMap, TVertex, Color>
     {
