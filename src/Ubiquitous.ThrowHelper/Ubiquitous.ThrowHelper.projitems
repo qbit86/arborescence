@@ -9,6 +9,7 @@
     <Import_RootNamespace>Ubiquitous.ThrowHelper</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)HashHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThrowHelper.cs" />
   </ItemGroup>
 </Project>
