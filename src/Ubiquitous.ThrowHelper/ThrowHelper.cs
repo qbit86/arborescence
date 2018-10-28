@@ -69,7 +69,8 @@
                 "Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
         }
 
-        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
+        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument,
+            ExceptionResource resource)
         {
             return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
         }
