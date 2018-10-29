@@ -7,8 +7,9 @@
     <VersionPrefix>0.1.0</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <Authors>Viktor T.</Authors>
-    <Description>Stable primitive types.
-Commonly used types: SourceTargetPair&lt;TVertex&gt;.</Description>
+    <Title>Stable primitive types</Title>
+    <Description>Low-level building blocks used in public APIs.
+Commonly used types: SourceTargetPair&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Description>
     <PackageLicenseUrl>https://github.com/qbit86/ubiquitous-graphs/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
