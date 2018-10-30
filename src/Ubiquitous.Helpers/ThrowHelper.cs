@@ -4,7 +4,6 @@
     using System.Diagnostics;
 
     // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/System/ThrowHelper.cs
-    // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/Resources/Strings.resx
     internal static class ThrowHelper
     {
         internal static void ThrowArgumentException_DestinationTooShort()
