@@ -9,7 +9,7 @@
     {
         internal static void ThrowArgumentException_DestinationTooShort()
         {
-            throw new ArgumentException("Destination is too short.");
+            throw new ArgumentException(SR.Argument_DestinationTooShort);
         }
 
         internal static void ThrowArgumentNullException(ExceptionArgument argument)
@@ -39,12 +39,12 @@
 
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()
         {
-            throw new InvalidOperationException("Enumeration already finished.");
+            throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
         }
 
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
         {
-            throw new InvalidOperationException("Enumeration has not started. Call MoveNext.");
+            throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
         }
 
         internal static void ThrowNotSupportedException()
@@ -58,15 +58,14 @@
                 return new ArgumentNullException(nameof(array));
 
             if (offset < 0)
-                return new ArgumentOutOfRangeException(nameof(offset), "Non-negative number required.");
+                return new ArgumentOutOfRangeException(nameof(offset), SR.ArgumentOutOfRange_NeedNonNegNum);
 
             if (count < 0)
-                return new ArgumentOutOfRangeException(nameof(count), "Non-negative number required.");
+                return new ArgumentOutOfRangeException(nameof(count), SR.ArgumentOutOfRange_NeedNonNegNum);
 
             Debug.Assert(array.Length - offset < count);
 
-            return new ArgumentException(
-                "Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
+            return new ArgumentException(SR.Argument_InvalidOffLen);
         }
 
         private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument,
@@ -96,9 +95,9 @@
             switch (resource)
             {
                 case ExceptionResource.ArgumentOutOfRange_Index:
-                    return "Index was out of range. Must be non-negative and less than the size of the collection.";
+                    return SR.ArgumentOutOfRange_Index;
                 case ExceptionResource.InvalidOperation_NullArray:
-                    return "The underlying array is null.";
+                    return SR.InvalidOperation_NullArray;
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource Enum.");
                     return "";
