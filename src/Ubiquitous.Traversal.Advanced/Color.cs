@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous.Traversal.Advanced
 {
-    public enum Color
+    public enum Color : byte
     {
         None = 0,
         White,
