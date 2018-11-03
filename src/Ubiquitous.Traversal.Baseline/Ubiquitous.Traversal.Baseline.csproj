@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
+    <LangVersion>7.2</LangVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <Authors>Viktor T.</Authors>
+    <Product>Ubiquitous</Product>
+    <Description>Naive implementation of graph traversal. Used for test purposes only.</Description>
+    <PackageLicenseUrl>https://github.com/qbit86/ubiquitous-graphs/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>Ubiquitous</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+    <ProjectReference Include="..\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bfs" />
+  </ItemGroup>
+  <Import Project="..\Ubiquitous.Internal\Ubiquitous.Internal.projitems" Label="Shared" />
+</Project>

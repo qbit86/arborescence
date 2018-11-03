@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.2</LangVersion>
@@ -7,6 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
     <ProjectReference Include="..\Ubiquitous.Models\Ubiquitous.Models.csproj" />
-    <ProjectReference Include="..\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
+    <ProjectReference Include="..\Ubiquitous.Traversal.Baseline\Ubiquitous.Traversal.Baseline.csproj" />
   </ItemGroup>
 </Project>
