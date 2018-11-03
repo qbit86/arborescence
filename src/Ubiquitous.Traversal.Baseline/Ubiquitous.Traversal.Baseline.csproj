@@ -22,8 +22,5 @@
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
     <ProjectReference Include="..\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bfs" />
-  </ItemGroup>
   <Import Project="..\Ubiquitous.Internal\Ubiquitous.Internal.projitems" Label="Shared" />
 </Project>
