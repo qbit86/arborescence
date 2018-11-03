@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
-    <ProjectReference Include="..\..\src\Ubiquitous.Traversal.Advanced\Ubiquitous.Traversal.Advanced.csproj" />
+    <ProjectReference Include="..\..\src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
+    <ProjectReference Include="..\..\src\Ubiquitous.Traversal.Baseline\Ubiquitous.Traversal.Baseline.csproj" />
   </ItemGroup>
 </Project>
