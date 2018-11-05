@@ -2,10 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
-
-namespace System.Collections.Generic
+namespace Ubiquitous
 {
+    using System;
+    using System.Diagnostics;
+
     /// <summary>
     /// Helper type for avoiding allocations while building arrays.
     /// </summary>
@@ -28,9 +29,7 @@ namespace System.Collections.Generic
         {
             Debug.Assert(capacity >= 0);
             if (capacity > 0)
-            {
                 _array = new T[capacity];
-            }
         }
 
         /// <summary>
@@ -67,9 +66,7 @@ namespace System.Collections.Generic
         public void Add(T item)
         {
             if (_count == Capacity)
-            {
                 EnsureCapacity(_count + 1);
-            }
 
             UncheckedAdd(item);
         }
@@ -101,9 +98,7 @@ namespace System.Collections.Generic
         public T[] ToArray()
         {
             if (_count == 0)
-            {
                 return s_emptyArray;
-            }
 
             Debug.Assert(_array != null); // Nonzero _count should imply this
 
@@ -148,17 +143,13 @@ namespace System.Collections.Generic
             int nextCapacity = capacity == 0 ? DefaultCapacity : 2 * capacity;
 
             if ((uint)nextCapacity > MaxCoreClrArrayLength)
-            {
                 nextCapacity = Math.Max(capacity + 1, MaxCoreClrArrayLength);
-            }
 
             nextCapacity = Math.Max(nextCapacity, minimum);
 
-            T[] next = new T[nextCapacity];
+            var next = new T[nextCapacity];
             if (_count > 0)
-            {
                 Array.Copy(_array, 0, next, 0, _count);
-            }
             _array = next;
         }
     }
