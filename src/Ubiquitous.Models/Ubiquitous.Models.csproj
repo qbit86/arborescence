@@ -26,4 +26,5 @@
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
     <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
   </ItemGroup>
+  <Import Project="..\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />
 </Project>
