@@ -6,12 +6,12 @@
 
     public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
     {
-        private List<SourceTargetPair<int>> Endpoints { get; }
+        private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private List<int>[] OutEdges { get; }
 
-        internal IndexedAdjacencyListGraph(List<SourceTargetPair<int>> endpoints, List<int>[] outEdges)
+        internal IndexedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, List<int>[] outEdges)
         {
-            Assert(endpoints != null);
+            Assert(endpoints.Array != null);
             Assert(outEdges != null);
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.

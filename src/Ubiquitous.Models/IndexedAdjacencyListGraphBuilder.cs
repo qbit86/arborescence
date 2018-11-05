@@ -5,6 +5,8 @@
 
     public sealed class IndexedAdjacencyListGraphBuilder
     {
+        private ArrayBuilder<SourceTargetPair<int>> _endpoints;
+
         public IndexedAdjacencyListGraphBuilder(int vertexCount) : this(vertexCount, 0)
         {
         }
@@ -18,17 +20,16 @@
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
             OutEdges = new List<int>[vertexCount];
-            Endpoints = edgeCount > 0 ? new List<SourceTargetPair<int>>(edgeCount) : new List<SourceTargetPair<int>>();
+            _endpoints = new ArrayBuilder<SourceTargetPair<int>>(edgeCount);
         }
 
-        private List<SourceTargetPair<int>> Endpoints { get; set; }
         private List<int>[] OutEdges { get; set; }
 
         public int VertexCount => OutEdges?.Length ?? 0;
 
         public bool Add(SourceTargetPair<int> edge)
         {
-            if (Endpoints == null || OutEdges == null)
+            if (OutEdges == null)
                 return false;
 
             if ((uint)edge.Source >= (uint)VertexCount)
@@ -37,8 +38,8 @@
             if ((uint)edge.Target >= (uint)VertexCount)
                 return false;
 
-            int newEdgeIndex = Endpoints.Count;
-            Endpoints.Add(edge);
+            int newEdgeIndex = _endpoints.Count;
+            _endpoints.Add(edge);
 
             if (OutEdges[edge.Source] == null)
                 OutEdges[edge.Source] = new List<int>(1);
@@ -50,10 +51,12 @@
 
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
-            List<SourceTargetPair<int>> endpoints = Endpoints ?? new List<SourceTargetPair<int>>(0);
-            List<int>[] outEdges = OutEdges ?? new List<int>[0];
+            ArrayPrefix<SourceTargetPair<int>> endpoints = _endpoints.Count > 0
+                ? new ArrayPrefix<SourceTargetPair<int>>(_endpoints.Buffer, _endpoints.Count)
+                : ArrayPrefix<SourceTargetPair<int>>.Empty;
+            _endpoints = default;
 
-            Endpoints = null;
+            List<int>[] outEdges = OutEdges ?? new List<int>[0];
             OutEdges = null;
 
             return new IndexedAdjacencyListGraph(endpoints, outEdges);
