@@ -15,6 +15,8 @@ namespace System.Collections.Generic
         private const int DefaultCapacity = 4;
         private const int MaxCoreClrArrayLength = 0x7fefffff; // For byte arrays the limit is slightly larger
 
+        private static readonly T[] s_emptyArray = new T[0];
+
         private T[] _array; // Starts out null, initialized on first Add.
         private int _count; // Number of items into _array we're using.
 
@@ -100,7 +102,7 @@ namespace System.Collections.Generic
         {
             if (_count == 0)
             {
-                return Array.Empty<T>();
+                return s_emptyArray;
             }
 
             Debug.Assert(_array != null); // Nonzero _count should imply this
@@ -145,7 +147,7 @@ namespace System.Collections.Generic
             int capacity = Capacity;
             int nextCapacity = capacity == 0 ? DefaultCapacity : 2 * capacity;
 
-            if ((uint)nextCapacity > (uint)MaxCoreClrArrayLength)
+            if ((uint)nextCapacity > MaxCoreClrArrayLength)
             {
                 nextCapacity = Math.Max(capacity + 1, MaxCoreClrArrayLength);
             }
