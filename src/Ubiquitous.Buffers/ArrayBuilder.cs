@@ -112,6 +112,7 @@ namespace Ubiquitous
                 // which would be incurred by using Array.Resize
                 result = ArrayPool<T>.Shared.Rent(_count);
                 Array.Copy(_array, 0, result, 0, _count);
+                ArrayPool<T>.Shared.Return(_array, true);
             }
 
 #if DEBUG
@@ -150,9 +151,13 @@ namespace Ubiquitous
 
             nextCapacity = Math.Max(nextCapacity, minimum);
 
-            var next = ArrayPool<T>.Shared.Rent(nextCapacity);
+            T[] next = ArrayPool<T>.Shared.Rent(nextCapacity);
             if (_count > 0)
+            {
                 Array.Copy(_array, 0, next, 0, _count);
+                ArrayPool<T>.Shared.Return(_array, true);
+            }
+
             _array = next;
         }
     }
