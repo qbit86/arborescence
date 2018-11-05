@@ -5,7 +5,10 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Buffers;
     using System.Diagnostics;
+
+    // https://github.com/dotnet/corefx/blob/master/src/Common/src/System/Collections/Generic/ArrayBuilder.cs
 
     /// <summary>
     /// Helper type for avoiding allocations while building arrays.
@@ -29,7 +32,7 @@ namespace Ubiquitous
         {
             Debug.Assert(capacity >= 0);
             if (capacity > 0)
-                _array = new T[capacity];
+                _array = ArrayPool<T>.Shared.Rent(capacity);
         }
 
         /// <summary>
@@ -107,7 +110,7 @@ namespace Ubiquitous
             {
                 // Avoid a bit of overhead (method call, some branches, extra codegen)
                 // which would be incurred by using Array.Resize
-                result = new T[_count];
+                result = ArrayPool<T>.Shared.Rent(_count);
                 Array.Copy(_array, 0, result, 0, _count);
             }
 
@@ -147,7 +150,7 @@ namespace Ubiquitous
 
             nextCapacity = Math.Max(nextCapacity, minimum);
 
-            var next = new T[nextCapacity];
+            var next = ArrayPool<T>.Shared.Rent(nextCapacity);
             if (_count > 0)
                 Array.Copy(_array, 0, next, 0, _count);
             _array = next;
