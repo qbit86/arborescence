@@ -27,16 +27,16 @@
 
         public int VertexCount => OutEdges?.Length ?? 0;
 
-        public bool Add(SourceTargetPair<int> edge)
+        public int Add(SourceTargetPair<int> edge)
         {
             if (OutEdges == null)
-                return false;
+                return -1;
 
             if ((uint)edge.Source >= (uint)VertexCount)
-                return false;
+                return -1;
 
             if ((uint)edge.Target >= (uint)VertexCount)
-                return false;
+                return -1;
 
             int newEdgeIndex = _endpoints.Count;
             _endpoints.Add(edge);
@@ -46,7 +46,7 @@
 
             OutEdges[edge.Source].Add(newEdgeIndex);
 
-            return true;
+            return OutEdges[edge.Source].Count - 1;
         }
 
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
