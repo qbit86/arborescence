@@ -60,7 +60,7 @@ namespace Ubiquitous
             private readonly int _count;
             private int _current;
 
-            public Enumerator(int count)
+            internal Enumerator(int count)
             {
                 _count = count;
                 _current = -1;
