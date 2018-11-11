@@ -11,7 +11,7 @@ namespace Ubiquitous
         private readonly int _end;
         private int _current;
 
-        internal ArrayPrefixEnumerator(T[] array, int count)
+        public ArrayPrefixEnumerator(T[] array, int count)
         {
             if (array == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
