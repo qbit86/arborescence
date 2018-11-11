@@ -83,7 +83,6 @@ namespace Ubiquitous
 
             public void Dispose()
             {
-                _current = _count;
             }
         }
     }
