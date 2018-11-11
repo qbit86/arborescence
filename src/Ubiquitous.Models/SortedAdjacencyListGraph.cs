@@ -6,17 +6,29 @@ namespace Ubiquitous
     public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
+        private int[] EdgeBounds { get; }
 
-        internal SortedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints)
+        internal SortedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, int[] edgeBounds)
         {
             Assert(endpoints.Array != null);
+            Assert(edgeBounds != null);
+
+            // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
+            // Assert: `endpoints` are sorted by source(edge).
+            // Assert: `edgeBounds` are vertexCount in length.
+            // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
             Endpoints = endpoints;
+            EdgeBounds = edgeBounds;
         }
+
+        public int VertexCount => EdgeBounds.Length;
+
+        public int EdgeCount => Endpoints.Count;
 
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
-            if ((uint)edge >= (uint)Endpoints.Count)
+            if ((uint)edge >= (uint)EdgeCount)
             {
                 endpoints = default;
                 return false;
@@ -26,14 +38,32 @@ namespace Ubiquitous
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
+        public bool TryGetOutEdges(int vertex, out RangeEnumerator outEdges)
         {
-            throw new NotImplementedException();
+            if ((uint)vertex >= (uint)VertexCount)
+            {
+                outEdges = default;
+                return false;
+            }
+
+            int start = vertex > 0 ? EdgeBounds[vertex - 1] : 0;
+            int count = EdgeBounds[vertex] - start;
+            if (count < 0)
+            {
+                outEdges = default;
+                return false;
+            }
+
+            outEdges = new RangeEnumerator(start, count);
+            return true;
         }
 
         public bool Equals(SortedAdjacencyListGraph other)
         {
             if (!Endpoints.Equals(other.Endpoints))
+                return false;
+
+            if (!EdgeBounds.Equals(other.EdgeBounds))
                 return false;
 
             return true;
@@ -49,7 +79,7 @@ namespace Ubiquitous
 
         public override int GetHashCode()
         {
-            return Endpoints.GetHashCode();
+            return Endpoints.GetHashCode() ^ EdgeBounds.GetHashCode();
         }
     }
 }
