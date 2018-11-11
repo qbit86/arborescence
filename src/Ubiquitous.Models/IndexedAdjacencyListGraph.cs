@@ -32,7 +32,7 @@
                 return false;
             }
 
-            endpoints = Endpoints[edge];
+            endpoints = Endpoints.Array[edge];
             return true;
         }
 
