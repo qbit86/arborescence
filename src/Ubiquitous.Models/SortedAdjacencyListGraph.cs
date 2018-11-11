@@ -1,26 +1,28 @@
-﻿namespace Ubiquitous
+namespace Ubiquitous
 {
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
+    public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
-        private ArrayBuilder<int>[] OutEdges { get; }
+        private int[] EdgeBounds { get; }
 
-        internal IndexedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, ArrayBuilder<int>[] outEdges)
+        internal SortedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, int[] edgeBounds)
         {
             Assert(endpoints.Array != null);
-            Assert(outEdges != null);
+            Assert(edgeBounds != null);
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
-            // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): source(edge) = vertex.
+            // Assert: `endpoints` are sorted by source(edge).
+            // Assert: `edgeBounds` are vertexCount in length.
+            // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
             Endpoints = endpoints;
-            OutEdges = outEdges;
+            EdgeBounds = edgeBounds;
         }
 
-        public int VertexCount => OutEdges.Length;
+        public int VertexCount => EdgeBounds.Length;
 
         public int EdgeCount => Endpoints.Count;
 
@@ -36,7 +38,7 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
+        public bool TryGetOutEdges(int vertex, out RangeEnumerator outEdges)
         {
             if ((uint)vertex >= (uint)VertexCount)
             {
@@ -44,22 +46,24 @@
                 return false;
             }
 
-            if (OutEdges[vertex].Buffer == null)
+            int start = vertex > 0 ? EdgeBounds[vertex - 1] : 0;
+            int count = EdgeBounds[vertex] - start;
+            if (count < 0)
             {
                 outEdges = default;
                 return false;
             }
 
-            outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Buffer, OutEdges[vertex].Count);
+            outEdges = new RangeEnumerator(start, count);
             return true;
         }
 
-        public bool Equals(IndexedAdjacencyListGraph other)
+        public bool Equals(SortedAdjacencyListGraph other)
         {
             if (!Endpoints.Equals(other.Endpoints))
                 return false;
 
-            if (!OutEdges.Equals(other.OutEdges))
+            if (!EdgeBounds.Equals(other.EdgeBounds))
                 return false;
 
             return true;
@@ -67,7 +71,7 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is IndexedAdjacencyListGraph other)
+            if (obj is SortedAdjacencyListGraph other)
                 return Equals(other);
 
             return false;
@@ -75,7 +79,7 @@
 
         public override int GetHashCode()
         {
-            return Endpoints.GetHashCode() ^ OutEdges.GetHashCode();
+            return Endpoints.GetHashCode() ^ EdgeBounds.GetHashCode();
         }
     }
 }
