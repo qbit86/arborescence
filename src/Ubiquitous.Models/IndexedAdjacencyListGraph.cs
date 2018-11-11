@@ -26,7 +26,7 @@
 
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
-            if ((uint)edge >= (uint)Endpoints.Count)
+            if ((uint)edge >= (uint)EdgeCount)
             {
                 endpoints = default;
                 return false;
