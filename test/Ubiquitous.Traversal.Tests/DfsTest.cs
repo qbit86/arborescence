@@ -42,41 +42,41 @@
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
             Dfs = new Dfs<IndexedAdjacencyListGraph, int, int,
-                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
+                ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             MultipleSourceDfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
             BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
-                List<int>.Enumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
+                ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
             Output = output;
         }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
+        private Dfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             Dfs { get; }
 
         private MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             MultipleSourceDfs { get; }
 
-        private BaselineDfs<IndexedAdjacencyListGraph, int, int, List<int>.Enumerator, ColorMap,
+        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator, ColorMap,
+                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             BaselineMultipleSourceDfs { get; }
 

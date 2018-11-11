@@ -1,7 +1,6 @@
 ﻿namespace Ubiquitous
 {
     using System;
-    using System.Collections.Generic;
 
     public sealed class IndexedAdjacencyListGraphBuilder
     {
@@ -19,11 +18,11 @@
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            OutEdges = new List<int>[vertexCount];
+            OutEdges = new ArrayBuilder<int>[vertexCount];
             _endpoints = new ArrayBuilder<SourceTargetPair<int>>(edgeCount);
         }
 
-        private List<int>[] OutEdges { get; set; }
+        private ArrayBuilder<int>[] OutEdges { get; set; }
 
         public int VertexCount => OutEdges?.Length ?? 0;
 
@@ -41,8 +40,8 @@
             int newEdgeIndex = _endpoints.Count;
             _endpoints.Add(edge);
 
-            if (OutEdges[edge.Source] == null)
-                OutEdges[edge.Source] = new List<int>(1);
+            if (OutEdges[edge.Source].Buffer == null)
+                OutEdges[edge.Source] = new ArrayBuilder<int>(1);
 
             OutEdges[edge.Source].Add(newEdgeIndex);
 
@@ -56,7 +55,7 @@
                 : ArrayPrefix<SourceTargetPair<int>>.Empty;
             _endpoints = default;
 
-            List<int>[] outEdges = OutEdges ?? new List<int>[0];
+            ArrayBuilder<int>[] outEdges = OutEdges ?? new ArrayBuilder<int>[0];
             OutEdges = null;
 
             return new IndexedAdjacencyListGraph(endpoints, outEdges);

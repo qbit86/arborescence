@@ -36,7 +36,7 @@ namespace Ubiquitous
 
             {
                 var dfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
-                    IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                    IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy));
@@ -51,7 +51,7 @@ namespace Ubiquitous
 
             {
                 var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
-                    IndexCollection, IndexCollection.Enumerator, List<int>.Enumerator,
+                    IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy));

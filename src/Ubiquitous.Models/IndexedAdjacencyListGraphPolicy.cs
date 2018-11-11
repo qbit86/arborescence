@@ -1,10 +1,8 @@
 ﻿namespace Ubiquitous
 {
-    using System.Collections.Generic;
-
     public readonly struct IndexedAdjacencyListGraphPolicy :
         IGetTargetPolicy<IndexedAdjacencyListGraph, int, int>,
-        IGetOutEdgesPolicy<IndexedAdjacencyListGraph, int, List<int>.Enumerator>
+        IGetOutEdgesPolicy<IndexedAdjacencyListGraph, int, ArrayPrefixEnumerator<int>>
     {
         public bool TryGetSource(IndexedAdjacencyListGraph graph, int edge, out int source)
         {
@@ -21,7 +19,7 @@
         }
 
         public bool TryGetOutEdges(IndexedAdjacencyListGraph graph, int vertex,
-            out List<int>.Enumerator edges)
+            out ArrayPrefixEnumerator<int> edges)
         {
             return graph.TryGetOutEdges(vertex, out edges);
         }

@@ -1,15 +1,14 @@
 ﻿namespace Ubiquitous
 {
     using System;
-    using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
     public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
-        private List<int>[] OutEdges { get; }
+        private ArrayBuilder<int>[] OutEdges { get; }
 
-        internal IndexedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, List<int>[] outEdges)
+        internal IndexedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, ArrayBuilder<int>[] outEdges)
         {
             Assert(endpoints.Array != null);
             Assert(outEdges != null);
@@ -37,7 +36,7 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out List<int>.Enumerator outEdges)
+        public bool TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
         {
             if ((uint)vertex >= (uint)VertexCount)
             {
@@ -45,13 +44,13 @@
                 return false;
             }
 
-            if (OutEdges[vertex] == null)
+            if (OutEdges[vertex].Buffer == null)
             {
                 outEdges = default;
                 return false;
             }
 
-            outEdges = OutEdges[vertex].GetEnumerator();
+            outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Buffer, OutEdges[vertex].Count);
             return true;
         }
 
