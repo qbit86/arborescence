@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
     // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/System/ThrowHelper.cs
     internal static class ThrowHelper
@@ -51,6 +52,7 @@
             throw new NotImplementedException();
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static Exception GetArraySegmentCtorValidationFailedException(Array array, int offset, int count)
         {
             if (array == null)
@@ -67,28 +69,31 @@
             return new ArgumentException(SR.Argument_InvalidOffLen);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument,
             ExceptionResource resource)
         {
             return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static string GetArgumentName(ExceptionArgument argument)
         {
             switch (argument)
             {
                 case ExceptionArgument.array:
-                    return "array";
+                    return nameof(ExceptionArgument.array);
                 case ExceptionArgument.count:
-                    return "count";
+                    return nameof(ExceptionArgument.count);
                 case ExceptionArgument.index:
-                    return "index";
+                    return nameof(ExceptionArgument.index);
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
-                    return "";
+                    return String.Empty;
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static string GetResourceString(ExceptionResource resource)
         {
             switch (resource)
