@@ -87,6 +87,8 @@
                     return nameof(ExceptionArgument.count);
                 case ExceptionArgument.index:
                     return nameof(ExceptionArgument.index);
+                case ExceptionArgument.start:
+                    return nameof(ExceptionArgument.start);
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
                     return String.Empty;
@@ -114,7 +116,8 @@
     {
         array,
         count,
-        index
+        index,
+        start
     }
 
     internal enum ExceptionResource

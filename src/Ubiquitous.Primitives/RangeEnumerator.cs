@@ -9,13 +9,13 @@ namespace Ubiquitous
         private readonly int _end;
         private int _current;
 
-        public RangeEnumerator(int start, int count)
+        public RangeEnumerator(int start, int endExclusive)
         {
-            if (count < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.count);
+            if (endExclusive < start)
+                ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.start);
 
             _start = start;
-            _end = start + count;
+            _end = endExclusive;
             _current = start - 1;
         }
 

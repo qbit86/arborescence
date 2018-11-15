@@ -47,14 +47,14 @@ namespace Ubiquitous
             }
 
             int start = vertex > 0 ? EdgeBounds[vertex - 1] : 0;
-            int count = EdgeBounds[vertex] - start;
-            if (count < 0)
+            int endExclusive = EdgeBounds[vertex];
+            if (endExclusive < start)
             {
                 outEdges = default;
                 return false;
             }
 
-            outEdges = new RangeEnumerator(start, count);
+            outEdges = new RangeEnumerator(start, endExclusive);
             return true;
         }
 
