@@ -45,7 +45,7 @@
 
             OutEdges[edge.Source].Add(newEdgeIndex);
 
-            return OutEdges[edge.Source].Count - 1;
+            return newEdgeIndex;
         }
 
         public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
