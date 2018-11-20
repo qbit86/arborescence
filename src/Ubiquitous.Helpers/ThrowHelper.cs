@@ -91,7 +91,7 @@
                     return nameof(ExceptionArgument.start);
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
-                    return String.Empty;
+                    return string.Empty;
             }
         }
 
