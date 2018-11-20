@@ -1,6 +1,6 @@
 namespace Ubiquitous
 {
-    public readonly struct IndexedRowWiseGraphPolicy<TGraph, TEdges> :
+    public readonly struct IndexedRowWiseIncidenceGraphPolicy<TGraph, TEdges> :
         IGetEndpointsPolicy<TGraph, int, int>,
         IGetOutEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IGetEndpoints<int, int>, IGetOutEdges<int, TEdges>

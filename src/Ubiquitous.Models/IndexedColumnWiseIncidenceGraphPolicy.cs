@@ -1,6 +1,6 @@
 namespace Ubiquitous
 {
-    public readonly struct IndexedColumnWiseGraphPolicy<TGraph, TEdges> :
+    public readonly struct IndexedColumnWiseIncidenceGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, int>,
         IGetTargetPolicy<TGraph, int, int>,
         IGetOutEdgesPolicy<TGraph, int, TEdges>
