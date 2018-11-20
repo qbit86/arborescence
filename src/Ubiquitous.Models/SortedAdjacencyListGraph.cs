@@ -4,7 +4,7 @@ namespace Ubiquitous
     using static System.Diagnostics.Debug;
 
     public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>,
-        IGetEndpoints<int, int>, IGetOutEdges<int, RangeEnumerator>
+        IGetTarget<int, int>, IGetEndpoints<int, int>, IGetOutEdges<int, RangeEnumerator>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private int[] EdgeBounds { get; }
@@ -26,6 +26,13 @@ namespace Ubiquitous
         public int VertexCount => EdgeBounds.Length;
 
         public int EdgeCount => Endpoints.Count;
+
+        public bool TryGetTarget(int edge, out int target)
+        {
+            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
+            target = result ? endpoints.Target : default;
+            return result;
+        }
 
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {

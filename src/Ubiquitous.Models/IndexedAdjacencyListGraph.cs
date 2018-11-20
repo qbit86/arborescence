@@ -4,7 +4,7 @@
     using static System.Diagnostics.Debug;
 
     public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>,
-        IGetEndpoints<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
+        IGetTarget<int, int>, IGetEndpoints<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private ArrayBuilder<int>[] OutEdges { get; }
@@ -24,6 +24,13 @@
         public int VertexCount => OutEdges.Length;
 
         public int EdgeCount => Endpoints.Count;
+
+        public bool TryGetTarget(int edge, out int target)
+        {
+            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
+            target = result ? endpoints.Target : default;
+            return result;
+        }
 
         public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
