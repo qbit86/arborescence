@@ -3,7 +3,8 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>
+    public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>,
+        IGetEndpoints<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private ArrayBuilder<int>[] OutEdges { get; }

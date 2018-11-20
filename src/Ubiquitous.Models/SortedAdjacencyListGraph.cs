@@ -3,7 +3,8 @@ namespace Ubiquitous
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>
+    public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>,
+        IGetEndpoints<int, int>, IGetOutEdges<int, RangeEnumerator>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private int[] EdgeBounds { get; }
