@@ -2,6 +2,8 @@
 
 Generic graph library inspired by [Concept C#: Type Classes for the Masses](https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md).
 
+API structure is partially influenced by [Boost Graph Concepts](https://www.boost.org/doc/libs/1_68_0/libs/graph/doc/graph_concepts.html).
+
 ```
 BenchmarkDotNet=v0.10.12, OS=Windows 10 Redstone 3 [1709, Fall Creators Update] (10.0.16299.192)
 Intel Core i5-4690K CPU 3.50GHz (Haswell), 1 CPU, 4 logical cores and 4 physical cores
