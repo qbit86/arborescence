@@ -9,7 +9,7 @@
     using ColorMap = System.ArraySegment<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedTargetOnlyIncidenceGraphPolicy<IndexedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
+        IndexedTargetOnlyIncidenceGraphPolicy<JaggedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {
@@ -43,20 +43,20 @@
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            Dfs = new Dfs<IndexedAdjacencyListGraph, int, int,
+            Dfs = new Dfs<JaggedAdjacencyListGraph, int, int,
                 ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
-            MultipleSourceDfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+            MultipleSourceDfs = new MultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
-            BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
+            BaselineDfs = new BaselineDfs<JaggedAdjacencyListGraph, int, int,
                 ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
-            BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+            BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
@@ -64,20 +64,20 @@
             Output = output;
         }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private Dfs<JaggedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             Dfs { get; }
 
-        private MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+        private MultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             MultipleSourceDfs { get; }
 
-        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private BaselineDfs<JaggedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
-        private BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+        private BaselineMultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
                 IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             BaselineMultipleSourceDfs { get; }
@@ -94,7 +94,7 @@
         {
             // Arrange
 
-            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
+            JaggedAdjacencyListGraph graph = CreateGraph(densityPower);
             int vertex = 0;
 
             // Act
@@ -138,7 +138,7 @@
         {
             // Arrange
 
-            IndexedAdjacencyListGraph graph = CreateGraph(densityPower);
+            JaggedAdjacencyListGraph graph = CreateGraph(densityPower);
             var vertices = new IndexCollection(graph.VertexCount);
 
             // Act
@@ -157,11 +157,11 @@
             Assert.Equal(expectedStartVertexCount, actualStartVertexCount);
         }
 
-        private IndexedAdjacencyListGraph CreateGraph(double densityPower)
+        private JaggedAdjacencyListGraph CreateGraph(double densityPower)
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, densityPower));
 
-            var builder = new IndexedAdjacencyListGraphBuilder(VertexCount);
+            var builder = new JaggedAdjacencyListGraphBuilder(VertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
@@ -171,7 +171,7 @@
                 builder.Add(SourceTargetPair.Create(source, target));
             }
 
-            IndexedAdjacencyListGraph result = builder.MoveToIndexedAdjacencyListGraph();
+            JaggedAdjacencyListGraph result = builder.MoveToIndexedAdjacencyListGraph();
             return result;
         }
     }

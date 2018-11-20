@@ -3,13 +3,13 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct IndexedAdjacencyListGraph : IEquatable<IndexedAdjacencyListGraph>,
+    public readonly struct JaggedAdjacencyListGraph : IEquatable<JaggedAdjacencyListGraph>,
         IGetTarget<int, int>, IGetEndpoints<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private ArrayBuilder<int>[] OutEdges { get; }
 
-        internal IndexedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, ArrayBuilder<int>[] outEdges)
+        internal JaggedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, ArrayBuilder<int>[] outEdges)
         {
             Assert(endpoints.Array != null);
             Assert(outEdges != null);
@@ -62,7 +62,7 @@
             return true;
         }
 
-        public bool Equals(IndexedAdjacencyListGraph other)
+        public bool Equals(JaggedAdjacencyListGraph other)
         {
             if (!Endpoints.Equals(other.Endpoints))
                 return false;
@@ -75,7 +75,7 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is IndexedAdjacencyListGraph other)
+            if (obj is JaggedAdjacencyListGraph other)
                 return Equals(other);
 
             return false;

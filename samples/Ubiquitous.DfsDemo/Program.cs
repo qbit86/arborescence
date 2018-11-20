@@ -10,7 +10,7 @@ namespace Ubiquitous
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedTargetOnlyIncidenceGraphPolicy<IndexedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
+        IndexedTargetOnlyIncidenceGraphPolicy<JaggedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
 
     internal static partial class Program
     {
@@ -21,7 +21,7 @@ namespace Ubiquitous
 
             Console.WriteLine($"{nameof(vertexCount)}: {vertexCount}, {nameof(edgeCount)}: {edgeCount}");
 
-            var builder = new IndexedAdjacencyListGraphBuilder(vertexCount);
+            var builder = new JaggedAdjacencyListGraphBuilder(vertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
@@ -31,13 +31,13 @@ namespace Ubiquitous
                 builder.Add(SourceTargetPair.Create(source, target));
             }
 
-            IndexedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
+            JaggedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             var vertices = new IndexCollection(graph.VertexCount);
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
 
             {
-                var dfs = new BaselineMultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+                var dfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
                     IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
@@ -52,7 +52,7 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = new MultipleSourceDfs<IndexedAdjacencyListGraph, int, int,
+                var dfs = new MultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
                     IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,

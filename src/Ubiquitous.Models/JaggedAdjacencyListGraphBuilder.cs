@@ -2,15 +2,15 @@
 {
     using System;
 
-    public sealed class IndexedAdjacencyListGraphBuilder
+    public sealed class JaggedAdjacencyListGraphBuilder
     {
         private ArrayBuilder<SourceTargetPair<int>> _endpoints;
 
-        public IndexedAdjacencyListGraphBuilder(int vertexCount) : this(vertexCount, 0)
+        public JaggedAdjacencyListGraphBuilder(int vertexCount) : this(vertexCount, 0)
         {
         }
 
-        public IndexedAdjacencyListGraphBuilder(int vertexCount, int edgeCount)
+        public JaggedAdjacencyListGraphBuilder(int vertexCount, int edgeCount)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
@@ -48,7 +48,7 @@
             return newEdgeIndex;
         }
 
-        public IndexedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
+        public JaggedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
             ArrayPrefix<SourceTargetPair<int>> endpoints = _endpoints.Count > 0
                 ? new ArrayPrefix<SourceTargetPair<int>>(_endpoints.Buffer, _endpoints.Count)
@@ -58,7 +58,7 @@
             ArrayBuilder<int>[] outEdges = OutEdges ?? new ArrayBuilder<int>[0];
             OutEdges = null;
 
-            return new IndexedAdjacencyListGraph(endpoints, outEdges);
+            return new JaggedAdjacencyListGraph(endpoints, outEdges);
         }
     }
 }

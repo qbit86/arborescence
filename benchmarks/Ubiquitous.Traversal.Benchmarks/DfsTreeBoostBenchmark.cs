@@ -8,7 +8,7 @@ namespace Ubiquitous
     using ColorMap = System.ArraySegment<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedTargetOnlyIncidenceGraphPolicy<IndexedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
+        IndexedTargetOnlyIncidenceGraphPolicy<JaggedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
@@ -17,11 +17,11 @@ namespace Ubiquitous
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            BaselineDfs = new BaselineDfs<IndexedAdjacencyListGraph, int, int,
+            BaselineDfs = new BaselineDfs<JaggedAdjacencyListGraph, int, int,
                 ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
-            DefaultDfs = new Dfs<IndexedAdjacencyListGraph, int, int,
+            DefaultDfs = new Dfs<JaggedAdjacencyListGraph, int, int,
                 ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
         }
@@ -31,19 +31,19 @@ namespace Ubiquitous
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private BaselineDfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private BaselineDfs<JaggedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private Dfs<JaggedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             DefaultDfs { get; }
 
-        private Dfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private Dfs<JaggedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             CachingDfs { get; set; }
 
-        private IndexedAdjacencyListGraph Graph { get; set; }
+        private JaggedAdjacencyListGraph Graph { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -53,7 +53,7 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(VertexCount);
             indexedMapPolicy.Warmup();
 
-            CachingDfs = new Dfs<IndexedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+            CachingDfs = new Dfs<JaggedAdjacencyListGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy);
         }
