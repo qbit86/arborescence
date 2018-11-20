@@ -7,6 +7,8 @@ namespace Ubiquitous
     using Traversal.Advanced;
     using ColorMap = System.ArraySegment<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
+    using IndexedAdjacencyListGraphPolicy =
+        IndexedTargetOnlyGraphPolicy<IndexedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark

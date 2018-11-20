@@ -9,6 +9,8 @@ namespace Ubiquitous
     using ColorMap = System.ArraySegment<Traversal.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
+    using IndexedAdjacencyListGraphPolicy =
+        IndexedTargetOnlyGraphPolicy<IndexedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
 
     internal static partial class Program
     {
