@@ -9,7 +9,7 @@
     using ColorMap = System.ArraySegment<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedTargetOnlyIncidenceGraphPolicy<JaggedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
+        IndexedIncidenceGraphPolicy<JaggedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {
