@@ -56,8 +56,7 @@
         public JaggedAdjacencyListGraph MoveToIndexedAdjacencyListGraph()
         {
             Assert(_sources.Count == _targets.Count);
-            // TODO: Add EmptyArray to ArrayBuilder.
-            int[] endpoints = _targets.Count > 0 ? new int[_targets.Count * 2] : ArrayPrefix<int>.Empty.Array;
+            int[] endpoints = _targets.Count > 0 ? new int[_targets.Count * 2] : ArrayBuilder<int>.EmptyArray;
             if (endpoints.Length > 0)
             {
                 Array.Copy(_targets.Buffer, 0, endpoints, 0, _targets.Count);
@@ -70,7 +69,6 @@
             ArrayBuilder<int>[] outEdges = OutEdges ?? new ArrayBuilder<int>[0];
             OutEdges = null;
 
-            // TODO: Replace ArrayPrefix with Array.
             return new JaggedAdjacencyListGraph(endpoints, outEdges);
         }
     }

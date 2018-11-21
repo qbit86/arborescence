@@ -7,9 +7,9 @@
         IGetSource<int, int>, IGetTarget<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
     {
         // Layout: endpoints start with targets, then sources follow.
-        internal JaggedAdjacencyListGraph(ArrayPrefix<int> endpoints, ArrayBuilder<int>[] outEdges)
+        internal JaggedAdjacencyListGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)
         {
-            Assert(endpoints.Array != null);
+            Assert(endpoints != null);
             Assert(outEdges != null);
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
@@ -19,11 +19,11 @@
             OutEdges = outEdges;
         }
 
-        public int VertexCount => OutEdges.Length;
+        public int VertexCount => OutEdges?.Length ?? 0;
 
-        public int EdgeCount => Endpoints.Count / 2;
+        public int EdgeCount => Endpoints?.Length / 2 ?? 0;
 
-        private ArrayPrefix<int> Endpoints { get; }
+        private int[] Endpoints { get; }
 
         private ArrayBuilder<int>[] OutEdges { get; }
 
@@ -37,7 +37,7 @@
                 return false;
             }
 
-            source = Endpoints.Array[edgeCount + edge];
+            source = Endpoints[edgeCount + edge];
             return true;
         }
 
@@ -49,7 +49,7 @@
                 return false;
             }
 
-            target = Endpoints.Array[edge];
+            target = Endpoints[edge];
             return true;
         }
 
@@ -73,10 +73,10 @@
 
         public bool Equals(JaggedAdjacencyListGraph other)
         {
-            if (!Endpoints.Equals(other.Endpoints))
+            if (Endpoints != other.Endpoints)
                 return false;
 
-            if (!OutEdges.Equals(other.OutEdges))
+            if (OutEdges != other.OutEdges)
                 return false;
 
             return true;
@@ -92,7 +92,7 @@
 
         public override int GetHashCode()
         {
-            return Endpoints.GetHashCode() ^ OutEdges.GetHashCode();
+            return unchecked(((Endpoints?.GetHashCode() ?? 0) * 397) ^ (OutEdges?.GetHashCode() ?? 0));
         }
     }
 }

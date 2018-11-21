@@ -35,6 +35,8 @@ namespace Ubiquitous
                 _array = ArrayPool<T>.Shared.Rent(capacity);
         }
 
+        public static T[] EmptyArray => s_emptyArray;
+
         /// <summary>
         /// Gets the number of items this instance can store without re-allocating,
         /// or 0 if the backing array is <c>null</c>.
