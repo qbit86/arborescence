@@ -6,12 +6,10 @@ namespace Ubiquitous
     public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>,
         IGetSource<int, int>, IGetTarget<int, int>, IGetOutEdges<int, RangeEnumerator>
     {
-        private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
-        private int[] EdgeBounds { get; }
-
-        internal SortedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, int[] edgeBounds)
+        // Layout: endpoints start with targets, then sources follow.
+        internal SortedAdjacencyListGraph(int[] endpoints, int[] edgeBounds)
         {
-            Assert(endpoints.Array != null);
+            Assert(endpoints != null);
             Assert(edgeBounds != null);
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
@@ -23,33 +21,37 @@ namespace Ubiquitous
             EdgeBounds = edgeBounds;
         }
 
-        public int VertexCount => EdgeBounds.Length;
+        public int VertexCount => EdgeBounds?.Length ?? 0;
 
-        public int EdgeCount => Endpoints.Count;
+        public int EdgeCount => Endpoints?.Length / 2 ?? 0;
+
+        private int[] Endpoints { get; }
+
+        private int[] EdgeBounds { get; }
 
         public bool TryGetSource(int edge, out int source)
         {
-            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
-            source = result ? endpoints.Source : default;
-            return result;
+            int edgeCount = EdgeCount;
+
+            if ((uint)edge >= (uint)edgeCount)
+            {
+                source = default;
+                return false;
+            }
+
+            source = Endpoints[edgeCount + edge];
+            return true;
         }
 
         public bool TryGetTarget(int edge, out int target)
         {
-            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
-            target = result ? endpoints.Target : default;
-            return result;
-        }
-
-        private bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
-        {
             if ((uint)edge >= (uint)EdgeCount)
             {
-                endpoints = default;
+                target = default;
                 return false;
             }
 
-            endpoints = Endpoints.Array[edge];
+            target = Endpoints[edge];
             return true;
         }
 
@@ -75,13 +77,7 @@ namespace Ubiquitous
 
         public bool Equals(SortedAdjacencyListGraph other)
         {
-            if (!Endpoints.Equals(other.Endpoints))
-                return false;
-
-            if (!EdgeBounds.Equals(other.EdgeBounds))
-                return false;
-
-            return true;
+            return Equals(Endpoints, other.Endpoints) && Equals(EdgeBounds, other.EdgeBounds);
         }
 
         public override bool Equals(object obj)
@@ -94,7 +90,7 @@ namespace Ubiquitous
 
         public override int GetHashCode()
         {
-            return Endpoints.GetHashCode() ^ EdgeBounds.GetHashCode();
+            return unchecked(((Endpoints?.GetHashCode() ?? 0) * 397) ^ (EdgeBounds?.GetHashCode() ?? 0));
         }
     }
 }
