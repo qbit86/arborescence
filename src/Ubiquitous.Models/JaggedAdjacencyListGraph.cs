@@ -73,13 +73,7 @@
 
         public bool Equals(JaggedAdjacencyListGraph other)
         {
-            if (Endpoints != other.Endpoints)
-                return false;
-
-            if (OutEdges != other.OutEdges)
-                return false;
-
-            return true;
+            return Equals(Endpoints, other.Endpoints) && Equals(OutEdges, other.OutEdges);
         }
 
         public override bool Equals(object obj)
