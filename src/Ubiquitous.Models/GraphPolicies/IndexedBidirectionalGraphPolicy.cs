@@ -1,6 +1,6 @@
 namespace Ubiquitous
 {
-    public struct IndexedColumnWiseBidirectionalGraphPolicy<TGraph, TEdges> :
+    public struct IndexedBidirectionalGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, int>,
         IGetTargetPolicy<TGraph, int, int>,
         IGetOutEdgesPolicy<TGraph, int, TEdges>,
