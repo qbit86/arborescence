@@ -32,10 +32,13 @@
                 {
                     for (int e = 0; e < graph.EdgeCount; ++e)
                     {
-                        if (!graph.TryGetEndpoints(e, out SourceTargetPair<int> endpoints))
+                        if (!graph.TryGetSource(e, out int source))
                             continue;
 
-                        textWriter.Write($"    {endpoints.Source} -> {endpoints.Target}");
+                        if (!graph.TryGetTarget(e, out int target))
+                            continue;
+
+                        textWriter.Write($"    {source} -> {target}");
 
                         DfsStepKind edgeKind = edgeKinds[e];
 

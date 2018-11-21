@@ -25,6 +25,13 @@
 
         public int EdgeCount => Endpoints.Count;
 
+        public bool TryGetSource(int edge, out int source)
+        {
+            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
+            source = result ? endpoints.Source : default;
+            return result;
+        }
+
         public bool TryGetTarget(int edge, out int target)
         {
             bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
@@ -32,7 +39,7 @@
             return result;
         }
 
-        public bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
+        private bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
         {
             if ((uint)edge >= (uint)EdgeCount)
             {
