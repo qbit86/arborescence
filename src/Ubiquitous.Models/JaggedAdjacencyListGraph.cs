@@ -4,7 +4,7 @@
     using static System.Diagnostics.Debug;
 
     public readonly struct JaggedAdjacencyListGraph : IEquatable<JaggedAdjacencyListGraph>,
-        IGetTarget<int, int>, IGetEndpoints<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
+        IGetTarget<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
     {
         private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
         private ArrayBuilder<int>[] OutEdges { get; }
