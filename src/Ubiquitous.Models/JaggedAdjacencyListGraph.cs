@@ -6,10 +6,8 @@
     public readonly struct JaggedAdjacencyListGraph : IEquatable<JaggedAdjacencyListGraph>,
         IGetSource<int, int>, IGetTarget<int, int>, IGetOutEdges<int, ArrayPrefixEnumerator<int>>
     {
-        private ArrayPrefix<SourceTargetPair<int>> Endpoints { get; }
-        private ArrayBuilder<int>[] OutEdges { get; }
-
-        internal JaggedAdjacencyListGraph(ArrayPrefix<SourceTargetPair<int>> endpoints, ArrayBuilder<int>[] outEdges)
+        // Layout: endpoints start with targets, then sources follow.
+        internal JaggedAdjacencyListGraph(ArrayPrefix<int> endpoints, ArrayBuilder<int>[] outEdges)
         {
             Assert(endpoints.Array != null);
             Assert(outEdges != null);
@@ -23,31 +21,35 @@
 
         public int VertexCount => OutEdges.Length;
 
-        public int EdgeCount => Endpoints.Count;
+        public int EdgeCount => Endpoints.Count / 2;
+
+        private ArrayPrefix<int> Endpoints { get; }
+
+        private ArrayBuilder<int>[] OutEdges { get; }
 
         public bool TryGetSource(int edge, out int source)
         {
-            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
-            source = result ? endpoints.Source : default;
-            return result;
+            int edgeCount = EdgeCount;
+
+            if ((uint)edge >= (uint)edgeCount)
+            {
+                source = default;
+                return false;
+            }
+
+            source = Endpoints.Array[edgeCount + edge];
+            return true;
         }
 
         public bool TryGetTarget(int edge, out int target)
         {
-            bool result = TryGetEndpoints(edge, out SourceTargetPair<int> endpoints);
-            target = result ? endpoints.Target : default;
-            return result;
-        }
-
-        private bool TryGetEndpoints(int edge, out SourceTargetPair<int> endpoints)
-        {
             if ((uint)edge >= (uint)EdgeCount)
             {
-                endpoints = default;
+                target = default;
                 return false;
             }
 
-            endpoints = Endpoints.Array[edge];
+            target = Endpoints.Array[edge];
             return true;
         }
 
