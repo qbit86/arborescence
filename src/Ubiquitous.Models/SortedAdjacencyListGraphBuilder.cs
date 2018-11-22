@@ -28,12 +28,12 @@ namespace Ubiquitous
 
         public int VertexCount { get; }
 
-        public int Add(SourceTargetPair<int> edge)
+        public int Add(int source, int target)
         {
-            if ((uint)edge.Source >= (uint)VertexCount)
+            if ((uint)source >= (uint)VertexCount)
                 return -1;
 
-            if ((uint)edge.Target >= (uint)VertexCount)
+            if ((uint)target >= (uint)VertexCount)
                 return -1;
 
             throw new NotImplementedException();
