@@ -60,6 +60,8 @@ namespace Ubiquitous
             return Count.GetHashCode();
         }
 
+        // https://github.com/dotnet/corefx/blob/master/src/System.Collections.Immutable/src/System/Collections/Immutable/ImmutableArray_1.Enumerator.cs
+
         /// <summary>
         /// An index enumerator.
         /// </summary>

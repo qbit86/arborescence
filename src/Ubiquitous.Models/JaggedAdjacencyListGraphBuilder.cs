@@ -29,26 +29,26 @@
 
         public int VertexCount => OutEdges?.Length ?? 0;
 
-        public int Add(SourceTargetPair<int> edge)
+        public int Add(int source, int target)
         {
             if (OutEdges == null)
                 return -1;
 
-            if ((uint)edge.Source >= (uint)VertexCount)
+            if ((uint)source >= (uint)VertexCount)
                 return -1;
 
-            if ((uint)edge.Target >= (uint)VertexCount)
+            if ((uint)target >= (uint)VertexCount)
                 return -1;
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
-            _sources.Add(edge.Source);
-            _targets.Add(edge.Target);
+            _sources.Add(source);
+            _targets.Add(target);
 
-            if (OutEdges[edge.Source].Buffer == null)
-                OutEdges[edge.Source] = new ArrayBuilder<int>(1);
+            if (OutEdges[source].Buffer == null)
+                OutEdges[source] = new ArrayBuilder<int>(1);
 
-            OutEdges[edge.Source].Add(newEdgeIndex);
+            OutEdges[source].Add(newEdgeIndex);
 
             return newEdgeIndex;
         }

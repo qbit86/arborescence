@@ -28,7 +28,7 @@ namespace Ubiquitous
             {
                 int source = prng.Next(vertexCount);
                 int target = prng.Next(vertexCount);
-                builder.Add(SourceTargetPair.Create(source, target));
+                builder.Add(source, target);
             }
 
             JaggedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
