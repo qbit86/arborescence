@@ -19,6 +19,11 @@ namespace Ubiquitous
             _current = start - 1;
         }
 
+        public RangeEnumerator GetEnumerator()
+        {
+            return this;
+        }
+
         public void Reset()
         {
             _current = _start - 1;

@@ -25,6 +25,11 @@ namespace Ubiquitous
             _current = offset - 1;
         }
 
+        public ArraySegmentEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
         public bool MoveNext()
         {
             if (_current < _end)
