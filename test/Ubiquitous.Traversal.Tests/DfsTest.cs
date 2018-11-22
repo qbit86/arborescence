@@ -48,7 +48,7 @@
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             MultipleSourceDfs = new MultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
+                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
@@ -57,7 +57,7 @@
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
+                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
@@ -69,7 +69,7 @@
             Dfs { get; }
 
         private MultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>,
+                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             MultipleSourceDfs { get; }
 
@@ -78,7 +78,7 @@
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
-                IndexCollection, IndexCollection.Enumerator, ArrayPrefixEnumerator<int>, ColorMap,
+                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             BaselineMultipleSourceDfs { get; }
 

@@ -19,6 +19,26 @@ namespace Ubiquitous
             Count = count;
         }
 
+        public IndexCollectionEnumerator GetIterator()
+        {
+            return new IndexCollectionEnumerator(Count);
+        }
+
+        public Enumerator GetEnumerator()
+        {
+            return new Enumerator(Count);
+        }
+
+        IEnumerator<int> IEnumerable<int>.GetEnumerator()
+        {
+            return new IndexCollectionEnumerator(Count);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new IndexCollectionEnumerator(Count);
+        }
+
         public bool Equals(IndexCollection other)
         {
             if (Count != other.Count)
@@ -40,22 +60,15 @@ namespace Ubiquitous
             return Count.GetHashCode();
         }
 
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(Count);
-        }
-
-        IEnumerator<int> IEnumerable<int>.GetEnumerator()
-        {
-            return new Enumerator(Count);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(Count);
-        }
-
-        public struct Enumerator : IEnumerator<int>
+        /// <summary>
+        /// An index enumerator.
+        /// </summary>
+        /// <remarks>
+        /// It is important that this enumerator does NOT implement <see cref="IDisposable"/>.
+        /// We want the iterator to inline when we do foreach and to not result in
+        /// a try/finally frame in the client.
+        /// </remarks>
+        public struct Enumerator
         {
             private readonly int _count;
             private int _current;
@@ -66,23 +79,12 @@ namespace Ubiquitous
                 _current = -1;
             }
 
-            public void Reset()
-            {
-                _current = -1;
-            }
-
-            object IEnumerator.Current => _current;
-
             public int Current => _current;
 
             public bool MoveNext()
             {
                 ++_current;
                 return _current < _count;
-            }
-
-            public void Dispose()
-            {
             }
         }
     }

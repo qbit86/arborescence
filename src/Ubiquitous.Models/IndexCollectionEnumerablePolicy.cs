@@ -1,11 +1,11 @@
 ﻿namespace Ubiquitous
 {
     public readonly struct IndexCollectionEnumerablePolicy :
-        IEnumerablePolicy<IndexCollection, IndexCollection.Enumerator>
+        IEnumerablePolicy<IndexCollection, IndexCollectionEnumerator>
     {
-        public IndexCollection.Enumerator GetEnumerator(IndexCollection collection)
+        public IndexCollectionEnumerator GetEnumerator(IndexCollection collection)
         {
-            return collection.GetEnumerator();
+            return collection.GetIterator();
         }
     }
 }
