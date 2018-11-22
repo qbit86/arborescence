@@ -4,7 +4,7 @@ namespace Ubiquitous
         IGetSourcePolicy<TGraph, TVertex, TEdge>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IGetOutEdgesPolicy<TGraph, TVertex, TEdges>
-        where TGraph : IGetSource<TVertex, TEdge>, IGetTarget<TVertex, TEdge>, IGetOutEdges<TVertex, TEdges>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdges>
     {
         public bool TryGetSource(TGraph graph, TEdge edge, out TVertex source)
         {

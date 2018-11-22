@@ -4,9 +4,8 @@ namespace Ubiquitous
         IGetSourcePolicy<TGraph, TVertex, TEdge>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IGetOutEdgesPolicy<TGraph, TVertex, TEdges>,
-        IGetInEdgesPolicy<TGraph, int, TEdges>
-        where TGraph : IGetSource<TVertex, TEdge>, IGetTarget<TVertex, TEdge>,
-        IGetOutEdges<TVertex, TEdges>, IGetInEdges<int, TEdges>
+        IGetInEdgesPolicy<TGraph, TVertex, TEdges>
+        where TGraph : IBidirectionalGraph<TVertex, TEdge, TEdges>
     {
         public bool TryGetSource(TGraph graph, TEdge edge, out TVertex source)
         {
@@ -23,7 +22,7 @@ namespace Ubiquitous
             return graph.TryGetOutEdges(vertex, out edges);
         }
 
-        public bool TryGetInEdges(TGraph graph, int vertex, out TEdges edges)
+        public bool TryGetInEdges(TGraph graph, TVertex vertex, out TEdges edges)
         {
             return graph.TryGetInEdges(vertex, out edges);
         }

@@ -4,7 +4,7 @@ namespace Ubiquitous
         IGetSourcePolicy<TGraph, int, int>,
         IGetTargetPolicy<TGraph, int, int>,
         IGetOutEdgesPolicy<TGraph, int, TEdges>
-        where TGraph : IGetSource<int, int>, IGetTarget<int, int>, IGetOutEdges<int, TEdges>
+        where TGraph : IIncidenceGraph<int, int, TEdges>
     {
         public bool TryGetSource(TGraph graph, int edge, out int source)
         {
