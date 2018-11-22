@@ -6,7 +6,12 @@ namespace Ubiquitous
     public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>,
         IIncidenceGraph<int, int, RangeEnumerator>
     {
-        // Layout: endpoints start with targets, then sources follow.
+        // Layout:
+        // [0..1) — VertexCount
+        // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - (1 + VertexCount)) / 2
+        // [1 + VertexCount..Offset₂ + EdgeCount) — Sources
+        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Targets
+
         internal SortedAdjacencyListGraph(int[] endpoints, int[] edgeBounds)
         {
             Assert(endpoints != null);
