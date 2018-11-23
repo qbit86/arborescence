@@ -9,7 +9,7 @@
     {
         // Layout:
         // [0..1) — VertexCount
-        // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - (1 + VertexCount)) / 2
+        // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - 1 - VertexCount) / 2
         // [1 + VertexCount..Offset₂ + EdgeCount) — Targets
         // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Sources
         private readonly int[] _storage;
