@@ -2,17 +2,17 @@ namespace Ubiquitous
 {
     using System;
 
-    public struct SortedAdjacencyListGraphBuilder
+    public struct SortedAdjacencyListIncidenceGraphBuilder
     {
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
         private bool _needsSorting;
 
-        public SortedAdjacencyListGraphBuilder(int vertexCount) : this(vertexCount, 0)
+        public SortedAdjacencyListIncidenceGraphBuilder(int vertexCount) : this(vertexCount, 0)
         {
         }
 
-        public SortedAdjacencyListGraphBuilder(int vertexCount, int edgeCount)
+        public SortedAdjacencyListIncidenceGraphBuilder(int vertexCount, int edgeCount)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
