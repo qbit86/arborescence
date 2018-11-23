@@ -3,11 +3,11 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct JaggedAdjacencyListGraph : IEquatable<JaggedAdjacencyListGraph>,
+    public readonly struct JaggedAdjacencyListIncidenceGraph : IEquatable<JaggedAdjacencyListIncidenceGraph>,
         IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>
     {
         // Layout: endpoints start with targets, then sources follow.
-        internal JaggedAdjacencyListGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)
+        internal JaggedAdjacencyListIncidenceGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)
         {
             Assert(endpoints != null, "endpoints != null");
             Assert(outEdges != null, "outEdges != null");
@@ -74,14 +74,14 @@
             return true;
         }
 
-        public bool Equals(JaggedAdjacencyListGraph other)
+        public bool Equals(JaggedAdjacencyListIncidenceGraph other)
         {
             return Equals(Endpoints, other.Endpoints) && Equals(OutEdges, other.OutEdges);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is JaggedAdjacencyListGraph other)
+            if (obj is JaggedAdjacencyListIncidenceGraph other)
                 return Equals(other);
 
             return false;

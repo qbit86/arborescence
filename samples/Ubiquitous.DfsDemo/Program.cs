@@ -10,7 +10,7 @@ namespace Ubiquitous
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedIncidenceGraphPolicy<JaggedAdjacencyListGraph, ArrayPrefixEnumerator<int>>;
+        IndexedIncidenceGraphPolicy<JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
     internal static partial class Program
     {
@@ -31,13 +31,13 @@ namespace Ubiquitous
                 builder.Add(source, target);
             }
 
-            JaggedAdjacencyListGraph graph = builder.MoveToIndexedAdjacencyListGraph();
+            JaggedAdjacencyListIncidenceGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
             var vertices = new IndexCollection(graph.VertexCount);
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
 
             {
-                var dfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
+                var dfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
                     IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
@@ -52,7 +52,7 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = new MultipleSourceDfs<JaggedAdjacencyListGraph, int, int,
+                var dfs = new MultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
                     IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,

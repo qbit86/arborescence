@@ -7,7 +7,7 @@
 
     internal static partial class Program
     {
-        private static void SerializeGraphByEdges(JaggedAdjacencyListGraph graph,
+        private static void SerializeGraphByEdges(JaggedAdjacencyListIncidenceGraph graph,
             ArraySegment<DfsStepKind> vertexKinds, ArraySegment<DfsStepKind> edgeKinds,
             string graphName, TextWriter textWriter)
         {
