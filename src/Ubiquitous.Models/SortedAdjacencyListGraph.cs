@@ -1,6 +1,7 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
     public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>,
@@ -9,70 +10,84 @@ namespace Ubiquitous
         // Layout:
         // [0..1) — VertexCount
         // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - (1 + VertexCount)) / 2
-        // [1 + VertexCount..Offset₂ + EdgeCount) — Sources
-        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Targets
+        // [1 + VertexCount..Offset₂ + EdgeCount) — Targets
+        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Sources
+        private readonly int[] _storage;
 
-        internal SortedAdjacencyListGraph(int[] endpoints, int[] edgeBounds)
+        internal SortedAdjacencyListGraph(int[] storage)
         {
-            Assert(endpoints != null);
-            Assert(edgeBounds != null);
+            Assert(storage != null);
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
             // Assert: `endpoints` are sorted by source(edge).
             // Assert: `edgeBounds` are vertexCount in length.
             // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
-            Endpoints = endpoints;
-            EdgeBounds = edgeBounds;
+            _storage = storage;
         }
 
-        public int VertexCount => EdgeBounds?.Length ?? 0;
+        public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
-        public int EdgeCount => Endpoints?.Length / 2 ?? 0;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
 
-        private int[] Endpoints { get; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetEdgeBounds()
+        {
+            return _storage.AsSpan().Slice(1, VertexCount);
+        }
 
-        private int[] EdgeBounds { get; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetSources()
+        {
+            return _storage.AsSpan().Slice(1 + VertexCount + EdgeCount, EdgeCount);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetTargets()
+        {
+            return _storage.AsSpan().Slice(1 + VertexCount, EdgeCount);
+        }
 
         public bool TryGetSource(int edge, out int source)
         {
-            int edgeCount = EdgeCount;
-
-            if ((uint)edge >= (uint)edgeCount)
+            ReadOnlySpan<int> sources = GetSources();
+            if ((uint)edge >= (uint)sources.Length)
             {
-                source = default;
+                source = -1;
                 return false;
             }
 
-            source = Endpoints[edgeCount + edge];
+            source = sources[edge];
             return true;
         }
 
         public bool TryGetTarget(int edge, out int target)
         {
-            if ((uint)edge >= (uint)EdgeCount)
+            ReadOnlySpan<int> targets = GetTargets();
+            if ((uint)edge >= (uint)targets.Length)
             {
-                target = default;
+                target = -1;
                 return false;
             }
 
-            target = Endpoints[edge];
+            target = targets[edge];
             return true;
         }
 
         public bool TryGetOutEdges(int vertex, out RangeEnumerator outEdges)
         {
-            if ((uint)vertex >= (uint)VertexCount)
+            ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
+            if ((uint)vertex >= (uint)edgeBounds.Length)
             {
-                outEdges = default;
+                outEdges = new RangeEnumerator(0, 0);
                 return false;
             }
 
-            int start = vertex > 0 ? EdgeBounds[vertex - 1] : 0;
-            int endExclusive = EdgeBounds[vertex];
+            int start = vertex > 0 ? edgeBounds[vertex - 1] : 0;
+            int endExclusive = edgeBounds[vertex];
             if (endExclusive < start)
             {
-                outEdges = default;
+                outEdges = new RangeEnumerator(0, 0);
                 return false;
             }
 
@@ -82,7 +97,7 @@ namespace Ubiquitous
 
         public bool Equals(SortedAdjacencyListGraph other)
         {
-            return Equals(Endpoints, other.Endpoints) && Equals(EdgeBounds, other.EdgeBounds);
+            return Equals(_storage, other._storage);
         }
 
         public override bool Equals(object obj)
@@ -95,7 +110,29 @@ namespace Ubiquitous
 
         public override int GetHashCode()
         {
-            return unchecked(((Endpoints?.GetHashCode() ?? 0) * 397) ^ (EdgeBounds?.GetHashCode() ?? 0));
+            return _storage?.GetHashCode() ?? 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private int GetVertexCount()
+        {
+            Assert(_storage != null, "_storage != null");
+
+            return _storage.Length < 1 ? 0 : Clamp(_storage[0], 0, _storage.Length - 1);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int Clamp(int value, int min, int max)
+        {
+            Assert(min <= max, "min <= max");
+
+            if (value < min)
+                return min;
+
+            if (value > max)
+                return max;
+
+            return value;
         }
     }
 }
