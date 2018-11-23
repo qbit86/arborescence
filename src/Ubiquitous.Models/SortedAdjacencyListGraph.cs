@@ -16,7 +16,11 @@ namespace Ubiquitous
 
         internal SortedAdjacencyListGraph(int[] storage)
         {
-            Assert(storage != null);
+            Assert(storage != null, "storage != null");
+            Assert(storage.Length > 0, "storage.Length > 0");
+
+            Assert(storage[0] >= 0, "storage[0] >= 0");
+            Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
             // Assert: `endpoints` are sorted by source(edge).
@@ -117,22 +121,13 @@ namespace Ubiquitous
         private int GetVertexCount()
         {
             Assert(_storage != null, "_storage != null");
+            Assert(_storage.Length > 0, "_storage.Length > 0");
 
-            return _storage.Length < 1 ? 0 : Clamp(_storage[0], 0, _storage.Length - 1);
-        }
+            int result = _storage[0];
+            Assert(result >= 0, "result >= 0");
+            Assert(result <= _storage.Length - 1, "result <= _storage.Length - 1");
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static int Clamp(int value, int min, int max)
-        {
-            Assert(min <= max, "min <= max");
-
-            if (value < min)
-                return min;
-
-            if (value > max)
-                return max;
-
-            return value;
+            return result;
         }
     }
 }
