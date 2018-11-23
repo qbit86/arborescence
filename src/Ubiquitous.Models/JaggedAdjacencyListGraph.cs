@@ -11,8 +11,8 @@
         // Layout: endpoints start with targets, then sources follow.
         internal JaggedAdjacencyListGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)
         {
-            Assert(endpoints != null);
-            Assert(outEdges != null);
+            Assert(endpoints != null, "endpoints != null");
+            Assert(outEdges != null, "outEdges != null");
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
             // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): source(edge) = vertex.
