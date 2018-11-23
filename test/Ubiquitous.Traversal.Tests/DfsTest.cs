@@ -6,7 +6,7 @@
     using Traversal.Advanced;
     using Xunit;
     using Xunit.Abstractions;
-    using ColorMap = System.ArraySegment<Traversal.Color>;
+    using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
         IndexedIncidenceGraphPolicy<JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;

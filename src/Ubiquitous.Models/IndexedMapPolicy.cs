@@ -4,7 +4,7 @@
     using System.Buffers;
 
     public readonly struct IndexedMapPolicy<T>
-        : IMapPolicy<ArraySegment<T>, int, T>, IFactory<ArraySegment<T>>
+        : IMapPolicy<ArrayPrefix<T>, int, T>, IFactory<ArrayPrefix<T>>
     {
         public IndexedMapPolicy(int count)
         {
@@ -16,7 +16,7 @@
 
         public int Count { get; }
 
-        public bool TryGet(ArraySegment<T> map, int key, out T value)
+        public bool TryGet(ArrayPrefix<T> map, int key, out T value)
         {
             if ((uint)key >= (uint)map.Count || map.Array == null)
             {
@@ -24,27 +24,27 @@
                 return false;
             }
 
-            value = map.Array[key + map.Offset];
+            value = map.Array[key];
             return true;
         }
 
-        public bool TryPut(ArraySegment<T> map, int key, T value)
+        public bool TryPut(ArrayPrefix<T> map, int key, T value)
         {
             if ((uint)key >= (uint)map.Count || map.Array == null)
                 return false;
 
-            map.Array[key + map.Offset] = value;
+            map.Array[key] = value;
             return true;
         }
 
-        public ArraySegment<T> Acquire()
+        public ArrayPrefix<T> Acquire()
         {
             T[] array = ArrayPool<T>.Shared.Rent(Count);
             Array.Clear(array, 0, Count);
-            return new ArraySegment<T>(array, 0, Count);
+            return new ArrayPrefix<T>(array, Count);
         }
 
-        public void Release(ArraySegment<T> value)
+        public void Release(ArrayPrefix<T> value)
         {
             ArrayPool<T>.Shared.Return(value.Array, true);
         }

@@ -6,7 +6,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using Traversal.Advanced;
     using static System.Diagnostics.Debug;
-    using ColorMap = System.ArraySegment<Traversal.Color>;
+    using ColorMap = ArrayPrefix<Traversal.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =

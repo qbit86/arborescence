@@ -1,6 +1,5 @@
 ﻿namespace Ubiquitous.Traversal.Pragmatic
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -10,14 +9,14 @@
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetTargetPolicy<TGraph, int, TEdge>, IGetOutEdgesPolicy<TGraph, int, TEdgeEnumerator>
     {
-        private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
+        private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArrayPrefix<Color>,
             TGraphPolicy, IndexedMapPolicy<Color>> _impl;
 
         internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, int queueCapacity,
             TGraphPolicy graphPolicy)
         {
             var colorMapPolicy = new IndexedMapPolicy<Color>(vertexCount);
-            _impl = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArraySegment<Color>,
+            _impl = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArrayPrefix<Color>,
                 TGraphPolicy, IndexedMapPolicy<Color>>(
                 graph, startVertex, queueCapacity, graphPolicy, colorMapPolicy);
         }
