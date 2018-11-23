@@ -4,27 +4,27 @@
 
 ### AdjacencyList-IncidenceGraph
 
-|            Length | Content       |
-|------------------:|:--------------|
-|                 1 | `vertexCount` |
-| 2 × `vertexCount` | `edgeBounds`  |
+|            Length | Content          |
+|------------------:|:-----------------|
+|                 1 | `vertexCount`    |
+| 2 × `vertexCount` | `edgeBounds`     |
 |       `edgeCount` | `reorderedEdges` |
 |       `edgeCount` | `targets`        |
 |       `edgeCount` | `sources`        |
 
 ```
-[4][··|··|··|··][···][···][···]
+[4][↓↑|↓↑|↓↑|↓↑][021][bcb][aca]
 ```
 
 ```plantuml
 digraph G {
   node [shape=circle]
-  b -> c [xlabel=0]
-  d -> d [xlabel=1]
-  b -> c [xlabel=2]
+  a -> b [xlabel=0]
+  c -> c [xlabel=1]
+  a -> b [xlabel=2]
   {
     rank = same
-    a, c
+    b, d
   }
 }
 ```
