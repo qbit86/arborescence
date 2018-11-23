@@ -39,6 +39,7 @@
                 return false;
             }
 
+            Assert(Endpoints != null, "Endpoints != null");
             source = Endpoints[edgeCount + edge];
             return true;
         }
@@ -51,6 +52,7 @@
                 return false;
             }
 
+            Assert(Endpoints != null, "Endpoints != null");
             target = Endpoints[edge];
             return true;
         }
@@ -63,6 +65,7 @@
                 return false;
             }
 
+            Assert(OutEdges != null, "OutEdges != null");
             if (OutEdges[vertex].Buffer == null)
             {
                 outEdges = new ArrayPrefixEnumerator<int>(s_emptyArray, 0);
