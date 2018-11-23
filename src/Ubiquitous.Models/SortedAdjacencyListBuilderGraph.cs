@@ -4,7 +4,7 @@
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
-    public readonly struct SortedAdjacencyListGraph : IEquatable<SortedAdjacencyListGraph>,
+    public readonly struct SortedAdjacencyListBuilderGraph : IEquatable<SortedAdjacencyListBuilderGraph>,
         IIncidenceGraph<int, int, RangeEnumerator>
     {
         // Layout:
@@ -14,7 +14,7 @@
         // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Sources
         private readonly int[] _storage;
 
-        internal SortedAdjacencyListGraph(int[] storage)
+        internal SortedAdjacencyListBuilderGraph(int[] storage)
         {
             Assert(storage != null, "storage != null");
             Assert(storage.Length > 0, "storage.Length > 0");
@@ -99,14 +99,14 @@
             return true;
         }
 
-        public bool Equals(SortedAdjacencyListGraph other)
+        public bool Equals(SortedAdjacencyListBuilderGraph other)
         {
             return Equals(_storage, other._storage);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is SortedAdjacencyListGraph other)
+            if (obj is SortedAdjacencyListBuilderGraph other)
                 return Equals(other);
 
             return false;
