@@ -6,8 +6,6 @@
     public readonly struct JaggedAdjacencyListGraph : IEquatable<JaggedAdjacencyListGraph>,
         IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>
     {
-        private static readonly int[] s_emptyArray = new int[0];
-
         // Layout: endpoints start with targets, then sources follow.
         internal JaggedAdjacencyListGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)
         {
@@ -61,14 +59,14 @@
         {
             if ((uint)vertex >= (uint)VertexCount)
             {
-                outEdges = new ArrayPrefixEnumerator<int>(s_emptyArray, 0);
+                outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
                 return false;
             }
 
             Assert(OutEdges != null, "OutEdges != null");
             if (OutEdges[vertex].Buffer == null)
             {
-                outEdges = new ArrayPrefixEnumerator<int>(s_emptyArray, 0);
+                outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
                 return false;
             }
 

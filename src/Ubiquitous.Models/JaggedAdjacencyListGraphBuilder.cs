@@ -66,7 +66,7 @@
             _sources = default;
             _targets = default;
 
-            ArrayBuilder<int>[] outEdges = OutEdges ?? new ArrayBuilder<int>[0];
+            ArrayBuilder<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
             OutEdges = null;
 
             return new JaggedAdjacencyListGraph(endpoints, outEdges);
