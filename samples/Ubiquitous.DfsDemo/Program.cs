@@ -21,7 +21,7 @@ namespace Ubiquitous
 
             Console.WriteLine($"{nameof(vertexCount)}: {vertexCount}, {nameof(edgeCount)}: {edgeCount}");
 
-            var builder = new JaggedAdjacencyListGraphBuilder(vertexCount);
+            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)

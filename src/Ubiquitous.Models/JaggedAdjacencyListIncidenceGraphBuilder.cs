@@ -3,16 +3,16 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public sealed class JaggedAdjacencyListGraphBuilder
+    public sealed class JaggedAdjacencyListIncidenceGraphBuilder
     {
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
 
-        public JaggedAdjacencyListGraphBuilder(int vertexCount) : this(vertexCount, 0)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexCount) : this(vertexCount, 0)
         {
         }
 
-        public JaggedAdjacencyListGraphBuilder(int vertexCount, int edgeCount)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexCount, int edgeCount)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));

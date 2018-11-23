@@ -161,7 +161,7 @@
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, densityPower));
 
-            var builder = new JaggedAdjacencyListGraphBuilder(VertexCount);
+            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
