@@ -8,7 +8,7 @@
     internal static partial class Program
     {
         private static void SerializeGraphByEdges(JaggedAdjacencyListIncidenceGraph graph,
-            ArraySegment<DfsStepKind> vertexKinds, ArraySegment<DfsStepKind> edgeKinds,
+            ReadOnlySpan<DfsStepKind> vertexKinds, ReadOnlySpan<DfsStepKind> edgeKinds,
             string graphName, TextWriter textWriter)
         {
             Assert(graphName != null);
@@ -18,7 +18,7 @@
             try
             {
                 textWriter.WriteLine("    node [shape=circle]");
-                if (vertexKinds.Array != null)
+                if (!vertexKinds.IsEmpty)
                 {
                     for (int v = 0; v < graph.VertexCount; ++v)
                     {
@@ -28,7 +28,7 @@
                     }
                 }
 
-                if (edgeKinds.Array != null)
+                if (!edgeKinds.IsEmpty)
                 {
                     for (int e = 0; e < graph.EdgeCount; ++e)
                     {
