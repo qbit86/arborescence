@@ -1,6 +1,7 @@
 ﻿namespace Ubiquitous
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using Traversal.Advanced;
@@ -164,11 +165,21 @@
             var builder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexCount);
             var prng = new Random(1729);
 
+            var vertices = new BitArray(VertexCount);
+
             for (int e = 0; e < edgeCount; ++e)
             {
                 int source = prng.Next(VertexCount);
+                vertices[source] = true;
                 int target = prng.Next(VertexCount);
+                vertices[target] = true;
                 builder.Add(source, target);
+            }
+
+            for (int vertex = 0; vertex != vertices.Count; ++vertex)
+            {
+                if (vertices[vertex] == false)
+                    builder.Add(vertex, vertex);
             }
 
             JaggedAdjacencyListIncidenceGraph result = builder.MoveToIndexedAdjacencyListGraph();
