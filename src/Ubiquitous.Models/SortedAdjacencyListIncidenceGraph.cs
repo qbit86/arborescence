@@ -30,26 +30,26 @@
             _storage = storage;
         }
 
-        public int VertexCount => _storage == null ? 0 : GetVertexCount();
+        public int VertexUpperBound => _storage == null ? 0 : GetVertexUpperBound();
 
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexUpperBound()) / 2;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetEdgeBounds()
         {
-            return _storage.AsSpan().Slice(1, VertexCount);
+            return _storage.AsSpan().Slice(1, VertexUpperBound);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetSources()
         {
-            return _storage.AsSpan().Slice(1 + VertexCount + EdgeCount, EdgeCount);
+            return _storage.AsSpan().Slice(1 + VertexUpperBound + EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTargets()
         {
-            return _storage.AsSpan().Slice(1 + VertexCount, EdgeCount);
+            return _storage.AsSpan().Slice(1 + VertexUpperBound, EdgeCount);
         }
 
         public bool TryGetSource(int edge, out int source)
@@ -118,7 +118,7 @@
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetVertexCount()
+        private int GetVertexUpperBound()
         {
             Assert(_storage != null, "_storage != null");
             Assert(_storage.Length > 0, "_storage.Length > 0");

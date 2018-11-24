@@ -8,36 +8,36 @@
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexCount) : this(vertexCount, 0)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
         {
         }
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexCount, int edgeCount)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound, int edgeCount)
         {
-            if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
+            if (vertexUpperBound < 0)
+                throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
 
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            OutEdges = new ArrayBuilder<int>[vertexCount];
+            OutEdges = new ArrayBuilder<int>[vertexUpperBound];
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
         }
 
         private ArrayBuilder<int>[] OutEdges { get; set; }
 
-        public int VertexCount => OutEdges?.Length ?? 0;
+        public int VertexUpperBound => OutEdges?.Length ?? 0;
 
         public int Add(int source, int target)
         {
             if (OutEdges == null)
                 return -1;
 
-            if ((uint)source >= (uint)VertexCount)
+            if ((uint)source >= (uint)VertexUpperBound)
                 return -1;
 
-            if ((uint)target >= (uint)VertexCount)
+            if ((uint)target >= (uint)VertexUpperBound)
                 return -1;
 
             Assert(_sources.Count == _targets.Count);
