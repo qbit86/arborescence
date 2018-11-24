@@ -49,10 +49,7 @@ namespace Ubiquitous
 
         public override bool Equals(object obj)
         {
-            if (obj is IndexCollection other)
-                return Equals(other);
-
-            return false;
+            return obj is IndexCollection other && Equals(other);
         }
 
         public override int GetHashCode()

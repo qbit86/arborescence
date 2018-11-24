@@ -73,11 +73,7 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Step<TStepKind, TVertex, TEdge>))
-                return false;
-
-            var other = (Step<TStepKind, TVertex, TEdge>)obj;
-            return Equals(other);
+            return obj is Step<TStepKind, TVertex, TEdge> other && Equals(other);
         }
 
         public override int GetHashCode()

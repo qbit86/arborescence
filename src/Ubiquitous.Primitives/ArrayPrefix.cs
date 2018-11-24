@@ -107,10 +107,7 @@ namespace Ubiquitous
 
         public override bool Equals(object obj)
         {
-            if (obj is ArrayPrefix<T> arrayPrefix)
-                return Equals(arrayPrefix);
-
-            return false;
+            return obj is ArrayPrefix<T> other && Equals(other);
         }
 
         public bool Equals(ArrayPrefix<T> obj)

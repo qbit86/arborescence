@@ -82,10 +82,7 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is SourceTargetPair<TVertex> other)
-                return Equals(other);
-
-            return false;
+            return obj is SourceTargetPair<TVertex> other && Equals(other);
         }
 
         public override int GetHashCode()
