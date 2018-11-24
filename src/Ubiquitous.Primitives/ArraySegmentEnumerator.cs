@@ -11,7 +11,7 @@ namespace Ubiquitous
         private readonly int _end; // cache Offset + Count, since it's a little slow
         private int _current;
 
-        internal ArraySegmentEnumerator(T[] array, int offset, int count)
+        public ArraySegmentEnumerator(T[] array, int offset, int count)
         {
             if (array == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
