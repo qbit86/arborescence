@@ -16,18 +16,18 @@ namespace Ubiquitous
     {
         private static void Main()
         {
-            const int vertexCount = 10;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
+            const int vertexUpperBound = 10;
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexUpperBound, 1.5));
 
-            Console.WriteLine($"{nameof(vertexCount)}: {vertexCount}, {nameof(edgeCount)}: {edgeCount}");
+            Console.WriteLine($"{nameof(vertexUpperBound)}: {vertexUpperBound}, {nameof(edgeCount)}: {edgeCount}");
 
-            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexCount);
+            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexUpperBound);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
             {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
+                int source = prng.Next(vertexUpperBound);
+                int target = prng.Next(vertexUpperBound);
                 builder.Add(source, target);
             }
 
