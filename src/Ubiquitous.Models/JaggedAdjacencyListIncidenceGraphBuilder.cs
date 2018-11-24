@@ -25,9 +25,9 @@
             _targets = new ArrayBuilder<int>(edgeCount);
         }
 
-        private ArrayBuilder<int>[] OutEdges { get; set; }
-
         public int VertexUpperBound => OutEdges?.Length ?? 0;
+
+        private ArrayBuilder<int>[] OutEdges { get; set; }
 
         public int Add(int source, int target)
         {
