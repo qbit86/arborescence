@@ -1,42 +1,46 @@
 namespace Ubiquitous
 {
     using System;
+    using static System.Diagnostics.Debug;
 
     public struct SortedAdjacencyListIncidenceGraphBuilder
     {
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
-        private bool _needsSorting;
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int vertexCount) : this(vertexCount, 0)
+        public SortedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
         {
         }
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int vertexCount, int edgeCount)
+        public SortedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound, int edgeCount)
         {
-            if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
+            if (vertexUpperBound < 0)
+                throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
 
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
-            _needsSorting = false;
-            VertexCount = vertexCount;
+            VertexUpperBound = vertexUpperBound;
         }
 
-        public int VertexCount { get; }
+        public int VertexUpperBound { get; }
 
         public int Add(int source, int target)
         {
-            if ((uint)source >= (uint)VertexCount)
+            if ((uint)source >= (uint)VertexUpperBound)
                 return -1;
 
-            if ((uint)target >= (uint)VertexCount)
+            if ((uint)target >= (uint)VertexUpperBound)
                 return -1;
 
-            throw new NotImplementedException();
+            Assert(_sources.Count == _targets.Count);
+            int newEdgeIndex = _targets.Count;
+            _sources.Add(source);
+            _targets.Add(target);
+
+            return newEdgeIndex;
         }
     }
 }
