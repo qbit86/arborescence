@@ -9,31 +9,30 @@
 
         internal static GraphHelper Default { get; } = new GraphHelper();
 
-        internal JaggedAdjacencyListIncidenceGraph GetGraph(int vertexCount)
+        internal JaggedAdjacencyListIncidenceGraph GetGraph(int vertexUpperBound)
         {
             if (_cache == null)
                 _cache = new Dictionary<int, JaggedAdjacencyListIncidenceGraph>();
 
-            JaggedAdjacencyListIncidenceGraph result;
-            if (_cache.TryGetValue(vertexCount, out result))
+            if (_cache.TryGetValue(vertexUpperBound, out JaggedAdjacencyListIncidenceGraph result))
                 return result;
 
-            result = CreateGraph(vertexCount);
-            _cache[vertexCount] = result;
+            result = CreateGraph(vertexUpperBound);
+            _cache[vertexUpperBound] = result;
             return result;
         }
 
-        internal static JaggedAdjacencyListIncidenceGraph CreateGraph(int vertexCount)
+        private static JaggedAdjacencyListIncidenceGraph CreateGraph(int vertexUpperBound)
         {
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.618));
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexUpperBound, 1.618));
 
-            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexCount);
+            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexUpperBound);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
             {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
+                int source = prng.Next(vertexUpperBound);
+                int target = prng.Next(vertexUpperBound);
                 builder.Add(source, target);
             }
 
