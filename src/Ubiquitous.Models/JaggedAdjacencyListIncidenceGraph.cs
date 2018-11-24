@@ -89,7 +89,7 @@
 
         public override int GetHashCode()
         {
-            return unchecked(((Endpoints?.GetHashCode() ?? 0) * 397) ^ (OutEdges?.GetHashCode() ?? 0));
+            return unchecked((Endpoints?.GetHashCode() ?? 0) * 397) ^ (OutEdges?.GetHashCode() ?? 0);
         }
     }
 }
