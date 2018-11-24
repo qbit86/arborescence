@@ -110,8 +110,6 @@ namespace Ubiquitous
             T[] result = _array;
             if (_count < result.Length)
             {
-                // Avoid a bit of overhead (method call, some branches, extra codegen)
-                // which would be incurred by using Array.Resize
                 result = ArrayPool<T>.Shared.Rent(_count);
                 Array.Copy(_array, 0, result, 0, _count);
                 ArrayPool<T>.Shared.Return(_array, true);
