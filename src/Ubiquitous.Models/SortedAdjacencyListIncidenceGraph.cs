@@ -8,10 +8,10 @@
         IIncidenceGraph<int, int, RangeEnumerator>
     {
         // Layout:
-        // [0..1) — VertexCount
-        // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - 1 - VertexCount) / 2
-        // [1 + VertexCount..Offset₂ + EdgeCount) — Targets
-        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Sources
+        // [0..1) — VertexUpperBound
+        // [1..Offset₁ + VertexUpperBound) — EdgeBounds; EdgeCount := (Length - 1 - VertexUpperBound) / 2
+        // [1 + VertexUpperBound..Offset₂ + EdgeCount) — Targets
+        // [1 + VertexUpperBound + EdgeCount..Offset₃ + EdgeCount) — Sources
         private readonly int[] _storage;
 
         internal SortedAdjacencyListIncidenceGraph(int[] storage)

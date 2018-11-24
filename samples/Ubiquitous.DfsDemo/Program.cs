@@ -33,8 +33,8 @@ namespace Ubiquitous
 
             JaggedAdjacencyListIncidenceGraph graph = builder.MoveToIndexedAdjacencyListGraph();
 
-            var vertices = new IndexCollection(graph.VertexCount);
-            var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
+            var vertices = new IndexCollection(graph.VertexUpperBound);
+            var indexedMapPolicy = new ColorMapPolicy(graph.VertexUpperBound);
 
             {
                 var dfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
@@ -44,7 +44,7 @@ namespace Ubiquitous
                     default(IndexCollectionEnumerablePolicy));
 
                 IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertices);
-                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
+                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexUpperBound]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
@@ -59,7 +59,7 @@ namespace Ubiquitous
                     default(IndexCollectionEnumerablePolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
-                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
+                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexUpperBound]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 

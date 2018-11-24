@@ -139,7 +139,7 @@
             // Arrange
 
             JaggedAdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
-            var vertices = new IndexCollection(graph.VertexCount);
+            var vertices = new IndexCollection(graph.VertexUpperBound);
 
             // Act
 
