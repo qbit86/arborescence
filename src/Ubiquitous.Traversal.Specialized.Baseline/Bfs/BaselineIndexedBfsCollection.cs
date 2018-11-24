@@ -12,10 +12,10 @@
         private readonly BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArrayPrefix<Color>,
             TGraphPolicy, IndexedMapPolicy<Color>> _impl;
 
-        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexCount, int queueCapacity,
+        internal BaselineIndexedBfsCollection(TGraph graph, int startVertex, int vertexUpperBound, int queueCapacity,
             TGraphPolicy graphPolicy)
         {
-            var colorMapPolicy = new IndexedMapPolicy<Color>(vertexCount);
+            var colorMapPolicy = new IndexedMapPolicy<Color>(vertexUpperBound);
             _impl = new BaselineBfsCollection<TGraph, int, TEdge, TEdgeEnumerator, ArrayPrefix<Color>,
                 TGraphPolicy, IndexedMapPolicy<Color>>(
                 graph, startVertex, queueCapacity, graphPolicy, colorMapPolicy);

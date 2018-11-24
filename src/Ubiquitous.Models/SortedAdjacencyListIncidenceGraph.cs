@@ -24,7 +24,7 @@
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
             // Assert: `endpoints` are sorted by source(edge).
-            // Assert: `edgeBounds` are vertexCount in length.
+            // Assert: `edgeBounds` are vertexUpperBound in length.
             // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
             _storage = storage;

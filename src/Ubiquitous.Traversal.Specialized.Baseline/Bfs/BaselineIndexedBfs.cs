@@ -18,17 +18,17 @@
         private TGraphPolicy GraphPolicy { get; }
 
         public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy> Traverse(
-            TGraph graph, int startVertex, int vertexCount)
+            TGraph graph, int startVertex, int vertexUpperBound)
         {
             return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy>(
-                graph, startVertex, vertexCount, 0, GraphPolicy);
+                graph, startVertex, vertexUpperBound, 0, GraphPolicy);
         }
 
         public BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy> Traverse(
-            TGraph graph, int startVertex, int vertexCount, int queueCapacity)
+            TGraph graph, int startVertex, int vertexUpperBound, int queueCapacity)
         {
             return new BaselineIndexedBfsCollection<TGraph, TEdge, TEdgeEnumerator, TGraphPolicy>(
-                graph, startVertex, vertexCount, queueCapacity, GraphPolicy);
+                graph, startVertex, vertexUpperBound, queueCapacity, GraphPolicy);
         }
     }
 }
