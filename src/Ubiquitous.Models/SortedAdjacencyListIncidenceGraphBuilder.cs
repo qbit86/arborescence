@@ -20,12 +20,14 @@ namespace Ubiquitous
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
+            EdgeBounds = new int[vertexUpperBound];
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
-            VertexUpperBound = vertexUpperBound;
         }
 
-        public int VertexUpperBound { get; }
+        public int VertexUpperBound => EdgeBounds?.Length ?? 0;
+
+        private int[] EdgeBounds { get; }
 
         public int Add(int source, int target)
         {
