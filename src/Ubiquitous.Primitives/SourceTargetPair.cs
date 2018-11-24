@@ -82,16 +82,16 @@
 
         public override bool Equals(object obj)
         {
-            if (!(obj is SourceTargetPair<TVertex>))
-                return false;
+            if (obj is SourceTargetPair<TVertex> other)
+                return Equals(other);
 
-            var other = (SourceTargetPair<TVertex>)obj;
-            return Equals(other);
+            return false;
         }
 
         public override int GetHashCode()
         {
-            return Source.GetHashCode() ^ Target.GetHashCode();
+            return unchecked(EqualityComparer<TVertex>.Default.GetHashCode(Source) * 397) ^
+                EqualityComparer<TVertex>.Default.GetHashCode(Target);
         }
 
         public static bool operator ==(SourceTargetPair<TVertex> left, SourceTargetPair<TVertex> right)
