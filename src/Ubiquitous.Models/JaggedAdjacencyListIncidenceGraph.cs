@@ -81,10 +81,7 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is JaggedAdjacencyListIncidenceGraph other)
-                return Equals(other);
-
-            return false;
+            return obj is JaggedAdjacencyListIncidenceGraph other && Equals(other);
         }
 
         public override int GetHashCode()

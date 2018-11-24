@@ -106,10 +106,7 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is SortedAdjacencyListIncidenceGraph other)
-                return Equals(other);
-
-            return false;
+            return obj is SortedAdjacencyListIncidenceGraph other && Equals(other);
         }
 
         public override int GetHashCode()
