@@ -34,24 +34,6 @@
 
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexUpperBound()) / 2;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgeBounds()
-        {
-            return _storage.AsSpan().Slice(1, VertexUpperBound);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetSources()
-        {
-            return _storage.AsSpan().Slice(1 + VertexUpperBound + EdgeCount, EdgeCount);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTargets()
-        {
-            return _storage.AsSpan().Slice(1 + VertexUpperBound, EdgeCount);
-        }
-
         public bool TryGetSource(int edge, out int source)
         {
             ReadOnlySpan<int> sources = GetSources();
@@ -112,6 +94,24 @@
         public override int GetHashCode()
         {
             return _storage?.GetHashCode() ?? 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetEdgeBounds()
+        {
+            return _storage.AsSpan().Slice(1, VertexUpperBound);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetSources()
+        {
+            return _storage.AsSpan().Slice(1 + VertexUpperBound + EdgeCount, EdgeCount);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetTargets()
+        {
+            return _storage.AsSpan().Slice(1 + VertexUpperBound, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
