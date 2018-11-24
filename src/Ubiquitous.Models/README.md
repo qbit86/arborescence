@@ -36,13 +36,13 @@ digraph Sorted {
 
 ### AdjacencyList-IncidenceGraph
 
-|            Length | Content          |
-|------------------:|:-----------------|
-|                 1 | _vertexCount_    |
-| 2 × _vertexCount_ | _edgeBounds_     |
-|       _edgeCount_ | _reorderedEdges_ |
-|       _edgeCount_ | _targets_        |
-|       _edgeCount_ | _sources_        |
+|                 Length | Content            |
+|-----------------------:|:-------------------|
+|                      1 | _vertexUpperBound_ |
+| 2 × _vertexUpperBound_ | _edgeBounds_       |
+|            _edgeCount_ | _reorderedEdges_   |
+|            _edgeCount_ | _targets_          |
+|            _edgeCount_ | _sources_          |
 
 ```
 [4][↓↑|↓↑|↓↑|↓↑][021][bcb][aca]
@@ -50,14 +50,14 @@ digraph Sorted {
 
 ### Sorted-AdjacencyList-IncidenceGraph
 
-|        Length | Content          |
-|--------------:|:-----------------|
-|             1 | _vertexCount_    |
-| _vertexCount_ | _edgeBounds_     |
-|   _edgeCount_ | _targets_        |
-|   _edgeCount_ | _orderedSources_ |
+|             Length | Content            |
+|-------------------:|:-------------------|
+|                  1 | _vertexUpperBound_ |
+| _vertexUpperBound_ | _edgeBounds_       |
+|        _edgeCount_ | _targets_          |
+|        _edgeCount_ | _orderedSources_   |
 
-_edgeCount_ = (_length_ − 1 − _vertexCount_) / 2
+_edgeCount_ = (_length_ − 1 − _vertexUpperBound_) / 2
 
 ```
 [4][↑↑↑↑][bbc][aac]
@@ -65,12 +65,12 @@ _edgeCount_ = (_length_ − 1 − _vertexCount_) / 2
 
 ### EdgeList-IncidenceGraph
 
-_vertexCount_
+_vertexUpperBound_
 
-|        Length | Content          |
-|--------------:|:-----------------|
-| _vertexCount_ | _edgeBounds_     |
-|   _edgeCount_ | _reorderedEdges_ |
+|             Length | Content          |
+|-------------------:|:-----------------|
+| _vertexUpperBound_ | _edgeBounds_     |
+|        _edgeCount_ | _reorderedEdges_ |
 
 ```
 [↓↓↓↓][aca]
@@ -79,10 +79,10 @@ _vertexCount_
 
 ### Sorted-EdgeList-IncidenceGraph
 
-|        Length | Content          |
-|--------------:|:-----------------|
-|             1 | _vertexCount_    |
-| _vertexCount_ | _edgeBounds_     |
+|             Length | Content            |
+|-------------------:|:-------------------|
+|                  1 | _vertexUpperBound_ |
+| _vertexUpperBound_ | _edgeBounds_       |
 
 ```
 [4][↑↑↑↑]
