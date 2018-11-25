@@ -7,6 +7,7 @@ namespace Ubiquitous
     {
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
+        private int _lastSource;
 
         public SortedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
         {
@@ -23,6 +24,7 @@ namespace Ubiquitous
             EdgeBounds = new int[vertexUpperBound];
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
+            _lastSource = 0;
         }
 
         public int VertexUpperBound => EdgeBounds?.Length ?? 0;
@@ -31,18 +33,36 @@ namespace Ubiquitous
 
         public int Add(int source, int target)
         {
+            if (EdgeBounds == null)
+                return int.MinValue;
+
             if ((uint)source >= (uint)VertexUpperBound)
                 return -1;
 
             if ((uint)target >= (uint)VertexUpperBound)
-                return -1;
+                return -2;
+
+            if (source < _lastSource)
+            {
+                return sbyte.MinValue;
+            }
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
             _sources.Add(source);
             _targets.Add(target);
 
+            EdgeBounds[source] = newEdgeIndex + 1;
+            _lastSource = source;
+
             return newEdgeIndex;
         }
+
+        /*
+        public SortedAdjacencyListIncidenceGraph Build()
+        {
+            // TODO: Заполнить нули в EdgeBounds на предыдущие значения.
+        }
+        */
     }
 }
