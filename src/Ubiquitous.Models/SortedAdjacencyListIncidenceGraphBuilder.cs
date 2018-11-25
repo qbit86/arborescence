@@ -3,6 +3,12 @@ namespace Ubiquitous
     using System;
     using static System.Diagnostics.Debug;
 
+    // vertexUpperBound      targets
+    //         ↓↓↓      ↓↓↓↓↓
+    //         [4][^^^^][bbc][aac]
+    //            ↑↑↑↑↑↑     ↑↑↑↑↑
+    //   edgeUpperBounds     orderedSources
+
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _orderedSources;
@@ -21,10 +27,10 @@ namespace Ubiquitous
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            EdgeUpperBounds = new int[vertexUpperBound];
             _orderedSources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
             _lastSource = 0;
+            EdgeUpperBounds = new int[vertexUpperBound];
         }
 
         public int VertexUpperBound => EdgeUpperBounds?.Length ?? 0;

@@ -20,9 +20,9 @@
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            OutEdges = new ArrayBuilder<int>[vertexUpperBound];
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
+            OutEdges = new ArrayBuilder<int>[vertexUpperBound];
         }
 
         public int VertexUpperBound => OutEdges?.Length ?? 0;
