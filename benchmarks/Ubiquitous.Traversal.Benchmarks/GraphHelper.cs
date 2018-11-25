@@ -33,7 +33,7 @@
             {
                 int source = prng.Next(vertexUpperBound);
                 int target = prng.Next(vertexUpperBound);
-                builder.Add(source, target);
+                builder.TryAdd(source, target, out _);
             }
 
             return builder.MoveToIndexedAdjacencyListGraph();

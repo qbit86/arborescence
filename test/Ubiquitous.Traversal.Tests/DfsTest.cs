@@ -168,7 +168,7 @@
             {
                 int source = prng.Next(VertexCount);
                 int target = prng.Next(VertexCount);
-                builder.Add(source, target);
+                builder.TryAdd(source, target, out _);
             }
 
             JaggedAdjacencyListIncidenceGraph result = builder.MoveToIndexedAdjacencyListGraph();

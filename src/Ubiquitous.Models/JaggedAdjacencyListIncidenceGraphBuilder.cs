@@ -29,16 +29,25 @@
 
         private ArrayBuilder<int>[] OutEdges { get; set; }
 
-        public int Add(int source, int target)
+        public bool TryAdd(int source, int target, out int edge)
         {
             if (OutEdges == null)
-                return int.MinValue;
+            {
+                edge = int.MinValue;
+                return false;
+            }
 
             if ((uint)source >= (uint)VertexUpperBound)
-                return -1;
+            {
+                edge = -1;
+                return false;
+            }
 
             if ((uint)target >= (uint)VertexUpperBound)
-                return -2;
+            {
+                edge = -2;
+                return false;
+            }
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
@@ -50,7 +59,8 @@
 
             OutEdges[source].Add(newEdgeIndex);
 
-            return newEdgeIndex;
+            edge = newEdgeIndex;
+            return true;
         }
 
         public JaggedAdjacencyListIncidenceGraph MoveToIndexedAdjacencyListGraph()
