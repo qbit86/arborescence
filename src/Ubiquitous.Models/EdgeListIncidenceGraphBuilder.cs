@@ -45,6 +45,24 @@ namespace Ubiquitous
         public EdgeListIncidenceGraph ToGraph()
         {
             var storage = new SourceTargetPair<int>[_edgeCount + VertexUpperBound];
+            Span<SourceTargetPair<int>> destReorderedEdges = storage.AsSpan(0, _edgeCount);
+            Span<SourceTargetPair<int>> destEdgeBounds = storage.AsSpan(_edgeCount, VertexUpperBound);
+
+            for (int s = 0, currentOffset = 0; s != VertexUpperBound; ++s)
+            {
+                ReadOnlySpan<SourceTargetPair<int>> currentOutEdges = _outEdges[s].AsSpan();
+                Span<SourceTargetPair<int>> destOutEdges =
+                    destReorderedEdges.Slice(currentOffset, currentOutEdges.Length);
+                currentOutEdges.CopyTo(destOutEdges);
+                int lowerBound = currentOffset;
+                currentOffset += currentOutEdges.Length;
+                int upperBound = currentOffset;
+                destEdgeBounds[s] = SourceTargetPair.Create(lowerBound, upperBound);
+
+                ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer, true);
+            }
+
+            ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
 
             _rawInitialOutDegree = DefaultInitialOutDegree;
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
