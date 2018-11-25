@@ -84,6 +84,9 @@ namespace Ubiquitous
                     EdgeBounds[v] = EdgeBounds[v - 1];
             }
 
+            storage[0] = VertexUpperBound;
+            Array.Copy(EdgeBounds, 0, storage, 1, VertexUpperBound);
+
             _sources = default;
             _targets = default;
             EdgeBounds = null;
