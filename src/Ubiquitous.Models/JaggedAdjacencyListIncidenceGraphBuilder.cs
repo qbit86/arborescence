@@ -32,13 +32,13 @@
         public int Add(int source, int target)
         {
             if (OutEdges == null)
-                return -1;
+                return int.MinValue;
 
             if ((uint)source >= (uint)VertexUpperBound)
                 return -1;
 
             if ((uint)target >= (uint)VertexUpperBound)
-                return -1;
+                return -2;
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
