@@ -1,6 +1,7 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
     public readonly struct EdgeListIncidenceGraph :
@@ -19,6 +20,8 @@ namespace Ubiquitous
         }
 
         public int VertexUpperBound { get; }
+
+        public int EdgeCount => _storage?.Length - VertexUpperBound ?? 0;
 
         public bool TryGetSource(SourceTargetPair<int> edge, out int source)
         {
@@ -56,9 +59,20 @@ namespace Ubiquitous
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<SourceTargetPair<int>> edges)
+        public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdges)
         {
-            throw new NotImplementedException();
+            ReadOnlySpan<SourceTargetPair<int>> edgeBounds = GetEdgeBounds();
+            if ((uint)vertex >= (uint)edgeBounds.Length)
+            {
+                outEdges = new ArraySegmentEnumerator<SourceTargetPair<int>>(
+                    ArrayBuilder<SourceTargetPair<int>>.EmptyArray, 0, 0);
+                return false;
+            }
+
+            int start = edgeBounds[vertex].Source;
+            int endExclusive = edgeBounds[vertex].Target;
+            outEdges = new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, endExclusive);
+            return true;
         }
 
         public bool Equals(EdgeListIncidenceGraph other)
@@ -74,6 +88,12 @@ namespace Ubiquitous
         public override int GetHashCode()
         {
             return unchecked(VertexUpperBound * 397) ^ (_storage?.GetHashCode() ?? 0);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<SourceTargetPair<int>> GetEdgeBounds()
+        {
+            return _storage.AsSpan(EdgeCount, VertexUpperBound);
         }
     }
 }
