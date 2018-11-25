@@ -71,11 +71,7 @@
 
             int start = vertex > 0 ? edgeBounds[vertex - 1] : 0;
             int endExclusive = edgeBounds[vertex];
-            if (endExclusive < start)
-            {
-                outEdges = new RangeEnumerator(0, 0);
-                return false;
-            }
+            Assert(start <= endExclusive, "start <= endExclusive");
 
             outEdges = new RangeEnumerator(start, endExclusive);
             return true;

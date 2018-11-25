@@ -62,11 +62,7 @@ namespace Ubiquitous
 
             int start = edgeBounds[2 * vertex];
             int endExclusive = edgeBounds[2 * vertex + 1];
-            if (endExclusive < start)
-            {
-                outEdges = new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
-                return false;
-            }
+            Assert(start <= endExclusive, "start <= endExclusive");
 
             outEdges = new ArraySegmentEnumerator<int>(_storage, start, endExclusive);
             return true;
