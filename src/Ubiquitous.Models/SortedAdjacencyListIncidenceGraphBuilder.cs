@@ -3,6 +3,7 @@ namespace Ubiquitous
     using System;
     using static System.Diagnostics.Debug;
 
+    // Storage layout:
     // vertexUpperBound      targets
     //         ↓↓↓      ↓↓↓↓↓
     //         [4][^^^^][bbc][aac]
@@ -97,6 +98,7 @@ namespace Ubiquitous
 
             _orderedSources = default;
             _targets = default;
+            _lastSource = 0;
             EdgeUpperBounds = null;
 
             return new SortedAdjacencyListIncidenceGraph(storage);
