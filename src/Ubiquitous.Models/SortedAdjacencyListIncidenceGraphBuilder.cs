@@ -3,7 +3,7 @@ namespace Ubiquitous
     using System;
     using static System.Diagnostics.Debug;
 
-    public struct SortedAdjacencyListIncidenceGraphBuilder
+    public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _orderedSources;
         private ArrayBuilder<int> _targets;
@@ -69,7 +69,7 @@ namespace Ubiquitous
             return true;
         }
 
-        public SortedAdjacencyListIncidenceGraph Build()
+        public SortedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_orderedSources.Count == _targets.Count);
             int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
