@@ -3,8 +3,7 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public sealed class
-        JaggedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
+    public struct JaggedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
