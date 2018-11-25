@@ -29,7 +29,7 @@ namespace Ubiquitous
 
         public int VertexUpperBound => EdgeBounds?.Length ?? 0;
 
-        private int[] EdgeBounds { get; }
+        private int[] EdgeBounds { get; set; }
 
         public int Add(int source, int target)
         {
@@ -58,11 +58,26 @@ namespace Ubiquitous
             return newEdgeIndex;
         }
 
-        /*
         public SortedAdjacencyListIncidenceGraph Build()
         {
-            // TODO: Заполнить нули в EdgeBounds на предыдущие значения.
+            Assert(_sources.Count == _targets.Count);
+            int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
+            int[] sourcesBuffer = _sources.Buffer ?? ArrayBuilder<int>.EmptyArray;
+            int storageSize = 1 + VertexUpperBound + _targets.Count + _sources.Count;
+            int[] storage = new int[storageSize];
+
+            // Make EdgeBounds monotonic in case if we skipped some sources.
+            for (int v = 1; v < EdgeBounds.Length; ++v)
+            {
+                if (EdgeBounds[v] < EdgeBounds[v - 1])
+                    EdgeBounds[v] = EdgeBounds[v - 1];
+            }
+
+            _sources = default;
+            _targets = default;
+            EdgeBounds = null;
+
+            return new SortedAdjacencyListIncidenceGraph(storage);
         }
-        */
     }
 }
