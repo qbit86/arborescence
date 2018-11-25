@@ -45,7 +45,7 @@ digraph Sorted {
 |            _edgeCount_ | _sources_          |
 
 ```
-vertedUpperBound    reorderedEdges     sources
+vertexUpperBound    reorderedEdges     sources
              ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
              [4][_^|_^|_^|_^][021][bcb][aca]
                 ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
@@ -64,7 +64,7 @@ vertedUpperBound    reorderedEdges     sources
 _edgeCount_ = (_length_ − 1 − _vertexUpperBound_) / 2
 
 ```
-vertedUpperBound      targets
+vertexUpperBound      targets
              ↓↓↓      ↓↓↓↓↓
              [4][^^^^][bbc][aac]
                 ↑↑↑↑↑↑     ↑↑↑↑↑
