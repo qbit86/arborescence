@@ -171,7 +171,7 @@
                 builder.TryAdd(source, target, out _);
             }
 
-            JaggedAdjacencyListIncidenceGraph result = builder.MoveToIndexedAdjacencyListGraph();
+            JaggedAdjacencyListIncidenceGraph result = builder.ToGraph();
             return result;
         }
     }

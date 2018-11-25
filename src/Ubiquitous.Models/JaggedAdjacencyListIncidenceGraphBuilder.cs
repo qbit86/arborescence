@@ -3,7 +3,8 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public sealed class JaggedAdjacencyListIncidenceGraphBuilder
+    public sealed class
+        JaggedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
@@ -63,7 +64,7 @@
             return true;
         }
 
-        public JaggedAdjacencyListIncidenceGraph MoveToIndexedAdjacencyListGraph()
+        public JaggedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_sources.Count == _targets.Count);
             int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;

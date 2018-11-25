@@ -31,7 +31,7 @@ namespace Ubiquitous
                 builder.TryAdd(source, target, out _);
             }
 
-            JaggedAdjacencyListIncidenceGraph graph = builder.MoveToIndexedAdjacencyListGraph();
+            JaggedAdjacencyListIncidenceGraph graph = builder.ToGraph();
 
             var vertices = new IndexCollection(graph.VertexUpperBound);
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexUpperBound);

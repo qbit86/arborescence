@@ -36,7 +36,7 @@
                 builder.TryAdd(source, target, out _);
             }
 
-            return builder.MoveToIndexedAdjacencyListGraph();
+            return builder.ToGraph();
         }
     }
 }
