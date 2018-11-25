@@ -75,10 +75,10 @@
                 Array.Copy(sourcesBuffer, 0, endpoints, _targets.Count, _sources.Count);
             }
 
+            ArrayBuilder<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
+
             _sources = default;
             _targets = default;
-
-            ArrayBuilder<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
             OutEdges = null;
 
             return new JaggedAdjacencyListIncidenceGraph(endpoints, outEdges);

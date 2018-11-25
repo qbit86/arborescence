@@ -73,12 +73,38 @@ namespace Ubiquitous
 
         public AdjacencyListIncidenceGraph ToGraph()
         {
+            Assert(_sources.Count == _targets.Count);
+            var storage = new int[1 + 2 * VertexUpperBound + _sources.Count + _targets.Count + _sources.Count];
+
+            storage[0] = VertexUpperBound;
+
+            ReadOnlySpan<ArrayBuilder<int>> outEdges = OutEdges.AsSpan();
+            Span<int> destEdgeBounds = storage.AsSpan(1, 2 * VertexUpperBound);
+            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * VertexUpperBound, _sources.Count);
+
+            for (int s = 0, currentBound = 0; s != outEdges.Length; ++s)
+            {
+                ReadOnlySpan<int> currentOutEdges = outEdges[s].AsSpan();
+                currentOutEdges.CopyTo(destReorderedEdges.Slice(currentBound, currentOutEdges.Length));
+                int finalLeftBound = 1 + 2 * VertexUpperBound + currentBound;
+                destEdgeBounds[2 * s] = finalLeftBound;
+                destEdgeBounds[2 * s + 1] = finalLeftBound + currentOutEdges.Length;
+                currentBound += currentOutEdges.Length;
+            }
+
+            Span<int> destTargets = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count, _targets.Count);
+            _targets.AsSpan().CopyTo(destTargets);
+
+            Span<int> destSources = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count + _targets.Count,
+                _sources.Count);
+            _sources.AsSpan().CopyTo(destSources);
+
             _sources = default;
             _targets = default;
             OutEdges = null;
             VertexUpperBound = 0;
 
-            throw new NotImplementedException();
+            return new AdjacencyListIncidenceGraph(storage);
         }
     }
 }
