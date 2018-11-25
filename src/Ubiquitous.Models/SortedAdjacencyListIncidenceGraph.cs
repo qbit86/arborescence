@@ -99,19 +99,19 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetEdgeBounds()
         {
-            return _storage.AsSpan().Slice(1, VertexUpperBound);
+            return _storage.AsSpan(1, VertexUpperBound);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetSources()
         {
-            return _storage.AsSpan().Slice(1 + VertexUpperBound + EdgeCount, EdgeCount);
+            return _storage.AsSpan(1 + VertexUpperBound + EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTargets()
         {
-            return _storage.AsSpan().Slice(1 + VertexUpperBound, EdgeCount);
+            return _storage.AsSpan(1 + VertexUpperBound, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

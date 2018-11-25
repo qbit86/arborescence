@@ -77,8 +77,8 @@ _vertexUpperBound_
 
 |             Length | Content          |
 |-------------------:|:-----------------|
-| _vertexUpperBound_ | _edgeBounds_     |
 |        _edgeCount_ | _reorderedEdges_ |
+| _vertexUpperBound_ | _edgeBounds_     |
 
 ```
 reorderedEdges

@@ -90,19 +90,19 @@ namespace Ubiquitous
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetEdgeBounds()
         {
-            return _storage.AsSpan().Slice(1, 2 * VertexUpperBound);
+            return _storage.AsSpan(1, 2 * VertexUpperBound);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetSources()
         {
-            return _storage.AsSpan().Slice(1 + 2 * VertexUpperBound + 2 * EdgeCount, EdgeCount);
+            return _storage.AsSpan(1 + 2 * VertexUpperBound + 2 * EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTargets()
         {
-            return _storage.AsSpan().Slice(1 + 2 * VertexUpperBound + EdgeCount, EdgeCount);
+            return _storage.AsSpan(1 + 2 * VertexUpperBound + EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
