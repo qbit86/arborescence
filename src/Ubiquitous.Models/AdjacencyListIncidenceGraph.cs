@@ -4,8 +4,8 @@ namespace Ubiquitous
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
-    public readonly struct AdjacencyListIncidenceGraph : IEquatable<AdjacencyListIncidenceGraph>,
-        IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>
+    public readonly struct AdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
+        IEquatable<AdjacencyListIncidenceGraph>
     {
         private readonly int[] _storage;
 

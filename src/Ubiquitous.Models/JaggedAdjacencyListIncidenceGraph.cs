@@ -3,8 +3,8 @@
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct JaggedAdjacencyListIncidenceGraph : IEquatable<JaggedAdjacencyListIncidenceGraph>,
-        IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>
+    public readonly struct JaggedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
+        IEquatable<JaggedAdjacencyListIncidenceGraph>
     {
         // Layout: endpoints start with targets, then sources follow.
         internal JaggedAdjacencyListIncidenceGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)

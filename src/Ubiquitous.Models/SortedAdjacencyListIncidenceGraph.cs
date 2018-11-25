@@ -4,8 +4,8 @@
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
-    public readonly struct SortedAdjacencyListIncidenceGraph : IEquatable<SortedAdjacencyListIncidenceGraph>,
-        IIncidenceGraph<int, int, RangeEnumerator>
+    public readonly struct SortedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, RangeEnumerator>,
+        IEquatable<SortedAdjacencyListIncidenceGraph>
     {
         // Layout:
         // [0..1) — VertexUpperBound
