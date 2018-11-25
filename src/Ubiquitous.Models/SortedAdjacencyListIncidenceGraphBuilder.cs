@@ -75,7 +75,7 @@ namespace Ubiquitous
             int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
             int[] orderedSourcesBuffer = _orderedSources.Buffer ?? ArrayBuilder<int>.EmptyArray;
             int storageSize = 1 + VertexUpperBound + _targets.Count + _orderedSources.Count;
-            int[] storage = new int[storageSize];
+            var storage = new int[storageSize];
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.
             for (int v = 1; v < EdgeUpperBounds.Length; ++v)
