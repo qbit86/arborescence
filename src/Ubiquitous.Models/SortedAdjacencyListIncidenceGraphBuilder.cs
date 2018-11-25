@@ -5,7 +5,7 @@ namespace Ubiquitous
 
     public struct SortedAdjacencyListIncidenceGraphBuilder
     {
-        private ArrayBuilder<int> _sources;
+        private ArrayBuilder<int> _orderedSources;
         private ArrayBuilder<int> _targets;
         private int _lastSource;
 
@@ -21,19 +21,19 @@ namespace Ubiquitous
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            EdgeBounds = new int[vertexUpperBound];
-            _sources = new ArrayBuilder<int>(edgeCount);
+            EdgeUpperBounds = new int[vertexUpperBound];
+            _orderedSources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
             _lastSource = 0;
         }
 
-        public int VertexUpperBound => EdgeBounds?.Length ?? 0;
+        public int VertexUpperBound => EdgeUpperBounds?.Length ?? 0;
 
-        private int[] EdgeBounds { get; set; }
+        private int[] EdgeUpperBounds { get; set; }
 
         public bool TryAdd(int source, int target, out int edge)
         {
-            if (EdgeBounds == null)
+            if (EdgeUpperBounds == null)
             {
                 edge = int.MinValue;
                 return false;
@@ -57,12 +57,12 @@ namespace Ubiquitous
                 return false;
             }
 
-            Assert(_sources.Count == _targets.Count);
+            Assert(_orderedSources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
-            _sources.Add(source);
+            _orderedSources.Add(source);
             _targets.Add(target);
 
-            EdgeBounds[source] = newEdgeIndex + 1;
+            EdgeUpperBounds[source] = newEdgeIndex + 1;
             _lastSource = source;
 
             edge = newEdgeIndex;
@@ -71,25 +71,27 @@ namespace Ubiquitous
 
         public SortedAdjacencyListIncidenceGraph Build()
         {
-            Assert(_sources.Count == _targets.Count);
+            Assert(_orderedSources.Count == _targets.Count);
             int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
-            int[] sourcesBuffer = _sources.Buffer ?? ArrayBuilder<int>.EmptyArray;
-            int storageSize = 1 + VertexUpperBound + _targets.Count + _sources.Count;
+            int[] orderedSourcesBuffer = _orderedSources.Buffer ?? ArrayBuilder<int>.EmptyArray;
+            int storageSize = 1 + VertexUpperBound + _targets.Count + _orderedSources.Count;
             int[] storage = new int[storageSize];
 
-            // Make EdgeBounds monotonic in case if we skipped some sources.
-            for (int v = 1; v < EdgeBounds.Length; ++v)
+            // Make EdgeUpperBounds monotonic in case if we skipped some sources.
+            for (int v = 1; v < EdgeUpperBounds.Length; ++v)
             {
-                if (EdgeBounds[v] < EdgeBounds[v - 1])
-                    EdgeBounds[v] = EdgeBounds[v - 1];
+                if (EdgeUpperBounds[v] < EdgeUpperBounds[v - 1])
+                    EdgeUpperBounds[v] = EdgeUpperBounds[v - 1];
             }
 
             storage[0] = VertexUpperBound;
-            Array.Copy(EdgeBounds, 0, storage, 1, VertexUpperBound);
+            Array.Copy(EdgeUpperBounds, 0, storage, 1, VertexUpperBound);
+            Array.Copy(targetsBuffer, 0, storage, 1 + VertexUpperBound, _targets.Count);
+            Array.Copy(orderedSourcesBuffer, 0, storage, 1 + VertexUpperBound + _targets.Count, _orderedSources.Count);
 
-            _sources = default;
+            _orderedSources = default;
             _targets = default;
-            EdgeBounds = null;
+            EdgeUpperBounds = null;
 
             return new SortedAdjacencyListIncidenceGraph(storage);
         }
