@@ -56,11 +56,13 @@
         public JaggedAdjacencyListIncidenceGraph MoveToIndexedAdjacencyListGraph()
         {
             Assert(_sources.Count == _targets.Count);
+            int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
+            int[] sourcesBuffer = _sources.Buffer ?? ArrayBuilder<int>.EmptyArray;
             int[] endpoints = _targets.Count > 0 ? new int[_targets.Count * 2] : ArrayBuilder<int>.EmptyArray;
             if (endpoints.Length > 0)
             {
-                Array.Copy(_targets.Buffer, 0, endpoints, 0, _targets.Count);
-                Array.Copy(_sources.Buffer, 0, endpoints, _targets.Count, _sources.Count);
+                Array.Copy(targetsBuffer, 0, endpoints, 0, _targets.Count);
+                Array.Copy(sourcesBuffer, 0, endpoints, _targets.Count, _sources.Count);
             }
 
             _sources = default;

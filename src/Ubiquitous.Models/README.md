@@ -53,14 +53,18 @@ digraph Sorted {
 |             Length | Content            |
 |-------------------:|:-------------------|
 |                  1 | _vertexUpperBound_ |
-| _vertexUpperBound_ | _edgeBounds_       |
+| _vertexUpperBound_ | _edgeUpperBounds_  |
 |        _edgeCount_ | _targets_          |
 |        _edgeCount_ | _orderedSources_   |
 
 _edgeCount_ = (_length_ − 1 − _vertexUpperBound_) / 2
 
 ```
-[4][↑↑↑↑][bbc][aac]
+vertedUpperBound      targets
+             ↓↓↓      ↓↓↓↓↓
+             [4][····][bbc][aac]
+                ↑↑↑↑↑↑     ↑↑↑↑↑
+       edgeUpperBounds     orderedSources
 ```
 
 ### EdgeList-IncidenceGraph
