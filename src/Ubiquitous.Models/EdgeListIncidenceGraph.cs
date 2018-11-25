@@ -11,6 +11,7 @@ namespace Ubiquitous
 
         internal EdgeListIncidenceGraph(int vertexUpperBound, SourceTargetPair<int>[] storage)
         {
+            Assert(vertexUpperBound >= 0, "vertexUpperBound >= 0");
             Assert(storage != null, "storage != null");
 
             _storage = storage;
@@ -21,12 +22,38 @@ namespace Ubiquitous
 
         public bool TryGetSource(SourceTargetPair<int> edge, out int source)
         {
-            throw new NotImplementedException();
+            if ((uint)edge.Source >= (uint)VertexUpperBound)
+            {
+                source = -1;
+                return false;
+            }
+
+            if ((uint)edge.Target >= (uint)VertexUpperBound)
+            {
+                source = -2;
+                return false;
+            }
+
+            source = edge.Source;
+            return true;
         }
 
         public bool TryGetTarget(SourceTargetPair<int> edge, out int target)
         {
-            throw new NotImplementedException();
+            if ((uint)edge.Source >= (uint)VertexUpperBound)
+            {
+                target = -1;
+                return false;
+            }
+
+            if ((uint)edge.Target >= (uint)VertexUpperBound)
+            {
+                target = -2;
+                return false;
+            }
+
+            target = edge.Target;
+            return true;
         }
 
         public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<SourceTargetPair<int>> edges)
