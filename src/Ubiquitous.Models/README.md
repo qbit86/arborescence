@@ -1,6 +1,6 @@
 # Ubiquitous Graphs
 
-## Data Layout
+## Storage Layout
 
 ### Examples
 
@@ -45,7 +45,11 @@ digraph Sorted {
 |            _edgeCount_ | _sources_          |
 
 ```
-[4][↓↑|↓↑|↓↑|↓↑][021][bcb][aca]
+vertedUpperBound    reorderedEdges     sources
+             ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
+             [4][_^|_^|_^|_^][021][bcb][aca]
+                ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
+                   edgeBounds     targets
 ```
 
 ### Sorted-AdjacencyList-IncidenceGraph
@@ -62,7 +66,7 @@ _edgeCount_ = (_length_ − 1 − _vertexUpperBound_) / 2
 ```
 vertedUpperBound      targets
              ↓↓↓      ↓↓↓↓↓
-             [4][····][bbc][aac]
+             [4][^^^^][bbc][aac]
                 ↑↑↑↑↑↑     ↑↑↑↑↑
        edgeUpperBounds     orderedSources
 ```
@@ -77,8 +81,12 @@ _vertexUpperBound_
 |        _edgeCount_ | _reorderedEdges_ |
 
 ```
-[↓↓↓↓][aca]
-[↑↑↑↑][bcb]
+edgeBounds
+    ↓↓↓↓↓↓
+    [____][aca]
+    [^^^^][bcb]
+          ↑↑↑↑↑
+          reorderedEdges
 ```
 
 ### Sorted-EdgeList-IncidenceGraph
@@ -89,7 +97,11 @@ _vertexUpperBound_
 | _vertexUpperBound_ | _edgeBounds_       |
 
 ```
-[4][↑↑↑↑]
+vertexUpperBound
+             ↓↓↓
+             [4][^^^^]
+                ↑↑↑↑↑↑
+                edgeBounds
 ```
 
 |        Length | Content          |
@@ -97,6 +109,8 @@ _vertexUpperBound_
 |   _edgeCount_ | _sortedEdges_    |
 
 ```
-[aac]
-[bbc]
+sortedEdges
+      ↓↓↓↓↓
+      [aac]
+      [bbc]
 ```
