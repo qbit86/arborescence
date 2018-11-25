@@ -3,13 +3,6 @@ namespace Ubiquitous
     using System;
     using static System.Diagnostics.Debug;
 
-    // Storage layout:
-    // vertexUpperBound      targets
-    //         ↓↓↓      ↓↓↓↓↓
-    //         [4][^^^^][bbc][aac]
-    //            ↑↑↑↑↑↑     ↑↑↑↑↑
-    //   edgeUpperBounds     orderedSources
-
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _orderedSources;
@@ -76,13 +69,20 @@ namespace Ubiquitous
             return true;
         }
 
+        // Storage layout:
+        // vertexUpperBound      targets
+        //         ↓↓↓      ↓↓↓↓↓
+        //         [4][^^^^][bbc][aac]
+        //            ↑↑↑↑↑↑     ↑↑↑↑↑
+        //   edgeUpperBounds     orderedSources
+
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_orderedSources.Count == _targets.Count);
+            var storage = new int[1 + VertexUpperBound + _targets.Count + _orderedSources.Count];
+
             int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
             int[] orderedSourcesBuffer = _orderedSources.Buffer ?? ArrayBuilder<int>.EmptyArray;
-            int storageSize = 1 + VertexUpperBound + _targets.Count + _orderedSources.Count;
-            var storage = new int[storageSize];
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.
             for (int v = 1; v < EdgeUpperBounds.Length; ++v)

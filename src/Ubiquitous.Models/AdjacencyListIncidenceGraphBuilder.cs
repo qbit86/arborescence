@@ -3,13 +3,6 @@ namespace Ubiquitous
     using System;
     using static System.Diagnostics.Debug;
 
-    // Storage layout:
-    // vertexUpperBound    reorderedEdges     sources
-    //              ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
-    //              [4][_^|_^|_^|_^][021][bcb][aca]
-    //                 ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-    //                    edgeBounds     targets
-
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _sources;
@@ -70,6 +63,13 @@ namespace Ubiquitous
             edge = newEdgeIndex;
             return true;
         }
+
+        // Storage layout:
+        // vertexUpperBound    reorderedEdges     sources
+        //              ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
+        //              [4][_^|_^|_^|_^][021][bcb][aca]
+        //                 ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
+        //                    edgeBounds     targets
 
         public AdjacencyListIncidenceGraph ToGraph()
         {
