@@ -31,20 +31,30 @@ namespace Ubiquitous
 
         private int[] EdgeBounds { get; set; }
 
-        public int Add(int source, int target)
+        public bool TryAdd(int source, int target, out int edge)
         {
             if (EdgeBounds == null)
-                return int.MinValue;
+            {
+                edge = int.MinValue;
+                return false;
+            }
 
             if ((uint)source >= (uint)VertexUpperBound)
-                return -1;
+            {
+                edge = -1;
+                return false;
+            }
 
             if ((uint)target >= (uint)VertexUpperBound)
-                return -2;
+            {
+                edge = -2;
+                return false;
+            }
 
             if (source < _lastSource)
             {
-                return sbyte.MinValue;
+                edge = sbyte.MinValue;
+                return false;
             }
 
             Assert(_sources.Count == _targets.Count);
@@ -55,7 +65,8 @@ namespace Ubiquitous
             EdgeBounds[source] = newEdgeIndex + 1;
             _lastSource = source;
 
-            return newEdgeIndex;
+            edge = newEdgeIndex;
+            return true;
         }
 
         public SortedAdjacencyListIncidenceGraph Build()
