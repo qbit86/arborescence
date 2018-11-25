@@ -81,12 +81,12 @@ _vertexUpperBound_
 |        _edgeCount_ | _reorderedEdges_ |
 
 ```
-edgeBounds
-    ↓↓↓↓↓↓
-    [____][aca]
-    [^^^^][bcb]
-          ↑↑↑↑↑
-          reorderedEdges
+reorderedEdges
+         ↓↓↓↓↓
+         [aca][____]
+         [bcb][^^^^]
+              ↑↑↑↑↑↑
+              edgeBounds
 ```
 
 ### Sorted-EdgeList-IncidenceGraph
