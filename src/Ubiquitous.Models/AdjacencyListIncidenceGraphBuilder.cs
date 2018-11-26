@@ -7,7 +7,7 @@ namespace Ubiquitous
     {
         private const int DefaultInitialOutDegree = 4;
 
-        private int _rawInitialOutDegree;
+        private int _initialOutDegree;
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
 
@@ -23,7 +23,7 @@ namespace Ubiquitous
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
-            _rawInitialOutDegree = DefaultInitialOutDegree;
+            _initialOutDegree = DefaultInitialOutDegree;
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
             VertexUpperBound = vertexUpperBound;
@@ -34,8 +34,8 @@ namespace Ubiquitous
 
         public int InitialOutDegree
         {
-            get => _rawInitialOutDegree <= 0 ? DefaultInitialOutDegree : _rawInitialOutDegree;
-            set => _rawInitialOutDegree = value;
+            get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
+            set => _initialOutDegree = value;
         }
 
         private ArrayBuilder<int>[] OutEdges { get; set; }
@@ -109,7 +109,7 @@ namespace Ubiquitous
                 _sources.Count);
             _sources.AsSpan().CopyTo(destSources);
 
-            _rawInitialOutDegree = DefaultInitialOutDegree;
+            _initialOutDegree = DefaultInitialOutDegree;
             _sources = default;
             _targets = default;
             OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;

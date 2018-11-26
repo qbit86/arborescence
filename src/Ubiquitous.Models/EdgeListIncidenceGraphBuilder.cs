@@ -9,13 +9,13 @@ namespace Ubiquitous
         private const int DefaultInitialOutDegree = 4;
         private const int MaxCoreClrArrayLength = 0x7fefffff;
 
-        private int _rawInitialOutDegree;
+        private int _initialOutDegree;
         private ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>> _outEdges;
         private int _edgeCount;
 
         public EdgeListIncidenceGraphBuilder(int vertexUpperBound)
         {
-            _rawInitialOutDegree = DefaultInitialOutDegree;
+            _initialOutDegree = DefaultInitialOutDegree;
             ArrayBuilder<SourceTargetPair<int>>[] outEdges =
                 ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(vertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, vertexUpperBound);
@@ -26,8 +26,8 @@ namespace Ubiquitous
 
         public int InitialOutDegree
         {
-            get => _rawInitialOutDegree <= 0 ? DefaultInitialOutDegree : _rawInitialOutDegree;
-            set => _rawInitialOutDegree = value;
+            get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
+            set => _initialOutDegree = value;
         }
 
         public bool TryAdd(int source, int target, out SourceTargetPair<int> edge)
@@ -87,7 +87,7 @@ namespace Ubiquitous
 
             ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
 
-            _rawInitialOutDegree = DefaultInitialOutDegree;
+            _initialOutDegree = DefaultInitialOutDegree;
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
             _edgeCount = 0;
 

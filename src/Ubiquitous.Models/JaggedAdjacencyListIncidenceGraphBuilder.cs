@@ -5,6 +5,9 @@
 
     public struct JaggedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
     {
+        private const int DefaultInitialOutDegree = 4;
+
+        private int _initialOutDegree;
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
 
@@ -20,12 +23,19 @@
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
+            _initialOutDegree = DefaultInitialOutDegree;
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
             OutEdges = new ArrayBuilder<int>[vertexUpperBound];
         }
 
         public int VertexUpperBound => OutEdges?.Length ?? 0;
+
+        public int InitialOutDegree
+        {
+            get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
+            set => _initialOutDegree = value;
+        }
 
         private ArrayBuilder<int>[] OutEdges { get; set; }
 
@@ -55,7 +65,7 @@
             _targets.Add(target);
 
             if (OutEdges[source].Buffer == null)
-                OutEdges[source] = new ArrayBuilder<int>(1);
+                OutEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
 
             OutEdges[source].Add(newEdgeIndex);
 
@@ -77,6 +87,7 @@
 
             ArrayBuilder<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
 
+            _initialOutDegree = DefaultInitialOutDegree;
             _sources = default;
             _targets = default;
             OutEdges = null;
