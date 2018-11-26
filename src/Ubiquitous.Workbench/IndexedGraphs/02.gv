@@ -1,5 +1,5 @@
 digraph "Isolated first vertex" {
-  node [shape=circle, fontname="Times-Italic"]
+  node [shape=circle fontname="Times-Italic"]
   b -> c [xlabel=0]
   d -> d [xlabel=1]
   b -> c [xlabel=2]
