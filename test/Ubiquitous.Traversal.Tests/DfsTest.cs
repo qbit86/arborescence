@@ -8,7 +8,7 @@
     using Xunit;
     using Xunit.Abstractions;
     using ColorMap = ArrayPrefix<Traversal.Color>;
-    using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
+    using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 

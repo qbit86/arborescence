@@ -7,7 +7,7 @@ namespace Ubiquitous
     using Models;
     using Traversal.Advanced;
     using ColorMap = ArrayPrefix<Traversal.Color>;
-    using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
+    using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 

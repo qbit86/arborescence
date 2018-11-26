@@ -9,7 +9,7 @@ namespace Ubiquitous
     using static System.Diagnostics.Debug;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
-    using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
+    using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
