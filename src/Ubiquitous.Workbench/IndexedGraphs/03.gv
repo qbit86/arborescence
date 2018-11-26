@@ -1,5 +1,5 @@
 digraph "First test" {
-  node [shape=circle]
+  node [shape=circle, fontname="Times-Italic"]
   j -> b [xlabel=0]
   d -> g [xlabel=1]
   i -> f [xlabel=2]
