@@ -8,7 +8,7 @@
 
 ```plantuml
 digraph Unordered {
-  node [shape=circle, fontname="Times-Italic"]
+  node [shape=circle fontname="Times-Italic"]
   a -> b [xlabel=0]
   c -> c [xlabel=1]
   a -> b [xlabel=2]
@@ -23,7 +23,7 @@ digraph Unordered {
 
 ```plantuml
 digraph Sorted {
-  node [shape=circle, fontname="Times-Italic"]
+  node [shape=circle fontname="Times-Italic"]
   a -> b [xlabel=0]
   a -> b [xlabel=1]
   c -> c [xlabel=2]
