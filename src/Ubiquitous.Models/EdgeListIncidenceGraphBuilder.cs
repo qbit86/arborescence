@@ -7,6 +7,7 @@ namespace Ubiquitous
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, SourceTargetPair<int>>
     {
         private const int DefaultInitialOutDegree = 4;
+        private const int MaxCoreClrArrayLength = 0x7fefffff;
 
         private int _rawInitialOutDegree;
         private ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>> _outEdges;
@@ -101,9 +102,26 @@ namespace Ubiquitous
             {
                 Array.Clear(_outEdges.Array, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
                 _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(_outEdges.Array, newVertexUpperBound);
+                return;
             }
 
-            throw new NotImplementedException();
+            int nextCapacity = _outEdges.Count == 0 ? 4 : 2 * _outEdges.Count;
+
+            if ((uint)nextCapacity > MaxCoreClrArrayLength)
+                nextCapacity = Math.Max(_outEdges.Count + 1, MaxCoreClrArrayLength);
+
+            nextCapacity = Math.Max(nextCapacity, newVertexUpperBound);
+            ArrayBuilder<SourceTargetPair<int>>[] next =
+                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(nextCapacity);
+
+            Array.Clear(next, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
+            if (_outEdges.Count > 0)
+            {
+                Array.Copy(_outEdges.Array, 0, next, 0, _outEdges.Count);
+                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
+            }
+
+            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(next, newVertexUpperBound);
         }
     }
 }
