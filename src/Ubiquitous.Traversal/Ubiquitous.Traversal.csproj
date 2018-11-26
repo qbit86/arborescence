@@ -15,7 +15,7 @@
     <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
-    <RootNamespace>Ubiquitous</RootNamespace>
+    <RootNamespace>Ubiquitous.Traversal</RootNamespace>
     <LangVersion>7.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
