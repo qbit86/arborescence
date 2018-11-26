@@ -5,6 +5,9 @@ namespace Ubiquitous
 
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
     {
+        private const int DefaultInitialOutDegree = 4;
+
+        private int _rawInitialOutDegree;
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
 
@@ -20,6 +23,7 @@ namespace Ubiquitous
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
+            _rawInitialOutDegree = DefaultInitialOutDegree;
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
             VertexUpperBound = vertexUpperBound;
@@ -27,6 +31,12 @@ namespace Ubiquitous
         }
 
         public int VertexUpperBound { get; set; }
+
+        public int InitialOutDegree
+        {
+            get => _rawInitialOutDegree <= 0 ? DefaultInitialOutDegree : _rawInitialOutDegree;
+            set => _rawInitialOutDegree = value;
+        }
 
         private ArrayBuilder<int>[] OutEdges { get; set; }
 
@@ -56,7 +66,7 @@ namespace Ubiquitous
             _targets.Add(target);
 
             if (OutEdges[source].Buffer == null)
-                OutEdges[source] = new ArrayBuilder<int>(1);
+                OutEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
 
             OutEdges[source].Add(newEdgeIndex);
 
@@ -99,9 +109,10 @@ namespace Ubiquitous
                 _sources.Count);
             _sources.AsSpan().CopyTo(destSources);
 
+            _rawInitialOutDegree = DefaultInitialOutDegree;
             _sources = default;
             _targets = default;
-            OutEdges = null;
+            OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
             VertexUpperBound = 0;
 
             return new AdjacencyListIncidenceGraph(storage);
