@@ -4,13 +4,14 @@ namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
+    using Models;
     using Traversal.Advanced;
     using static System.Diagnostics.Debug;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedIncidenceGraphPolicy<JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
+        IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
     internal static partial class Program
     {

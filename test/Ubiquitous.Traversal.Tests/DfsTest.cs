@@ -3,13 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Models;
     using Traversal.Advanced;
     using Xunit;
     using Xunit.Abstractions;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedIncidenceGraphPolicy<JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
+        IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
     internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
     {

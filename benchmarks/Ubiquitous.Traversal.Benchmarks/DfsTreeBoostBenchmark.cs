@@ -4,11 +4,12 @@ namespace Ubiquitous
 {
     using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
+    using Models;
     using Traversal.Advanced;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        IndexedIncidenceGraphPolicy<JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
+        IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
