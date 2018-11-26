@@ -2,6 +2,7 @@ namespace Ubiquitous
 {
     using System;
     using System.Buffers;
+    using static System.Diagnostics.Debug;
 
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, SourceTargetPair<int>>
     {
@@ -24,15 +25,36 @@ namespace Ubiquitous
 
         public int InitialOutDegree
         {
-            get => Math.Max(DefaultInitialOutDegree, _rawInitialOutDegree);
+            get => _rawInitialOutDegree <= 0 ? DefaultInitialOutDegree : _rawInitialOutDegree;
             set => _rawInitialOutDegree = value;
         }
 
         public bool TryAdd(int source, int target, out SourceTargetPair<int> edge)
         {
+            if (source < 0)
+            {
+                edge = SourceTargetPair.Create(-1, -1);
+                return false;
+            }
+
+            if (target < 0)
+            {
+                edge = SourceTargetPair.Create(-2, -2);
+                return false;
+            }
+
+            int max = Math.Max(source, target);
+            if (max >= VertexUpperBound)
+                EnsureCapacity(max + 1);
+
+            if (_outEdges[source].Buffer == null)
+                _outEdges[source] = new ArrayBuilder<SourceTargetPair<int>>(InitialOutDegree);
+
+            edge = SourceTargetPair.Create(source, target);
+            _outEdges[source].Add(edge);
             ++_edgeCount;
 
-            throw new NotImplementedException();
+            return true;
         }
 
         // reorderedEdges
@@ -69,6 +91,19 @@ namespace Ubiquitous
             _edgeCount = 0;
 
             return new EdgeListIncidenceGraph(VertexUpperBound, storage);
+        }
+
+        private void EnsureCapacity(int newVertexUpperBound)
+        {
+            Assert(newVertexUpperBound > _outEdges.Count);
+
+            if (newVertexUpperBound <= _outEdges.Array.Length)
+            {
+                Array.Clear(_outEdges.Array, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
+                _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(_outEdges.Array, newVertexUpperBound);
+            }
+
+            throw new NotImplementedException();
         }
     }
 }
