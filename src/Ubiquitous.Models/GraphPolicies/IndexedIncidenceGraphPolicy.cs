@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Ubiquitous.Models
 {
     public readonly struct IndexedIncidenceGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, int>,

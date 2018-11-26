@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Ubiquitous.Models
 {
     public readonly struct Int32AdditiveMonoidPolicy : IMonoidPolicy<int>
     {

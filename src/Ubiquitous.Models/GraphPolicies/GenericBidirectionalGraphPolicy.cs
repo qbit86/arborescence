@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Ubiquitous.Models
 {
     public readonly struct GenericBidirectionalGraphPolicy<TGraph, TVertex, TEdge, TEdges> :
         IGetSourcePolicy<TGraph, TVertex, TEdge>,

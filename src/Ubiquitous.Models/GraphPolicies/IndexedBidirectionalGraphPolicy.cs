@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Ubiquitous.Models
 {
     public struct IndexedBidirectionalGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, int>,

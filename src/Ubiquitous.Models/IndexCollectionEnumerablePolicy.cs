@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Ubiquitous.Models
 {
     public readonly struct IndexCollectionEnumerablePolicy :
         IEnumerablePolicy<IndexCollection, IndexCollectionEnumerator>

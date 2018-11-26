@@ -1,4 +1,4 @@
-namespace Ubiquitous
+﻿namespace Ubiquitous.Models
 {
     using System;
     using System.Buffers;
