@@ -72,7 +72,7 @@
                 if (i < 0 || i > 26)
                     return i.ToString(CultureInfo.InvariantCulture);
 
-                var c = (char)(i + 'a');
+                char c = (char)(i + 'a');
 
                 return c.ToString(CultureInfo.InvariantCulture);
             }

@@ -4,8 +4,10 @@ namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Models;
     using Traversal.Advanced;
+    using Workbench;
     using static System.Diagnostics.Debug;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
@@ -17,22 +19,20 @@ namespace Ubiquitous
     {
         private static void Main()
         {
-            const int vertexUpperBound = 10;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexUpperBound, 1.5));
+            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(10);
 
-            Console.WriteLine($"{nameof(vertexUpperBound)}: {vertexUpperBound}, {nameof(edgeCount)}: {edgeCount}");
-
-            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexUpperBound);
-            var prng = new Random(1729);
-
-            for (int e = 0; e < edgeCount; ++e)
+            using (TextReader textReader = IndexedGraphs.GetTextReader("03"))
             {
-                int source = prng.Next(vertexUpperBound);
-                int target = prng.Next(vertexUpperBound);
-                builder.TryAdd(source, target, out _);
+                var parser = new IndexedEdgeListParser();
+                IEnumerable<SourceTargetPair<int>> edges = parser.ParseEdges(textReader);
+                foreach (SourceTargetPair<int> edge in edges)
+                    builder.TryAdd(edge.Source, edge.Target, out _);
             }
 
             JaggedAdjacencyListIncidenceGraph graph = builder.ToGraph();
+
+            Console.Write($"{nameof(graph.VertexUpperBound)}: {graph.VertexUpperBound}, ");
+            Console.WriteLine($"{nameof(graph.EdgeCount)}: {graph.EdgeCount}");
 
             var vertices = new IndexCollection(graph.VertexUpperBound);
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexUpperBound);
