@@ -49,7 +49,7 @@ namespace Ubiquitous
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS Forest", Console.Out);
+                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS forest", Console.Out);
             }
 
             {
@@ -64,7 +64,7 @@ namespace Ubiquitous
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS Forest", Console.Out);
+                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
             }
         }
 
