@@ -4,6 +4,7 @@ namespace Ubiquitous.Workbench
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using static System.Diagnostics.Debug;
 
     public readonly struct IndexedEdgeListParser
     {
@@ -33,14 +34,8 @@ namespace Ubiquitous.Workbench
                     string leftToken = leftTokens[leftTokens.Length - 1];
                     if (!int.TryParse(leftToken, NumberStyles.None, CultureInfo.InvariantCulture, out int source))
                     {
-                        if (leftToken.Length != 1)
+                        if (!TryParseChar(leftToken, out source))
                             continue;
-
-                        char sourceChar = leftToken[0];
-                        if (sourceChar < 'a' || sourceChar > 'z')
-                            continue;
-
-                        source = sourceChar - 'a';
                     }
 
                     string[] rightTokens = parts[1].Split(default(char[]), 2, StringSplitOptions.RemoveEmptyEntries);
@@ -50,17 +45,32 @@ namespace Ubiquitous.Workbench
                     string rightToken = rightTokens[0];
                     if (!int.TryParse(rightToken, NumberStyles.None, CultureInfo.InvariantCulture, out int target))
                     {
-                        if (rightToken.Length != 1)
+                        if (!TryParseChar(rightToken, out target))
                             continue;
-
-                        char targetChar = rightToken[0];
-                        if (targetChar < 'a' || targetChar > 'z')
-                            continue;
-
-                        target = targetChar - 'a';
                     }
 
                     yield return SourceTargetPair.Create(source, target);
+                }
+
+                bool TryParseChar(string s, out int result)
+                {
+                    Assert(s != null);
+
+                    if (s.Length != 1)
+                    {
+                        result = default;
+                        return false;
+                    }
+
+                    char c = s[0];
+                    if (c < 'a' || c > 'z')
+                    {
+                        result = default;
+                        return false;
+                    }
+
+                    result = c - 'a';
+                    return true;
                 }
             }
         }
