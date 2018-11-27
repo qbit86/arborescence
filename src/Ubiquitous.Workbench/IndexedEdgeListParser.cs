@@ -16,6 +16,8 @@ namespace Ubiquitous.Workbench
             if (textReader == null)
                 throw new ArgumentNullException(nameof(textReader));
 
+            return ParseEdgesCore();
+
             IEnumerable<SourceTargetPair<int>> ParseEdgesCore()
             {
                 for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
@@ -61,8 +63,6 @@ namespace Ubiquitous.Workbench
                     yield return SourceTargetPair.Create(source, target);
                 }
             }
-
-            return ParseEdgesCore();
         }
     }
 }
