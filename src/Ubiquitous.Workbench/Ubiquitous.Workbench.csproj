@@ -24,4 +24,7 @@
   <ItemGroup>
     <EmbeddedResource Include="IndexedGraphs\*.gv" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
+  </ItemGroup>
 </Project>
