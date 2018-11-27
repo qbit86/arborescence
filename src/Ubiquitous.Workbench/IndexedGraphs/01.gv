@@ -1,8 +1,8 @@
 digraph "Isolated last vertex" {
   node [shape=circle fontname="Times-Italic"]
-  a -> b [xlabel=0]
-  c -> c [xlabel=1]
-  a -> b [xlabel=2]
+  a -> b [label=0]
+  c -> c [label=1]
+  a -> b [label=2]
   {
     rank=same
     b d
