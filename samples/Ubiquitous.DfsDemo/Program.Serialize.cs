@@ -20,15 +20,6 @@
             try
             {
                 textWriter.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
-                if (!vertexKinds.IsEmpty)
-                {
-                    for (int v = 0; v < graph.VertexUpperBound; ++v)
-                    {
-                        DfsStepKind vertexKind = vertexKinds[v];
-                        if (vertexKind == DfsStepKind.StartVertex)
-                            textWriter.WriteLine($"  {IndexToChar(v)} [style=filled]");
-                    }
-                }
 
                 if (!edgeKinds.IsEmpty)
                 {
@@ -44,7 +35,6 @@
 
                         DfsStepKind edgeKind = edgeKinds[e];
 
-                        // http://www.graphviz.org/Documentation/dotguide.pdf
                         switch (edgeKind)
                         {
                             case DfsStepKind.TreeEdge:
@@ -59,6 +49,16 @@
                         }
 
                         textWriter.WriteLine($" [label={e} style=dotted]");
+                    }
+                }
+
+                if (!vertexKinds.IsEmpty)
+                {
+                    for (int v = 0; v < graph.VertexUpperBound; ++v)
+                    {
+                        DfsStepKind vertexKind = vertexKinds[v];
+                        if (vertexKind == DfsStepKind.StartVertex)
+                            textWriter.WriteLine($"  {IndexToChar(v)} [style=filled]");
                     }
                 }
             }

@@ -1,7 +1,5 @@
 digraph "Boost DFS forest" {
   node [shape=circle fontname="Times-Italic"]
-  a [style=filled]
-  e [style=filled]
   j -> b [label=0 style=bold]
   d -> g [label=1 style=bold]
   i -> f [label=2 style=dotted]
@@ -34,4 +32,6 @@ digraph "Boost DFS forest" {
   e -> c [label=29 style=dashed]
   a -> g [label=30 style=dashed]
   h -> d [label=31 style=dotted]
+  a [style=filled]
+  e [style=filled]
 }
