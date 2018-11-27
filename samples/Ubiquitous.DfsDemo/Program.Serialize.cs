@@ -15,17 +15,17 @@
             Assert(graphName != null);
             Assert(textWriter != null);
 
-            textWriter.WriteLine($"digraph \"{graphName}\"{Environment.NewLine}{{");
+            textWriter.WriteLine($"digraph \"{graphName}\" {{");
             try
             {
-                textWriter.WriteLine("    node [shape=circle]");
+                textWriter.WriteLine("  node [shape=circle]");
                 if (!vertexKinds.IsEmpty)
                 {
                     for (int v = 0; v < graph.VertexUpperBound; ++v)
                     {
                         DfsStepKind vertexKind = vertexKinds[v];
                         if (vertexKind == DfsStepKind.StartVertex)
-                            textWriter.WriteLine($"    {v} [style=filled]");
+                            textWriter.WriteLine($"  {v} [style=filled]");
                     }
                 }
 
@@ -39,7 +39,7 @@
                         if (!graph.TryGetTarget(e, out int target))
                             continue;
 
-                        textWriter.Write($"    {source} -> {target}");
+                        textWriter.Write($"  {source} -> {target}");
 
                         DfsStepKind edgeKind = edgeKinds[e];
 
@@ -47,17 +47,17 @@
                         switch (edgeKind)
                         {
                             case DfsStepKind.TreeEdge:
-                                textWriter.WriteLine(" [style=bold]");
+                                textWriter.WriteLine($" [label={e} style=bold]");
                                 continue;
                             case DfsStepKind.BackEdge:
-                                textWriter.WriteLine(" [style=dotted]");
+                                textWriter.WriteLine($" [label={e} style=dotted]");
                                 continue;
                             case DfsStepKind.ForwardOrCrossEdge:
-                                textWriter.WriteLine(" [style=dashed]");
+                                textWriter.WriteLine($" [label={e} style=dashed]");
                                 continue;
                         }
 
-                        textWriter.WriteLine(" [style=dotted]");
+                        textWriter.WriteLine($" [label={e} style=dotted]");
                     }
                 }
             }
