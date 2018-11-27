@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Traversal.Specia
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Buffers", "src\Ubiquitous.Buffers\Ubiquitous.Buffers.shproj", "{1FE04D46-B1CA-4801-A399-D3D351BEA8DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Workbench", "src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj", "{4383A396-67D9-4AC8-B1EF-1603F9D181A0}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
@@ -96,6 +98,10 @@ Global
 		{48C4555E-7460-4566-B337-B4B4745F2CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48C4555E-7460-4566-B337-B4B4745F2CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48C4555E-7460-4566-B337-B4B4745F2CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4383A396-67D9-4AC8-B1EF-1603F9D181A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4383A396-67D9-4AC8-B1EF-1603F9D181A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4383A396-67D9-4AC8-B1EF-1603F9D181A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4383A396-67D9-4AC8-B1EF-1603F9D181A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{4839FEAE-EA62-46B1-B739-1E1EC9BC24CA} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{48C4555E-7460-4566-B337-B4B4745F2CCC} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{1FE04D46-B1CA-4801-A399-D3D351BEA8DD} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+		{4383A396-67D9-4AC8-B1EF-1603F9D181A0} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

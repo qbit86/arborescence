@@ -1,0 +1,10 @@
+digraph "Isolated first vertex" {
+  node [shape=circle fontname="Times-Italic"]
+  b -> c [label=0]
+  d -> d [label=1]
+  b -> c [label=2]
+  {
+    rank=same
+    c a
+  }
+}
