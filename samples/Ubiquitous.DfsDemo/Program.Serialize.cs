@@ -1,6 +1,7 @@
 ﻿namespace Ubiquitous
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using Models;
     using Traversal.Advanced;
@@ -18,14 +19,14 @@
             textWriter.WriteLine($"digraph \"{graphName}\" {{");
             try
             {
-                textWriter.WriteLine("  node [shape=circle]");
+                textWriter.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
                 if (!vertexKinds.IsEmpty)
                 {
                     for (int v = 0; v < graph.VertexUpperBound; ++v)
                     {
                         DfsStepKind vertexKind = vertexKinds[v];
                         if (vertexKind == DfsStepKind.StartVertex)
-                            textWriter.WriteLine($"  {v} [style=filled]");
+                            textWriter.WriteLine($"  {IndexToChar(v)} [style=filled]");
                     }
                 }
 
@@ -39,7 +40,7 @@
                         if (!graph.TryGetTarget(e, out int target))
                             continue;
 
-                        textWriter.Write($"  {source} -> {target}");
+                        textWriter.Write($"  {IndexToChar(source)} -> {IndexToChar(target)}");
 
                         DfsStepKind edgeKind = edgeKinds[e];
 
@@ -64,6 +65,16 @@
             finally
             {
                 textWriter.WriteLine("}");
+            }
+
+            string IndexToChar(int i)
+            {
+                if (i < 0 || i > 26)
+                    return i.ToString(CultureInfo.InvariantCulture);
+
+                var c = (char)(i + 'a');
+
+                return c.ToString(CultureInfo.InvariantCulture);
             }
         }
     }
