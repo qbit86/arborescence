@@ -37,7 +37,7 @@ namespace Ubiquitous.Workbench
                 string leftToken = leftTokens[leftTokens.Length - 1];
                 if (!int.TryParse(leftToken, NumberStyles.None, CultureInfo.InvariantCulture, out int source))
                 {
-                    if (!TryParseChar(leftToken, out source))
+                    if (!TryParseChar(leftToken.AsSpan(), out source))
                         continue;
                 }
 
@@ -48,7 +48,7 @@ namespace Ubiquitous.Workbench
                 string rightToken = rightTokens[0];
                 if (!int.TryParse(rightToken, NumberStyles.None, CultureInfo.InvariantCulture, out int target))
                 {
-                    if (!TryParseChar(rightToken, out target))
+                    if (!TryParseChar(rightToken.AsSpan(), out target))
                         continue;
                 }
 
@@ -56,10 +56,8 @@ namespace Ubiquitous.Workbench
             }
         }
 
-        private static bool TryParseChar(string s, out int result)
+        private static bool TryParseChar(ReadOnlySpan<char> s, out int result)
         {
-            Assert(s != null);
-
             if (s.Length != 1)
             {
                 result = default;
