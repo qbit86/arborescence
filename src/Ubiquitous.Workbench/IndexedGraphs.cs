@@ -14,8 +14,8 @@ namespace Ubiquitous.Workbench
             if (shortName == null)
                 throw new ArgumentNullException(nameof(shortName));
 
-            Stream stream = Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream(typeof(IndexedGraphs), $"IndexedGraphs.{shortName}.gv");
+            Stream stream = typeof(IndexedGraphs).GetTypeInfo().Assembly
+                .GetManifestResourceStream($"Ubiquitous.Workbench.IndexedGraphs.{shortName}.gv");
             if (stream == null)
                 return TextReader.Null;
 
