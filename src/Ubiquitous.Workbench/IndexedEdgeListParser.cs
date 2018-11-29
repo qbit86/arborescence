@@ -17,62 +17,64 @@ namespace Ubiquitous.Workbench
             if (textReader == null)
                 throw new ArgumentNullException(nameof(textReader));
 
-            return ParseEdgesCore();
+            return ParseEdgesCore(textReader);
+        }
 
-            IEnumerable<SourceTargetPair<int>> ParseEdgesCore()
+        private static IEnumerable<SourceTargetPair<int>> ParseEdgesCore(TextReader textReader)
+        {
+            Assert(textReader != null);
+
+            for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
             {
-                for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
+                string[] parts = line.Split(s_arrowSeparator, 2, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length < 2)
+                    continue;
+
+                string[] leftTokens = parts[0].Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
+                if (leftTokens.Length < 1)
+                    continue;
+
+                string leftToken = leftTokens[leftTokens.Length - 1];
+                if (!int.TryParse(leftToken, NumberStyles.None, CultureInfo.InvariantCulture, out int source))
                 {
-                    string[] parts = line.Split(s_arrowSeparator, 2, StringSplitOptions.RemoveEmptyEntries);
-                    if (parts.Length < 2)
+                    if (!TryParseChar(leftToken, out source))
                         continue;
-
-                    string[] leftTokens = parts[0].Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
-                    if (leftTokens.Length < 1)
-                        continue;
-
-                    string leftToken = leftTokens[leftTokens.Length - 1];
-                    if (!int.TryParse(leftToken, NumberStyles.None, CultureInfo.InvariantCulture, out int source))
-                    {
-                        if (!TryParseChar(leftToken, out source))
-                            continue;
-                    }
-
-                    string[] rightTokens = parts[1].Split(default(char[]), 2, StringSplitOptions.RemoveEmptyEntries);
-                    if (rightTokens.Length < 1)
-                        continue;
-
-                    string rightToken = rightTokens[0];
-                    if (!int.TryParse(rightToken, NumberStyles.None, CultureInfo.InvariantCulture, out int target))
-                    {
-                        if (!TryParseChar(rightToken, out target))
-                            continue;
-                    }
-
-                    yield return SourceTargetPair.Create(source, target);
                 }
 
-                bool TryParseChar(string s, out int result)
+                string[] rightTokens = parts[1].Split(default(char[]), 2, StringSplitOptions.RemoveEmptyEntries);
+                if (rightTokens.Length < 1)
+                    continue;
+
+                string rightToken = rightTokens[0];
+                if (!int.TryParse(rightToken, NumberStyles.None, CultureInfo.InvariantCulture, out int target))
                 {
-                    Assert(s != null);
-
-                    if (s.Length != 1)
-                    {
-                        result = default;
-                        return false;
-                    }
-
-                    char c = s[0];
-                    if (c < 'a' || c > 'z')
-                    {
-                        result = default;
-                        return false;
-                    }
-
-                    result = c - 'a';
-                    return true;
+                    if (!TryParseChar(rightToken, out target))
+                        continue;
                 }
+
+                yield return SourceTargetPair.Create(source, target);
             }
+        }
+
+        private static bool TryParseChar(string s, out int result)
+        {
+            Assert(s != null);
+
+            if (s.Length != 1)
+            {
+                result = default;
+                return false;
+            }
+
+            char c = s[0];
+            if (c < 'a' || c > 'z')
+            {
+                result = default;
+                return false;
+            }
+
+            result = c - 'a';
+            return true;
         }
     }
 }
