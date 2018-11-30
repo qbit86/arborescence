@@ -82,7 +82,6 @@ dotnet_style_qualification_for_method = false:suggestion
 dotnet_style_qualification_for_property = false:suggestion
 
 # https://github.com/dotnet/corefx/blob/master/.editorconfig
-# https://github.com/dotnet/coreclr/blob/master/.editorconfig
 
 dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = warning
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = constant_fields
