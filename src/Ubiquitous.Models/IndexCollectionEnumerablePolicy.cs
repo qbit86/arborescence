@@ -5,7 +5,7 @@
     {
         public IndexCollectionEnumerator GetEnumerator(IndexCollection collection)
         {
-            return collection.GetIterator();
+            return collection.GetValueEnumerator();
         }
     }
 }

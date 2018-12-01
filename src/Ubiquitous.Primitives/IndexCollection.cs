@@ -19,7 +19,7 @@ namespace Ubiquitous
             Count = count;
         }
 
-        public IndexCollectionEnumerator GetIterator()
+        public IndexCollectionEnumerator GetValueEnumerator()
         {
             return new IndexCollectionEnumerator(Count);
         }
