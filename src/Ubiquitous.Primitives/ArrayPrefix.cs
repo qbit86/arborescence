@@ -12,8 +12,6 @@ namespace Ubiquitous
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 
-        // ReSharper disable once InconsistentNaming
-        private const int _offset = 0;
         private readonly T[] _array;
         private readonly int _count;
 
@@ -52,14 +50,14 @@ namespace Ubiquitous
                 if ((uint)index >= (uint)_count)
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-                return _array[_offset + index];
+                return _array[index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-                _array[_offset + index] = value;
+                _array[index] = value;
             }
         }
 
@@ -91,7 +89,7 @@ namespace Ubiquitous
         public void CopyTo(T[] destination, int destinationIndex)
         {
             ThrowInvalidOperationIfDefault();
-            System.Array.Copy(_array, _offset, destination, destinationIndex, _count);
+            System.Array.Copy(_array, 0, destination, destinationIndex, _count);
         }
 
         public void CopyTo(ArrayPrefix<T> destination)
@@ -102,7 +100,7 @@ namespace Ubiquitous
             if (_count > destination._count)
                 ThrowHelper.ThrowArgumentException_DestinationTooShort();
 
-            System.Array.Copy(_array, _offset, destination._array, _offset, _count);
+            System.Array.Copy(_array, 0, destination._array, 0, _count);
         }
 
         public override bool Equals(object obj)
@@ -122,7 +120,7 @@ namespace Ubiquitous
             if ((uint)index > (uint)_count)
                 ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-            return new ArraySegment<T>(_array, _offset + index, _count - index);
+            return new ArraySegment<T>(_array, index, _count - index);
         }
 
         public ArraySegment<T> Slice(int index, int count)
@@ -132,7 +130,7 @@ namespace Ubiquitous
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
                 ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-            return new ArraySegment<T>(_array, _offset + index, count);
+            return new ArraySegment<T>(_array, index, count);
         }
 
         public T[] ToArray()
@@ -143,7 +141,7 @@ namespace Ubiquitous
                 return Empty._array;
 
             var array = new T[_count];
-            System.Array.Copy(_array, _offset, array, 0, _count);
+            System.Array.Copy(_array, 0, array, 0, _count);
             return array;
         }
 
@@ -172,7 +170,7 @@ namespace Ubiquitous
                 if (index < 0 || index >= _count)
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-                return _array[_offset + index];
+                return _array[index];
             }
 
             set
@@ -181,7 +179,7 @@ namespace Ubiquitous
                 if (index < 0 || index >= _count)
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-                _array[_offset + index] = value;
+                _array[index] = value;
             }
         }
 
@@ -189,11 +187,11 @@ namespace Ubiquitous
         {
             ThrowInvalidOperationIfDefault();
 
-            int index = System.Array.IndexOf(_array, item, _offset, _count);
+            int index = System.Array.IndexOf(_array, item, 0, _count);
 
-            Debug.Assert(index == -1 || index >= _offset && index < _offset + _count);
+            Debug.Assert(index == -1 || index >= 0 && index < _count);
 
-            return index >= 0 ? index - _offset : -1;
+            return index >= 0 ? index : -1;
         }
 
         void IList<T>.Insert(int index, T item)
@@ -218,7 +216,7 @@ namespace Ubiquitous
                 if (index < 0 || index >= _count)
                     ThrowHelper.ThrowArgumentOutOfRange_IndexException();
 
-                return _array[_offset + index];
+                return _array[index];
             }
         }
 
@@ -242,9 +240,9 @@ namespace Ubiquitous
         {
             ThrowInvalidOperationIfDefault();
 
-            int index = System.Array.IndexOf(_array, item, _offset, _count);
+            int index = System.Array.IndexOf(_array, item, 0, _count);
 
-            Debug.Assert(index == -1 || index >= _offset && index < _offset + _count);
+            Debug.Assert(index == -1 || index >= 0 && index < _count);
 
             return index >= 0;
         }
