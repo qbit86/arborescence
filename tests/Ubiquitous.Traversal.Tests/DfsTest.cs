@@ -36,7 +36,7 @@
         }
     }
 
-    public class DfsTest
+    public sealed class DfsTest
     {
         private const int VertexCount = 100;
 
