@@ -105,12 +105,7 @@
                 return;
             }
 
-            int nextCapacity = _outEdges.Count == 0 ? 4 : 2 * _outEdges.Count;
-
-            if ((uint)nextCapacity > MaxCoreClrArrayLength)
-                nextCapacity = Math.Max(_outEdges.Count + 1, MaxCoreClrArrayLength);
-
-            nextCapacity = Math.Max(nextCapacity, newVertexUpperBound);
+            int nextCapacity = Math.Min(newVertexUpperBound, MaxCoreClrArrayLength);
             ArrayBuilder<SourceTargetPair<int>>[] next =
                 ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(nextCapacity);
 
