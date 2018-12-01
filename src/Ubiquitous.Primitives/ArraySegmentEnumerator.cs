@@ -25,9 +25,16 @@ namespace Ubiquitous
             _current = offset - 1;
         }
 
-        public ArraySegmentEnumerator<T> GetEnumerator()
+        public T Current
         {
-            return this;
+            get
+            {
+                if (_current < _start)
+                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                if (_current >= _end)
+                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                return _array[_current];
+            }
         }
 
         public bool MoveNext()
@@ -41,16 +48,9 @@ namespace Ubiquitous
             return false;
         }
 
-        public T Current
+        public ArraySegmentEnumerator<T> GetEnumerator()
         {
-            get
-            {
-                if (_current < _start)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
-                if (_current >= _end)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
-                return _array[_current];
-            }
+            return this;
         }
 
         object IEnumerator.Current => Current;
