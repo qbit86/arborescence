@@ -61,7 +61,13 @@ namespace Ubiquitous
             }
         }
 
-        public ArrayPrefixEnumerator<T> GetEnumerator()
+        public Enumerator GetEnumerator()
+        {
+            ThrowInvalidOperationIfDefault();
+            return new Enumerator(_array, _count);
+        }
+
+        public ArrayPrefixEnumerator<T> GetValueEnumerator()
         {
             ThrowInvalidOperationIfDefault();
             return new ArrayPrefixEnumerator<T>(_array, _count);
@@ -259,7 +265,7 @@ namespace Ubiquitous
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return GetEnumerator();
+            return GetValueEnumerator();
         }
 
         #endregion
@@ -268,7 +274,7 @@ namespace Ubiquitous
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return GetValueEnumerator();
         }
 
         #endregion
@@ -277,6 +283,47 @@ namespace Ubiquitous
         {
             if (_array == null)
                 ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
+        }
+
+        public struct Enumerator
+        {
+            private readonly T[] _array;
+            private readonly int _end;
+            private int _current;
+
+            internal Enumerator(T[] array, int count)
+            {
+                Debug.Assert(array != null);
+                Debug.Assert(count >= 0);
+                Debug.Assert(count <= array.Length);
+
+                _array = array;
+                _end = count;
+                _current = -1;
+            }
+
+            public T Current
+            {
+                get
+                {
+                    if (_current < 0)
+                        ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                    if (_current >= _end)
+                        ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                    return _array[_current];
+                }
+            }
+
+            public bool MoveNext()
+            {
+                if (_current < _end)
+                {
+                    _current++;
+                    return _current < _end;
+                }
+
+                return false;
+            }
         }
     }
 }
