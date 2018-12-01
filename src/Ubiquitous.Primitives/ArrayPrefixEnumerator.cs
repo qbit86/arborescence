@@ -6,7 +6,6 @@ namespace Ubiquitous
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
     public struct ArrayPrefixEnumerator<T> : IEnumerator<T>
     {
-        private const int Start = 0;
         private readonly T[] _array;
         private readonly int _end;
         private int _current;
@@ -16,21 +15,19 @@ namespace Ubiquitous
             if (array == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
 
-            const int offset = 0;
-
-            if (array == null || (uint)count > (uint)(array.Length - offset))
-                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, offset, count);
+            if (array == null || (uint)count > (uint)array.Length)
+                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
 
             _array = array;
-            _end = offset + count;
-            _current = offset - 1;
+            _end = count;
+            _current = -1;
         }
 
         public T Current
         {
             get
             {
-                if (_current < Start)
+                if (_current < 0)
                     ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                 if (_current >= _end)
                     ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
@@ -58,7 +55,7 @@ namespace Ubiquitous
 
         void IEnumerator.Reset()
         {
-            _current = Start - 1;
+            _current = -1;
         }
 
         public void Dispose()
