@@ -1,36 +1,29 @@
-digraph "Sorted" {
+digraph "Petersen Directed" {
+  layout="neato"
   node [shape=circle fontname="Times-Italic"]
-  a b c d e f g h i j
-  a -> d [label=0]
-  a -> g [label=1]
-  a -> h [label=2]
-  b -> f [label=3]
-  b -> f [label=4]
-  b -> h [label=5]
-  c -> a [label=6]
-  c -> g [label=7]
-  c -> i [label=8]
-  c -> j [label=9]
-  c -> j [label=10]
-  d -> g [label=11]
-  d -> g [label=12]
-  d -> j [label=13]
-  d -> j [label=14]
-  e -> c [label=15]
-  e -> e [label=16]
-  e -> g [label=17]
-  e -> h [label=18]
-  e -> i [label=19]
-  e -> j [label=20]
-  f -> a [label=21]
-  f -> d [label=22]
-  f -> f [label=23]
-  f -> i [label=24]
-  g -> j [label=25]
-  h -> d [label=26]
-  i -> a [label=27]
-  i -> f [label=28]
-  i -> i [label=29]
-  j -> b [label=30]
-  j -> c [label=31]
+  a [pos="0,4!"]
+  b [pos="4,2!"]
+  c [pos="3,-2!"]
+  d [pos="-3,-2!"]
+  e [pos="-4,2!"]
+  f [pos="0,3!"]
+  g [pos="2,1!"]
+  h [pos="1,-1!"]
+  i [pos="-1,-1!"]
+  j [pos="-2,1!"]
+  a -> b
+  b -> c
+  c -> d
+  d -> e
+  e -> a
+  f -> h
+  h -> j
+  j -> g
+  g -> i
+  i -> f
+  a -> f
+  b -> g
+  c -> h
+  d -> i
+  e -> j
 }
