@@ -11,7 +11,7 @@ namespace Ubiquitous
         private const int VertexUpperBound = 10;
 
         [Theory]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [InlineData("05")]
         public void SortedAdjacencyList_ShouldNotBeLess(string testName)
         {
             // Arrange
