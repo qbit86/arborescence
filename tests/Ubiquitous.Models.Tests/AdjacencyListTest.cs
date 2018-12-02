@@ -12,14 +12,6 @@ namespace Ubiquitous
     {
         private const int VertexUpperBound = 10;
 
-        public AdjacencyListTest(ITestOutputHelper output)
-        {
-            Output = output;
-        }
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        private ITestOutputHelper Output { get; }
-
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void ShouldNotBeLess(string testName)
@@ -48,10 +40,46 @@ namespace Ubiquitous
 
                 var outEdges = new List<int>(OneTimeEnumerable<int>.Create(outEdgesEnumerator));
 
-                IEnumerable<int> leftDifference = jaggedOutEdges.Except(outEdges);
+                IEnumerable<int> difference = jaggedOutEdges.Except(outEdges);
 
                 // Assert
-                Assert.Empty(leftDifference);
+                Assert.Empty(difference);
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(IndexedGraphTestCollection))]
+        public void ShouldNotBeGreater(string testName)
+        {
+            // Arrange
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
+                ref jaggedAdjacencyListBuilder, testName);
+            JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList = jaggedAdjacencyListBuilder.ToGraph();
+
+            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            BuildHelpers<AdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
+                ref adjacencyListBuilder, testName);
+            AdjacencyListIncidenceGraph adjacencyList = adjacencyListBuilder.ToGraph();
+
+            // Act
+            for (int v = 0; v < adjacencyList.VertexUpperBound; ++v)
+            {
+                if (!adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator))
+                    continue;
+
+                var outEdges = new List<int>(OneTimeEnumerable<int>.Create(outEdgesEnumerator));
+
+                bool hasOutEdges =
+                    jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
+                Assert.True(hasOutEdges);
+
+                var jaggedOutEdges = new List<int>(OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator));
+
+                IEnumerable<int> difference = outEdges.Except(jaggedOutEdges);
+
+                // Assert
+                Assert.Empty(difference);
             }
         }
     }
