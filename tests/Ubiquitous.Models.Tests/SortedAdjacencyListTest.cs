@@ -11,18 +11,18 @@ namespace Ubiquitous
         private const int VertexUpperBound = 10;
 
         [Theory]
-        [MemberData(nameof(GetData))]
+        [ClassData(typeof(IndexedGraphTestCollection))]
         public void SortedAdjacencyList_ShouldNotBeLess(string testName)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
             BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
-                ref jaggedAdjacencyListBuilder, testName);
+                ref jaggedAdjacencyListBuilder, testName, true);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList = jaggedAdjacencyListBuilder.ToGraph();
 
             var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
             BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
-                ref sortedAdjacencyListBuilder, testName);
+                ref sortedAdjacencyListBuilder, testName, true);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList = sortedAdjacencyListBuilder.ToGraph();
 
             // Act
@@ -46,18 +46,18 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [MemberData(nameof(GetData))]
+        [ClassData(typeof(IndexedGraphTestCollection))]
         public void SortedAdjacencyList_ShouldNotBeGreater(string testName)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
             BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
-                ref jaggedAdjacencyListBuilder, testName);
+                ref jaggedAdjacencyListBuilder, testName, true);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList = jaggedAdjacencyListBuilder.ToGraph();
 
             var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
             BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
-                ref sortedAdjacencyListBuilder, testName);
+                ref sortedAdjacencyListBuilder, testName, true);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList = sortedAdjacencyListBuilder.ToGraph();
 
             // Act
