@@ -11,19 +11,19 @@ digraph "Petersen Directed" {
   h [pos="1,-1.38!"]
   i [pos="-1,-1.38!"]
   j [pos="-1.62,0.53!"]
-  a -> b
-  b -> c
-  c -> d
-  d -> e
-  e -> a
-  f -> h
-  h -> j
-  j -> g
-  g -> i
-  i -> f
-  a -> f
-  b -> g
-  c -> h
-  d -> i
-  e -> j
+  a -> b [label=0]
+  b -> c [label=1]
+  c -> d [label=2]
+  d -> e [label=3]
+  e -> a [label=4]
+  f -> h [label=5]
+  h -> j [label=6]
+  j -> g [label=7]
+  g -> i [label=8]
+  i -> f [label=9]
+  a -> f [label=10]
+  b -> g [label=11]
+  c -> h [label=12]
+  d -> i [label=13]
+  e -> j [label=14]
 }
