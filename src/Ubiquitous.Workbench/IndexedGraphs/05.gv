@@ -1,16 +1,16 @@
 digraph "Petersen Directed" {
   layout="neato"
   node [shape=circle fontname="Times-Italic"]
-  a [pos="0,4!"]
-  b [pos="4,2!"]
-  c [pos="3,-2!"]
-  d [pos="-3,-2!"]
-  e [pos="-4,2!"]
-  f [pos="0,3!"]
-  g [pos="2,1!"]
-  h [pos="1,-1!"]
-  i [pos="-1,-1!"]
-  j [pos="-2,1!"]
+  a [pos="0,1.70!"]
+  b [pos="1.62,0.53!"]
+  c [pos="1,-1.38!"]
+  d [pos="-1,-1.38!"]
+  e [pos="-1.62,0.53!"]
+  f [pos="0,0.85!"]
+  g [pos="0.81,0.263!"]
+  h [pos="0.5,-0.69!"]
+  i [pos="-0.5,-0.69!"]
+  j [pos="-0.81,0.263!"]
   a -> b
   b -> c
   c -> d
