@@ -64,7 +64,7 @@ namespace Ubiquitous.Models
             int endExclusive = edgeBounds[2 * vertex + 1];
             Assert(start <= endExclusive, "start <= endExclusive");
 
-            outEdges = new ArraySegmentEnumerator<int>(_storage, start, endExclusive);
+            outEdges = new ArraySegmentEnumerator<int>(_storage, start, endExclusive - start);
             return true;
         }
 
