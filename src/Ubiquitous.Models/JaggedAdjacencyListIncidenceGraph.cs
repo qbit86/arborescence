@@ -67,7 +67,7 @@
             if (OutEdges[vertex].Buffer == null)
             {
                 outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
-                return false;
+                return true;
             }
 
             outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Buffer, OutEdges[vertex].Count);
