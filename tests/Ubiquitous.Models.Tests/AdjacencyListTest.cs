@@ -14,7 +14,7 @@ namespace Ubiquitous
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
-        public void ShouldNotBeLess(string testName)
+        public void AdjacencyList_ShouldNotBeLess(string testName)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
@@ -49,7 +49,7 @@ namespace Ubiquitous
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
-        public void ShouldNotBeGreater(string testName)
+        public void AdjacencyList_ShouldNotBeGreater(string testName)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
