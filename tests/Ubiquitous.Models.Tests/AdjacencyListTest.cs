@@ -1,12 +1,10 @@
 namespace Ubiquitous
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using Models;
     using Workbench;
     using Xunit;
-    using Xunit.Abstractions;
 
     public sealed class AdjacencyListTest
     {
@@ -36,7 +34,7 @@ namespace Ubiquitous
                 var jaggedOutEdges = new List<int>(OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator));
 
                 bool hasOutEdges = adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator);
-                Assert.True(hasOutEdges);
+                Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
                 var outEdges = new List<int>(OneTimeEnumerable<int>.Create(outEdgesEnumerator));
 
@@ -72,7 +70,7 @@ namespace Ubiquitous
 
                 bool hasOutEdges =
                     jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
-                Assert.True(hasOutEdges);
+                Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
                 var jaggedOutEdges = new List<int>(OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator));
 
