@@ -26,27 +26,13 @@ namespace Ubiquitous
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
-
-            using (TextReader textReader = IndexedGraphs.GetTextReader(testName))
-            {
-                var parser = new IndexedEdgeListParser();
-                IEnumerable<SourceTargetPair<int>> edges = parser.ParseEdges(textReader);
-                foreach (SourceTargetPair<int> edge in edges)
-                    jaggedAdjacencyListBuilder.TryAdd(edge.Source, edge.Target, out _);
-            }
-
+            BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
+                ref jaggedAdjacencyListBuilder, testName);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList = jaggedAdjacencyListBuilder.ToGraph();
 
             var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(VertexUpperBound);
-
-            using (TextReader textReader = IndexedGraphs.GetTextReader(testName))
-            {
-                var parser = new IndexedEdgeListParser();
-                IEnumerable<SourceTargetPair<int>> edges = parser.ParseEdges(textReader);
-                foreach (SourceTargetPair<int> edge in edges)
-                    adjacencyListBuilder.TryAdd(edge.Source, edge.Target, out _);
-            }
-
+            BuildHelpers<AdjacencyListIncidenceGraph, int>.PopulateFromIndexedGraph(
+                ref adjacencyListBuilder, testName);
             AdjacencyListIncidenceGraph adjacencyList = adjacencyListBuilder.ToGraph();
 
             // Act
