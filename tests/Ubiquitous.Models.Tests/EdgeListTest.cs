@@ -21,7 +21,7 @@ namespace Ubiquitous
                     testName);
 
             var edgeListBuilder = new EdgeListIncidenceGraphBuilder(VertexUpperBound);
-            EdgeListIncidenceGraph adjacencyList =
+            EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 
             // Act
@@ -36,7 +36,7 @@ namespace Ubiquitous
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(v, p.Target))
                     .ToList();
 
-                bool hasOutEdges = adjacencyList.TryGetOutEdges(v,
+                bool hasOutEdges = edgeList.TryGetOutEdges(v,
                     out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
