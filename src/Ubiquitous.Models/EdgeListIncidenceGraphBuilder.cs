@@ -88,8 +88,7 @@
                 currentOutEdges.CopyTo(destOutEdges);
                 int lowerBound = currentOffset;
                 currentOffset += currentOutEdges.Length;
-                int upperBound = currentOffset;
-                destEdgeBounds[s] = SourceTargetPair.Create(lowerBound, upperBound);
+                destEdgeBounds[s] = SourceTargetPair.Create(lowerBound, currentOutEdges.Length);
 
                 if (_outEdges[s].Buffer != null)
                     ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer, true);

@@ -70,8 +70,8 @@ namespace Ubiquitous.Models
             }
 
             int start = edgeBounds[vertex].Source;
-            int endExclusive = edgeBounds[vertex].Target;
-            outEdges = new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, endExclusive - start);
+            int length = edgeBounds[vertex].Target;
+            outEdges = new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, length);
             return true;
         }
 
