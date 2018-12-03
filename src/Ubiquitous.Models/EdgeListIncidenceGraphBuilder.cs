@@ -98,11 +98,13 @@
             if (_outEdges.Array != null)
                 ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
 
+            var result = new EdgeListIncidenceGraph(VertexUpperBound, storage);
+
             _initialOutDegree = DefaultInitialOutDegree;
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
             _edgeCount = 0;
 
-            return new EdgeListIncidenceGraph(VertexUpperBound, storage);
+            return result;
         }
 
         private void EnsureCapacity(int newVertexUpperBound)
