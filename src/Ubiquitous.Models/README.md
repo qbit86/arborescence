@@ -83,8 +83,8 @@ _vertexUpperBound_
 ```
 reorderedEdges
          ↓↓↓↓↓
-         [aca][____]
-         [bcb][^^^^]
+         [aac][____]
+         [bbc][^^^^]
               ↑↑↑↑↑↑
               edgeBounds
 ```

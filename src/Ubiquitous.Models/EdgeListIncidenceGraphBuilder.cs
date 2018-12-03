@@ -60,8 +60,8 @@
 
         // reorderedEdges
         //          ↓↓↓↓↓
-        //          [aca][____]
-        //          [bcb][^^^^]
+        //          [aac][____]
+        //          [bbc][^^^^]
         //               ↑↑↑↑↑↑
         //               edgeBounds
 
