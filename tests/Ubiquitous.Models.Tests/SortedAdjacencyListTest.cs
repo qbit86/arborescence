@@ -80,13 +80,5 @@ namespace Ubiquitous
                 Assert.Empty(difference);
             }
         }
-
-        public static IEnumerable<object[]> GetData()
-        {
-            return new[]
-            {
-                new object[] { "05" },
-            };
-        }
     }
 }
