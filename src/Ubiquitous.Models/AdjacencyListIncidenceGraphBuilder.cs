@@ -98,7 +98,7 @@ namespace Ubiquitous.Models
                 currentOutEdges.CopyTo(destReorderedEdges.Slice(currentBound, currentOutEdges.Length));
                 int finalLeftBound = 1 + 2 * VertexUpperBound + currentBound;
                 destEdgeBounds[2 * s] = finalLeftBound;
-                destEdgeBounds[2 * s + 1] = finalLeftBound + currentOutEdges.Length;
+                destEdgeBounds[2 * s + 1] = currentOutEdges.Length;
                 currentBound += currentOutEdges.Length;
             }
 
