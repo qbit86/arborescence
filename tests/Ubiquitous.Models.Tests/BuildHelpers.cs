@@ -8,6 +8,20 @@ namespace Ubiquitous
 
     internal static class BuildHelpers<TGraph, TEdge>
     {
+        internal static TGraph CreateGraph<TBuilder>(ref TBuilder builder, string testName)
+            where TBuilder : IGraphBuilder<TGraph, int, TEdge>
+        {
+            return CreateGraph(ref builder, testName, false);
+        }
+
+        internal static TGraph CreateGraph<TBuilder>(ref TBuilder builder, string testName, bool orderBySource)
+            where TBuilder : IGraphBuilder<TGraph, int, TEdge>
+        {
+            PopulateFromIndexedGraph(ref builder, testName, orderBySource);
+
+            return builder.ToGraph();
+        }
+
         internal static void PopulateFromIndexedGraph<TBuilder>(ref TBuilder builder, string testName)
             where TBuilder : IGraphBuilder<TGraph, int, TEdge>
         {
