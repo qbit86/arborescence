@@ -82,10 +82,12 @@
                 int upperBound = currentOffset;
                 destEdgeBounds[s] = SourceTargetPair.Create(lowerBound, upperBound);
 
-                ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer, true);
+                if (_outEdges[s].Buffer != null)
+                    ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer, true);
             }
 
-            ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
+            if (_outEdges.Array != null)
+                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
 
             _initialOutDegree = DefaultInitialOutDegree;
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
