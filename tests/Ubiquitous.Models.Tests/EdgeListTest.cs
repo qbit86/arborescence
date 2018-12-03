@@ -10,7 +10,7 @@ namespace Ubiquitous
     {
         private const int VertexUpperBound = 10;
 
-        [Theory(Skip = "Not fixed yet.")]
+        [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void EdgeList_ShouldNotBeLess(string testName)
         {

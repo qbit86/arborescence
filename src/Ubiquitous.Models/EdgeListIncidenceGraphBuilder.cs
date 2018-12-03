@@ -61,7 +61,7 @@
                 _outEdges[source] = new ArrayBuilder<SourceTargetPair<int>>(InitialOutDegree);
 
             edge = SourceTargetPair.Create(source, target);
-            _outEdges[source].Add(edge);
+            _outEdges.Array[source].Add(edge);
             ++_edgeCount;
 
             return true;
