@@ -22,13 +22,7 @@ namespace Ubiquitous
             return builder.ToGraph();
         }
 
-        internal static void PopulateFromIndexedGraph<TBuilder>(ref TBuilder builder, string testName)
-            where TBuilder : IGraphBuilder<TGraph, int, TEdge>
-        {
-            PopulateFromIndexedGraph(ref builder, testName, false);
-        }
-
-        internal static void PopulateFromIndexedGraph<TBuilder>(ref TBuilder builder, string testName,
+        private static void PopulateFromIndexedGraph<TBuilder>(ref TBuilder builder, string testName,
             bool orderBySource)
             where TBuilder : IGraphBuilder<TGraph, int, TEdge>
         {
