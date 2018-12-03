@@ -9,6 +9,7 @@
     using Xunit.Abstractions;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
+    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
@@ -45,41 +46,41 @@
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
             Dfs = new Dfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
+                EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             MultipleSourceDfs = new MultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
             BaselineDfs = new BaselineDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                ArrayPrefixEnumerator<int>, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
+                EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             BaselineMultipleSourceDfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
             Output = output;
         }
 
-        private Dfs<JaggedAdjacencyListIncidenceGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private Dfs<JaggedAdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             Dfs { get; }
 
         private MultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
                 ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             MultipleSourceDfs { get; }
 
-        private BaselineDfs<JaggedAdjacencyListIncidenceGraph, int, int, ArrayPrefixEnumerator<int>, ColorMap,
+        private BaselineDfs<JaggedAdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>, ColorMap,
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
             BaselineMultipleSourceDfs { get; }
 
