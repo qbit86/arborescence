@@ -46,7 +46,16 @@
 
             int max = Math.Max(source, target);
             if (max >= VertexUpperBound)
-                EnsureCapacity(max + 1);
+            {
+                int newVertexUpperBound = max + 1;
+                if (newVertexUpperBound + _edgeCount > MaxCoreClrArrayLength)
+                {
+                    edge = SourceTargetPair.Create(int.MinValue, int.MinValue);
+                    return false;
+                }
+
+                EnsureCapacity(newVertexUpperBound);
+            }
 
             if (_outEdges[source].Buffer == null)
                 _outEdges[source] = new ArrayBuilder<SourceTargetPair<int>>(InitialOutDegree);
@@ -98,7 +107,9 @@
 
         private void EnsureCapacity(int newVertexUpperBound)
         {
-            Assert(newVertexUpperBound > _outEdges.Count);
+            Assert(newVertexUpperBound > _outEdges.Count, "newVertexUpperBound > _outEdges.Count");
+            Assert(newVertexUpperBound + _edgeCount <= MaxCoreClrArrayLength,
+                "newVertexUpperBound + _edgeCount <= MaxCoreClrArrayLength");
 
             if (newVertexUpperBound <= _outEdges.Array.Length)
             {
@@ -107,7 +118,7 @@
                 return;
             }
 
-            int nextCapacity = Math.Min(newVertexUpperBound, MaxCoreClrArrayLength);
+            int nextCapacity = newVertexUpperBound;
             ArrayBuilder<SourceTargetPair<int>>[] next =
                 ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(nextCapacity);
 
