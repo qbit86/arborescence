@@ -13,13 +13,13 @@ namespace Ubiquitous
     using StepMap = System.ArraySegment<Traversal.Advanced.DfsStepKind>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.JaggedAdjacencyListIncidenceGraph, ArrayPrefixEnumerator<int>>;
+        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static partial class Program
     {
         private static void Main()
         {
-            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(10);
+            var builder = new AdjacencyListIncidenceGraphBuilder(10);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("03"))
             {
@@ -29,7 +29,7 @@ namespace Ubiquitous
                     builder.TryAdd(edge.Source, edge.Target, out _);
             }
 
-            JaggedAdjacencyListIncidenceGraph graph = builder.ToGraph();
+            AdjacencyListIncidenceGraph graph = builder.ToGraph();
 
             Console.Write($"{nameof(graph.VertexUpperBound)}: {graph.VertexUpperBound}, ");
             Console.WriteLine($"{nameof(graph.EdgeCount)}: {graph.EdgeCount}");
@@ -38,8 +38,8 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexUpperBound);
 
             {
-                var dfs = new BaselineMultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                    IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
+                var dfs = new BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
+                    IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy));
@@ -53,8 +53,8 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = new MultipleSourceDfs<JaggedAdjacencyListIncidenceGraph, int, int,
-                    IndexCollection, IndexCollectionEnumerator, ArrayPrefixEnumerator<int>,
+                var dfs = new MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
+                    IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>,
                     ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy));
