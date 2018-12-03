@@ -6,16 +6,16 @@
 
     internal struct GraphHelper
     {
-        private Dictionary<int, JaggedAdjacencyListIncidenceGraph> _cache;
+        private Dictionary<int, AdjacencyListIncidenceGraph> _cache;
 
         internal static GraphHelper Default { get; } = new GraphHelper();
 
-        internal JaggedAdjacencyListIncidenceGraph GetGraph(int vertexUpperBound)
+        internal AdjacencyListIncidenceGraph GetGraph(int vertexUpperBound)
         {
             if (_cache == null)
-                _cache = new Dictionary<int, JaggedAdjacencyListIncidenceGraph>();
+                _cache = new Dictionary<int, AdjacencyListIncidenceGraph>();
 
-            if (_cache.TryGetValue(vertexUpperBound, out JaggedAdjacencyListIncidenceGraph result))
+            if (_cache.TryGetValue(vertexUpperBound, out AdjacencyListIncidenceGraph result))
                 return result;
 
             result = CreateGraph(vertexUpperBound);
@@ -23,11 +23,11 @@
             return result;
         }
 
-        private static JaggedAdjacencyListIncidenceGraph CreateGraph(int vertexUpperBound)
+        private static AdjacencyListIncidenceGraph CreateGraph(int vertexUpperBound)
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexUpperBound, 1.618));
 
-            var builder = new JaggedAdjacencyListIncidenceGraphBuilder(vertexUpperBound);
+            var builder = new AdjacencyListIncidenceGraphBuilder(vertexUpperBound);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
