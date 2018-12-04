@@ -6,6 +6,7 @@ namespace Ubiquitous
     using System.Diagnostics;
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
+
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>
     {
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
@@ -27,13 +28,11 @@ namespace Ubiquitous
 
         public ArrayPrefix(T[] array, int count)
         {
-            const int offset = 0;
-
             // Validate arguments, check is minimal instructions with reduced branching for inlinable fast-path
             // Negative values discovered though conversion to high values when converted to unsigned
             // Failure should be rare and location determination and message is delegated to failure functions
-            if (array == null || (uint)count > (uint)(array.Length - offset))
-                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, offset, count);
+            if (array == null || (uint)count > (uint)array.Length)
+                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
 
             _array = array;
             _count = count;
