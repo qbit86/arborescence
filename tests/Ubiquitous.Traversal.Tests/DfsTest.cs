@@ -35,7 +35,7 @@
 
         public int GetHashCode(Step<DfsStepKind, int, int> obj)
         {
-            return obj.Kind.GetHashCode() ^ obj.Vertex.GetHashCode() ^ obj.Edge.GetHashCode();
+            return ((int)obj.Kind).GetHashCode() ^ obj.Vertex.GetHashCode() ^ obj.Edge.GetHashCode();
         }
     }
 
