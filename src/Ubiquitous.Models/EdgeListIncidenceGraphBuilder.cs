@@ -17,6 +17,7 @@
             _initialOutDegree = DefaultInitialOutDegree;
             ArrayBuilder<SourceTargetPair<int>>[] outEdges =
                 ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(vertexUpperBound);
+            Array.Clear(outEdges, 0, vertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, vertexUpperBound);
             _edgeCount = 0;
         }
@@ -53,8 +54,9 @@
                     return false;
                 }
 
+                int oldCount = _outEdges.Count;
                 ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound);
-                Array.Clear(_outEdges.Array, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
+                Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
             if (_outEdges[source].Buffer == null)
@@ -91,11 +93,11 @@
                 destEdgeBounds[s] = SourceTargetPair.Create(lowerBound, currentOutEdges.Length);
 
                 if (_outEdges[s].Buffer != null)
-                    ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer, true);
+                    ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer);
             }
 
             if (_outEdges.Array != null)
-                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
+                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array);
 
             var result = new EdgeListIncidenceGraph(VertexUpperBound, storage);
 
