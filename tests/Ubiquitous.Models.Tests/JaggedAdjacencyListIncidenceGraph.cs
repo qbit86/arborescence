@@ -7,7 +7,7 @@
         IEquatable<JaggedAdjacencyListIncidenceGraph>
     {
         // Layout: endpoints start with targets, then sources follow.
-        internal JaggedAdjacencyListIncidenceGraph(int[] endpoints, ArrayBuilder<int>[] outEdges)
+        internal JaggedAdjacencyListIncidenceGraph(int[] endpoints, ArrayPrefix<int>[] outEdges)
         {
             Assert(endpoints != null, "endpoints != null");
             Assert(outEdges != null, "outEdges != null");
@@ -25,7 +25,7 @@
 
         private int[] Endpoints { get; }
 
-        private ArrayBuilder<int>[] OutEdges { get; }
+        private ArrayPrefix<int>[] OutEdges { get; }
 
         public bool TryGetSource(int edge, out int source)
         {
@@ -64,13 +64,13 @@
             }
 
             Assert(OutEdges != null, "OutEdges != null");
-            if (OutEdges[vertex].Buffer == null)
+            if (OutEdges[vertex].Array == null)
             {
                 outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
                 return true;
             }
 
-            outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Buffer, OutEdges[vertex].Count);
+            outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Array, OutEdges[vertex].Count);
             return true;
         }
 

@@ -1,6 +1,7 @@
 ﻿namespace Ubiquitous.Models
 {
     using System;
+    using System.Buffers;
     using static System.Diagnostics.Debug;
 
     public struct JaggedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
@@ -26,7 +27,7 @@
             _initialOutDegree = DefaultInitialOutDegree;
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
-            OutEdges = new ArrayBuilder<int>[vertexUpperBound];
+            OutEdges = new ArrayPrefix<int>[vertexUpperBound];
         }
 
         public int VertexUpperBound => OutEdges?.Length ?? 0;
@@ -37,7 +38,7 @@
             set => _initialOutDegree = value;
         }
 
-        private ArrayBuilder<int>[] OutEdges { get; set; }
+        private ArrayPrefix<int>[] OutEdges { get; set; }
 
         public bool TryAdd(int source, int target, out int edge)
         {
@@ -64,10 +65,10 @@
             _sources.Add(source);
             _targets.Add(target);
 
-            if (OutEdges[source].Buffer == null)
-                OutEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
+            if (OutEdges[source].Array == null)
+                OutEdges[source] = new ArrayPrefix<int>(ArrayPool<int>.Shared.Rent(InitialOutDegree), 0);
 
-            OutEdges[source].Add(newEdgeIndex);
+            ArrayPrefixBuilder.Add(ref OutEdges[source], newEdgeIndex);
 
             edge = newEdgeIndex;
             return true;
@@ -85,7 +86,7 @@
                 Array.Copy(sourcesBuffer, 0, endpoints, _targets.Count, _sources.Count);
             }
 
-            ArrayBuilder<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
+            ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
 
             _initialOutDegree = DefaultInitialOutDegree;
             _sources = default;
