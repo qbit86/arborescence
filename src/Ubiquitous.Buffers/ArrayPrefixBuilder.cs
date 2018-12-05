@@ -16,9 +16,17 @@ namespace Ubiquitous
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
             if (arrayPrefix.Count == capacity)
-                EnsureCapacity(ref arrayPrefix, arrayPrefix.Count + 1);
+                UncheckedEnsureCapacity(ref arrayPrefix, capacity, arrayPrefix.Count + 1);
 
             UncheckedAdd(ref arrayPrefix, item);
+        }
+
+        internal static void EnsureCapacity(ref ArrayPrefix<T> arrayPrefix, int minimum)
+        {
+            int capacity = arrayPrefix.Array?.Length ?? 0;
+
+            if (capacity < minimum)
+                UncheckedEnsureCapacity(ref arrayPrefix, capacity, minimum);
         }
 
         private static void UncheckedAdd(ref ArrayPrefix<T> arrayPrefix, T item)
@@ -30,10 +38,8 @@ namespace Ubiquitous
             arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, arrayPrefix.Count + 1);
         }
 
-        private static void EnsureCapacity(ref ArrayPrefix<T> arrayPrefix, int minimum)
+        private static void UncheckedEnsureCapacity(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum)
         {
-            int capacity = arrayPrefix.Array?.Length ?? 0;
-
             Assert(minimum > capacity, "minimum > capacity");
 
             int nextCapacity = capacity == 0 ? DefaultCapacity : unchecked(2 * capacity);
