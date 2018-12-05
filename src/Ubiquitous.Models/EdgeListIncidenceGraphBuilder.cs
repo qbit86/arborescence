@@ -14,6 +14,9 @@
 
         public EdgeListIncidenceGraphBuilder(int vertexUpperBound)
         {
+            if (vertexUpperBound < 0)
+                throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
+
             _initialOutDegree = DefaultInitialOutDegree;
             ArrayBuilder<SourceTargetPair<int>>[] outEdges =
                 ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(vertexUpperBound);
