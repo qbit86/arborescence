@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Misnomer;
+    using Misnomer.Extensions;
     using Models;
     using Traversal.Advanced;
     using Xunit;
@@ -101,8 +103,8 @@
 
             // Act
 
-            List<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertex).ToList();
-            List<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertex).ToList();
+            Rist<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertex).ToRist();
+            Rist<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertex).ToRist();
 
             // Assert
 
@@ -145,9 +147,9 @@
 
             // Act
 
-            List<Step<DfsStepKind, int, int>> baselineSteps =
-                BaselineMultipleSourceDfs.Traverse(graph, vertices).ToList();
-            List<Step<DfsStepKind, int, int>> boostSteps = MultipleSourceDfs.Traverse(graph, vertices).ToList();
+            Rist<Step<DfsStepKind, int, int>> baselineSteps =
+                BaselineMultipleSourceDfs.Traverse(graph, vertices).ToRist();
+            Rist<Step<DfsStepKind, int, int>> boostSteps = MultipleSourceDfs.Traverse(graph, vertices).ToRist();
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
             int actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
