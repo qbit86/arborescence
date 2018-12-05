@@ -2,6 +2,8 @@ namespace Ubiquitous
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Misnomer;
+    using Misnomer.Extensions;
     using Models;
     using Workbench;
     using Xunit;
@@ -30,12 +32,12 @@ namespace Ubiquitous
                 if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
                     continue;
 
-                List<int> jaggedOutEdges = OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator).ToList();
+                Rist<int> jaggedOutEdges = OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator).ToRist();
 
                 bool hasOutEdges = adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                List<int> outEdges = OneTimeEnumerable<int>.Create(outEdgesEnumerator).ToList();
+                Rist<int> outEdges = OneTimeEnumerable<int>.Create(outEdgesEnumerator).ToRist();
 
                 IEnumerable<int> difference = jaggedOutEdges.Except(outEdges);
 
@@ -64,13 +66,13 @@ namespace Ubiquitous
                 if (!adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator))
                     continue;
 
-                List<int> outEdges = OneTimeEnumerable<int>.Create(outEdgesEnumerator).ToList();
+                Rist<int> outEdges = OneTimeEnumerable<int>.Create(outEdgesEnumerator).ToRist();
 
                 bool hasOutEdges =
                     jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                List<int> jaggedOutEdges = OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator).ToList();
+                Rist<int> jaggedOutEdges = OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator).ToRist();
 
                 IEnumerable<int> difference = outEdges.Except(jaggedOutEdges);
 

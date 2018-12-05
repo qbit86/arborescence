@@ -2,6 +2,8 @@ namespace Ubiquitous
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Misnomer;
+    using Misnomer.Extensions;
     using Models;
     using Workbench;
     using Xunit;
@@ -30,18 +32,19 @@ namespace Ubiquitous
                 if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
                     continue;
 
-                List<SourceTargetPair<int>> jaggedOutEndpoints = OneTimeEnumerable<int>
+                int defensiveCopy = v;
+                Rist<SourceTargetPair<int>> jaggedOutEndpoints = OneTimeEnumerable<int>
                     .Create(jaggedOutEdgesEnumerator)
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
-                    .Where(p => p.Success).Select(p => SourceTargetPair.Create(v, p.Target))
-                    .ToList();
+                    .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
+                    .ToRist();
 
                 bool hasOutEdges = edgeList.TryGetOutEdges(v,
                     out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                List<SourceTargetPair<int>> outEdges =
-                    OneTimeEnumerable<SourceTargetPair<int>>.Create(outEdgesEnumerator).ToList();
+                Rist<SourceTargetPair<int>> outEdges =
+                    OneTimeEnumerable<SourceTargetPair<int>>.Create(outEdgesEnumerator).ToRist();
 
                 IEnumerable<SourceTargetPair<int>> difference = jaggedOutEndpoints.Except(outEdges);
 
@@ -70,18 +73,19 @@ namespace Ubiquitous
                 if (!edgeList.TryGetOutEdges(v, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator))
                     continue;
 
-                List<SourceTargetPair<int>> outEdges =
-                    OneTimeEnumerable<SourceTargetPair<int>>.Create(outEdgesEnumerator).ToList();
+                Rist<SourceTargetPair<int>> outEdges =
+                    OneTimeEnumerable<SourceTargetPair<int>>.Create(outEdgesEnumerator).ToRist();
 
                 bool hasOutEdges =
                     jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                List<SourceTargetPair<int>> jaggedOutEndpoints = OneTimeEnumerable<int>
+                int defensiveCopy = v;
+                Rist<SourceTargetPair<int>> jaggedOutEndpoints = OneTimeEnumerable<int>
                     .Create(jaggedOutEdgesEnumerator)
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
-                    .Where(p => p.Success).Select(p => SourceTargetPair.Create(v, p.Target))
-                    .ToList();
+                    .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
+                    .ToRist();
 
                 IEnumerable<SourceTargetPair<int>> difference = outEdges.Except(jaggedOutEndpoints);
 
