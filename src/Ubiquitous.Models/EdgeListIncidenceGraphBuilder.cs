@@ -2,7 +2,6 @@
 {
     using System;
     using System.Buffers;
-    using static System.Diagnostics.Debug;
 
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, SourceTargetPair<int>>
     {
@@ -54,7 +53,9 @@
                     return false;
                 }
 
-                EnsureCapacity(newVertexUpperBound);
+                ArrayPrefixBuilder<ArrayBuilder<SourceTargetPair<int>>>.EnsureCapacity(ref _outEdges,
+                    newVertexUpperBound);
+                Array.Clear(_outEdges.Array, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
             }
 
             if (_outEdges[source].Buffer == null)
@@ -104,33 +105,6 @@
             _edgeCount = 0;
 
             return result;
-        }
-
-        private void EnsureCapacity(int newVertexUpperBound)
-        {
-            Assert(newVertexUpperBound > _outEdges.Count, "newVertexUpperBound > _outEdges.Count");
-            Assert(newVertexUpperBound + _edgeCount <= MaxCoreClrArrayLength,
-                "newVertexUpperBound + _edgeCount <= MaxCoreClrArrayLength");
-
-            if (newVertexUpperBound <= _outEdges.Array.Length)
-            {
-                Array.Clear(_outEdges.Array, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
-                _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(_outEdges.Array, newVertexUpperBound);
-                return;
-            }
-
-            int nextCapacity = newVertexUpperBound;
-            ArrayBuilder<SourceTargetPair<int>>[] next =
-                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(nextCapacity);
-
-            Array.Clear(next, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
-            if (_outEdges.Count > 0)
-            {
-                Array.Copy(_outEdges.Array, 0, next, 0, _outEdges.Count);
-                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
-            }
-
-            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(next, newVertexUpperBound);
         }
     }
 }
