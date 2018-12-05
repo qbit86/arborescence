@@ -68,7 +68,7 @@
             if (OutEdges[source].Array == null)
                 OutEdges[source] = new ArrayPrefix<int>(ArrayPool<int>.Shared.Rent(InitialOutDegree), 0);
 
-            ArrayPrefixBuilder<int>.Add(ref OutEdges[source], newEdgeIndex);
+            ArrayPrefixBuilder.Add(ref OutEdges[source], newEdgeIndex);
 
             edge = newEdgeIndex;
             return true;

@@ -4,14 +4,12 @@ namespace Ubiquitous
     using System.Buffers;
     using static System.Diagnostics.Debug;
 
-    internal static class ArrayPrefixBuilder<T>
+    internal static class ArrayPrefixBuilder
     {
         private const int DefaultCapacity = 4;
         private const int MaxCoreClrArrayLength = 0x7fefffff; // For byte arrays the limit is slightly larger
 
-        internal static T[] EmptyArray { get; } = new T[0];
-
-        internal static void Add(ref ArrayPrefix<T> arrayPrefix, T item)
+        internal static void Add<T>(ref ArrayPrefix<T> arrayPrefix, T item)
         {
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
@@ -21,7 +19,7 @@ namespace Ubiquitous
             UncheckedAdd(ref arrayPrefix, item);
         }
 
-        internal static void EnsureCapacity(ref ArrayPrefix<T> arrayPrefix, int minimum)
+        internal static void EnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int minimum)
         {
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
@@ -29,7 +27,7 @@ namespace Ubiquitous
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, minimum);
         }
 
-        private static void UncheckedAdd(ref ArrayPrefix<T> arrayPrefix, T item)
+        private static void UncheckedAdd<T>(ref ArrayPrefix<T> arrayPrefix, T item)
         {
             Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
             Assert(arrayPrefix.Count < arrayPrefix.Array.Length, "arrayPrefix.Count < arrayPrefix.Array.Length");
@@ -38,7 +36,7 @@ namespace Ubiquitous
             arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, arrayPrefix.Count + 1);
         }
 
-        private static void UncheckedEnsureCapacity(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum)
+        private static void UncheckedEnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum)
         {
             Assert(minimum > capacity, "minimum > capacity");
 

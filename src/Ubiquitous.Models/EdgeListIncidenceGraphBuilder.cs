@@ -53,8 +53,7 @@
                     return false;
                 }
 
-                ArrayPrefixBuilder<ArrayBuilder<SourceTargetPair<int>>>.EnsureCapacity(ref _outEdges,
-                    newVertexUpperBound);
+                ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound);
                 Array.Clear(_outEdges.Array, _outEdges.Count, newVertexUpperBound - _outEdges.Count);
             }
 
