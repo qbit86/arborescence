@@ -50,6 +50,9 @@ namespace Ubiquitous
 
                 // Assert
                 Assert.Empty(difference);
+
+                jaggedOutEndpoints.Dispose();
+                outEdges.Dispose();
             }
         }
 
@@ -91,6 +94,9 @@ namespace Ubiquitous
 
                 // Assert
                 Assert.Empty(difference);
+
+                outEdges.Dispose();
+                jaggedOutEndpoints.Dispose();
             }
         }
     }

@@ -130,6 +130,9 @@
             }
 
             Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
+
+            baselineSteps.Dispose();
+            boostSteps.Dispose();
         }
 
         [Theory]
@@ -159,6 +162,9 @@
             Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
             Assert.Equal(VertexCount, discoveredVertexCount);
             Assert.Equal(expectedStartVertexCount, actualStartVertexCount);
+
+            baselineSteps.Dispose();
+            boostSteps.Dispose();
         }
 
         private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
