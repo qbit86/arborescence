@@ -99,13 +99,14 @@
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
             int vertex = 0;
+            var stepCountApproximation = graph.VertexUpperBound + graph.EdgeCount;
 
             // Act
 
             Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
-                BaselineDfs.Traverse(graph, vertex).GetEnumerator());
+                BaselineDfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
             Rist<Step<DfsStepKind, int, int>> boostSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
-                Dfs.Traverse(graph, vertex).GetEnumerator());
+                Dfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
 
             // Assert
 
@@ -148,13 +149,14 @@
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
             var vertices = new IndexCollection(graph.VertexUpperBound);
+            var stepCountApproximation = graph.VertexUpperBound + graph.EdgeCount;
 
             // Act
 
             Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
-                BaselineMultipleSourceDfs.Traverse(graph, vertices).GetEnumerator());
+                BaselineMultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
             Rist<Step<DfsStepKind, int, int>> boostSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
-                MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator());
+                MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
             int actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
