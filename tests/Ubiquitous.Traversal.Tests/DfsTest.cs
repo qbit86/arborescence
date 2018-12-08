@@ -99,7 +99,7 @@
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
             int vertex = 0;
-            var stepCountApproximation = graph.VertexUpperBound + graph.EdgeCount;
+            int stepCountApproximation = graph.VertexUpperBound + graph.EdgeCount;
 
             // Act
 
@@ -149,7 +149,7 @@
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
             var vertices = new IndexCollection(graph.VertexUpperBound);
-            var stepCountApproximation = graph.VertexUpperBound + graph.EdgeCount;
+            int stepCountApproximation = graph.VertexUpperBound + graph.EdgeCount;
 
             // Act
 
