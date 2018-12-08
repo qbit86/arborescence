@@ -20,4 +20,5 @@
     <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
   </ItemGroup>
   <Import Project="..\..\src\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />
+  <Import Project="..\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems" Label="Shared" />
 </Project>
