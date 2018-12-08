@@ -1,4 +1,4 @@
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
     using System.Collections.Generic;
     using Misnomer;
