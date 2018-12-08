@@ -43,8 +43,7 @@ namespace Ubiquitous
                     out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                Rist<SourceTargetPair<int>> outEdges =
-                    OneTimeEnumerable<SourceTargetPair<int>>.Create(outEdgesEnumerator).ToRist();
+                Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
 
                 IEnumerable<SourceTargetPair<int>> difference = jaggedOutEndpoints.Except(outEdges);
 
@@ -76,8 +75,7 @@ namespace Ubiquitous
                 if (!edgeList.TryGetOutEdges(v, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator))
                     continue;
 
-                Rist<SourceTargetPair<int>> outEdges =
-                    OneTimeEnumerable<SourceTargetPair<int>>.Create(outEdgesEnumerator).ToRist();
+                Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
 
                 bool hasOutEdges =
                     jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);

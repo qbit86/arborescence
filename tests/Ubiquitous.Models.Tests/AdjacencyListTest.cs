@@ -32,12 +32,12 @@ namespace Ubiquitous
                 if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
                     continue;
 
-                Rist<int> jaggedOutEdges = OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator).ToRist();
+                Rist<int> jaggedOutEdges = RistFactory<int>.Create(jaggedOutEdgesEnumerator);
 
                 bool hasOutEdges = adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                Rist<int> outEdges = OneTimeEnumerable<int>.Create(outEdgesEnumerator).ToRist();
+                Rist<int> outEdges = RistFactory<int>.Create(outEdgesEnumerator);
 
                 IEnumerable<int> difference = jaggedOutEdges.Except(outEdges);
 
@@ -69,13 +69,13 @@ namespace Ubiquitous
                 if (!adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator))
                     continue;
 
-                Rist<int> outEdges = OneTimeEnumerable<int>.Create(outEdgesEnumerator).ToRist();
+                Rist<int> outEdges = RistFactory<int>.Create(outEdgesEnumerator);
 
                 bool hasOutEdges =
                     jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
-                Rist<int> jaggedOutEdges = OneTimeEnumerable<int>.Create(jaggedOutEdgesEnumerator).ToRist();
+                Rist<int> jaggedOutEdges = RistFactory<int>.Create(jaggedOutEdgesEnumerator);
 
                 IEnumerable<int> difference = outEdges.Except(jaggedOutEdges);
 
