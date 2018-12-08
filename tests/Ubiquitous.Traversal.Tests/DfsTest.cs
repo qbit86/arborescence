@@ -103,8 +103,10 @@
 
             // Act
 
-            Rist<Step<DfsStepKind, int, int>> baselineSteps = BaselineDfs.Traverse(graph, vertex).ToRist();
-            Rist<Step<DfsStepKind, int, int>> boostSteps = Dfs.Traverse(graph, vertex).ToRist();
+            Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+                BaselineDfs.Traverse(graph, vertex).GetEnumerator());
+            Rist<Step<DfsStepKind, int, int>> boostSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+                Dfs.Traverse(graph, vertex).GetEnumerator());
 
             // Assert
 
@@ -150,9 +152,10 @@
 
             // Act
 
-            Rist<Step<DfsStepKind, int, int>> baselineSteps =
-                BaselineMultipleSourceDfs.Traverse(graph, vertices).ToRist();
-            Rist<Step<DfsStepKind, int, int>> boostSteps = MultipleSourceDfs.Traverse(graph, vertices).ToRist();
+            Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+                BaselineMultipleSourceDfs.Traverse(graph, vertices).GetEnumerator());
+            Rist<Step<DfsStepKind, int, int>> boostSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+                MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator());
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
             int actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
