@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Misnomer;
-    using Misnomer.Extensions;
     using Models;
     using Traversal.Advanced;
     using Xunit;
