@@ -3,9 +3,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using System.Linq;
     using Misnomer;
-    using Misnomer.Extensions;
     using Models;
-    using Workbench;
     using Xunit;
 
     public sealed class AdjacencyListTest
