@@ -88,8 +88,14 @@
 
             ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
 
+            if (_sources.Buffer != null)
+                ArrayPool<int>.Shared.Return(_sources.Buffer);
             _sources = default;
+
+            if (_targets.Buffer != null)
+                ArrayPool<int>.Shared.Return(_targets.Buffer);
             _targets = default;
+
             OutEdges = null;
 
             return new JaggedAdjacencyListIncidenceGraph(endpoints, outEdges);
