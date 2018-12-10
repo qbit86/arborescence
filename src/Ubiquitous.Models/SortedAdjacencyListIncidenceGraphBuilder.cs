@@ -80,17 +80,18 @@ namespace Ubiquitous.Models
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_orderedSources.Count == _targets.Count);
-            var storage = new int[1 + VertexUpperBound + _targets.Count + _orderedSources.Count];
-            storage[0] = VertexUpperBound;
+            int vertexUpperBound = VertexUpperBound;
+            var storage = new int[1 + vertexUpperBound + _targets.Count + _orderedSources.Count];
+            storage[0] = vertexUpperBound;
 
             ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
-            targetsBuffer.CopyTo(storage.AsSpan(1 + VertexUpperBound, _targets.Count));
+            targetsBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound, _targets.Count));
             if (_targets.Buffer != null)
                 ArrayPool<int>.Shared.Return(_targets.Buffer);
             _targets = default;
 
             ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
-            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + VertexUpperBound + _targets.Count, _orderedSources.Count));
+            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound + _targets.Count, _orderedSources.Count));
             if (_orderedSources.Buffer != null)
                 ArrayPool<int>.Shared.Return(_orderedSources.Buffer);
             _orderedSources = default;
@@ -102,7 +103,7 @@ namespace Ubiquitous.Models
                     EdgeUpperBounds[v] = EdgeUpperBounds[v - 1];
             }
 
-            EdgeUpperBounds.CopyTo(storage.AsSpan(1, VertexUpperBound));
+            EdgeUpperBounds.CopyTo(storage.AsSpan(1, vertexUpperBound));
             EdgeUpperBounds = null;
 
             _lastSource = 0;
