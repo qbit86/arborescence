@@ -85,12 +85,14 @@ namespace Ubiquitous.Models
 
             ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
             targetsBuffer.CopyTo(storage.AsSpan(1 + VertexUpperBound, _targets.Count));
-            ArrayPool<int>.Shared.Return(_targets.Buffer);
+            if (_targets.Buffer != null)
+                ArrayPool<int>.Shared.Return(_targets.Buffer);
             _targets = default;
 
             ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
             orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + VertexUpperBound + _targets.Count, _orderedSources.Count));
-            ArrayPool<int>.Shared.Return(_orderedSources.Buffer);
+            if (_orderedSources.Buffer != null)
+                ArrayPool<int>.Shared.Return(_orderedSources.Buffer);
             _orderedSources = default;
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.

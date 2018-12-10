@@ -86,7 +86,6 @@ namespace Ubiquitous.Models
         {
             Assert(_sources.Count == _targets.Count);
             var storage = new int[1 + 2 * VertexUpperBound + _sources.Count + _targets.Count + _sources.Count];
-
             storage[0] = VertexUpperBound;
 
             ReadOnlySpan<ArrayBuilder<int>> outEdges = OutEdges.AsSpan();
@@ -101,7 +100,7 @@ namespace Ubiquitous.Models
                 destEdgeBounds[2 * s] = finalLeftBound;
                 destEdgeBounds[2 * s + 1] = currentOutEdges.Length;
                 currentBound += currentOutEdges.Length;
-                if (outEdges[s].Count > 0)
+                if (outEdges[s].Buffer != null)
                     ArrayPool<int>.Shared.Return(outEdges[s].Buffer);
             }
 
@@ -109,17 +108,17 @@ namespace Ubiquitous.Models
 
             Span<int> destTargets = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count, _targets.Count);
             _targets.AsSpan().CopyTo(destTargets);
+            if (_targets.Buffer != null)
+                ArrayPool<int>.Shared.Return(_targets.Buffer);
+            _targets = default;
 
             Span<int> destSources = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count + _targets.Count,
                 _sources.Count);
             _sources.AsSpan().CopyTo(destSources);
-
-            if (_sources.Count > 0)
+            if (_sources.Buffer != null)
                 ArrayPool<int>.Shared.Return(_sources.Buffer);
             _sources = default;
-            if (_targets.Count > 0)
-                ArrayPool<int>.Shared.Return(_targets.Buffer);
-            _targets = default;
+
             OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
             VertexUpperBound = 0;
 
