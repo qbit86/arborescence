@@ -1,6 +1,7 @@
 namespace Ubiquitous.Models
 {
     using System;
+    using System.Buffers;
     using static System.Diagnostics.Debug;
 
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
@@ -80,9 +81,17 @@ namespace Ubiquitous.Models
         {
             Assert(_orderedSources.Count == _targets.Count);
             var storage = new int[1 + VertexUpperBound + _targets.Count + _orderedSources.Count];
+            storage[0] = VertexUpperBound;
 
-            int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
-            int[] orderedSourcesBuffer = _orderedSources.Buffer ?? ArrayBuilder<int>.EmptyArray;
+            ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
+            targetsBuffer.CopyTo(storage.AsSpan(1 + VertexUpperBound, _targets.Count));
+            ArrayPool<int>.Shared.Return(_targets.Buffer);
+            _targets = default;
+
+            ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
+            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + VertexUpperBound + _targets.Count, _orderedSources.Count));
+            ArrayPool<int>.Shared.Return(_orderedSources.Buffer);
+            _orderedSources = default;
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.
             for (int v = 1; v < EdgeUpperBounds.Length; ++v)
@@ -91,15 +100,10 @@ namespace Ubiquitous.Models
                     EdgeUpperBounds[v] = EdgeUpperBounds[v - 1];
             }
 
-            storage[0] = VertexUpperBound;
-            Array.Copy(EdgeUpperBounds, 0, storage, 1, VertexUpperBound);
-            Array.Copy(targetsBuffer, 0, storage, 1 + VertexUpperBound, _targets.Count);
-            Array.Copy(orderedSourcesBuffer, 0, storage, 1 + VertexUpperBound + _targets.Count, _orderedSources.Count);
-
-            _orderedSources = default;
-            _targets = default;
-            _lastSource = 0;
+            EdgeUpperBounds.CopyTo(storage.AsSpan(1, VertexUpperBound));
             EdgeUpperBounds = null;
+
+            _lastSource = 0;
 
             return new SortedAdjacencyListIncidenceGraph(storage);
         }
