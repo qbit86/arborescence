@@ -104,7 +104,6 @@
 
             var result = new EdgeListIncidenceGraph(VertexUpperBound, storage);
 
-            _initialOutDegree = DefaultInitialOutDegree;
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
             _edgeCount = 0;
 

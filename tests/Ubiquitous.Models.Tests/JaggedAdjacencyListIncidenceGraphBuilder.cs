@@ -88,7 +88,6 @@
 
             ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
 
-            _initialOutDegree = DefaultInitialOutDegree;
             _sources = default;
             _targets = default;
             OutEdges = null;
