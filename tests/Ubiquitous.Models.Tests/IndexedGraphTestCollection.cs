@@ -7,7 +7,7 @@ namespace Ubiquitous
     public sealed class IndexedGraphTestCollection : IEnumerable<object[]>
     {
         private const int LowerBound = 1;
-        private const int UpperBound = 6;
+        private const int UpperBound = 7;
 
         public IEnumerator<object[]> GetEnumerator()
         {
