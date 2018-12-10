@@ -104,7 +104,9 @@ namespace Ubiquitous.Models
                     ArrayPool<int>.Shared.Return(outEdges[s].Buffer);
             }
 
+            // TODO: Clear on return to pool.
             Array.Clear(OutEdges, 0, OutEdges.Length);
+            OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
 
             Span<int> destTargets = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count, _targets.Count);
             _targets.AsSpan().CopyTo(destTargets);
@@ -119,7 +121,6 @@ namespace Ubiquitous.Models
                 ArrayPool<int>.Shared.Return(_sources.Buffer);
             _sources = default;
 
-            OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
             VertexUpperBound = 0;
 
             return new AdjacencyListIncidenceGraph(storage);

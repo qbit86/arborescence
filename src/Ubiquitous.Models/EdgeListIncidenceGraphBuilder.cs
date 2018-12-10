@@ -81,11 +81,12 @@
 
         public EdgeListIncidenceGraph ToGraph()
         {
-            var storage = new SourceTargetPair<int>[_edgeCount + VertexUpperBound];
+            int vertexUpperBound = VertexUpperBound;
+            var storage = new SourceTargetPair<int>[_edgeCount + vertexUpperBound];
             Span<SourceTargetPair<int>> destReorderedEdges = storage.AsSpan(0, _edgeCount);
-            Span<SourceTargetPair<int>> destEdgeBounds = storage.AsSpan(_edgeCount, VertexUpperBound);
+            Span<SourceTargetPair<int>> destEdgeBounds = storage.AsSpan(_edgeCount, vertexUpperBound);
 
-            for (int s = 0, currentOffset = 0; s != VertexUpperBound; ++s)
+            for (int s = 0, currentOffset = 0; s != vertexUpperBound; ++s)
             {
                 ReadOnlySpan<SourceTargetPair<int>> currentOutEdges = _outEdges[s].AsSpan();
                 Span<SourceTargetPair<int>> destOutEdges =
@@ -100,14 +101,11 @@
             }
 
             if (_outEdges.Array != null)
-                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array);
-
-            var result = new EdgeListIncidenceGraph(VertexUpperBound, storage);
-
+                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
             _edgeCount = 0;
 
-            return result;
+            return new EdgeListIncidenceGraph(vertexUpperBound, storage);
         }
     }
 }
