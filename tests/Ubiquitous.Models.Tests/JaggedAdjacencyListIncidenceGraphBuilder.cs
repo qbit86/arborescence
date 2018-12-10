@@ -77,13 +77,13 @@
         public JaggedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_sources.Count == _targets.Count);
-            int[] targetsBuffer = _targets.Buffer ?? ArrayBuilder<int>.EmptyArray;
-            int[] sourcesBuffer = _sources.Buffer ?? ArrayBuilder<int>.EmptyArray;
+            ReadOnlySpan<int> targetsBuffer = new Span<int>(_targets.Buffer, 0, _targets.Count);
+            ReadOnlySpan<int> sourcesBuffer = new Span<int>(_sources.Buffer, 0, _sources.Count);
             int[] endpoints = _targets.Count > 0 ? new int[_targets.Count * 2] : ArrayBuilder<int>.EmptyArray;
             if (endpoints.Length > 0)
             {
-                Array.Copy(targetsBuffer, 0, endpoints, 0, _targets.Count);
-                Array.Copy(sourcesBuffer, 0, endpoints, _targets.Count, _sources.Count);
+                targetsBuffer.CopyTo(endpoints.AsSpan(0, _targets.Count));
+                sourcesBuffer.CopyTo(endpoints.AsSpan(_targets.Count, _sources.Count));
             }
 
             ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
