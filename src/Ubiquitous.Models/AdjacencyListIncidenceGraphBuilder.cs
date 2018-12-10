@@ -1,6 +1,7 @@
 namespace Ubiquitous.Models
 {
     using System;
+    using System.Buffers;
     using static System.Diagnostics.Debug;
 
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
@@ -100,7 +101,11 @@ namespace Ubiquitous.Models
                 destEdgeBounds[2 * s] = finalLeftBound;
                 destEdgeBounds[2 * s + 1] = currentOutEdges.Length;
                 currentBound += currentOutEdges.Length;
+                if (outEdges[s].Count > 0)
+                    ArrayPool<int>.Shared.Return(outEdges[s].Buffer);
             }
+
+            Array.Clear(OutEdges, 0, OutEdges.Length);
 
             Span<int> destTargets = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count, _targets.Count);
             _targets.AsSpan().CopyTo(destTargets);
@@ -109,8 +114,11 @@ namespace Ubiquitous.Models
                 _sources.Count);
             _sources.AsSpan().CopyTo(destSources);
 
-            _initialOutDegree = DefaultInitialOutDegree;
+            if (_sources.Count > 0)
+                ArrayPool<int>.Shared.Return(_sources.Buffer);
             _sources = default;
+            if (_targets.Count > 0)
+                ArrayPool<int>.Shared.Return(_targets.Buffer);
             _targets = default;
             OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
             VertexUpperBound = 0;
