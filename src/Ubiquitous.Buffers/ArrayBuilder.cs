@@ -137,6 +137,21 @@ namespace Ubiquitous
             _array[_count++] = item;
         }
 
+        /// <summary>
+        /// Returns the backing array to the pool.
+        /// </summary>
+        /// <param name="clearArray">
+        /// Indicates whether the contents of the backing array should be cleared before reuse.
+        /// </param>
+        public void Dispose(bool clearArray)
+        {
+            if (_array == null)
+                return;
+
+            ArrayPool<T>.Shared.Return(_array, clearArray);
+            this = default;
+        }
+
         private void EnsureCapacity(int minimum)
         {
             Debug.Assert(minimum > Capacity);
