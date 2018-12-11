@@ -31,7 +31,7 @@ namespace Ubiquitous.Models
             OutEdges = new ArrayBuilder<int>[vertexUpperBound];
         }
 
-        public int VertexUpperBound { get; set; }
+        public int VertexUpperBound { get; }
 
         public int InitialOutDegree
         {
@@ -120,8 +120,6 @@ namespace Ubiquitous.Models
             if (_sources.Buffer != null)
                 ArrayPool<int>.Shared.Return(_sources.Buffer);
             _sources = default;
-
-            VertexUpperBound = 0;
 
             return new AdjacencyListIncidenceGraph(storage);
         }
