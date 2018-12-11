@@ -18,12 +18,14 @@
                 throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            ArrayBuilder<SourceTargetPair<int>>[] outEdges =
-                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Rent(vertexUpperBound);
+            ArrayBuilder<SourceTargetPair<int>>[] outEdges = Pool.Rent(vertexUpperBound);
             Array.Clear(outEdges, 0, vertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, vertexUpperBound);
             _edgeCount = 0;
         }
+
+        private static ArrayPool<ArrayBuilder<SourceTargetPair<int>>> Pool =>
+            ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared;
 
         public int VertexUpperBound => _outEdges.Count;
 
@@ -96,12 +98,11 @@
                 currentOffset += currentOutEdges.Length;
                 destEdgeBounds[s] = SourceTargetPair.Create(lowerBound, currentOutEdges.Length);
 
-                if (_outEdges[s].Buffer != null)
-                    ArrayPool<SourceTargetPair<int>>.Shared.Return(_outEdges[s].Buffer);
+                _outEdges[s].Dispose(false);
             }
 
             if (_outEdges.Array != null)
-                ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared.Return(_outEdges.Array, true);
+                Pool.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
             _edgeCount = 0;
 
