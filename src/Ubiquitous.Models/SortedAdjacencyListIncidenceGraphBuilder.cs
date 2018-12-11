@@ -1,7 +1,6 @@
 namespace Ubiquitous.Models
 {
     using System;
-    using System.Buffers;
     using static System.Diagnostics.Debug;
 
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
@@ -86,15 +85,11 @@ namespace Ubiquitous.Models
 
             ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
             targetsBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound, _targets.Count));
-            if (_targets.Buffer != null)
-                ArrayPool<int>.Shared.Return(_targets.Buffer);
-            _targets = default;
+            _targets.Dispose(false);
 
             ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
             orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound + _targets.Count, _orderedSources.Count));
-            if (_orderedSources.Buffer != null)
-                ArrayPool<int>.Shared.Return(_orderedSources.Buffer);
-            _orderedSources = default;
+            _orderedSources.Dispose(false);
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.
             for (int v = 1; v < EdgeUpperBounds.Length; ++v)
