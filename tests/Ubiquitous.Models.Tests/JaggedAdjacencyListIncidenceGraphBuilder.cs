@@ -30,6 +30,8 @@
             OutEdges = new ArrayPrefix<int>[vertexUpperBound];
         }
 
+        private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
+
         public int VertexUpperBound => OutEdges?.Length ?? 0;
 
         public int InitialOutDegree
@@ -66,7 +68,7 @@
             _targets.Add(target);
 
             if (OutEdges[source].Array == null)
-                OutEdges[source] = new ArrayPrefix<int>(ArrayPool<int>.Shared.Rent(InitialOutDegree), 0);
+                OutEdges[source] = new ArrayPrefix<int>(Pool.Rent(InitialOutDegree), 0);
 
             ArrayPrefixBuilder.Add(ref OutEdges[source], newEdgeIndex);
 
@@ -89,11 +91,11 @@
             ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
 
             if (_sources.Buffer != null)
-                ArrayPool<int>.Shared.Return(_sources.Buffer);
+                Pool.Return(_sources.Buffer);
             _sources = default;
 
             if (_targets.Buffer != null)
-                ArrayPool<int>.Shared.Return(_targets.Buffer);
+                Pool.Return(_targets.Buffer);
             _targets = default;
 
             OutEdges = null;
