@@ -147,11 +147,11 @@ namespace Ubiquitous
         /// </param>
         public void Dispose(bool clearArray)
         {
-            if (_array == null)
-                return;
-
-            Pool.Return(_array, clearArray);
+            T[] toReturn = _array;
             this = default;
+
+            if (toReturn != null)
+                Pool.Return(toReturn, clearArray);
         }
 
         private void EnsureCapacity(int minimum)
