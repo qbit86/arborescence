@@ -14,6 +14,8 @@
             Count = count;
         }
 
+        private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
+
         public int Count { get; }
 
         public bool TryGet(ArrayPrefix<T> map, int key, out T value)
@@ -39,20 +41,20 @@
 
         public ArrayPrefix<T> Acquire()
         {
-            T[] array = ArrayPool<T>.Shared.Rent(Count);
+            T[] array = Pool.Rent(Count);
             Array.Clear(array, 0, Count);
             return new ArrayPrefix<T>(array, Count);
         }
 
         public void Release(ArrayPrefix<T> value)
         {
-            ArrayPool<T>.Shared.Return(value.Array, true);
+            Pool.Return(value.Array, true);
         }
 
         public void Warmup()
         {
-            T[] array = ArrayPool<T>.Shared.Rent(Count);
-            ArrayPool<T>.Shared.Return(array, true);
+            T[] array = Pool.Rent(Count);
+            Pool.Return(array, true);
         }
     }
 }
