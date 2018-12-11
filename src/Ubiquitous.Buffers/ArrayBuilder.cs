@@ -32,10 +32,12 @@ namespace Ubiquitous
         {
             Debug.Assert(capacity >= 0);
             if (capacity > 0)
-                _array = ArrayPool<T>.Shared.Rent(capacity);
+                _array = Pool.Rent(capacity);
         }
 
         public static T[] EmptyArray => s_emptyArray;
+
+        private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
 
         /// <summary>
         /// Gets the number of items this instance can store without re-allocating,
@@ -110,9 +112,9 @@ namespace Ubiquitous
             T[] result = _array;
             if (_count < result.Length)
             {
-                result = ArrayPool<T>.Shared.Rent(_count);
+                result = Pool.Rent(_count);
                 Array.Copy(_array, 0, result, 0, _count);
-                ArrayPool<T>.Shared.Return(_array, true);
+                Pool.Return(_array, true);
             }
 
             // Try to prevent callers from using the ArrayBuilder after ToArray, if _count != 0.
@@ -148,7 +150,7 @@ namespace Ubiquitous
             if (_array == null)
                 return;
 
-            ArrayPool<T>.Shared.Return(_array, clearArray);
+            Pool.Return(_array, clearArray);
             this = default;
         }
 
@@ -164,11 +166,11 @@ namespace Ubiquitous
 
             nextCapacity = Math.Max(nextCapacity, minimum);
 
-            T[] next = ArrayPool<T>.Shared.Rent(nextCapacity);
+            T[] next = Pool.Rent(nextCapacity);
             if (_count > 0)
             {
                 Array.Copy(_array, 0, next, 0, _count);
-                ArrayPool<T>.Shared.Return(_array, true);
+                Pool.Return(_array, true);
             }
 
             _array = next;
