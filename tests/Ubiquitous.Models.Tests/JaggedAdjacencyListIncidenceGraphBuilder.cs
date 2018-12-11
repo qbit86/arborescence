@@ -90,13 +90,8 @@
 
             ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
 
-            if (_sources.Buffer != null)
-                Pool.Return(_sources.Buffer);
-            _sources = default;
-
-            if (_targets.Buffer != null)
-                Pool.Return(_targets.Buffer);
-            _targets = default;
+            _sources.Dispose(false);
+            _targets.Dispose(false);
 
             OutEdges = null;
 
