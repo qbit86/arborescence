@@ -8,7 +8,7 @@
     <Authors>Viktor T.</Authors>
     <Title>Graph abstractions</Title>
     <Description>Graph abstractions.</Description>
-    <PackageLicenseUrl>https://github.com/qbit86/ubiquitous-graphs/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
