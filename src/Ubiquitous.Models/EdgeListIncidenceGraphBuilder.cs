@@ -6,7 +6,6 @@
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, SourceTargetPair<int>>
     {
         private const int DefaultInitialOutDegree = 4;
-        private const int MaxCoreClrArrayLength = 0x7fefffff;
 
         private int _initialOutDegree;
         private ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>> _outEdges;
@@ -53,12 +52,6 @@
             if (max >= VertexUpperBound)
             {
                 int newVertexUpperBound = max + 1;
-                if (newVertexUpperBound + _edgeCount > MaxCoreClrArrayLength)
-                {
-                    edge = SourceTargetPair.Create(int.MinValue, int.MinValue);
-                    return false;
-                }
-
                 int oldCount = _outEdges.Count;
                 ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound);
                 Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
