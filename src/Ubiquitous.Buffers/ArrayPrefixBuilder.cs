@@ -19,12 +19,12 @@ namespace Ubiquitous
             UncheckedAdd(ref arrayPrefix, item);
         }
 
-        internal static void EnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int minimum)
+        internal static void EnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int minimum, bool clearArray)
         {
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
             if (capacity < minimum)
-                UncheckedEnsureCapacity(ref arrayPrefix, capacity, minimum, true);
+                UncheckedEnsureCapacity(ref arrayPrefix, capacity, minimum, clearArray);
         }
 
         private static void UncheckedAdd<T>(ref ArrayPrefix<T> arrayPrefix, T item)
