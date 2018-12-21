@@ -29,10 +29,12 @@ namespace Ubiquitous.Models
             int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
             _sources = new ArrayBuilder<int>(initialEdgeCount);
             _targets = new ArrayBuilder<int>(initialEdgeCount);
-            ArrayBuilder<int>[] outEdges = ArrayPool<ArrayBuilder<int>>.Shared.Rent(vertexUpperBound);
+            ArrayBuilder<int>[] outEdges = Pool.Rent(vertexUpperBound);
             Array.Clear(outEdges, 0, vertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayBuilder<int>>(outEdges, vertexUpperBound);
         }
+
+        private static ArrayPool<ArrayBuilder<int>> Pool => ArrayPool<ArrayBuilder<int>>.Shared;
 
         public int VertexUpperBound => _outEdges.Count;
 
@@ -109,7 +111,7 @@ namespace Ubiquitous.Models
             }
 
             if (_outEdges.Array != null)
-                ArrayPool<ArrayBuilder<int>>.Shared.Return(_outEdges.Array, true);
+                Pool.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
             Span<int> destTargets = storage.AsSpan(1 + 2 * vertexUpperBound + _sources.Count, _targets.Count);
