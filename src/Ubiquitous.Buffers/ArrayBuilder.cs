@@ -70,10 +70,10 @@ namespace Ubiquitous
         /// Adds an item to the backing array, resizing it if necessary.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        public void Add(T item)
+        public void Add(T item, bool clearArray = false)
         {
             if (_count == Capacity)
-                EnsureCapacity(_count + 1, true);
+                EnsureCapacity(_count + 1, clearArray);
 
             UncheckedAdd(item);
         }
