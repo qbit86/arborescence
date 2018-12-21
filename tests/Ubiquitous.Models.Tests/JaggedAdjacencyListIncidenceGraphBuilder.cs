@@ -45,16 +45,25 @@
 
         public bool TryAdd(int source, int target, out int edge)
         {
-            if ((uint)source >= (uint)VertexUpperBound)
+            if (source < 0)
             {
                 edge = -1;
                 return false;
             }
 
-            if ((uint)target >= (uint)VertexUpperBound)
+            if (target < 0)
             {
                 edge = -2;
                 return false;
+            }
+
+            int max = Math.Max(source, target);
+            if (max >= VertexUpperBound)
+            {
+                int newVertexUpperBound = max + 1;
+                int oldCount = _outEdges.Count;
+                ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound);
+                Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
             Assert(_sources.Count == _targets.Count);
