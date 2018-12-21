@@ -73,7 +73,7 @@ namespace Ubiquitous
         public void Add(T item)
         {
             if (_count == Capacity)
-                EnsureCapacity(_count + 1);
+                EnsureCapacity(_count + 1, true);
 
             UncheckedAdd(item);
         }
@@ -154,7 +154,7 @@ namespace Ubiquitous
                 Pool.Return(toReturn, clearArray);
         }
 
-        private void EnsureCapacity(int minimum)
+        private void EnsureCapacity(int minimum, bool clearArray)
         {
             Debug.Assert(minimum > Capacity);
 
@@ -170,7 +170,7 @@ namespace Ubiquitous
             if (_count > 0)
             {
                 Array.Copy(_array, 0, next, 0, _count);
-                Pool.Return(_array, true);
+                Pool.Return(_array, clearArray);
             }
 
             _array = next;

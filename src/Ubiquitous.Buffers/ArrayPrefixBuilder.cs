@@ -14,7 +14,7 @@ namespace Ubiquitous
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
             if (arrayPrefix.Count == capacity)
-                UncheckedEnsureCapacity(ref arrayPrefix, capacity, arrayPrefix.Count + 1);
+                UncheckedEnsureCapacity(ref arrayPrefix, capacity, arrayPrefix.Count + 1, true);
 
             UncheckedAdd(ref arrayPrefix, item);
         }
@@ -24,7 +24,7 @@ namespace Ubiquitous
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
             if (capacity < minimum)
-                UncheckedEnsureCapacity(ref arrayPrefix, capacity, minimum);
+                UncheckedEnsureCapacity(ref arrayPrefix, capacity, minimum, true);
         }
 
         private static void UncheckedAdd<T>(ref ArrayPrefix<T> arrayPrefix, T item)
@@ -36,7 +36,8 @@ namespace Ubiquitous
             arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, arrayPrefix.Count + 1);
         }
 
-        private static void UncheckedEnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum)
+        private static void UncheckedEnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum,
+            bool clearArray)
         {
             Assert(minimum > capacity, "minimum > capacity");
 
@@ -52,7 +53,7 @@ namespace Ubiquitous
             {
                 Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
                 Array.Copy(arrayPrefix.Array, 0, next, 0, arrayPrefix.Count);
-                ArrayPool<T>.Shared.Return(arrayPrefix.Array, true);
+                ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
             }
 
             arrayPrefix = new ArrayPrefix<T>(next, arrayPrefix.Count);
