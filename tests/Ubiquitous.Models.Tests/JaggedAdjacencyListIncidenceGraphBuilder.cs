@@ -26,8 +26,9 @@
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            _sources = new ArrayBuilder<int>(edgeCount);
-            _targets = new ArrayBuilder<int>(edgeCount);
+            int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
+            _sources = new ArrayBuilder<int>(initialEdgeCount);
+            _targets = new ArrayBuilder<int>(initialEdgeCount);
             ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(vertexUpperBound);
             Array.Clear(outEdges, 0, vertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, vertexUpperBound);
@@ -97,7 +98,7 @@
 
             if (_outEdges.Array != null)
                 ArrayPool<ArrayPrefix<int>>.Shared.Return(_outEdges.Array, true);
-            _outEdges = default;
+            _outEdges = ArrayPrefix<ArrayPrefix<int>>.Empty;
 
             _sources.Dispose(false);
             _targets.Dispose(false);
