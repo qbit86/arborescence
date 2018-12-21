@@ -75,7 +75,7 @@
             if (_outEdges[source].Array == null)
                 _outEdges[source] = new ArrayPrefix<int>(Pool.Rent(InitialOutDegree), 0);
 
-            ArrayPrefixBuilder.Add(ref _outEdges.Array[source], newEdgeIndex);
+            ArrayPrefixBuilder.Add(ref _outEdges.Array[source], newEdgeIndex, true);
 
             edge = newEdgeIndex;
             return true;
