@@ -1,7 +1,7 @@
 namespace Ubiquitous
 {
-    public interface IBidirectionalGraph<TVertex, in TEdge, TEdges> : IIncidenceGraph<TVertex, TEdge, TEdges>
+    public interface IBidirectionalGraph<TVertex, in TEdge, TEdges> : IGraph<TVertex, TEdge>,
+        IBidirectional<TVertex, TEdges>
     {
-        bool TryGetInEdges(TVertex vertex, out TEdges edges);
     }
 }

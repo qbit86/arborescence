@@ -5,7 +5,7 @@ namespace Ubiquitous.Models
         IGetTargetPolicy<TGraph, int, SourceTargetPair<int>>,
         IGetOutEdgesPolicy<TGraph, int, TEdges>,
         IGetInEdgesPolicy<TGraph, int, TEdges>
-        where TGraph : IBidirectionalGraph<int, SourceTargetPair<int>, TEdges>
+        where TGraph : IBidirectional<int, TEdges>
     {
         public bool TryGetSource(TGraph graph, SourceTargetPair<int> edge, out int source)
         {

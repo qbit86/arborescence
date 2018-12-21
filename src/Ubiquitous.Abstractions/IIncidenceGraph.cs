@@ -1,7 +1,6 @@
 namespace Ubiquitous
 {
-    public interface IIncidenceGraph<TVertex, in TEdge, TEdges> : IGraph<TVertex, TEdge>
+    public interface IIncidenceGraph<TVertex, in TEdge, TEdges> : IGraph<TVertex, TEdge>, IIncidence<TVertex, TEdges>
     {
-        bool TryGetOutEdges(TVertex vertex, out TEdges edges);
     }
 }
