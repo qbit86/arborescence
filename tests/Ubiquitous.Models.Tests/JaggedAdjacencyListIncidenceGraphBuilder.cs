@@ -92,7 +92,7 @@
                 sourcesBuffer.CopyTo(endpoints.AsSpan(_targets.Count, _sources.Count));
             }
 
-            ArrayPrefix<int>[] outEdges = new ArrayPrefix<int>[_outEdges.Count];
+            var outEdges = new ArrayPrefix<int>[_outEdges.Count];
             _outEdges.CopyTo(outEdges);
 
             if (_outEdges.Array != null)
