@@ -1,6 +1,7 @@
 namespace Ubiquitous.Models
 {
     using System;
+    using System.Buffers;
     using static System.Diagnostics.Debug;
 
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
@@ -10,6 +11,7 @@ namespace Ubiquitous.Models
         private int _initialOutDegree;
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
+        private ArrayPrefix<ArrayBuilder<int>> _outEdges;
 
         public AdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
         {
@@ -24,13 +26,15 @@ namespace Ubiquitous.Models
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            _sources = new ArrayBuilder<int>(edgeCount);
-            _targets = new ArrayBuilder<int>(edgeCount);
-            VertexUpperBound = vertexUpperBound;
-            OutEdges = new ArrayBuilder<int>[vertexUpperBound];
+            int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
+            _sources = new ArrayBuilder<int>(initialEdgeCount);
+            _targets = new ArrayBuilder<int>(initialEdgeCount);
+            ArrayBuilder<int>[] outEdges = ArrayPool<ArrayBuilder<int>>.Shared.Rent(vertexUpperBound);
+            Array.Clear(outEdges, 0, vertexUpperBound);
+            _outEdges = new ArrayPrefix<ArrayBuilder<int>>(outEdges, vertexUpperBound);
         }
 
-        public int VertexUpperBound { get; }
+        public int VertexUpperBound => _outEdges.Count;
 
         public int InitialOutDegree
         {
@@ -38,26 +42,27 @@ namespace Ubiquitous.Models
             set => _initialOutDegree = value;
         }
 
-        private ArrayBuilder<int>[] OutEdges { get; set; }
-
         public bool TryAdd(int source, int target, out int edge)
         {
-            if (OutEdges == null)
-            {
-                edge = int.MinValue;
-                return false;
-            }
-
-            if ((uint)source >= (uint)VertexUpperBound)
+            if (source < 0)
             {
                 edge = -1;
                 return false;
             }
 
-            if ((uint)target >= (uint)VertexUpperBound)
+            if (target < 0)
             {
                 edge = -2;
                 return false;
+            }
+
+            int max = Math.Max(source, target);
+            if (max >= VertexUpperBound)
+            {
+                int newVertexUpperBound = max + 1;
+                int oldCount = _outEdges.Count;
+                ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound);
+                Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
             Assert(_sources.Count == _targets.Count);
@@ -65,10 +70,10 @@ namespace Ubiquitous.Models
             _sources.Add(source);
             _targets.Add(target);
 
-            if (OutEdges[source].Buffer == null)
-                OutEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
+            if (_outEdges[source].Buffer == null)
+                _outEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
 
-            OutEdges[source].Add(newEdgeIndex);
+            _outEdges.Array[source].Add(newEdgeIndex);
 
             edge = newEdgeIndex;
             return true;
@@ -84,33 +89,34 @@ namespace Ubiquitous.Models
         public AdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_sources.Count == _targets.Count);
-            var storage = new int[1 + 2 * VertexUpperBound + _sources.Count + _targets.Count + _sources.Count];
-            storage[0] = VertexUpperBound;
+            int vertexUpperBound = VertexUpperBound;
+            var storage = new int[1 + 2 * vertexUpperBound + _sources.Count + _targets.Count + _sources.Count];
+            storage[0] = vertexUpperBound;
 
-            ReadOnlySpan<ArrayBuilder<int>> outEdges = OutEdges.AsSpan();
-            Span<int> destEdgeBounds = storage.AsSpan(1, 2 * VertexUpperBound);
-            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * VertexUpperBound, _sources.Count);
+            ReadOnlySpan<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
+            Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexUpperBound);
+            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexUpperBound, _sources.Count);
 
             for (int s = 0, currentBound = 0; s != outEdges.Length; ++s)
             {
                 ReadOnlySpan<int> currentOutEdges = outEdges[s].AsSpan();
                 currentOutEdges.CopyTo(destReorderedEdges.Slice(currentBound, currentOutEdges.Length));
-                int finalLeftBound = 1 + 2 * VertexUpperBound + currentBound;
+                int finalLeftBound = 1 + 2 * vertexUpperBound + currentBound;
                 destEdgeBounds[2 * s] = finalLeftBound;
                 destEdgeBounds[2 * s + 1] = currentOutEdges.Length;
                 currentBound += currentOutEdges.Length;
                 outEdges[s].Dispose(false);
             }
 
-            // TODO: Clear on return to pool.
-            Array.Clear(OutEdges, 0, OutEdges.Length);
-            OutEdges = ArrayBuilder<ArrayBuilder<int>>.EmptyArray;
+            if (_outEdges.Array != null)
+                ArrayPool<ArrayBuilder<int>>.Shared.Return(_outEdges.Array, true);
+            _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
-            Span<int> destTargets = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count, _targets.Count);
+            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexUpperBound + _sources.Count, _targets.Count);
             _targets.AsSpan().CopyTo(destTargets);
             _targets.Dispose(false);
 
-            Span<int> destSources = storage.AsSpan(1 + 2 * VertexUpperBound + _sources.Count + _targets.Count,
+            Span<int> destSources = storage.AsSpan(1 + 2 * vertexUpperBound + _sources.Count + _targets.Count,
                 _sources.Count);
             _sources.AsSpan().CopyTo(destSources);
             _sources.Dispose(false);
