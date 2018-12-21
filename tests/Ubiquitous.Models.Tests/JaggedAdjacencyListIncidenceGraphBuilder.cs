@@ -11,6 +11,7 @@
         private int _initialOutDegree;
         private ArrayBuilder<int> _sources;
         private ArrayBuilder<int> _targets;
+        private ArrayPrefix<ArrayPrefix<int>> _outEdges;
 
         public JaggedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
         {
@@ -27,12 +28,14 @@
             _initialOutDegree = DefaultInitialOutDegree;
             _sources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
-            OutEdges = new ArrayPrefix<int>[vertexUpperBound];
+            ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(vertexUpperBound);
+            Array.Clear(outEdges, 0, vertexUpperBound);
+            _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, vertexUpperBound);
         }
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
 
-        public int VertexUpperBound => OutEdges?.Length ?? 0;
+        public int VertexUpperBound => _outEdges.Count;
 
         public int InitialOutDegree
         {
@@ -40,26 +43,27 @@
             set => _initialOutDegree = value;
         }
 
-        private ArrayPrefix<int>[] OutEdges { get; set; }
-
         public bool TryAdd(int source, int target, out int edge)
         {
-            if (OutEdges == null)
-            {
-                edge = int.MinValue;
-                return false;
-            }
-
-            if ((uint)source >= (uint)VertexUpperBound)
+            if (source < 0)
             {
                 edge = -1;
                 return false;
             }
 
-            if ((uint)target >= (uint)VertexUpperBound)
+            if (target < 0)
             {
                 edge = -2;
                 return false;
+            }
+
+            int max = Math.Max(source, target);
+            if (max >= VertexUpperBound)
+            {
+                int newVertexUpperBound = max + 1;
+                int oldCount = _outEdges.Count;
+                ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound);
+                Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
             Assert(_sources.Count == _targets.Count);
@@ -67,10 +71,10 @@
             _sources.Add(source);
             _targets.Add(target);
 
-            if (OutEdges[source].Array == null)
-                OutEdges[source] = new ArrayPrefix<int>(Pool.Rent(InitialOutDegree), 0);
+            if (_outEdges[source].Array == null)
+                _outEdges[source] = new ArrayPrefix<int>(Pool.Rent(InitialOutDegree), 0);
 
-            ArrayPrefixBuilder.Add(ref OutEdges[source], newEdgeIndex);
+            ArrayPrefixBuilder.Add(ref _outEdges.Array[source], newEdgeIndex);
 
             edge = newEdgeIndex;
             return true;
@@ -88,12 +92,15 @@
                 sourcesBuffer.CopyTo(endpoints.AsSpan(_targets.Count, _sources.Count));
             }
 
-            ArrayPrefix<int>[] outEdges = OutEdges ?? ArrayBuilder<ArrayPrefix<int>>.EmptyArray;
+            var outEdges = new ArrayPrefix<int>[_outEdges.Count];
+            _outEdges.CopyTo(outEdges);
+
+            if (_outEdges.Array != null)
+                ArrayPool<ArrayPrefix<int>>.Shared.Return(_outEdges.Array, true);
+            _outEdges = default;
 
             _sources.Dispose(false);
             _targets.Dispose(false);
-
-            OutEdges = null;
 
             return new JaggedAdjacencyListIncidenceGraph(endpoints, outEdges);
         }
