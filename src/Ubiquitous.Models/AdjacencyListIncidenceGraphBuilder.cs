@@ -13,14 +13,14 @@ namespace Ubiquitous.Models
         private ArrayBuilder<int> _targets;
         private ArrayPrefix<ArrayBuilder<int>> _outEdges;
 
-        public AdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
+        public AdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound) : this(initialVertexUpperBound, 0)
         {
         }
 
-        public AdjacencyListIncidenceGraphBuilder(int vertexUpperBound, int edgeCount)
+        public AdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCount)
         {
-            if (vertexUpperBound < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
+            if (initialVertexUpperBound < 0)
+                throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
 
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
@@ -29,9 +29,9 @@ namespace Ubiquitous.Models
             int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
             _sources = new ArrayBuilder<int>(initialEdgeCount);
             _targets = new ArrayBuilder<int>(initialEdgeCount);
-            ArrayBuilder<int>[] outEdges = Pool.Rent(vertexUpperBound);
-            Array.Clear(outEdges, 0, vertexUpperBound);
-            _outEdges = new ArrayPrefix<ArrayBuilder<int>>(outEdges, vertexUpperBound);
+            ArrayBuilder<int>[] outEdges = Pool.Rent(initialVertexUpperBound);
+            Array.Clear(outEdges, 0, initialVertexUpperBound);
+            _outEdges = new ArrayPrefix<ArrayBuilder<int>>(outEdges, initialVertexUpperBound);
         }
 
         private static ArrayPool<ArrayBuilder<int>> Pool => ArrayPool<ArrayBuilder<int>>.Shared;

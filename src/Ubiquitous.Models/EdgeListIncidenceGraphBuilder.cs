@@ -11,15 +11,15 @@
         private ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>> _outEdges;
         private int _edgeCount;
 
-        public EdgeListIncidenceGraphBuilder(int vertexUpperBound)
+        public EdgeListIncidenceGraphBuilder(int initialVertexUpperBound)
         {
-            if (vertexUpperBound < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
+            if (initialVertexUpperBound < 0)
+                throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            ArrayBuilder<SourceTargetPair<int>>[] outEdges = Pool.Rent(vertexUpperBound);
-            Array.Clear(outEdges, 0, vertexUpperBound);
-            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, vertexUpperBound);
+            ArrayBuilder<SourceTargetPair<int>>[] outEdges = Pool.Rent(initialVertexUpperBound);
+            Array.Clear(outEdges, 0, initialVertexUpperBound);
+            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, initialVertexUpperBound);
             _edgeCount = 0;
         }
 

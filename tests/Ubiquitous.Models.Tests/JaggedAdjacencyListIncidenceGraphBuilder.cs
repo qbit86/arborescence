@@ -13,14 +13,14 @@
         private ArrayBuilder<int> _targets;
         private ArrayPrefix<ArrayPrefix<int>> _outEdges;
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound) : this(initialVertexUpperBound, 0)
         {
         }
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound, int edgeCount)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCount)
         {
-            if (vertexUpperBound < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexUpperBound));
+            if (initialVertexUpperBound < 0)
+                throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
 
             if (edgeCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCount));
@@ -29,9 +29,9 @@
             int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
             _sources = new ArrayBuilder<int>(initialEdgeCount);
             _targets = new ArrayBuilder<int>(initialEdgeCount);
-            ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(vertexUpperBound);
-            Array.Clear(outEdges, 0, vertexUpperBound);
-            _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, vertexUpperBound);
+            ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(initialVertexUpperBound);
+            Array.Clear(outEdges, 0, initialVertexUpperBound);
+            _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, initialVertexUpperBound);
         }
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
