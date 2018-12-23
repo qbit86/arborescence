@@ -54,7 +54,7 @@ namespace Ubiquitous.Models
             {
                 int newVertexUpperBound = max + 1;
                 int oldCount = _edgeUpperBounds.Count;
-                ArrayPrefixBuilder.EnsureCapacity(ref _edgeUpperBounds, newVertexUpperBound, true);
+                ArrayPrefixBuilder.Resize(ref _edgeUpperBounds, newVertexUpperBound, true);
                 Array.Clear(_edgeUpperBounds.Array, oldCount, newVertexUpperBound - oldCount);
             }
 

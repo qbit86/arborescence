@@ -53,7 +53,7 @@
             {
                 int newVertexUpperBound = max + 1;
                 int oldCount = _outEdges.Count;
-                ArrayPrefixBuilder.EnsureCapacity(ref _outEdges, newVertexUpperBound, true);
+                ArrayPrefixBuilder.Resize(ref _outEdges, newVertexUpperBound, true);
                 Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
