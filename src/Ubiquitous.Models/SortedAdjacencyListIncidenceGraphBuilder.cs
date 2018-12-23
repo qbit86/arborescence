@@ -78,10 +78,10 @@ namespace Ubiquitous.Models
 
         // Storage layout:
         // vertexUpperBound      targets
-        //         ↓↓↓      ↓↓↓↓↓
-        //         [4][^^^^][bbc][aac]
-        //            ↑↑↑↑↑↑     ↑↑↑↑↑
-        //   edgeUpperBounds     orderedSources
+        //              ↓↓↓      ↓↓↓↓↓
+        //              [4][^^^^][bbc][aac]
+        //                 ↑↑↑↑↑↑     ↑↑↑↑↑
+        //        edgeUpperBounds     orderedSources
 
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
