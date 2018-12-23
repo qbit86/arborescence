@@ -10,19 +10,19 @@ namespace Ubiquitous
 
     public sealed class EdgeListTest
     {
-        private const int VertexUpperBound = 10;
+        private const int InitialVertexUpperBound = 10;
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void EdgeList_ShouldNotBeLess(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName);
 
-            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(VertexUpperBound);
+            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexUpperBound);
             EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 
@@ -60,12 +60,12 @@ namespace Ubiquitous
         public void EdgeList_ShouldNotBeGreater(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName);
 
-            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(VertexUpperBound);
+            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexUpperBound);
             EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 

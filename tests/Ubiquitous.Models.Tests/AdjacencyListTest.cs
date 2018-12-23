@@ -8,19 +8,19 @@ namespace Ubiquitous
 
     public sealed class AdjacencyListTest
     {
-        private const int VertexUpperBound = 10;
+        private const int InitialVertexUpperBound = 10;
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void AdjacencyList_ShouldNotBeLess(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName);
 
-            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             AdjacencyListIncidenceGraph adjacencyList = BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(
                 ref adjacencyListBuilder, testName);
 
@@ -52,12 +52,12 @@ namespace Ubiquitous
         public void AdjacencyList_ShouldNotBeGreater(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName);
 
-            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             AdjacencyListIncidenceGraph adjacencyList =
                 BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(ref adjacencyListBuilder, testName);
 

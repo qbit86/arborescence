@@ -8,19 +8,19 @@ namespace Ubiquitous
 
     public sealed class SortedAdjacencyListTest
     {
-        private const int VertexUpperBound = 10;
+        private const int InitialVertexUpperBound = 10;
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void SortedAdjacencyList_ShouldNotBeLess(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName, true);
 
-            var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList =
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
                     testName, true);
@@ -53,12 +53,12 @@ namespace Ubiquitous
         public void SortedAdjacencyList_ShouldNotBeGreater(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName, true);
 
-            var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(VertexUpperBound);
+            var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList =
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
                     testName, true);
