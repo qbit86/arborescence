@@ -8,7 +8,7 @@ namespace Ubiquitous
 
     public sealed class AdjacencyListTest
     {
-        private const int InitialVertexUpperBound = 10;
+        private const int InitialVertexUpperBound = 4;
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]

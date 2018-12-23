@@ -10,7 +10,7 @@ namespace Ubiquitous
 
     public sealed class EdgeListTest
     {
-        private const int InitialVertexUpperBound = 10;
+        private const int InitialVertexUpperBound = 4;
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
