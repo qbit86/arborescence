@@ -1,12 +1,14 @@
 namespace Ubiquitous.Models
 {
     using System;
+    using System.Buffers;
     using static System.Diagnostics.Debug;
 
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _orderedSources;
         private ArrayBuilder<int> _targets;
+        private ArrayPrefix<int> _edgeUpperBounds;
         private int _lastSource;
 
         public SortedAdjacencyListIncidenceGraphBuilder(int vertexUpperBound) : this(vertexUpperBound, 0)
@@ -24,31 +26,36 @@ namespace Ubiquitous.Models
             _orderedSources = new ArrayBuilder<int>(edgeCount);
             _targets = new ArrayBuilder<int>(edgeCount);
             _lastSource = 0;
-            EdgeUpperBounds = new int[vertexUpperBound];
+            int[] edgeUpperBounds = Pool.Rent(vertexUpperBound);
+            Array.Clear(edgeUpperBounds, 0, vertexUpperBound);
+            _edgeUpperBounds = new ArrayPrefix<int>(edgeUpperBounds, vertexUpperBound);
         }
 
-        public int VertexUpperBound => EdgeUpperBounds?.Length ?? 0;
+        private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
 
-        private int[] EdgeUpperBounds { get; set; }
+        public int VertexUpperBound => _edgeUpperBounds.Count;
 
         public bool TryAdd(int source, int target, out int edge)
         {
-            if (EdgeUpperBounds == null)
-            {
-                edge = int.MinValue;
-                return false;
-            }
-
-            if ((uint)source >= (uint)VertexUpperBound)
+            if (source < 0)
             {
                 edge = -1;
                 return false;
             }
 
-            if ((uint)target >= (uint)VertexUpperBound)
+            if (target < 0)
             {
                 edge = -2;
                 return false;
+            }
+
+            int max = Math.Max(source, target);
+            if (max >= VertexUpperBound)
+            {
+                int newVertexUpperBound = max + 1;
+                int oldCount = _edgeUpperBounds.Count;
+                ArrayPrefixBuilder.EnsureCapacity(ref _edgeUpperBounds, newVertexUpperBound, true);
+                Array.Clear(_edgeUpperBounds.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
             if (source < _lastSource)
@@ -62,7 +69,7 @@ namespace Ubiquitous.Models
             _orderedSources.Add(source);
             _targets.Add(target);
 
-            EdgeUpperBounds[source] = newEdgeIndex + 1;
+            _edgeUpperBounds[source] = newEdgeIndex + 1;
             _lastSource = source;
 
             edge = newEdgeIndex;
@@ -92,14 +99,16 @@ namespace Ubiquitous.Models
             _orderedSources.Dispose(false);
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.
-            for (int v = 1; v < EdgeUpperBounds.Length; ++v)
+            for (int v = 1; v < _edgeUpperBounds.Count; ++v)
             {
-                if (EdgeUpperBounds[v] < EdgeUpperBounds[v - 1])
-                    EdgeUpperBounds[v] = EdgeUpperBounds[v - 1];
+                if (_edgeUpperBounds[v] < _edgeUpperBounds[v - 1])
+                    _edgeUpperBounds[v] = _edgeUpperBounds[v - 1];
             }
 
-            EdgeUpperBounds.CopyTo(storage.AsSpan(1, vertexUpperBound));
-            EdgeUpperBounds = null;
+            _edgeUpperBounds.CopyTo(storage, 1);
+            if (_edgeUpperBounds.Array != null)
+                Pool.Return(_edgeUpperBounds.Array);
+            _edgeUpperBounds = ArrayPrefix<int>.Empty;
 
             _lastSource = 0;
 
