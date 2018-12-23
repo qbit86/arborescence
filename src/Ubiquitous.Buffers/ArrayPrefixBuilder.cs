@@ -9,7 +9,7 @@ namespace Ubiquitous
         private const int DefaultCapacity = 4;
         private const int MaxCoreClrArrayLength = 0x7fefffff; // For byte arrays the limit is slightly larger
 
-        internal static void Add<T>(ref ArrayPrefix<T> arrayPrefix, T item, bool clearArray)
+        internal static ArrayPrefix<T> Add<T>(ArrayPrefix<T> arrayPrefix, T item, bool clearArray)
         {
             int capacity = arrayPrefix.Array?.Length ?? 0;
 
@@ -17,6 +17,7 @@ namespace Ubiquitous
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, arrayPrefix.Count + 1, clearArray);
 
             UncheckedAdd(ref arrayPrefix, item);
+            return arrayPrefix;
         }
 
         internal static ArrayPrefix<T> Resize<T>(ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
