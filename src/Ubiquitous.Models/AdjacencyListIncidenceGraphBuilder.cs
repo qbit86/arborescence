@@ -17,18 +17,18 @@ namespace Ubiquitous.Models
         {
         }
 
-        public AdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCount)
+        public AdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCapacity)
         {
             if (initialVertexUpperBound < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
 
-            if (edgeCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(edgeCount));
+            if (edgeCapacity < 0)
+                throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
-            _sources = new ArrayBuilder<int>(initialEdgeCount);
-            _targets = new ArrayBuilder<int>(initialEdgeCount);
+            int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
+            _sources = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
             ArrayBuilder<int>[] outEdges = Pool.Rent(initialVertexUpperBound);
             Array.Clear(outEdges, 0, initialVertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayBuilder<int>>(outEdges, initialVertexUpperBound);

@@ -17,18 +17,18 @@
         {
         }
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCount)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCapacity)
         {
             if (initialVertexUpperBound < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
 
-            if (edgeCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(edgeCount));
+            if (edgeCapacity < 0)
+                throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            int initialEdgeCount = Math.Max(edgeCount, DefaultInitialOutDegree);
-            _sources = new ArrayBuilder<int>(initialEdgeCount);
-            _targets = new ArrayBuilder<int>(initialEdgeCount);
+            int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
+            _sources = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
             ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(initialVertexUpperBound);
             Array.Clear(outEdges, 0, initialVertexUpperBound);
             _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, initialVertexUpperBound);

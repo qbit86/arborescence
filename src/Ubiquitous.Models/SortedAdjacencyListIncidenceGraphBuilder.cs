@@ -15,16 +15,16 @@ namespace Ubiquitous.Models
         {
         }
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCount)
+        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCapacity)
         {
             if (initialVertexUpperBound < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
 
-            if (edgeCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(edgeCount));
+            if (edgeCapacity < 0)
+                throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-            _orderedSources = new ArrayBuilder<int>(edgeCount);
-            _targets = new ArrayBuilder<int>(edgeCount);
+            _orderedSources = new ArrayBuilder<int>(edgeCapacity);
+            _targets = new ArrayBuilder<int>(edgeCapacity);
             _lastSource = 0;
             int[] edgeUpperBounds = Pool.Rent(initialVertexUpperBound);
             Array.Clear(edgeUpperBounds, 0, initialVertexUpperBound);
