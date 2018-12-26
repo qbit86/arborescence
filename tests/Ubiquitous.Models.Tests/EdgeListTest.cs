@@ -33,8 +33,7 @@ namespace Ubiquitous
                     continue;
 
                 int defensiveCopy = v;
-                Rist<SourceTargetPair<int>> jaggedOutEndpoints = OneTimeEnumerable<int>
-                    .Create(jaggedOutEdgesEnumerator)
+                Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
                     .ToRist();
@@ -82,8 +81,7 @@ namespace Ubiquitous
                 Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
 
                 int defensiveCopy = v;
-                Rist<SourceTargetPair<int>> jaggedOutEndpoints = OneTimeEnumerable<int>
-                    .Create(jaggedOutEdgesEnumerator)
+                Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
                     .ToRist();
