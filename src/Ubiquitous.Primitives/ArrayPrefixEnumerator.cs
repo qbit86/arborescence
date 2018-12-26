@@ -1,5 +1,6 @@
 namespace Ubiquitous
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -53,6 +54,10 @@ namespace Ubiquitous
 
         object IEnumerator.Current => Current;
 
+        void IDisposable.Dispose()
+        {
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this;
@@ -66,10 +71,6 @@ namespace Ubiquitous
         void IEnumerator.Reset()
         {
             _current = -1;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }
