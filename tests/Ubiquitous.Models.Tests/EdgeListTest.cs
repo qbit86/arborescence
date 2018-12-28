@@ -5,7 +5,6 @@ namespace Ubiquitous
     using Misnomer;
     using Misnomer.Extensions;
     using Models;
-    using Workbench;
     using Xunit;
 
     public sealed class EdgeListTest
