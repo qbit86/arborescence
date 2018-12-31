@@ -52,9 +52,7 @@
             if (max >= VertexUpperBound)
             {
                 int newVertexUpperBound = max + 1;
-                int oldCount = _outEdges.Count;
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexUpperBound, true);
-                Array.Clear(_outEdges.Array, oldCount, newVertexUpperBound - oldCount);
             }
 
             if (_outEdges[source].Buffer == null)

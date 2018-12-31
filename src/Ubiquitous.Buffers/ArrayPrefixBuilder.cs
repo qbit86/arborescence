@@ -22,12 +22,42 @@ namespace Ubiquitous
 
         internal static ArrayPrefix<T> Resize<T>(ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
         {
-            int capacity = arrayPrefix.Array?.Length ?? 0;
+            if (arrayPrefix.Count < size)
+            {
+                UncheckedGrow(ref arrayPrefix, size, clearArray);
+                return arrayPrefix;
+            }
 
+            if (arrayPrefix.Count > size)
+            {
+                UncheckedShrink(ref arrayPrefix, size, clearArray);
+                return arrayPrefix;
+            }
+
+            return arrayPrefix;
+        }
+
+        private static void UncheckedGrow<T>(ref ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
+        {
+            Assert(arrayPrefix.Count < size, "arrayPrefix.Count < size");
+
+            int capacity = arrayPrefix.Array?.Length ?? 0;
             if (capacity < size)
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, size, clearArray);
 
-            return new ArrayPrefix<T>(arrayPrefix.Array, size);
+            int oldCount = arrayPrefix.Count;
+            Array.Clear(arrayPrefix.Array, oldCount, size - oldCount);
+            arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, size);
+        }
+
+        private static void UncheckedShrink<T>(ref ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
+        {
+            Assert(arrayPrefix.Count > size, "arrayPrefix.Count > size");
+
+            int oldCount = arrayPrefix.Count;
+            arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, size);
+            if (clearArray)
+                Array.Clear(arrayPrefix.Array, size, oldCount - size);
         }
 
         private static void UncheckedAdd<T>(ref ArrayPrefix<T> arrayPrefix, T item)
