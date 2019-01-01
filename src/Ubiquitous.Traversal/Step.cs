@@ -34,7 +34,7 @@
         }
     }
 
-    public struct Step<TStepKind, TVertex, TEdge> : IEquatable<Step<TStepKind, TVertex, TEdge>>
+    public readonly struct Step<TStepKind, TVertex, TEdge> : IEquatable<Step<TStepKind, TVertex, TEdge>>
     {
         public TStepKind Kind { get; }
 

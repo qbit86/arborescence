@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous.Traversal.Advanced
 {
-    public enum DfsStepKind
+    public enum DfsStepKind : byte
     {
         None = 0,
         StartVertex,

@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous.Traversal.Advanced
 {
-    public struct DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>
+    public readonly struct DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>
     {
         internal TVertex Vertex { get; }
 
