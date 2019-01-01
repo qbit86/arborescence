@@ -8,7 +8,7 @@ namespace Ubiquitous.Traversal.Advanced
     using Internal;
     using static System.Diagnostics.Debug;
 
-    public partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
+    public readonly partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
         TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
         TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
     {
@@ -34,7 +34,7 @@ namespace Ubiquitous.Traversal.Advanced
             private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
                 TColorMapPolicy> _stepEnumerator;
 
-            internal Enumerator(DfsForestStepCollection<TGraph, TVertex, TEdge,
+            internal Enumerator(in DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy> collection)
             {

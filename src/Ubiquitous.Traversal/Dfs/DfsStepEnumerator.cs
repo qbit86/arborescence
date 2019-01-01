@@ -5,7 +5,7 @@ namespace Ubiquitous.Traversal.Advanced
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    // http://www.boost.org/doc/libs/1_65_1/boost/graph/depth_first_search.hpp
+    // https://www.boost.org/doc/libs/1_69_0/boost/graph/depth_first_search.hpp
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
