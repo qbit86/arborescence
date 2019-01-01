@@ -38,9 +38,8 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexUpperBound);
 
             {
-                var dfs = new BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                    IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>,
-                    ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
+                var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
+                    IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy));
 
