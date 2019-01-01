@@ -53,11 +53,10 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = new MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                    IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>,
-                    ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>(
-                    default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
-                    default(IndexCollectionEnumerablePolicy));
+                var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
+                        IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap>
+                    .Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
+                        default(IndexCollectionEnumerablePolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexUpperBound]);
