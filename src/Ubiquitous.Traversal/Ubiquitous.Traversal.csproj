@@ -16,7 +16,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(UbiquitousRootDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>Ubiquitous.Traversal</RootNamespace>
-    <LangVersion>7.0</LangVersion>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />

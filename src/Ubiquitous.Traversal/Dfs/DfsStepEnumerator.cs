@@ -39,11 +39,11 @@ namespace Ubiquitous.Traversal.Advanced
             _graphPolicy = graphPolicy;
             _colorMapPolicy = colorMapPolicy;
 
-            _current = default(Step<DfsStepKind, TVertex, TEdge>);
+            _current = default;
             _state = 0;
 
-            _edgeEnumerator = default(TEdgeEnumerator);
-            _neighborVertex = default(TVertex);
+            _edgeEnumerator = default;
+            _neighborVertex = default;
             _currentVertex = startVertex;
         }
 
@@ -190,7 +190,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case int.MaxValue:
                     {
-                        _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                        _current = default;
                         _state = -1;
                         return false;
                     }
@@ -202,18 +202,18 @@ namespace Ubiquitous.Traversal.Advanced
 
         private static Step<DfsStepKind, TVertex, TEdge> CreateVertexStep(DfsStepKind kind, TVertex vertex)
         {
-            return new Step<DfsStepKind, TVertex, TEdge>(kind, vertex, default(TEdge));
+            return new Step<DfsStepKind, TVertex, TEdge>(kind, vertex, default);
         }
 
         private static Step<DfsStepKind, TVertex, TEdge> CreateEdgeStep(DfsStepKind kind, TEdge edge)
         {
-            return new Step<DfsStepKind, TVertex, TEdge>(kind, default(TVertex), edge);
+            return new Step<DfsStepKind, TVertex, TEdge>(kind, default, edge);
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
             TVertex vertex, TEdgeEnumerator edgeEnumerator)
         {
-            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default(TEdge), edgeEnumerator);
+            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default, edgeEnumerator);
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateEdgeStackFrame(

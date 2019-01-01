@@ -40,7 +40,7 @@ namespace Ubiquitous.Traversal.Advanced
             {
                 Assert(collection.ColorMapPolicy != null);
 
-                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                _current = default;
                 _state = 0;
 
                 _graph = collection.Graph;
@@ -48,13 +48,11 @@ namespace Ubiquitous.Traversal.Advanced
                 _stackCapacity = collection.StackCapacity;
                 _graphPolicy = collection.GraphPolicy;
                 _colorMapPolicy = collection.ColorMapPolicy;
-                _colorMap = default(TColorMap);
+                _colorMap = default;
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator =
-                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
-                        TColorMapPolicy>);
+                _stepEnumerator = default;
             }
 
             public bool MoveNext()
@@ -143,7 +141,7 @@ namespace Ubiquitous.Traversal.Advanced
                         case int.MaxValue:
                         {
                             DisposeCore();
-                            _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                            _current = default;
                             _state = -1;
                             return false;
                         }
@@ -157,16 +155,14 @@ namespace Ubiquitous.Traversal.Advanced
             {
                 DisposeCore();
 
-                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                _current = default;
                 _state = 0;
 
-                _colorMap = default(TColorMap);
+                _colorMap = default;
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator =
-                    default(DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
-                        TColorMapPolicy>);
+                _stepEnumerator = default;
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -177,7 +173,7 @@ namespace Ubiquitous.Traversal.Advanced
             public void Dispose()
             {
                 DisposeCore();
-                _current = default(Step<DfsStepKind, TVertex, TEdge>);
+                _current = default;
                 _state = -1;
             }
 
@@ -196,7 +192,7 @@ namespace Ubiquitous.Traversal.Advanced
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
                     _colorMapPolicy.Release(_colorMap);
-                    _colorMap = default(TColorMap);
+                    _colorMap = default;
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
 
