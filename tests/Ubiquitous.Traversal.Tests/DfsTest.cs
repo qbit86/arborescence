@@ -53,9 +53,8 @@
                 IndexCollectionEnumerator, EdgeEnumerator, ColorMap>.Create(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
 
-            BaselineDfs = new BaselineDfs<AdjacencyListIncidenceGraph, int, int,
-                EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap>.Create(

@@ -3,6 +3,20 @@
     using System;
     using System.Collections.Generic;
 
+    public static class BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
+        where TEdgeEnumerator : IEnumerator<TEdge>
+    {
+        public static BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+            Create<TGraphPolicy, TColorMapPolicy>(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+            where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+            IGetTargetPolicy<TGraph, TVertex, TEdge>
+            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        {
+            return new BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphPolicy, TColorMapPolicy>(graphPolicy, colorMapPolicy);
+        }
+    }
+
     public struct BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>

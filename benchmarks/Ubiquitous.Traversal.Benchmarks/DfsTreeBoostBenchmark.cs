@@ -19,9 +19,8 @@ namespace Ubiquitous
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            BaselineDfs = new BaselineDfs<AdjacencyListIncidenceGraph, int, int,
-                EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
