@@ -46,9 +46,8 @@
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            Dfs = new Dfs<AdjacencyListIncidenceGraph, int, int,
-                EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             MultipleSourceDfs = new MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,

@@ -23,9 +23,8 @@ namespace Ubiquitous
                 EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
-            DefaultDfs = new Dfs<AdjacencyListIncidenceGraph, int, int,
-                EdgeEnumerator, ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
         }
 
         [Params(10, 100, 1000)]
@@ -55,9 +54,8 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(VertexCount);
             indexedMapPolicy.Warmup();
 
-            CachingDfs = new Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>(
-                default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy);
+            CachingDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
+                .Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy);
         }
 
         [Benchmark(Baseline = true)]
