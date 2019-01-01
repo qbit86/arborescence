@@ -25,7 +25,7 @@
         }
     }
 
-    public struct BaselineMultipleSourceDfs<TGraph, TVertex, TEdge,
+    public readonly struct BaselineMultipleSourceDfs<TGraph, TVertex, TEdge,
         TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
         where TVertexEnumerable : IEnumerable<TVertex>

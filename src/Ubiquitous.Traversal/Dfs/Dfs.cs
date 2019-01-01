@@ -17,7 +17,7 @@
         }
     }
 
-    public struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public readonly struct Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,

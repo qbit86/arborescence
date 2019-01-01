@@ -1,6 +1,6 @@
 namespace Ubiquitous.Models
 {
-    public struct IndexedBidirectionalGraphPolicy<TGraph, TEdges> :
+    public readonly struct IndexedBidirectionalGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, int>,
         IGetTargetPolicy<TGraph, int, int>,
         IGetOutEdgesPolicy<TGraph, int, TEdges>,

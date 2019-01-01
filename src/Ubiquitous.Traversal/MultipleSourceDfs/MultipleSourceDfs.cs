@@ -25,8 +25,8 @@
         }
     }
 
-    public struct MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-        TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
+    public readonly struct MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator,
+        TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
         where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
