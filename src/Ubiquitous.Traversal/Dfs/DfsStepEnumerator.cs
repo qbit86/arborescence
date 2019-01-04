@@ -86,13 +86,13 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 2:
                     {
-                        if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame))
+                        if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate();
 
-                        _currentVertex = poppedStackFrame.Vertex;
-                        _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
-                        if (poppedStackFrame.HasEdge)
-                            return CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge, 3);
+                        _currentVertex = stackFrame.Vertex;
+                        _edgeEnumerator = stackFrame.EdgeEnumerator;
+                        if (stackFrame.HasEdge)
+                            return CreateEdgeStep(DfsStepKind.FinishEdge, stackFrame.Edge, 3);
 
                         _state = 3;
                         continue;
