@@ -80,9 +80,7 @@ namespace Ubiquitous.Traversal.Advanced
                         if (!hasOutEdges)
                             return CreateFinishVertexStep(_currentVertex, int.MaxValue);
 
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
-                            CreateVertexStackFrame(_currentVertex, edges);
-                        _stack.Add(pushingStackFrame);
+                        PushVertexStackFrame(_currentVertex, edges);
                         _state = 2;
                         continue;
                     }
@@ -133,9 +131,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 5:
                     {
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
-                            CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
-                        _stack.Add(pushingStackFrame);
+                        PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
                         return CreateDiscoverVertexStep(_currentVertex, 6);
                     }
@@ -196,16 +192,18 @@ namespace Ubiquitous.Traversal.Advanced
             return false;
         }
 
-        private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
-            TVertex vertex, TEdgeEnumerator edgeEnumerator)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushVertexStackFrame(TVertex vertex, TEdgeEnumerator edgeEnumerator)
         {
-            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default, edgeEnumerator);
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default, edgeEnumerator);
+            _stack.Add(stackFrame);
         }
 
-        private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateEdgeStackFrame(
-            TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushEdgeStackFrame(TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
         {
-            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
+            _stack.Add(stackFrame);
         }
     }
 }
