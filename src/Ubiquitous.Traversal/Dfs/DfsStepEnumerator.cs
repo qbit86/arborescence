@@ -71,18 +71,14 @@ namespace Ubiquitous.Traversal.Advanced
                 {
                     case 0:
                     {
-                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 1);
+                        return CreateDiscoverVertexStep(_currentVertex, 1);
                     }
                     case 1:
                     {
                         bool hasOutEdges =
                             _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
-                        {
-                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, int.MaxValue);
-                        }
+                            return CreateFinishVertexStep(_currentVertex, int.MaxValue);
 
                         DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
                             CreateVertexStackFrame(_currentVertex, edges);
@@ -108,10 +104,7 @@ namespace Ubiquitous.Traversal.Advanced
                     case 3:
                     {
                         if (!_edgeEnumerator.MoveNext())
-                        {
-                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
-                        }
+                            return CreateFinishVertexStep(_currentVertex, 2);
 
                         bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
@@ -144,17 +137,13 @@ namespace Ubiquitous.Traversal.Advanced
                             CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
-                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 6);
+                        return CreateDiscoverVertexStep(_currentVertex, 6);
                     }
                     case 6:
                     {
                         bool hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
-                        {
-                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
-                        }
+                            return CreateFinishVertexStep(_currentVertex, 2);
 
                         _state = 3;
                         continue;
@@ -174,9 +163,19 @@ namespace Ubiquitous.Traversal.Advanced
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateVertexStep(DfsStepKind kind, TVertex vertex, int newState)
+        private bool CreateDiscoverVertexStep(TVertex vertex, int newState)
         {
-            _current = _stepPolicy.CreateVertexStep(kind, vertex);
+            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
+            _current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateFinishVertexStep(TVertex vertex, int newState)
+        {
+            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
+            _current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
             _state = newState;
             return true;
         }
