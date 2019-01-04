@@ -25,6 +25,8 @@ namespace Ubiquitous
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
                     testName, true);
 
+            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, sortedAdjacencyList.VertexUpperBound);
+
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexUpperBound; ++v)
             {

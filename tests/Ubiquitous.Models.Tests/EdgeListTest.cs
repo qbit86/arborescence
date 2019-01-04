@@ -25,6 +25,8 @@ namespace Ubiquitous
             EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 
+            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, edgeList.VertexUpperBound);
+
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexUpperBound; ++v)
             {
