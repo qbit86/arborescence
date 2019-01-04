@@ -71,36 +71,28 @@ namespace Ubiquitous.Traversal.Advanced
                 {
                     case 0:
                     {
-                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 1);
+                        return CreateDiscoverVertexStep(_currentVertex, 1);
                     }
                     case 1:
                     {
                         bool hasOutEdges =
                             _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
-                        {
-                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, int.MaxValue);
-                        }
+                            return CreateFinishVertexStep(_currentVertex, int.MaxValue);
 
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
-                            CreateVertexStackFrame(_currentVertex, edges);
-                        _stack.Add(pushingStackFrame);
+                        PushVertexStackFrame(_currentVertex, edges);
                         _state = 2;
                         continue;
                     }
                     case 2:
                     {
-                        if (_stack.Count == 0)
+                        if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate();
 
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = _stack[_stack.Count - 1];
-                        _stack.RemoveAt(_stack.Count - 1);
-                        _currentVertex = poppedStackFrame.Vertex;
-                        _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
-                        if (poppedStackFrame.HasEdge)
-                            return CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge, 3);
+                        _currentVertex = stackFrame.Vertex;
+                        _edgeEnumerator = stackFrame.EdgeEnumerator;
+                        if (stackFrame.HasEdge)
+                            return CreateEdgeStep(DfsStepKind.FinishEdge, stackFrame.Edge, 3);
 
                         _state = 3;
                         continue;
@@ -108,10 +100,7 @@ namespace Ubiquitous.Traversal.Advanced
                     case 3:
                     {
                         if (!_edgeEnumerator.MoveNext())
-                        {
-                            _state = short.MaxValue;
-                            continue;
-                        }
+                            return CreateFinishVertexStep(_currentVertex, 2);
 
                         bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
@@ -124,8 +113,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 4:
                     {
-                        if (!_colorMapPolicy.TryGet(_colorMap, _neighborVertex, out Color neighborColor))
-                            neighborColor = Color.None;
+                        Color neighborColor = GetColorOrDefault(_neighborVertex);
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
                         {
@@ -140,21 +128,15 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 5:
                     {
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
-                            CreateEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
-                        _stack.Add(pushingStackFrame);
+                        PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
-                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 6);
+                        return CreateDiscoverVertexStep(_currentVertex, 6);
                     }
                     case 6:
                     {
                         bool hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
-                        {
-                            _state = short.MaxValue;
-                            continue;
-                        }
+                            return CreateFinishVertexStep(_currentVertex, 2);
 
                         _state = 3;
                         continue;
@@ -162,11 +144,6 @@ namespace Ubiquitous.Traversal.Advanced
                     case 7:
                     {
                         return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 3);
-                    }
-                    case short.MaxValue:
-                    {
-                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                        return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
                     }
                     case int.MaxValue:
                     {
@@ -179,9 +156,19 @@ namespace Ubiquitous.Traversal.Advanced
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateVertexStep(DfsStepKind kind, TVertex vertex, int newState)
+        private bool CreateDiscoverVertexStep(TVertex vertex, int newState)
         {
-            _current = _stepPolicy.CreateVertexStep(kind, vertex);
+            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
+            _current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateFinishVertexStep(TVertex vertex, int newState)
+        {
+            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
+            _current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
             _state = newState;
             return true;
         }
@@ -202,16 +189,41 @@ namespace Ubiquitous.Traversal.Advanced
             return false;
         }
 
-        private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
-            TVertex vertex, TEdgeEnumerator edgeEnumerator)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushVertexStackFrame(TVertex vertex, TEdgeEnumerator edgeEnumerator)
         {
-            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default, edgeEnumerator);
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default, edgeEnumerator);
+            _stack.Add(stackFrame);
         }
 
-        private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateEdgeStackFrame(
-            TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushEdgeStackFrame(TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
         {
-            return new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
+            _stack.Add(stackFrame);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame)
+        {
+            if (_stack.Count == 0)
+            {
+                stackFrame = default;
+                return false;
+            }
+
+            stackFrame = _stack[_stack.Count - 1];
+            _stack.RemoveAt(_stack.Count - 1);
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TVertex vertex)
+        {
+            if (_colorMapPolicy.TryGet(_colorMap, vertex, out Color result))
+                return result;
+
+            return Color.None;
         }
     }
 }
