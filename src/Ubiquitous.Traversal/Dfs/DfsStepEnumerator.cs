@@ -3,6 +3,7 @@
 namespace Ubiquitous.Traversal.Advanced
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
     // https://www.boost.org/doc/libs/1_69_0/boost/graph/depth_first_search.hpp
@@ -71,9 +72,7 @@ namespace Ubiquitous.Traversal.Advanced
                     case 0:
                     {
                         _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        _current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
-                        _state = 1;
-                        return true;
+                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 1);
                     }
                     case 1:
                     {
@@ -82,9 +81,7 @@ namespace Ubiquitous.Traversal.Advanced
                         if (!hasOutEdges)
                         {
                             _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                            _current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
-                            _state = int.MaxValue;
-                            return true;
+                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, int.MaxValue);
                         }
 
                         DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
@@ -95,22 +92,15 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 2:
                     {
-                        if (_stack.Count <= 0)
-                        {
-                            _state = int.MaxValue;
-                            continue;
-                        }
+                        if (_stack.Count == 0)
+                            return Terminate();
 
                         DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = _stack[_stack.Count - 1];
                         _stack.RemoveAt(_stack.Count - 1);
                         _currentVertex = poppedStackFrame.Vertex;
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
-                        {
-                            _current = _stepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge);
-                            _state = 3;
-                            return true;
-                        }
+                            return CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge, 3);
 
                         _state = 3;
                         continue;
@@ -130,9 +120,7 @@ namespace Ubiquitous.Traversal.Advanced
                             continue;
                         }
 
-                        _current = _stepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current);
-                        _state = 4;
-                        return true;
+                        return CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current, 4);
                     }
                     case 4:
                     {
@@ -143,17 +131,11 @@ namespace Ubiquitous.Traversal.Advanced
                         {
                             case Color.None:
                             case Color.White:
-                                _current = _stepPolicy.CreateEdgeStep(DfsStepKind.TreeEdge, edge);
-                                _state = 5;
-                                return true;
+                                return CreateEdgeStep(DfsStepKind.TreeEdge, edge, 5);
                             case Color.Gray:
-                                _current = _stepPolicy.CreateEdgeStep(DfsStepKind.BackEdge, edge);
-                                _state = 7;
-                                return true;
+                                return CreateEdgeStep(DfsStepKind.BackEdge, edge, 7);
                             default:
-                                _current = _stepPolicy.CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge);
-                                _state = 7;
-                                return true;
+                                return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 7);
                         }
                     }
                     case 5:
@@ -163,9 +145,7 @@ namespace Ubiquitous.Traversal.Advanced
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        _current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
-                        _state = 6;
-                        return true;
+                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 6);
                     }
                     case 6:
                     {
@@ -181,27 +161,45 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 7:
                     {
-                        _current = _stepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current);
-                        _state = 3;
-                        return true;
+                        return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 3);
                     }
                     case short.MaxValue:
                     {
                         _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                        _current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
-                        _state = 2;
-                        return true;
+                        return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
                     }
                     case int.MaxValue:
                     {
-                        _current = default;
-                        _state = -1;
-                        return false;
+                        return Terminate();
                     }
                 }
 
                 return false;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateVertexStep(DfsStepKind kind, TVertex vertex, int newState)
+        {
+            _current = _stepPolicy.CreateVertexStep(kind, vertex);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateEdgeStep(DfsStepKind kind, TEdge edge, int newState)
+        {
+            _current = _stepPolicy.CreateEdgeStep(kind, edge);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool Terminate()
+        {
+            _current = default;
+            _state = -1;
+            return false;
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
