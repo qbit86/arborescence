@@ -113,8 +113,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 4:
                     {
-                        if (!_colorMapPolicy.TryGet(_colorMap, _neighborVertex, out Color neighborColor))
-                            neighborColor = Color.None;
+                        Color neighborColor = GetColorOrDefault(_neighborVertex);
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
                         {
@@ -216,6 +215,15 @@ namespace Ubiquitous.Traversal.Advanced
             stackFrame = _stack[_stack.Count - 1];
             _stack.RemoveAt(_stack.Count - 1);
             return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TVertex vertex)
+        {
+            if (_colorMapPolicy.TryGet(_colorMap, vertex, out Color result))
+                return result;
+
+            return Color.None;
         }
     }
 }
