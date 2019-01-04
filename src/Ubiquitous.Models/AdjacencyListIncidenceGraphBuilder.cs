@@ -90,12 +90,14 @@ namespace Ubiquitous.Models
         {
             Assert(_sources.Count == _targets.Count);
             int vertexUpperBound = VertexUpperBound;
-            var storage = new int[1 + 2 * vertexUpperBound + _sources.Count + _targets.Count + _sources.Count];
+            int sourceCount = _sources.Count;
+            int targetCount = _targets.Count;
+            var storage = new int[1 + 2 * vertexUpperBound + sourceCount + targetCount + sourceCount];
             storage[0] = vertexUpperBound;
 
             ReadOnlySpan<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
             Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexUpperBound);
-            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexUpperBound, _sources.Count);
+            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexUpperBound, sourceCount);
 
             for (int s = 0, currentBound = 0; s != outEdges.Length; ++s)
             {
@@ -112,12 +114,11 @@ namespace Ubiquitous.Models
                 Pool.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
-            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexUpperBound + _sources.Count, _targets.Count);
+            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexUpperBound + sourceCount, targetCount);
             _targets.AsSpan().CopyTo(destTargets);
             _targets.Dispose(false);
 
-            Span<int> destSources = storage.AsSpan(1 + 2 * vertexUpperBound + _sources.Count + _targets.Count,
-                _sources.Count);
+            Span<int> destSources = storage.AsSpan(1 + 2 * vertexUpperBound + sourceCount + targetCount, sourceCount);
             _sources.AsSpan().CopyTo(destSources);
             _sources.Dispose(false);
 
