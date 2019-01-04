@@ -91,4 +91,18 @@
             return !left.Equals(right);
         }
     }
+
+    public readonly struct DefaultStepPolicy<TStepKind, TVertex, TEdge>
+        : IStepPolicy<TStepKind, TVertex, TEdge, Step<TStepKind, TVertex, TEdge>>
+    {
+        public Step<TStepKind, TVertex, TEdge> CreateVertexStep(TStepKind kind, TVertex vertex)
+        {
+            return Step.Create(kind, vertex, default(TEdge));
+        }
+
+        public Step<TStepKind, TVertex, TEdge> CreateEdgeStep(TStepKind kind, TEdge edge)
+        {
+            return Step.Create(kind, default(TVertex), edge);
+        }
+    }
 }
