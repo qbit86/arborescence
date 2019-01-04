@@ -103,11 +103,7 @@ namespace Ubiquitous.Traversal.Advanced
                         _currentVertex = poppedStackFrame.Vertex;
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
-                        {
-                            _current = _stepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge);
-                            _state = 3;
-                            return true;
-                        }
+                            return CreateEdgeStep(DfsStepKind.FinishEdge, poppedStackFrame.Edge, 3);
 
                         _state = 3;
                         continue;
@@ -127,9 +123,7 @@ namespace Ubiquitous.Traversal.Advanced
                             continue;
                         }
 
-                        _current = _stepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current);
-                        _state = 4;
-                        return true;
+                        return CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current, 4);
                     }
                     case 4:
                     {
@@ -140,17 +134,11 @@ namespace Ubiquitous.Traversal.Advanced
                         {
                             case Color.None:
                             case Color.White:
-                                _current = _stepPolicy.CreateEdgeStep(DfsStepKind.TreeEdge, edge);
-                                _state = 5;
-                                return true;
+                                return CreateEdgeStep(DfsStepKind.TreeEdge, edge, 5);
                             case Color.Gray:
-                                _current = _stepPolicy.CreateEdgeStep(DfsStepKind.BackEdge, edge);
-                                _state = 7;
-                                return true;
+                                return CreateEdgeStep(DfsStepKind.BackEdge, edge, 7);
                             default:
-                                _current = _stepPolicy.CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge);
-                                _state = 7;
-                                return true;
+                                return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 7);
                         }
                     }
                     case 5:
@@ -176,9 +164,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 7:
                     {
-                        _current = _stepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current);
-                        _state = 3;
-                        return true;
+                        return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 3);
                     }
                     case short.MaxValue:
                     {
@@ -201,6 +187,14 @@ namespace Ubiquitous.Traversal.Advanced
         private bool CreateVertexStep(DfsStepKind kind, TVertex vertex, int newState)
         {
             _current = _stepPolicy.CreateVertexStep(kind, vertex);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateEdgeStep(DfsStepKind kind, TEdge edge, int newState)
+        {
+            _current = _stepPolicy.CreateEdgeStep(kind, edge);
             _state = newState;
             return true;
         }
