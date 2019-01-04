@@ -27,8 +27,9 @@ namespace Ubiquitous.Traversal.Advanced
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
 
-            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
-                TColorMapPolicy> _stepEnumerator;
+            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                Step<DfsStepKind, TVertex, TEdge>, TGraphPolicy, TColorMapPolicy,
+                DefaultStepPolicy<DfsStepKind, TVertex, TEdge>> _stepEnumerator;
 
             internal Enumerator(in DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy> collection)
@@ -91,9 +92,10 @@ namespace Ubiquitous.Traversal.Advanced
                         case 4:
                         {
                             ThrowIfDisposed();
-                            _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                                TColorMap, TGraphPolicy, TColorMapPolicy>(
-                                _graph, _startVertex, _colorMap, _stack, _graphPolicy, _colorMapPolicy);
+                            _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                                Step<DfsStepKind, TVertex, TEdge>, TGraphPolicy, TColorMapPolicy,
+                                DefaultStepPolicy<DfsStepKind, TVertex, TEdge>>(_graph, _startVertex, _colorMap,
+                                _stack, _graphPolicy, _colorMapPolicy, default);
                             _state = 5;
                             continue;
                         }

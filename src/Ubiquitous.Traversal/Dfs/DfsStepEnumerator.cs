@@ -6,14 +6,15 @@ namespace Ubiquitous.Traversal.Advanced
     using static System.Diagnostics.Debug;
 
     // https://www.boost.org/doc/libs/1_69_0/boost/graph/depth_first_search.hpp
-    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+        TGraphPolicy, TColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
+        where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
-        private Step<DfsStepKind, TVertex, TEdge> _current;
+        private TStep _current;
         private int _state;
 
         private readonly TGraph _graph;
@@ -25,19 +26,22 @@ namespace Ubiquitous.Traversal.Advanced
         private readonly List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
         private TGraphPolicy _graphPolicy;
         private TColorMapPolicy _colorMapPolicy;
+        private TStepPolicy _stepPolicy;
 
         internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
             TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
-            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
             Assert(colorMap != null);
             Assert(graphPolicy != null);
+            Assert(stepPolicy != null);
 
             _graph = graph;
             _colorMap = colorMap;
             _stack = stack;
             _graphPolicy = graphPolicy;
             _colorMapPolicy = colorMapPolicy;
+            _stepPolicy = stepPolicy;
 
             _current = default;
             _state = 0;
@@ -48,7 +52,7 @@ namespace Ubiquitous.Traversal.Advanced
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-        public Step<DfsStepKind, TVertex, TEdge> Current => _current;
+        public TStep Current => _current;
 
         public bool MoveNext()
         {
@@ -200,14 +204,14 @@ namespace Ubiquitous.Traversal.Advanced
             }
         }
 
-        private static Step<DfsStepKind, TVertex, TEdge> CreateVertexStep(DfsStepKind kind, TVertex vertex)
+        private TStep CreateVertexStep(DfsStepKind kind, TVertex vertex)
         {
-            return new Step<DfsStepKind, TVertex, TEdge>(kind, vertex, default);
+            return _stepPolicy.CreateVertexStep(kind, vertex);
         }
 
-        private static Step<DfsStepKind, TVertex, TEdge> CreateEdgeStep(DfsStepKind kind, TEdge edge)
+        private TStep CreateEdgeStep(DfsStepKind kind, TEdge edge)
         {
-            return new Step<DfsStepKind, TVertex, TEdge>(kind, default, edge);
+            return _stepPolicy.CreateEdgeStep(kind, edge);
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
