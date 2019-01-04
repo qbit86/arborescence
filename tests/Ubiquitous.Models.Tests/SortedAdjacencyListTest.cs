@@ -65,6 +65,8 @@ namespace Ubiquitous
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
                     testName, true);
 
+            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, sortedAdjacencyList.VertexUpperBound);
+
             // Act
             for (int v = 0; v < sortedAdjacencyList.VertexUpperBound; ++v)
             {
@@ -86,6 +88,32 @@ namespace Ubiquitous
 
                 jaggedOutEdges.Dispose();
                 outEdges.Dispose();
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(IndexedGraphTestCollection))]
+        public void SortedAdjacencyList_ShouldHaveSameSources(string testName)
+        {
+            // Arrange
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
+            JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
+                BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
+                    testName, true);
+
+            var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
+            SortedAdjacencyListIncidenceGraph sortedAdjacencyList =
+                BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
+                    testName, true);
+
+            // Act
+            for (int e = 0; e < sortedAdjacencyList.EdgeCount; ++e)
+            {
+                bool hasExpected = jaggedAdjacencyList.TryGetSource(e, out int expectedSource);
+                bool hasActual = sortedAdjacencyList.TryGetSource(e, out int actualSource);
+
+                Assert.Equal(hasExpected, hasActual);
+                Assert.Equal(expectedSource, actualSource);
             }
         }
     }
