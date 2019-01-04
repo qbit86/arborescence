@@ -92,11 +92,8 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 2:
                     {
-                        if (_stack.Count <= 0)
-                        {
-                            _state = int.MaxValue;
-                            continue;
-                        }
+                        if (_stack.Count == 0)
+                            return Terminate();
 
                         DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = _stack[_stack.Count - 1];
                         _stack.RemoveAt(_stack.Count - 1);
@@ -173,9 +170,7 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case int.MaxValue:
                     {
-                        _current = default;
-                        _state = -1;
-                        return false;
+                        return Terminate();
                     }
                 }
 
@@ -197,6 +192,14 @@ namespace Ubiquitous.Traversal.Advanced
             _current = _stepPolicy.CreateEdgeStep(kind, edge);
             _state = newState;
             return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool Terminate()
+        {
+            _current = default;
+            _state = -1;
+            return false;
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
