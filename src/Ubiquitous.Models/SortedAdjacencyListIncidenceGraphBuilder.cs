@@ -85,15 +85,17 @@ namespace Ubiquitous.Models
         {
             Assert(_orderedSources.Count == _targets.Count);
             int vertexUpperBound = VertexUpperBound;
-            var storage = new int[1 + vertexUpperBound + _targets.Count + _orderedSources.Count];
+            int targetCount = _targets.Count;
+            int orderedSourceCount = _orderedSources.Count;
+            var storage = new int[1 + vertexUpperBound + targetCount + orderedSourceCount];
             storage[0] = vertexUpperBound;
 
             ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
-            targetsBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound, _targets.Count));
+            targetsBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound, targetCount));
             _targets.Dispose(false);
 
             ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
-            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound + _targets.Count, _orderedSources.Count));
+            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound + targetCount, orderedSourceCount));
             _orderedSources.Dispose(false);
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.
