@@ -86,11 +86,9 @@ namespace Ubiquitous.Traversal.Advanced
                     }
                     case 2:
                     {
-                        if (_stack.Count == 0)
+                        if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame))
                             return Terminate();
 
-                        DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> poppedStackFrame = _stack[_stack.Count - 1];
-                        _stack.RemoveAt(_stack.Count - 1);
                         _currentVertex = poppedStackFrame.Vertex;
                         _edgeEnumerator = poppedStackFrame.EdgeEnumerator;
                         if (poppedStackFrame.HasEdge)
@@ -204,6 +202,20 @@ namespace Ubiquitous.Traversal.Advanced
         {
             var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
             _stack.Add(stackFrame);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame)
+        {
+            if (_stack.Count == 0)
+            {
+                stackFrame = default;
+                return false;
+            }
+
+            stackFrame = _stack[_stack.Count - 1];
+            _stack.RemoveAt(_stack.Count - 1);
+            return true;
         }
     }
 }
