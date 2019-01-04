@@ -109,8 +109,8 @@ namespace Ubiquitous.Traversal.Advanced
                     {
                         if (!_edgeEnumerator.MoveNext())
                         {
-                            _state = short.MaxValue;
-                            continue;
+                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
+                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
                         }
 
                         bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
@@ -152,8 +152,8 @@ namespace Ubiquitous.Traversal.Advanced
                         bool hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
                         {
-                            _state = short.MaxValue;
-                            continue;
+                            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
+                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
                         }
 
                         _state = 3;
@@ -162,11 +162,6 @@ namespace Ubiquitous.Traversal.Advanced
                     case 7:
                     {
                         return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 3);
-                    }
-                    case short.MaxValue:
-                    {
-                        _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                        return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
                     }
                     case int.MaxValue:
                     {
