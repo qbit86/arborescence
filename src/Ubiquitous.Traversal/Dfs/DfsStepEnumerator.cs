@@ -3,6 +3,7 @@
 namespace Ubiquitous.Traversal.Advanced
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
     // https://www.boost.org/doc/libs/1_69_0/boost/graph/depth_first_search.hpp
@@ -71,9 +72,7 @@ namespace Ubiquitous.Traversal.Advanced
                     case 0:
                     {
                         _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        _current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
-                        _state = 1;
-                        return true;
+                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 1);
                     }
                     case 1:
                     {
@@ -82,9 +81,7 @@ namespace Ubiquitous.Traversal.Advanced
                         if (!hasOutEdges)
                         {
                             _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                            _current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
-                            _state = int.MaxValue;
-                            return true;
+                            return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, int.MaxValue);
                         }
 
                         DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> pushingStackFrame =
@@ -163,9 +160,7 @@ namespace Ubiquitous.Traversal.Advanced
                         _stack.Add(pushingStackFrame);
                         _currentVertex = _neighborVertex;
                         _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
-                        _current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex);
-                        _state = 6;
-                        return true;
+                        return CreateVertexStep(DfsStepKind.DiscoverVertex, _currentVertex, 6);
                     }
                     case 6:
                     {
@@ -188,9 +183,7 @@ namespace Ubiquitous.Traversal.Advanced
                     case short.MaxValue:
                     {
                         _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
-                        _current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex);
-                        _state = 2;
-                        return true;
+                        return CreateVertexStep(DfsStepKind.FinishVertex, _currentVertex, 2);
                     }
                     case int.MaxValue:
                     {
@@ -202,6 +195,14 @@ namespace Ubiquitous.Traversal.Advanced
 
                 return false;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateVertexStep(DfsStepKind kind, TVertex vertex, int newState)
+        {
+            _current = _stepPolicy.CreateVertexStep(kind, vertex);
+            _state = newState;
+            return true;
         }
 
         private static DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> CreateVertexStackFrame(
