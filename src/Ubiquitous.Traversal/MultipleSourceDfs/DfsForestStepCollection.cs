@@ -6,8 +6,8 @@
 
     public readonly partial struct DfsForestStepCollection<TGraph, TVertex, TEdge,
             TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-            TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
-        : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+            TColorMap, TStep, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
+        : IEnumerable<TStep>
         where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -15,10 +15,11 @@
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
+        where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
         internal DfsForestStepCollection(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
-            TVertexEnumerablePolicy vertexEnumerablePolicy)
+            TVertexEnumerablePolicy vertexEnumerablePolicy, TStepPolicy stepPolicy)
         {
             Assert(vertexCollection != null);
             Assert(colorMapPolicy != null);
@@ -29,6 +30,7 @@
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
             VertexEnumerablePolicy = vertexEnumerablePolicy;
+            StepPolicy = stepPolicy;
         }
 
         private TGraph Graph { get; }
@@ -37,13 +39,14 @@
         private TGraphPolicy GraphPolicy { get; }
         private TColorMapPolicy ColorMapPolicy { get; }
         private TVertexEnumerablePolicy VertexEnumerablePolicy { get; }
+        public TStepPolicy StepPolicy { get; }
 
         public Enumerator GetEnumerator()
         {
             return new Enumerator(this);
         }
 
-        IEnumerator<Step<DfsStepKind, TVertex, TEdge>> IEnumerable<Step<DfsStepKind, TVertex, TEdge>>.GetEnumerator()
+        IEnumerator<TStep> IEnumerable<TStep>.GetEnumerator()
         {
             return new Enumerator(this);
         }

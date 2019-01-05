@@ -8,16 +8,17 @@ namespace Ubiquitous.Traversal.Advanced
     using Internal;
     using static System.Diagnostics.Debug;
 
-    public readonly partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+    public readonly partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+        TGraphPolicy, TColorMapPolicy, TStepPolicy>
     {
-        public struct Enumerator : IEnumerator<Step<DfsStepKind, TVertex, TEdge>>
+        public struct Enumerator : IEnumerator<TStep>
         {
-            private Step<DfsStepKind, TVertex, TEdge> _current;
+            private TStep _current;
             private int _state;
 
             private TColorMapPolicy _colorMapPolicy;
             private TGraphPolicy _graphPolicy;
+            private TStepPolicy _stepPolicy;
 
             private readonly TGraph _graph;
             private readonly TVertex _startVertex;
@@ -27,14 +28,15 @@ namespace Ubiquitous.Traversal.Advanced
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
 
-            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                Step<DfsStepKind, TVertex, TEdge>, TGraphPolicy, TColorMapPolicy,
-                StepPolicy<DfsStepKind, TVertex, TEdge>> _stepEnumerator;
+            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+                TGraphPolicy, TColorMapPolicy, TStepPolicy> _stepEnumerator;
 
-            internal Enumerator(in DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy> collection)
+            internal Enumerator(in DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+                TGraphPolicy, TColorMapPolicy, TStepPolicy> collection)
             {
+                Assert(collection.GraphPolicy != null);
                 Assert(collection.ColorMapPolicy != null);
+                Assert(collection.StepPolicy != null);
 
                 _current = default;
                 _state = 0;
@@ -44,6 +46,7 @@ namespace Ubiquitous.Traversal.Advanced
                 _stackCapacity = collection.StackCapacity;
                 _graphPolicy = collection.GraphPolicy;
                 _colorMapPolicy = collection.ColorMapPolicy;
+                _stepPolicy = collection.StepPolicy;
                 _colorMap = default;
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
@@ -72,7 +75,7 @@ namespace Ubiquitous.Traversal.Advanced
                         }
                         case 2:
                         {
-                            _current = Step.Create(DfsStepKind.StartVertex, _startVertex, default(TEdge));
+                            _current = _stepPolicy.CreateVertexStep(DfsStepKind.StartVertex, _startVertex);
                             _state = 3;
                             return true;
                         }
@@ -93,9 +96,8 @@ namespace Ubiquitous.Traversal.Advanced
                         {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                                Step<DfsStepKind, TVertex, TEdge>, TGraphPolicy, TColorMapPolicy,
-                                StepPolicy<DfsStepKind, TVertex, TEdge>>(_graph, _startVertex, _colorMap,
-                                _stack, _graphPolicy, _colorMapPolicy, default);
+                                TStep, TGraphPolicy, TColorMapPolicy, TStepPolicy>(_graph, _startVertex, _colorMap,
+                                _stack, _graphPolicy, _colorMapPolicy, _stepPolicy);
                             _state = 5;
                             continue;
                         }
@@ -140,7 +142,7 @@ namespace Ubiquitous.Traversal.Advanced
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-            public Step<DfsStepKind, TVertex, TEdge> Current => _current;
+            public TStep Current => _current;
 
             object IEnumerator.Current => _current;
 
