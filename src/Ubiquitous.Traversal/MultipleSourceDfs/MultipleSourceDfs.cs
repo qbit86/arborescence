@@ -41,6 +41,8 @@
 
         private TVertexEnumerablePolicy VertexEnumerablePolicy { get; }
 
+        private StepPolicy<DfsStepKind, TVertex, TEdge> StepPolicy { get; }
+
         public MultipleSourceDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TVertexEnumerablePolicy vertexEnumerablePolicy)
         {
@@ -56,6 +58,7 @@
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
             VertexEnumerablePolicy = vertexEnumerablePolicy;
+            StepPolicy = default;
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
@@ -69,7 +72,8 @@
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
-                graph, vertexCollection, 0, GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, default);
+                graph, vertexCollection, 0,
+                GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, StepPolicy);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
@@ -83,7 +87,8 @@
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
-                graph, vertexCollection, stackCapacity, GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, default);
+                graph, vertexCollection, stackCapacity,
+                GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, StepPolicy);
         }
     }
 }

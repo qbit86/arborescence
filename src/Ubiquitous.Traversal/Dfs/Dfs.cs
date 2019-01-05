@@ -28,6 +28,8 @@
 
         private TColorMapPolicy ColorMapPolicy { get; }
 
+        private StepPolicy<DfsStepKind, TVertex, TEdge> StepPolicy { get; }
+
         public Dfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             if (graphPolicy == null)
@@ -38,6 +40,7 @@
 
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
+            StepPolicy = default;
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -48,7 +51,7 @@
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 Step<DfsStepKind, TVertex, TEdge>,
                 TGraphPolicy, TColorMapPolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
-                graph, startVertex, 0, GraphPolicy, ColorMapPolicy, default);
+                graph, startVertex, 0, GraphPolicy, ColorMapPolicy, StepPolicy);
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -59,7 +62,7 @@
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 Step<DfsStepKind, TVertex, TEdge>,
                 TGraphPolicy, TColorMapPolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
-                graph, startVertex, stackCapacity, GraphPolicy, ColorMapPolicy, default);
+                graph, startVertex, stackCapacity, GraphPolicy, ColorMapPolicy, StepPolicy);
         }
     }
 }
