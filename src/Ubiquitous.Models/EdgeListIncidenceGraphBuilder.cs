@@ -11,22 +11,22 @@
         private ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>> _outEdges;
         private int _edgeCount;
 
-        public EdgeListIncidenceGraphBuilder(int initialVertexUpperBound)
+        public EdgeListIncidenceGraphBuilder(int initialVertexCount)
         {
-            if (initialVertexUpperBound < 0)
-                throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
+            if (initialVertexCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
 
             _initialOutDegree = DefaultInitialOutDegree;
-            ArrayBuilder<SourceTargetPair<int>>[] outEdges = Pool.Rent(initialVertexUpperBound);
-            Array.Clear(outEdges, 0, initialVertexUpperBound);
-            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, initialVertexUpperBound);
+            ArrayBuilder<SourceTargetPair<int>>[] outEdges = Pool.Rent(initialVertexCount);
+            Array.Clear(outEdges, 0, initialVertexCount);
+            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, initialVertexCount);
             _edgeCount = 0;
         }
 
         private static ArrayPool<ArrayBuilder<SourceTargetPair<int>>> Pool =>
             ArrayPool<ArrayBuilder<SourceTargetPair<int>>>.Shared;
 
-        public int VertexUpperBound => _outEdges.Count;
+        public int VertexCount => _outEdges.Count;
 
         public int InitialOutDegree
         {
@@ -49,10 +49,10 @@
             }
 
             int max = Math.Max(source, target);
-            if (max >= VertexUpperBound)
+            if (max >= VertexCount)
             {
-                int newVertexUpperBound = max + 1;
-                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexUpperBound, true);
+                int newVertexCount = max + 1;
+                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexCount, true);
             }
 
             if (_outEdges[source].Buffer == null)
@@ -74,12 +74,12 @@
 
         public EdgeListIncidenceGraph ToGraph()
         {
-            int vertexUpperBound = VertexUpperBound;
-            var storage = new SourceTargetPair<int>[_edgeCount + vertexUpperBound];
+            int vertexCount = VertexCount;
+            var storage = new SourceTargetPair<int>[_edgeCount + vertexCount];
             Span<SourceTargetPair<int>> destReorderedEdges = storage.AsSpan(0, _edgeCount);
-            Span<SourceTargetPair<int>> destEdgeBounds = storage.AsSpan(_edgeCount, vertexUpperBound);
+            Span<SourceTargetPair<int>> destEdgeBounds = storage.AsSpan(_edgeCount, vertexCount);
 
-            for (int s = 0, currentOffset = 0; s != vertexUpperBound; ++s)
+            for (int s = 0, currentOffset = 0; s != vertexCount; ++s)
             {
                 ReadOnlySpan<SourceTargetPair<int>> currentOutEdges = _outEdges[s].AsSpan();
                 Span<SourceTargetPair<int>> destOutEdges =
@@ -97,7 +97,7 @@
             _outEdges = ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>.Empty;
             _edgeCount = 0;
 
-            return new EdgeListIncidenceGraph(vertexUpperBound, storage);
+            return new EdgeListIncidenceGraph(vertexCount, storage);
         }
     }
 }
