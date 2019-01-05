@@ -97,7 +97,7 @@ namespace Ubiquitous.Traversal.Advanced
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                                 TStep, TGraphPolicy, TColorMapPolicy, TStepPolicy>(_graph, _startVertex, _colorMap,
-                                _stack, _graphPolicy, _colorMapPolicy, default);
+                                _stack, _graphPolicy, _colorMapPolicy, _stepPolicy);
                             _state = 5;
                             continue;
                         }
