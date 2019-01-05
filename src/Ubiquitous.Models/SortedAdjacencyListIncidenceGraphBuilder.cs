@@ -35,6 +35,12 @@ namespace Ubiquitous.Models
 
         public int VertexCount => _edgeUpperBounds.Count;
 
+        public void EnsureVertexCount(int vertexCount)
+        {
+            if (vertexCount > VertexCount)
+                _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, vertexCount, true);
+        }
+
         public bool TryAdd(int source, int target, out int edge)
         {
             if (source < 0)
@@ -50,8 +56,7 @@ namespace Ubiquitous.Models
             }
 
             int max = Math.Max(source, target);
-            if (max >= VertexCount)
-                _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, max + 1, true);
+            EnsureVertexCount(max + 1);
 
             if (source < _lastSource)
             {

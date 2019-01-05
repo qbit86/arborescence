@@ -44,6 +44,12 @@
             set => _initialOutDegree = value;
         }
 
+        public void EnsureVertexCount(int vertexCount)
+        {
+            if (vertexCount > VertexCount)
+                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
+        }
+
         public bool TryAdd(int source, int target, out int edge)
         {
             if (source < 0)
@@ -59,8 +65,7 @@
             }
 
             int max = Math.Max(source, target);
-            if (max >= VertexCount)
-                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, max + 1, true);
+            EnsureVertexCount(max + 1);
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
