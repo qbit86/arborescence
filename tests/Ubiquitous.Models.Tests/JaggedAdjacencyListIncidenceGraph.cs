@@ -19,7 +19,7 @@
             OutEdges = outEdges;
         }
 
-        public int VertexUpperBound => OutEdges?.Length ?? 0;
+        public int VertexCount => OutEdges?.Length ?? 0;
 
         public int EdgeCount => Endpoints?.Length / 2 ?? 0;
 
@@ -57,7 +57,7 @@
 
         public bool TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
         {
-            if ((uint)vertex >= (uint)VertexUpperBound)
+            if ((uint)vertex >= (uint)VertexCount)
             {
                 outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
                 return false;

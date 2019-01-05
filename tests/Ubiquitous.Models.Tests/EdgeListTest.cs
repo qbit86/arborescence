@@ -9,26 +9,26 @@ namespace Ubiquitous
 
     public sealed class EdgeListTest
     {
-        private const int InitialVertexUpperBound = 4;
+        private const int InitialVertexCount = 0;
 
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void EdgeList_ShouldNotBeLess(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName);
 
-            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexUpperBound);
+            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexCount);
             EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 
-            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, edgeList.VertexUpperBound);
+            Assert.Equal(jaggedAdjacencyList.VertexCount, edgeList.VertexCount);
 
             // Act
-            for (int v = 0; v < jaggedAdjacencyList.VertexUpperBound; ++v)
+            for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
                 if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
                     continue;
@@ -60,17 +60,17 @@ namespace Ubiquitous
         public void EdgeList_ShouldNotBeGreater(string testName)
         {
             // Arrange
-            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexUpperBound);
+            var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
                     testName);
 
-            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexUpperBound);
+            var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexCount);
             EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 
             // Act
-            for (int v = 0; v < edgeList.VertexUpperBound; ++v)
+            for (int v = 0; v < edgeList.VertexCount; ++v)
             {
                 if (!edgeList.TryGetOutEdges(v, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator))
                     continue;

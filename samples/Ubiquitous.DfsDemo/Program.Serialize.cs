@@ -54,7 +54,7 @@
 
                 if (!vertexKinds.IsEmpty)
                 {
-                    for (int v = 0; v < graph.VertexUpperBound; ++v)
+                    for (int v = 0; v < graph.VertexCount; ++v)
                     {
                         DfsStepKind vertexKind = vertexKinds[v];
                         if (vertexKind == DfsStepKind.StartVertex)

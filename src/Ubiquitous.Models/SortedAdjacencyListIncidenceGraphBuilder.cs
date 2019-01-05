@@ -11,14 +11,14 @@ namespace Ubiquitous.Models
         private ArrayPrefix<int> _edgeUpperBounds;
         private int _lastSource;
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound) : this(initialVertexUpperBound, 0)
+        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0)
         {
         }
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCapacity)
+        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
         {
-            if (initialVertexUpperBound < 0)
-                throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
+            if (initialVertexCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
 
             if (edgeCapacity < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
@@ -26,14 +26,14 @@ namespace Ubiquitous.Models
             _orderedSources = new ArrayBuilder<int>(edgeCapacity);
             _targets = new ArrayBuilder<int>(edgeCapacity);
             _lastSource = 0;
-            int[] edgeUpperBounds = Pool.Rent(initialVertexUpperBound);
-            Array.Clear(edgeUpperBounds, 0, initialVertexUpperBound);
-            _edgeUpperBounds = new ArrayPrefix<int>(edgeUpperBounds, initialVertexUpperBound);
+            int[] edgeUpperBounds = Pool.Rent(initialVertexCount);
+            Array.Clear(edgeUpperBounds, 0, initialVertexCount);
+            _edgeUpperBounds = new ArrayPrefix<int>(edgeUpperBounds, initialVertexCount);
         }
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
 
-        public int VertexUpperBound => _edgeUpperBounds.Count;
+        public int VertexCount => _edgeUpperBounds.Count;
 
         public bool TryAdd(int source, int target, out int edge)
         {
@@ -50,10 +50,10 @@ namespace Ubiquitous.Models
             }
 
             int max = Math.Max(source, target);
-            if (max >= VertexUpperBound)
+            if (max >= VertexCount)
             {
-                int newVertexUpperBound = max + 1;
-                _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, newVertexUpperBound, true);
+                int newVertexCount = max + 1;
+                _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, newVertexCount, true);
             }
 
             if (source < _lastSource)
@@ -75,27 +75,27 @@ namespace Ubiquitous.Models
         }
 
         // Storage layout:
-        // vertexUpperBound      targets
-        //              ↓↓↓      ↓↓↓↓↓
-        //              [4][^^^^][bbc][aac]
-        //                 ↑↑↑↑↑↑     ↑↑↑↑↑
-        //        edgeUpperBounds     orderedSources
+        // vertexCount      targets
+        //         ↓↓↓      ↓↓↓↓↓
+        //         [4][^^^^][bbc][aac]
+        //            ↑↑↑↑↑↑     ↑↑↑↑↑
+        //   edgeUpperBounds     orderedSources
 
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_orderedSources.Count == _targets.Count);
-            int vertexUpperBound = VertexUpperBound;
+            int vertexCount = VertexCount;
             int targetCount = _targets.Count;
             int orderedSourceCount = _orderedSources.Count;
-            var storage = new int[1 + vertexUpperBound + targetCount + orderedSourceCount];
-            storage[0] = vertexUpperBound;
+            var storage = new int[1 + vertexCount + targetCount + orderedSourceCount];
+            storage[0] = vertexCount;
 
             ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
-            targetsBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound, targetCount));
+            targetsBuffer.CopyTo(storage.AsSpan(1 + vertexCount, targetCount));
             _targets.Dispose(false);
 
             ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
-            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexUpperBound + targetCount, orderedSourceCount));
+            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexCount + targetCount, orderedSourceCount));
             _orderedSources.Dispose(false);
 
             // Make EdgeUpperBounds monotonic in case if we skipped some sources.

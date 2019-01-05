@@ -10,28 +10,28 @@ namespace Ubiquitous.Models
     {
         private readonly SourceTargetPair<int>[] _storage;
 
-        internal EdgeListIncidenceGraph(int vertexUpperBound, SourceTargetPair<int>[] storage)
+        internal EdgeListIncidenceGraph(int vertexCount, SourceTargetPair<int>[] storage)
         {
-            Assert(vertexUpperBound >= 0, "vertexUpperBound >= 0");
+            Assert(vertexCount >= 0, "vertexCount >= 0");
             Assert(storage != null, "storage != null");
 
             _storage = storage;
-            VertexUpperBound = vertexUpperBound;
+            VertexCount = vertexCount;
         }
 
-        public int VertexUpperBound { get; }
+        public int VertexCount { get; }
 
-        public int EdgeCount => _storage?.Length - VertexUpperBound ?? 0;
+        public int EdgeCount => _storage?.Length - VertexCount ?? 0;
 
         public bool TryGetSource(SourceTargetPair<int> edge, out int source)
         {
-            if ((uint)edge.Source >= (uint)VertexUpperBound)
+            if ((uint)edge.Source >= (uint)VertexCount)
             {
                 source = -1;
                 return false;
             }
 
-            if ((uint)edge.Target >= (uint)VertexUpperBound)
+            if ((uint)edge.Target >= (uint)VertexCount)
             {
                 source = -2;
                 return false;
@@ -43,13 +43,13 @@ namespace Ubiquitous.Models
 
         public bool TryGetTarget(SourceTargetPair<int> edge, out int target)
         {
-            if ((uint)edge.Source >= (uint)VertexUpperBound)
+            if ((uint)edge.Source >= (uint)VertexCount)
             {
                 target = -1;
                 return false;
             }
 
-            if ((uint)edge.Target >= (uint)VertexUpperBound)
+            if ((uint)edge.Target >= (uint)VertexCount)
             {
                 target = -2;
                 return false;
@@ -77,7 +77,7 @@ namespace Ubiquitous.Models
 
         public bool Equals(EdgeListIncidenceGraph other)
         {
-            return VertexUpperBound == other.VertexUpperBound && _storage == other._storage;
+            return VertexCount == other.VertexCount && _storage == other._storage;
         }
 
         public override bool Equals(object obj)
@@ -87,13 +87,13 @@ namespace Ubiquitous.Models
 
         public override int GetHashCode()
         {
-            return unchecked(VertexUpperBound * 397) ^ (_storage?.GetHashCode() ?? 0);
+            return unchecked(VertexCount * 397) ^ (_storage?.GetHashCode() ?? 0);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<SourceTargetPair<int>> GetEdgeBounds()
         {
-            return _storage.AsSpan(EdgeCount, VertexUpperBound);
+            return _storage.AsSpan(EdgeCount, VertexCount);
         }
     }
 }
