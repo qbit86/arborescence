@@ -59,31 +59,31 @@
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
-                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertexEnumerable vertexCollection)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
-                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>(graph,
-                vertexCollection, 0, GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy);
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
+                graph, vertexCollection, 0, GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, default);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
-                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
 
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
-                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
-                TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>(graph,
-                vertexCollection, stackCapacity, GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy);
+                TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
+                graph, vertexCollection, stackCapacity, GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, default);
         }
     }
 }
