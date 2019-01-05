@@ -223,7 +223,7 @@ namespace Ubiquitous.Traversal.Advanced
             if (_colorMapPolicy.TryGet(_colorMap, vertex, out Color result))
                 return result;
 
-            return Color.None;
+            return default;
         }
     }
 }
