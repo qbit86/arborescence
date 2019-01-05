@@ -70,6 +70,7 @@ namespace Ubiquitous
         /// Adds an item to the backing array, resizing it if necessary.
         /// </summary>
         /// <param name="item">The item to add.</param>
+        /// <param name="clearArray">Indicates whether the contents of the buffer should be cleared before reuse.</param>
         public void Add(T item, bool clearArray = false)
         {
             if (_count == Capacity)
