@@ -8,10 +8,10 @@
         IEquatable<SortedAdjacencyListIncidenceGraph>
     {
         // Layout:
-        // [0..1) — VertexUpperBound
-        // [1..Offset₁ + VertexUpperBound) — EdgeBounds; EdgeCount := (Length - 1 - VertexUpperBound) / 2
-        // [1 + VertexUpperBound..Offset₂ + EdgeCount) — Targets
-        // [1 + VertexUpperBound + EdgeCount..Offset₃ + EdgeCount) — Sources
+        // [0..1) — VertexCount
+        // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - 1 - VertexCount) / 2
+        // [1 + VertexCount..Offset₂ + EdgeCount) — Targets
+        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Sources
         private readonly int[] _storage;
 
         internal SortedAdjacencyListIncidenceGraph(int[] storage)
@@ -24,15 +24,15 @@
 
             // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
             // Assert: `endpoints` are sorted by source(edge).
-            // Assert: `edgeBounds` are vertexUpperBound in length.
+            // Assert: `edgeBounds` are vertexCount in length.
             // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
             _storage = storage;
         }
 
-        public int VertexUpperBound => _storage == null ? 0 : GetVertexUpperBound();
+        public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexUpperBound()) / 2;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
 
         public bool TryGetSource(int edge, out int source)
         {
@@ -95,23 +95,23 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetEdgeBounds()
         {
-            return _storage.AsSpan(1, VertexUpperBound);
+            return _storage.AsSpan(1, VertexCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetSources()
         {
-            return _storage.AsSpan(1 + VertexUpperBound + EdgeCount, EdgeCount);
+            return _storage.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTargets()
         {
-            return _storage.AsSpan(1 + VertexUpperBound, EdgeCount);
+            return _storage.AsSpan(1 + VertexCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetVertexUpperBound()
+        private int GetVertexCount()
         {
             Assert(_storage != null, "_storage != null");
             Assert(_storage.Length > 0, "_storage.Length > 0");
