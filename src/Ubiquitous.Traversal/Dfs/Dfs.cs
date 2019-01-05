@@ -41,21 +41,25 @@
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>
+                Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>(graph, startVertex, 0,
-                GraphPolicy, ColorMapPolicy);
+                Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
+                graph, startVertex, 0, GraphPolicy, ColorMapPolicy, default);
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>
+                Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>
             Traverse(TGraph graph, TVertex startVertex, int stackCapacity)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>(graph, startVertex, stackCapacity,
-                GraphPolicy, ColorMapPolicy);
+                Step<DfsStepKind, TVertex, TEdge>,
+                TGraphPolicy, TColorMapPolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
+                graph, startVertex, stackCapacity, GraphPolicy, ColorMapPolicy, default);
         }
     }
 }
