@@ -51,10 +51,7 @@ namespace Ubiquitous.Models
 
             int max = Math.Max(source, target);
             if (max >= VertexCount)
-            {
-                int newVertexCount = max + 1;
-                _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, newVertexCount, true);
-            }
+                _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, max + 1, true);
 
             if (source < _lastSource)
             {

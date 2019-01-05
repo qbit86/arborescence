@@ -60,10 +60,7 @@ namespace Ubiquitous.Models
 
             int max = Math.Max(source, target);
             if (max >= VertexCount)
-            {
-                int newVertexCount = max + 1;
-                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexCount, true);
-            }
+                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, max + 1, true);
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;

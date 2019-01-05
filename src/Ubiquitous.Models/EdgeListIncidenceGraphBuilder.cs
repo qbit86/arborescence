@@ -50,10 +50,7 @@
 
             int max = Math.Max(source, target);
             if (max >= VertexCount)
-            {
-                int newVertexCount = max + 1;
-                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexCount, true);
-            }
+                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, max + 1, true);
 
             if (_outEdges[source].Buffer == null)
                 _outEdges[source] = new ArrayBuilder<SourceTargetPair<int>>(InitialOutDegree);
