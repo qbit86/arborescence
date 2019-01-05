@@ -92,7 +92,7 @@
         }
     }
 
-    public readonly struct DefaultStepPolicy<TStepKind, TVertex, TEdge>
+    public readonly struct StepPolicy<TStepKind, TVertex, TEdge>
         : IStepPolicy<TStepKind, TVertex, TEdge, Step<TStepKind, TVertex, TEdge>>
     {
         public Step<TStepKind, TVertex, TEdge> CreateVertexStep(TStepKind kind, TVertex vertex)
