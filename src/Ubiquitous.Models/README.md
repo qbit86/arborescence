@@ -14,7 +14,7 @@ digraph Unordered {
   a -> b [xlabel=2]
   {
     rank=same
-    b, d
+    b d
   }
 }
 ```
@@ -29,7 +29,7 @@ digraph Sorted {
   c -> c [xlabel=2]
   {
     rank=same
-    b, d
+    b d
   }
 }
 ```
@@ -38,47 +38,47 @@ digraph Sorted {
 
 |                 Length | Content            |
 |-----------------------:|:-------------------|
-|                      1 | _vertexUpperBound_ |
-| 2 × _vertexUpperBound_ | _edgeBounds_       |
+|                      1 | _vertexCount_      |
+|      2 × _vertexCount_ | _edgeBounds_       |
 |            _edgeCount_ | _reorderedEdges_   |
 |            _edgeCount_ | _targets_          |
 |            _edgeCount_ | _sources_          |
 
 ```
-vertexUpperBound    reorderedEdges     sources
-             ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
-             [4][_^|_^|_^|_^][021][bcb][aca]
-                ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-                   edgeBounds     targets
+vertexCount    reorderedEdges     sources
+        ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
+        [4][_^|_^|_^|_^][021][bcb][aca]
+           ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
+              edgeBounds     targets
 ```
 
 ### Sorted-AdjacencyList-IncidenceGraph
 
 |             Length | Content            |
 |-------------------:|:-------------------|
-|                  1 | _vertexUpperBound_ |
-| _vertexUpperBound_ | _edgeUpperBounds_  |
+|                  1 | _vertexCount_      |
+|      _vertexCount_ | _edgeUpperBounds_  |
 |        _edgeCount_ | _targets_          |
 |        _edgeCount_ | _orderedSources_   |
 
-_edgeCount_ = (_length_ − 1 − _vertexUpperBound_) / 2
+_edgeCount_ = (_length_ − 1 − _vertexCount_) / 2
 
 ```
-vertexUpperBound      targets
-             ↓↓↓      ↓↓↓↓↓
-             [4][^^^^][bbc][aac]
-                ↑↑↑↑↑↑     ↑↑↑↑↑
-       edgeUpperBounds     orderedSources
+vertexCount      targets
+        ↓↓↓      ↓↓↓↓↓
+        [4][^^^^][bbc][aac]
+           ↑↑↑↑↑↑     ↑↑↑↑↑
+  edgeUpperBounds     orderedSources
 ```
 
 ### EdgeList-IncidenceGraph
 
-_vertexUpperBound_
+_vertexCount_
 
 |             Length | Content          |
 |-------------------:|:-----------------|
 |        _edgeCount_ | _reorderedEdges_ |
-| _vertexUpperBound_ | _edgeBounds_     |
+|      _vertexCount_ | _edgeBounds_     |
 
 ```
 reorderedEdges
@@ -93,15 +93,15 @@ reorderedEdges
 
 |             Length | Content            |
 |-------------------:|:-------------------|
-|                  1 | _vertexUpperBound_ |
-| _vertexUpperBound_ | _edgeBounds_       |
+|                  1 | _vertexCount_      |
+|      _vertexCount_ | _edgeBounds_       |
 
 ```
-vertexUpperBound
-             ↓↓↓
-             [4][^^^^]
-                ↑↑↑↑↑↑
-                edgeBounds
+vertexCount
+        ↓↓↓
+        [4][^^^^]
+           ↑↑↑↑↑↑
+           edgeBounds
 ```
 
 |        Length | Content          |
