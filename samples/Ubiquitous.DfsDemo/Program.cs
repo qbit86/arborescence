@@ -31,11 +31,11 @@ namespace Ubiquitous
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
 
-            Console.Write($"{nameof(graph.VertexUpperBound)}: {graph.VertexUpperBound}, ");
+            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount}, ");
             Console.WriteLine($"{nameof(graph.EdgeCount)}: {graph.EdgeCount}");
 
-            var vertices = new IndexCollection(graph.VertexUpperBound);
-            var indexedMapPolicy = new ColorMapPolicy(graph.VertexUpperBound);
+            var vertices = new IndexCollection(graph.VertexCount);
+            var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
 
             {
                 var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
@@ -44,7 +44,7 @@ namespace Ubiquitous
                     default(IndexCollectionEnumerablePolicy));
 
                 IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertices);
-                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexUpperBound]);
+                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
@@ -58,7 +58,7 @@ namespace Ubiquitous
                         default(IndexCollectionEnumerablePolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
-                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexUpperBound]);
+                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 

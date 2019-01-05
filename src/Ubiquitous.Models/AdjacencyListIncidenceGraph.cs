@@ -20,9 +20,9 @@ namespace Ubiquitous.Models
             _storage = storage;
         }
 
-        public int VertexUpperBound => _storage == null ? 0 : GetVertexUpperBound();
+        public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexUpperBound()) / 3;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
 
         public bool TryGetSource(int edge, out int source)
         {
@@ -86,23 +86,23 @@ namespace Ubiquitous.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetEdgeBounds()
         {
-            return _storage.AsSpan(1, 2 * VertexUpperBound);
+            return _storage.AsSpan(1, 2 * VertexCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetSources()
         {
-            return _storage.AsSpan(1 + 2 * VertexUpperBound + 2 * EdgeCount, EdgeCount);
+            return _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTargets()
         {
-            return _storage.AsSpan(1 + 2 * VertexUpperBound + EdgeCount, EdgeCount);
+            return _storage.AsSpan(1 + 2 * VertexCount + EdgeCount, EdgeCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetVertexUpperBound()
+        private int GetVertexCount()
         {
             Assert(_storage != null, "_storage != null");
             Assert(_storage.Length > 0, "_storage.Length > 0");

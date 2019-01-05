@@ -24,7 +24,7 @@ namespace Ubiquitous
             AdjacencyListIncidenceGraph adjacencyList = BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(
                 ref adjacencyListBuilder, testName);
 
-            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, adjacencyList.VertexUpperBound);
+            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, adjacencyList.VertexCount);
 
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexUpperBound; ++v)
@@ -64,7 +64,7 @@ namespace Ubiquitous
                 BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(ref adjacencyListBuilder, testName);
 
             // Act
-            for (int v = 0; v < adjacencyList.VertexUpperBound; ++v)
+            for (int v = 0; v < adjacencyList.VertexCount; ++v)
             {
                 if (!adjacencyList.TryGetOutEdges(v, out ArraySegmentEnumerator<int> outEdgesEnumerator))
                     continue;
