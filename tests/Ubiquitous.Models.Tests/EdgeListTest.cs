@@ -25,10 +25,10 @@ namespace Ubiquitous
             EdgeListIncidenceGraph edgeList =
                 BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
 
-            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, edgeList.VertexCount);
+            Assert.Equal(jaggedAdjacencyList.VertexCount, edgeList.VertexCount);
 
             // Act
-            for (int v = 0; v < jaggedAdjacencyList.VertexUpperBound; ++v)
+            for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
                 if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
                     continue;

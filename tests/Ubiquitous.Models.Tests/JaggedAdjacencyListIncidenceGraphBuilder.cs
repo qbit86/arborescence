@@ -13,14 +13,14 @@
         private ArrayBuilder<int> _targets;
         private ArrayPrefix<ArrayPrefix<int>> _outEdges;
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound) : this(initialVertexUpperBound, 0)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0)
         {
         }
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexUpperBound, int edgeCapacity)
+        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
         {
-            if (initialVertexUpperBound < 0)
-                throw new ArgumentOutOfRangeException(nameof(initialVertexUpperBound));
+            if (initialVertexCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
 
             if (edgeCapacity < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
@@ -29,14 +29,14 @@
             int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
             _sources = new ArrayBuilder<int>(effectiveEdgeCapacity);
             _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
-            ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(initialVertexUpperBound);
-            Array.Clear(outEdges, 0, initialVertexUpperBound);
-            _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, initialVertexUpperBound);
+            ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(initialVertexCount);
+            Array.Clear(outEdges, 0, initialVertexCount);
+            _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, initialVertexCount);
         }
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
 
-        public int VertexUpperBound => _outEdges.Count;
+        public int VertexCount => _outEdges.Count;
 
         public int InitialOutDegree
         {
@@ -59,10 +59,10 @@
             }
 
             int max = Math.Max(source, target);
-            if (max >= VertexUpperBound)
+            if (max >= VertexCount)
             {
-                int newVertexUpperBound = max + 1;
-                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexUpperBound, true);
+                int newVertexCount = max + 1;
+                _outEdges = ArrayPrefixBuilder.Resize(_outEdges, newVertexCount, true);
             }
 
             Assert(_sources.Count == _targets.Count);

@@ -25,10 +25,10 @@ namespace Ubiquitous
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
                     testName, true);
 
-            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, sortedAdjacencyList.VertexCount);
+            Assert.Equal(jaggedAdjacencyList.VertexCount, sortedAdjacencyList.VertexCount);
 
             // Act
-            for (int v = 0; v < jaggedAdjacencyList.VertexUpperBound; ++v)
+            for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
                 if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
                     continue;
@@ -65,7 +65,7 @@ namespace Ubiquitous
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
                     testName, true);
 
-            Assert.Equal(jaggedAdjacencyList.VertexUpperBound, sortedAdjacencyList.VertexCount);
+            Assert.Equal(jaggedAdjacencyList.VertexCount, sortedAdjacencyList.VertexCount);
 
             // Act
             for (int v = 0; v < sortedAdjacencyList.VertexCount; ++v)
