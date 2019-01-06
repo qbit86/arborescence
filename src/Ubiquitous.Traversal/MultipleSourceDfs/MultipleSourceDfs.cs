@@ -21,7 +21,7 @@
         {
             return new MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>(
-                graphPolicy, colorMapPolicy, vertexEnumerablePolicy);
+                graphPolicy, colorMapPolicy, vertexEnumerablePolicy, default);
         }
     }
 
@@ -44,7 +44,7 @@
         private StepPolicy<DfsStepKind, TVertex, TEdge> StepPolicy { get; }
 
         public MultipleSourceDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
-            TVertexEnumerablePolicy vertexEnumerablePolicy)
+            TVertexEnumerablePolicy vertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge> stepPolicy)
         {
             if (graphPolicy == null)
                 throw new ArgumentNullException(nameof(graphPolicy));
@@ -58,7 +58,7 @@
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
             VertexEnumerablePolicy = vertexEnumerablePolicy;
-            StepPolicy = default;
+            StepPolicy = stepPolicy;
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,

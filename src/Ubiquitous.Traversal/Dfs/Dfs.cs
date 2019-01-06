@@ -13,7 +13,7 @@
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
         {
             return new Dfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>(graphPolicy, colorMapPolicy);
+                TGraphPolicy, TColorMapPolicy>(graphPolicy, colorMapPolicy, default);
         }
     }
 
@@ -30,7 +30,8 @@
 
         private StepPolicy<DfsStepKind, TVertex, TEdge> StepPolicy { get; }
 
-        public Dfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+        public Dfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
+            StepPolicy<DfsStepKind, TVertex, TEdge> stepPolicy)
         {
             if (graphPolicy == null)
                 throw new ArgumentNullException(nameof(graphPolicy));
@@ -40,7 +41,7 @@
 
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
-            StepPolicy = default;
+            StepPolicy = stepPolicy;
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
