@@ -35,12 +35,12 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, Step<DfsStepKind, int, int>,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
             DefaultDfs { get; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, Step<DfsStepKind, int, int>,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
             CachingDfs { get; set; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }

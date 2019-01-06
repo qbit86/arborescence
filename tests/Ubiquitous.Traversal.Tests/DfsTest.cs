@@ -63,8 +63,8 @@
             Output = output;
         }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, Step<DfsStepKind, int, int>,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
             Dfs { get; }
 
         private MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
