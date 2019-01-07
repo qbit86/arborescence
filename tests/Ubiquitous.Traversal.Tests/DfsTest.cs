@@ -69,7 +69,9 @@
 
         private MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
-                ColorMap, IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexCollectionEnumerablePolicy>
+                ColorMap, Step<DfsStepKind, int, int>,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
+                IndexCollectionEnumerablePolicy, StepPolicy<DfsStepKind, int, int>>
             MultipleSourceDfs { get; }
 
         private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
