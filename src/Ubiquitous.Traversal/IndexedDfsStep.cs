@@ -1,7 +1,6 @@
 namespace Ubiquitous.Traversal
 {
     using System;
-    using Advanced;
 
     public readonly struct IndexedDfsStep : IEquatable<IndexedDfsStep>
     {

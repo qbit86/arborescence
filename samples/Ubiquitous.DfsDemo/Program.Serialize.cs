@@ -4,7 +4,7 @@
     using System.Globalization;
     using System.IO;
     using Models;
-    using Traversal.Advanced;
+    using Traversal;
     using static System.Diagnostics.Debug;
 
     internal static partial class Program

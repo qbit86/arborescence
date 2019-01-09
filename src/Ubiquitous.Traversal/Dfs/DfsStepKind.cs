@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal.Advanced
+﻿namespace Ubiquitous.Traversal
 {
     public enum DfsStepKind : byte
     {
