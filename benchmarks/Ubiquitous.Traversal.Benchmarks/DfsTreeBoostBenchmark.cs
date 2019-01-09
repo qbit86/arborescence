@@ -5,6 +5,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
     using Models;
+    using Traversal;
     using Traversal.Advanced;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
@@ -22,8 +23,8 @@ namespace Ubiquitous
             BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
-            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
         }
 
         [Params(10, 100, 1000)]
@@ -35,12 +36,12 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             BaselineDfs { get; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, Step<DfsStepKind, int, int>,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             DefaultDfs { get; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, Step<DfsStepKind, int, int>,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             CachingDfs { get; set; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
@@ -53,8 +54,8 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(VertexCount);
             indexedMapPolicy.Warmup();
 
-            CachingDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
-                .Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy);
+            CachingDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy, default(IndexedDfsStepPolicy));
         }
 
         [Benchmark(Baseline = true)]
@@ -73,7 +74,7 @@ namespace Ubiquitous
         {
             int count = 0;
             var steps = DefaultDfs.Traverse(Graph, 0);
-            foreach (Step<DfsStepKind, int, int> _ in steps)
+            foreach (var _ in steps)
                 ++count;
 
             return count;
@@ -84,7 +85,7 @@ namespace Ubiquitous
         {
             int count = 0;
             var steps = CachingDfs.Traverse(Graph, 0);
-            foreach (Step<DfsStepKind, int, int> _ in steps)
+            foreach (var _ in steps)
                 ++count;
 
             return count;

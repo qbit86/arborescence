@@ -5,6 +5,7 @@
     using System.Linq;
     using Misnomer;
     using Models;
+    using Traversal;
     using Traversal.Advanced;
     using Xunit;
     using Xunit.Abstractions;
@@ -46,8 +47,8 @@
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             MultipleSourceDfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
                 IndexCollectionEnumerator, EdgeEnumerator, ColorMap>.Create(
@@ -63,8 +64,8 @@
             Output = output;
         }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, Step<DfsStepKind, int, int>,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             Dfs { get; }
 
         private MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
@@ -93,6 +94,8 @@
         [InlineData(2.0)]
         public void Baseline_and_boost_implementations_should_match_for_tree(double densityPower)
         {
+            throw new NotImplementedException();
+            /*
             // Arrange
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
@@ -103,7 +106,7 @@
 
             Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
                 BaselineDfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
-            Rist<Step<DfsStepKind, int, int>> boostSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+            Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
                 Dfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
 
             // Assert
@@ -120,7 +123,7 @@
             for (int i = 0; i != count; ++i)
             {
                 Step<DfsStepKind, int, int> baselineStep = baselineSteps[i];
-                Step<DfsStepKind, int, int> boostStep = boostSteps[i];
+                IndexedDfsStep boostStep = boostSteps[i];
 
                 if (baselineStep == boostStep)
                     continue;
@@ -133,6 +136,7 @@
 
             baselineSteps.Dispose();
             boostSteps.Dispose();
+            */
         }
 
         [Theory]
