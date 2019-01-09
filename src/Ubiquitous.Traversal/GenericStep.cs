@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal.Advanced
+﻿namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,10 @@
 
     public static class Step
     {
-        public static Step<TStepKind, TVertex, TEdge> Create<TStepKind, TVertex, TEdge>(
+        public static GenericStep<TStepKind, TVertex, TEdge> Create<TStepKind, TVertex, TEdge>(
             TStepKind kind, TVertex vertex, TEdge edge)
         {
-            return new Step<TStepKind, TVertex, TEdge>(kind, vertex, edge);
+            return new GenericStep<TStepKind, TVertex, TEdge>(kind, vertex, edge);
         }
 
         internal static string StepToString(object kind, object vertex, object edge)
@@ -34,7 +34,7 @@
         }
     }
 
-    public readonly struct Step<TStepKind, TVertex, TEdge> : IEquatable<Step<TStepKind, TVertex, TEdge>>
+    public readonly struct GenericStep<TStepKind, TVertex, TEdge> : IEquatable<GenericStep<TStepKind, TVertex, TEdge>>
     {
         public TStepKind Kind { get; }
 
@@ -42,7 +42,7 @@
 
         public TEdge Edge { get; }
 
-        public Step(TStepKind kind, TVertex vertex, TEdge edge)
+        public GenericStep(TStepKind kind, TVertex vertex, TEdge edge)
         {
             Kind = kind;
             Vertex = vertex;
@@ -54,7 +54,7 @@
             return Step.StepToString(Kind, Vertex, Edge);
         }
 
-        public bool Equals(Step<TStepKind, TVertex, TEdge> other)
+        public bool Equals(GenericStep<TStepKind, TVertex, TEdge> other)
         {
             EqualityComparer<TStepKind> kindComparer = EqualityComparer<TStepKind>.Default;
             if (!kindComparer.Equals(Kind, other.Kind))
@@ -73,7 +73,7 @@
 
         public override bool Equals(object obj)
         {
-            return obj is Step<TStepKind, TVertex, TEdge> other && Equals(other);
+            return obj is GenericStep<TStepKind, TVertex, TEdge> other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -81,26 +81,26 @@
             return Kind.GetHashCode();
         }
 
-        public static bool operator ==(Step<TStepKind, TVertex, TEdge> left, Step<TStepKind, TVertex, TEdge> right)
+        public static bool operator ==(GenericStep<TStepKind, TVertex, TEdge> left, GenericStep<TStepKind, TVertex, TEdge> right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Step<TStepKind, TVertex, TEdge> left, Step<TStepKind, TVertex, TEdge> right)
+        public static bool operator !=(GenericStep<TStepKind, TVertex, TEdge> left, GenericStep<TStepKind, TVertex, TEdge> right)
         {
             return !left.Equals(right);
         }
     }
 
-    public readonly struct StepPolicy<TStepKind, TVertex, TEdge>
-        : IStepPolicy<TStepKind, TVertex, TEdge, Step<TStepKind, TVertex, TEdge>>
+    public readonly struct GenericStepPolicy<TStepKind, TVertex, TEdge>
+        : IStepPolicy<TStepKind, TVertex, TEdge, GenericStep<TStepKind, TVertex, TEdge>>
     {
-        public Step<TStepKind, TVertex, TEdge> CreateVertexStep(TStepKind kind, TVertex vertex)
+        public GenericStep<TStepKind, TVertex, TEdge> CreateVertexStep(TStepKind kind, TVertex vertex)
         {
             return Step.Create(kind, vertex, default(TEdge));
         }
 
-        public Step<TStepKind, TVertex, TEdge> CreateEdgeStep(TStepKind kind, TEdge edge)
+        public GenericStep<TStepKind, TVertex, TEdge> CreateEdgeStep(TStepKind kind, TEdge edge)
         {
             return Step.Create(kind, default(TVertex), edge);
         }
