@@ -40,7 +40,7 @@ namespace Ubiquitous
 
             {
                 var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                        IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
@@ -54,7 +54,7 @@ namespace Ubiquitous
 
             {
                 var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                        IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
@@ -71,7 +71,7 @@ namespace Ubiquitous
         {
             Assert(steps != null);
 
-            foreach (var step in steps)
+            foreach (IndexedDfsStep step in steps)
             {
                 switch (step.Kind)
                 {

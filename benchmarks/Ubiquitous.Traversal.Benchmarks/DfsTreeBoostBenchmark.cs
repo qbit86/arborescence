@@ -74,7 +74,7 @@ namespace Ubiquitous
         {
             int count = 0;
             var steps = DefaultDfs.Traverse(Graph, 0);
-            foreach (var _ in steps)
+            foreach (IndexedDfsStep _ in steps)
                 ++count;
 
             return count;
@@ -85,7 +85,7 @@ namespace Ubiquitous
         {
             int count = 0;
             var steps = CachingDfs.Traverse(Graph, 0);
-            foreach (var _ in steps)
+            foreach (IndexedDfsStep _ in steps)
                 ++count;
 
             return count;

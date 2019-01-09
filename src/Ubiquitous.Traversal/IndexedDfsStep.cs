@@ -5,7 +5,7 @@ namespace Ubiquitous.Traversal
 
     public readonly struct IndexedDfsStep : IEquatable<IndexedDfsStep>
     {
-        private static uint s_kindMask = 0x000000FF;
+        private static readonly uint s_kindMask = 0x000000FF;
 
         private readonly uint _storage;
 
