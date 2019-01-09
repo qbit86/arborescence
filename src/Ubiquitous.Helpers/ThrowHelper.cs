@@ -49,7 +49,7 @@
 
         internal static void ThrowNotSupportedException()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
