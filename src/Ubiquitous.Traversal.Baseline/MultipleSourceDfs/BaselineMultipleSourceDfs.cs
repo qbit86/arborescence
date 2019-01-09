@@ -4,26 +4,27 @@
     using System.Collections.Generic;
 
     public static class BaselineMultipleSourceDfs<
-        TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap>
+        TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep>
         where TVertexEnumerable : IEnumerable<TVertex>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         public static BaselineMultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator,
-                TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
-                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>
-            Create<TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy>(
+                TEdgeEnumerator, TColorMap, TStep,
+                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
+            Create<TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
                 TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
-                TVertexEnumerablePolicy vertexEnumerablePolicy)
+                TVertexEnumerablePolicy vertexEnumerablePolicy, TStepPolicy stepPolicy)
             where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
             where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
+            where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
         {
             return new BaselineMultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator,
-                TEdgeEnumerator, TColorMap, Step<DfsStepKind, TVertex, TEdge>,
-                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, StepPolicy<DfsStepKind, TVertex, TEdge>>(
-                graphPolicy, colorMapPolicy, vertexEnumerablePolicy, default);
+                TEdgeEnumerator, TColorMap, TStep,
+                TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
+                graphPolicy, colorMapPolicy, vertexEnumerablePolicy, stepPolicy);
         }
     }
 

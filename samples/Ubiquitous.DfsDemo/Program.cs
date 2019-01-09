@@ -6,6 +6,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using System.IO;
     using Models;
+    using Traversal;
     using Traversal.Advanced;
     using Workbench;
     using static System.Diagnostics.Debug;
@@ -38,12 +39,12 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
 
             {
-                var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                    IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap>.Create(
+                var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
-                    default(IndexCollectionEnumerablePolicy));
+                    default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
-                IEnumerable<Step<DfsStepKind, int, int>> steps = dfs.Traverse(graph, vertices);
+                IEnumerable<IndexedDfsStep> steps = dfs.Traverse(graph, vertices);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
@@ -52,10 +53,10 @@ namespace Ubiquitous
             }
 
             {
-                var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                        IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap>
-                    .Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
-                        default(IndexCollectionEnumerablePolicy));
+                var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
+                    default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
+                    default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
                 StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
@@ -66,22 +67,21 @@ namespace Ubiquitous
             }
         }
 
-        private static void FillEdgeKinds(IEnumerable<Step<DfsStepKind, int, int>> steps,
-            StepMap vertexKinds, StepMap edgeKinds)
+        private static void FillEdgeKinds(IEnumerable<IndexedDfsStep> steps, StepMap vertexKinds, StepMap edgeKinds)
         {
             Assert(steps != null);
 
-            foreach (Step<DfsStepKind, int, int> step in steps)
+            foreach (IndexedDfsStep step in steps)
             {
                 switch (step.Kind)
                 {
                     case DfsStepKind.TreeEdge:
                     case DfsStepKind.BackEdge:
                     case DfsStepKind.ForwardOrCrossEdge:
-                        edgeKinds[step.Edge] = step.Kind;
+                        edgeKinds[step.Value] = step.Kind;
                         break;
                     case DfsStepKind.StartVertex:
-                        vertexKinds[step.Vertex] = step.Kind;
+                        vertexKinds[step.Value] = step.Kind;
                         break;
                     default:
                         continue;
