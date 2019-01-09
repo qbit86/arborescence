@@ -55,8 +55,8 @@
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
                 default(IndexedDfsStepPolicy));
 
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap>.Create(
@@ -77,8 +77,8 @@
             MultipleSourceDfs { get; }
 
         private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                Step<DfsStepKind, int, int>,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
+                IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,

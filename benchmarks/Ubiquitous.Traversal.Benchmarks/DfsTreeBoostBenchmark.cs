@@ -20,8 +20,8 @@ namespace Ubiquitous
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
@@ -32,9 +32,8 @@ namespace Ubiquitous
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                Step<DfsStepKind, int, int>,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
+        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             BaselineDfs { get; }
 
         private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
@@ -63,8 +62,8 @@ namespace Ubiquitous
         public int BaselineDfsTree()
         {
             int count = 0;
-            IEnumerable<Step<DfsStepKind, int, int>> steps = BaselineDfs.Traverse(Graph, 0);
-            foreach (Step<DfsStepKind, int, int> _ in steps)
+            IEnumerable<IndexedDfsStep> steps = BaselineDfs.Traverse(Graph, 0);
+            foreach (IndexedDfsStep _ in steps)
                 ++count;
 
             return count;
