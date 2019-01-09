@@ -51,6 +51,8 @@ namespace Ubiquitous
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS forest", Console.Out);
             }
 
+            throw new NotImplementedException();
+            /*
             {
                 var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                         IndexCollection, IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap>
@@ -64,6 +66,7 @@ namespace Ubiquitous
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
             }
+            */
         }
 
         private static void FillEdgeKinds(IEnumerable<Step<DfsStepKind, int, int>> steps,

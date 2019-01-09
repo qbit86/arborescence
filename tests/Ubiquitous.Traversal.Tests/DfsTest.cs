@@ -51,8 +51,9 @@
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             MultipleSourceDfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                IndexCollectionEnumerator, EdgeEnumerator, ColorMap>.Create(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
+                IndexCollectionEnumerator, EdgeEnumerator, ColorMap, IndexedDfsStep>.Create(
+                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
+                default(IndexedDfsStepPolicy));
 
             BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
@@ -70,9 +71,9 @@
 
         private MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
-                ColorMap, Step<DfsStepKind, int, int>,
+                ColorMap, IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
-                IndexCollectionEnumerablePolicy, StepPolicy<DfsStepKind, int, int>>
+                IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             MultipleSourceDfs { get; }
 
         private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
@@ -147,6 +148,8 @@
         [InlineData(2.0)]
         public void Baseline_and_boost_implementations_should_match_for_forest(double densityPower)
         {
+            throw new NotImplementedException();
+            /*
             // Arrange
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
@@ -171,6 +174,7 @@
 
             baselineSteps.Dispose();
             boostSteps.Dispose();
+            */
         }
 
         private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
