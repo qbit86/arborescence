@@ -6,7 +6,6 @@ namespace Ubiquitous
     using BenchmarkDotNet.Attributes;
     using Models;
     using Traversal;
-    using Traversal.Advanced;
     using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;

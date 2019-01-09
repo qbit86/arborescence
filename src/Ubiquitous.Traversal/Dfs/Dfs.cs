@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal.Advanced
+﻿namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;

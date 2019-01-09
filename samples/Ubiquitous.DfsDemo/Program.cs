@@ -7,7 +7,6 @@ namespace Ubiquitous
     using System.IO;
     using Models;
     using Traversal;
-    using Traversal.Advanced;
     using Workbench;
     using static System.Diagnostics.Debug;
     using ColorMap = ArrayPrefix<Traversal.Color>;

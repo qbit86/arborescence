@@ -6,7 +6,6 @@
     using Misnomer;
     using Models;
     using Traversal;
-    using Traversal.Advanced;
     using Xunit;
     using Xunit.Abstractions;
     using ColorMap = ArrayPrefix<Traversal.Color>;
