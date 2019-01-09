@@ -81,12 +81,14 @@
             return Kind.GetHashCode();
         }
 
-        public static bool operator ==(GenericStep<TStepKind, TVertex, TEdge> left, GenericStep<TStepKind, TVertex, TEdge> right)
+        public static bool operator ==(GenericStep<TStepKind, TVertex, TEdge> left,
+            GenericStep<TStepKind, TVertex, TEdge> right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(GenericStep<TStepKind, TVertex, TEdge> left, GenericStep<TStepKind, TVertex, TEdge> right)
+        public static bool operator !=(GenericStep<TStepKind, TVertex, TEdge> left,
+            GenericStep<TStepKind, TVertex, TEdge> right)
         {
             return !left.Equals(right);
         }
