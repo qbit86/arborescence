@@ -5,16 +5,16 @@ namespace Ubiquitous.Traversal
 
     public readonly struct IndexedDfsStep : IEquatable<IndexedDfsStep>
     {
-        private static readonly uint s_kindMask = 0x000000FF;
+        private const uint KindMask = 0x000000FF;
 
         private readonly uint _storage;
 
         public IndexedDfsStep(DfsStepKind kind, int value)
         {
-            _storage = ((uint)value << 8) | (s_kindMask & (uint)kind);
+            _storage = ((uint)value << 8) | (KindMask & (uint)kind);
         }
 
-        public DfsStepKind Kind => (DfsStepKind)(s_kindMask & _storage);
+        public DfsStepKind Kind => (DfsStepKind)(KindMask & _storage);
 
         public int Value => (int)(_storage >> 8);
 
