@@ -6,13 +6,14 @@ namespace Ubiquitous.Traversal.Advanced
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphPolicy, TColorMapPolicy>
-        : IEnumerable<Step<DfsStepKind, TVertex, TEdge>>
+    internal struct BaselineDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+            TGraphPolicy, TColorMapPolicy, TStepPolicy>
+        : IEnumerable<TStep>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
+        where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
         private TColorMap _colorMap;
 
@@ -24,43 +25,47 @@ namespace Ubiquitous.Traversal.Advanced
 
         private TColorMapPolicy ColorMapPolicy { get; }
 
+        private TStepPolicy StepPolicy { get; }
+
         public BaselineDfsStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
-            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+            TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
             Assert(colorMap != null);
             Assert(graphPolicy != null);
             Assert(colorMapPolicy != null);
+            Assert(stepPolicy != null);
 
             Graph = graph;
             StartVertex = startVertex;
             _colorMap = colorMap;
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
+            StepPolicy = stepPolicy;
         }
 
-        public IEnumerator<Step<DfsStepKind, TVertex, TEdge>> GetEnumerator()
+        public IEnumerator<TStep> GetEnumerator()
         {
             return ProcessVertexCoroutine(StartVertex);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            IEnumerator<Step<DfsStepKind, TVertex, TEdge>> result = GetEnumerator();
+            IEnumerator<TStep> result = GetEnumerator();
             return result;
         }
 
-        private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessVertexCoroutine(TVertex vertex)
+        private IEnumerator<TStep> ProcessVertexCoroutine(TVertex vertex)
         {
             if (!ColorMapPolicy.TryPut(_colorMap, vertex, Color.Gray))
                 yield break;
 
-            yield return Step.Create(DfsStepKind.DiscoverVertex, vertex, default(TEdge));
+            yield return StepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
 
             if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
             {
                 while (edges.MoveNext())
                 {
-                    IEnumerator<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessEdgeCoroutine(edges.Current);
+                    IEnumerator<TStep> steps = ProcessEdgeCoroutine(edges.Current);
                     while (steps.MoveNext())
                         yield return steps.Current;
                 }
@@ -69,12 +74,12 @@ namespace Ubiquitous.Traversal.Advanced
             if (!ColorMapPolicy.TryPut(_colorMap, vertex, Color.Black))
                 yield break;
 
-            yield return Step.Create(DfsStepKind.FinishVertex, vertex, default(TEdge));
+            yield return StepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
         }
 
-        private IEnumerator<Step<DfsStepKind, TVertex, TEdge>> ProcessEdgeCoroutine(TEdge edge)
+        private IEnumerator<TStep> ProcessEdgeCoroutine(TEdge edge)
         {
-            yield return Step.Create(DfsStepKind.ExamineEdge, default(TVertex), edge);
+            yield return StepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, edge);
 
             if (GraphPolicy.TryGetTarget(Graph, edge, out TVertex target))
             {
@@ -85,21 +90,21 @@ namespace Ubiquitous.Traversal.Advanced
                 {
                     case Color.None:
                     case Color.White:
-                        yield return Step.Create(DfsStepKind.TreeEdge, default(TVertex), edge);
-                        IEnumerator<Step<DfsStepKind, TVertex, TEdge>> steps = ProcessVertexCoroutine(target);
+                        yield return StepPolicy.CreateEdgeStep(DfsStepKind.TreeEdge, edge);
+                        IEnumerator<TStep> steps = ProcessVertexCoroutine(target);
                         while (steps.MoveNext())
                             yield return steps.Current;
                         break;
                     case Color.Gray:
-                        yield return Step.Create(DfsStepKind.BackEdge, default(TVertex), edge);
+                        yield return StepPolicy.CreateEdgeStep(DfsStepKind.BackEdge, edge);
                         break;
                     default:
-                        yield return Step.Create(DfsStepKind.ForwardOrCrossEdge, default(TVertex), edge);
+                        yield return StepPolicy.CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge);
                         break;
                 }
             }
 
-            yield return Step.Create(DfsStepKind.FinishEdge, default(TVertex), edge);
+            yield return StepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, edge);
         }
     }
 }

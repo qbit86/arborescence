@@ -32,7 +32,8 @@ namespace Ubiquitous
         public int VertexCount { get; set; }
 
         private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+                Step<DfsStepKind, int, int>,
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, StepPolicy<DfsStepKind, int, int>>
             BaselineDfs { get; }
 
         private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
