@@ -21,7 +21,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Condition="$(TargetFramework) != 'netcoreapp2.1'" Include="System.Buffers" Version="4.5.0" />
-    <PackageReference Condition="$(TargetFramework) != 'netcoreapp2.1'" Include="System.Memory" Version="4.5.1" />
+    <PackageReference Condition="$(TargetFramework) != 'netcoreapp2.1'" Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
