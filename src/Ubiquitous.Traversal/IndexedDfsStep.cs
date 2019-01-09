@@ -14,9 +14,9 @@ namespace Ubiquitous.Traversal
             _storage = ((uint)value << 8) | (s_kindMask & (uint)kind);
         }
 
-        DfsStepKind Kind => (DfsStepKind)(s_kindMask & _storage);
+        public DfsStepKind Kind => (DfsStepKind)(s_kindMask & _storage);
 
-        int Value => (int)(_storage >> 8);
+        public int Value => (int)(_storage >> 8);
 
         public bool Equals(IndexedDfsStep other)
         {

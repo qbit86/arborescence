@@ -15,27 +15,18 @@
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
-    internal sealed class DfsStepEqualityComparer : IEqualityComparer<Step<DfsStepKind, int, int>>
+    internal sealed class IndexedDfsStepEqualityComparer : IEqualityComparer<IndexedDfsStep>
     {
-        internal static DfsStepEqualityComparer Default { get; } = new DfsStepEqualityComparer();
+        internal static IndexedDfsStepEqualityComparer Default { get; } = new IndexedDfsStepEqualityComparer();
 
-        public bool Equals(Step<DfsStepKind, int, int> x, Step<DfsStepKind, int, int> y)
+        public bool Equals(IndexedDfsStep x, IndexedDfsStep y)
         {
-            if (x.Kind != y.Kind)
-                return false;
-
-            if (x.Vertex != y.Vertex)
-                return false;
-
-            if (x.Edge != y.Edge)
-                return false;
-
-            return true;
+            return x.Equals(y);
         }
 
-        public int GetHashCode(Step<DfsStepKind, int, int> obj)
+        public int GetHashCode(IndexedDfsStep obj)
         {
-            return ((int)obj.Kind).GetHashCode() ^ obj.Vertex.GetHashCode() ^ obj.Edge.GetHashCode();
+            return obj.GetHashCode();
         }
     }
 
@@ -59,8 +50,9 @@
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap>.Create(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy));
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap, IndexedDfsStep>.Create(
+                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy,
+                default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
             Output = output;
         }
@@ -82,10 +74,9 @@
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap,
-                Step<DfsStepKind, int, int>,
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap, IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
-                IndexCollectionEnumerablePolicy, StepPolicy<DfsStepKind, int, int>>
+                IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             BaselineMultipleSourceDfs { get; }
 
         private ITestOutputHelper Output { get; }
@@ -98,8 +89,6 @@
         [InlineData(2.0)]
         public void Baseline_and_boost_implementations_should_match_for_tree(double densityPower)
         {
-            throw new NotImplementedException();
-            /*
             // Arrange
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
@@ -108,9 +97,9 @@
 
             // Act
 
-            Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+            var baselineSteps = RistFactory<IndexedDfsStep>.Create(
                 BaselineDfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
-            Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
+            var boostSteps = RistFactory<IndexedDfsStep>.Create(
                 Dfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
 
             // Assert
@@ -126,7 +115,7 @@
             int count = Math.Min(baselineStepCount, boostStepCount);
             for (int i = 0; i != count; ++i)
             {
-                Step<DfsStepKind, int, int> baselineStep = baselineSteps[i];
+                var baselineStep = baselineSteps[i];
                 IndexedDfsStep boostStep = boostSteps[i];
 
                 if (baselineStep == boostStep)
@@ -136,11 +125,10 @@
                     + $"{nameof(baselineStep)}: {baselineStep}, {nameof(boostStep)}: {boostStep}");
             }
 
-            Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
+            Assert.Equal(baselineSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
 
             baselineSteps.Dispose();
             boostSteps.Dispose();
-            */
         }
 
         [Theory]
@@ -151,8 +139,6 @@
         [InlineData(2.0)]
         public void Baseline_and_boost_implementations_should_match_for_forest(double densityPower)
         {
-            throw new NotImplementedException();
-            /*
             // Arrange
 
             AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
@@ -161,9 +147,9 @@
 
             // Act
 
-            Rist<Step<DfsStepKind, int, int>> baselineSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+            var baselineSteps = RistFactory<IndexedDfsStep>.Create(
                 BaselineMultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
-            Rist<Step<DfsStepKind, int, int>> boostSteps = RistFactory<Step<DfsStepKind, int, int>>.Create(
+            var boostSteps = RistFactory<IndexedDfsStep>.Create(
                 MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
             int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
@@ -171,13 +157,12 @@
 
             // Assert
 
-            Assert.Equal(baselineSteps, boostSteps, DfsStepEqualityComparer.Default);
+            Assert.Equal(baselineSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
             Assert.Equal(VertexCount, discoveredVertexCount);
             Assert.Equal(expectedStartVertexCount, actualStartVertexCount);
 
             baselineSteps.Dispose();
             boostSteps.Dispose();
-            */
         }
 
         private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
