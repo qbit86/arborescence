@@ -4,12 +4,18 @@ namespace Ubiquitous.Traversal
 
     public readonly struct IndexedDfsStep : IEquatable<IndexedDfsStep>
     {
-        private const uint KindMask = 0x000000FF;
+        private const uint KindMask = 0x000000FFu;
 
         private readonly uint _storage;
 
         public IndexedDfsStep(DfsStepKind kind, int value)
         {
+            if ((uint)kind > 0x7Fu)
+                throw new ArgumentOutOfRangeException(nameof(kind));
+
+            if ((uint)value > 0x00FFFFFFu)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
             _storage = ((uint)value << 8) | (KindMask & (uint)kind);
         }
 
