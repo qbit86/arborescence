@@ -46,6 +46,7 @@ namespace Ubiquitous
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, size, clearArray);
 
             int oldCount = arrayPrefix.Count;
+            Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
             Array.Clear(arrayPrefix.Array, oldCount, size - oldCount);
             arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, size);
         }
