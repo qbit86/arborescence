@@ -122,14 +122,14 @@ namespace Ubiquitous.Traversal
                         case 5:
                         {
                             ThrowIfDisposed();
-                            if (!_stepEnumerator.MoveNext())
+                            if (!_stepEnumerator.TryMoveNext(out TStep current))
                             {
                                 DisposeStack();
                                 _state = 1;
                                 continue;
                             }
 
-                            _current = _stepEnumerator.Current;
+                            _current = current;
                             _state = 5;
                             return true;
                         }
