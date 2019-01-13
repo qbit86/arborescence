@@ -108,7 +108,7 @@ namespace Ubiquitous.Traversal
                         }
                     }
 
-                    return Terminate();
+                    return false;
                 }
             }
 
