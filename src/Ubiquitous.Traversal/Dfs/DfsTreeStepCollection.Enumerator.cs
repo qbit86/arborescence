@@ -5,6 +5,7 @@ namespace Ubiquitous.Traversal
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using Internal;
     using static System.Diagnostics.Debug;
 
@@ -64,10 +65,7 @@ namespace Ubiquitous.Traversal
                         {
                             _colorMap = _colorMapPolicy.Acquire();
                             if (_colorMap == null)
-                            {
-                                _state = int.MaxValue;
-                                continue;
-                            }
+                                return Terminate();
 
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
                             _state = 2;
@@ -83,10 +81,7 @@ namespace Ubiquitous.Traversal
                         {
                             _stack = ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire(_stackCapacity);
                             if (_stack == null)
-                            {
-                                _state = int.MaxValue;
-                                continue;
-                            }
+                                return Terminate();
 
                             _stackDisposalStatus = DisposalStatus.Initialized;
                             _state = 4;
@@ -105,25 +100,15 @@ namespace Ubiquitous.Traversal
                         {
                             ThrowIfDisposed();
                             if (!_stepEnumerator.MoveNext())
-                            {
-                                _state = int.MaxValue;
-                                continue;
-                            }
+                                return Terminate();
 
                             _current = _stepEnumerator.Current;
                             _state = 5;
                             return true;
                         }
-                        case int.MaxValue:
-                        {
-                            DisposeCore();
-                            _current = default;
-                            _state = -1;
-                            return false;
-                        }
                     }
 
-                    return false;
+                    return Terminate();
                 }
             }
 
@@ -176,6 +161,15 @@ namespace Ubiquitous.Traversal
                     throw new ObjectDisposedException(nameof(_colorMap));
                 if (_stackDisposalStatus != DisposalStatus.Initialized)
                     throw new ObjectDisposedException(nameof(_stack));
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            private bool Terminate()
+            {
+                DisposeCore();
+                _current = default;
+                _state = -1;
+                return false;
             }
         }
     }

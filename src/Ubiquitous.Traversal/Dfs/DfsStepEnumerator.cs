@@ -151,7 +151,7 @@ namespace Ubiquitous.Traversal
                     }
                 }
 
-                return false;
+                return Terminate();
             }
         }
 
