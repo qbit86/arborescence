@@ -95,9 +95,7 @@ namespace Ubiquitous.Traversal
                                 continue;
                             }
 
-                            _current = _stepPolicy.CreateVertexStep(DfsStepKind.StartVertex, _vertexEnumerator.Current);
-                            _state = 3;
-                            return true;
+                            return CreateStartVertexStep();
                         }
                         case 3:
                         {
@@ -193,6 +191,14 @@ namespace Ubiquitous.Traversal
                     throw new ObjectDisposedException(nameof(_colorMap));
                 if (_stackDisposalStatus != DisposalStatus.Initialized)
                     throw new ObjectDisposedException(nameof(_stack));
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            private bool CreateStartVertexStep()
+            {
+                _current = _stepPolicy.CreateVertexStep(DfsStepKind.StartVertex, _vertexEnumerator.Current);
+                _state = 3;
+                return true;
             }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
