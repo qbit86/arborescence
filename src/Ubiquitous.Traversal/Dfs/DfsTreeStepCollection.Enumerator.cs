@@ -100,9 +100,7 @@ namespace Ubiquitous.Traversal
                             if (!_stepEnumerator.TryMoveNext(out TStep current))
                                 return Terminate();
 
-                            _current = current;
-                            _state = 5;
-                            return true;
+                            return PropagateCurrentStep(current);
                         }
                     }
 
@@ -166,6 +164,14 @@ namespace Ubiquitous.Traversal
             {
                 _current = _stepPolicy.CreateVertexStep(DfsStepKind.StartVertex, _startVertex);
                 _state = 3;
+                return true;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            private bool PropagateCurrentStep(TStep current)
+            {
+                _current = current;
+                _state = 5;
                 return true;
             }
 
