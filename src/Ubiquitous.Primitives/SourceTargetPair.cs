@@ -18,7 +18,7 @@
         /// <summary>
         /// Used by SourceTargetPair.ToString to reduce generic code.
         /// </summary>
-        internal static string PairToString(object source, object target)
+        internal static string PairToString(string source, string target)
         {
             var s = new StringBuilder();
             s.Append('[');
@@ -57,7 +57,7 @@
 
         public override string ToString()
         {
-            return SourceTargetPair.PairToString(Source, Target);
+            return SourceTargetPair.PairToString(Source?.ToString(), Target?.ToString());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
