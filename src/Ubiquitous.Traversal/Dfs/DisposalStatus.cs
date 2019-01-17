@@ -1,6 +1,6 @@
 ﻿namespace Ubiquitous.Traversal
 {
-    internal enum DisposalStatus
+    internal enum DisposalStatus : byte
     {
         None = 0,
         Initialized,
