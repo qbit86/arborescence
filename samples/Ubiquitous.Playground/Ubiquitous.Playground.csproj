@@ -5,7 +5,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3" />
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.3" />
     <PackageReference Include="Misnomer.Rist" Version="0.2.2" />
+    <PackageReference Include="Text.Analyzers" Version="2.6.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
