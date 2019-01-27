@@ -24,7 +24,7 @@
             return new MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
-                graphPolicy, colorMapPolicy, vertexEnumerablePolicy, default);
+                graphPolicy, colorMapPolicy, vertexEnumerablePolicy, stepPolicy);
         }
     }
 
