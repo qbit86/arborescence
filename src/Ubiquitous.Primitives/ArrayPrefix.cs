@@ -7,7 +7,7 @@ namespace Ubiquitous
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
-    public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>
+    public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
     {
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
@@ -113,9 +113,9 @@ namespace Ubiquitous
             return obj is ArrayPrefix<T> other && Equals(other);
         }
 
-        public bool Equals(ArrayPrefix<T> obj)
+        public bool Equals(ArrayPrefix<T> other)
         {
-            return obj._array == _array && obj._count == _count;
+            return other._array == _array && other._count == _count;
         }
 
         public ArraySegment<T> Slice(int index)
