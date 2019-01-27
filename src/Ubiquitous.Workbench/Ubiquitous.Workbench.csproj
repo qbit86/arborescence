@@ -30,5 +30,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3" />
     <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="Text.Analyzers" Version="2.6.3" />
   </ItemGroup>
 </Project>
