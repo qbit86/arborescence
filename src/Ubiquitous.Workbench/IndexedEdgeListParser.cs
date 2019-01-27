@@ -6,13 +6,13 @@ namespace Ubiquitous.Workbench
     using System.IO;
     using static System.Diagnostics.Debug;
 
-    public readonly struct IndexedEdgeListParser
+    public static class IndexedEdgeListParser
     {
         private static readonly string[] s_arrowSeparator = { "->" };
 
         // Treats characters from ['a', 'z'] as integers from [0, 26).
 
-        public IEnumerable<SourceTargetPair<int>> ParseEdges(TextReader textReader)
+        public static IEnumerable<SourceTargetPair<int>> ParseEdges(TextReader textReader)
         {
             if (textReader == null)
                 throw new ArgumentNullException(nameof(textReader));

@@ -23,8 +23,7 @@ namespace Ubiquitous
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("03"))
             {
-                var parser = new IndexedEdgeListParser();
-                IEnumerable<SourceTargetPair<int>> edges = parser.ParseEdges(textReader);
+                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 foreach (SourceTargetPair<int> edge in edges)
                     builder.TryAdd(edge.Source, edge.Target, out _);
             }
