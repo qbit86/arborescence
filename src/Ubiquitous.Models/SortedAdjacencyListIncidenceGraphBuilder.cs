@@ -11,9 +11,7 @@ namespace Ubiquitous.Models
         private ArrayPrefix<int> _edgeUpperBounds;
         private int _lastSource;
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0)
-        {
-        }
+        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
 
         public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
         {

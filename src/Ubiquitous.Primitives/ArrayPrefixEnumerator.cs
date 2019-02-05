@@ -54,9 +54,7 @@ namespace Ubiquitous
 
         object IEnumerator.Current => Current;
 
-        void IDisposable.Dispose()
-        {
-        }
+        void IDisposable.Dispose() { }
 
         IEnumerator IEnumerable.GetEnumerator()
         {

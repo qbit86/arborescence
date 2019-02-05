@@ -34,8 +34,6 @@ namespace Ubiquitous
             return _current < _count;
         }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
     }
 }

@@ -60,8 +60,6 @@ namespace Ubiquitous
             _current = _start - 1;
         }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
     }
 }

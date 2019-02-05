@@ -13,9 +13,7 @@ namespace Ubiquitous.Models
         private ArrayBuilder<int> _targets;
         private ArrayPrefix<ArrayBuilder<int>> _outEdges;
 
-        public AdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0)
-        {
-        }
+        public AdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
 
         public AdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
         {

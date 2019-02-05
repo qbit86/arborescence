@@ -13,9 +13,7 @@
         private ArrayBuilder<int> _targets;
         private ArrayPrefix<ArrayPrefix<int>> _outEdges;
 
-        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0)
-        {
-        }
+        public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
 
         public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
         {
