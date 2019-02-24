@@ -36,6 +36,8 @@ digraph Sorted {
 
 ### AdjacencyList-IncidenceGraph
 
+Used in general case where graph is permitted to have parallel edges.
+
 |                 Length | Content            |
 |-----------------------:|:-------------------|
 |                      1 | _vertexCount_      |
@@ -72,6 +74,8 @@ vertexCount      targets
 ```
 
 ### EdgeList-IncidenceGraph
+
+Used for simple graphs where edge is unambiguously determined by a pair of vertices.
 
 _vertexCount_
 
