@@ -1,18 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
-    <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyVersion>0.1</AssemblyVersion>
     <VersionPrefix>0.1.0</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <Authors>Viktor T.</Authors>
     <Description>Graph traversal algorithms: DFS, BFS.</Description>
-    <PackageLicenseUrl>https://github.com/qbit86/ubiquitous-graphs/blob/master/LICENSE.txt</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>graph;traversal;dfs;bfs</PackageTags>
-    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
     <RootNamespace>Ubiquitous.Traversal</RootNamespace>
     <LangVersion>7.2</LangVersion>

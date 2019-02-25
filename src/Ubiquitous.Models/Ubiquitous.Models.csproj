@@ -1,19 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard1.1;netstandard2.0;netcoreapp2.1</TargetFrameworks>
-    <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyVersion>0.1</AssemblyVersion>
     <VersionPrefix>0.1.0</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <Authors>Viktor T.</Authors>
     <Title>Graph models</Title>
     <Description>Graph models.</Description>
-    <PackageLicenseUrl>https://github.com/qbit86/ubiquitous-graphs/blob/master/LICENSE.txt</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>graph;model;adjacency</PackageTags>
-    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
     <RootNamespace>Ubiquitous.Models</RootNamespace>
     <LangVersion>7.2</LangVersion>

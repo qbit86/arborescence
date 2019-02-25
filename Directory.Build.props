@@ -1,6 +1,14 @@
 <Project>
   <PropertyGroup>
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Viktor T.</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <AssemblyOriginatorKeyFile>$(RepoRoot)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>Ubiquitous</RootNamespace>
   </PropertyGroup>
 </Project>
