@@ -15,7 +15,6 @@
     <PackageTags>graph;model;adjacency</PackageTags>
     <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(UbiquitousRootDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>Ubiquitous.Models</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>

@@ -15,7 +15,6 @@
     <PackageTags>graph;abstraction</PackageTags>
     <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(UbiquitousRootDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>Ubiquitous</RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>

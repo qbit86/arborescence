@@ -17,7 +17,6 @@ Commonly used types: SourceTargetPair&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Des
     <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <PackageReleaseNotes>https://github.com/qbit86/ubiquitous-graphs/blob/develop/src/Ubiquitous.Primitives/CHANGELOG.md</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(UbiquitousRootDir)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>Ubiquitous</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>

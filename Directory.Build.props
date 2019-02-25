@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
-    <UbiquitousRootDir>$(MSBuildThisFileDirectory)</UbiquitousRootDir>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 </Project>
