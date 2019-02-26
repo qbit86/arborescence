@@ -12,7 +12,7 @@
             return new GenericStep<TStepKind, TVertex, TEdge>(kind, vertex, edge);
         }
 
-        internal static string StepToString(object kind, object vertex, object edge)
+        internal static string StepToString(string kind, string vertex, string edge)
         {
             var s = new StringBuilder();
             s.Append('[');
@@ -51,7 +51,7 @@
 
         public override string ToString()
         {
-            return Step.StepToString(Kind, Vertex, Edge);
+            return Step.StepToString(Kind.ToString(), Vertex.ToString(), Edge.ToString());
         }
 
         public bool Equals(GenericStep<TStepKind, TVertex, TEdge> other)
