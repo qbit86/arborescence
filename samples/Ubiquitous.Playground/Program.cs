@@ -5,71 +5,71 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
-    using Misnomer;
+    using Models;
 
     internal static class Program
     {
-        private static Random Prng { get; } = new Random();
+        private static TextReader In { get; } = CreateInputReader();
 
         private static TextWriter Out => Console.Out;
 
         private static void Main()
         {
-            const int count = 10;
+            string header = In.ReadLine() ?? string.Empty;
+            string[] parts = header.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
 
-            var edges = new Rist<SourceTargetPair<int>>(count * (count - 1));
-            for (int i = 0; i < count; ++i)
+            int vertexCount = Convert.ToInt32(parts[0], CultureInfo.InvariantCulture);
+            int edgeCount = Convert.ToInt32(parts[1], CultureInfo.InvariantCulture);
+
+            var graphBuilder = new AdjacencyListIncidenceGraphBuilder(vertexCount, edgeCount);
+            IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(In);
+            foreach (SourceTargetPair<int> edge in edges)
             {
-                for (int j = 0; j < i; ++j)
-                {
-                    edges.Add(SourceTargetPair.Create(i, j));
-                    edges.Add(SourceTargetPair.Create(j, i));
-                }
+                graphBuilder.TryAdd(edge.Source, edge.Target, out int _);
+                graphBuilder.TryAdd(edge.Target, edge.Source, out int _);
             }
 
-            Shuffle(edges);
+            AdjacencyListIncidenceGraph graph = graphBuilder.ToGraph();
 
-            Out.WriteLine("digraph \"Dense\" {");
-            Out.WriteLine("  layout=\"circo\"");
-            Out.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
-            Out.Write("  ");
-            for (int i = 0; i < count; ++i)
-                Out.Write($"{IndexToChar(i)} ");
-
-            Out.WriteLine();
-            int edgeCount = edges.Count;
-            for (int edgeIndex = 0; edgeIndex < edgeCount; ++edgeIndex)
-            {
-                SourceTargetPair<int> edge = edges[edgeIndex];
-                Out.WriteLine($"  {IndexToChar(edge.Source)} -> {IndexToChar(edge.Target)} // [label={edgeIndex}]");
-            }
-
-            Out.WriteLine("}");
-            edges.Dispose();
+            Out.WriteLine(graph.EdgeCount);
         }
 
-        private static void Shuffle<T>(IList<T> list)
+        private static TextReader CreateInputReader()
         {
-            Debug.Assert(list != null);
+            return new StringReader("4 2\n1 2\n3 2");
+        }
+    }
 
-            int count = list.Count;
-            for (int i = 0; i < count; ++i)
-            {
-                int randomIndex = i + Prng.Next(count - i);
-                T temp = list[randomIndex];
-                list[randomIndex] = list[i];
-                list[i] = temp;
-            }
+    internal static class IndexedEdgeListParser
+    {
+        public static IEnumerable<SourceTargetPair<int>> ParseEdges(TextReader textReader)
+        {
+            if (textReader == null)
+                throw new ArgumentNullException(nameof(textReader));
+
+            return ParseEdgesCore(textReader);
         }
 
-        private static string IndexToChar(int i)
+        private static IEnumerable<SourceTargetPair<int>> ParseEdgesCore(TextReader textReader)
         {
-            if (i < 0 || i > 26)
-                return i.ToString(CultureInfo.InvariantCulture);
+            Debug.Assert(textReader != null);
 
-            char c = (char)(i + 'a');
+            for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
+            {
+                string[] parts = line.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length < 2)
+                    continue;
 
-            return c.ToString(CultureInfo.InvariantCulture);
+                int source;
+                if (!int.TryParse(parts[0], out source))
+                    continue;
+
+                int target;
+                if (!int.TryParse(parts[1], out target))
+                    continue;
+
+                yield return SourceTargetPair.Create(source - 1, target - 1);
+            }
         }
     }
 }

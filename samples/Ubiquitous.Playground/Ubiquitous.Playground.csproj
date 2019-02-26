@@ -10,6 +10,7 @@
     <PackageReference Include="Text.Analyzers" Version="2.6.3" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
   </ItemGroup>
 </Project>
