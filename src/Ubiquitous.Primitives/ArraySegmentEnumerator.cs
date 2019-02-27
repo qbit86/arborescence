@@ -4,7 +4,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
-    public struct ArraySegmentEnumerator<T> : IEnumerator<T>
+    public struct ArraySegmentEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
         private readonly T[] _array;
         private readonly int _start;
@@ -61,5 +61,15 @@ namespace Ubiquitous
         }
 
         public void Dispose() { }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return this;
+        }
     }
 }
