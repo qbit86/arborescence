@@ -11,6 +11,7 @@ namespace Ubiquitous
     {
         private const int InitialVertexCount = 0;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void EdgeList_ShouldNotBeLess(string testName)
@@ -96,5 +97,6 @@ namespace Ubiquitous
                 jaggedOutEndpoints.Dispose();
             }
         }
+#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }

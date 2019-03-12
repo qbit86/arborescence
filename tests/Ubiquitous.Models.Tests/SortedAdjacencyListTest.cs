@@ -10,6 +10,7 @@ namespace Ubiquitous
     {
         private const int InitialVertexCount = 0;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(IndexedGraphTestCollection))]
         public void SortedAdjacencyList_ShouldNotBeLess(string testName)
@@ -125,5 +126,6 @@ namespace Ubiquitous
                 Assert.Equal(expectedTarget, actualTarget);
             }
         }
+#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }
