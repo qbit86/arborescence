@@ -1,10 +1,11 @@
-﻿namespace Ubiquitous.Models
+namespace Ubiquitous.Models
 {
     using System;
     using System.Buffers;
     using static System.Diagnostics.Debug;
 
-    public struct JaggedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
+    internal struct JaggedAdjacencyListIncidenceGraphBuilder :
+        IGraphBuilder<JaggedAdjacencyListIncidenceGraph, int, int>
     {
         private const int DefaultInitialOutDegree = 4;
 

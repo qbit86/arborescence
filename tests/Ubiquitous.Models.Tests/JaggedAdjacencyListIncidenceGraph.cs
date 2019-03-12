@@ -1,9 +1,9 @@
-﻿namespace Ubiquitous.Models
+namespace Ubiquitous.Models
 {
     using System;
     using static System.Diagnostics.Debug;
 
-    public readonly struct JaggedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
+    internal readonly struct JaggedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
         IEquatable<JaggedAdjacencyListIncidenceGraph>
     {
         // Layout: endpoints start with targets, then sources follow.
