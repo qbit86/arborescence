@@ -80,6 +80,24 @@ namespace Ubiquitous
 
         private ITestOutputHelper Output { get; }
 
+        private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
+        {
+            int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, densityPower));
+
+            var builder = new AdjacencyListIncidenceGraphBuilder(VertexCount);
+            var prng = new Random(1729);
+
+            for (int e = 0; e < edgeCount; ++e)
+            {
+                int source = prng.Next(VertexCount);
+                int target = prng.Next(VertexCount);
+                builder.TryAdd(source, target, out _);
+            }
+
+            AdjacencyListIncidenceGraph result = builder.ToGraph();
+            return result;
+        }
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [InlineData(1.0)]
@@ -165,23 +183,5 @@ namespace Ubiquitous
             boostSteps.Dispose();
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
-
-        private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
-        {
-            int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, densityPower));
-
-            var builder = new AdjacencyListIncidenceGraphBuilder(VertexCount);
-            var prng = new Random(1729);
-
-            for (int e = 0; e < edgeCount; ++e)
-            {
-                int source = prng.Next(VertexCount);
-                int target = prng.Next(VertexCount);
-                builder.TryAdd(source, target, out _);
-            }
-
-            AdjacencyListIncidenceGraph result = builder.ToGraph();
-            return result;
-        }
     }
 }
