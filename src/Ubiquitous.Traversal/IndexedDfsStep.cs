@@ -54,8 +54,10 @@ namespace Ubiquitous.Traversal
         }
     }
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct IndexedDfsStepPolicy
         : IStepPolicy<DfsStepKind, int, int, IndexedDfsStep>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public IndexedDfsStep CreateVertexStep(DfsStepKind kind, int vertex)
         {

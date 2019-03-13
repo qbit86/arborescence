@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal
+namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,7 @@
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
+#pragma warning disable CA1000 // Do not declare static members on generic types
         public static MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
@@ -20,6 +21,7 @@
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
             where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
             where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+#pragma warning restore CA1000 // Do not declare static members on generic types
         {
             return new MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
                 TColorMap, TStep,
@@ -28,6 +30,7 @@
         }
     }
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct MultipleSourceDfs<TGraph, TVertex, TEdge, TVertexEnumerable, TVertexEnumerator,
         TEdgeEnumerator, TColorMap, TStep,
         TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
@@ -39,13 +42,11 @@
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         private TGraphPolicy GraphPolicy { get; }
-
         private TColorMapPolicy ColorMapPolicy { get; }
-
         private TVertexEnumerablePolicy VertexEnumerablePolicy { get; }
-
         private TStepPolicy StepPolicy { get; }
 
         public MultipleSourceDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,

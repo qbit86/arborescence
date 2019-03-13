@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal
+namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;
@@ -94,8 +94,10 @@
         }
     }
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct GenericStepPolicy<TStepKind, TVertex, TEdge>
         : IStepPolicy<TStepKind, TVertex, TEdge, GenericStep<TStepKind, TVertex, TEdge>>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public GenericStep<TStepKind, TVertex, TEdge> CreateVertexStep(TStepKind kind, TVertex vertex)
         {

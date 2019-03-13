@@ -1,9 +1,10 @@
-﻿namespace Ubiquitous.Traversal
+namespace Ubiquitous.Traversal
 {
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
             TGraphPolicy, TColorMapPolicy, TStepPolicy>
         : IEnumerable<TStep>
@@ -12,6 +13,7 @@
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, int stackCapacity,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
@@ -33,7 +35,7 @@
         private int StackCapacity { get; }
         private TGraphPolicy GraphPolicy { get; }
         private TColorMapPolicy ColorMapPolicy { get; }
-        public TStepPolicy StepPolicy { get; }
+        private TStepPolicy StepPolicy { get; }
 
         public Enumerator GetEnumerator()
         {
