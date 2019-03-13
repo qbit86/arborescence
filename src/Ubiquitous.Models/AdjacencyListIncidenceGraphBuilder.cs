@@ -4,7 +4,9 @@ namespace Ubiquitous.Models
     using System.Buffers;
     using static System.Diagnostics.Debug;
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         private const int DefaultInitialOutDegree = 4;
 

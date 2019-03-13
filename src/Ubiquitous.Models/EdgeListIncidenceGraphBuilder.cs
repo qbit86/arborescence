@@ -1,9 +1,11 @@
-﻿namespace Ubiquitous.Models
+namespace Ubiquitous.Models
 {
     using System;
     using System.Buffers;
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, SourceTargetPair<int>>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         private const int DefaultInitialOutDegree = 4;
 

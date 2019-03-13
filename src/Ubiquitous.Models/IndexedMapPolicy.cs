@@ -1,10 +1,11 @@
-﻿namespace Ubiquitous.Models
+namespace Ubiquitous.Models
 {
     using System;
     using System.Buffers;
 
-    public readonly struct IndexedMapPolicy<T>
-        : IMapPolicy<ArrayPrefix<T>, int, T>, IFactory<ArrayPrefix<T>>
+#pragma warning disable CA1815 // Override equals and operator equals on value types
+    public readonly struct IndexedMapPolicy<T> : IMapPolicy<ArrayPrefix<T>, int, T>, IFactory<ArrayPrefix<T>>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public IndexedMapPolicy(int count)
         {
