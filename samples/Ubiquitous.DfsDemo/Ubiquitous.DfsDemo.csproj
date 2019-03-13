@@ -10,6 +10,15 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Text.Analyzers" Version="2.6.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
