@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Traversal
+namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections;
@@ -7,6 +7,8 @@
     using Internal;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
+
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphPolicy, TColorMapPolicy>
         : IEnumerable<TEdge>
@@ -14,6 +16,7 @@
         where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
