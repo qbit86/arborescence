@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+namespace Ubiquitous
 {
     using System;
     using System.Collections.Generic;
@@ -80,6 +80,7 @@
 
         private ITestOutputHelper Output { get; }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [InlineData(1.0)]
         [InlineData(1.414)]
@@ -163,6 +164,7 @@
             baselineSteps.Dispose();
             boostSteps.Dispose();
         }
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 
         private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
         {

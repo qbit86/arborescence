@@ -8,6 +8,15 @@
   <PackageReference Include="Misnomer.Rist" Version="0.2.1" />
   <PackageReference Include="xunit" Version="2.2.0" />
   <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3">
+    <PrivateAssets>All</PrivateAssets>
+  </PackageReference>
+  <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.3">
+    <PrivateAssets>All</PrivateAssets>
+  </PackageReference>
+  <PackageReference Include="Text.Analyzers" Version="2.6.3">
+    <PrivateAssets>All</PrivateAssets>
+  </PackageReference>
 </ItemGroup>
 <ItemGroup>
   <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
