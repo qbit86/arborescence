@@ -68,7 +68,6 @@ namespace Ubiquitous
         }
 
 
-
         // https://github.com/dotnet/corefx/blob/master/src/System.Collections.Immutable/src/System/Collections/Immutable/ImmutableArray_1.Enumerator.cs
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
