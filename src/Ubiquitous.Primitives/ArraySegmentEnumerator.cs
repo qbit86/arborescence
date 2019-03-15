@@ -4,7 +4,10 @@ namespace Ubiquitous
     using System.Collections.Generic;
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
+
+#pragma warning disable CA1710 // Identifiers should have correct suffix
     public struct ArraySegmentEnumerator<T> : IEnumerator<T>, IEnumerable<T>
+#pragma warning restore CA1710 // Identifiers should have correct suffix
     {
         private readonly T[] _array;
         private readonly int _start;

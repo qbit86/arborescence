@@ -7,7 +7,9 @@ namespace Ubiquitous
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
+#pragma warning restore CA1710 // Identifiers should have correct suffix
     {
 #pragma warning disable CA1825 // Avoid zero-length array allocations.
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
