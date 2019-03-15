@@ -122,5 +122,15 @@
 
             return result;
         }
+
+        public static bool operator ==(SortedAdjacencyListIncidenceGraph left, SortedAdjacencyListIncidenceGraph right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(SortedAdjacencyListIncidenceGraph left, SortedAdjacencyListIncidenceGraph right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

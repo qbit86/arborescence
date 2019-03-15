@@ -20,4 +20,15 @@
     <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
   </ItemGroup>
   <Import Project="..\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Text.Analyzers" Version="2.6.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

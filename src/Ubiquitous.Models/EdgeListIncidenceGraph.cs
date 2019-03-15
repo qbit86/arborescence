@@ -95,5 +95,15 @@ namespace Ubiquitous.Models
         {
             return _storage.AsSpan(EdgeCount, VertexCount);
         }
+
+        public static bool operator ==(EdgeListIncidenceGraph left, EdgeListIncidenceGraph right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(EdgeListIncidenceGraph left, EdgeListIncidenceGraph right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

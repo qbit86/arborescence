@@ -113,5 +113,15 @@ namespace Ubiquitous.Models
 
             return result;
         }
+
+        public static bool operator ==(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right)
+        {
+            return !left.Equals(right);
+        }
     }
 }
