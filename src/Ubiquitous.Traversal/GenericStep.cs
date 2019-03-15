@@ -4,7 +4,7 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
     using System.Text;
 
-    public static class Step
+    public static class GenericStep
     {
         public static GenericStep<TStepKind, TVertex, TEdge> Create<TStepKind, TVertex, TEdge>(
             TStepKind kind, TVertex vertex, TEdge edge)
@@ -51,7 +51,7 @@ namespace Ubiquitous.Traversal
 
         public override string ToString()
         {
-            return Step.StepToString(Kind.ToString(), Vertex.ToString(), Edge.ToString());
+            return GenericStep.StepToString(Kind.ToString(), Vertex.ToString(), Edge.ToString());
         }
 
         public bool Equals(GenericStep<TStepKind, TVertex, TEdge> other)
@@ -101,12 +101,12 @@ namespace Ubiquitous.Traversal
     {
         public GenericStep<TStepKind, TVertex, TEdge> CreateVertexStep(TStepKind kind, TVertex vertex)
         {
-            return Step.Create(kind, vertex, default(TEdge));
+            return GenericStep.Create(kind, vertex, default(TEdge));
         }
 
         public GenericStep<TStepKind, TVertex, TEdge> CreateEdgeStep(TStepKind kind, TEdge edge)
         {
-            return Step.Create(kind, default(TVertex), edge);
+            return GenericStep.Create(kind, default(TVertex), edge);
         }
     }
 }

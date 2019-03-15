@@ -15,11 +15,9 @@
   </ItemGroup>
   <Import Project="..\Ubiquitous.Internal\Ubiquitous.Internal.projitems" Label="Shared" />
   <ItemGroup>
-    <!--
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.6.3">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    -->
     <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.3">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
