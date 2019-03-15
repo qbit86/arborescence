@@ -1,4 +1,4 @@
-﻿// ReSharper disable ConvertToAutoPropertyWhenPossible
+// ReSharper disable ConvertToAutoPropertyWhenPossible
 // ReSharper disable ConvertToAutoPropertyWithPrivateSetter
 
 namespace Ubiquitous
@@ -55,6 +55,16 @@ namespace Ubiquitous
         public override int GetHashCode()
         {
             return Count.GetHashCode();
+        }
+
+        public static bool operator ==(IndexCollection left, IndexCollection right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(IndexCollection left, IndexCollection right)
+        {
+            return !left.Equals(right);
         }
 
         // https://github.com/dotnet/corefx/blob/master/src/System.Collections.Immutable/src/System/Collections/Immutable/ImmutableArray_1.Enumerator.cs

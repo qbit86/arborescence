@@ -9,9 +9,11 @@ namespace Ubiquitous
 
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
     {
+#pragma warning disable CA1825 // Avoid zero-length array allocations.
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
+#pragma warning restore CA1825 // Avoid zero-length array allocations.
 
         private readonly T[] _array;
         private readonly int _count;
