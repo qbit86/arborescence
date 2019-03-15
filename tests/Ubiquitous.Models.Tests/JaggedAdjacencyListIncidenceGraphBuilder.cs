@@ -30,7 +30,7 @@ namespace Ubiquitous.Models
             _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
             ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(initialVertexCount);
             Array.Clear(outEdges, 0, initialVertexCount);
-            _outEdges = new ArrayPrefix<ArrayPrefix<int>>(outEdges, initialVertexCount);
+            _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
         }
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
@@ -72,7 +72,7 @@ namespace Ubiquitous.Models
             _targets.Add(target);
 
             if (_outEdges[source].Array == null)
-                _outEdges[source] = new ArrayPrefix<int>(Pool.Rent(InitialOutDegree), 0);
+                _outEdges[source] = ArrayPrefix.Create(Pool.Rent(InitialOutDegree), 0);
 
             _outEdges[source] = ArrayPrefixBuilder.Add(_outEdges[source], newEdgeIndex, true);
 

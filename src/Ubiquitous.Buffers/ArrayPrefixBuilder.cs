@@ -48,7 +48,7 @@ namespace Ubiquitous
             int oldCount = arrayPrefix.Count;
             Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
             Array.Clear(arrayPrefix.Array, oldCount, size - oldCount);
-            arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, size);
+            arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, size);
         }
 
         private static void UncheckedShrink<T>(ref ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
@@ -56,7 +56,7 @@ namespace Ubiquitous
             Assert(arrayPrefix.Count > size, "arrayPrefix.Count > size");
 
             int oldCount = arrayPrefix.Count;
-            arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, size);
+            arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, size);
             if (clearArray)
                 Array.Clear(arrayPrefix.Array, size, oldCount - size);
         }
@@ -67,7 +67,7 @@ namespace Ubiquitous
             Assert(arrayPrefix.Count < arrayPrefix.Array.Length, "arrayPrefix.Count < arrayPrefix.Array.Length");
 
             arrayPrefix.Array[arrayPrefix.Count] = item;
-            arrayPrefix = new ArrayPrefix<T>(arrayPrefix.Array, arrayPrefix.Count + 1);
+            arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, arrayPrefix.Count + 1);
         }
 
         private static void UncheckedEnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum,
@@ -90,7 +90,7 @@ namespace Ubiquitous
                 ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
             }
 
-            arrayPrefix = new ArrayPrefix<T>(next, arrayPrefix.Count);
+            arrayPrefix = ArrayPrefix.Create(next, arrayPrefix.Count);
         }
     }
 }

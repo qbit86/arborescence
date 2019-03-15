@@ -21,7 +21,7 @@ namespace Ubiquitous.Models
             _initialOutDegree = DefaultInitialOutDegree;
             ArrayBuilder<SourceTargetPair<int>>[] outEdges = Pool.Rent(initialVertexCount);
             Array.Clear(outEdges, 0, initialVertexCount);
-            _outEdges = new ArrayPrefix<ArrayBuilder<SourceTargetPair<int>>>(outEdges, initialVertexCount);
+            _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
             _edgeCount = 0;
         }
 

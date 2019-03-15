@@ -44,7 +44,7 @@ namespace Ubiquitous.Models
         {
             T[] array = Pool.Rent(Count);
             Array.Clear(array, 0, Count);
-            return new ArrayPrefix<T>(array, Count);
+            return ArrayPrefix.Create(array, Count);
         }
 
         public void Release(ArrayPrefix<T> value)

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Runtime.CompilerServices;
     using System.Text;
 
     /// <summary>
@@ -10,6 +11,7 @@
     /// </summary>
     public static class SourceTargetPair
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SourceTargetPair<TVertex> Create<TVertex>(TVertex source, TVertex target)
         {
             return new SourceTargetPair<TVertex>(source, target);

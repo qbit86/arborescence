@@ -28,7 +28,7 @@ namespace Ubiquitous.Models
             _lastSource = 0;
             int[] edgeUpperBounds = Pool.Rent(initialVertexCount);
             Array.Clear(edgeUpperBounds, 0, initialVertexCount);
-            _edgeUpperBounds = new ArrayPrefix<int>(edgeUpperBounds, initialVertexCount);
+            _edgeUpperBounds = ArrayPrefix.Create(edgeUpperBounds, initialVertexCount);
         }
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;

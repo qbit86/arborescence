@@ -4,6 +4,16 @@ namespace Ubiquitous
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
+
+    public static class ArrayPrefix
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ArrayPrefix<T> Create<T>(T[] array, int count)
+        {
+            return new ArrayPrefix<T>(array, count);
+        }
+    }
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
