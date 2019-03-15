@@ -11,11 +11,13 @@ namespace Ubiquitous
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
 #pragma warning restore CA1710 // Identifiers should have correct suffix
     {
+#pragma warning disable CA1000 // Do not declare static members on generic types
 #pragma warning disable CA1825 // Avoid zero-length array allocations.
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 #pragma warning restore CA1825 // Avoid zero-length array allocations.
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
         private readonly T[] _array;
         private readonly int _count;
@@ -293,7 +295,9 @@ namespace Ubiquitous
         }
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+#pragma warning disable CA1034 // Nested types should not be visible
         public struct Enumerator
+#pragma warning restore CA1034 // Nested types should not be visible
 #pragma warning restore CA1815 // Override equals and operator equals on value types
         {
             private readonly T[] _array;
