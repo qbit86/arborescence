@@ -9,6 +9,12 @@ namespace Ubiquitous
     public static class ArrayPrefix
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ArrayPrefix<T> Create<T>(T[] array)
+        {
+            return new ArrayPrefix<T>(array);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array, int count)
         {
             return new ArrayPrefix<T>(array, count);
