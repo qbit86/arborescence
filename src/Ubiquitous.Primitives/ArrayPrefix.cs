@@ -162,7 +162,9 @@ namespace Ubiquitous
             return !(a == b);
         }
 
+#pragma warning disable CA2225 // Operator overloads have named alternates
         public static implicit operator ArrayPrefix<T>(T[] array)
+#pragma warning restore CA2225 // Operator overloads have named alternates
         {
             return array != null ? new ArrayPrefix<T>(array) : default;
         }
