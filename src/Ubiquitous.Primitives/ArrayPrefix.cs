@@ -42,7 +42,9 @@ namespace Ubiquitous
             _count = count;
         }
 
+#pragma warning disable CA1819 // Properties should not return arrays
         public T[] Array => _array;
+#pragma warning restore CA1819 // Properties should not return arrays
 
         public int Count => _count;
 
@@ -290,7 +292,9 @@ namespace Ubiquitous
                 ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
         }
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
         public struct Enumerator
+#pragma warning restore CA1815 // Override equals and operator equals on value types
         {
             private readonly T[] _array;
             private readonly int _end;

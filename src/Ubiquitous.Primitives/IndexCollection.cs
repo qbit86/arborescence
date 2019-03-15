@@ -67,8 +67,10 @@ namespace Ubiquitous
             return !left.Equals(right);
         }
 
+
         // https://github.com/dotnet/corefx/blob/master/src/System.Collections.Immutable/src/System/Collections/Immutable/ImmutableArray_1.Enumerator.cs
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
         /// <summary>
         /// An index enumerator.
         /// </summary>
@@ -78,6 +80,7 @@ namespace Ubiquitous
         /// a try/finally frame in the client.
         /// </remarks>
         public struct Enumerator
+#pragma warning restore CA1815 // Override equals and operator equals on value types
         {
             private readonly int _count;
             private int _current;
