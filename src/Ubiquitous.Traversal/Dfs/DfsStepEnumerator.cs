@@ -6,7 +6,11 @@ namespace Ubiquitous.Traversal
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
+    // “22.3-7 Rewrite the procedure DFS, using a stack to eliminate recursion.”
+    // --- CLRS
+
     // https://www.boost.org/doc/libs/1_69_0/boost/graph/depth_first_search.hpp
+
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
         TGraphPolicy, TColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
