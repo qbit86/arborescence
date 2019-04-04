@@ -16,7 +16,6 @@ namespace Ubiquitous.Traversal
         {
             var s = new StringBuilder();
             s.Append('[');
-
             s.Append(kind);
             s.Append(", ");
 
