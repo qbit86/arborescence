@@ -11,9 +11,7 @@ namespace Ubiquitous.Traversal
 
         private readonly uint _storage;
 
-        public IndexedDfsStep(DfsStepKind kind, int value) : this(kind, value, false) { }
-
-        public IndexedDfsStep(DfsStepKind kind, int value, bool isReversed)
+        public IndexedDfsStep(DfsStepKind kind, int value, bool isReversed = false)
         {
             if ((uint)kind > 0x7Fu)
                 throw new ArgumentOutOfRangeException(nameof(kind));

@@ -33,11 +33,9 @@ namespace Ubiquitous.Traversal
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        private TGraphPolicy GraphPolicy { get; }
-
-        private TColorMapPolicy ColorMapPolicy { get; }
-
-        private TStepPolicy StepPolicy { get; }
+        private readonly TGraphPolicy _graphPolicy;
+        private readonly TColorMapPolicy _colorMapPolicy;
+        private readonly TStepPolicy _stepPolicy;
 
         public BaselineDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
@@ -50,9 +48,9 @@ namespace Ubiquitous.Traversal
             if (stepPolicy == null)
                 throw new ArgumentNullException(nameof(stepPolicy));
 
-            GraphPolicy = graphPolicy;
-            ColorMapPolicy = colorMapPolicy;
-            StepPolicy = stepPolicy;
+            _graphPolicy = graphPolicy;
+            _colorMapPolicy = colorMapPolicy;
+            _stepPolicy = stepPolicy;
         }
 
         public IEnumerable<TStep>
@@ -60,7 +58,7 @@ namespace Ubiquitous.Traversal
         {
             return new BaselineDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(
-                graph, startVertex, GraphPolicy, ColorMapPolicy, StepPolicy);
+                graph, startVertex, _graphPolicy, _colorMapPolicy, _stepPolicy);
         }
     }
 }
