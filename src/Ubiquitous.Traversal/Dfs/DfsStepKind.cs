@@ -12,9 +12,9 @@ namespace Ubiquitous.Traversal
         DiscoverVertex,
         FinishVertex,
         ExamineEdge,
+        FinishEdge,
         TreeEdge,
         BackEdge,
-        ForwardOrCrossEdge,
-        FinishEdge
+        ForwardOrCrossEdge
     }
 }
