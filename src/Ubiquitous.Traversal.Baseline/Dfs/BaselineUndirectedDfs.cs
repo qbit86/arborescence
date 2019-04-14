@@ -64,5 +64,13 @@ namespace Ubiquitous.Traversal
             _edgeColorMapPolicy = edgeColorMapPolicy;
             _stepPolicy = stepPolicy;
         }
+
+        public IEnumerable<TStep> Traverse(TGraph graph, TVertex startVertex)
+        {
+            return new BaselineUndirectedDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                TVertexColorMap, TEdgeColorMap, TStep,
+                TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
+                graph, startVertex, _graphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, _stepPolicy);
+        }
     }
 }
