@@ -1,5 +1,6 @@
 namespace Ubiquitous.Traversal
 {
+    using System;
     using System.Collections.Generic;
 
     public readonly struct BaselineUndirectedDfs<TGraph, TVertex, TEdge, TEdgeEnumerator,
@@ -18,5 +19,26 @@ namespace Ubiquitous.Traversal
         private readonly TVertexColorMapPolicy _vertexColorMapPolicy;
         private readonly TEdgeColorMapPolicy _edgeColorMapPolicy;
         private readonly TStepPolicy _stepPolicy;
+
+        public BaselineUndirectedDfs(TGraphPolicy graphPolicy, TVertexColorMapPolicy vertexColorMapPolicy,
+            TEdgeColorMapPolicy edgeColorMapPolicy, TStepPolicy stepPolicy)
+        {
+            if (graphPolicy == null)
+                throw new ArgumentNullException(nameof(graphPolicy));
+
+            if (vertexColorMapPolicy == null)
+                throw new ArgumentNullException(nameof(vertexColorMapPolicy));
+
+            if (edgeColorMapPolicy == null)
+                throw new ArgumentNullException(nameof(edgeColorMapPolicy));
+
+            if (stepPolicy == null)
+                throw new ArgumentNullException(nameof(stepPolicy));
+
+            _graphPolicy = graphPolicy;
+            _vertexColorMapPolicy = vertexColorMapPolicy;
+            _edgeColorMapPolicy = edgeColorMapPolicy;
+            _stepPolicy = stepPolicy;
+        }
     }
 }
