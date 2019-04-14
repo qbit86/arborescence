@@ -26,7 +26,9 @@
         internal BaselineDfsTreeStepCollection(TGraph graph, TVertex startVertex,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
+            Assert(graphPolicy != null);
             Assert(colorMapPolicy != null);
+            Assert(stepPolicy != null);
 
             Graph = graph;
             StartVertex = startVertex;
