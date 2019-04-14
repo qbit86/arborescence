@@ -8,6 +8,13 @@ namespace Ubiquitous.Traversal
     internal sealed class BaselineUndirectedDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
         TVertexColorMap, TEdgeColorMap, TStep,
         TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy> : IEnumerable<TStep>
+        where TEdgeEnumerator : IEnumerator<TEdge>
+        where TGraphPolicy :
+        IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
+        where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
+        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TVertexColorMap>
+        where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
         private TVertexColorMapPolicy _vertexColorMapPolicy;
         private TEdgeColorMapPolicy _edgeColorMapPolicy;
@@ -51,7 +58,20 @@ namespace Ubiquitous.Traversal
 
         private IEnumerator<TStep> GetEnumeratorCoroutine()
         {
-            throw new NotImplementedException();
+            TVertexColorMap colorMap = _vertexColorMapPolicy.Acquire();
+            if (colorMap == null)
+                yield break;
+
+            try
+            {
+                yield return StepPolicy.CreateVertexStep(DfsStepKind.StartVertex, StartVertex);
+
+                throw new NotImplementedException();
+            }
+            finally
+            {
+                _vertexColorMapPolicy.Release(colorMap);
+            }
         }
     }
 }
