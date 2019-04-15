@@ -13,7 +13,7 @@ namespace Ubiquitous.Traversal
         IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
         where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
-        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TVertexColorMap>
+        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
         private TVertexColorMapPolicy _vertexColorMapPolicy;
@@ -58,8 +58,12 @@ namespace Ubiquitous.Traversal
 
         private IEnumerator<TStep> GetEnumeratorCoroutine()
         {
-            TVertexColorMap colorMap = _vertexColorMapPolicy.Acquire();
-            if (colorMap == null)
+            TVertexColorMap vertexColorMap = _vertexColorMapPolicy.Acquire();
+            if (vertexColorMap == null)
+                yield break;
+
+            TEdgeColorMap edgeColorMap = _edgeColorMapPolicy.Acquire();
+            if (edgeColorMap == null)
                 yield break;
 
             try
@@ -70,7 +74,8 @@ namespace Ubiquitous.Traversal
             }
             finally
             {
-                _vertexColorMapPolicy.Release(colorMap);
+                _edgeColorMapPolicy.Release(edgeColorMap);
+                _vertexColorMapPolicy.Release(vertexColorMap);
             }
         }
     }

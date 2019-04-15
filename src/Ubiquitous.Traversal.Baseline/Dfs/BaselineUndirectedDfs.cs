@@ -17,7 +17,7 @@ namespace Ubiquitous.Traversal
             IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
             where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
-            where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TVertexColorMap>
+            where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
             where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
         {
             return new BaselineUndirectedDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TVertexColorMap, TEdgeColorMap,
@@ -35,7 +35,7 @@ namespace Ubiquitous.Traversal
         IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
         where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
-        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TVertexColorMap>
+        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
