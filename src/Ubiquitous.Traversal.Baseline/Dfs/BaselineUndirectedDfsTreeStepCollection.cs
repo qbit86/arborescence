@@ -1,6 +1,5 @@
 namespace Ubiquitous.Traversal
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -70,7 +69,16 @@ namespace Ubiquitous.Traversal
             {
                 yield return StepPolicy.CreateVertexStep(DfsStepKind.StartVertex, StartVertex);
 
-                throw new NotImplementedException();
+                var steps = new BaselineUndirectedDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                    TVertexColorMap, TEdgeColorMap, TStep,
+                    TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
+                    Graph, StartVertex, vertexColorMap, edgeColorMap,
+                    GraphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, StepPolicy);
+                using (IEnumerator<TStep> stepEnumerator = steps.GetEnumerator())
+                {
+                    while (stepEnumerator.MoveNext())
+                        yield return stepEnumerator.Current;
+                }
             }
             finally
             {
