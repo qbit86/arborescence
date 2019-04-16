@@ -27,7 +27,7 @@ namespace Ubiquitous.Traversal
 
         private TStepPolicy StepPolicy { get; }
 
-        public BaselineDfsStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
+        internal BaselineDfsStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
             Assert(colorMap != null);
