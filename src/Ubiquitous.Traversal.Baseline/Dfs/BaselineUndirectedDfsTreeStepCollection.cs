@@ -15,8 +15,8 @@ namespace Ubiquitous.Traversal
         where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
-        private TVertexColorMapPolicy _vertexColorMapPolicy;
         private TEdgeColorMapPolicy _edgeColorMapPolicy;
+        private TVertexColorMapPolicy _vertexColorMapPolicy;
 
         internal BaselineUndirectedDfsTreeStepCollection(TGraph graph, TVertex startVertex, TGraphPolicy graphPolicy,
             TVertexColorMapPolicy vertexColorMapPolicy, TEdgeColorMapPolicy edgeColorMapPolicy,

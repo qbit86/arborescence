@@ -1,5 +1,6 @@
 namespace Ubiquitous.Traversal
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
@@ -48,7 +49,7 @@ namespace Ubiquitous.Traversal
 
         public IEnumerator<TStep> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
