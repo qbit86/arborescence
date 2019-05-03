@@ -10,10 +10,12 @@ namespace Ubiquitous.Traversal
         TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy> : IEnumerable<TStep>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetPolicy<TGraph, TVertex, TEdge>
+        IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        IGetTargetPolicy<TGraph, TVertex, TEdge>,
+        IGetSourcePolicy<TGraph, TVertex, TEdge>
         where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>
         where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>
-        where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+        where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
         private TVertexColorMap _vertexColorMap;
         private TEdgeColorMap _edgeColorMap;
@@ -49,12 +51,45 @@ namespace Ubiquitous.Traversal
 
         public IEnumerator<TStep> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return ProcessVertexCoroutine(StartVertex);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
+        private IEnumerator<TStep> ProcessVertexCoroutine(TVertex vertex)
+        {
+
+            if (!VertexColorMapPolicy.TryPut(_vertexColorMap, vertex, Color.Gray))
+                yield break;
+
+            yield return StepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
+
+            if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator outEdges) && outEdges != null)
+            {
+                throw new NotImplementedException();
+#if false
+                while (edges.MoveNext())
+                {
+                    IEnumerator<TStep> steps = ProcessEdgeCoroutine(edges.Current);
+                    while (steps.MoveNext())
+                        yield return steps.Current;
+                }
+#endif
+            }
+
+            if (GraphPolicy.TryGetInEdges(Graph, vertex, out TEdgeEnumerator inEdges) && inEdges != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (!VertexColorMapPolicy.TryPut(_vertexColorMap, vertex, Color.Black))
+                yield break;
+
+            yield return StepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
+        }
     }
 }
+

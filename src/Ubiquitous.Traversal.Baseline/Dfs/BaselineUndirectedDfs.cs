@@ -18,7 +18,7 @@ namespace Ubiquitous.Traversal
             IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
             where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
             where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
-            where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+            where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
         {
             return new BaselineUndirectedDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TVertexColorMap, TEdgeColorMap,
                 TStep, TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
@@ -36,7 +36,7 @@ namespace Ubiquitous.Traversal
         IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
         where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
         where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
-        where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+        where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         private readonly TGraphPolicy _graphPolicy;
