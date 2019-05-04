@@ -11,7 +11,7 @@ trim_trailing_whitespace = true
 [*.{csproj,gv,props,shproj}]
 indent_size = 2
 
-[*.sln.DotSettings]
+[*.{sln,sln.DotSettings}]
 indent_style = tab
 
 [*.md]
