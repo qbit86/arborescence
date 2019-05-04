@@ -10,6 +10,7 @@ namespace Ubiquitous.Traversal
         public static BaselineUndirectedDfs<TGraph, TVertex, TEdge, TEdgeEnumerator,
                 TVertexColorMap, TEdgeColorMap, TStep,
                 TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>
+#pragma warning disable CA1000 // Do not declare static members on generic types
             Create<TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
                 TGraphPolicy graphPolicy, TVertexColorMapPolicy vertexColorMapPolicy,
                 TEdgeColorMapPolicy edgeColorMapPolicy, TStepPolicy stepPolicy)
@@ -19,6 +20,7 @@ namespace Ubiquitous.Traversal
             where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
             where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
             where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
+#pragma warning restore CA1000 // Do not declare static members on generic types
         {
             return new BaselineUndirectedDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TVertexColorMap, TEdgeColorMap,
                 TStep, TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
