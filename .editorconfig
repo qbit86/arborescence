@@ -103,11 +103,9 @@ csharp_style_prefer_range_operator = true:suggestion
 csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 csharp_style_unused_value_expression_statement_preference = discard_variable:suggestion
 
-csharp_indent_block_contents = true
-csharp_indent_braces = false
-csharp_indent_case_contents = true
-csharp_indent_labels = one_less_than_current
-csharp_indent_switch_labels = true
+#### C# Formatting Rules ####
+
+# New line preferences
 csharp_new_line_before_catch = true
 csharp_new_line_before_else = true
 csharp_new_line_before_finally = true
@@ -115,6 +113,12 @@ csharp_new_line_before_members_in_anonymous_types = true
 csharp_new_line_before_members_in_object_initializers = true
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
+
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_labels = one_less_than_current
+csharp_indent_switch_labels = true
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = false
 csharp_space_after_cast = false
