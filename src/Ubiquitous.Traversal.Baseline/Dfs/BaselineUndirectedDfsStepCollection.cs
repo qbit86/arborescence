@@ -61,7 +61,6 @@ namespace Ubiquitous.Traversal
 
         private IEnumerator<TStep> ProcessVertexCoroutine(TVertex vertex)
         {
-
             if (!VertexColorMapPolicy.TryPut(_vertexColorMap, vertex, Color.Gray))
                 yield break;
 
@@ -97,8 +96,42 @@ namespace Ubiquitous.Traversal
         {
             yield return StepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, edge, isReversed);
 
-            throw new NotImplementedException();
+            TVertex neighbour;
+            bool hasNeighbour = isReversed
+                ? GraphPolicy.TryGetSource(Graph, edge, out neighbour)
+                : GraphPolicy.TryGetTarget(Graph, edge, out neighbour);
+            if (hasNeighbour)
+            {
+                if (!VertexColorMapPolicy.TryGet(_vertexColorMap, neighbour, out Color neighborColor))
+                    neighborColor = Color.None;
+
+                if (!EdgeColorMapPolicy.TryGet(_edgeColorMap, edge, out Color edgeColor))
+                    edgeColor = Color.None;
+
+                if (!EdgeColorMapPolicy.TryPut(_edgeColorMap, edge, Color.Black))
+                    yield break;
+
+                switch (neighborColor)
+                {
+                    case Color.None:
+                    case Color.White:
+                        yield return StepPolicy.CreateEdgeStep(DfsStepKind.TreeEdge, edge, isReversed);
+                        IEnumerator<TStep> steps = ProcessVertexCoroutine(neighbour);
+                        while (steps.MoveNext())
+                            yield return steps.Current;
+                        break;
+                    case Color.Gray:
+                        // “Forward and cross edges never occur in a depth-first search of an undirected graph.”
+                        // Here is difference with directed version of DFS.
+                        if (edgeColor == Color.None || edgeColor == Color.White)
+                            yield return StepPolicy.CreateEdgeStep(DfsStepKind.BackEdge, edge, isReversed);
+                        break;
+                }
+            }
+
+            yield return StepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, edge, isReversed);
         }
     }
 }
+
 
