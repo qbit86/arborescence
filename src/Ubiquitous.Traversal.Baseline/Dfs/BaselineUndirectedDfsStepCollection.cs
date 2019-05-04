@@ -69,26 +69,35 @@ namespace Ubiquitous.Traversal
 
             if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator outEdges) && outEdges != null)
             {
-                throw new NotImplementedException();
-#if false
-                while (edges.MoveNext())
+                while (outEdges.MoveNext())
                 {
-                    IEnumerator<TStep> steps = ProcessEdgeCoroutine(edges.Current);
+                    IEnumerator<TStep> steps = ProcessEdgeCoroutine(outEdges.Current, false);
                     while (steps.MoveNext())
                         yield return steps.Current;
                 }
-#endif
             }
 
             if (GraphPolicy.TryGetInEdges(Graph, vertex, out TEdgeEnumerator inEdges) && inEdges != null)
             {
-                throw new NotImplementedException();
+                while (inEdges.MoveNext())
+                {
+                    IEnumerator<TStep> steps = ProcessEdgeCoroutine(inEdges.Current, true);
+                    while (steps.MoveNext())
+                        yield return steps.Current;
+                }
             }
 
             if (!VertexColorMapPolicy.TryPut(_vertexColorMap, vertex, Color.Black))
                 yield break;
 
             yield return StepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
+        }
+
+        private IEnumerator<TStep> ProcessEdgeCoroutine(TEdge edge, bool isReversed)
+        {
+            yield return StepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, edge, isReversed);
+
+            throw new NotImplementedException();
         }
     }
 }
