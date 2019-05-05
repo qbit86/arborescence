@@ -110,15 +110,15 @@ namespace Ubiquitous
             return hash;
         }
 
-        public void CopyTo(T[] destination)
+        public void CopyTo(T[] array)
         {
-            CopyTo(destination, 0);
+            CopyTo(array, 0);
         }
 
-        public void CopyTo(T[] destination, int destinationIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             ThrowInvalidOperationIfDefault();
-            System.Array.Copy(_array, 0, destination, destinationIndex, _count);
+            System.Array.Copy(_array, 0, array, arrayIndex, _count);
         }
 
         public void CopyTo(ArrayPrefix<T> destination)
