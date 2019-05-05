@@ -50,13 +50,13 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<int> outEdges)
+        public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<int> edges)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
 
             if ((uint)(2 * vertex) >= (uint)edgeBounds.Length)
             {
-                outEdges = new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
+                edges = new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
                 return false;
             }
 
@@ -64,7 +64,7 @@ namespace Ubiquitous.Models
             int length = edgeBounds[2 * vertex + 1];
             Assert(length >= 0, "length >= 0");
 
-            outEdges = new ArraySegmentEnumerator<int>(_storage, start, length);
+            edges = new ArraySegmentEnumerator<int>(_storage, start, length);
             return true;
         }
 

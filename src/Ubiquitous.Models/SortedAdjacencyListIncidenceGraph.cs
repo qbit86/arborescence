@@ -60,12 +60,12 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out RangeEnumerator outEdges)
+        public bool TryGetOutEdges(int vertex, out RangeEnumerator edges)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
             if ((uint)vertex >= (uint)edgeBounds.Length)
             {
-                outEdges = new RangeEnumerator(0, 0);
+                edges = new RangeEnumerator(0, 0);
                 return false;
             }
 
@@ -73,7 +73,7 @@
             int endExclusive = edgeBounds[vertex];
             Assert(start <= endExclusive, "start <= endExclusive");
 
-            outEdges = new RangeEnumerator(start, endExclusive);
+            edges = new RangeEnumerator(start, endExclusive);
             return true;
         }
 
