@@ -19,10 +19,12 @@ namespace Ubiquitous
             Count = count;
         }
 
+#pragma warning disable CA1024 // Use properties where appropriate
         public IndexCollectionEnumerator GetValueEnumerator()
         {
             return new IndexCollectionEnumerator(Count);
         }
+#pragma warning restore CA1024 // Use properties where appropriate
 
         public Enumerator GetEnumerator()
         {
