@@ -69,11 +69,8 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 0:
-                    {
                         return CreateDiscoverVertexStep(_currentVertex, 1, out current);
-                    }
                     case 1:
-                    {
                         bool hasOutEdges =
                             _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
                         if (!hasOutEdges)
@@ -82,9 +79,7 @@ namespace Ubiquitous.Traversal
                         PushVertexStackFrame(_currentVertex, edges);
                         _state = 2;
                         continue;
-                    }
                     case 2:
-                    {
                         if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate(out current);
 
@@ -95,9 +90,7 @@ namespace Ubiquitous.Traversal
 
                         _state = 3;
                         continue;
-                    }
                     case 3:
-                    {
                         if (!_edgeEnumerator.MoveNext())
                             return CreateFinishVertexStep(_currentVertex, 2, out current);
 
@@ -109,9 +102,7 @@ namespace Ubiquitous.Traversal
                         }
 
                         return CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current, 4, out current);
-                    }
                     case 4:
-                    {
                         Color neighborColor = GetColorOrDefault(_neighborVertex);
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
@@ -124,30 +115,21 @@ namespace Ubiquitous.Traversal
                             default:
                                 return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 7, out current);
                         }
-                    }
                     case 5:
-                    {
                         PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
                         return CreateDiscoverVertexStep(_currentVertex, 6, out current);
-                    }
                     case 6:
-                    {
-                        bool hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
+                        hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
                         if (!hasOutEdges)
                             return CreateFinishVertexStep(_currentVertex, 2, out current);
 
                         _state = 3;
                         continue;
-                    }
                     case 7:
-                    {
                         return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 3, out current);
-                    }
                     case int.MaxValue:
-                    {
                         return Terminate(out current);
-                    }
                 }
 
                 return Terminate(out current);

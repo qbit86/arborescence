@@ -62,7 +62,6 @@ namespace Ubiquitous.Traversal
                     switch (_state)
                     {
                         case 0:
-                        {
                             _colorMap = _colorMapPolicy.Acquire();
                             if (_colorMap == null)
                                 return Terminate();
@@ -70,13 +69,9 @@ namespace Ubiquitous.Traversal
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
                             _state = 2;
                             continue;
-                        }
                         case 2:
-                        {
                             return CreateStartVertexStep();
-                        }
                         case 3:
-                        {
                             _stack = ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire(_stackCapacity);
                             if (_stack == null)
                                 return Terminate();
@@ -84,24 +79,19 @@ namespace Ubiquitous.Traversal
                             _stackDisposalStatus = DisposalStatus.Initialized;
                             _state = 4;
                             continue;
-                        }
                         case 4:
-                        {
                             ThrowIfDisposed();
                             _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                                 TStep, TGraphPolicy, TColorMapPolicy, TStepPolicy>(_graph, _startVertex, _colorMap,
                                 _stack, _graphPolicy, _colorMapPolicy, _stepPolicy);
                             _state = 5;
                             continue;
-                        }
                         case 5:
-                        {
                             ThrowIfDisposed();
                             if (!_stepEnumerator.TryMoveNext(out TStep current))
                                 return Terminate();
 
                             return PropagateCurrentStep(current);
-                        }
                     }
 
                     return false;
