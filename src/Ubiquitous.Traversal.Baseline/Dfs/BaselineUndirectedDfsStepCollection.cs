@@ -16,8 +16,8 @@ namespace Ubiquitous.Traversal
         where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>
         where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
-        private TVertexColorMap _vertexColorMap;
-        private TEdgeColorMap _edgeColorMap;
+        private readonly TVertexColorMap _vertexColorMap;
+        private readonly TEdgeColorMap _edgeColorMap;
 
         internal BaselineUndirectedDfsStepCollection(TGraph graph, TVertex startVertex,
             TVertexColorMap vertexColorMap, TEdgeColorMap edgeColorMap, TGraphPolicy graphPolicy,
@@ -95,9 +95,8 @@ namespace Ubiquitous.Traversal
         {
             yield return StepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, edge, isReversed);
 
-            TVertex neighbour;
             bool hasNeighbour = isReversed
-                ? GraphPolicy.TryGetSource(Graph, edge, out neighbour)
+                ? GraphPolicy.TryGetSource(Graph, edge, out TVertex neighbour)
                 : GraphPolicy.TryGetTarget(Graph, edge, out neighbour);
             if (hasNeighbour)
             {
@@ -132,5 +131,3 @@ namespace Ubiquitous.Traversal
         }
     }
 }
-
-
