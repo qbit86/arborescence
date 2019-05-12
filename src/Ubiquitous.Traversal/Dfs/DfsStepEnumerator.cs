@@ -115,6 +115,7 @@ namespace Ubiquitous.Traversal
                             default:
                                 return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 7, out current);
                         }
+
                     case 5:
                         PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
