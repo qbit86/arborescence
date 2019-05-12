@@ -83,8 +83,6 @@ namespace Ubiquitous
         /// a try/finally frame in the client.
         /// </remarks>
         public struct Enumerator
-#pragma warning restore CA1034 // Nested types should not be visible
-#pragma warning restore CA1815 // Override equals and operator equals on value types
         {
             private readonly int _count;
             private int _current;
@@ -103,5 +101,7 @@ namespace Ubiquitous
                 return _current < _count;
             }
         }
+#pragma warning restore CA1034 // Nested types should not be visible
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     }
 }
