@@ -44,7 +44,8 @@
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex descriptors.</typeparam>
     /// <remarks>
-    /// See also: <a href="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs">KeyValuePair.cs</a>
+    /// See also:
+    /// <a href="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs">KeyValuePair.cs</a>
     /// </remarks>
     public readonly struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
     {
