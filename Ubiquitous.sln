@@ -9,13 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Abstractions", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Models", "src\Ubiquitous.Models\Ubiquitous.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB074B2E-C4E5-49C4-AA6C-9F1EBC5ED673}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{AB074B2E-C4E5-49C4-AA6C-9F1EBC5ED673}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+		Ubiquitous.sln.DotSettings = Ubiquitous.sln.DotSettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Traversal", "src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj", "{59271DA1-4B19-4804-962C-DF2791D123A2}"
