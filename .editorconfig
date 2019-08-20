@@ -1,26 +1,53 @@
 root = true
 
 [*]
+
+#### Core EditorConfig Options ####
+
 charset = utf-8
-end_of_line = crlf
+
+# Indentation and spacing
 indent_size = 4
 indent_style = space
+
+# New line preferences
+end_of_line = crlf
 insert_final_newline = true
 max_line_length = 120
 trim_trailing_whitespace = true
 
 [*.{csproj,gv,props,shproj}]
+
 indent_size = 2
 
 [*.{sln,sln.DotSettings}]
+
 indent_style = tab
 
 [*.md]
+
 trim_trailing_whitespace = false
 
 [*.cs]
 
-# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+# ReSharper properties
+resharper_align_multiline_binary_expressions_chain = false
+resharper_autodetect_indent_settings = false
+resharper_braces_for_for = required_for_multiline
+resharper_braces_for_foreach = required_for_multiline
+resharper_braces_for_ifelse = required_for_multiline
+resharper_braces_for_while = required_for_multiline
+resharper_csharp_stick_comment = false
+resharper_empty_block_style = together_same_line
+resharper_place_accessorholder_attribute_on_same_line = False
+resharper_place_simple_embedded_statement_on_same_line = False
+resharper_space_within_single_line_array_initializer_braces = true
+resharper_xmldoc_indent_child_elements = DoNotTouch
+resharper_xmldoc_indent_text = DoNotTouch
+resharper_xmldoc_space_before_self_closing = false
+
+# ReSharper inspection severities
+resharper_check_namespace_highlighting = none
 
 #### .NET Coding Conventions ####
 
@@ -97,7 +124,7 @@ csharp_style_conditional_delegate_call = true:suggestion
 
 # Modifier preferences
 csharp_prefer_static_local_function = true:suggestion
-csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async
+csharp_preferred_modifier_order = public, private, protected, internal, new, abstract, virtual, sealed, override, static, readonly, extern, unsafe, volatile, async:suggestion
 
 # Code-block preferences
 # Does not work in Rider 2019.1: https://youtrack.jetbrains.com/issue/RSRP-474621
@@ -122,7 +149,7 @@ csharp_new_line_before_catch = true
 csharp_new_line_before_else = true
 csharp_new_line_before_finally = true
 csharp_new_line_before_members_in_anonymous_types = true
-csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_object_initializers = false
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
 
