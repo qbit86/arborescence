@@ -1,4 +1,6 @@
-﻿namespace Ubiquitous
+﻿#pragma warning disable CA1303
+
+namespace Ubiquitous
 {
     using System;
     using System.Diagnostics;

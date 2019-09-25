@@ -51,6 +51,7 @@ namespace Ubiquitous.Traversal
 
         public IEnumerator<TEdge> GetEnumerator()
         {
+#pragma warning disable CA1303
             if (Graph == null)
                 throw new InvalidOperationException($"{nameof(Graph)}: null");
 
@@ -62,6 +63,7 @@ namespace Ubiquitous.Traversal
 
             if (ColorMapPolicy == null)
                 throw new InvalidOperationException($"{nameof(ColorMapPolicy)}: null");
+#pragma warning restore CA1303
 
             TColorMap colorMap = ColorMapPolicy.Acquire();
             Queue<TVertex> queue = QueueCache<TVertex>.Acquire(QueueCapacity);
