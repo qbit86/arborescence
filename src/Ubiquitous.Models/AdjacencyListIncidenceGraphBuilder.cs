@@ -97,7 +97,7 @@ namespace Ubiquitous.Models
             var storage = new int[1 + 2 * vertexCount + sourceCount + targetCount + sourceCount];
             storage[0] = vertexCount;
 
-            ReadOnlySpan<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
+            Span<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
             Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexCount);
             Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, sourceCount);
 
