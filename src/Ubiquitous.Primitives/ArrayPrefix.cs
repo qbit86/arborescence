@@ -43,9 +43,11 @@ namespace Ubiquitous
             if (array == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
 
+#pragma warning disable CA1062
             _array = array;
             Debug.Assert(array != null, nameof(array) + " != null");
             _count = array.Length;
+#pragma warning restore CA1062
         }
 
         public ArrayPrefix(T[] array, int count)
