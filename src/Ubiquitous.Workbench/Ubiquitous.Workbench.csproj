@@ -20,9 +20,11 @@
     <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.1" PrivateAssets="all" />
-    <PackageReference Include="System.Memory" Version="4.5.2" />
-    <PackageReference Include="Text.Analyzers" Version="2.6.3" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.4" PrivateAssets="all" />
+    <PackageReference Condition="'$(TargetFramework)' == 'net461'" Include="System.Memory" Version="4.5.3" />
+    <PackageReference Condition="'$(TargetFramework)' == 'netstandard1.1'" Include="System.Memory" Version="4.5.3" />
+    <PackageReference Condition="'$(TargetFramework)' == 'netstandard2.0'" Include="System.Memory" Version="4.5.3" />
+    <PackageReference Include="Text.Analyzers" Version="2.6.4" PrivateAssets="all" />
   </ItemGroup>
 </Project>
