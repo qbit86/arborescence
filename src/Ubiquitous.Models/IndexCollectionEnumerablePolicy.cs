@@ -7,7 +7,7 @@ namespace Ubiquitous.Models
     {
         public IndexCollectionEnumerator GetEnumerator(IndexCollection collection)
         {
-            return collection.GetValueEnumerator();
+            return collection.Enumerate();
         }
     }
 }

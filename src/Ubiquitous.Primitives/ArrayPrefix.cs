@@ -92,7 +92,7 @@ namespace Ubiquitous
             return new Enumerator(_array, _count);
         }
 
-        public ArrayPrefixEnumerator<T> GetValueEnumerator()
+        public ArrayPrefixEnumerator<T> Enumerate()
         {
             ThrowInvalidOperationIfDefault();
             return new ArrayPrefixEnumerator<T>(_array, _count);
@@ -292,7 +292,7 @@ namespace Ubiquitous
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return GetValueEnumerator();
+            return Enumerate();
         }
 
         #endregion
@@ -301,7 +301,7 @@ namespace Ubiquitous
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetValueEnumerator();
+            return Enumerate();
         }
 
         #endregion

@@ -20,7 +20,7 @@ namespace Ubiquitous
         }
 
 #pragma warning disable CA1024 // Use properties where appropriate
-        public IndexCollectionEnumerator GetValueEnumerator()
+        public IndexCollectionEnumerator Enumerate()
         {
             return new IndexCollectionEnumerator(Count);
         }
