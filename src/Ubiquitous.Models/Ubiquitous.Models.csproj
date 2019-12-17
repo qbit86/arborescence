@@ -13,12 +13,8 @@
     <Title>Graph models</Title>
     <VersionPrefix>$(FileVersion)</VersionPrefix>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Condition="'$(TargetFramework)' == 'net461'" Include="System.Buffers" Version="4.5.0" />
-    <PackageReference Condition="'$(TargetFramework)' == 'netstandard1.1'" Include="System.Buffers" Version="4.5.0" />
-    <PackageReference Condition="'$(TargetFramework)' == 'netstandard2.0'" Include="System.Buffers" Version="4.5.0" />
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.1' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Buffers" Version="4.5.0" />
     <PackageReference Include="System.Memory" Version="4.5.3" />
   </ItemGroup>
   <ItemGroup>
