@@ -2,7 +2,6 @@
   <PropertyGroup>
     <AssemblyVersion>0.1</AssemblyVersion>
     <FileVersion>0.1.0</FileVersion>
-    <LangVersion>7.2</LangVersion>
     <SignAssembly>true</SignAssembly>
     <TargetFrameworks>net461;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
