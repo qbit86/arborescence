@@ -1,15 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
     <AssemblyVersion>0.1</AssemblyVersion>
+    <LangVersion>7.2</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <TargetFrameworks>net461;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
     <VersionPrefix>0.1.0</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <Title>Graph models</Title>
     <Description>Graph models.</Description>
     <PackageTags>graph;model;adjacency</PackageTags>
-    <SignAssembly>true</SignAssembly>
     <RootNamespace>Ubiquitous.Models</RootNamespace>
-    <LangVersion>7.2</LangVersion>
+    <Title>Graph models</Title>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Condition="'$(TargetFramework)' == 'net461'" Include="System.Buffers" Version="4.5.0" />
@@ -25,8 +27,7 @@
   </ItemGroup>
   <Import Project="..\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.4" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.4" PrivateAssets="all" />
-    <PackageReference Include="Text.Analyzers" Version="2.6.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>
