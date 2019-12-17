@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
     <AssemblyVersion>0.1</AssemblyVersion>
-    <VersionPrefix>0.1.0</VersionPrefix>
-    <FileVersion>$(VersionPrefix)</FileVersion>
-    <Description>Naive implementation of graph traversal. Used for test purposes only.</Description>
-    <SignAssembly>true</SignAssembly>
+    <FileVersion>0.1.0</FileVersion>
     <RootNamespace>Ubiquitous.Traversal</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Description>Naive implementation of graph traversal. Used for test purposes only.</Description>
+    <VersionPrefix>$(FileVersion)</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
@@ -14,8 +16,7 @@
   </ItemGroup>
   <Import Project="..\Ubiquitous.Internal\Ubiquitous.Internal.projitems" Label="Shared" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.4" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.4" PrivateAssets="all" />
-    <PackageReference Include="Text.Analyzers" Version="2.6.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>
