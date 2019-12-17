@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyVersion>0.1</AssemblyVersion>
+    <FileVersion>0.1.0</FileVersion>
     <LangVersion>7.2</LangVersion>
     <SignAssembly>true</SignAssembly>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <VersionPrefix>0.1.0</VersionPrefix>
     <Description>Low-level building blocks used in public APIs.
 Commonly used types: SourceTargetPair&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Description>
-    <FileVersion>$(VersionPrefix)</FileVersion>
     <PackageReleaseNotes>https://github.com/qbit86/ubiquitous-graphs/blob/develop/src/Ubiquitous.Primitives/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
+    <VersionPrefix>$(FileVersion)</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
     <EmbedAllSources>true</EmbedAllSources>
