@@ -1,0 +1,16 @@
+<Project>
+  <Import Project="..\Directory.Build.props" />
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
+    <LangVersion>7.2</LangVersion>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Authors>Viktor T.</Authors>
+    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/qbit86/ubiquitous-graphs</RepositoryUrl>
+  </PropertyGroup>
+</Project>
