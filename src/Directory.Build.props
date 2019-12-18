@@ -7,7 +7,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <Authors>Viktor T.</Authors>
-    <PackageIconUrl>https://github.com/qbit86/ubiquitous-graphs/raw/master/kopimi.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
