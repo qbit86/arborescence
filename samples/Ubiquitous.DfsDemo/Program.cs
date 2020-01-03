@@ -9,7 +9,6 @@ namespace Ubiquitous
     using Traversal;
     using Workbench;
     using static System.Diagnostics.Debug;
-    using ColorMap = ArrayPrefix<Traversal.Color>;
     using StepMap = System.ArraySegment<Traversal.DfsStepKind>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
@@ -38,7 +37,7 @@ namespace Ubiquitous
 
             {
                 var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, Color[], IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
@@ -52,7 +51,7 @@ namespace Ubiquitous
 
             {
                 var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, ColorMap, IndexedDfsStep>.Create(
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, Color[], IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
