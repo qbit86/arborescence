@@ -15,17 +15,6 @@ namespace Ubiquitous
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
     {
-        protected DfsTreeBoostBenchmark()
-        {
-            var colorMapPolicy = new ColorMapPolicy(VertexCount);
-
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
-
-            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
-        }
-
         [Params(10, 100, 1000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -33,11 +22,11 @@ namespace Ubiquitous
 
         private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
-            BaselineDfs { get; }
+            BaselineDfs { get; set; }
 
         private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
-            DefaultDfs { get; }
+            DefaultDfs { get; set; }
 
         private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
@@ -49,6 +38,14 @@ namespace Ubiquitous
         public void GlobalSetup()
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
+
+            var colorMapPolicy = new ColorMapPolicy(VertexCount);
+
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
+
+            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             var indexedMapPolicy = new ColorMapPolicy(VertexCount);
             indexedMapPolicy.Warmup();
