@@ -3,6 +3,5 @@
 .vscode/
 *.suo
 *.user
-**/BenchmarkDotNet.Artifacts*/
 bin/
 obj/
