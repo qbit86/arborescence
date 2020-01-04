@@ -82,9 +82,7 @@ namespace Ubiquitous.Traversal
 
             try
             {
-                if (!ColorMapPolicy.TryPut(colorMap, StartVertex, Color.Gray))
-                    yield break;
-
+                ColorMapPolicy.AddOrUpdate(colorMap, StartVertex, Color.Gray);
                 queue.Enqueue(StartVertex);
 
                 while (queue.Count > 0)
@@ -105,9 +103,7 @@ namespace Ubiquitous.Traversal
                                 case Color.None:
                                 case Color.White:
                                 {
-                                    if (!ColorMapPolicy.TryPut(colorMap, v, Color.Gray))
-                                        continue;
-
+                                    ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
                                     queue.Enqueue(v);
                                     yield return e;
                                     break;
@@ -116,7 +112,7 @@ namespace Ubiquitous.Traversal
                         }
                     }
 
-                    ColorMapPolicy.TryPut(colorMap, u, Color.Black);
+                    ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
                 }
             }
             finally

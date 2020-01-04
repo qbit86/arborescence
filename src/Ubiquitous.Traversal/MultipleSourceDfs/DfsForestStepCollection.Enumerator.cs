@@ -82,7 +82,8 @@ namespace Ubiquitous.Traversal
                             continue;
                         case 2:
                             Assert(_colorMap != null, nameof(_colorMap) + " != null");
-                            if (!_colorMapPolicy.TryGetValue(_colorMap, _vertexEnumerator.Current, out Color vertexColor))
+                            if (!_colorMapPolicy.TryGetValue(_colorMap, _vertexEnumerator.Current,
+                                out Color vertexColor))
                                 vertexColor = Color.None;
                             if (vertexColor != Color.None && vertexColor != Color.White)
                             {

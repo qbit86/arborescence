@@ -140,7 +140,7 @@ namespace Ubiquitous.Traversal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool CreateDiscoverVertexStep(TVertex vertex, int newState, out TStep current)
         {
-            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Gray);
+            _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
             current = _stepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
             _state = newState;
             return true;
@@ -149,7 +149,7 @@ namespace Ubiquitous.Traversal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool CreateFinishVertexStep(TVertex vertex, int newState, out TStep current)
         {
-            _colorMapPolicy.TryPut(_colorMap, _currentVertex, Color.Black);
+            _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Black);
             current = _stepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
             _state = newState;
             return true;

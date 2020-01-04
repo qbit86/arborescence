@@ -31,13 +31,12 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryPut(T[] map, int key, T value)
+        public void AddOrUpdate(T[] map, int key, T value)
         {
             if (map == null || (uint)key >= (uint)map.Length)
-                return false;
+                return;
 
             map[key] = value;
-            return true;
         }
 
         public T[] Acquire()

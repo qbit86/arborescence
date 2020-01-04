@@ -60,9 +60,7 @@ namespace Ubiquitous.Traversal
 
         private IEnumerator<TStep> ProcessVertexCoroutine(TVertex vertex)
         {
-            if (!VertexColorMapPolicy.TryPut(_vertexColorMap, vertex, Color.Gray))
-                yield break;
-
+            VertexColorMapPolicy.AddOrUpdate(_vertexColorMap, vertex, Color.Gray);
             yield return StepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
 
             if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator outEdges) && outEdges != null)
@@ -85,9 +83,7 @@ namespace Ubiquitous.Traversal
                 }
             }
 
-            if (!VertexColorMapPolicy.TryPut(_vertexColorMap, vertex, Color.Black))
-                yield break;
-
+            VertexColorMapPolicy.AddOrUpdate(_vertexColorMap, vertex, Color.Black);
             yield return StepPolicy.CreateVertexStep(DfsStepKind.FinishVertex, vertex);
         }
 
@@ -106,9 +102,7 @@ namespace Ubiquitous.Traversal
                 if (!EdgeColorMapPolicy.TryGetValue(_edgeColorMap, edge, out Color edgeColor))
                     edgeColor = Color.None;
 
-                if (!EdgeColorMapPolicy.TryPut(_edgeColorMap, edge, Color.Black))
-                    yield break;
-
+                EdgeColorMapPolicy.AddOrUpdate(_edgeColorMap, edge, Color.Black);
                 switch (neighborColor)
                 {
                     case Color.None:
