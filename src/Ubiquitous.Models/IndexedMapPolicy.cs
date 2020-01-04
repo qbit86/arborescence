@@ -19,7 +19,7 @@ namespace Ubiquitous.Models
 
         public int Count { get; }
 
-        public bool TryGet(T[] map, int key, out T value)
+        public bool TryGetValue(T[] map, int key, out T value)
         {
             if (map == null || (uint)key >= (uint)map.Length)
             {

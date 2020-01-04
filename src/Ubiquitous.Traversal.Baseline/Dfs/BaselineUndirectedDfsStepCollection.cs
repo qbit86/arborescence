@@ -100,10 +100,10 @@ namespace Ubiquitous.Traversal
                 : GraphPolicy.TryGetTarget(Graph, edge, out neighbour);
             if (hasNeighbour)
             {
-                if (!VertexColorMapPolicy.TryGet(_vertexColorMap, neighbour, out Color neighborColor))
+                if (!VertexColorMapPolicy.TryGetValue(_vertexColorMap, neighbour, out Color neighborColor))
                     neighborColor = Color.None;
 
-                if (!EdgeColorMapPolicy.TryGet(_edgeColorMap, edge, out Color edgeColor))
+                if (!EdgeColorMapPolicy.TryGetValue(_edgeColorMap, edge, out Color edgeColor))
                     edgeColor = Color.None;
 
                 if (!EdgeColorMapPolicy.TryPut(_edgeColorMap, edge, Color.Black))

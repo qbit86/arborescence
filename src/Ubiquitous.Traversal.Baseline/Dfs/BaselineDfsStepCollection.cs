@@ -83,7 +83,7 @@ namespace Ubiquitous.Traversal
 
             if (GraphPolicy.TryGetTarget(Graph, edge, out TVertex target))
             {
-                if (!ColorMapPolicy.TryGet(_colorMap, target, out Color neighborColor))
+                if (!ColorMapPolicy.TryGetValue(_colorMap, target, out Color neighborColor))
                     neighborColor = Color.None;
 
                 switch (neighborColor)

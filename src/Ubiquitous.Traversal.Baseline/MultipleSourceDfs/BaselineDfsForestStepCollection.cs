@@ -71,7 +71,7 @@
                 {
                     TVertex vertex = vertexEnumerator.Current;
 
-                    if (!_colorMapPolicy.TryGet(colorMap, vertex, out Color vertexColor))
+                    if (!_colorMapPolicy.TryGetValue(colorMap, vertex, out Color vertexColor))
                         vertexColor = Color.None;
 
                     if (vertexColor != Color.None && vertexColor != Color.White)

@@ -99,7 +99,7 @@ namespace Ubiquitous.Traversal
                             if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
                                 continue;
 
-                            ColorMapPolicy.TryGet(colorMap, v, out Color color);
+                            ColorMapPolicy.TryGetValue(colorMap, v, out Color color);
                             switch (color)
                             {
                                 case Color.None:
