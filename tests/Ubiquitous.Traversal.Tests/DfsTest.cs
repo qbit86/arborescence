@@ -8,7 +8,6 @@ namespace Ubiquitous
     using Traversal;
     using Xunit;
     using Xunit.Abstractions;
-    using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
@@ -37,43 +36,43 @@ namespace Ubiquitous
         {
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             MultipleSourceDfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                IndexCollectionEnumerator, EdgeEnumerator, ColorMap, IndexedDfsStep>.Create(
+                IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
                 default(IndexedDfsStepPolicy));
 
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap, IndexedDfsStep>.Create(
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy,
                 default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
             Output = output;
         }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             Dfs { get; }
 
         private MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
-                ColorMap, IndexedDfsStep,
+                Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
                 IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             MultipleSourceDfs { get; }
 
-        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap,
+        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
                 IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             BaselineDfs { get; }
 
         private BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, ColorMap, IndexedDfsStep,
+                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
                 IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             BaselineMultipleSourceDfs { get; }

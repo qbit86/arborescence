@@ -6,7 +6,6 @@ namespace Ubiquitous
     using BenchmarkDotNet.Attributes;
     using Models;
     using Traversal;
-    using ColorMap = ArrayPrefix<Traversal.Color>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
@@ -20,15 +19,15 @@ namespace Ubiquitous
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             BaselineDfs { get; set; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             DefaultDfs { get; set; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep,
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
             CachingDfs { get; set; }
 
@@ -41,16 +40,16 @@ namespace Ubiquitous
 
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
-            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             var indexedMapPolicy = new ColorMapPolicy(VertexCount);
             indexedMapPolicy.Warmup();
 
-            CachingDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, ColorMap, IndexedDfsStep>
+            CachingDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy, default(IndexedDfsStepPolicy));
         }
 

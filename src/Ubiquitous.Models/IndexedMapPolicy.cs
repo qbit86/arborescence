@@ -4,7 +4,7 @@ namespace Ubiquitous.Models
     using System.Buffers;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly struct IndexedMapPolicy<T> : IMapPolicy<ArrayPrefix<T>, int, T>, IFactory<ArrayPrefix<T>>
+    public readonly struct IndexedMapPolicy<T> : IMapPolicy<T[], int, T>, IFactory<T[]>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public IndexedMapPolicy(int count)
@@ -19,37 +19,37 @@ namespace Ubiquitous.Models
 
         public int Count { get; }
 
-        public bool TryGet(ArrayPrefix<T> map, int key, out T value)
+        public bool TryGet(T[] map, int key, out T value)
         {
-            if ((uint)key >= (uint)map.Count || map.Array == null)
+            if (map == null || (uint)key >= (uint)map.Length)
             {
                 value = default;
                 return false;
             }
 
-            value = map.Array[key];
+            value = map[key];
             return true;
         }
 
-        public bool TryPut(ArrayPrefix<T> map, int key, T value)
+        public bool TryPut(T[] map, int key, T value)
         {
-            if ((uint)key >= (uint)map.Count || map.Array == null)
+            if (map == null || (uint)key >= (uint)map.Length)
                 return false;
 
-            map.Array[key] = value;
+            map[key] = value;
             return true;
         }
 
-        public ArrayPrefix<T> Acquire()
+        public T[] Acquire()
         {
             T[] array = Pool.Rent(Count);
-            Array.Clear(array, 0, Count);
-            return ArrayPrefix.Create(array, Count);
+            Array.Clear(array, 0, array.Length);
+            return array;
         }
 
-        public void Release(ArrayPrefix<T> value)
+        public void Release(T[] value)
         {
-            Pool.Return(value.Array, true);
+            Pool.Return(value, true);
         }
 
         public void Warmup()
