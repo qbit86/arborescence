@@ -18,9 +18,9 @@ namespace Ubiquitous.Models
             return graph.TryGetTarget(edge, out target);
         }
 
-        public bool TryGetOutEdges(TGraph graph, TVertex vertex, out TEdges edges)
+        public void TryGetOutEdges(TGraph graph, TVertex vertex, out TEdges edges)
         {
-            return graph.TryGetOutEdges(vertex, out edges);
+            graph.TryGetOutEdges(vertex, out edges);
         }
     }
 }

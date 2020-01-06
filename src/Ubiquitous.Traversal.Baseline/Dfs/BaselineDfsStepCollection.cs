@@ -59,7 +59,8 @@ namespace Ubiquitous.Traversal
             ColorMapPolicy.AddOrUpdate(_colorMap, vertex, Color.Gray);
             yield return StepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
 
-            if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
+            GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges);
+            if (edges != null)
             {
                 while (edges.MoveNext())
                 {

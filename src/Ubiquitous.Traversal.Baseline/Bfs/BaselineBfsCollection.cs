@@ -88,26 +88,24 @@ namespace Ubiquitous.Traversal
                 while (queue.Count > 0)
                 {
                     TVertex u = queue.Dequeue();
-                    if (GraphPolicy.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
+                    GraphPolicy.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges);
+                    while (outEdges.MoveNext())
                     {
-                        while (outEdges.MoveNext())
+                        TEdge e = outEdges.Current;
+
+                        if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
+                            continue;
+
+                        ColorMapPolicy.TryGetValue(colorMap, v, out Color color);
+                        switch (color)
                         {
-                            TEdge e = outEdges.Current;
-
-                            if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
-                                continue;
-
-                            ColorMapPolicy.TryGetValue(colorMap, v, out Color color);
-                            switch (color)
+                            case Color.None:
+                            case Color.White:
                             {
-                                case Color.None:
-                                case Color.White:
-                                {
-                                    ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
-                                    queue.Enqueue(v);
-                                    yield return e;
-                                    break;
-                                }
+                                ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
+                                queue.Enqueue(v);
+                                yield return e;
+                                break;
                             }
                         }
                     }
