@@ -55,23 +55,22 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
+        public void TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
         {
             if ((uint)vertex >= (uint)VertexCount)
             {
                 outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
-                return false;
+                return;
             }
 
             Assert(OutEdges != null, "OutEdges != null");
             if (OutEdges[vertex].Array == null)
             {
                 outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
-                return true;
+                return;
             }
 
             outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Array, OutEdges[vertex].Count);
-            return true;
         }
 
         public bool Equals(JaggedAdjacencyListIncidenceGraph other)

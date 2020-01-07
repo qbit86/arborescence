@@ -59,20 +59,19 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<SourceTargetPair<int>> edges)
+        public void TryGetOutEdges(int vertex, out ArraySegmentEnumerator<SourceTargetPair<int>> edges)
         {
             ReadOnlySpan<SourceTargetPair<int>> edgeBounds = GetEdgeBounds();
             if ((uint)vertex >= (uint)edgeBounds.Length)
             {
                 edges = new ArraySegmentEnumerator<SourceTargetPair<int>>(
                     ArrayBuilder<SourceTargetPair<int>>.EmptyArray, 0, 0);
-                return false;
+                return;
             }
 
             int start = edgeBounds[vertex].Source;
             int length = edgeBounds[vertex].Target;
             edges = new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, length);
-            return true;
         }
 
         public bool Equals(EdgeListIncidenceGraph other)
