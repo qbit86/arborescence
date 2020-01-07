@@ -31,11 +31,11 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
-                jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> jaggedOutEdges = RistFactory<int>.Create(jaggedOutEdgesEnumerator);
 
-                sortedAdjacencyList.TryGetOutEdges(v, out RangeEnumerator outEdgesEnumerator);
+                RangeEnumerator outEdgesEnumerator = sortedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> outEdges = RistFactory<int>.Create(outEdgesEnumerator);
 
@@ -69,11 +69,11 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < sortedAdjacencyList.VertexCount; ++v)
             {
-                sortedAdjacencyList.TryGetOutEdges(v, out RangeEnumerator outEdgesEnumerator);
+                RangeEnumerator outEdgesEnumerator = sortedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> outEdges = RistFactory<int>.Create(outEdgesEnumerator);
 
-                jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> jaggedOutEdges = RistFactory<int>.Create(jaggedOutEdgesEnumerator);
 

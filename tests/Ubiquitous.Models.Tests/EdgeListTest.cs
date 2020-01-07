@@ -31,7 +31,7 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
-                jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
                 Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
@@ -39,7 +39,7 @@ namespace Ubiquitous
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
                     .ToRist();
 
-                edgeList.TryGetOutEdges(v, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator);
+                ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
 
                 Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
 
@@ -70,11 +70,11 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < edgeList.VertexCount; ++v)
             {
-                edgeList.TryGetOutEdges(v, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator);
+                ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
 
                 Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
 
-                jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
                 Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
