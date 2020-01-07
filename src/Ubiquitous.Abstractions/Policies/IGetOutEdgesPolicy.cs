@@ -1,7 +1,7 @@
 ﻿namespace Ubiquitous
 {
-    public interface IGetOutEdgesPolicy<in TGraph, in TVertex, TEdges>
+    public interface IGetOutEdgesPolicy<in TGraph, in TVertex, out TEdges>
     {
-        void TryGetOutEdges(TGraph graph, TVertex vertex, out TEdges edges);
+        TEdges EnumerateOutEdges(TGraph graph, TVertex vertex);
     }
 }

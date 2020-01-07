@@ -88,7 +88,7 @@ namespace Ubiquitous.Traversal
                 while (queue.Count > 0)
                 {
                     TVertex u = queue.Dequeue();
-                    GraphPolicy.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges);
+                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(Graph, u);
                     while (outEdges.MoveNext())
                     {
                         TEdge e = outEdges.Current;

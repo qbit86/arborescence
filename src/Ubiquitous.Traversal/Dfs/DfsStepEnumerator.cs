@@ -71,7 +71,7 @@ namespace Ubiquitous.Traversal
                     case 0:
                         return CreateDiscoverVertexStep(_currentVertex, 1, out current);
                     case 1:
-                        _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
+                        TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         PushVertexStackFrame(_currentVertex, edges);
                         _state = 2;
                         continue;
@@ -117,7 +117,7 @@ namespace Ubiquitous.Traversal
                         _currentVertex = _neighborVertex;
                         return CreateDiscoverVertexStep(_currentVertex, 6, out current);
                     case 6:
-                        _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
+                        _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         _state = 3;
                         continue;
                     case 7:

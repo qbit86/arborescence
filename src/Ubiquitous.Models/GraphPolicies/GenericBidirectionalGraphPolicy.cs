@@ -19,9 +19,11 @@ namespace Ubiquitous.Models
             return graph.TryGetTarget(edge, out target);
         }
 
-        public void TryGetOutEdges(TGraph graph, TVertex vertex, out TEdges edges)
+        public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex)
         {
+            TEdges edges;
             graph.TryGetOutEdges(vertex, out edges);
+            return edges;
         }
 
         public bool TryGetInEdges(TGraph graph, TVertex vertex, out TEdges edges)
