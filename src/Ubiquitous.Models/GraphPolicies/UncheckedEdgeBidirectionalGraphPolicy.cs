@@ -30,9 +30,7 @@ namespace Ubiquitous.Models
 
         public TEdges EnumerateInEdges(TGraph graph, int vertex)
         {
-            TEdges edges;
-            graph.TryGetInEdges(vertex, out edges);
-            return edges;
+            return graph.EnumerateInEdges(vertex);
         }
     }
 }
