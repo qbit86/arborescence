@@ -26,9 +26,11 @@ namespace Ubiquitous.Models
             return edges;
         }
 
-        public void TryGetInEdges(TGraph graph, TVertex vertex, out TEdges edges)
+        public TEdges EnumerateInEdges(TGraph graph, TVertex vertex)
         {
+            TEdges edges;
             graph.TryGetInEdges(vertex, out edges);
+            return edges;
         }
     }
 }

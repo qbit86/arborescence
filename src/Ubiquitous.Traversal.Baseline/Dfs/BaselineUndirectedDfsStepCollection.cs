@@ -74,7 +74,7 @@ namespace Ubiquitous.Traversal
                 }
             }
 
-            GraphPolicy.TryGetInEdges(Graph, vertex, out TEdgeEnumerator inEdges);
+            TEdgeEnumerator inEdges = GraphPolicy.EnumerateInEdges(Graph, vertex);
             if (inEdges != null)
             {
                 while (inEdges.MoveNext())
