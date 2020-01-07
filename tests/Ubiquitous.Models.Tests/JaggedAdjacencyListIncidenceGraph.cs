@@ -55,23 +55,16 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArrayPrefixEnumerator<int> outEdges)
+        public ArrayPrefixEnumerator<int> EnumerateOutEdges(int vertex)
         {
             if ((uint)vertex >= (uint)VertexCount)
-            {
-                outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
-                return false;
-            }
+                return new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
 
             Assert(OutEdges != null, "OutEdges != null");
             if (OutEdges[vertex].Array == null)
-            {
-                outEdges = new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
-                return true;
-            }
+                return new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
 
-            outEdges = new ArrayPrefixEnumerator<int>(OutEdges[vertex].Array, OutEdges[vertex].Count);
-            return true;
+            return new ArrayPrefixEnumerator<int>(OutEdges[vertex].Array, OutEdges[vertex].Count);
         }
 
         public bool Equals(JaggedAdjacencyListIncidenceGraph other)

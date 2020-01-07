@@ -14,7 +14,7 @@ namespace Ubiquitous.Traversal
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
         TGraphPolicy, TColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
@@ -71,11 +71,7 @@ namespace Ubiquitous.Traversal
                     case 0:
                         return CreateDiscoverVertexStep(_currentVertex, 1, out current);
                     case 1:
-                        bool hasOutEdges =
-                            _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out TEdgeEnumerator edges);
-                        if (!hasOutEdges)
-                            return CreateFinishVertexStep(_currentVertex, int.MaxValue, out current);
-
+                        TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         PushVertexStackFrame(_currentVertex, edges);
                         _state = 2;
                         continue;
@@ -121,10 +117,7 @@ namespace Ubiquitous.Traversal
                         _currentVertex = _neighborVertex;
                         return CreateDiscoverVertexStep(_currentVertex, 6, out current);
                     case 6:
-                        hasOutEdges = _graphPolicy.TryGetOutEdges(_graph, _currentVertex, out _edgeEnumerator);
-                        if (!hasOutEdges)
-                            return CreateFinishVertexStep(_currentVertex, 2, out current);
-
+                        _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         _state = 3;
                         continue;
                     case 7:

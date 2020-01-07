@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>
             Create<TGraphPolicy, TColorMapPolicy, TStepPolicy>(
                 TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
-            where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+            where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
             where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
@@ -27,7 +27,7 @@ namespace Ubiquitous.Traversal
     public readonly struct BaselineDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
         TGraphPolicy, TColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>

@@ -31,13 +31,11 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
-                if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
-                    continue;
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> jaggedOutEdges = RistFactory<int>.Create(jaggedOutEdgesEnumerator);
 
-                bool hasOutEdges = sortedAdjacencyList.TryGetOutEdges(v, out RangeEnumerator outEdgesEnumerator);
-                Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
+                RangeEnumerator outEdgesEnumerator = sortedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> outEdges = RistFactory<int>.Create(outEdgesEnumerator);
 
@@ -71,14 +69,11 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < sortedAdjacencyList.VertexCount; ++v)
             {
-                if (!sortedAdjacencyList.TryGetOutEdges(v, out RangeEnumerator outEdgesEnumerator))
-                    continue;
+                RangeEnumerator outEdgesEnumerator = sortedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> outEdges = RistFactory<int>.Create(outEdgesEnumerator);
 
-                bool hasOutEdges =
-                    jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
-                Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 Rist<int> jaggedOutEdges = RistFactory<int>.Create(jaggedOutEdgesEnumerator);
 

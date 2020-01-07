@@ -4,8 +4,8 @@ namespace Ubiquitous.Models
     public readonly struct EdgeBidirectionalGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, SourceTargetPair<int>>,
         IGetTargetPolicy<TGraph, int, SourceTargetPair<int>>,
-        IGetOutEdgesPolicy<TGraph, int, TEdges>,
-        IGetInEdgesPolicy<TGraph, int, TEdges>
+        IOutEdgesPolicy<TGraph, int, TEdges>,
+        IInEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IBidirectionalGraph<int, SourceTargetPair<int>, TEdges>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
@@ -19,14 +19,14 @@ namespace Ubiquitous.Models
             return graph.TryGetTarget(edge, out target);
         }
 
-        public bool TryGetOutEdges(TGraph graph, int vertex, out TEdges edges)
+        public TEdges EnumerateOutEdges(TGraph graph, int vertex)
         {
-            return graph.TryGetOutEdges(vertex, out edges);
+            return graph.EnumerateOutEdges(vertex);
         }
 
-        public bool TryGetInEdges(TGraph graph, int vertex, out TEdges edges)
+        public TEdges EnumerateInEdges(TGraph graph, int vertex)
         {
-            return graph.TryGetInEdges(vertex, out edges);
+            return graph.EnumerateInEdges(vertex);
         }
     }
 }

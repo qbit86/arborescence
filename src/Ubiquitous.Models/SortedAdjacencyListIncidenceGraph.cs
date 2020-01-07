@@ -60,21 +60,17 @@
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out RangeEnumerator edges)
+        public RangeEnumerator EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
             if ((uint)vertex >= (uint)edgeBounds.Length)
-            {
-                edges = new RangeEnumerator(0, 0);
-                return false;
-            }
+                return new RangeEnumerator(0, 0);
 
             int start = vertex > 0 ? edgeBounds[vertex - 1] : 0;
             int endExclusive = edgeBounds[vertex];
             Assert(start <= endExclusive, "start <= endExclusive");
 
-            edges = new RangeEnumerator(start, endExclusive);
-            return true;
+            return new RangeEnumerator(start, endExclusive);
         }
 
         public bool Equals(SortedAdjacencyListIncidenceGraph other)

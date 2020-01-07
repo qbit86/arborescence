@@ -14,7 +14,7 @@ namespace Ubiquitous.Traversal
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
+        IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
@@ -88,26 +88,24 @@ namespace Ubiquitous.Traversal
                 while (queue.Count > 0)
                 {
                     TVertex u = queue.Dequeue();
-                    if (GraphPolicy.TryGetOutEdges(Graph, u, out TEdgeEnumerator outEdges))
+                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(Graph, u);
+                    while (outEdges.MoveNext())
                     {
-                        while (outEdges.MoveNext())
+                        TEdge e = outEdges.Current;
+
+                        if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
+                            continue;
+
+                        ColorMapPolicy.TryGetValue(colorMap, v, out Color color);
+                        switch (color)
                         {
-                            TEdge e = outEdges.Current;
-
-                            if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
-                                continue;
-
-                            ColorMapPolicy.TryGetValue(colorMap, v, out Color color);
-                            switch (color)
+                            case Color.None:
+                            case Color.White:
                             {
-                                case Color.None:
-                                case Color.White:
-                                {
-                                    ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
-                                    queue.Enqueue(v);
-                                    yield return e;
-                                    break;
-                                }
+                                ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
+                                queue.Enqueue(v);
+                                yield return e;
+                                break;
                             }
                         }
                     }

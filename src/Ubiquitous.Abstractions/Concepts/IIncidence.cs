@@ -1,7 +1,7 @@
 namespace Ubiquitous
 {
-    public interface IIncidence<in TVertex, TEdges>
+    public interface IIncidence<in TVertex, out TEdges>
     {
-        bool TryGetOutEdges(TVertex vertex, out TEdges edges);
+        TEdges EnumerateOutEdges(TVertex vertex);
     }
 }

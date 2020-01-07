@@ -4,7 +4,7 @@ namespace Ubiquitous.Models
     public readonly struct GenericIncidenceGraphPolicy<TGraph, TVertex, TEdge, TEdges> :
         IGetSourcePolicy<TGraph, TVertex, TEdge>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetOutEdgesPolicy<TGraph, TVertex, TEdges>
+        IOutEdgesPolicy<TGraph, TVertex, TEdges>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdges>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
@@ -18,9 +18,9 @@ namespace Ubiquitous.Models
             return graph.TryGetTarget(edge, out target);
         }
 
-        public bool TryGetOutEdges(TGraph graph, TVertex vertex, out TEdges edges)
+        public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex)
         {
-            return graph.TryGetOutEdges(vertex, out edges);
+            return graph.EnumerateOutEdges(vertex);
         }
     }
 }

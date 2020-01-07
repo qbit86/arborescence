@@ -31,8 +31,7 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < jaggedAdjacencyList.VertexCount; ++v)
             {
-                if (!jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator))
-                    continue;
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
                 Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
@@ -40,9 +39,7 @@ namespace Ubiquitous
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
                     .ToRist();
 
-                bool hasOutEdges = edgeList.TryGetOutEdges(v,
-                    out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator);
-                Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
+                ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
 
                 Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
 
@@ -73,14 +70,11 @@ namespace Ubiquitous
             // Act
             for (int v = 0; v < edgeList.VertexCount; ++v)
             {
-                if (!edgeList.TryGetOutEdges(v, out ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator))
-                    continue;
+                ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
 
                 Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
 
-                bool hasOutEdges =
-                    jaggedAdjacencyList.TryGetOutEdges(v, out ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator);
-                Assert.True(hasOutEdges, $"Should have edges for {nameof(v)}: {v}");
+                ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
                 Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator

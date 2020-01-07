@@ -1,7 +1,7 @@
 namespace Ubiquitous
 {
-    public interface IBidirectional<in TVertex, TEdges> : IIncidence<TVertex, TEdges>
+    public interface IBidirectional<in TVertex, out TEdges> : IIncidence<TVertex, TEdges>
     {
-        bool TryGetInEdges(TVertex vertex, out TEdges edges);
+        TEdges EnumerateInEdges(TVertex vertex);
     }
 }

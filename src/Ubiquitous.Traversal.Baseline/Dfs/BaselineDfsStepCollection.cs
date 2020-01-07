@@ -10,7 +10,7 @@ namespace Ubiquitous.Traversal
             TGraphPolicy, TColorMapPolicy, TStepPolicy>
         : IEnumerable<TStep>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
@@ -59,7 +59,8 @@ namespace Ubiquitous.Traversal
             ColorMapPolicy.AddOrUpdate(_colorMap, vertex, Color.Gray);
             yield return StepPolicy.CreateVertexStep(DfsStepKind.DiscoverVertex, vertex);
 
-            if (GraphPolicy.TryGetOutEdges(Graph, vertex, out TEdgeEnumerator edges) && edges != null)
+            TEdgeEnumerator edges = GraphPolicy.EnumerateOutEdges(Graph, vertex);
+            if (edges != null)
             {
                 while (edges.MoveNext())
                 {

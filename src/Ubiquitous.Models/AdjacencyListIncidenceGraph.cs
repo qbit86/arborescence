@@ -50,22 +50,18 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetOutEdges(int vertex, out ArraySegmentEnumerator<int> edges)
+        public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
 
             if ((uint)(2 * vertex) >= (uint)edgeBounds.Length)
-            {
-                edges = new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
-                return false;
-            }
+                return new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
 
             int start = edgeBounds[2 * vertex];
             int length = edgeBounds[2 * vertex + 1];
             Assert(length >= 0, "length >= 0");
 
-            edges = new ArraySegmentEnumerator<int>(_storage, start, length);
-            return true;
+            return new ArraySegmentEnumerator<int>(_storage, start, length);
         }
 
         public bool Equals(AdjacencyListIncidenceGraph other)

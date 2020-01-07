@@ -15,7 +15,7 @@ namespace Ubiquitous.Traversal
                 TGraphPolicy graphPolicy, TVertexColorMapPolicy vertexColorMapPolicy,
                 TEdgeColorMapPolicy edgeColorMapPolicy, TStepPolicy stepPolicy)
             where TGraphPolicy :
-            IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+            IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
             where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
             where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
@@ -34,7 +34,7 @@ namespace Ubiquitous.Traversal
         TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy :
-        IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IGetInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
         where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
         where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
