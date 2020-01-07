@@ -4,7 +4,7 @@ namespace Ubiquitous.Models
     public readonly struct GenericIncidenceGraphPolicy<TGraph, TVertex, TEdge, TEdges> :
         IGetSourcePolicy<TGraph, TVertex, TEdge>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetOutEdgesPolicy<TGraph, TVertex, TEdges>
+        IOutEdgesPolicy<TGraph, TVertex, TEdges>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdges>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {

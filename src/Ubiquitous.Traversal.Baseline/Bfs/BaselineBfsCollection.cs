@@ -14,7 +14,7 @@ namespace Ubiquitous.Traversal
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
+        IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {

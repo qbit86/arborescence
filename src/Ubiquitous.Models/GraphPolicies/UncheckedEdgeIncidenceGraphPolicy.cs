@@ -4,7 +4,7 @@ namespace Ubiquitous.Models
     public readonly struct UncheckedEdgeIncidenceGraphPolicy<TGraph, TEdges> :
         IGetSourcePolicy<TGraph, int, SourceTargetPair<int>>,
         IGetTargetPolicy<TGraph, int, SourceTargetPair<int>>,
-        IGetOutEdgesPolicy<TGraph, int, TEdges>
+        IOutEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IIncidence<int, TEdges>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {

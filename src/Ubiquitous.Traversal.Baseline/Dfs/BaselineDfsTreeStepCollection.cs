@@ -8,7 +8,7 @@
             TGraphPolicy, TColorMapPolicy, TStepPolicy>
         : IEnumerable<TStep>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>

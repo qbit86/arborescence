@@ -14,7 +14,7 @@ namespace Ubiquitous.Traversal
     internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
         TGraphPolicy, TColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
+        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
