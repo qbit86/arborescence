@@ -6,9 +6,11 @@ namespace Ubiquitous.Traversal
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
     {
+        private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
+
         public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler)
         {
-            TraverseCore(graph, startVertex, colorMap, handler, False);
+            TraverseCore(graph, startVertex, colorMap, handler, s_false);
         }
 
         public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler,
@@ -26,11 +28,6 @@ namespace Ubiquitous.Traversal
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 
             throw new NotImplementedException();
-        }
-
-        private static bool False(TGraph graph, TVertex vertex)
-        {
-            return false;
         }
     }
 }
