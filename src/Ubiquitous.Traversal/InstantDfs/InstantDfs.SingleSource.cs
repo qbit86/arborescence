@@ -53,7 +53,13 @@ namespace Ubiquitous.Traversal
                     handler.FinishEdge(graph, stackFrame.Edge);
 
                 TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
-                throw new NotImplementedException();
+                while (edges.MoveNext())
+                {
+                    throw new NotImplementedException();
+                }
+
+                ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                handler.FinishVertex(graph, u);
             }
         }
     }
