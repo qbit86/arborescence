@@ -7,6 +7,8 @@ namespace Ubiquitous.Traversal
         void FinishVertex(TGraph g, TVertex v);
         void ExamineEdge(TGraph g, TEdge e);
         void TreeEdge(TGraph g, TEdge e);
+        void BackEdge(TGraph g, TEdge e);
+        void ForwardOrCrossEdge(TGraph g, TEdge e);
         void FinishEdge(TGraph g, TEdge e);
     }
 }

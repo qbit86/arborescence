@@ -78,11 +78,21 @@ namespace Ubiquitous.Traversal
                         ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
                         handler.DiscoverVertex(graph, u);
 
-                        throw new NotImplementedException();
+                        edges = GraphPolicy.EnumerateOutEdges(graph, u);
+                        if (terminationCondition(graph, u))
+                        {
+                            ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                            handler.FinishVertex(graph, u);
+                            return;
+                        }
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        if (color == Color.Gray)
+                            handler.BackEdge(graph, e);
+                        else
+                            handler.ForwardOrCrossEdge(graph, e);
+                        handler.FinishEdge(graph, e);
                     }
                 }
 
