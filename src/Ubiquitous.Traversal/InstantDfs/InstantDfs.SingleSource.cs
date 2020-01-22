@@ -25,22 +25,27 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            if (terminationCondition == null)
-                throw new ArgumentNullException(nameof(terminationCondition));
-
             handler.StartVertex(graph, startVertex);
-            TraverseCore(graph, startVertex, colorMap, handler, terminationCondition);
+            TraverseCore(graph, startVertex, colorMap, handler, terminationCondition ?? s_false);
         }
 
-        private void TraverseCore<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler,
+        private void TraverseCore<THandler>(TGraph graph, TVertex u, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
             where THandler : IDfsHandler<TGraph, TVertex>
         {
             Debug.Assert(handler != null, "handler != null");
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 
-            ColorMapPolicy.AddOrUpdate(colorMap, startVertex, Color.Gray);
-            handler.DiscoverVertex(graph, startVertex);
+            ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
+            handler.DiscoverVertex(graph, u);
+            TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+            if (terminationCondition(graph, u))
+            {
+            }
+            else
+            {
+            }
+
             throw new NotImplementedException();
         }
     }
