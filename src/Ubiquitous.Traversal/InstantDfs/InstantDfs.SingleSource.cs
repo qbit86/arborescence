@@ -1,6 +1,7 @@
 namespace Ubiquitous.Traversal
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
 
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -38,15 +39,18 @@ namespace Ubiquitous.Traversal
 
             ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
             handler.DiscoverVertex(graph, u);
-            TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-            if (terminationCondition(graph, u))
-            {
-            }
-            else
-            {
-            }
 
-            throw new NotImplementedException();
+            var stack = new Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+
+            TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+            stack.Push(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, false, default, outEdges));
+
+            while (stack.Count > 0)
+            {
+                DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame = stack.Pop();
+
+                throw new NotImplementedException();
+            }
         }
     }
 }
