@@ -5,6 +5,7 @@ namespace Ubiquitous.Traversal
         void StartVertex(TGraph g, TVertex v);
         void DiscoverVertex(TGraph g, TVertex v);
         void FinishVertex(TGraph g, TVertex v);
+        void ExamineEdge(TGraph g, TEdge e);
         void FinishEdge(TGraph g, TEdge e);
     }
 }

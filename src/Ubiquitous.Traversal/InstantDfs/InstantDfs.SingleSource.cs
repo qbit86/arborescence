@@ -55,6 +55,12 @@ namespace Ubiquitous.Traversal
                 TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
                 while (edges.MoveNext())
                 {
+                    TEdge e = edges.Current;
+                    if (!GraphPolicy.TryGetTarget(graph, e, out TVertex v))
+                        continue;
+
+                    handler.ExamineEdge(graph, e);
+
                     throw new NotImplementedException();
                 }
 
