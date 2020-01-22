@@ -6,6 +6,7 @@ namespace Ubiquitous.Traversal
         void DiscoverVertex(TGraph g, TVertex v);
         void FinishVertex(TGraph g, TVertex v);
         void ExamineEdge(TGraph g, TEdge e);
+        void TreeEdge(TGraph g, TEdge e);
         void FinishEdge(TGraph g, TEdge e);
     }
 }

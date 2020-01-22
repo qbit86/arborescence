@@ -40,6 +40,13 @@ namespace Ubiquitous.Traversal
             ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
             handler.DiscoverVertex(graph, u);
 
+            if (terminationCondition(graph, u))
+            {
+                ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                handler.FinishVertex(graph, u);
+                return;
+            }
+
             var stack = new Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
 
             TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
@@ -60,8 +67,23 @@ namespace Ubiquitous.Traversal
                         continue;
 
                     handler.ExamineEdge(graph, e);
+                    if (!ColorMapPolicy.TryGetValue(colorMap, v, out Color color))
+                        color = Color.None;
 
-                    throw new NotImplementedException();
+                    if (color == Color.None || color == Color.White)
+                    {
+                        handler.TreeEdge(graph, e);
+                        stack.Push(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, true, e, edges));
+                        u = v;
+                        ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
+                        handler.DiscoverVertex(graph, u);
+
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
                 }
 
                 ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
