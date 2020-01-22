@@ -39,6 +39,8 @@ namespace Ubiquitous.Traversal
             Debug.Assert(handler != null, "handler != null");
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 
+            ColorMapPolicy.AddOrUpdate(colorMap, startVertex, Color.Gray);
+            handler.DiscoverVertex(graph, startVertex);
             throw new NotImplementedException();
         }
     }
