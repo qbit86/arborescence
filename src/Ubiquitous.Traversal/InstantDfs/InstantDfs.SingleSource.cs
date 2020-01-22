@@ -10,7 +10,7 @@ namespace Ubiquitous.Traversal
         private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
 
         public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler)
-            where THandler : IDfsHandler<TGraph, TVertex>
+            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
@@ -21,7 +21,7 @@ namespace Ubiquitous.Traversal
 
         public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
-            where THandler : IDfsHandler<TGraph, TVertex>
+            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
@@ -32,7 +32,7 @@ namespace Ubiquitous.Traversal
 
         private void TraverseCore<THandler>(TGraph graph, TVertex u, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
-            where THandler : IDfsHandler<TGraph, TVertex>
+            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             Debug.Assert(handler != null, "handler != null");
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
@@ -48,7 +48,11 @@ namespace Ubiquitous.Traversal
             while (stack.Count > 0)
             {
                 DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame = stack.Pop();
+                u = stackFrame.Vertex;
+                if (stackFrame.HasEdge)
+                    handler.FinishEdge(graph, stackFrame.Edge);
 
+                TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
                 throw new NotImplementedException();
             }
         }
