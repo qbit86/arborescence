@@ -9,12 +9,14 @@ namespace Ubiquitous.Traversal
         private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
 
         public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler)
+            where THandler : IDfsHandler
         {
             TraverseCore(graph, startVertex, colorMap, handler, s_false);
         }
 
         public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
+            where THandler : IDfsHandler
         {
             if (terminationCondition == null)
                 throw new ArgumentNullException(nameof(terminationCondition));
@@ -24,6 +26,7 @@ namespace Ubiquitous.Traversal
 
         private void TraverseCore<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
+            where THandler : IDfsHandler
         {
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 
