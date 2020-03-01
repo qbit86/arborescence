@@ -20,8 +20,8 @@ namespace Ubiquitous
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; set; }
 
         private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
@@ -41,8 +41,8 @@ namespace Ubiquitous
 
             var colorMapPolicy = new ColorMapPolicy(VertexCount);
 
-            InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[]>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
+                .Create(default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
 
             DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
@@ -58,10 +58,10 @@ namespace Ubiquitous
         public int BaselineDfsTree()
         {
             var handler = new DummyDfsHandler<AdjacencyListIncidenceGraph>();
-            Color[] colorMap = ArrayPool<Color>.Shared.Rent(Graph.VertexCount);
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             InstantDfs.Traverse(Graph, 0, colorMap, handler);
-            ArrayPool<Color>.Shared.Return(colorMap);
+            ArrayPool<byte>.Shared.Return(colorMap);
             return handler.Count;
         }
 

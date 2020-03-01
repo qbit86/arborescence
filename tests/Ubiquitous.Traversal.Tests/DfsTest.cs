@@ -47,7 +47,7 @@ namespace Ubiquitous
                 default(IndexedDfsStepPolicy));
 
             InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
-                .Create(default(IndexedAdjacencyListGraphPolicy), new IndexedColorMapPolicy());
+                .Create(default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
