@@ -46,8 +46,8 @@ namespace Ubiquitous
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
                 default(IndexedDfsStepPolicy));
 
-            InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[]>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
+            InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
+                .Create(default(IndexedAdjacencyListGraphPolicy), new IndexedColorMapPolicy());
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
@@ -70,8 +70,8 @@ namespace Ubiquitous
                 IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             MultipleSourceDfs { get; }
 
-        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
         private BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
@@ -115,7 +115,7 @@ namespace Ubiquitous
             int vertex = 0;
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
-            Color[] colorMap = ArrayPool<Color>.Shared.Rent(graph.VertexCount);
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
             var dfsHandler = new DfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
@@ -155,7 +155,7 @@ namespace Ubiquitous
 
             boostSteps.Dispose();
             instantSteps.Dispose();
-            ArrayPool<Color>.Shared.Return(colorMap);
+            ArrayPool<byte>.Shared.Return(colorMap);
         }
 
         [Theory]
