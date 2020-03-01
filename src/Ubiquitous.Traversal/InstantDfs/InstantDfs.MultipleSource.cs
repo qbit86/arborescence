@@ -20,7 +20,18 @@ namespace Ubiquitous.Traversal
             handler.StartVertex(graph, startVertex);
             TraverseCore(graph, startVertex, colorMap, handler, s_false);
 
-            throw new NotImplementedException();
+            while (vertices.MoveNext())
+            {
+                TVertex u = vertices.Current;
+                if (!ColorMapPolicy.TryGetValue(colorMap, u, out Color color))
+                    color = Color.None;
+
+                if (color == Color.None || color == Color.White)
+                    continue;
+
+                handler.StartVertex(graph, u);
+                TraverseCore(graph, startVertex, colorMap, handler, s_false);
+            }
         }
     }
 }
