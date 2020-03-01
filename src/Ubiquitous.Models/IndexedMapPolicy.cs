@@ -5,7 +5,6 @@ namespace Ubiquitous.Models
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct IndexedMapPolicy<T> : IMapPolicy<T[], int, T>, IFactory<T[]>
-#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public IndexedMapPolicy(int count)
         {
@@ -57,4 +56,5 @@ namespace Ubiquitous.Models
             Pool.Return(array, true);
         }
     }
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
