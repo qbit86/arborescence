@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal
             Create<TGraphPolicy, TColorMapPolicy>(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>
-            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         {
             return new InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                 graphPolicy, colorMapPolicy);
