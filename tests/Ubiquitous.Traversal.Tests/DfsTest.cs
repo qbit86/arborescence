@@ -46,10 +46,6 @@ namespace Ubiquitous
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
                 default(IndexedDfsStepPolicy));
 
-#if !N_BASELINE_DFS
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
-#endif
             InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[]>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
@@ -74,12 +70,6 @@ namespace Ubiquitous
                 IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             MultipleSourceDfs { get; }
 
-#if !N_BASELINE_DFS
-        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
-                IndexedDfsStep,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
-            BaselineDfs { get; }
-#endif
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
             InstantDfs { get; }
