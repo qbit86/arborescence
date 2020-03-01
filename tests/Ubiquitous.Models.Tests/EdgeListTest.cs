@@ -34,7 +34,7 @@ namespace Ubiquitous
                 ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
-                Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
+                var jaggedOutEndpoints = jaggedOutEdgesEnumerator
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
                     .ToRist();
@@ -77,7 +77,7 @@ namespace Ubiquitous
                 ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
-                Rist<SourceTargetPair<int>> jaggedOutEndpoints = jaggedOutEdgesEnumerator
+                var jaggedOutEndpoints = jaggedOutEdgesEnumerator
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
                     .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
                     .ToRist();

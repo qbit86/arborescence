@@ -1,7 +1,9 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Misnomer;
     using Models;
@@ -44,8 +46,8 @@ namespace Ubiquitous
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
                 default(IndexedDfsStepPolicy));
 
-            BaselineDfs = BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
-                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
+            InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[]>
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
@@ -54,6 +56,8 @@ namespace Ubiquitous
 
             Output = output;
         }
+
+        private static CultureInfo F => CultureInfo.InvariantCulture;
 
         private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
                 IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
@@ -66,10 +70,9 @@ namespace Ubiquitous
                 IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             MultipleSourceDfs { get; }
 
-        private BaselineDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
-                IndexedDfsStep,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
-            BaselineDfs { get; }
+        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[],
+                IndexedAdjacencyListGraphPolicy, ColorMapPolicy>
+            InstantDfs { get; }
 
         private BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep,
@@ -112,40 +115,47 @@ namespace Ubiquitous
             int vertex = 0;
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
+            Color[] colorMap = ArrayPool<Color>.Shared.Rent(graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
+            var dfsHandler = new DfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
+
             // Act
 
-            Rist<IndexedDfsStep> baselineSteps = RistFactory<IndexedDfsStep>.Create(
-                BaselineDfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
             Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
                 Dfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
+            InstantDfs.Traverse(graph, vertex, colorMap, dfsHandler);
 
             // Assert
 
-            int baselineStepCount = baselineSteps.Count;
+            int instantStepCount = instantSteps.Count;
             int boostStepCount = boostSteps.Count;
-            if (baselineStepCount != boostStepCount)
+            if (instantStepCount != boostStepCount)
             {
-                Output.WriteLine($"{nameof(baselineStepCount)}: {baselineStepCount}, "
-                    + $"{nameof(boostStepCount)}: {boostStepCount}");
+                Output.WriteLine(
+                    $"{nameof(instantStepCount)}: {instantStepCount.ToString(F)}, {nameof(boostStepCount)}: {boostStepCount.ToString(F)}");
             }
 
-            int count = Math.Min(baselineStepCount, boostStepCount);
+            Assert.Equal(instantStepCount, boostStepCount);
+
+            int count = Math.Min(instantStepCount, boostStepCount);
             for (int i = 0; i != count; ++i)
             {
-                IndexedDfsStep baselineStep = baselineSteps[i];
+                IndexedDfsStep baselineStep = instantSteps[i];
                 IndexedDfsStep boostStep = boostSteps[i];
 
                 if (baselineStep == boostStep)
                     continue;
 
-                Output.WriteLine($"{nameof(i)}: {i}, "
-                    + $"{nameof(baselineStep)}: {baselineStep}, {nameof(boostStep)}: {boostStep}");
+                Output.WriteLine(
+                    $"{nameof(i)}: {i}, {nameof(baselineStep)}: {baselineStep.ToString()}, {nameof(boostStep)}: {boostStep.ToString()}");
             }
 
-            Assert.Equal(baselineSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
+            Assert.Equal(instantSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
 
-            baselineSteps.Dispose();
             boostSteps.Dispose();
+            instantSteps.Dispose();
+            ArrayPool<Color>.Shared.Return(colorMap);
         }
 
         [Theory]
