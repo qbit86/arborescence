@@ -23,7 +23,7 @@ namespace Ubiquitous.Traversal
                 if (!ColorMapPolicy.TryGetValue(colorMap, u, out Color color))
                     color = Color.None;
 
-                if (color != Color.None || color != Color.White)
+                if (color != Color.None && color != Color.White)
                     continue;
 
                 handler.StartVertex(graph, u);
@@ -51,7 +51,7 @@ namespace Ubiquitous.Traversal
                 if (!ColorMapPolicy.TryGetValue(colorMap, u, out Color color))
                     color = Color.None;
 
-                if (color != Color.None || color != Color.White)
+                if (color != Color.None && color != Color.White)
                     continue;
 
                 handler.StartVertex(graph, u);
