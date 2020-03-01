@@ -49,11 +49,6 @@ namespace Ubiquitous
             InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
 
-            BaselineMultipleSourceDfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
-                default(IndexedAdjacencyListGraphPolicy), colorMapPolicy,
-                default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
-
             Output = output;
         }
 
@@ -73,12 +68,6 @@ namespace Ubiquitous
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
-
-        private BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
-                IndexCollection, IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
-                IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
-            BaselineMultipleSourceDfs { get; }
 
         private ITestOutputHelper Output { get; }
 
@@ -172,24 +161,30 @@ namespace Ubiquitous
             var vertices = new IndexCollection(graph.VertexCount);
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
+            var dfsHandler = new DfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
+
             // Act
 
-            Rist<IndexedDfsStep> baselineSteps = RistFactory<IndexedDfsStep>.Create(
-                BaselineMultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
             Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
                 MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
+            InstantDfs.Traverse(graph, vertices.Enumerate(), colorMap, dfsHandler);
+
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
-            int expectedStartVertexCount = baselineSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
+            int expectedStartVertexCount = instantSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
             int actualStartVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.StartVertex);
 
             // Assert
 
-            Assert.Equal(baselineSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
+            Assert.Equal(instantSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
             Assert.Equal(VertexCount, discoveredVertexCount);
             Assert.Equal(expectedStartVertexCount, actualStartVertexCount);
 
-            baselineSteps.Dispose();
             boostSteps.Dispose();
+            instantSteps.Dispose();
+            ArrayPool<byte>.Shared.Return(colorMap);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
