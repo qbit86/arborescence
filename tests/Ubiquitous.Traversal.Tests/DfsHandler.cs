@@ -5,7 +5,7 @@ namespace Ubiquitous
     using Traversal;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly struct DfsHandler<TGraph> : IDfsHandler<TGraph, int, int>
+    internal readonly struct DfsHandler<TGraph> : IDfsHandler<TGraph, int, int>
     {
         private readonly IList<IndexedDfsStep> _steps;
 
