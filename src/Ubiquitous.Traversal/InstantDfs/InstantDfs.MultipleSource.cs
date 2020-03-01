@@ -26,11 +26,11 @@ namespace Ubiquitous.Traversal
                 if (!ColorMapPolicy.TryGetValue(colorMap, u, out Color color))
                     color = Color.None;
 
-                if (color == Color.None || color == Color.White)
+                if (color != Color.None || color != Color.White)
                     continue;
 
                 handler.StartVertex(graph, u);
-                TraverseCore(graph, startVertex, colorMap, handler, s_false);
+                TraverseCore(graph, u, colorMap, handler, s_false);
             }
         }
     }
