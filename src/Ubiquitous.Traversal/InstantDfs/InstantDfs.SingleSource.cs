@@ -3,6 +3,7 @@ namespace Ubiquitous.Traversal
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using Internal;
 
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
@@ -47,14 +48,16 @@ namespace Ubiquitous.Traversal
                 return;
             }
 
-            var stack = new Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+            List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack =
+                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire();
 
             TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-            stack.Push(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, false, default, outEdges));
+            stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, false, default, outEdges));
 
             while (stack.Count > 0)
             {
-                DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame = stack.Pop();
+                DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame = stack[stack.Count - 1];
+                stack.RemoveAt(stack.Count - 1);
                 u = stackFrame.Vertex;
                 if (stackFrame.HasEdge)
                     handler.FinishEdge(graph, stackFrame.Edge);
@@ -73,7 +76,7 @@ namespace Ubiquitous.Traversal
                     if (color == Color.None || color == Color.White)
                     {
                         handler.TreeEdge(graph, e);
-                        stack.Push(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, true, e, edges));
+                        stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, true, e, edges));
                         u = v;
                         ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
                         handler.DiscoverVertex(graph, u);
@@ -99,6 +102,8 @@ namespace Ubiquitous.Traversal
                 ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
                 handler.FinishVertex(graph, u);
             }
+
+            ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(stack);
         }
     }
 }
