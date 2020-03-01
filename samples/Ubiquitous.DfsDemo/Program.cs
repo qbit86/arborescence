@@ -36,20 +36,6 @@ namespace Ubiquitous
             var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
 
             {
-                var dfs = BaselineMultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, Color[], IndexedDfsStep>.Create(
-                    default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
-                    default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
-
-                IEnumerable<IndexedDfsStep> steps = dfs.Traverse(graph, vertices);
-                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
-                StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
-                FillEdgeKinds(steps, vertexKinds, edgeKinds);
-
-                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Recursive DFS forest", Console.Out);
-            }
-
-            {
                 var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
                     IndexCollectionEnumerator, ArraySegmentEnumerator<int>, Color[], IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
