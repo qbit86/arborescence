@@ -1,6 +1,7 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
     using System.Linq;
     using Misnomer;
@@ -121,12 +122,17 @@ namespace Ubiquitous
             int vertex = 0;
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
+            Color[] colorMap = ArrayPool<Color>.Shared.Rent(graph.VertexCount);
+            var indexedDfsSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
+            var dfsHandler = new DfsHandler<AdjacencyListIncidenceGraph>(indexedDfsSteps);
+
             // Act
 
             Rist<IndexedDfsStep> baselineSteps = RistFactory<IndexedDfsStep>.Create(
                 BaselineDfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
             Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
                 Dfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
+            InstantDfs.Traverse(graph, vertex, colorMap, dfsHandler);
 
             // Assert
 
@@ -147,14 +153,16 @@ namespace Ubiquitous
                 if (baselineStep == boostStep)
                     continue;
 
-                Output.WriteLine($"{nameof(i)}: {i}, "
-                    + $"{nameof(baselineStep)}: {baselineStep}, {nameof(boostStep)}: {boostStep}");
+                Output.WriteLine(
+                    $"{nameof(i)}: {i}, {nameof(baselineStep)}: {baselineStep.ToString()}, {nameof(boostStep)}: {boostStep.ToString()}");
             }
 
             Assert.Equal(baselineSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
 
             baselineSteps.Dispose();
             boostSteps.Dispose();
+            indexedDfsSteps.Dispose();
+            ArrayPool<Color>.Shared.Return(colorMap);
         }
 
         [Theory]
