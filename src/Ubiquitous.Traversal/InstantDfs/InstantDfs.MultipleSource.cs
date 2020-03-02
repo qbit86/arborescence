@@ -20,9 +20,7 @@ namespace Ubiquitous.Traversal
             while (vertices.MoveNext())
             {
                 TVertex u = vertices.Current;
-                if (!ColorMapPolicy.TryGetValue(colorMap, u, out Color color))
-                    color = Color.None;
-
+                Color color = GetColorOrDefault(colorMap, u);
                 if (color != Color.None && color != Color.White)
                     continue;
 
@@ -48,9 +46,7 @@ namespace Ubiquitous.Traversal
             while (vertices.MoveNext())
             {
                 TVertex u = vertices.Current;
-                if (!ColorMapPolicy.TryGetValue(colorMap, u, out Color color))
-                    color = Color.None;
-
+                Color color = GetColorOrDefault(colorMap, u);
                 if (color != Color.None && color != Color.White)
                     continue;
 

@@ -3,6 +3,7 @@ namespace Ubiquitous.Traversal
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Internal;
 
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -70,9 +71,7 @@ namespace Ubiquitous.Traversal
                         continue;
 
                     handler.ExamineEdge(graph, e);
-                    if (!ColorMapPolicy.TryGetValue(colorMap, v, out Color color))
-                        color = Color.None;
-
+                    Color color = GetColorOrDefault(colorMap, v);
                     if (color == Color.None || color == Color.White)
                     {
                         handler.TreeEdge(graph, e);
@@ -105,5 +104,9 @@ namespace Ubiquitous.Traversal
 
             ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(stack);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 }
