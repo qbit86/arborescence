@@ -4,6 +4,7 @@ namespace Ubiquitous.Traversal
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Internal;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/breadth_first_search.hpp
@@ -96,17 +97,12 @@ namespace Ubiquitous.Traversal
                         if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
                             continue;
 
-                        ColorMapPolicy.TryGetValue(colorMap, v, out Color color);
-                        switch (color)
+                        Color color = GetColorOrDefault(colorMap, v);
+                        if (color == Color.None || color == Color.White)
                         {
-                            case Color.None:
-                            case Color.White:
-                            {
-                                ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
-                                queue.Enqueue(v);
-                                yield return e;
-                                break;
-                            }
+                            ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
+                            queue.Enqueue(v);
+                            yield return e;
                         }
                     }
 
@@ -119,5 +115,9 @@ namespace Ubiquitous.Traversal
                 ColorMapPolicy.Release(colorMap);
             }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 }
