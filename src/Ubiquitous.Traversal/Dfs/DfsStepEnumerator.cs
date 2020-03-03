@@ -193,12 +193,7 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Color GetColorOrDefault(TVertex vertex)
-        {
-            if (_colorMapPolicy.TryGetValue(_colorMap, vertex, out Color result))
-                return result;
-
-            return default;
-        }
+        private Color GetColorOrDefault(TVertex vertex) =>
+            _colorMapPolicy.TryGetValue(_colorMap, vertex, out Color result) ? result : Color.None;
     }
 }

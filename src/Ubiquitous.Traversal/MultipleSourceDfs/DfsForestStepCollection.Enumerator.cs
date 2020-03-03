@@ -82,9 +82,7 @@ namespace Ubiquitous.Traversal
                             continue;
                         case 2:
                             Assert(_colorMap != null, nameof(_colorMap) + " != null");
-                            if (!_colorMapPolicy.TryGetValue(_colorMap, _vertexEnumerator.Current,
-                                out Color vertexColor))
-                                vertexColor = Color.None;
+                            Color vertexColor = GetColorOrDefault(_colorMap, _vertexEnumerator.Current);
                             if (vertexColor != Color.None && vertexColor != Color.White)
                             {
                                 _state = 1;
@@ -204,6 +202,10 @@ namespace Ubiquitous.Traversal
                 _state = -1;
                 return false;
             }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+                _colorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
         }
     }
 }
