@@ -1,4 +1,4 @@
-﻿// ReSharper disable SuggestVarOrType_Elsewhere
+// ReSharper disable SuggestVarOrType_Elsewhere
 
 namespace Ubiquitous
 {
@@ -9,10 +9,10 @@ namespace Ubiquitous
     using Traversal;
     using Workbench;
     using static System.Diagnostics.Debug;
-    using StepMap = System.ArraySegment<Traversal.DfsStepKind>;
     using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
+    using StepMap = System.ArraySegment<Traversal.DfsStepKind>;
 
     internal static partial class Program
     {
@@ -42,8 +42,8 @@ namespace Ubiquitous
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
                 var steps = dfs.Traverse(graph, vertices);
-                StepMap vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
-                StepMap edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
+                var vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
+                var edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
