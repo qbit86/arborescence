@@ -2,6 +2,7 @@ namespace Ubiquitous.Traversal
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
     internal struct BaselineUndirectedDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
@@ -98,12 +99,8 @@ namespace Ubiquitous.Traversal
                 : GraphPolicy.TryGetTarget(Graph, edge, out neighbour);
             if (hasNeighbour)
             {
-                if (!VertexColorMapPolicy.TryGetValue(_vertexColorMap, neighbour, out Color neighborColor))
-                    neighborColor = Color.None;
-
-                if (!EdgeColorMapPolicy.TryGetValue(_edgeColorMap, edge, out Color edgeColor))
-                    edgeColor = Color.None;
-
+                Color neighborColor = GetVertexColorOrDefault(_vertexColorMap, neighbour);
+                Color edgeColor = GetEdgeColorOrDefault(_edgeColorMap, edge);
                 EdgeColorMapPolicy.AddOrUpdate(_edgeColorMap, edge, Color.Black);
                 switch (neighborColor)
                 {
@@ -125,5 +122,13 @@ namespace Ubiquitous.Traversal
 
             yield return StepPolicy.CreateEdgeStep(DfsStepKind.FinishEdge, edge, isReversed);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetVertexColorOrDefault(TVertexColorMap colorMap, TVertex vertex) =>
+            VertexColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetEdgeColorOrDefault(TEdgeColorMap colorMap, TEdge edge) =>
+            EdgeColorMapPolicy.TryGetValue(colorMap, edge, out Color result) ? result : Color.None;
     }
 }
