@@ -1,5 +1,3 @@
-﻿// ReSharper disable SuggestVarOrType_Elsewhere
-
 namespace Ubiquitous
 {
     using System;
