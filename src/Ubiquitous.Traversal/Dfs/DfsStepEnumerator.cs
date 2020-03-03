@@ -99,7 +99,7 @@ namespace Ubiquitous.Traversal
 
                         return CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current, 4, out current);
                     case 4:
-                        Color neighborColor = GetColorOrDefault(_neighborVertex);
+                        Color neighborColor = GetColorOrDefault(_colorMap, _neighborVertex);
                         TEdge edge = _edgeEnumerator.Current;
                         switch (neighborColor)
                         {
@@ -193,7 +193,7 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Color GetColorOrDefault(TVertex vertex) =>
-            _colorMapPolicy.TryGetValue(_colorMap, vertex, out Color result) ? result : Color.None;
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            _colorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 }
