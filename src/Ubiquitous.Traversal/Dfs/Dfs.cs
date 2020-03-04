@@ -56,7 +56,7 @@ namespace Ubiquitous.Traversal
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertex startVertex)
+            Traverse(TGraph graph, TVertex startVertex, TColorMap colorMap)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(
@@ -65,7 +65,7 @@ namespace Ubiquitous.Traversal
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertex startVertex, int stackCapacity)
+            Traverse(TGraph graph, TVertex startVertex, TColorMap colorMap, int stackCapacity)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(

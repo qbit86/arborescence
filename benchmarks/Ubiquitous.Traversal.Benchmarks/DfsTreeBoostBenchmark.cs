@@ -67,7 +67,9 @@ namespace Ubiquitous
         public int DefaultDfsTree()
         {
             int count = 0;
-            var steps = DefaultDfs.Traverse(Graph, 0);
+            Color[] colorMap = ArrayPool<Color>.Shared.Rent(Graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            var steps = DefaultDfs.Traverse(Graph, 0, colorMap);
             foreach (IndexedDfsStep _ in steps)
                 ++count;
 
@@ -78,7 +80,9 @@ namespace Ubiquitous
         public int CachingDfsTree()
         {
             int count = 0;
-            var steps = CachingDfs.Traverse(Graph, 0);
+            Color[] colorMap = ArrayPool<Color>.Shared.Rent(Graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            var steps = CachingDfs.Traverse(Graph, 0, colorMap);
             foreach (IndexedDfsStep _ in steps)
                 ++count;
 
