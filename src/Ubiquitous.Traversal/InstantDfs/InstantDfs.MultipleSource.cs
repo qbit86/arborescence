@@ -24,7 +24,7 @@ namespace Ubiquitous.Traversal
                 if (color != Color.None && color != Color.White)
                     continue;
 
-                handler.StartVertex(graph, u);
+                handler.OnStartVertex(graph, u);
                 TraverseCore(graph, u, colorMap, handler, s_false);
             }
         }
@@ -40,7 +40,7 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            handler.StartVertex(graph, startVertex);
+            handler.OnStartVertex(graph, startVertex);
             TraverseCore(graph, startVertex, colorMap, handler, s_false);
 
             while (vertices.MoveNext())
@@ -50,7 +50,7 @@ namespace Ubiquitous.Traversal
                 if (color != Color.None && color != Color.White)
                     continue;
 
-                handler.StartVertex(graph, u);
+                handler.OnStartVertex(graph, u);
                 TraverseCore(graph, u, colorMap, handler, s_false);
             }
         }

@@ -2,13 +2,13 @@ namespace Ubiquitous.Traversal
 {
     public interface IDfsHandler<in TGraph, in TVertex, in TEdge>
     {
-        void StartVertex(TGraph g, TVertex v);
-        void DiscoverVertex(TGraph g, TVertex v);
-        void FinishVertex(TGraph g, TVertex v);
-        void ExamineEdge(TGraph g, TEdge e);
-        void TreeEdge(TGraph g, TEdge e);
-        void BackEdge(TGraph g, TEdge e);
-        void ForwardOrCrossEdge(TGraph g, TEdge e);
-        void FinishEdge(TGraph g, TEdge e);
+        void OnStartVertex(TGraph g, TVertex v);
+        void OnDiscoverVertex(TGraph g, TVertex v);
+        void OnFinishVertex(TGraph g, TVertex v);
+        void OnExamineEdge(TGraph g, TEdge e);
+        void OnTreeEdge(TGraph g, TEdge e);
+        void OnBackEdge(TGraph g, TEdge e);
+        void OnForwardOrCrossEdge(TGraph g, TEdge e);
+        void OnFinishEdge(TGraph g, TEdge e);
     }
 }

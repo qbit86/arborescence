@@ -17,7 +17,7 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            handler.StartVertex(graph, startVertex);
+            handler.OnStartVertex(graph, startVertex);
             TraverseCore(graph, startVertex, colorMap, handler, s_false);
         }
 
@@ -28,7 +28,7 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            handler.StartVertex(graph, startVertex);
+            handler.OnStartVertex(graph, startVertex);
             TraverseCore(graph, startVertex, colorMap, handler, terminationCondition ?? s_false);
         }
 
@@ -40,12 +40,12 @@ namespace Ubiquitous.Traversal
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 
             ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
-            handler.DiscoverVertex(graph, u);
+            handler.OnDiscoverVertex(graph, u);
 
             if (terminationCondition(graph, u))
             {
                 ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
-                handler.FinishVertex(graph, u);
+                handler.OnFinishVertex(graph, u);
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace Ubiquitous.Traversal
                 stack.RemoveAt(stack.Count - 1);
                 u = stackFrame.Vertex;
                 if (stackFrame.HasEdge)
-                    handler.FinishEdge(graph, stackFrame.Edge);
+                    handler.OnFinishEdge(graph, stackFrame.Edge);
 
                 TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
                 while (edges.MoveNext())
@@ -70,36 +70,36 @@ namespace Ubiquitous.Traversal
                     if (!GraphPolicy.TryGetTarget(graph, e, out TVertex v))
                         continue;
 
-                    handler.ExamineEdge(graph, e);
+                    handler.OnExamineEdge(graph, e);
                     Color color = GetColorOrDefault(colorMap, v);
                     if (color == Color.None || color == Color.White)
                     {
-                        handler.TreeEdge(graph, e);
+                        handler.OnTreeEdge(graph, e);
                         stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, true, e, edges));
                         u = v;
                         ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
-                        handler.DiscoverVertex(graph, u);
+                        handler.OnDiscoverVertex(graph, u);
 
                         edges = GraphPolicy.EnumerateOutEdges(graph, u);
                         if (terminationCondition(graph, u))
                         {
                             ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
-                            handler.FinishVertex(graph, u);
+                            handler.OnFinishVertex(graph, u);
                             return;
                         }
                     }
                     else
                     {
                         if (color == Color.Gray)
-                            handler.BackEdge(graph, e);
+                            handler.OnBackEdge(graph, e);
                         else
-                            handler.ForwardOrCrossEdge(graph, e);
-                        handler.FinishEdge(graph, e);
+                            handler.OnForwardOrCrossEdge(graph, e);
+                        handler.OnFinishEdge(graph, e);
                     }
                 }
 
                 ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
-                handler.FinishVertex(graph, u);
+                handler.OnFinishVertex(graph, u);
             }
 
             ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(stack);
