@@ -38,6 +38,14 @@ namespace Ubiquitous.Models
             map[key] = value;
         }
 
+        public void Clear(T[] map)
+        {
+            if (map == null)
+                return;
+
+            Array.Clear(map, 0, map.Length);
+        }
+
         public T[] Acquire()
         {
             T[] array = Pool.Rent(Count);
