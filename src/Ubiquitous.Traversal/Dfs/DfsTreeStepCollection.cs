@@ -11,11 +11,11 @@ namespace Ubiquitous.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, int stackCapacity,
+        internal DfsTreeStepCollection(TGraph graph, TVertex startVertex, TColorMap colorMap, int stackCapacity,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
             Assert(graphPolicy != null);
@@ -24,6 +24,7 @@ namespace Ubiquitous.Traversal
 
             Graph = graph;
             StartVertex = startVertex;
+            ColorMap = colorMap;
             StackCapacity = stackCapacity;
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
@@ -32,6 +33,7 @@ namespace Ubiquitous.Traversal
 
         private TGraph Graph { get; }
         private TVertex StartVertex { get; }
+        private TColorMap ColorMap { get; }
         private int StackCapacity { get; }
         private TGraphPolicy GraphPolicy { get; }
         private TColorMapPolicy ColorMapPolicy { get; }

@@ -1,6 +1,7 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
     using System.IO;
     using Models;
@@ -39,7 +40,9 @@ namespace Ubiquitous
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
-                var steps = dfs.Traverse(graph, vertices);
+                Color[] colorMap = ArrayPool<Color>.Shared.Rent(graph.VertexCount);
+                Array.Clear(colorMap, 0, colorMap.Length);
+                var steps = dfs.Traverse(graph, vertices, colorMap);
                 var vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
                 var edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);

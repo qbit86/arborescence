@@ -13,7 +13,7 @@ namespace Ubiquitous.Traversal
                 TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>
-            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
             where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
@@ -29,7 +29,7 @@ namespace Ubiquitous.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
@@ -56,20 +56,20 @@ namespace Ubiquitous.Traversal
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertex startVertex)
+            Traverse(TGraph graph, TVertex startVertex, TColorMap colorMap)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(
-                graph, startVertex, 0, GraphPolicy, ColorMapPolicy, StepPolicy);
+                graph, startVertex, colorMap, 0, GraphPolicy, ColorMapPolicy, StepPolicy);
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertex startVertex, int stackCapacity)
+            Traverse(TGraph graph, TVertex startVertex, TColorMap colorMap, int stackCapacity)
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(
-                graph, startVertex, stackCapacity, GraphPolicy, ColorMapPolicy, StepPolicy);
+                graph, startVertex, colorMap, stackCapacity, GraphPolicy, ColorMapPolicy, StepPolicy);
         }
     }
 }

@@ -23,8 +23,8 @@ namespace Ubiquitous.Traversal
 
             private readonly TGraph _graph;
             private readonly TVertex _startVertex;
+            private readonly TColorMap _colorMap;
             private readonly int _stackCapacity;
-            private TColorMap _colorMap;
             private DisposalStatus _colorMapDisposalStatus;
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
@@ -48,7 +48,7 @@ namespace Ubiquitous.Traversal
                 _graphPolicy = collection.GraphPolicy;
                 _colorMapPolicy = collection.ColorMapPolicy;
                 _stepPolicy = collection.StepPolicy;
-                _colorMap = default;
+                _colorMap = collection.ColorMap;
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
@@ -62,10 +62,6 @@ namespace Ubiquitous.Traversal
                     switch (_state)
                     {
                         case 0:
-                            _colorMap = _colorMapPolicy.Acquire();
-                            if (_colorMap == null)
-                                return Terminate();
-
                             _colorMapDisposalStatus = DisposalStatus.Initialized;
                             _state = 2;
                             continue;
@@ -105,7 +101,7 @@ namespace Ubiquitous.Traversal
                 _current = default;
                 _state = 0;
 
-                _colorMap = default;
+                _colorMapPolicy.Clear(_colorMap);
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
@@ -128,8 +124,7 @@ namespace Ubiquitous.Traversal
             {
                 if (_colorMapDisposalStatus == DisposalStatus.Initialized)
                 {
-                    _colorMapPolicy.Release(_colorMap);
-                    _colorMap = default;
+                    _colorMapPolicy.Clear(_colorMap);
                     _colorMapDisposalStatus = DisposalStatus.Disposed;
                 }
 

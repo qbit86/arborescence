@@ -18,7 +18,7 @@ namespace Ubiquitous.Traversal
                 TVertexEnumerablePolicy vertexEnumerablePolicy, TStepPolicy stepPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>
-            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
             where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
             where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1000 // Do not declare static members on generic types
@@ -39,7 +39,7 @@ namespace Ubiquitous.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TVertexEnumerablePolicy : IEnumerablePolicy<TVertexEnumerable, TVertexEnumerator>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
@@ -73,7 +73,7 @@ namespace Ubiquitous.Traversal
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertexEnumerable vertexCollection)
+            Traverse(TGraph graph, TVertexEnumerable vertexCollection, TColorMap colorMap)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
@@ -81,14 +81,14 @@ namespace Ubiquitous.Traversal
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
-                graph, vertexCollection, 0,
+                graph, vertexCollection, colorMap, 0,
                 GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, StepPolicy);
         }
 
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity)
+            Traverse(TGraph graph, TVertexEnumerable vertexCollection, TColorMap colorMap, int stackCapacity)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
@@ -96,7 +96,7 @@ namespace Ubiquitous.Traversal
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
-                graph, vertexCollection, stackCapacity,
+                graph, vertexCollection, colorMap, stackCapacity,
                 GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, StepPolicy);
         }
     }

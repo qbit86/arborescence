@@ -10,7 +10,6 @@ namespace Ubiquitous
     using Traversal;
     using Xunit;
     using Xunit.Abstractions;
-    using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
@@ -36,32 +35,32 @@ namespace Ubiquitous
 
         public DfsTest(ITestOutputHelper output)
         {
-            var colorMapPolicy = new ColorMapPolicy(VertexCount);
+            var colorMapPolicy = default(IndexedColorMapPolicy);
 
-            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep>
+            Dfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedDfsStep>
                 .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexedDfsStepPolicy));
 
             MultipleSourceDfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                IndexCollectionEnumerator, EdgeEnumerator, Color[], IndexedDfsStep>.Create(
+                IndexCollectionEnumerator, EdgeEnumerator, byte[], IndexedDfsStep>.Create(
                 default(IndexedAdjacencyListGraphPolicy), colorMapPolicy, default(IndexCollectionEnumerablePolicy),
                 default(IndexedDfsStepPolicy));
 
             InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
-                .Create(default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
+                .Create(default(IndexedAdjacencyListGraphPolicy), colorMapPolicy);
 
             Output = output;
         }
 
         private static CultureInfo F => CultureInfo.InvariantCulture;
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Color[], IndexedDfsStep,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy, IndexedDfsStepPolicy>
+        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy, IndexedDfsStepPolicy>
             Dfs { get; }
 
         private MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int,
                 IndexCollection, IndexCollectionEnumerator, EdgeEnumerator,
-                Color[], IndexedDfsStep,
-                IndexedAdjacencyListGraphPolicy, ColorMapPolicy,
+                byte[], IndexedDfsStep,
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy,
                 IndexCollectionEnumerablePolicy, IndexedDfsStepPolicy>
             MultipleSourceDfs { get; }
 
@@ -104,6 +103,8 @@ namespace Ubiquitous
             int vertex = 0;
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
+            byte[] boostColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(boostColorMap, 0, boostColorMap.Length);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
@@ -112,7 +113,7 @@ namespace Ubiquitous
             // Act
 
             Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
-                Dfs.Traverse(graph, vertex).GetEnumerator(), stepCountApproximation);
+                Dfs.Traverse(graph, vertex, boostColorMap).GetEnumerator(), stepCountApproximation);
             InstantDfs.Traverse(graph, vertex, colorMap, dfsHandler);
 
             // Assert
@@ -161,6 +162,8 @@ namespace Ubiquitous
             var vertices = new IndexCollection(graph.VertexCount);
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
+            byte[] boostColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(boostColorMap, 0, boostColorMap.Length);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
@@ -169,7 +172,7 @@ namespace Ubiquitous
             // Act
 
             Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
-                MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
+                MultipleSourceDfs.Traverse(graph, vertices, boostColorMap).GetEnumerator(), stepCountApproximation);
             InstantDfs.Traverse(graph, vertices.Enumerate(), colorMap, dfsHandler);
 
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
