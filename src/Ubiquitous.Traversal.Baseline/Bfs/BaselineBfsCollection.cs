@@ -16,7 +16,7 @@ namespace Ubiquitous.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
         IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
-        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public BaselineBfsCollection(TGraph graph, TVertex startVertex, TColorMap colorMap, int queueCapacity,
@@ -39,6 +39,7 @@ namespace Ubiquitous.Traversal
 
             Graph = graph;
             StartVertex = startVertex;
+            ColorMap = colorMap;
             QueueCapacity = queueCapacity;
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
@@ -46,6 +47,7 @@ namespace Ubiquitous.Traversal
 
         private TGraph Graph { get; }
         private TVertex StartVertex { get; }
+        private TColorMap ColorMap { get; }
         private int QueueCapacity { get; }
         private TGraphPolicy GraphPolicy { get; }
         private TColorMapPolicy ColorMapPolicy { get; }
@@ -66,9 +68,8 @@ namespace Ubiquitous.Traversal
                 throw new InvalidOperationException($"{nameof(ColorMapPolicy)}: null");
 #pragma warning restore CA1303
 
-            TColorMap colorMap = ColorMapPolicy.Acquire();
             Queue<TVertex> queue = QueueCache<TVertex>.Acquire(QueueCapacity);
-            return GetEnumeratorCoroutine(colorMap, queue);
+            return GetEnumeratorCoroutine(ColorMap, queue);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -112,7 +113,6 @@ namespace Ubiquitous.Traversal
             finally
             {
                 QueueCache<TVertex>.Release(queue);
-                ColorMapPolicy.Release(colorMap);
             }
         }
 
