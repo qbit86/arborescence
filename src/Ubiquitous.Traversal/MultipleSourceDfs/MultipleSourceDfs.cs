@@ -81,7 +81,7 @@ namespace Ubiquitous.Traversal
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
-                graph, vertexCollection, 0,
+                graph, vertexCollection, colorMap, 0,
                 GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, StepPolicy);
         }
 
@@ -96,7 +96,7 @@ namespace Ubiquitous.Traversal
             return new DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>(
-                graph, vertexCollection, stackCapacity,
+                graph, vertexCollection, colorMap, stackCapacity,
                 GraphPolicy, ColorMapPolicy, VertexEnumerablePolicy, StepPolicy);
         }
     }
