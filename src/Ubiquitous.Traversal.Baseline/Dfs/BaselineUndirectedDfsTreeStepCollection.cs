@@ -1,3 +1,5 @@
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+
 namespace Ubiquitous.Traversal
 {
     using System.Collections;
@@ -60,20 +62,20 @@ namespace Ubiquitous.Traversal
 
         private IEnumerator<TStep> GetEnumeratorCoroutine()
         {
-            {
-                yield return StepPolicy.CreateVertexStep(DfsStepKind.StartVertex, StartVertex);
+            yield return StepPolicy.CreateVertexStep(DfsStepKind.StartVertex, StartVertex);
 
-                var steps = new BaselineUndirectedDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
-                    TVertexColorMap, TEdgeColorMap, TStep,
-                    TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
-                    Graph, StartVertex, VertexColorMap, EdgeColorMap,
-                    GraphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, StepPolicy);
-                using (IEnumerator<TStep> stepEnumerator = steps.GetEnumerator())
-                {
-                    while (stepEnumerator.MoveNext())
-                        yield return stepEnumerator.Current;
-                }
+            var steps = new BaselineUndirectedDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
+                TVertexColorMap, TEdgeColorMap, TStep,
+                TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
+                Graph, StartVertex, VertexColorMap, EdgeColorMap,
+                GraphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, StepPolicy);
+            using (IEnumerator<TStep> stepEnumerator = steps.GetEnumerator())
+            {
+                while (stepEnumerator.MoveNext())
+                    yield return stepEnumerator.Current;
             }
         }
     }
 }
+
+// ReSharper restore FieldCanBeMadeReadOnly.Local
