@@ -42,18 +42,19 @@ namespace Ubiquitous.Traversal
 
         public BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy>
-            Traverse(TGraph graph, TVertex startVertex)
+            Traverse(TGraph graph, TVertex startVertex, TColorMap colorMap)
         {
             return new BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>(graph, startVertex, 0, GraphPolicy, ColorMapPolicy);
+                TGraphPolicy, TColorMapPolicy>(graph, startVertex, colorMap, 0, GraphPolicy, ColorMapPolicy);
         }
 
         public BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy>
-            Traverse(TGraph graph, TVertex startVertex, int queueCapacity)
+            Traverse(TGraph graph, TVertex startVertex, TColorMap colorMap, int queueCapacity)
         {
             return new BaselineBfsCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy>(graph, startVertex, queueCapacity, GraphPolicy, ColorMapPolicy);
+                TGraphPolicy, TColorMapPolicy>(
+                graph, startVertex, colorMap, queueCapacity, GraphPolicy, ColorMapPolicy);
         }
     }
 }

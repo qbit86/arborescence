@@ -19,7 +19,7 @@ namespace Ubiquitous.Traversal
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        public BaselineBfsCollection(TGraph graph, TVertex startVertex, int queueCapacity,
+        public BaselineBfsCollection(TGraph graph, TVertex startVertex, TColorMap colorMap, int queueCapacity,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             if (graph == null)
