@@ -36,7 +36,6 @@ namespace Ubiquitous.Traversal
             TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
-            Assert(colorMap != null);
             Assert(graphPolicy != null);
             Assert(stepPolicy != null);
 
