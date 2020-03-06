@@ -60,7 +60,7 @@ namespace Ubiquitous.Traversal
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(
-                graph, startVertex, 0, GraphPolicy, ColorMapPolicy, StepPolicy);
+                graph, startVertex, colorMap, 0, GraphPolicy, ColorMapPolicy, StepPolicy);
         }
 
         public DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
@@ -69,7 +69,7 @@ namespace Ubiquitous.Traversal
         {
             return new DfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TStepPolicy>(
-                graph, startVertex, stackCapacity, GraphPolicy, ColorMapPolicy, StepPolicy);
+                graph, startVertex, colorMap, stackCapacity, GraphPolicy, ColorMapPolicy, StepPolicy);
         }
     }
 }
