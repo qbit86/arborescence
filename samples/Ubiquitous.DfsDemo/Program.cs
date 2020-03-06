@@ -8,7 +8,6 @@ namespace Ubiquitous
     using Traversal;
     using Workbench;
     using static System.Diagnostics.Debug;
-    using ColorMapPolicy = Models.IndexedMapPolicy<Traversal.Color>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
     using StepMap = System.ArraySegment<Traversal.DfsStepKind>;
@@ -32,15 +31,15 @@ namespace Ubiquitous
             Console.WriteLine($"{nameof(graph.EdgeCount)}: {graph.EdgeCount}");
 
             var vertices = new IndexCollection(graph.VertexCount);
-            var indexedMapPolicy = new ColorMapPolicy(graph.VertexCount);
+            var indexedMapPolicy = default(IndexedColorMapPolicy);
 
             {
                 var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, Color[], IndexedDfsStep>.Create(
+                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, byte[], IndexedDfsStep>.Create(
                     default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
                     default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
 
-                Color[] colorMap = ArrayPool<Color>.Shared.Rent(graph.VertexCount);
+                byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
                 Array.Clear(colorMap, 0, colorMap.Length);
                 var steps = dfs.Traverse(graph, vertices, colorMap);
                 var vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
@@ -48,6 +47,7 @@ namespace Ubiquitous
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
+                ArrayPool<byte>.Shared.Return(colorMap);
             }
         }
 
