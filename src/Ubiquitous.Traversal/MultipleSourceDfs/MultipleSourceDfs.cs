@@ -73,7 +73,7 @@ namespace Ubiquitous.Traversal
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertexEnumerable vertexCollection)
+            Traverse(TGraph graph, TVertexEnumerable vertexCollection, TColorMap colorMap)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));
@@ -88,7 +88,7 @@ namespace Ubiquitous.Traversal
         public DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator, TColorMap, TStep,
                 TGraphPolicy, TColorMapPolicy, TVertexEnumerablePolicy, TStepPolicy>
-            Traverse(TGraph graph, TVertexEnumerable vertexCollection, int stackCapacity)
+            Traverse(TGraph graph, TVertexEnumerable vertexCollection, TColorMap colorMap, int stackCapacity)
         {
             if (vertexCollection == null)
                 throw new ArgumentNullException(nameof(vertexCollection));

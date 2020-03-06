@@ -163,6 +163,8 @@ namespace Ubiquitous
             var vertices = new IndexCollection(graph.VertexCount);
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
+            Color[] boostColorMap = ArrayPool<Color>.Shared.Rent(graph.VertexCount);
+            Array.Clear(boostColorMap, 0, boostColorMap.Length);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
@@ -171,7 +173,7 @@ namespace Ubiquitous
             // Act
 
             Rist<IndexedDfsStep> boostSteps = RistFactory<IndexedDfsStep>.Create(
-                MultipleSourceDfs.Traverse(graph, vertices).GetEnumerator(), stepCountApproximation);
+                MultipleSourceDfs.Traverse(graph, vertices, boostColorMap).GetEnumerator(), stepCountApproximation);
             InstantDfs.Traverse(graph, vertices.Enumerate(), colorMap, dfsHandler);
 
             int discoveredVertexCount = boostSteps.Count(s => s.Kind == DfsStepKind.DiscoverVertex);
