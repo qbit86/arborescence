@@ -13,7 +13,7 @@ namespace Ubiquitous.Traversal
                 TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>
-            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+            where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
             where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
@@ -29,7 +29,7 @@ namespace Ubiquitous.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
-        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>, IFactory<TColorMap>
+        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         where TStepPolicy : IStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
