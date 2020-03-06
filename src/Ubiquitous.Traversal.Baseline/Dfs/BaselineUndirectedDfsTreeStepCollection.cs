@@ -11,14 +11,16 @@ namespace Ubiquitous.Traversal
         where TGraphPolicy :
         IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
-        where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
-        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
+        where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>
+        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>
         where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
     {
         private TEdgeColorMapPolicy _edgeColorMapPolicy;
         private TVertexColorMapPolicy _vertexColorMapPolicy;
 
-        internal BaselineUndirectedDfsTreeStepCollection(TGraph graph, TVertex startVertex, TGraphPolicy graphPolicy,
+        internal BaselineUndirectedDfsTreeStepCollection(TGraph graph, TVertex startVertex,
+            TVertexColorMap vertexColorMap, TEdgeColorMap edgeColorMap,
+            TGraphPolicy graphPolicy,
             TVertexColorMapPolicy vertexColorMapPolicy, TEdgeColorMapPolicy edgeColorMapPolicy,
             TStepPolicy stepPolicy)
         {
@@ -29,6 +31,8 @@ namespace Ubiquitous.Traversal
 
             Graph = graph;
             StartVertex = startVertex;
+            VertexColorMap = vertexColorMap;
+            EdgeColorMap = edgeColorMap;
             GraphPolicy = graphPolicy;
             StepPolicy = stepPolicy;
 
@@ -37,11 +41,10 @@ namespace Ubiquitous.Traversal
         }
 
         private TGraph Graph { get; }
-
         private TVertex StartVertex { get; }
-
+        private TVertexColorMap VertexColorMap { get; }
+        private TEdgeColorMap EdgeColorMap { get; }
         private TGraphPolicy GraphPolicy { get; }
-
         private TStepPolicy StepPolicy { get; }
 
         public IEnumerator<TStep> GetEnumerator()
@@ -57,33 +60,19 @@ namespace Ubiquitous.Traversal
 
         private IEnumerator<TStep> GetEnumeratorCoroutine()
         {
-            TVertexColorMap vertexColorMap = _vertexColorMapPolicy.Acquire();
-            if (vertexColorMap == null)
-                yield break;
-
-            TEdgeColorMap edgeColorMap = _edgeColorMapPolicy.Acquire();
-            if (edgeColorMap == null)
-                yield break;
-
-            try
             {
                 yield return StepPolicy.CreateVertexStep(DfsStepKind.StartVertex, StartVertex);
 
                 var steps = new BaselineUndirectedDfsStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
                     TVertexColorMap, TEdgeColorMap, TStep,
                     TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
-                    Graph, StartVertex, vertexColorMap, edgeColorMap,
+                    Graph, StartVertex, VertexColorMap, EdgeColorMap,
                     GraphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, StepPolicy);
                 using (IEnumerator<TStep> stepEnumerator = steps.GetEnumerator())
                 {
                     while (stepEnumerator.MoveNext())
                         yield return stepEnumerator.Current;
                 }
-            }
-            finally
-            {
-                _edgeColorMapPolicy.Release(edgeColorMap);
-                _vertexColorMapPolicy.Release(vertexColorMap);
             }
         }
     }

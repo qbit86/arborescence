@@ -17,8 +17,8 @@ namespace Ubiquitous.Traversal
             where TGraphPolicy :
             IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
             IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
-            where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
-            where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
+            where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>
+            where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>
             where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
@@ -36,8 +36,8 @@ namespace Ubiquitous.Traversal
         where TGraphPolicy :
         IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>, IGetSourcePolicy<TGraph, TVertex, TEdge>
-        where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>, IFactory<TVertexColorMap>
-        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>, IFactory<TEdgeColorMap>
+        where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>
+        where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>
         where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
@@ -67,12 +67,14 @@ namespace Ubiquitous.Traversal
             _stepPolicy = stepPolicy;
         }
 
-        public IEnumerable<TStep> Traverse(TGraph graph, TVertex startVertex)
+        public IEnumerable<TStep> Traverse(TGraph graph, TVertex startVertex,
+            TVertexColorMap vertexColorMap, TEdgeColorMap edgeColorMap)
         {
             return new BaselineUndirectedDfsTreeStepCollection<TGraph, TVertex, TEdge, TEdgeEnumerator,
                 TVertexColorMap, TEdgeColorMap, TStep,
                 TGraphPolicy, TVertexColorMapPolicy, TEdgeColorMapPolicy, TStepPolicy>(
-                graph, startVertex, _graphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, _stepPolicy);
+                graph, startVertex, vertexColorMap, edgeColorMap,
+                _graphPolicy, _vertexColorMapPolicy, _edgeColorMapPolicy, _stepPolicy);
         }
     }
 }
