@@ -44,8 +44,8 @@ namespace Ubiquitous.Traversal
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
         {
-            DfsSingleComponentVertexEnumerator<
-                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> ator = this;
+            DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphPolicy, TColorMapPolicy> ator = this;
             ator.Reset();
             return ator;
         }

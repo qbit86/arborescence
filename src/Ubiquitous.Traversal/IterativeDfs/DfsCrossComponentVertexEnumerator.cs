@@ -8,8 +8,9 @@ namespace Ubiquitous.Traversal
     using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
-    public struct DfsCrossComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public struct DfsCrossComponentVertexEnumerator<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsVertexStep<TVertex>>, IEnumerator<DfsVertexStep<TVertex>>
+        where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
@@ -35,8 +36,8 @@ namespace Ubiquitous.Traversal
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
         {
-            DfsCrossComponentVertexEnumerator<
-                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> ator = this;
+            DfsCrossComponentVertexEnumerator<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
+                TGraphPolicy, TColorMapPolicy> ator = this;
             ator.Reset();
             return ator;
         }
