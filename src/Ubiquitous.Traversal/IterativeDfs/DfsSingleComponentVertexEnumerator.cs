@@ -32,7 +32,7 @@ namespace Ubiquitous.Traversal
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
             _current = default;
-            _state = 0;
+            _state = 1;
 
             _graphPolicy = graphPolicy;
             _colorMapPolicy = colorMapPolicy;
