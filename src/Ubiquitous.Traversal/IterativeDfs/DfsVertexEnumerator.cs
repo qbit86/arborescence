@@ -2,6 +2,7 @@
 
 namespace Ubiquitous.Traversal
 {
+    using System;
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
@@ -12,6 +13,9 @@ namespace Ubiquitous.Traversal
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
+        private DfsVertexStep<TVertex> _current;
+        private int _state;
+
         private TGraphPolicy _graphPolicy;
         private TColorMapPolicy _colorMapPolicy;
 
@@ -20,12 +24,23 @@ namespace Ubiquitous.Traversal
             Assert(graphPolicy != null, "graphPolicy != null");
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
+            _current = default;
+            _state = 0;
+
             _graphPolicy = graphPolicy;
             _colorMapPolicy = colorMapPolicy;
         }
 
         internal TGraphPolicy GraphPolicy => _graphPolicy;
         internal TColorMapPolicy ColorMapPolicy => _colorMapPolicy;
+
+        public bool MoveNext() => throw new NotImplementedException();
+
+        public void Reset() => throw new NotImplementedException();
+
+        public DfsVertexStep<TVertex> Current => _current;
+
+        public void Dispose() => throw new NotImplementedException();
     }
 }
 
