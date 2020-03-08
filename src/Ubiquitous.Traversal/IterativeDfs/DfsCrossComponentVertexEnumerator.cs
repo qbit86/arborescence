@@ -23,6 +23,13 @@ namespace Ubiquitous.Traversal
         private TGraphPolicy _graphPolicy;
         private TColorMapPolicy _colorMapPolicy;
 
+        private readonly TGraph _graph;
+        private readonly TVertexEnumerator _vertices;
+        private readonly TColorMap _colorMap;
+
+        private readonly bool _hasStartVertex;
+        private readonly TVertex _startVertex;
+
         internal DfsCrossComponentVertexEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TGraph graph, TVertexEnumerator vertices, TColorMap colorMap,
             bool hasStartVertex, TVertex startVertex)
@@ -35,6 +42,13 @@ namespace Ubiquitous.Traversal
 
             _graphPolicy = graphPolicy;
             _colorMapPolicy = colorMapPolicy;
+
+            _graph = graph;
+            _vertices = vertices;
+            _colorMap = colorMap;
+
+            _hasStartVertex = hasStartVertex;
+            _startVertex = startVertex;
         }
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
