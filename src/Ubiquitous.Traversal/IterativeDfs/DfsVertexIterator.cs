@@ -41,15 +41,6 @@ namespace Ubiquitous.Traversal
             _stack = null;
         }
 
-        internal DfsVertexIterator<
-            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> Create(
-            TVertex startVertex)
-        {
-            return new DfsVertexIterator<
-                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
-                _graphPolicy, _colorMapPolicy, _graph, startVertex, _colorMap);
-        }
-
         internal bool MoveNext()
         {
             Assert(_state > 0, "_state > 0");
@@ -75,6 +66,15 @@ namespace Ubiquitous.Traversal
                         throw new NotImplementedException();
                 }
             }
+        }
+
+        public void Reset(TVertex startVertex)
+        {
+            Assert(_state > 0, "_state > 0");
+
+            _current = new DfsVertexStep<TVertex>(DfsStepKind.None, startVertex);
+            _stack?.Clear();
+            _state = 1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
