@@ -24,13 +24,6 @@ namespace Ubiquitous.Traversal
     {
         private int _state;
 
-        private TGraphPolicy _graphPolicy;
-        private TColorMapPolicy _colorMapPolicy;
-
-        private readonly TGraph _graph;
-        private readonly TVertex _startVertex;
-        private readonly TColorMap _colorMap;
-
         private DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphPolicy, TColorMapPolicy> _vertexIterator;
 
@@ -41,15 +34,9 @@ namespace Ubiquitous.Traversal
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
             _state = 1;
-
-            _graphPolicy = graphPolicy;
-            _colorMapPolicy = colorMapPolicy;
-
-            _graph = graph;
-            _startVertex = startVertex;
-            _colorMap = colorMap;
-
-            _vertexIterator = default;
+            _vertexIterator = new DfsVertexIterator<
+                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                graphPolicy, colorMapPolicy, graph, startVertex, colorMap);
         }
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
@@ -73,9 +60,6 @@ namespace Ubiquitous.Traversal
             {
                 case 1:
                     _state = 2;
-                    _vertexIterator = new DfsVertexIterator<
-                        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
-                        _graphPolicy, _colorMapPolicy);
                     return true;
                 default:
                     _state = 3;
@@ -86,7 +70,7 @@ namespace Ubiquitous.Traversal
         public void Reset()
         {
             _state = 1;
-            _vertexIterator = default;
+            _vertexIterator = _vertexIterator.Create();
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -97,10 +81,10 @@ namespace Ubiquitous.Traversal
                 ThrowIfNotValid();
 
                 if (_state == 1)
-                    return new DfsVertexStep<TVertex>(DfsStepKind.None, _startVertex);
+                    return new DfsVertexStep<TVertex>(DfsStepKind.None, _vertexIterator._startVertex);
 
                 if (_state == 2)
-                    return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
+                    return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _vertexIterator._startVertex);
 
                 return _vertexIterator._current;
             }
