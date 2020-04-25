@@ -23,6 +23,7 @@ namespace Ubiquitous.Traversal
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private int _state;
+        private readonly TVertex _startVertex;
 
         private DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphPolicy, TColorMapPolicy> _vertexIterator;
@@ -34,6 +35,7 @@ namespace Ubiquitous.Traversal
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
             _state = 1;
+            _startVertex = startVertex;
             _vertexIterator = new DfsVertexIterator<
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                 graphPolicy, colorMapPolicy, graph, startVertex, colorMap);
@@ -72,7 +74,7 @@ namespace Ubiquitous.Traversal
             ThrowIfNotValid();
 
             _state = 1;
-            _vertexIterator = _vertexIterator.Create(_vertexIterator._startVertex);
+            _vertexIterator = _vertexIterator.Create(_startVertex);
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -86,9 +88,9 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
-                        return new DfsVertexStep<TVertex>(DfsStepKind.None, _vertexIterator._startVertex);
+                        return new DfsVertexStep<TVertex>(DfsStepKind.None, _startVertex);
                     case 2:
-                        return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _vertexIterator._startVertex);
+                        return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
                     default:
                         return _vertexIterator._current;
                 }
