@@ -54,7 +54,12 @@ namespace Ubiquitous.Traversal
 
         IEnumerator<DfsVertexStep<TVertex>> IEnumerable<DfsVertexStep<TVertex>>.GetEnumerator() => GetEnumerator();
 
-        public bool MoveNext() => throw new NotImplementedException();
+        public bool MoveNext()
+        {
+            ThrowIfNotValid();
+
+            throw new NotImplementedException();
+        }
 
         public void Reset() => throw new NotImplementedException();
 
@@ -67,6 +72,15 @@ namespace Ubiquitous.Traversal
         {
             _current = default;
             _state = -1;
+        }
+
+        private void ThrowIfNotValid()
+        {
+            if (_state == 0)
+                throw new InvalidOperationException();
+
+            if (_state == -1)
+                throw new ObjectDisposedException(GetType().Name);
         }
     }
 #pragma warning restore CA1710 // Identifiers should have correct suffix
