@@ -2,7 +2,6 @@
 
 namespace Ubiquitous.Traversal
 {
-    using System;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
