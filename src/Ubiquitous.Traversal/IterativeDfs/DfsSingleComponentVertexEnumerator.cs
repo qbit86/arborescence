@@ -72,7 +72,7 @@ namespace Ubiquitous.Traversal
             ThrowIfNotValid();
 
             _state = 1;
-            _vertexIterator = _vertexIterator.Create();
+            _vertexIterator = _vertexIterator.Create(_vertexIterator._startVertex);
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter

@@ -39,11 +39,12 @@ namespace Ubiquitous.Traversal
         }
 
         internal DfsVertexIterator<
-            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> Create()
+            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> Create(
+            TVertex startVertex)
         {
             return new DfsVertexIterator<
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
-                _graphPolicy, _colorMapPolicy, _graph, _startVertex, _colorMap);
+                _graphPolicy, _colorMapPolicy, _graph, startVertex, _colorMap);
         }
 
         internal bool MoveNext()
