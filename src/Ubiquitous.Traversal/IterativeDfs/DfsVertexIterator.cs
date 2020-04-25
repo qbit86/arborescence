@@ -46,7 +46,23 @@ namespace Ubiquitous.Traversal
                 _graphPolicy, _colorMapPolicy, _graph, _startVertex, _colorMap);
         }
 
-        internal bool MoveNext() => throw new NotImplementedException();
+        internal bool MoveNext()
+        {
+            Assert(_state > 0, "_state > 0");
+            switch (_state)
+            {
+                case 1:
+                    _current = new DfsVertexStep<TVertex>(DfsStepKind.None, _startVertex);
+                    _state = 2;
+                    return true;
+                case 2:
+                    _current = new DfsVertexStep<TVertex>(DfsStepKind.DiscoverVertex, _startVertex);
+                    _state = 3;
+                    return true;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }
 
