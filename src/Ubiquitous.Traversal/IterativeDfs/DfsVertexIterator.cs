@@ -60,20 +60,16 @@ namespace Ubiquitous.Traversal
                         EnsureStack();
                         TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         PushVertexStackFrame(_currentVertex, edges);
-                        _state = 3;
-                        continue;
-                    case 3:
+
                         if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate(out _current);
 
                         _currentVertex = stackFrame.Vertex;
                         _edgeEnumerator = stackFrame.EdgeEnumerator;
-                        // if (stackFrame.HasEdge)
-                        //     return CreateEdgeStep(DfsStepKind.FinishEdge, stackFrame.Edge...);
 
-                        _state = 4;
+                        _state = 3;
                         continue;
-                    case 4:
+                    case 3:
                         if (!_edgeEnumerator.MoveNext())
                             return CreateFinishVertexStep(_currentVertex, 2, out _current);
 
@@ -81,10 +77,16 @@ namespace Ubiquitous.Traversal
                         if (!isValid)
                             continue;
 
-                        throw new NotImplementedException();
-                    default:
-                        throw new NotImplementedException();
+                        PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
+                        _currentVertex = _neighborVertex;
+                        return CreateDiscoverVertexStep(_currentVertex, 6, out _current);
+                    case 6:
+                        _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
+                        _state = 3;
+                        continue;
                 }
+
+                return Terminate(out _current);
             }
         }
 
@@ -157,6 +159,13 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushEdgeStackFrame(TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
+        {
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
+            _stack.Add(stackFrame);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame)
         {
             if (_stack.Count == 0)
@@ -169,6 +178,10 @@ namespace Ubiquitous.Traversal
             _stack.RemoveAt(_stack.Count - 1);
             return true;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            _colorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 }
 
