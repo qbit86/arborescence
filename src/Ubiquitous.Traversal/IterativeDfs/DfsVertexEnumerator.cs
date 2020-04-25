@@ -32,10 +32,6 @@ namespace Ubiquitous.Traversal
         }
 
         public bool MoveNext() => throw new NotImplementedException();
-
-        public void Reset() => throw new NotImplementedException();
-
-        public void Dispose() => throw new NotImplementedException();
     }
 }
 

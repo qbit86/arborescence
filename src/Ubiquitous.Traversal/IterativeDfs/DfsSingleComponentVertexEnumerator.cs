@@ -7,6 +7,13 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
+    // States:
+    // • -1: disposed
+    // • 0: not initialized
+    // • 1: initialized, but not moved
+    // • 2: StartVertex
+    // • >2: other step kinds
+
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     public struct DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsVertexStep<TVertex>>, IEnumerator<DfsVertexStep<TVertex>>
@@ -15,7 +22,6 @@ namespace Ubiquitous.Traversal
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
-        private DfsVertexStep<TVertex> _current;
         private int _state;
 
         private TGraphPolicy _graphPolicy;
@@ -25,13 +31,15 @@ namespace Ubiquitous.Traversal
         private readonly TVertex _startVertex;
         private readonly TColorMap _colorMap;
 
+        private DfsVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            TGraphPolicy, TColorMapPolicy> _vertexEnumerator;
+
         internal DfsSingleComponentVertexEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TGraph graph, TVertex startVertex, TColorMap colorMap)
         {
             Assert(graphPolicy != null, "graphPolicy != null");
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
-            _current = default;
             _state = 1;
 
             _graphPolicy = graphPolicy;
@@ -40,6 +48,8 @@ namespace Ubiquitous.Traversal
             _graph = graph;
             _startVertex = startVertex;
             _colorMap = colorMap;
+
+            _vertexEnumerator = default;
         }
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
@@ -61,16 +71,34 @@ namespace Ubiquitous.Traversal
             throw new NotImplementedException();
         }
 
-        public void Reset() => throw new NotImplementedException();
+        public void Reset()
+        {
+            _state = 1;
+            _vertexEnumerator = default;
+        }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-        public DfsVertexStep<TVertex> Current => _current;
+        public DfsVertexStep<TVertex> Current
+        {
+            get
+            {
+                ThrowIfNotValid();
+
+                if (_state == 1)
+                    return new DfsVertexStep<TVertex>(DfsStepKind.None, _startVertex);
+
+                if (_state == 2)
+                    return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
+
+                return _vertexEnumerator._current;
+            }
+        }
 
         object IEnumerator.Current => Current;
 
         public void Dispose()
         {
-            _current = default;
+            _vertexEnumerator = default;
             _state = -1;
         }
 
