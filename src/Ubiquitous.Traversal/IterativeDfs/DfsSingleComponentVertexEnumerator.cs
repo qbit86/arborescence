@@ -82,13 +82,16 @@ namespace Ubiquitous.Traversal
             {
                 ThrowIfNotValid();
 
-                if (_state == 1)
-                    return new DfsVertexStep<TVertex>(DfsStepKind.None, _vertexIterator._startVertex);
-
-                if (_state == 2)
-                    return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _vertexIterator._startVertex);
-
-                return _vertexIterator._current;
+                Assert(_state > 0, "_state > 0");
+                switch (_state)
+                {
+                    case 1:
+                        return new DfsVertexStep<TVertex>(DfsStepKind.None, _vertexIterator._startVertex);
+                    case 2:
+                        return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _vertexIterator._startVertex);
+                    default:
+                        return _vertexIterator._current;
+                }
             }
         }
 
