@@ -27,8 +27,8 @@ namespace Ubiquitous
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
 
-            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount}, ");
-            Console.WriteLine($"{nameof(graph.EdgeCount)}: {graph.EdgeCount}");
+            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount}");
+            Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount}");
 
             var vertices = new IndexCollection(graph.VertexCount);
             var indexedMapPolicy = default(IndexedColorMapPolicy);
