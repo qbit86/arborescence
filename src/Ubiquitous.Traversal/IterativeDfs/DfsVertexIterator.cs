@@ -59,29 +59,48 @@ namespace Ubiquitous.Traversal
                         EnsureStack();
                         TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         PushVertexStackFrame(_currentVertex, edges);
-
+                        _state = 3;
+                        continue;
+                    case 3:
                         if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate(out _current);
 
                         _currentVertex = stackFrame.Vertex;
                         _edgeEnumerator = stackFrame.EdgeEnumerator;
-
-                        _state = 3;
+                        _state = 4;
                         continue;
-                    case 3:
+                    case 4:
                         if (!_edgeEnumerator.MoveNext())
-                            return CreateFinishVertexStep(_currentVertex, 2, out _current);
+                            return CreateFinishVertexStep(_currentVertex, 3, out _current);
 
                         bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
                             continue;
 
+                        _state = 5;
+                        continue;
+                    case 5:
+                        Color neighborColor = GetColorOrDefault(_colorMap, _neighborVertex);
+                        switch (neighborColor)
+                        {
+                            case Color.None:
+                            case Color.White:
+                                _state = 6;
+                                continue;
+                            case Color.Gray:
+                                _state = 4;
+                                continue;
+                            default:
+                                _state = 4;
+                                continue;
+                        }
+                    case 6:
                         PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
-                        return CreateDiscoverVertexStep(_currentVertex, 6, out _current);
-                    case 6:
+                        return CreateDiscoverVertexStep(_currentVertex, 7, out _current);
+                    case 7:
                         _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
-                        _state = 3;
+                        _state = 4;
                         continue;
                 }
 
