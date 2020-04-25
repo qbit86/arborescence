@@ -68,13 +68,21 @@ namespace Ubiquitous.Traversal
             }
         }
 
-        public void Reset(TVertex startVertex)
+        internal void Reset(TVertex startVertex)
         {
             Assert(_state > 0, "_state > 0");
 
             _current = new DfsVertexStep<TVertex>(DfsStepKind.None, startVertex);
             _stack?.Clear();
             _state = 1;
+        }
+
+        internal void Dispose()
+        {
+            _stack?.Clear();
+            _stack = null;
+            _current = default;
+            _state = -1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

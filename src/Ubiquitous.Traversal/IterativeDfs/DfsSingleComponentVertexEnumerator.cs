@@ -34,11 +34,11 @@ namespace Ubiquitous.Traversal
             Assert(graphPolicy != null, "graphPolicy != null");
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
-            _state = 1;
             _startVertex = startVertex;
             _vertexIterator = new DfsVertexIterator<
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                 graphPolicy, colorMapPolicy, graph, startVertex, colorMap);
+            _state = 1;
         }
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
@@ -73,8 +73,8 @@ namespace Ubiquitous.Traversal
         {
             ThrowIfNotValid();
 
-            _state = 1;
             _vertexIterator.Reset(_startVertex);
+            _state = 1;
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -101,8 +101,12 @@ namespace Ubiquitous.Traversal
 
         public void Dispose()
         {
-            _state = -1;
+            if (_state == -1)
+                return;
+
+            _vertexIterator.Dispose();
             _vertexIterator = default;
+            _state = -1;
         }
 
         private void ThrowIfNotValid()
