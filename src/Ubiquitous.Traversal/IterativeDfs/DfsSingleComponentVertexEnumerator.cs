@@ -55,9 +55,9 @@ namespace Ubiquitous.Traversal
 
         public bool MoveNext()
         {
-            ThrowIfNotValid();
+            if (_state <= 0)
+                return false;
 
-            Assert(_state > 0, "_state > 0");
             switch (_state)
             {
                 case 1:

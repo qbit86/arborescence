@@ -43,7 +43,9 @@ namespace Ubiquitous.Traversal
 
         internal bool MoveNext()
         {
-            Assert(_state > 0, "_state > 0");
+            if (_state <= 0)
+                return false;
+
             while (true)
             {
                 switch (_state)
