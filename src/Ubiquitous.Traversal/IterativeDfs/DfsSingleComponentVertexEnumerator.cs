@@ -73,6 +73,9 @@ namespace Ubiquitous.Traversal
             {
                 case 1:
                     _state = 2;
+                    _vertexIterator = new DfsVertexIterator<
+                        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                        _graphPolicy, _colorMapPolicy);
                     return true;
                 default:
                     _state = 3;
