@@ -18,7 +18,7 @@ namespace Ubiquitous.Traversal
         private TGraphPolicy _graphPolicy;
         private TColorMapPolicy _colorMapPolicy;
         private TGraph _graph;
-        internal TVertex _startVertex;
+        internal readonly TVertex _startVertex;
         private TColorMap _colorMap;
 
         internal DfsVertexIterator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
