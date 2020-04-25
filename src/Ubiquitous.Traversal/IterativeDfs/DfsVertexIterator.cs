@@ -51,16 +51,15 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
-                        _current = new DfsVertexStep<TVertex>(DfsStepKind.None, _currentVertex);
-                        _state = 2;
-                        return true;
+                        return CreateNoneVertexStep(_currentVertex, 2, out _current);
                     case 2:
-                        _current = new DfsVertexStep<TVertex>(DfsStepKind.DiscoverVertex, _currentVertex);
-                        _state = 3;
-                        return true;
+                        return CreateDiscoverVertexStep(_currentVertex, 3, out _current);
                     case 3:
                         TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
-                        _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+                        if (_stack is null)
+                            _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+                        else
+                            _stack.Clear();
                         PushVertexStackFrame(_currentVertex, edges);
                         _state = 4;
                         continue;
@@ -88,10 +87,27 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateNoneVertexStep(TVertex vertex, int newState, out DfsVertexStep<TVertex> current)
+        {
+            current = new DfsVertexStep<TVertex>(DfsStepKind.None, vertex);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateDiscoverVertexStep(TVertex vertex, int newState, out DfsVertexStep<TVertex> current)
+        {
+            _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
+            current = new DfsVertexStep<TVertex>(DfsStepKind.DiscoverVertex, vertex);
+            _state = newState;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool Terminate(out DfsVertexStep<TVertex> current)
         {
             current = new DfsVertexStep<TVertex>(DfsStepKind.None, _currentVertex);
-            _state = -1;
+            _state = -2;
             return false;
         }
 
