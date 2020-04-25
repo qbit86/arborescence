@@ -51,17 +51,12 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
-                        return CreateNoneVertexStep(_currentVertex, 2, out _current);
+                        return CreateDiscoverVertexStep(_currentVertex, 2, out _current);
                     case 2:
-                        return CreateDiscoverVertexStep(_currentVertex, 3, out _current);
-                    case 3:
+                        EnsureStack();
                         TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
-                        if (_stack is null)
-                            _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
-                        else
-                            _stack.Clear();
                         PushVertexStackFrame(_currentVertex, edges);
-                        _state = 4;
+                        _state = 3;
                         continue;
                     default:
                         throw new NotImplementedException();
@@ -87,14 +82,6 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateNoneVertexStep(TVertex vertex, int newState, out DfsVertexStep<TVertex> current)
-        {
-            current = new DfsVertexStep<TVertex>(DfsStepKind.None, vertex);
-            _state = newState;
-            return true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool CreateDiscoverVertexStep(TVertex vertex, int newState, out DfsVertexStep<TVertex> current)
         {
             _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
@@ -109,6 +96,15 @@ namespace Ubiquitous.Traversal
             current = new DfsVertexStep<TVertex>(DfsStepKind.None, _currentVertex);
             _state = -2;
             return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void EnsureStack()
+        {
+            if (_stack is null)
+                _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+            else
+                _stack.Clear();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
