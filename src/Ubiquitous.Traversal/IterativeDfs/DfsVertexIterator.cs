@@ -38,8 +38,8 @@ namespace Ubiquitous.Traversal
             _colorMap = colorMap;
         }
 
-        internal DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphPolicy, TColorMapPolicy> Create()
+        internal DfsVertexIterator<
+            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> Create()
         {
             return new DfsVertexIterator<
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
