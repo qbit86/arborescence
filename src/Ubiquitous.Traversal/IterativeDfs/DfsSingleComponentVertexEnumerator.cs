@@ -22,8 +22,9 @@ namespace Ubiquitous.Traversal
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
-        private int _state;
         private readonly TVertex _startVertex;
+
+        private int _state;
 
         private DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
             TGraphPolicy, TColorMapPolicy> _vertexIterator;
