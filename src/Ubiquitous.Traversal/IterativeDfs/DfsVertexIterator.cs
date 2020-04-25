@@ -18,7 +18,7 @@ namespace Ubiquitous.Traversal
         private TGraphPolicy _graphPolicy;
         private TColorMapPolicy _colorMapPolicy;
         private TGraph _graph;
-        internal readonly TVertex _startVertex;
+        private TVertex _currentVertex;
         private TColorMap _colorMap;
 
         internal DfsVertexIterator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
@@ -34,7 +34,7 @@ namespace Ubiquitous.Traversal
             _colorMapPolicy = colorMapPolicy;
 
             _graph = graph;
-            _startVertex = startVertex;
+            _currentVertex = startVertex;
             _colorMap = colorMap;
         }
 
@@ -53,11 +53,11 @@ namespace Ubiquitous.Traversal
             switch (_state)
             {
                 case 1:
-                    _current = new DfsVertexStep<TVertex>(DfsStepKind.None, _startVertex);
+                    _current = new DfsVertexStep<TVertex>(DfsStepKind.None, _currentVertex);
                     _state = 2;
                     return true;
                 case 2:
-                    _current = new DfsVertexStep<TVertex>(DfsStepKind.DiscoverVertex, _startVertex);
+                    _current = new DfsVertexStep<TVertex>(DfsStepKind.DiscoverVertex, _currentVertex);
                     _state = 3;
                     return true;
                 default:
