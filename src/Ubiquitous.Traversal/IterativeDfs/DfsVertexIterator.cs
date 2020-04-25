@@ -6,7 +6,7 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
     using static System.Diagnostics.Debug;
 
-    internal struct DfsVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    internal struct DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
@@ -19,7 +19,7 @@ namespace Ubiquitous.Traversal
         internal TGraphPolicy _graphPolicy;
         internal TColorMapPolicy _colorMapPolicy;
 
-        internal DfsVertexEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+        internal DfsVertexIterator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             Assert(graphPolicy != null, "graphPolicy != null");
             Assert(colorMapPolicy != null, "colorMapPolicy != null");

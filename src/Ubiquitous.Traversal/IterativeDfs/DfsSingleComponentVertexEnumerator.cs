@@ -31,8 +31,8 @@ namespace Ubiquitous.Traversal
         private readonly TVertex _startVertex;
         private readonly TColorMap _colorMap;
 
-        private DfsVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphPolicy, TColorMapPolicy> _vertexEnumerator;
+        private DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            TGraphPolicy, TColorMapPolicy> _vertexIterator;
 
         internal DfsSingleComponentVertexEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TGraph graph, TVertex startVertex, TColorMap colorMap)
@@ -49,7 +49,7 @@ namespace Ubiquitous.Traversal
             _startVertex = startVertex;
             _colorMap = colorMap;
 
-            _vertexEnumerator = default;
+            _vertexIterator = default;
         }
 
         public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
@@ -74,7 +74,7 @@ namespace Ubiquitous.Traversal
         public void Reset()
         {
             _state = 1;
-            _vertexEnumerator = default;
+            _vertexIterator = default;
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
@@ -90,7 +90,7 @@ namespace Ubiquitous.Traversal
                 if (_state == 2)
                     return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
 
-                return _vertexEnumerator._current;
+                return _vertexIterator._current;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Ubiquitous.Traversal
 
         public void Dispose()
         {
-            _vertexEnumerator = default;
+            _vertexIterator = default;
             _state = -1;
         }
 
