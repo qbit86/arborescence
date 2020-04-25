@@ -69,6 +69,8 @@ namespace Ubiquitous.Traversal
 
         public void Reset()
         {
+            ThrowIfNotValid();
+
             _state = 1;
             _vertexIterator = _vertexIterator.Create();
         }
