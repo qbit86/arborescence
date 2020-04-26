@@ -1,75 +1,49 @@
-﻿namespace Ubiquitous.Playground
+﻿namespace Ubiquitous
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
     using System.IO;
+    using System.Linq;
+    using Misnomer.Extensions;
     using Models;
+    using Traversal;
+    using Workbench;
+    using IndexedAdjacencyListGraphPolicy =
+        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
-        private static TextReader In { get; } = CreateInputReader();
-
-        private static TextWriter Out => Console.Out;
-
         private static void Main()
         {
-            string header = In.ReadLine() ?? string.Empty;
-            string[] parts = header.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
+            var builder = new AdjacencyListIncidenceGraphBuilder(10);
 
-            int vertexCount = Convert.ToInt32(parts[0], CultureInfo.InvariantCulture);
-            int edgeCount = Convert.ToInt32(parts[1], CultureInfo.InvariantCulture);
-
-            var graphBuilder = new AdjacencyListIncidenceGraphBuilder(vertexCount, edgeCount);
-            IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(In);
-            foreach (SourceTargetPair<int> edge in edges)
+            using (TextReader textReader = IndexedGraphs.GetTextReader("03"))
             {
-                graphBuilder.TryAdd(edge.Source, edge.Target, out int _);
-                graphBuilder.TryAdd(edge.Target, edge.Source, out int _);
+                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (SourceTargetPair<int> edge in edges)
+                    builder.TryAdd(edge.Source, edge.Target, out _);
             }
 
-            AdjacencyListIncidenceGraph graph = graphBuilder.ToGraph();
+            AdjacencyListIncidenceGraph graph = builder.ToGraph();
 
-            Out.WriteLine(graph.EdgeCount);
-        }
+            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount}");
+            Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount}");
 
-        private static TextReader CreateInputReader()
-        {
-            return new StringReader("4 2\n1 2\n3 2");
-        }
-    }
+            var indexedMapPolicy = default(IndexedColorMapPolicy);
+            var dfs = IterativeDfs<AdjacencyListIncidenceGraph, int, int,
+                ArraySegmentEnumerator<int>, byte[]>.Create(default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy);
 
-    internal static class IndexedEdgeListParser
-    {
-        public static IEnumerable<SourceTargetPair<int>> ParseEdges(TextReader textReader)
-        {
-            if (textReader == null)
-                throw new ArgumentNullException(nameof(textReader));
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            var vertices = dfs.EnumerateVertices(graph, 0, colorMap);
+            var discoveredVertices = vertices
+                .Where(v => v.Kind == DfsStepKind.DiscoverVertex)
+                .Select(v => Convert.ToChar('a' + v.Vertex)).ToRist();
 
-            return ParseEdgesCore(textReader);
-        }
+            Console.WriteLine(string.Join(", ", discoveredVertices));
 
-        private static IEnumerable<SourceTargetPair<int>> ParseEdgesCore(TextReader textReader)
-        {
-            Debug.Assert(textReader != null);
-
-            for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
-            {
-                string[] parts = line.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length < 2)
-                    continue;
-
-                int source;
-                if (!int.TryParse(parts[0], out source))
-                    continue;
-
-                int target;
-                if (!int.TryParse(parts[1], out target))
-                    continue;
-
-                yield return SourceTargetPair.Create(source - 1, target - 1);
-            }
+            ArrayPool<byte>.Shared.Return(colorMap);
         }
     }
 }
