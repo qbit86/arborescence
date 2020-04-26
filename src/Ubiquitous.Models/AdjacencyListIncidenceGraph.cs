@@ -29,7 +29,7 @@ namespace Ubiquitous.Models
             ReadOnlySpan<int> sources = GetSources();
             if ((uint)edge >= (uint)sources.Length)
             {
-                source = -1;
+                source = default;
                 return false;
             }
 
@@ -42,7 +42,7 @@ namespace Ubiquitous.Models
             ReadOnlySpan<int> targets = GetTargets();
             if ((uint)edge >= (uint)targets.Length)
             {
-                target = -1;
+                target = default;
                 return false;
             }
 

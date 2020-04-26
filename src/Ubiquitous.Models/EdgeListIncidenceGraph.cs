@@ -27,13 +27,13 @@ namespace Ubiquitous.Models
         {
             if ((uint)edge.Source >= (uint)VertexCount)
             {
-                source = -1;
+                source = default;
                 return false;
             }
 
             if ((uint)edge.Target >= (uint)VertexCount)
             {
-                source = -2;
+                source = default;
                 return false;
             }
 
@@ -45,13 +45,13 @@ namespace Ubiquitous.Models
         {
             if ((uint)edge.Source >= (uint)VertexCount)
             {
-                target = -1;
+                target = default;
                 return false;
             }
 
             if ((uint)edge.Target >= (uint)VertexCount)
             {
-                target = -2;
+                target = default;
                 return false;
             }
 

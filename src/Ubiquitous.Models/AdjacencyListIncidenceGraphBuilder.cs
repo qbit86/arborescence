@@ -54,13 +54,13 @@ namespace Ubiquitous.Models
         {
             if (source < 0)
             {
-                edge = -1;
+                edge = default;
                 return false;
             }
 
             if (target < 0)
             {
-                edge = -2;
+                edge = default;
                 return false;
             }
 
