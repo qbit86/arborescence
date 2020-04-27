@@ -6,7 +6,6 @@ namespace Ubiquitous.Models
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
-#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         private const int DefaultInitialOutDegree = 4;
 
@@ -127,4 +126,5 @@ namespace Ubiquitous.Models
             return new AdjacencyListIncidenceGraph(storage);
         }
     }
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
