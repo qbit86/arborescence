@@ -6,7 +6,6 @@ namespace Ubiquitous.Models
         IGetTargetPolicy<TGraph, int, SourceTargetPair<int>>,
         IOutEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IIncidence<int, TEdges>
-#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public bool TryGetSource(TGraph graph, SourceTargetPair<int> edge, out int source)
         {
@@ -20,9 +19,7 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public TEdges EnumerateOutEdges(TGraph graph, int vertex)
-        {
-            return graph.EnumerateOutEdges(vertex);
-        }
+        public TEdges EnumerateOutEdges(TGraph graph, int vertex) => graph.EnumerateOutEdges(vertex);
     }
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
