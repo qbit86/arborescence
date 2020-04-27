@@ -6,7 +6,6 @@ namespace Ubiquitous.Models
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
-#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         private ArrayBuilder<int> _orderedSources;
         private ArrayBuilder<int> _targets;
@@ -117,4 +116,5 @@ namespace Ubiquitous.Models
             return new SortedAdjacencyListIncidenceGraph(storage);
         }
     }
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

@@ -4,10 +4,7 @@ namespace Ubiquitous.Models
     public readonly struct IndexCollectionEnumerablePolicy :
         IEnumerablePolicy<IndexCollection, IndexCollectionEnumerator>
     {
-        public IndexCollectionEnumerator GetEnumerator(IndexCollection collection)
-        {
-            return collection.Enumerate();
-        }
+        public IndexCollectionEnumerator GetEnumerator(IndexCollection collection) => collection.Enumerate();
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }

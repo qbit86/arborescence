@@ -64,38 +64,20 @@ namespace Ubiquitous.Models
             return new ArraySegmentEnumerator<int>(_storage, start, length);
         }
 
-        public bool Equals(AdjacencyListIncidenceGraph other)
-        {
-            return _storage == other._storage;
-        }
+        public bool Equals(AdjacencyListIncidenceGraph other) => _storage == other._storage;
 
-        public override bool Equals(object obj)
-        {
-            return obj is AdjacencyListIncidenceGraph other && Equals(other);
-        }
+        public override bool Equals(object obj) => obj is AdjacencyListIncidenceGraph other && Equals(other);
 
-        public override int GetHashCode()
-        {
-            return _storage?.GetHashCode() ?? 0;
-        }
+        public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgeBounds()
-        {
-            return _storage.AsSpan(1, 2 * VertexCount);
-        }
+        private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetSources()
-        {
-            return _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
-        }
+        private ReadOnlySpan<int> GetSources() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTargets()
-        {
-            return _storage.AsSpan(1 + 2 * VertexCount + EdgeCount, EdgeCount);
-        }
+        private ReadOnlySpan<int> GetTargets() => _storage.AsSpan(1 + 2 * VertexCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()
@@ -110,14 +92,10 @@ namespace Ubiquitous.Models
             return result;
         }
 
-        public static bool operator ==(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
+            left.Equals(right);
 
-        public static bool operator !=(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
+            !left.Equals(right);
     }
 }
