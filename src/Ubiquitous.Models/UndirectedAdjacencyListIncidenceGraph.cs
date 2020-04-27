@@ -22,7 +22,7 @@ namespace Ubiquitous.Models
 
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
-        public int EdgeCount => _storage == null ? 0 : 2 * (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
 
         public bool TryGetSource(int edge, out int source) => throw new NotImplementedException();
 
