@@ -58,6 +58,11 @@ namespace Ubiquitous.Models
 
         public override bool Equals(object obj) => obj is UndirectedAdjacencyListIncidenceGraph other && Equals(other);
 
+        public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetEdgeBounds() => throw new NotImplementedException();
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetSources() => throw new NotImplementedException();
 
@@ -76,5 +81,11 @@ namespace Ubiquitous.Models
 
             return result;
         }
+
+        public static bool operator ==(UndirectedAdjacencyListIncidenceGraph left,
+            UndirectedAdjacencyListIncidenceGraph right) => left.Equals(right);
+
+        public static bool operator !=(UndirectedAdjacencyListIncidenceGraph left,
+            UndirectedAdjacencyListIncidenceGraph right) => !left.Equals(right);
     }
 }
