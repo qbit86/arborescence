@@ -22,7 +22,7 @@ namespace Ubiquitous.Models
 
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 4;
 
         public bool TryGetSource(int edge, out int source)
         {
@@ -61,13 +61,13 @@ namespace Ubiquitous.Models
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgeBounds() => throw new NotImplementedException();
+        private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetSources() => throw new NotImplementedException();
+        private ReadOnlySpan<int> GetSources() => _storage.AsSpan(1 + 2 * VertexCount + 3 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTargets() => throw new NotImplementedException();
+        private ReadOnlySpan<int> GetTargets() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()
