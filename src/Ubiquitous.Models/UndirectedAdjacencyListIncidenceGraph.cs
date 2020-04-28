@@ -52,7 +52,19 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex) => throw new NotImplementedException();
+        public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
+        {
+            ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
+
+            if ((uint)(2 * vertex) >= (uint)edgeBounds.Length)
+                return new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
+
+            int start = edgeBounds[2 * vertex];
+            int length = edgeBounds[2 * vertex + 1];
+            Assert(length >= 0, "length >= 0");
+
+            return new ArraySegmentEnumerator<int>(_storage, start, length);
+        }
 
         public bool Equals(UndirectedAdjacencyListIncidenceGraph other) => _storage == other._storage;
 
