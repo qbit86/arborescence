@@ -36,14 +36,13 @@ namespace Ubiquitous
         private ITestOutputHelper Output { get; }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory(Skip = "Not implemented yet")]
-        [InlineData(1.0)]
-        [InlineData(1.414)]
-        [InlineData(1.618)]
-        [InlineData(2.0)]
-        public void Iterative_vertices_single_component(double densityPower)
+        [Theory, CombinatorialData]
+        public void Iterative_vertices_single_component(
+            [CombinatorialValues(1, 10, 100)] int vertexCount,
+            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)] double densityPower)
         {
-            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                vertexCount, densityPower);
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
