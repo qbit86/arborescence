@@ -80,7 +80,52 @@
             return true;
         }
 
-        public UndirectedAdjacencyListIncidenceGraph ToGraph() => throw new NotImplementedException();
+        // Storage layout:
+        // vertexCount          reorderedEdges     sources
+        //         ↓↓↓             ↓↓↓↓↓↓↓↓↓↓↓     ↓↓↓↓↓
+        //         [4][_^|_^|_^|_^][021~0~2~1][bcb][aca]
+        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑           ↑↑↑↑↑
+        //               edgeBounds           targets
+
+        public UndirectedAdjacencyListIncidenceGraph ToGraph()
+        {
+            Assert(_sources.Count == _targets.Count);
+            int vertexCount = VertexCount;
+            int sourceCount = _sources.Count;
+            int targetCount = _targets.Count;
+            int reorderedEdgeCount = 2 * sourceCount;
+            var storage = new int[1 + 2 * vertexCount + reorderedEdgeCount + targetCount + sourceCount];
+            storage[0] = vertexCount;
+
+            Span<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
+            Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexCount);
+            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, reorderedEdgeCount);
+
+            for (int s = 0, currentBound = 0; s != outEdges.Length; ++s)
+            {
+                ReadOnlySpan<int> currentOutEdges = outEdges[s].AsSpan();
+                currentOutEdges.CopyTo(destReorderedEdges.Slice(currentBound, currentOutEdges.Length));
+                int finalLeftBound = 1 + 2 * vertexCount + currentBound;
+                destEdgeBounds[2 * s] = finalLeftBound;
+                destEdgeBounds[2 * s + 1] = currentOutEdges.Length;
+                currentBound += currentOutEdges.Length;
+                outEdges[s].Dispose(false);
+            }
+
+            if (_outEdges.Array != null)
+                Pool.Return(_outEdges.Array, true);
+            _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
+
+            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount, targetCount);
+            _targets.AsSpan().CopyTo(destTargets);
+            _targets.Dispose(false);
+
+            Span<int> destSources = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount + targetCount, sourceCount);
+            _sources.AsSpan().CopyTo(destSources);
+            _sources.Dispose(false);
+
+            return new UndirectedAdjacencyListIncidenceGraph(storage);
+        }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
