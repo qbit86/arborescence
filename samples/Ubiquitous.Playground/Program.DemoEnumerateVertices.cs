@@ -1,3 +1,5 @@
+#if false
+
 namespace Ubiquitous
 {
     using System;
@@ -47,3 +49,5 @@ namespace Ubiquitous
         }
     }
 }
+
+#endif

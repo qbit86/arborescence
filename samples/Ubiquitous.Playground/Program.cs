@@ -4,7 +4,7 @@
     {
         private static void Main()
         {
-            DemoEnumerateVertices();
+            DemoUndirected();
         }
     }
 }
