@@ -62,6 +62,23 @@ namespace Ubiquitous
             InstantDfs.Traverse(graph, startVertex, instantColorMap, dfsHandler);
             iterativeSteps.AddRange(IterativeDfs.EnumerateVertices(graph, startVertex, iterativeColorMap));
 
+            // Assert
+
+            int instantStepCount = instantSteps.Count;
+            int iterativeStepCount = iterativeSteps.Count;
+            Assert.Equal(instantStepCount, iterativeStepCount);
+
+            int count = instantStepCount;
+            for (int i = 0; i != count; ++i)
+            {
+                DfsVertexStep<int> instantStep = instantSteps[i];
+                DfsVertexStep<int> iterativeStep = iterativeSteps[i];
+                if (instantStep == iterativeStep)
+                    continue;
+
+                Assert.Equal(instantStep, iterativeStep);
+            }
+
             // Cleanup
 
             iterativeSteps.Dispose();
