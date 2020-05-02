@@ -66,13 +66,13 @@
             EnsureVertexCount(max + 1);
 
             Assert(_sources.Count == _targets.Count);
+            int newEdgeIndex = _targets.Count;
             _sources.Add(source);
             _targets.Add(target);
 
             if (_outEdges[source].Buffer == null)
                 _outEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
 
-            int newEdgeIndex = _targets.Count;
             _outEdges.Array[source].Add(newEdgeIndex);
             _outEdges.Array[target].Add(~newEdgeIndex);
 
