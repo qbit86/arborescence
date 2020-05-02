@@ -52,25 +52,6 @@ namespace Ubiquitous
 
         private ITestOutputHelper Output { get; }
 
-        private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
-        {
-            const int vertexCount = 100;
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
-
-            var builder = new AdjacencyListIncidenceGraphBuilder(vertexCount);
-            var prng = new Random(1729);
-
-            for (int e = 0; e < edgeCount; ++e)
-            {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
-                builder.TryAdd(source, target, out _);
-            }
-
-            AdjacencyListIncidenceGraph result = builder.ToGraph();
-            return result;
-        }
-
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [InlineData(1.0)]
@@ -82,7 +63,7 @@ namespace Ubiquitous
         {
             // Arrange
 
-            AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
             int vertex = 0;
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
@@ -141,7 +122,7 @@ namespace Ubiquitous
         {
             // Arrange
 
-            AdjacencyListIncidenceGraph graph = CreateGraph(densityPower);
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
             var vertices = new IndexCollection(graph.VertexCount);
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
