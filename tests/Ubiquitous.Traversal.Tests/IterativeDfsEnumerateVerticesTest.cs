@@ -1,5 +1,7 @@
 namespace Ubiquitous
 {
+    using System;
+    using System.Buffers;
     using System.Diagnostics;
     using Models;
     using Traversal;
@@ -41,9 +43,21 @@ namespace Ubiquitous
             [CombinatorialValues(1, 10, 100)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)] double densityPower)
         {
+            // Arrange
+
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+
+            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(instantColorMap, 0, instantColorMap.Length);
+            byte[] iterativeColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(iterativeColorMap, 0, iterativeColorMap.Length);
+
+            // Cleanup
+
+            ArrayPool<byte>.Shared.Return(iterativeColorMap);
+            ArrayPool<byte>.Shared.Return(instantColorMap);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
