@@ -53,10 +53,12 @@ namespace Ubiquitous
         private ITestOutputHelper Output { get; }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory, CombinatorialData]
+        [Theory]
+        [CombinatorialData]
         public void Baseline_and_boost_implementations_should_match_for_tree(
             [CombinatorialValues(1, 10, 100)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)] double densityPower)
+            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
+            double densityPower)
         {
             // Arrange
 
@@ -110,10 +112,12 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(colorMap);
         }
 
-        [Theory, CombinatorialData]
+        [Theory]
+        [CombinatorialData]
         public void Baseline_and_boost_implementations_should_match_for_forest(
             [CombinatorialValues(1, 10, 100)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)] double densityPower)
+            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
+            double densityPower)
         {
             // Arrange
 
