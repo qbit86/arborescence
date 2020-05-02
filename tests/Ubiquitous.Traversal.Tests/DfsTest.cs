@@ -53,17 +53,15 @@ namespace Ubiquitous
         private ITestOutputHelper Output { get; }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory]
-        [InlineData(1.0)]
-        [InlineData(1.414)]
-        [InlineData(1.5)]
-        [InlineData(1.618)]
-        [InlineData(2.0)]
-        public void Baseline_and_boost_implementations_should_match_for_tree(double densityPower)
+        [Theory, CombinatorialData]
+        public void Baseline_and_boost_implementations_should_match_for_tree(
+            [CombinatorialValues(1, 10, 100)] int vertexCount,
+            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)] double densityPower)
         {
             // Arrange
 
-            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                vertexCount, densityPower);
             int vertex = 0;
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
@@ -112,17 +110,15 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(colorMap);
         }
 
-        [Theory]
-        [InlineData(1.0)]
-        [InlineData(1.059)]
-        [InlineData(1.414)]
-        [InlineData(1.618)]
-        [InlineData(2.0)]
-        public void Baseline_and_boost_implementations_should_match_for_forest(double densityPower)
+        [Theory, CombinatorialData]
+        public void Baseline_and_boost_implementations_should_match_for_forest(
+            [CombinatorialValues(1, 10, 100)] int vertexCount,
+            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)] double densityPower)
         {
             // Arrange
 
-            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                vertexCount, densityPower);
             var vertices = new IndexCollection(graph.VertexCount);
             int stepCountApproximation = graph.VertexCount + graph.EdgeCount;
 
