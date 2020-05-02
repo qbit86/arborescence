@@ -2,6 +2,7 @@
 {
     using System;
     using System.Buffers;
+    using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct UndirectedAdjacencyListIncidenceGraphBuilder :
@@ -47,7 +48,37 @@
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out int edge) => throw new NotImplementedException();
+        public bool TryAdd(int source, int target, out int edge)
+        {
+            if (source < 0)
+            {
+                edge = default;
+                return false;
+            }
+
+            if (target < 0)
+            {
+                edge = default;
+                return false;
+            }
+
+            int max = Math.Max(source, target);
+            EnsureVertexCount(max + 1);
+
+            Assert(_sources.Count == _targets.Count);
+            _sources.Add(source);
+            _targets.Add(target);
+
+            if (_outEdges[source].Buffer == null)
+                _outEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
+
+            int newEdgeIndex = _targets.Count;
+            _outEdges.Array[source].Add(newEdgeIndex);
+            _outEdges.Array[target].Add(~newEdgeIndex);
+
+            edge = newEdgeIndex;
+            return true;
+        }
 
         public UndirectedAdjacencyListIncidenceGraph ToGraph() => throw new NotImplementedException();
     }
