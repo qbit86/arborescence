@@ -7,14 +7,13 @@ namespace Ubiquitous
     using Models;
     using Traversal;
     using Xunit;
-    using Xunit.Abstractions;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public sealed class IterativeDfsEnumerateVerticesTest
     {
-        public IterativeDfsEnumerateVerticesTest(ITestOutputHelper output)
+        public IterativeDfsEnumerateVerticesTest()
         {
             var graphPolicy = default(IndexedAdjacencyListGraphPolicy);
             var colorMapPolicy = default(IndexedColorMapPolicy);
@@ -24,8 +23,6 @@ namespace Ubiquitous
 
             IterativeDfs = IterativeDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
                 graphPolicy, colorMapPolicy);
-
-            Output = output;
         }
 
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
@@ -35,8 +32,6 @@ namespace Ubiquitous
         private IterativeDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             IterativeDfs { get; }
-
-        private ITestOutputHelper Output { get; }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
