@@ -2,7 +2,6 @@ namespace Ubiquitous
 {
     using System;
     using System.Buffers;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using Misnomer;
@@ -13,21 +12,6 @@ namespace Ubiquitous
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
-
-    internal sealed class IndexedDfsStepEqualityComparer : IEqualityComparer<IndexedDfsStep>
-    {
-        internal static IndexedDfsStepEqualityComparer Default { get; } = new IndexedDfsStepEqualityComparer();
-
-        public bool Equals(IndexedDfsStep x, IndexedDfsStep y)
-        {
-            return x.Equals(y);
-        }
-
-        public int GetHashCode(IndexedDfsStep obj)
-        {
-            return obj.GetHashCode();
-        }
-    }
 
     public sealed class DfsTest
     {
