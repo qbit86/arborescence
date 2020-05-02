@@ -1,5 +1,6 @@
 namespace Ubiquitous
 {
+    using System.Diagnostics;
     using Models;
     using Traversal;
     using Xunit;
@@ -42,7 +43,8 @@ namespace Ubiquitous
         [InlineData(2.0)]
         public void Iterative_vertices_single_component(double densityPower)
         {
-            AdjacencyListIncidenceGraph _ = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(100, densityPower);
+            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
