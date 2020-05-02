@@ -15,8 +15,6 @@ namespace Ubiquitous
 
     public sealed class DfsTest
     {
-        private const int VertexCount = 100;
-
         public DfsTest(ITestOutputHelper output)
         {
             var colorMapPolicy = default(IndexedColorMapPolicy);
@@ -56,15 +54,16 @@ namespace Ubiquitous
 
         private AdjacencyListIncidenceGraph CreateGraph(double densityPower)
         {
-            int edgeCount = (int)Math.Ceiling(Math.Pow(VertexCount, densityPower));
+            const int vertexCount = 100;
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
 
-            var builder = new AdjacencyListIncidenceGraphBuilder(VertexCount);
+            var builder = new AdjacencyListIncidenceGraphBuilder(vertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)
             {
-                int source = prng.Next(VertexCount);
-                int target = prng.Next(VertexCount);
+                int source = prng.Next(vertexCount);
+                int target = prng.Next(vertexCount);
                 builder.TryAdd(source, target, out _);
             }
 
@@ -166,7 +165,7 @@ namespace Ubiquitous
             // Assert
 
             Assert.Equal(instantSteps, boostSteps, IndexedDfsStepEqualityComparer.Default);
-            Assert.Equal(VertexCount, discoveredVertexCount);
+            Assert.Equal(graph.VertexCount, discoveredVertexCount);
             Assert.Equal(expectedStartVertexCount, actualStartVertexCount);
 
             boostSteps.Dispose();
