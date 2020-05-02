@@ -42,9 +42,7 @@ namespace Ubiquitous
                 {
                     string sourceString = graph.TryGetSource(edge, out int source) ? IndexToChar(source) : "?";
                     string targetString = graph.TryGetTarget(edge, out int target) ? IndexToChar(target) : "?";
-                    string endpointsString = edge < 0
-                        ? $"{targetString} <- {sourceString}"
-                        : $"{sourceString} -> {targetString}";
+                    string endpointsString = $"{sourceString} -> {targetString}";
                     Console.WriteLine($"{edge.ToString(CultureInfo.InvariantCulture)}: {endpointsString}");
                 }
             }
