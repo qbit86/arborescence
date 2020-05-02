@@ -33,8 +33,8 @@ namespace Ubiquitous.Traversal
             private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
             private DisposalStatus _stackDisposalStatus;
 
-            private DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
-                TGraphPolicy, TColorMapPolicy, TStepPolicy> _stepEnumerator;
+            private DfsStepIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+                TGraphPolicy, TColorMapPolicy, TStepPolicy> _stepIterator;
 
             internal Enumerator(in DfsForestStepCollection<TGraph, TVertex, TEdge,
                 TVertexEnumerable, TVertexEnumerator, TEdgeEnumerator,
@@ -57,7 +57,7 @@ namespace Ubiquitous.Traversal
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator = default;
+                _stepIterator = default;
             }
 
             public bool MoveNext()
@@ -96,14 +96,14 @@ namespace Ubiquitous.Traversal
                             continue;
                         case 4:
                             ThrowIfDisposed();
-                            _stepEnumerator = new DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                            _stepIterator = new DfsStepIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                                 TStep, TGraphPolicy, TColorMapPolicy, TStepPolicy>(_graph, _vertexEnumerator.Current,
                                 _colorMap, _stack, _graphPolicy, _colorMapPolicy, _stepPolicy);
                             _state = 5;
                             continue;
                         case 5:
                             ThrowIfDisposed();
-                            if (!_stepEnumerator.TryMoveNext(out TStep current))
+                            if (!_stepIterator.TryMoveNext(out TStep current))
                             {
                                 DisposeStack();
                                 _state = 1;
@@ -128,7 +128,7 @@ namespace Ubiquitous.Traversal
                 _colorMapDisposalStatus = DisposalStatus.None;
                 _stack = null;
                 _stackDisposalStatus = DisposalStatus.None;
-                _stepEnumerator = default;
+                _stepIterator = default;
             }
 
             // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter

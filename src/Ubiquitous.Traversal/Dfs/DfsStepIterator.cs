@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal
 
     // https://www.boost.org/doc/libs/1_69_0/boost/graph/depth_first_search.hpp
 
-    internal struct DfsStepEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
+    internal struct DfsStepIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TStep,
         TGraphPolicy, TColorMapPolicy, TStepPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
@@ -32,7 +32,7 @@ namespace Ubiquitous.Traversal
         private TColorMapPolicy _colorMapPolicy;
         private TStepPolicy _stepPolicy;
 
-        internal DfsStepEnumerator(TGraph graph, TVertex startVertex,
+        internal DfsStepIterator(TGraph graph, TVertex startVertex,
             TColorMap colorMap, List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack,
             TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy, TStepPolicy stepPolicy)
         {
