@@ -3,6 +3,7 @@ namespace Ubiquitous.Traversal
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     public struct DfsSingleComponentEdgeEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -12,6 +13,13 @@ namespace Ubiquitous.Traversal
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
+        internal DfsSingleComponentEdgeEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
+            TGraph graph, TVertex startVertex, TColorMap colorMap)
+        {
+            Assert(graphPolicy != null, "graphPolicy != null");
+            Assert(colorMapPolicy != null, "colorMapPolicy != null");
+        }
+
         public IEnumerator<DfsStep<TVertex>> GetEnumerator() => throw new NotImplementedException();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

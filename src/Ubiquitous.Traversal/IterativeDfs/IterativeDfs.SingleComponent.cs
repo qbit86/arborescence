@@ -10,6 +10,13 @@ namespace Ubiquitous.Traversal
             return new DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy>(GraphPolicy, ColorMapPolicy, graph, startVertex, colorMap);
         }
+
+        public DfsSingleComponentEdgeEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+            TGraphPolicy, TColorMapPolicy> EnumerateEdges(TGraph graph, TVertex startVertex, TColorMap colorMap)
+        {
+            return new DfsSingleComponentEdgeEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+                TGraphPolicy, TColorMapPolicy>(GraphPolicy, ColorMapPolicy, graph, startVertex, colorMap);
+        }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
