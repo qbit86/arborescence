@@ -12,6 +12,7 @@ namespace Ubiquitous
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
+    using IndexedDfsStep = Traversal.DfsStep<int>;
 
     public sealed class DfsTest
     {

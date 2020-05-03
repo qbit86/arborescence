@@ -1,7 +1,7 @@
 namespace Ubiquitous
 {
     using System.Collections.Generic;
-    using Traversal;
+    using IndexedDfsStep = Traversal.DfsStep<int>;
 
     internal sealed class IndexedDfsStepEqualityComparer : IEqualityComparer<IndexedDfsStep>
     {

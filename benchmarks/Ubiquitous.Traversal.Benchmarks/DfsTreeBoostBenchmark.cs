@@ -8,6 +8,7 @@ namespace Ubiquitous
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
+    using IndexedDfsStep = Traversal.DfsStep<int>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark

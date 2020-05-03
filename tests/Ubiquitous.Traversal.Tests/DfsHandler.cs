@@ -3,6 +3,7 @@ namespace Ubiquitous
     using System;
     using System.Collections.Generic;
     using Traversal;
+    using IndexedDfsStep = Traversal.DfsStep<int>;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     internal readonly struct DfsHandler<TGraph> : IDfsHandler<TGraph, int, int>
