@@ -2,10 +2,15 @@ namespace Ubiquitous
 {
     using System;
     using System.Buffers;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
     using Misnomer;
     using Models;
     using Traversal;
+    using Workbench;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
@@ -13,6 +18,8 @@ namespace Ubiquitous
 
     public sealed class IterativeDfsEnumerateVerticesTest
     {
+        private static IEnumerable<object[]> s_testCases;
+
         public IterativeDfsEnumerateVerticesTest()
         {
             var graphPolicy = default(IndexedAdjacencyListGraphPolicy);
@@ -33,18 +40,19 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             IterativeDfs { get; }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory]
-        [CombinatorialData]
-        public void Iterative_vertices_single_component(
-            [CombinatorialValues(1, 10, 100)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
-            double densityPower)
+        public static IEnumerable<object[]> TestCases => s_testCases ??= CreateTestCases();
+
+        private static IEnumerable<object[]> CreateTestCases()
         {
+            return Enumerable.Range(1, 7).Select(it => new object[] { it });
+        }
+
+        private void IterativeVerticesSingleComponentCore(AdjacencyListIncidenceGraph graph)
+        {
+            Debug.Assert(graph != null, "graph != null");
+
             // Arrange
 
-            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
-                vertexCount, densityPower);
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
             int startVertex = graph.VertexCount - 1;
 
@@ -85,6 +93,38 @@ namespace Ubiquitous
             instantSteps.Dispose();
             ArrayPool<byte>.Shared.Return(iterativeColorMap);
             ArrayPool<byte>.Shared.Return(instantColorMap);
+        }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        [Theory]
+        [CombinatorialData]
+        public void Iterative_vertices_single_component_combinatorial(
+            [CombinatorialValues(1, 10, 100)] int vertexCount,
+            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
+            double densityPower)
+        {
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                vertexCount, densityPower);
+            IterativeVerticesSingleComponentCore(graph);
+        }
+
+        [Theory]
+        [MemberData(nameof(TestCases))]
+        public void Iterative_vertices_single_component_member(int testCase)
+        {
+            var builder = new AdjacencyListIncidenceGraphBuilder(10);
+
+            string name = testCase.ToString("D2", CultureInfo.InvariantCulture);
+            using (TextReader textReader = IndexedGraphs.GetTextReader(name))
+            {
+                Assert.NotEqual(TextReader.Null, textReader);
+                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (SourceTargetPair<int> edge in edges)
+                    builder.TryAdd(edge.Source, edge.Target, out _);
+            }
+
+            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            IterativeVerticesSingleComponentCore(graph);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
