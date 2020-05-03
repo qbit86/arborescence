@@ -6,6 +6,7 @@ namespace Ubiquitous.Traversal
     using System.Runtime.CompilerServices;
     using Internal;
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
     {
@@ -109,4 +110,5 @@ namespace Ubiquitous.Traversal
         private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
             ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
