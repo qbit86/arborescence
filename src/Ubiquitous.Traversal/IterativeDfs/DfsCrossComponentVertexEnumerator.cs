@@ -10,14 +10,14 @@ namespace Ubiquitous.Traversal
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     public struct DfsCrossComponentVertexEnumerator<
         TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsVertexStep<TVertex>>, IEnumerator<DfsVertexStep<TVertex>>
+        TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsStep<TVertex>>, IEnumerator<DfsStep<TVertex>>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
-        private DfsVertexStep<TVertex> _current;
+        private DfsStep<TVertex> _current;
         private int _state;
 
         private TGraphPolicy _graphPolicy;
@@ -51,7 +51,7 @@ namespace Ubiquitous.Traversal
             _startVertex = startVertex;
         }
 
-        public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
+        public IEnumerator<DfsStep<TVertex>> GetEnumerator()
         {
             DfsCrossComponentVertexEnumerator<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy> ator = this;
@@ -61,14 +61,14 @@ namespace Ubiquitous.Traversal
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        IEnumerator<DfsVertexStep<TVertex>> IEnumerable<DfsVertexStep<TVertex>>.GetEnumerator() => GetEnumerator();
+        IEnumerator<DfsStep<TVertex>> IEnumerable<DfsStep<TVertex>>.GetEnumerator() => GetEnumerator();
 
         public bool MoveNext() => throw new NotImplementedException();
 
         public void Reset() => throw new NotImplementedException();
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-        public DfsVertexStep<TVertex> Current => _current;
+        public DfsStep<TVertex> Current => _current;
 
         object IEnumerator.Current => Current;
 

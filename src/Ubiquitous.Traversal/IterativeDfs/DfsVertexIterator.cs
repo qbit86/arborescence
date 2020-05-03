@@ -18,7 +18,7 @@ namespace Ubiquitous.Traversal
         private TGraph _graph;
         private TColorMap _colorMap;
 
-        internal DfsVertexStep<TVertex> _current;
+        internal DfsStep<TVertex> _current;
         private TEdgeEnumerator _edgeEnumerator; // Corresponds to iterator range in Boost implementation.
         private TVertex _neighborVertex; // Corresponds to `v` in Boost implementation.
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
@@ -36,7 +36,7 @@ namespace Ubiquitous.Traversal
             _graph = graph;
             _colorMap = colorMap;
 
-            _current = new DfsVertexStep<TVertex>(DfsStepKind.None, startVertex);
+            _current = new DfsStep<TVertex>(DfsStepKind.None, startVertex);
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = startVertex;
@@ -112,7 +112,7 @@ namespace Ubiquitous.Traversal
         {
             Assert(_state > 0, "_state > 0");
 
-            _current = new DfsVertexStep<TVertex>(DfsStepKind.None, startVertex);
+            _current = new DfsStep<TVertex>(DfsStepKind.None, startVertex);
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = startVertex;
@@ -135,27 +135,27 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateDiscoverVertexStep(TVertex vertex, int newState, out DfsVertexStep<TVertex> current)
+        private bool CreateDiscoverVertexStep(TVertex vertex, int newState, out DfsStep<TVertex> current)
         {
             _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
-            current = new DfsVertexStep<TVertex>(DfsStepKind.DiscoverVertex, vertex);
+            current = new DfsStep<TVertex>(DfsStepKind.DiscoverVertex, vertex);
             _state = newState;
             return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateFinishVertexStep(TVertex vertex, int newState, out DfsVertexStep<TVertex> current)
+        private bool CreateFinishVertexStep(TVertex vertex, int newState, out DfsStep<TVertex> current)
         {
             _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Black);
-            current = new DfsVertexStep<TVertex>(DfsStepKind.FinishVertex, vertex);
+            current = new DfsStep<TVertex>(DfsStepKind.FinishVertex, vertex);
             _state = newState;
             return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool Terminate(out DfsVertexStep<TVertex> current)
+        private bool Terminate(out DfsStep<TVertex> current)
         {
-            current = new DfsVertexStep<TVertex>(DfsStepKind.None, _currentVertex);
+            current = new DfsStep<TVertex>(DfsStepKind.None, _currentVertex);
             _state = -2;
             return false;
         }

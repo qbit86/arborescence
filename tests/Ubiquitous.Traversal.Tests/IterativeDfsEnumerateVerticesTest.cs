@@ -61,8 +61,8 @@ namespace Ubiquitous
             byte[] iterativeColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(iterativeColorMap, 0, iterativeColorMap.Length);
 
-            var instantSteps = new Rist<DfsVertexStep<int>>(graph.VertexCount);
-            var iterativeSteps = new Rist<DfsVertexStep<int>>(graph.VertexCount);
+            var instantSteps = new Rist<DfsStep<int>>(graph.VertexCount);
+            var iterativeSteps = new Rist<DfsStep<int>>(graph.VertexCount);
             var dfsHandler = new IndexedDfsVertexHandler<AdjacencyListIncidenceGraph>(instantSteps);
 
             // Act
@@ -79,8 +79,8 @@ namespace Ubiquitous
             int count = instantStepCount;
             for (int i = 0; i != count; ++i)
             {
-                DfsVertexStep<int> instantStep = instantSteps[i];
-                DfsVertexStep<int> iterativeStep = iterativeSteps[i];
+                DfsStep<int> instantStep = instantSteps[i];
+                DfsStep<int> iterativeStep = iterativeSteps[i];
                 if (instantStep == iterativeStep)
                     continue;
 

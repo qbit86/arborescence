@@ -16,7 +16,7 @@ namespace Ubiquitous.Traversal
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     public struct DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsVertexStep<TVertex>>, IEnumerator<DfsVertexStep<TVertex>>
+        TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsStep<TVertex>>, IEnumerator<DfsStep<TVertex>>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
@@ -42,7 +42,7 @@ namespace Ubiquitous.Traversal
             _state = 1;
         }
 
-        public IEnumerator<DfsVertexStep<TVertex>> GetEnumerator()
+        public IEnumerator<DfsStep<TVertex>> GetEnumerator()
         {
             DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy> ator = this;
@@ -52,7 +52,7 @@ namespace Ubiquitous.Traversal
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        IEnumerator<DfsVertexStep<TVertex>> IEnumerable<DfsVertexStep<TVertex>>.GetEnumerator() => GetEnumerator();
+        IEnumerator<DfsStep<TVertex>> IEnumerable<DfsStep<TVertex>>.GetEnumerator() => GetEnumerator();
 
         public bool MoveNext()
         {
@@ -79,7 +79,7 @@ namespace Ubiquitous.Traversal
         }
 
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-        public DfsVertexStep<TVertex> Current
+        public DfsStep<TVertex> Current
         {
             get
             {
@@ -89,9 +89,9 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
-                        return new DfsVertexStep<TVertex>(DfsStepKind.None, _startVertex);
+                        return new DfsStep<TVertex>(DfsStepKind.None, _startVertex);
                     case 2:
-                        return new DfsVertexStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
+                        return new DfsStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
                     default:
                         return _vertexIterator._current;
                 }
