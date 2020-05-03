@@ -61,7 +61,7 @@ namespace Ubiquitous.Models
                 return new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
 
             Assert(OutEdges != null, "OutEdges != null");
-            if (OutEdges[vertex].Array == null)
+            if (OutEdges[vertex].Array is null)
                 return new ArrayPrefixEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0);
 
             return new ArrayPrefixEnumerator<int>(OutEdges[vertex].Array, OutEdges[vertex].Count);

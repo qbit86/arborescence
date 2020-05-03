@@ -71,7 +71,7 @@ namespace Ubiquitous.Models
             _sources.Add(source);
             _targets.Add(target);
 
-            if (_outEdges[source].Array == null)
+            if (_outEdges[source].Array is null)
                 _outEdges[source] = ArrayPrefix.Create(Pool.Rent(InitialOutDegree), 0);
 
             _outEdges[source] = ArrayPrefixBuilder.Add(_outEdges[source], newEdgeIndex, true);
