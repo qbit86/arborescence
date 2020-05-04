@@ -81,6 +81,21 @@ namespace Ubiquitous.Traversal
                         _state = 4;
                         continue;
                     case 4:
+                        if (!_edgeEnumerator.MoveNext())
+                        {
+                            _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Black);
+                            _state = 3;
+                            continue;
+                        }
+
+                        if (!_graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex))
+                        {
+                            _state = 4;
+                            continue;
+                        }
+
+                        return CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current, 5);
+                    case 5:
                         throw new NotImplementedException();
                 }
 
