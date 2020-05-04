@@ -2,7 +2,6 @@
 
 namespace Ubiquitous.Traversal
 {
-    using System;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
@@ -96,7 +95,31 @@ namespace Ubiquitous.Traversal
 
                         return CreateEdgeStep(DfsStepKind.ExamineEdge, _edgeEnumerator.Current, 5);
                     case 5:
-                        throw new NotImplementedException();
+                        Color neighborColor = GetColorOrDefault(_colorMap, _neighborVertex);
+                        TEdge edge = _edgeEnumerator.Current;
+                        switch (neighborColor)
+                        {
+                            case Color.None:
+                            case Color.White:
+                                return CreateEdgeStep(DfsStepKind.TreeEdge, edge, 6);
+                            case Color.Gray:
+                                return CreateEdgeStep(DfsStepKind.BackEdge, edge, 8);
+                            default:
+                                return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 8);
+                        }
+                    case 6:
+                        PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
+                        _currentVertex = _neighborVertex;
+                        _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
+                        _state = 7;
+                        continue;
+                    // TODO: Consider merging with state 6.
+                    case 7:
+                        _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
+                        _state = 4;
+                        continue;
+                    case 8:
+                        return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 4);
                 }
 
                 return Terminate();
