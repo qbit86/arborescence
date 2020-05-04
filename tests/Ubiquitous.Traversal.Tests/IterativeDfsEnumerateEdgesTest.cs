@@ -82,6 +82,8 @@ namespace Ubiquitous
             {
                 DfsStep<int> instantStep = instantSteps[i];
                 DfsStep<int> iterativeStep = iterativeSteps[i];
+                Assert.NotEqual(DfsStepKind.None, iterativeStep.Kind);
+
                 if (instantStep == iterativeStep)
                     continue;
 
