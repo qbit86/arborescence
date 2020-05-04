@@ -64,7 +64,7 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
-                        return CreateDiscoverVertexStep(_currentVertex, 2);
+                        return UpdateColorMapAndCreateDiscoverVertexStep(_currentVertex, 2);
                     case 2:
                         EnsureStackInitialized();
                         TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
@@ -81,7 +81,7 @@ namespace Ubiquitous.Traversal
                         continue;
                     case 4:
                         if (!_edgeEnumerator.MoveNext())
-                            return CreateFinishVertexStep(_currentVertex, 3);
+                            return UpdateColorMapAndCreateFinishVertexStep(_currentVertex, 3);
 
                         bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
                         if (!isValid)
@@ -107,7 +107,7 @@ namespace Ubiquitous.Traversal
                     case 6:
                         PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
-                        return CreateDiscoverVertexStep(_currentVertex, 7);
+                        return UpdateColorMapAndCreateDiscoverVertexStep(_currentVertex, 7);
                     case 7:
                         _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         _state = 4;
@@ -145,7 +145,7 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateDiscoverVertexStep(TVertex vertex, int newState)
+        private bool UpdateColorMapAndCreateDiscoverVertexStep(TVertex vertex, int newState)
         {
             _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
             _current = new DfsStep<TVertex>(DfsStepKind.DiscoverVertex, vertex);
@@ -154,7 +154,7 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool CreateFinishVertexStep(TVertex vertex, int newState)
+        private bool UpdateColorMapAndCreateFinishVertexStep(TVertex vertex, int newState)
         {
             _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Black);
             _current = new DfsStep<TVertex>(DfsStepKind.FinishVertex, vertex);
