@@ -9,26 +9,19 @@ namespace Ubiquitous.Traversal
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     public struct DfsCrossComponentVertexEnumerator<
-        TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy> : IEnumerable<DfsStep<TVertex>>, IEnumerator<DfsStep<TVertex>>
+        TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> :
+        IEnumerable<DfsStep<TVertex>>, IEnumerator<DfsStep<TVertex>>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
-        private DfsStep<TVertex> _current;
+        private readonly TVertex _startVertex;
         private int _state;
 
-        private TGraphPolicy _graphPolicy;
-        private TColorMapPolicy _colorMapPolicy;
-
-        private readonly TGraph _graph;
-        private readonly TVertexEnumerator _vertices;
-        private readonly TColorMap _colorMap;
-
-        private readonly bool _hasStartVertex;
-        private readonly TVertex _startVertex;
+        private DfsVertexIterator<
+            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> _vertexIterator;
 
         internal DfsCrossComponentVertexEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TGraph graph, TVertexEnumerator vertices, TColorMap colorMap,
@@ -37,21 +30,16 @@ namespace Ubiquitous.Traversal
             Assert(graphPolicy != null, "graphPolicy != null");
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
-            _current = default;
-            _state = 1;
-
-            _graphPolicy = graphPolicy;
-            _colorMapPolicy = colorMapPolicy;
-
-            _graph = graph;
-            _vertices = vertices;
-            _colorMap = colorMap;
-
-            _hasStartVertex = hasStartVertex;
             _startVertex = startVertex;
+            _vertexIterator = new DfsVertexIterator<
+                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                graphPolicy, colorMapPolicy, graph, startVertex, colorMap);
+            _state = 1;
         }
 
-        public IEnumerator<DfsStep<TVertex>> GetEnumerator()
+        public DfsCrossComponentVertexEnumerator<
+                TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+            GetEnumerator()
         {
             DfsCrossComponentVertexEnumerator<TGraph, TVertex, TEdge, TVertexEnumerator, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy> ator = this;
@@ -59,22 +47,31 @@ namespace Ubiquitous.Traversal
             return ator;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         IEnumerator<DfsStep<TVertex>> IEnumerable<DfsStep<TVertex>>.GetEnumerator() => GetEnumerator();
 
-        public bool MoveNext() => throw new NotImplementedException();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public bool MoveNext()
+        {
+            if (_state <= 0)
+                return false;
+
+            throw new NotImplementedException();
+        }
 
         public void Reset() => throw new NotImplementedException();
 
-        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-        public DfsStep<TVertex> Current => _current;
+        public DfsStep<TVertex> Current => throw new NotImplementedException();
 
         object IEnumerator.Current => Current;
 
         public void Dispose()
         {
-            _current = default;
+            if (_state == -1)
+                return;
+
+            _vertexIterator.Dispose();
+            _vertexIterator = default;
             _state = -1;
         }
     }
