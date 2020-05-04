@@ -57,12 +57,16 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
-                        EnsureStackInitialized();
-                        TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
-                        PushVertexStackFrame(_currentVertex, edges);
+                        _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
                         _state = 2;
                         continue;
                     case 2:
+                        EnsureStackInitialized();
+                        TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
+                        PushVertexStackFrame(_currentVertex, edges);
+                        _state = 3;
+                        continue;
+                    case 3:
                         if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate();
 
@@ -72,11 +76,11 @@ namespace Ubiquitous.Traversal
                         // loop. Think of the pop as the return from a recursive call.
                         // --- boost/graph/depth_first_search.hpp
                         if (stackFrame.HasEdge)
-                            return CreateEdgeStep(DfsStepKind.FinishEdge, stackFrame.Edge, 3);
+                            return CreateEdgeStep(DfsStepKind.FinishEdge, stackFrame.Edge, 4);
 
-                        _state = 3;
+                        _state = 4;
                         continue;
-                    case 3:
+                    case 4:
                         throw new NotImplementedException();
                 }
 
