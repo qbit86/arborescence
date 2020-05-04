@@ -57,6 +57,15 @@ namespace Ubiquitous.Traversal
                 switch (_state)
                 {
                     case 1:
+                        EnsureStackInitialized();
+                        TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
+                        PushVertexStackFrame(_currentVertex, edges);
+                        _state = 2;
+                        continue;
+                    case 2:
+                        if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
+                            return Terminate(out _current);
+
                         throw new NotImplementedException();
                 }
 
@@ -99,12 +108,40 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void EnsureStack()
+        private void EnsureStackInitialized()
         {
             if (_stack is null)
                 _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
             else
                 _stack.Clear();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushVertexStackFrame(TVertex vertex, TEdgeEnumerator edgeEnumerator)
+        {
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, false, default, edgeEnumerator);
+            _stack.Add(stackFrame);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void PushEdgeStackFrame(TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
+        {
+            var stackFrame = new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(vertex, true, edge, edgeEnumerator);
+            _stack.Add(stackFrame);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame)
+        {
+            if (_stack.Count == 0)
+            {
+                stackFrame = default;
+                return false;
+            }
+
+            stackFrame = _stack[_stack.Count - 1];
+            _stack.RemoveAt(_stack.Count - 1);
+            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
