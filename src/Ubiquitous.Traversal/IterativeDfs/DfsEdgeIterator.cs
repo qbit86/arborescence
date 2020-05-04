@@ -64,7 +64,7 @@ namespace Ubiquitous.Traversal
                         continue;
                     case 2:
                         if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
-                            return Terminate(out _current);
+                            return Terminate();
 
                         _currentVertex = stackFrame.Vertex;
                         _edgeEnumerator = stackFrame.EdgeEnumerator;
@@ -80,7 +80,7 @@ namespace Ubiquitous.Traversal
                         throw new NotImplementedException();
                 }
 
-                return Terminate(out _current);
+                return Terminate();
             }
         }
 
@@ -119,9 +119,9 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool Terminate(out DfsStep<TEdge> current)
+        private bool Terminate()
         {
-            current = new DfsStep<TEdge>(DfsStepKind.None, default);
+            _current = new DfsStep<TEdge>(DfsStepKind.None, default);
             _state = -2;
             return false;
         }
