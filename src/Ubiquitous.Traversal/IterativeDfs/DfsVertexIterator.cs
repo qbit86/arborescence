@@ -83,8 +83,7 @@ namespace Ubiquitous.Traversal
                         if (!_edgeEnumerator.MoveNext())
                             return UpdateColorMapAndCreateFinishVertexStep(_currentVertex, 3);
 
-                        bool isValid = _graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex);
-                        if (!isValid)
+                        if (!_graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex))
                             continue;
 
                         _state = 5;
