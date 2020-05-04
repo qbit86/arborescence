@@ -66,7 +66,7 @@ namespace Ubiquitous.Traversal
                     case 1:
                         return CreateDiscoverVertexStep(_currentVertex, 2, out _current);
                     case 2:
-                        EnsureStack();
+                        EnsureStackInitialized();
                         TEdgeEnumerator edges = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         PushVertexStackFrame(_currentVertex, edges);
                         _state = 3;
@@ -171,7 +171,7 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void EnsureStack()
+        private void EnsureStackInitialized()
         {
             if (_stack is null)
                 _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
