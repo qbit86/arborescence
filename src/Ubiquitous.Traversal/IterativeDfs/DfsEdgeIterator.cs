@@ -66,6 +66,17 @@ namespace Ubiquitous.Traversal
                         if (!TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                             return Terminate(out _current);
 
+                        _currentVertex = stackFrame.Vertex;
+                        _edgeEnumerator = stackFrame.EdgeEnumerator;
+                        // finish_edge has to be called here, not after the
+                        // loop. Think of the pop as the return from a recursive call.
+                        // --- boost/graph/depth_first_search.hpp
+                        if (stackFrame.HasEdge)
+                            return CreateEdgeStep(DfsStepKind.FinishEdge, stackFrame.Edge, 3);
+
+                        _state = 3;
+                        continue;
+                    case 3:
                         throw new NotImplementedException();
                 }
 
@@ -97,6 +108,14 @@ namespace Ubiquitous.Traversal
             _stack?.Clear();
             _stack = default;
             _state = -1;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CreateEdgeStep(DfsStepKind kind, TEdge edge, int newState)
+        {
+            _current = new DfsStep<TEdge>(kind, edge);
+            _state = newState;
+            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
