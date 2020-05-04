@@ -78,7 +78,6 @@ namespace Ubiquitous.Traversal
             _state = 1;
         }
 
-        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
         public DfsStep<TVertex> Current
         {
             get
