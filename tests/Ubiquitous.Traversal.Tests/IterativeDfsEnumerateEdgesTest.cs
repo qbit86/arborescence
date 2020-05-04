@@ -4,9 +4,7 @@ namespace Ubiquitous
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Globalization;
     using System.IO;
-    using System.Linq;
     using Misnomer;
     using Models;
     using Traversal;
@@ -40,13 +38,7 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             IterativeDfs { get; }
 
-        public static IEnumerable<object[]> TestCases => s_testCases ??= CreateTestCases();
-
-        private static IEnumerable<object[]> CreateTestCases()
-        {
-            return Enumerable.Range(1, 7)
-                .Select(it => new object[] { it.ToString("D2", CultureInfo.InvariantCulture) });
-        }
+        public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
         private void IterativeEdgesSingleComponentCore(AdjacencyListIncidenceGraph graph)
         {
