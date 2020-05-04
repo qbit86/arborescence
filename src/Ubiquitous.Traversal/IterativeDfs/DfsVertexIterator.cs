@@ -6,6 +6,14 @@ namespace Ubiquitous.Traversal
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
+    // States:
+    // • -2: "After" — the iterator has finished
+    // • -1: disposed
+    // • 0: not initialized
+    // • 1: "Before" — MoveNext() hasn't been called yet
+    // • Anything positive: indicates where to resume from
+    // --- https://csharpindepth.com/Articles/IteratorBlockImplementation
+
     internal struct DfsVertexIterator<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -49,6 +57,8 @@ namespace Ubiquitous.Traversal
             if (_state <= 0)
                 return false;
 
+            // With `while (true)` we can avoid `goto label`,
+            // simulating the latter with `_state = label; continue;`.
             while (true)
             {
                 switch (_state)
