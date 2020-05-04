@@ -25,8 +25,8 @@ namespace Ubiquitous.Traversal
         private readonly TVertex _startVertex;
         private int _state;
 
-        private DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-            TGraphPolicy, TColorMapPolicy> _vertexIterator;
+        private DfsVertexIterator<
+            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> _vertexIterator;
 
         internal DfsSingleComponentVertexEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TGraph graph, TVertex startVertex, TColorMap colorMap)
@@ -44,8 +44,8 @@ namespace Ubiquitous.Traversal
         public DfsSingleComponentVertexEnumerator<
             TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> GetEnumerator()
         {
-            DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy> ator = this;
+            DfsSingleComponentVertexEnumerator<
+                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> ator = this;
             ator.Reset();
             return ator;
         }
