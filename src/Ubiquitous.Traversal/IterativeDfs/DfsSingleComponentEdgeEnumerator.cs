@@ -13,7 +13,11 @@ namespace Ubiquitous.Traversal
         IGetTargetPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
+        private readonly TVertex _startVertex;
         private int _state;
+
+        private DfsEdgeIterator<
+            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> _edgeIterator;
 
         internal DfsSingleComponentEdgeEnumerator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
             TGraph graph, TVertex startVertex, TColorMap colorMap)
@@ -21,14 +25,18 @@ namespace Ubiquitous.Traversal
             Assert(graphPolicy != null, "graphPolicy != null");
             Assert(colorMapPolicy != null, "colorMapPolicy != null");
 
+            _startVertex = startVertex;
+            _edgeIterator = new DfsEdgeIterator<
+                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                graphPolicy, colorMapPolicy, graph, startVertex, colorMap);
             _state = 1;
         }
 
         public DfsSingleComponentEdgeEnumerator<
             TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> GetEnumerator()
         {
-            DfsSingleComponentEdgeEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-                TGraphPolicy, TColorMapPolicy> ator = this;
+            DfsSingleComponentEdgeEnumerator<
+                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> ator = this;
             ator.Reset();
             return ator;
         }
@@ -36,14 +44,6 @@ namespace Ubiquitous.Traversal
         IEnumerator<DfsStep<TEdge>> IEnumerable<DfsStep<TEdge>>.GetEnumerator() => GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public void Dispose()
-        {
-            if (_state == -1)
-                return;
-
-            throw new NotImplementedException();
-        }
 
         public bool MoveNext()
         {
@@ -57,8 +57,8 @@ namespace Ubiquitous.Traversal
         {
             ThrowIfNotValid();
 
+            _edgeIterator.Reset(_startVertex);
             _state = 1;
-            throw new NotImplementedException();
         }
 
         public DfsStep<TEdge> Current
@@ -68,11 +68,27 @@ namespace Ubiquitous.Traversal
                 ThrowIfNotValid();
 
                 Assert(_state > 0, "_state > 0");
-                throw new NotImplementedException();
+                switch (_state)
+                {
+                    case 1:
+                        return new DfsStep<TEdge>(DfsStepKind.None, default);
+                    default:
+                        throw new NotImplementedException();
+                }
             }
         }
 
         object IEnumerator.Current => Current;
+
+        public void Dispose()
+        {
+            if (_state == -1)
+                return;
+
+            _edgeIterator.Dispose();
+            _edgeIterator = default;
+            _state = -1;
+        }
 
         private void ThrowIfNotValid()
         {
@@ -85,3 +101,5 @@ namespace Ubiquitous.Traversal
     }
 #pragma warning restore CA1710 // Identifiers should have correct suffix
 }
+
+// ReSharper restore FieldCanBeMadeReadOnly.Local
