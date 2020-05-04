@@ -44,7 +44,8 @@ namespace Ubiquitous
 
         private static IEnumerable<object[]> CreateTestCases()
         {
-            return Enumerable.Range(1, 7).Select(it => new object[] { it });
+            return Enumerable.Range(1, 7)
+                .Select(it => new object[] { it.ToString("D2", CultureInfo.InvariantCulture) });
         }
 
         private void IterativeVerticesSingleComponentCore(AdjacencyListIncidenceGraph graph)
@@ -112,12 +113,12 @@ namespace Ubiquitous
 
         [Theory]
         [MemberData(nameof(TestCases))]
-        public void Iterative_vertices_single_component_member(int testCase)
+        public void Iterative_vertices_single_component_member(string testCase)
         {
+            Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
 
-            string name = testCase.ToString("D2", CultureInfo.InvariantCulture);
-            using (TextReader textReader = IndexedGraphs.GetTextReader(name))
+            using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
             {
                 Assert.NotEqual(TextReader.Null, textReader);
                 IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
