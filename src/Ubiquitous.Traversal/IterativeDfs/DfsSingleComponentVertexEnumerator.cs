@@ -23,7 +23,6 @@ namespace Ubiquitous.Traversal
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private readonly TVertex _startVertex;
-
         private int _state;
 
         private DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -42,7 +41,8 @@ namespace Ubiquitous.Traversal
             _state = 1;
         }
 
-        public IEnumerator<DfsStep<TVertex>> GetEnumerator()
+        public DfsSingleComponentVertexEnumerator<
+            TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> GetEnumerator()
         {
             DfsSingleComponentVertexEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
                 TGraphPolicy, TColorMapPolicy> ator = this;
