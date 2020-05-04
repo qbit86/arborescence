@@ -50,7 +50,18 @@ namespace Ubiquitous.Traversal
             if (_state <= 0)
                 return false;
 
-            throw new NotImplementedException();
+            // With `while (true)` we can avoid `goto label`,
+            // simulating the latter with `_state = label; continue;`.
+            while (true)
+            {
+                switch (_state)
+                {
+                    case 1:
+                        throw new NotImplementedException();
+                }
+
+                return Terminate(out _current);
+            }
         }
 
         internal void Reset(TVertex startVertex)
@@ -77,6 +88,14 @@ namespace Ubiquitous.Traversal
             _stack?.Clear();
             _stack = default;
             _state = -1;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool Terminate(out DfsStep<TEdge> current)
+        {
+            current = new DfsStep<TEdge>(DfsStepKind.None, default);
+            _state = -2;
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
