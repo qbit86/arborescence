@@ -50,9 +50,9 @@ namespace Ubiquitous.Traversal
             return ator;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         IEnumerator<DfsStep<TVertex>> IEnumerable<DfsStep<TVertex>>.GetEnumerator() => GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public bool MoveNext()
         {
