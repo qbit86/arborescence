@@ -50,7 +50,8 @@ namespace Ubiquitous.Traversal
             if (_state <= 0)
                 return false;
 
-            throw new NotImplementedException();
+            _state = 2;
+            return _edgeIterator.MoveNext();
         }
 
         public void Reset()
@@ -73,7 +74,7 @@ namespace Ubiquitous.Traversal
                     case 1:
                         return new DfsStep<TEdge>(DfsStepKind.None, default);
                     default:
-                        throw new NotImplementedException();
+                        return _edgeIterator._current;
                 }
             }
         }

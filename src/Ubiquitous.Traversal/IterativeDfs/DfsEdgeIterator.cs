@@ -17,6 +17,8 @@ namespace Ubiquitous.Traversal
         private TGraphPolicy _graphPolicy;
         private TColorMapPolicy _colorMapPolicy;
 
+        internal DfsStep<TEdge> _current;
+        private TVertex _currentVertex;
         private int _state;
 
         internal DfsEdgeIterator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
@@ -28,6 +30,8 @@ namespace Ubiquitous.Traversal
             _graphPolicy = graphPolicy;
             _colorMapPolicy = colorMapPolicy;
 
+            _current = new DfsStep<TEdge>(DfsStepKind.None, default);
+            _currentVertex = startVertex;
             _state = 1;
         }
 
@@ -43,6 +47,8 @@ namespace Ubiquitous.Traversal
         {
             Assert(_state > 0, "_state > 0");
 
+            _current = new DfsStep<TEdge>(DfsStepKind.None, default);
+            _currentVertex = startVertex;
             _state = 1;
             throw new NotImplementedException();
         }
@@ -52,6 +58,8 @@ namespace Ubiquitous.Traversal
             if (_state == -1)
                 return;
 
+            _current = default;
+            _currentVertex = default;
             _state = -1;
             throw new NotImplementedException();
         }
