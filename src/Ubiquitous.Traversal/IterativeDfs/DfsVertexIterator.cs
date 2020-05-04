@@ -6,8 +6,8 @@ namespace Ubiquitous.Traversal
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
-    internal struct DfsVertexIterator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+    internal struct DfsVertexIterator<
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
