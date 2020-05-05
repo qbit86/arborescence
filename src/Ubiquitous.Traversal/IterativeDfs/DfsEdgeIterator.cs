@@ -103,22 +103,19 @@ namespace Ubiquitous.Traversal
                             case Color.White:
                                 return CreateEdgeStep(DfsStepKind.TreeEdge, edge, 6);
                             case Color.Gray:
-                                return CreateEdgeStep(DfsStepKind.BackEdge, edge, 8);
+                                return CreateEdgeStep(DfsStepKind.BackEdge, edge, 7);
                             default:
-                                return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 8);
+                                return CreateEdgeStep(DfsStepKind.ForwardOrCrossEdge, edge, 7);
                         }
                     case 6:
                         PushEdgeStackFrame(_currentVertex, _edgeEnumerator.Current, _edgeEnumerator);
                         _currentVertex = _neighborVertex;
                         _colorMapPolicy.AddOrUpdate(_colorMap, _currentVertex, Color.Gray);
-                        _state = 7;
-                        continue;
-                    // TODO: Consider merging with state 6.
-                    case 7:
+
                         _edgeEnumerator = _graphPolicy.EnumerateOutEdges(_graph, _currentVertex);
                         _state = 4;
                         continue;
-                    case 8:
+                    case 7:
                         return CreateEdgeStep(DfsStepKind.FinishEdge, _edgeEnumerator.Current, 4);
                 }
 
