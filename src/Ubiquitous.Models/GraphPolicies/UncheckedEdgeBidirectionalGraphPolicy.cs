@@ -23,6 +23,6 @@ namespace Ubiquitous.Models
         public TEdges EnumerateOutEdges(TGraph graph, int vertex) => graph.EnumerateOutEdges(vertex);
 
         public TEdges EnumerateInEdges(TGraph graph, int vertex) => graph.EnumerateInEdges(vertex);
-#pragma warning restore CA1815 // Override equals and operator equals on value types
     }
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
