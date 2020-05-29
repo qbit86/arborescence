@@ -75,7 +75,7 @@ namespace Ubiquitous.Traversal
                 if (color != Color.None && color != Color.White)
                     continue;
 
-                yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, startVertex);
+                yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, u);
                 var vertexIterator = new DfsVertexIterator<
                     TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                     GraphPolicy, ColorMapPolicy, graph, u, colorMap);
