@@ -44,11 +44,11 @@ namespace Ubiquitous.Traversal
                     continue;
 
                 yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, u);
-                var vertexIterator = new DfsVertexIterator<
+                var iterator = new DfsVertexIterator<
                     TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                     GraphPolicy, ColorMapPolicy, graph, u, colorMap);
-                while (vertexIterator.MoveNext())
-                    yield return vertexIterator.Current;
+                while (iterator.MoveNext())
+                    yield return iterator.Current;
             }
         }
 
@@ -61,11 +61,11 @@ namespace Ubiquitous.Traversal
             ColorMapPolicy.Clear(colorMap);
 
             yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, startVertex);
-            var startVertexIterator = new DfsVertexIterator<
+            var startIterator = new DfsVertexIterator<
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                 GraphPolicy, ColorMapPolicy, graph, startVertex, colorMap);
-            while (startVertexIterator.MoveNext())
-                yield return startVertexIterator.Current;
+            while (startIterator.MoveNext())
+                yield return startIterator.Current;
 
             while (vertices.MoveNext())
             {
