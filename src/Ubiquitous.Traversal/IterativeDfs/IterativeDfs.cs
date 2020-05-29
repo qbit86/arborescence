@@ -2,6 +2,7 @@ namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     public static class IterativeDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -41,6 +42,10 @@ namespace Ubiquitous.Traversal
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
