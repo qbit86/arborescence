@@ -1,6 +1,5 @@
 namespace Ubiquitous.Traversal
 {
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct IterativeDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
     {
@@ -18,5 +17,4 @@ namespace Ubiquitous.Traversal
                 TGraphPolicy, TColorMapPolicy>(GraphPolicy, ColorMapPolicy, graph, startVertex, colorMap);
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
