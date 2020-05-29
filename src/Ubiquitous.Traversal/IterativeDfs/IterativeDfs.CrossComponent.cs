@@ -3,6 +3,7 @@ namespace Ubiquitous.Traversal
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct IterativeDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -34,7 +35,22 @@ namespace Ubiquitous.Traversal
         {
             Debug.Assert(vertices != null, "vertices != null");
 
-            throw new NotImplementedException();
+            ColorMapPolicy.Clear(colorMap);
+
+            while (vertices.MoveNext())
+            {
+                TVertex u = vertices.Current;
+                Color color = GetColorOrDefault(colorMap, u);
+                if (color != Color.None && color != Color.White)
+                    continue;
+
+                yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, u);
+                var vertexIterator = new DfsVertexIterator<
+                    TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                    GraphPolicy, ColorMapPolicy, graph, u, colorMap);
+                while (vertexIterator.MoveNext())
+                    yield return vertexIterator._current;
+            }
         }
 
         private IEnumerator<DfsStep<TVertex>> EnumerateVerticesCore<TVertexEnumerator>(
@@ -43,8 +59,34 @@ namespace Ubiquitous.Traversal
         {
             Debug.Assert(vertices != null, "vertices != null");
 
-            throw new NotImplementedException();
+            ColorMapPolicy.Clear(colorMap);
+
+            yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, startVertex);
+            var startVertexIterator = new DfsVertexIterator<
+                TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                GraphPolicy, ColorMapPolicy, graph, startVertex, colorMap);
+            while (startVertexIterator.MoveNext())
+                yield return startVertexIterator._current;
+
+            while (vertices.MoveNext())
+            {
+                TVertex u = vertices.Current;
+                Color color = GetColorOrDefault(colorMap, u);
+                if (color != Color.None && color != Color.White)
+                    continue;
+
+                yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, startVertex);
+                var vertexIterator = new DfsVertexIterator<
+                    TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
+                    GraphPolicy, ColorMapPolicy, graph, u, colorMap);
+                while (vertexIterator.MoveNext())
+                    yield return vertexIterator._current;
+            }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
