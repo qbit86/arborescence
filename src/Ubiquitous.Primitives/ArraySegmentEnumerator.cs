@@ -15,9 +15,6 @@ namespace Ubiquitous
 
         public ArraySegmentEnumerator(T[] array, int offset, int count)
         {
-            if (array == null)
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-
             if (array == null || (uint)offset > (uint)array.Length || (uint)count > (uint)(array.Length - offset))
                 ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, offset, count);
 
