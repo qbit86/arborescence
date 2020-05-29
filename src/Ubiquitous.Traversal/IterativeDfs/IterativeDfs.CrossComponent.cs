@@ -49,7 +49,7 @@ namespace Ubiquitous.Traversal
                     TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                     GraphPolicy, ColorMapPolicy, graph, u, colorMap);
                 while (vertexIterator.MoveNext())
-                    yield return vertexIterator._current;
+                    yield return vertexIterator.Current;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Ubiquitous.Traversal
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                 GraphPolicy, ColorMapPolicy, graph, startVertex, colorMap);
             while (startVertexIterator.MoveNext())
-                yield return startVertexIterator._current;
+                yield return startVertexIterator.Current;
 
             while (vertices.MoveNext())
             {
@@ -80,7 +80,7 @@ namespace Ubiquitous.Traversal
                     TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                     GraphPolicy, ColorMapPolicy, graph, u, colorMap);
                 while (vertexIterator.MoveNext())
-                    yield return vertexIterator._current;
+                    yield return vertexIterator.Current;
             }
         }
 

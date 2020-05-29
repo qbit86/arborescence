@@ -26,7 +26,7 @@ namespace Ubiquitous.Traversal
         private TGraph _graph;
         private TColorMap _colorMap;
 
-        internal DfsStep<TVertex> _current;
+        private DfsStep<TVertex> _current;
         private TEdgeEnumerator _edgeEnumerator; // Corresponds to iterator range in Boost implementation.
         private TVertex _neighborVertex; // Corresponds to `v` in Boost implementation.
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
@@ -51,6 +51,8 @@ namespace Ubiquitous.Traversal
             _stack = default;
             _state = 1;
         }
+
+        internal DfsStep<TVertex> Current => _current;
 
         internal bool MoveNext()
         {

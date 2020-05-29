@@ -74,7 +74,7 @@ namespace Ubiquitous.Traversal
                     case 1:
                         return new DfsStep<TEdge>(DfsStepKind.None, default);
                     default:
-                        return _edgeIterator._current;
+                        return _edgeIterator.Current;
                 }
             }
         }

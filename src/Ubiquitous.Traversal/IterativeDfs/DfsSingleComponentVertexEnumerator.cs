@@ -92,7 +92,7 @@ namespace Ubiquitous.Traversal
                     case 2:
                         return new DfsStep<TVertex>(DfsStepKind.StartVertex, _startVertex);
                     default:
-                        return _vertexIterator._current;
+                        return _vertexIterator.Current;
                 }
             }
         }
