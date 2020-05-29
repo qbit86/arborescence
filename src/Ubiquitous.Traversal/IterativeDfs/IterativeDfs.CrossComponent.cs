@@ -3,7 +3,6 @@ namespace Ubiquitous.Traversal
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct IterativeDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -83,10 +82,6 @@ namespace Ubiquitous.Traversal
                     yield return vertexIterator.Current;
             }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
-            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
