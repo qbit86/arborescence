@@ -73,7 +73,7 @@ namespace Ubiquitous
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
-            var dfsHandler = new DfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
+            var dfsHandler = new TestDfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
 
             // Act
 
@@ -132,7 +132,7 @@ namespace Ubiquitous
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var instantSteps = new Rist<IndexedDfsStep>(graph.VertexCount);
-            var dfsHandler = new DfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
+            var dfsHandler = new TestDfsHandler<AdjacencyListIncidenceGraph>(instantSteps);
 
             // Act
 
