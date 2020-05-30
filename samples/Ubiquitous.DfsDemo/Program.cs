@@ -32,44 +32,34 @@ namespace Ubiquitous
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
-            var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                IndexCollectionEnumerator, ArraySegmentEnumerator<int>, byte[], IndexedDfsStep>.Create(
-                default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy),
-                default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
+            var dfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[]>.Create(
+                default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            var vertices = new IndexCollection(graph.VertexCount);
+            var vertices = new RangeEnumerator(0, graph.VertexCount);
             var vertexKinds = new DfsStepKind[graph.VertexCount];
             var edgeKinds = new DfsStepKind[graph.EdgeCount];
-            var steps = dfs.Traverse(graph, vertices, colorMap);
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(vertexKinds, edgeKinds);
 
-            FillStepKinds(steps, vertexKinds, edgeKinds);
+            dfs.Traverse(graph, vertices, colorMap, dfsHandler);
+
             SerializeGraph(graph, vertexKinds, edgeKinds, "DFS forest", Console.Out);
             ArrayPool<byte>.Shared.Return(colorMap);
         }
 
-        private static void FillStepKinds(
-            IEnumerable<IndexedDfsStep> steps, Span<DfsStepKind> vertexKinds, Span<DfsStepKind> edgeKinds)
+        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(
+            DfsStepKind[] vertexKinds, DfsStepKind[] edgeKinds)
         {
-            Assert(steps != null);
+            Assert(vertexKinds != null, "vertexKinds != null");
+            Assert(edgeKinds != null, "edgeKinds != null");
 
-            foreach (IndexedDfsStep step in steps)
-            {
-                switch (step.Kind)
-                {
-                    case DfsStepKind.TreeEdge:
-                    case DfsStepKind.BackEdge:
-                    case DfsStepKind.ForwardOrCrossEdge:
-                        edgeKinds[step.Value] = step.Kind;
-                        break;
-                    case DfsStepKind.StartVertex:
-                        vertexKinds[step.Value] = step.Kind;
-                        break;
-                    default:
-                        continue;
-                }
-            }
+            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            result.StartVertex += (_, v) => vertexKinds[v] = DfsStepKind.StartVertex;
+            result.TreeEdge += (_, e) => edgeKinds[e] = DfsStepKind.TreeEdge;
+            result.BackEdge += (_, e) => edgeKinds[e] = DfsStepKind.BackEdge;
+            result.ForwardOrCrossEdge += (_, e) => edgeKinds[e] = DfsStepKind.ForwardOrCrossEdge;
+            return result;
         }
     }
 }
