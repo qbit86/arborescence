@@ -11,7 +11,6 @@ namespace Ubiquitous
     using static System.Diagnostics.Debug;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
-    using IndexedDfsStep = Traversal.DfsStep<int>;
 
     internal static partial class Program
     {
