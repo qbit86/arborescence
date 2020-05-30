@@ -42,6 +42,8 @@ namespace Ubiquitous
             var vertices = new IndexCollection(graph.VertexCount);
             var vertexKinds = new DfsStepKind[graph.VertexCount];
             var edgeKinds = new DfsStepKind[graph.EdgeCount];
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(vertexKinds, edgeKinds);
+
             var steps = dfs.Traverse(graph, vertices, colorMap);
 
             FillStepKinds(steps, vertexKinds, edgeKinds);
@@ -70,6 +72,17 @@ namespace Ubiquitous
                         continue;
                 }
             }
+        }
+
+        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(
+            DfsStepKind[] vertexKinds, DfsStepKind[] edgeKinds)
+        {
+            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            result.StartVertex += (_, v) => vertexKinds[v] = DfsStepKind.StartVertex;
+            result.TreeEdge += (_, e) => edgeKinds[e] = DfsStepKind.TreeEdge;
+            result.BackEdge += (_, e) => edgeKinds[e] = DfsStepKind.BackEdge;
+            result.ForwardOrCrossEdge += (_, e) => edgeKinds[e] = DfsStepKind.ForwardOrCrossEdge;
+            return result;
         }
     }
 }
