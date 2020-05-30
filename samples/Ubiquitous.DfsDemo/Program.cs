@@ -55,7 +55,8 @@ namespace Ubiquitous
             }
         }
 
-        private static void FillEdgeKinds(IEnumerable<IndexedDfsStep> steps, StepMap vertexKinds, StepMap edgeKinds)
+        private static void FillEdgeKinds(
+            IEnumerable<IndexedDfsStep> steps, Span<DfsStepKind> vertexKinds, Span<DfsStepKind> edgeKinds)
         {
             Assert(steps != null);
 
