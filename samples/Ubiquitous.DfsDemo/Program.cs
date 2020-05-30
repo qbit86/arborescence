@@ -49,7 +49,7 @@ namespace Ubiquitous
                 var edgeKinds = new DfsStepKind[graph.EdgeCount];
                 FillStepKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraph(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
+                SerializeGraph(graph, vertexKinds, edgeKinds, "DFS forest", Console.Out);
                 ArrayPool<byte>.Shared.Return(colorMap);
             }
         }
