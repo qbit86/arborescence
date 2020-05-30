@@ -29,29 +29,24 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
+            var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
+                IndexCollectionEnumerator, ArraySegmentEnumerator<int>, byte[], IndexedDfsStep>.Create(
+                default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy),
+                default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
+
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
             var vertices = new IndexCollection(graph.VertexCount);
-            var indexedMapPolicy = default(IndexedColorMapPolicy);
+            var vertexKinds = new DfsStepKind[graph.VertexCount];
+            var edgeKinds = new DfsStepKind[graph.EdgeCount];
+            var steps = dfs.Traverse(graph, vertices, colorMap);
 
-            {
-                var dfs = MultipleSourceDfs<AdjacencyListIncidenceGraph, int, int, IndexCollection,
-                    IndexCollectionEnumerator, ArraySegmentEnumerator<int>, byte[], IndexedDfsStep>.Create(
-                    default(IndexedAdjacencyListGraphPolicy), indexedMapPolicy,
-                    default(IndexCollectionEnumerablePolicy), default(IndexedDfsStepPolicy));
-
-                byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-                Array.Clear(colorMap, 0, colorMap.Length);
-                var steps = dfs.Traverse(graph, vertices, colorMap);
-                var vertexKinds = new DfsStepKind[graph.VertexCount];
-                var edgeKinds = new DfsStepKind[graph.EdgeCount];
-                FillStepKinds(steps, vertexKinds, edgeKinds);
-
-                SerializeGraph(graph, vertexKinds, edgeKinds, "DFS forest", Console.Out);
-                ArrayPool<byte>.Shared.Return(colorMap);
-            }
+            FillStepKinds(steps, vertexKinds, edgeKinds);
+            SerializeGraph(graph, vertexKinds, edgeKinds, "DFS forest", Console.Out);
+            ArrayPool<byte>.Shared.Return(colorMap);
         }
 
         private static void FillStepKinds(
