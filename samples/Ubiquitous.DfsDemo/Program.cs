@@ -12,7 +12,6 @@ namespace Ubiquitous
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
     using IndexedDfsStep = Traversal.DfsStep<int>;
-    using StepMap = System.ArraySegment<Traversal.DfsStepKind>;
 
     internal static partial class Program
     {
@@ -46,8 +45,8 @@ namespace Ubiquitous
                 byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
                 Array.Clear(colorMap, 0, colorMap.Length);
                 var steps = dfs.Traverse(graph, vertices, colorMap);
-                var vertexKinds = new StepMap(new DfsStepKind[graph.VertexCount]);
-                var edgeKinds = new StepMap(new DfsStepKind[graph.EdgeCount]);
+                var vertexKinds = new DfsStepKind[graph.VertexCount];
+                var edgeKinds = new DfsStepKind[graph.EdgeCount];
                 FillEdgeKinds(steps, vertexKinds, edgeKinds);
 
                 SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
