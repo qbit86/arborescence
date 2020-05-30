@@ -9,7 +9,7 @@
 
     internal static partial class Program
     {
-        private static void SerializeGraphByEdges(AdjacencyListIncidenceGraph graph,
+        private static void SerializeGraph(AdjacencyListIncidenceGraph graph,
             ReadOnlySpan<DfsStepKind> vertexKinds, ReadOnlySpan<DfsStepKind> edgeKinds,
             string graphName, TextWriter textWriter)
         {

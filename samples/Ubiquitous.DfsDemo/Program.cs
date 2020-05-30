@@ -47,14 +47,14 @@ namespace Ubiquitous
                 var steps = dfs.Traverse(graph, vertices, colorMap);
                 var vertexKinds = new DfsStepKind[graph.VertexCount];
                 var edgeKinds = new DfsStepKind[graph.EdgeCount];
-                FillEdgeKinds(steps, vertexKinds, edgeKinds);
+                FillStepKinds(steps, vertexKinds, edgeKinds);
 
-                SerializeGraphByEdges(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
+                SerializeGraph(graph, vertexKinds, edgeKinds, "Boost DFS forest", Console.Out);
                 ArrayPool<byte>.Shared.Return(colorMap);
             }
         }
 
-        private static void FillEdgeKinds(
+        private static void FillStepKinds(
             IEnumerable<IndexedDfsStep> steps, Span<DfsStepKind> vertexKinds, Span<DfsStepKind> edgeKinds)
         {
             Assert(steps != null);
