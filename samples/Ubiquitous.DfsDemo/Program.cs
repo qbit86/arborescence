@@ -3,6 +3,7 @@ namespace Ubiquitous
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using Models;
     using Traversal;
@@ -15,6 +16,8 @@ namespace Ubiquitous
 
     internal static partial class Program
     {
+        private static CultureInfo F => CultureInfo.InvariantCulture;
+
         private static void Main()
         {
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
@@ -28,8 +31,8 @@ namespace Ubiquitous
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
 
-            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount}");
-            Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount}");
+            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
+            Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
             var vertices = new IndexCollection(graph.VertexCount);
             var indexedMapPolicy = default(IndexedColorMapPolicy);
