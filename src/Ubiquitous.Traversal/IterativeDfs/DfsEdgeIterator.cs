@@ -134,7 +134,8 @@ namespace Ubiquitous.Traversal
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = startVertex;
-            ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
+            if (_stack != null)
+                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
             _stack = null;
             _state = 1;
         }
@@ -148,7 +149,8 @@ namespace Ubiquitous.Traversal
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = default;
-            ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
+            if (_stack != null)
+                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
             _stack = null;
             _stack = default;
             _state = -1;
