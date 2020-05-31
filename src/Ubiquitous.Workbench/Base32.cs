@@ -2,6 +2,8 @@
 {
     using System;
 
+    // https://en.wikipedia.org/wiki/Base32#RFC_4648_Base32_alphabet
+
     public static class Base32
     {
         private const string Alphabet = "abcdefghijklmnopqrstuvwxyz234567";
