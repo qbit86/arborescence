@@ -4,6 +4,7 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    // ReSharper disable UnusedTypeParameter
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
     {
@@ -60,5 +61,6 @@ namespace Ubiquitous.Traversal
             }
         }
     }
+    // ReSharper restore UnusedTypeParameter
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
