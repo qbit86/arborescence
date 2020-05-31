@@ -16,7 +16,7 @@
             IConfig config = ManualConfig.Create(DefaultConfig.Instance)
                 .With(job);
 
-            Summary _ = BenchmarkRunner.Run<DfsTreeBoostBenchmark>(config);
+            Summary _ = BenchmarkRunner.Run<DfsTreeBenchmark>(config);
         }
     }
 }

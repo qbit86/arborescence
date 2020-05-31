@@ -10,7 +10,7 @@ namespace Ubiquitous
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     [MemoryDiagnoser]
-    public abstract class DfsTreeBoostBenchmark
+    public abstract class DfsTreeBenchmark
     {
         private byte[] _colorMap = Array.Empty<byte>();
 
