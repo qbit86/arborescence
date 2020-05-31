@@ -79,6 +79,7 @@ namespace Ubiquitous
             while (steps.MoveNext())
                 ++count;
 
+            steps.Dispose();
             return count;
         }
 
