@@ -76,7 +76,7 @@ namespace Ubiquitous
             Array.Clear(_colorMap, 0, _colorMap.Length);
             var steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
             int count = 0;
-            foreach (IndexedDfsStep _ in steps)
+            while (steps.MoveNext())
                 ++count;
 
             return count;
