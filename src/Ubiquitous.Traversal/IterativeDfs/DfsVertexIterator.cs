@@ -179,7 +179,7 @@ namespace Ubiquitous.Traversal
         private void EnsureStackInitialized()
         {
             if (_stack is null)
-                _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+                _stack = ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire();
             else
                 _stack.Clear();
         }
