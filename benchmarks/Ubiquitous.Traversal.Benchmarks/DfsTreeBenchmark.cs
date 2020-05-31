@@ -40,7 +40,7 @@ namespace Ubiquitous
             InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(graphPolicy, colorMapPolicy);
 
-            EnumerableDfs = IterativeDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
+            EnumerableDfs = EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(graphPolicy, colorMapPolicy);
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
