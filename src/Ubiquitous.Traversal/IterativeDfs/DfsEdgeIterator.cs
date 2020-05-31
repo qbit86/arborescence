@@ -4,6 +4,7 @@ namespace Ubiquitous.Traversal
 {
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+    using Internal;
     using static System.Diagnostics.Debug;
 
     internal struct DfsEdgeIterator<
@@ -133,7 +134,8 @@ namespace Ubiquitous.Traversal
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = startVertex;
-            _stack?.Clear();
+            ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
+            _stack = null;
             _state = 1;
         }
 
@@ -146,7 +148,8 @@ namespace Ubiquitous.Traversal
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = default;
-            _stack?.Clear();
+            ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
+            _stack = null;
             _stack = default;
             _state = -1;
         }
@@ -171,7 +174,7 @@ namespace Ubiquitous.Traversal
         private void EnsureStackInitialized()
         {
             if (_stack is null)
-                _stack = new List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+                _stack = ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire();
             else
                 _stack.Clear();
         }
