@@ -5,11 +5,6 @@ namespace Ubiquitous.Traversal
         TStep CreateVertexStep(TStepKind kind, TVertex vertex);
     }
 
-    public interface IEdgeStepPolicy<in TStepKind, in TEdge, out TStep>
-    {
-        TStep CreateEdgeStep(TStepKind kind, TEdge edge);
-    }
-
     public interface IUndirectedEdgeStepPolicy<in TStepKind, in TEdge, out TStep>
     {
         TStep CreateEdgeStep(TStepKind kind, TEdge edge, bool isReversed);
