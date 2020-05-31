@@ -20,6 +20,13 @@
             try
             {
                 textWriter.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
+                if (!vertexKinds.IsEmpty)
+                {
+                    for (int v = 0; v < graph.VertexCount; ++v)
+                        textWriter.Write(v == 0 ? $"  {IndexToString(v)}" : $" {IndexToString(v)}");
+
+                    textWriter.WriteLine();
+                }
 
                 if (!edgeKinds.IsEmpty)
                 {
@@ -67,7 +74,7 @@
                 textWriter.WriteLine("}");
             }
 
-            string IndexToString(int i) => Base32.ToString(i);
+            static string IndexToString(int i) => Base32.ToString(i);
         }
     }
 }
