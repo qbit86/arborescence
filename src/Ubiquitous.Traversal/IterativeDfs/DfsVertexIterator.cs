@@ -4,6 +4,7 @@ namespace Ubiquitous.Traversal
 {
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+    using Internal;
     using static System.Diagnostics.Debug;
 
     // States:
@@ -127,7 +128,9 @@ namespace Ubiquitous.Traversal
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = startVertex;
-            _stack?.Clear();
+            if (_stack != null)
+                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
+            _stack = default;
             _state = 1;
         }
 
@@ -140,7 +143,8 @@ namespace Ubiquitous.Traversal
             _edgeEnumerator = default;
             _neighborVertex = default;
             _currentVertex = default;
-            _stack?.Clear();
+            if (_stack != null)
+                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
             _stack = default;
             _state = -1;
         }
