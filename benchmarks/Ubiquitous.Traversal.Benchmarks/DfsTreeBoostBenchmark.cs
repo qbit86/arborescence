@@ -8,7 +8,6 @@ namespace Ubiquitous
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
-    using IndexedDfsStep = Traversal.DfsStep<int>;
 
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
@@ -28,10 +27,6 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             EnumerableDfs { get; set; }
 
-        private Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedDfsStep,
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy, IndexedDfsStepPolicy>
-            DefaultDfs { get; set; }
-
         private AdjacencyListIncidenceGraph Graph { get; set; }
 
         [GlobalSetup]
@@ -47,9 +42,6 @@ namespace Ubiquitous
 
             EnumerableDfs = IterativeDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(graphPolicy, colorMapPolicy);
-
-            DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedDfsStep>
-                .Create(graphPolicy, colorMapPolicy, default(IndexedDfsStepPolicy));
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
         }
@@ -71,7 +63,7 @@ namespace Ubiquitous
         }
 
         [Benchmark]
-        public int EnumerableDfsTree()
+        public int EnumerableDfsEdgesTree()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             var steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
@@ -84,14 +76,15 @@ namespace Ubiquitous
         }
 
         [Benchmark]
-        public int LegacyDfsTree()
+        public int EnumerableDfsVerticesTree()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            var steps = DefaultDfs.Traverse(Graph, 0, _colorMap);
+            var steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
-            foreach (IndexedDfsStep _ in steps)
+            while (steps.MoveNext())
                 ++count;
 
+            steps.Dispose();
             return count;
         }
     }
