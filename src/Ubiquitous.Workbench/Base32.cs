@@ -9,7 +9,7 @@
         public static string ToString(int value)
         {
             if (value == 0)
-                return "0";
+                return "a";
 
             uint l = (uint)value;
             Span<char> buffer = stackalloc char[7];
