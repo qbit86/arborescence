@@ -56,7 +56,7 @@ namespace Ubiquitous
 
             var instantSteps = new Rist<DfsStep<int>>(graph.VertexCount);
             var iterativeSteps = new Rist<DfsStep<int>>(graph.VertexCount);
-            var dfsHandler = new IndexedDfsVertexHandler<AdjacencyListIncidenceGraph>(instantSteps);
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
@@ -107,7 +107,7 @@ namespace Ubiquitous
 
             var instantSteps = new Rist<DfsStep<int>>(graph.VertexCount);
             var iterativeSteps = new Rist<DfsStep<int>>(graph.VertexCount);
-            var dfsHandler = new IndexedDfsVertexHandler<AdjacencyListIncidenceGraph>(instantSteps);
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
@@ -142,6 +142,17 @@ namespace Ubiquitous
             instantSteps.Dispose();
             ArrayPool<byte>.Shared.Return(iterativeColorMap);
             ArrayPool<byte>.Shared.Return(instantColorMap);
+        }
+
+        private DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(IList<DfsStep<int>> steps)
+        {
+            Debug.Assert(steps != null, "steps != null");
+
+            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            result.StartVertex += (g, v) => steps.Add(DfsStep.Create(DfsStepKind.StartVertex, v));
+            result.DiscoverVertex += (g, v) => steps.Add(DfsStep.Create(DfsStepKind.DiscoverVertex, v));
+            result.FinishVertex += (g, v) => steps.Add(DfsStep.Create(DfsStepKind.FinishVertex, v));
+            return result;
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
