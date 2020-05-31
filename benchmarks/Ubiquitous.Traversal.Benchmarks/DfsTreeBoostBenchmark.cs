@@ -13,6 +13,8 @@ namespace Ubiquitous
     [MemoryDiagnoser]
     public abstract class DfsTreeBoostBenchmark
     {
+        private byte[] _colorMap = Array.Empty<byte>();
+
         [Params(10, 100, 1000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -48,44 +50,47 @@ namespace Ubiquitous
 
             DefaultDfs = Dfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedDfsStep>
                 .Create(graphPolicy, colorMapPolicy, default(IndexedDfsStepPolicy));
+
+            _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
+        }
+
+        [GlobalCleanup]
+        public void GlobalCleanup()
+        {
+            ArrayPool<byte>.Shared.Return(_colorMap, true);
+            _colorMap = Array.Empty<byte>();
         }
 
         [Benchmark(Baseline = true)]
         public int InstantDfsTree()
         {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
             var handler = new DummyDfsHandler<AdjacencyListIncidenceGraph>();
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
-            InstantDfs.Traverse(Graph, 0, colorMap, handler);
-            ArrayPool<byte>.Shared.Return(colorMap);
+            InstantDfs.Traverse(Graph, 0, _colorMap, handler);
             return handler.Count;
         }
 
         [Benchmark]
         public int EnumerableDfsTree()
         {
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
-            var steps = EnumerableDfs.EnumerateEdges(Graph, 0, colorMap);
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            var steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
             int count = 0;
             foreach (IndexedDfsStep _ in steps)
                 ++count;
 
-            ArrayPool<byte>.Shared.Return(colorMap);
             return count;
         }
 
         [Benchmark]
-        public int DefaultDfsTree()
+        public int LegacyDfsTree()
         {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            var steps = DefaultDfs.Traverse(Graph, 0, _colorMap);
             int count = 0;
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
-            var steps = DefaultDfs.Traverse(Graph, 0, colorMap);
             foreach (IndexedDfsStep _ in steps)
                 ++count;
 
-            ArrayPool<byte>.Shared.Return(colorMap);
             return count;
         }
     }
