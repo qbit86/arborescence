@@ -13,22 +13,22 @@
             if (value == 0)
                 return "a";
 
-            uint l = (uint)value;
+            uint remainingBits = (uint)value;
             Span<char> buffer = stackalloc char[7];
-            int index = 0;
-            for (int i = 0; i != buffer.Length; i++)
+            int length = 0;
+            for (int i = 0; i != buffer.Length; ++i)
             {
-                uint mod = l & 0b11111;
+                uint mod = remainingBits & 0b11111;
                 buffer[i] = Alphabet[(int)mod];
-                l >>= 5;
-                if (l == 0)
+                remainingBits >>= 5;
+                if (remainingBits == 0)
                 {
-                    index = i + 1;
+                    length = i + 1;
                     break;
                 }
             }
 
-            Span<char> span = buffer.Slice(0, index);
+            Span<char> span = buffer.Slice(0, length);
             span.Reverse();
             return span.ToString();
         }
