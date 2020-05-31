@@ -1,10 +1,10 @@
 ﻿namespace Ubiquitous
 {
     using System;
-    using System.Globalization;
     using System.IO;
     using Models;
     using Traversal;
+    using Workbench;
     using static System.Diagnostics.Debug;
 
     internal static partial class Program
@@ -31,7 +31,7 @@
                         if (!graph.TryGetTarget(e, out int target))
                             continue;
 
-                        textWriter.Write($"  {IndexToChar(source)} -> {IndexToChar(target)}");
+                        textWriter.Write($"  {IndexToString(source)} -> {IndexToString(target)}");
 
                         DfsStepKind edgeKind = edgeKinds[e];
 
@@ -58,7 +58,7 @@
                     {
                         DfsStepKind vertexKind = vertexKinds[v];
                         if (vertexKind == DfsStepKind.StartVertex)
-                            textWriter.WriteLine($"  {IndexToChar(v)} [style=filled]");
+                            textWriter.WriteLine($"  {IndexToString(v)} [style=filled]");
                     }
                 }
             }
@@ -67,15 +67,7 @@
                 textWriter.WriteLine("}");
             }
 
-            string IndexToChar(int i)
-            {
-                if (i < 0 || i > 26)
-                    return i.ToString(CultureInfo.InvariantCulture);
-
-                char c = (char)(i + 'a');
-
-                return c.ToString(CultureInfo.InvariantCulture);
-            }
+            string IndexToString(int i) => Base32.ToString(i);
         }
     }
 }
