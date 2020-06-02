@@ -19,7 +19,7 @@
             int length = 0;
             for (int i = 0; i != buffer.Length; ++i)
             {
-                uint mod = remainingBits & 0b11111;
+                uint mod = remainingBits & 0b11111u;
                 buffer[i] = Alphabet[(int)mod];
                 remainingBits >>= 5;
                 if (remainingBits == 0)
@@ -39,20 +39,21 @@
             ReadOnlySpan<char> input = value.Length > MaxLength
                 ? value.Slice(value.Length - MaxLength, MaxLength)
                 : value;
-            Span<byte> buffer = stackalloc byte[MaxLength];
 
+            uint resultBits = 0;
             for (int i = 0; i != input.Length; ++i)
             {
+                resultBits <<= 5;
                 char c = char.ToLowerInvariant(input[i]);
                 if (c >= 'a' && c <= 'z')
                 {
-                    buffer[i] = (byte)(c - 'a');
+                    resultBits |= (uint)(c - 'a') & 0b11111u;
                     continue;
                 }
 
                 if (c >= '2' && c <= '7')
                 {
-                    buffer[i] = (byte)(26 + c - '2');
+                    resultBits |= (uint)(26 + c - '2') & 0b11111u;
                     continue;
                 }
 
@@ -60,7 +61,8 @@
                 return false;
             }
 
-            throw new NotImplementedException();
+            result = (int)resultBits;
+            return true;
         }
     }
 }
