@@ -2,7 +2,6 @@ namespace Ubiquitous.Workbench
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using static System.Diagnostics.Debug;
 
@@ -10,7 +9,7 @@ namespace Ubiquitous.Workbench
     {
         private static readonly string[] s_arrowSeparator = { "->" };
 
-        // Treats characters from ['a', 'z'] as integers from [0, 26).
+        // Treats nodes as Base32 numbers: https://en.wikipedia.org/wiki/Base32#RFC_4648_Base32_alphabet
 
         public static IEnumerable<SourceTargetPair<int>> ParseEdges(TextReader textReader)
         {
@@ -35,22 +34,16 @@ namespace Ubiquitous.Workbench
                     continue;
 
                 string leftToken = leftTokens[leftTokens.Length - 1];
-                if (!int.TryParse(leftToken, NumberStyles.None, CultureInfo.InvariantCulture, out int source))
-                {
-                    if (!TryParse(leftToken.AsSpan(), out source))
-                        continue;
-                }
+                if (!TryParse(leftToken.AsSpan(), out int source))
+                    continue;
 
                 string[] rightTokens = parts[1].Split(default(char[]), 2, StringSplitOptions.RemoveEmptyEntries);
                 if (rightTokens.Length < 1)
                     continue;
 
                 string rightToken = rightTokens[0];
-                if (!int.TryParse(rightToken, NumberStyles.None, CultureInfo.InvariantCulture, out int target))
-                {
-                    if (!TryParse(rightToken.AsSpan(), out target))
-                        continue;
-                }
+                if (!TryParse(rightToken.AsSpan(), out int target))
+                    continue;
 
                 yield return SourceTargetPair.Create(source, target);
             }
