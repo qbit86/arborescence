@@ -98,7 +98,7 @@ namespace Ubiquitous
 
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
             int startVertex = graph.VertexCount - 1;
-            var vertices = new RangeEnumerator(0, graph.VertexCount);
+            var vertices = new IndexEnumerator(graph.VertexCount);
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
