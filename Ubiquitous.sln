@@ -51,6 +51,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Tests.Shared", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Playground", "samples\Ubiquitous.Playground\Ubiquitous.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Collections", "src\Ubiquitous.Collections\Ubiquitous.Collections.csproj", "{BDA3146C-7E28-4B26-89C5-192841CD887D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
@@ -107,6 +109,10 @@ Global
 		{282AD4AD-D567-4B09-9521-118DDC9C3066}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{282AD4AD-D567-4B09-9521-118DDC9C3066}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{282AD4AD-D567-4B09-9521-118DDC9C3066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA3146C-7E28-4B26-89C5-192841CD887D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA3146C-7E28-4B26-89C5-192841CD887D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA3146C-7E28-4B26-89C5-192841CD887D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA3146C-7E28-4B26-89C5-192841CD887D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +133,7 @@ Global
 		{4383A396-67D9-4AC8-B1EF-1603F9D181A0} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{096764F1-8EF8-4961-9AE9-D419FD6B4D29} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{282AD4AD-D567-4B09-9521-118DDC9C3066} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
+		{BDA3146C-7E28-4B26-89C5-192841CD887D} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
