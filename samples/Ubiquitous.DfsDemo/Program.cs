@@ -36,7 +36,7 @@ namespace Ubiquitous
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            var vertices = new RangeEnumerator(0, graph.VertexCount);
+            var vertices = new IndexEnumerator(graph.VertexCount);
             var vertexKinds = new DfsStepKind[graph.VertexCount];
             var edgeKinds = new DfsStepKind[graph.EdgeCount];
             DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(vertexKinds, edgeKinds);

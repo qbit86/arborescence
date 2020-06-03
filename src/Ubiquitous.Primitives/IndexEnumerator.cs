@@ -3,18 +3,18 @@ namespace Ubiquitous
     using System.Collections;
     using System.Collections.Generic;
 
-    public struct IndexCollectionEnumerator : IEnumerator<int>
+    public struct IndexEnumerator : IEnumerator<int>
     {
         private readonly int _count;
         private int _current;
 
-        public IndexCollectionEnumerator(int count)
+        public IndexEnumerator(int count)
         {
             _count = count;
             _current = -1;
         }
 
-        public IndexCollectionEnumerator GetEnumerator()
+        public IndexEnumerator GetEnumerator()
         {
             return this;
         }
