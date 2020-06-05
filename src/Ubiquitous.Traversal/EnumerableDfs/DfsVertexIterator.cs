@@ -2,9 +2,9 @@
 
 namespace Ubiquitous.Traversal
 {
+    using System;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using Internal;
     using static System.Diagnostics.Debug;
 
     // States:
@@ -16,7 +16,7 @@ namespace Ubiquitous.Traversal
     // --- https://csharpindepth.com/Articles/IteratorBlockImplementation
 
     internal struct DfsVertexIterator<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> : IDisposable
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
@@ -31,7 +31,7 @@ namespace Ubiquitous.Traversal
         private TEdgeEnumerator _edgeEnumerator; // Corresponds to iterator range in Boost implementation.
         private TVertex _neighborVertex; // Corresponds to `v` in Boost implementation.
         private TVertex _currentVertex; // Corresponds to `u` in Boost implementation.
-        private List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
+        private Collections.Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> _stack;
         private int _state;
 
         internal DfsVertexIterator(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy,
@@ -132,7 +132,7 @@ namespace Ubiquitous.Traversal
             _state = 1;
         }
 
-        internal void Dispose()
+        public void Dispose()
         {
             if (_state == -1)
                 return;
@@ -176,16 +176,15 @@ namespace Ubiquitous.Traversal
         private void EnsureStackInitialized()
         {
             if (_stack is null)
-                _stack = ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire();
+                _stack = new Collections.Stack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
             else
-                _stack.Clear();
+                _stack.Dispose();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void EnsureStackReleased()
         {
-            if (_stack != null)
-                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(_stack);
+            _stack?.Dispose();
             _stack = default;
         }
 
@@ -204,18 +203,8 @@ namespace Ubiquitous.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame)
-        {
-            if (_stack.Count == 0)
-            {
-                stackFrame = default;
-                return false;
-            }
-
-            stackFrame = _stack[_stack.Count - 1];
-            _stack.RemoveAt(_stack.Count - 1);
-            return true;
-        }
+        private bool TryPopStackFrame(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame) =>
+            _stack.TryTake(out stackFrame);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
