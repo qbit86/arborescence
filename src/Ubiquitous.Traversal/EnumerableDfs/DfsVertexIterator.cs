@@ -2,6 +2,7 @@
 
 namespace Ubiquitous.Traversal
 {
+    using System;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
@@ -15,7 +16,7 @@ namespace Ubiquitous.Traversal
     // --- https://csharpindepth.com/Articles/IteratorBlockImplementation
 
     internal struct DfsVertexIterator<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> : IDisposable
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IGetTargetPolicy<TGraph, TVertex, TEdge>
@@ -131,7 +132,7 @@ namespace Ubiquitous.Traversal
             _state = 1;
         }
 
-        internal void Dispose()
+        public void Dispose()
         {
             if (_state == -1)
                 return;
