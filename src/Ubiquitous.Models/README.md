@@ -1,5 +1,7 @@
 # Ubiquitous Graphs
 
+Undirected graphs are basically “duplicated” directed graphs, but storage is more efficient than in case of naive edge duplication.
+
 ## Storage Layout
 
 ### Examples
