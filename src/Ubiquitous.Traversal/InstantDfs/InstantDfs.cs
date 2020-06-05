@@ -4,7 +4,7 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
-    using Internal;
+    using Collections;
 
     public static class InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -62,16 +62,13 @@ namespace Ubiquitous.Traversal
                 return;
             }
 
-            List<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>> stack =
-                ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Acquire();
+            var stack = new ValueStack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
 
             TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
             stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, false, default, outEdges));
 
-            while (stack.Count > 0)
+            while (stack.TryTake(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
             {
-                DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame = stack[stack.Count - 1];
-                stack.RemoveAt(stack.Count - 1);
                 u = stackFrame.Vertex;
                 if (stackFrame.HasEdge)
                     handler.OnFinishEdge(graph, stackFrame.Edge);
@@ -115,7 +112,7 @@ namespace Ubiquitous.Traversal
                 handler.OnFinishVertex(graph, u);
             }
 
-            ListCache<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>.Release(stack);
+            stack.Dispose();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
