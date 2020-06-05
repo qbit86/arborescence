@@ -14,7 +14,7 @@
                 .ApplyAndFreeze(RunMode.Short);
 
             IConfig config = ManualConfig.Create(DefaultConfig.Instance)
-                .With(job);
+                .AddJob(job);
 
             Summary _ = BenchmarkRunner.Run<DfsTreeBenchmark>(config);
         }
