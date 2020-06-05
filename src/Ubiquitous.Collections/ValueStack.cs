@@ -20,8 +20,12 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
-            CheckedReturnArray();
             _count = 0;
+            if (_arrayFromPool is null)
+                return;
+
+            Pool.Return(_arrayFromPool, ShouldClear());
+            _arrayFromPool = null;
         }
 
         public void Add(T item)
@@ -68,22 +72,13 @@
             Debug.Assert(_arrayFromPool!.Length > 0, "_arrayFromPool.Length > 0");
 
             int count = _count;
-            T[] newArray = Pool.Rent(count << 1);
-            Array.Copy(_arrayFromPool, newArray, count);
+            int newCapacity = count << 1;
+            T[] newArray = Pool.Rent(newCapacity);
+            Array.Copy(_arrayFromPool!, newArray, count);
             newArray[count] = item;
-            Pool.Return(_arrayFromPool, ShouldClear());
+            Pool.Return(_arrayFromPool!, ShouldClear());
             _arrayFromPool = newArray;
             _count = count + 1;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void CheckedReturnArray()
-        {
-            if (_arrayFromPool != null)
-            {
-                Pool.Return(_arrayFromPool, ShouldClear());
-                _arrayFromPool = null;
-            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
