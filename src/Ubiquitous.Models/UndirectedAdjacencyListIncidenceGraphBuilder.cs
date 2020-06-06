@@ -116,12 +116,12 @@
                 Pool.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
-            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount, headCount);
-            _heads.AsSpan().CopyTo(destTargets);
+            Span<int> destHeads = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount, headCount);
+            _heads.AsSpan().CopyTo(destHeads);
             _heads.Dispose(false);
 
-            Span<int> destSources = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount + headCount, tailCount);
-            _tails.AsSpan().CopyTo(destSources);
+            Span<int> destTails = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount + headCount, tailCount);
+            _tails.AsSpan().CopyTo(destTails);
             _tails.Dispose(false);
 
             return new UndirectedAdjacencyListIncidenceGraph(storage);
