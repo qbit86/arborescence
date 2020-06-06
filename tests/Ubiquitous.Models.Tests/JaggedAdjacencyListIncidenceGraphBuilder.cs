@@ -10,8 +10,8 @@ namespace Ubiquitous.Models
         private const int DefaultInitialOutDegree = 4;
 
         private int _initialOutDegree;
-        private ArrayBuilder<int> _sources;
-        private ArrayBuilder<int> _targets;
+        private ArrayBuilder<int> _tails;
+        private ArrayBuilder<int> _heads;
         private ArrayPrefix<ArrayPrefix<int>> _outEdges;
 
         public JaggedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
@@ -26,8 +26,8 @@ namespace Ubiquitous.Models
 
             _initialOutDegree = DefaultInitialOutDegree;
             int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
-            _sources = new ArrayBuilder<int>(effectiveEdgeCapacity);
-            _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _tails = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _heads = new ArrayBuilder<int>(effectiveEdgeCapacity);
             ArrayPrefix<int>[] outEdges = ArrayPool<ArrayPrefix<int>>.Shared.Rent(initialVertexCount);
             Array.Clear(outEdges, 0, initialVertexCount);
             _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
@@ -49,32 +49,32 @@ namespace Ubiquitous.Models
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out int edge)
+        public bool TryAdd(int tail, int head, out int edge)
         {
-            if (source < 0)
+            if (tail < 0)
             {
                 edge = -1;
                 return false;
             }
 
-            if (target < 0)
+            if (head < 0)
             {
                 edge = -2;
                 return false;
             }
 
-            int max = Math.Max(source, target);
+            int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            Assert(_sources.Count == _targets.Count);
-            int newEdgeIndex = _targets.Count;
-            _sources.Add(source);
-            _targets.Add(target);
+            Assert(_tails.Count == _heads.Count);
+            int newEdgeIndex = _heads.Count;
+            _tails.Add(tail);
+            _heads.Add(head);
 
-            if (_outEdges[source].Array is null)
-                _outEdges[source] = ArrayPrefix.Create(Pool.Rent(InitialOutDegree), 0);
+            if (_outEdges[tail].Array is null)
+                _outEdges[tail] = ArrayPrefix.Create(Pool.Rent(InitialOutDegree), 0);
 
-            _outEdges[source] = ArrayPrefixBuilder.Add(_outEdges[source], newEdgeIndex, true);
+            _outEdges[tail] = ArrayPrefixBuilder.Add(_outEdges[tail], newEdgeIndex, true);
 
             edge = newEdgeIndex;
             return true;
@@ -82,14 +82,14 @@ namespace Ubiquitous.Models
 
         public JaggedAdjacencyListIncidenceGraph ToGraph()
         {
-            Assert(_sources.Count == _targets.Count);
-            ReadOnlySpan<int> targetsBuffer = new Span<int>(_targets.Buffer, 0, _targets.Count);
-            ReadOnlySpan<int> sourcesBuffer = new Span<int>(_sources.Buffer, 0, _sources.Count);
-            int[] endpoints = _targets.Count > 0 ? new int[_targets.Count * 2] : ArrayBuilder<int>.EmptyArray;
+            Assert(_tails.Count == _heads.Count);
+            ReadOnlySpan<int> headsBuffer = new Span<int>(_heads.Buffer, 0, _heads.Count);
+            ReadOnlySpan<int> tailsBuffer = new Span<int>(_tails.Buffer, 0, _tails.Count);
+            int[] endpoints = _heads.Count > 0 ? new int[_heads.Count * 2] : ArrayBuilder<int>.EmptyArray;
             if (endpoints.Length > 0)
             {
-                targetsBuffer.CopyTo(endpoints.AsSpan(0, _targets.Count));
-                sourcesBuffer.CopyTo(endpoints.AsSpan(_targets.Count, _sources.Count));
+                headsBuffer.CopyTo(endpoints.AsSpan(0, _heads.Count));
+                tailsBuffer.CopyTo(endpoints.AsSpan(_heads.Count, _tails.Count));
             }
 
             var outEdges = new ArrayPrefix<int>[_outEdges.Count];
@@ -99,8 +99,8 @@ namespace Ubiquitous.Models
                 ArrayPool<ArrayPrefix<int>>.Shared.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayPrefix<int>>.Empty;
 
-            _sources.Dispose(false);
-            _targets.Dispose(false);
+            _tails.Dispose(false);
+            _heads.Dispose(false);
 
             return new JaggedAdjacencyListIncidenceGraph(endpoints, outEdges);
         }
