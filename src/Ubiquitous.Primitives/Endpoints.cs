@@ -12,26 +12,26 @@
     public static class Endpoints
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Endpoints<TVertex> Create<TVertex>(TVertex source, TVertex target)
+        public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head)
         {
-            return new Endpoints<TVertex>(source, target);
+            return new Endpoints<TVertex>(tail, head);
         }
 
         /// <summary>
         /// Used by Endpoints.ToString to reduce generic code.
         /// </summary>
-        internal static string PairToString(string source, string target)
+        internal static string PairToString(string tail, string head)
         {
             var s = new StringBuilder();
             s.Append('[');
 
-            if (source != null)
-                s.Append(source);
+            if (tail != null)
+                s.Append(tail);
 
             s.Append(", ");
 
-            if (target != null)
-                s.Append(target);
+            if (head != null)
+                s.Append(head);
 
             s.Append(']');
 
@@ -64,10 +64,10 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public void Deconstruct(out TVertex source, out TVertex target)
+        public void Deconstruct(out TVertex tail, out TVertex head)
         {
-            source = Tail;
-            target = Head;
+            tail = Tail;
+            head = Head;
         }
 
         public bool Equals(Endpoints<TVertex> other)
