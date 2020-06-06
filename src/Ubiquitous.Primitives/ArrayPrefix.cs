@@ -25,7 +25,6 @@ namespace Ubiquitous
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
-#pragma warning restore CA1710 // Identifiers should have correct suffix
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
 #pragma warning disable CA1825 // Avoid zero-length array allocations.
@@ -188,10 +187,10 @@ namespace Ubiquitous
 
 #pragma warning disable CA2225 // Operator overloads have named alternates
         public static implicit operator ArrayPrefix<T>(T[] array)
-#pragma warning restore CA2225 // Operator overloads have named alternates
         {
             return array != null ? new ArrayPrefix<T>(array) : default;
         }
+#pragma warning restore CA2225 // Operator overloads have named alternates
 
         #region IList<T>
 
@@ -315,8 +314,6 @@ namespace Ubiquitous
 #pragma warning disable CA1815 // Override equals and operator equals on value types
 #pragma warning disable CA1034 // Nested types should not be visible
         public struct Enumerator
-#pragma warning restore CA1034 // Nested types should not be visible
-#pragma warning restore CA1815 // Override equals and operator equals on value types
         {
             private readonly T[] _array;
             private readonly int _end;
@@ -356,5 +353,8 @@ namespace Ubiquitous
                 return false;
             }
         }
+#pragma warning restore CA1034 // Nested types should not be visible
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     }
+#pragma warning restore CA1710 // Identifiers should have correct suffix
 }
