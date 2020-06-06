@@ -35,8 +35,8 @@ namespace Ubiquitous
 
                 int defensiveCopy = v;
                 var jaggedOutEndpoints = jaggedOutEdgesEnumerator
-                    .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int target), Target = target })
-                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Target))
+                    .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int head), Head = head })
+                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Head))
                     .ToRist();
 
                 ArraySegmentEnumerator<Endpoints<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
@@ -78,8 +78,8 @@ namespace Ubiquitous
 
                 int defensiveCopy = v;
                 var jaggedOutEndpoints = jaggedOutEdgesEnumerator
-                    .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int target), Target = target })
-                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Target))
+                    .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int head), Head = head })
+                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Head))
                     .ToRist();
 
                 IEnumerable<Endpoints<int>> difference = outEdges.Except(jaggedOutEndpoints);
