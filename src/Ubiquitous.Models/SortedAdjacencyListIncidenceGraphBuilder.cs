@@ -10,11 +10,9 @@ namespace Ubiquitous.Models
         private ArrayBuilder<int> _orderedTails;
         private ArrayBuilder<int> _heads;
         private ArrayPrefix<int> _edgeUpperBounds;
-        private int _lastSource;
+        private int _lastTail;
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
-
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
+        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -24,7 +22,7 @@ namespace Ubiquitous.Models
 
             _orderedTails = new ArrayBuilder<int>(edgeCapacity);
             _heads = new ArrayBuilder<int>(edgeCapacity);
-            _lastSource = 0;
+            _lastTail = 0;
             int[] edgeUpperBounds = Pool.Rent(initialVertexCount);
             Array.Clear(edgeUpperBounds, 0, initialVertexCount);
             _edgeUpperBounds = ArrayPrefix.Create(edgeUpperBounds, initialVertexCount);
@@ -57,7 +55,7 @@ namespace Ubiquitous.Models
             int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            if (tail < _lastSource)
+            if (tail < _lastTail)
             {
                 edge = default;
                 return false;
@@ -69,7 +67,7 @@ namespace Ubiquitous.Models
             _heads.Add(head);
 
             _edgeUpperBounds[tail] = newEdgeIndex + 1;
-            _lastSource = tail;
+            _lastTail = tail;
 
             edge = newEdgeIndex;
             return true;
@@ -87,16 +85,16 @@ namespace Ubiquitous.Models
             Assert(_orderedTails.Count == _heads.Count);
             int vertexCount = VertexCount;
             int headCount = _heads.Count;
-            int orderedSourceCount = _orderedTails.Count;
-            var storage = new int[1 + vertexCount + headCount + orderedSourceCount];
+            int orderedTailCount = _orderedTails.Count;
+            var storage = new int[1 + vertexCount + headCount + orderedTailCount];
             storage[0] = vertexCount;
 
             ReadOnlySpan<int> headsBuffer = _heads.AsSpan();
             headsBuffer.CopyTo(storage.AsSpan(1 + vertexCount, headCount));
             _heads.Dispose(false);
 
-            ReadOnlySpan<int> orderedSourcesBuffer = _orderedTails.AsSpan();
-            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexCount + headCount, orderedSourceCount));
+            ReadOnlySpan<int> orderedTailsBuffer = _orderedTails.AsSpan();
+            orderedTailsBuffer.CopyTo(storage.AsSpan(1 + vertexCount + headCount, orderedTailCount));
             _orderedTails.Dispose(false);
 
             // Make EdgeUpperBounds monotonic in case if we skipped some tails.
@@ -111,7 +109,7 @@ namespace Ubiquitous.Models
                 Pool.Return(_edgeUpperBounds.Array);
             _edgeUpperBounds = ArrayPrefix<int>.Empty;
 
-            _lastSource = 0;
+            _lastTail = 0;
 
             return new SortedAdjacencyListIncidenceGraph(storage);
         }
