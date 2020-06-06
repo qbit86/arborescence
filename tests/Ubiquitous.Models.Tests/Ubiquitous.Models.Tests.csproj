@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
@@ -13,10 +13,7 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj">
-      <Project>{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}</Project>
-      <Name>Ubiquitous.Models</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
   </ItemGroup>
   <Import Project="..\..\src\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />
