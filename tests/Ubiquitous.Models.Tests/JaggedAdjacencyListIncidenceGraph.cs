@@ -6,7 +6,7 @@ namespace Ubiquitous.Models
     internal readonly struct JaggedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
         IEquatable<JaggedAdjacencyListIncidenceGraph>
     {
-        // Layout: endpoints start with targets, then sources follow.
+        // Layout: endpoints start with heads, then tails follow.
         internal JaggedAdjacencyListIncidenceGraph(int[] endpoints, ArrayPrefix<int>[] outEdges)
         {
             Assert(endpoints != null, "endpoints != null");
