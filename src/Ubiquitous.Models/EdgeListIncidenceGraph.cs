@@ -5,12 +5,12 @@ namespace Ubiquitous.Models
     using static System.Diagnostics.Debug;
 
     public readonly struct EdgeListIncidenceGraph :
-        IIncidenceGraph<int, SourceTargetPair<int>, ArraySegmentEnumerator<SourceTargetPair<int>>>,
+        IIncidenceGraph<int, Endpoints<int>, ArraySegmentEnumerator<Endpoints<int>>>,
         IEquatable<EdgeListIncidenceGraph>
     {
-        private readonly SourceTargetPair<int>[] _storage;
+        private readonly Endpoints<int>[] _storage;
 
-        internal EdgeListIncidenceGraph(int vertexCount, SourceTargetPair<int>[] storage)
+        internal EdgeListIncidenceGraph(int vertexCount, Endpoints<int>[] storage)
         {
             Assert(vertexCount >= 0, "vertexCount >= 0");
             Assert(storage != null, "storage != null");
@@ -23,7 +23,7 @@ namespace Ubiquitous.Models
 
         public int EdgeCount => _storage?.Length - VertexCount ?? 0;
 
-        public bool TryGetTail(SourceTargetPair<int> edge, out int source)
+        public bool TryGetTail(Endpoints<int> edge, out int source)
         {
             if ((uint)edge.Tail >= (uint)VertexCount)
             {
@@ -41,7 +41,7 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetHead(SourceTargetPair<int> edge, out int target)
+        public bool TryGetHead(Endpoints<int> edge, out int target)
         {
             if ((uint)edge.Tail >= (uint)VertexCount)
             {
@@ -59,18 +59,18 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public ArraySegmentEnumerator<SourceTargetPair<int>> EnumerateOutEdges(int vertex)
+        public ArraySegmentEnumerator<Endpoints<int>> EnumerateOutEdges(int vertex)
         {
-            ReadOnlySpan<SourceTargetPair<int>> edgeBounds = GetEdgeBounds();
+            ReadOnlySpan<Endpoints<int>> edgeBounds = GetEdgeBounds();
             if ((uint)vertex >= (uint)edgeBounds.Length)
             {
-                return new ArraySegmentEnumerator<SourceTargetPair<int>>(
-                    ArrayBuilder<SourceTargetPair<int>>.EmptyArray, 0, 0);
+                return new ArraySegmentEnumerator<Endpoints<int>>(
+                    ArrayBuilder<Endpoints<int>>.EmptyArray, 0, 0);
             }
 
             int start = edgeBounds[vertex].Tail;
             int length = edgeBounds[vertex].Head;
-            return new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, length);
+            return new ArraySegmentEnumerator<Endpoints<int>>(_storage, start, length);
         }
 
         public bool Equals(EdgeListIncidenceGraph other) =>
@@ -81,7 +81,7 @@ namespace Ubiquitous.Models
         public override int GetHashCode() => unchecked(VertexCount * 397) ^ (_storage?.GetHashCode() ?? 0);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<SourceTargetPair<int>> GetEdgeBounds() => _storage.AsSpan(EdgeCount, VertexCount);
+        private ReadOnlySpan<Endpoints<int>> GetEdgeBounds() => _storage.AsSpan(EdgeCount, VertexCount);
 
         public static bool operator ==(EdgeListIncidenceGraph left, EdgeListIncidenceGraph right) =>
             left.Equals(right);

@@ -178,8 +178,8 @@ namespace Ubiquitous
             using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
             {
                 Assert.NotEqual(TextReader.Null, textReader);
-                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (SourceTargetPair<int> edge in edges)
+                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (Endpoints<int> edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
@@ -209,8 +209,8 @@ namespace Ubiquitous
             using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
             {
                 Assert.NotEqual(TextReader.Null, textReader);
-                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (SourceTargetPair<int> edge in edges)
+                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (Endpoints<int> edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 

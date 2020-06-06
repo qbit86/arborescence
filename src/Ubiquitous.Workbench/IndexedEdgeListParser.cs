@@ -11,7 +11,7 @@ namespace Ubiquitous.Workbench
 
         // Treats nodes as Base32 numbers: https://en.wikipedia.org/wiki/Base32#RFC_4648_Base32_alphabet
 
-        public static IEnumerable<SourceTargetPair<int>> ParseEdges(TextReader textReader)
+        public static IEnumerable<Endpoints<int>> ParseEdges(TextReader textReader)
         {
             if (textReader == null)
                 throw new ArgumentNullException(nameof(textReader));
@@ -19,7 +19,7 @@ namespace Ubiquitous.Workbench
             return ParseEdgesCore(textReader);
         }
 
-        private static IEnumerable<SourceTargetPair<int>> ParseEdgesCore(TextReader textReader)
+        private static IEnumerable<Endpoints<int>> ParseEdgesCore(TextReader textReader)
         {
             Assert(textReader != null);
 
@@ -45,7 +45,7 @@ namespace Ubiquitous.Workbench
                 if (!TryParse(rightToken.AsSpan(), out int target))
                     continue;
 
-                yield return SourceTargetPair.Create(source, target);
+                yield return Endpoints.Create(source, target);
             }
         }
 

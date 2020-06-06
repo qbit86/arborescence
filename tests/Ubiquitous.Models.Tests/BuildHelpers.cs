@@ -31,10 +31,10 @@ namespace Ubiquitous
 
             using (TextReader textReader = IndexedGraphs.GetTextReader(testName))
             {
-                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 if (orderBySource)
                     edges = edges.OrderBy(st => st.Tail);
-                foreach (SourceTargetPair<int> edge in edges)
+                foreach (Endpoints<int> edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
         }

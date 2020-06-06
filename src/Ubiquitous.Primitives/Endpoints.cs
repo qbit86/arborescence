@@ -7,18 +7,18 @@
     using System.Text;
 
     /// <summary>
-    /// Provides the Create factory method for SourceTargetPair&lt;TVertex&gt;.
+    /// Provides the Create factory method for Endpoints&lt;TVertex&gt;.
     /// </summary>
-    public static class SourceTargetPair
+    public static class Endpoints
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SourceTargetPair<TVertex> Create<TVertex>(TVertex source, TVertex target)
+        public static Endpoints<TVertex> Create<TVertex>(TVertex source, TVertex target)
         {
-            return new SourceTargetPair<TVertex>(source, target);
+            return new Endpoints<TVertex>(source, target);
         }
 
         /// <summary>
-        /// Used by SourceTargetPair.ToString to reduce generic code.
+        /// Used by Endpoints.ToString to reduce generic code.
         /// </summary>
         internal static string PairToString(string source, string target)
         {
@@ -40,19 +40,19 @@
     }
 
     /// <summary>
-    /// A SourceTargetPair holds endpoints of an oriented edge.
+    /// Holds endpoints of an oriented edge.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex descriptors.</typeparam>
     /// <remarks>
     /// See also:
     /// <a href="https://github.com/dotnet/coreclr/blob/master/src/mscorlib/shared/System/Collections/Generic/KeyValuePair.cs">KeyValuePair.cs</a>
     /// </remarks>
-    public readonly struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
+    public readonly struct Endpoints<TVertex> : IEquatable<Endpoints<TVertex>>
     {
         public TVertex Tail { get; }
         public TVertex Head { get; }
 
-        public SourceTargetPair(TVertex tail, TVertex head)
+        public Endpoints(TVertex tail, TVertex head)
         {
             Tail = tail;
             Head = head;
@@ -60,7 +60,7 @@
 
         public override string ToString()
         {
-            return SourceTargetPair.PairToString(Tail?.ToString(), Head?.ToString());
+            return Endpoints.PairToString(Tail?.ToString(), Head?.ToString());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -70,7 +70,7 @@
             target = Head;
         }
 
-        public bool Equals(SourceTargetPair<TVertex> other)
+        public bool Equals(Endpoints<TVertex> other)
         {
             EqualityComparer<TVertex> comparer = EqualityComparer<TVertex>.Default;
 
@@ -85,7 +85,7 @@
 
         public override bool Equals(object obj)
         {
-            return obj is SourceTargetPair<TVertex> other && Equals(other);
+            return obj is Endpoints<TVertex> other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -94,12 +94,12 @@
                 EqualityComparer<TVertex>.Default.GetHashCode(Head);
         }
 
-        public static bool operator ==(SourceTargetPair<TVertex> left, SourceTargetPair<TVertex> right)
+        public static bool operator ==(Endpoints<TVertex> left, Endpoints<TVertex> right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(SourceTargetPair<TVertex> left, SourceTargetPair<TVertex> right)
+        public static bool operator !=(Endpoints<TVertex> left, Endpoints<TVertex> right)
         {
             return !left.Equals(right);
         }
