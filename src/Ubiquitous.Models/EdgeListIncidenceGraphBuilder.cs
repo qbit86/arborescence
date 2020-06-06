@@ -41,28 +41,28 @@ namespace Ubiquitous.Models
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out Endpoints<int> edge)
+        public bool TryAdd(int tail, int head, out Endpoints<int> edge)
         {
-            if (source < 0)
+            if (tail < 0)
             {
                 edge = default;
                 return false;
             }
 
-            if (target < 0)
+            if (head < 0)
             {
                 edge = default;
                 return false;
             }
 
-            int max = Math.Max(source, target);
+            int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            if (_outEdges[source].Buffer == null)
-                _outEdges[source] = new ArrayBuilder<Endpoints<int>>(InitialOutDegree);
+            if (_outEdges[tail].Buffer == null)
+                _outEdges[tail] = new ArrayBuilder<Endpoints<int>>(InitialOutDegree);
 
-            edge = Endpoints.Create(source, target);
-            _outEdges.Array[source].Add(edge);
+            edge = Endpoints.Create(tail, head);
+            _outEdges.Array[tail].Add(edge);
             ++_edgeCount;
 
             return true;

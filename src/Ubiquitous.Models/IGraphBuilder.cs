@@ -2,7 +2,7 @@ namespace Ubiquitous.Models
 {
     public interface IGraphBuilder<out TGraph, in TVertex, TEdge>
     {
-        bool TryAdd(TVertex source, TVertex target, out TEdge edge);
+        bool TryAdd(TVertex tail, TVertex head, out TEdge edge);
         TGraph ToGraph();
     }
 }

@@ -40,24 +40,24 @@ namespace Ubiquitous.Models
                 _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out int edge)
+        public bool TryAdd(int tail, int head, out int edge)
         {
-            if (source < 0)
+            if (tail < 0)
             {
                 edge = default;
                 return false;
             }
 
-            if (target < 0)
+            if (head < 0)
             {
                 edge = default;
                 return false;
             }
 
-            int max = Math.Max(source, target);
+            int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            if (source < _lastSource)
+            if (tail < _lastSource)
             {
                 edge = default;
                 return false;
@@ -65,11 +65,11 @@ namespace Ubiquitous.Models
 
             Assert(_orderedSources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
-            _orderedSources.Add(source);
-            _targets.Add(target);
+            _orderedSources.Add(tail);
+            _targets.Add(head);
 
-            _edgeUpperBounds[source] = newEdgeIndex + 1;
-            _lastSource = source;
+            _edgeUpperBounds[tail] = newEdgeIndex + 1;
+            _lastSource = tail;
 
             edge = newEdgeIndex;
             return true;

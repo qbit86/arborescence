@@ -48,33 +48,33 @@
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out int edge)
+        public bool TryAdd(int tail, int head, out int edge)
         {
-            if (source < 0)
+            if (tail < 0)
             {
                 edge = default;
                 return false;
             }
 
-            if (target < 0)
+            if (head < 0)
             {
                 edge = default;
                 return false;
             }
 
-            int max = Math.Max(source, target);
+            int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
             Assert(_sources.Count == _targets.Count);
             int newEdgeIndex = _targets.Count;
-            _sources.Add(source);
-            _targets.Add(target);
+            _sources.Add(tail);
+            _targets.Add(head);
 
-            if (_outEdges[source].Buffer == null)
-                _outEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
+            if (_outEdges[tail].Buffer == null)
+                _outEdges[tail] = new ArrayBuilder<int>(InitialOutDegree);
 
-            _outEdges.Array[source].Add(newEdgeIndex);
-            _outEdges.Array[target].Add(~newEdgeIndex);
+            _outEdges.Array[tail].Add(newEdgeIndex);
+            _outEdges.Array[head].Add(~newEdgeIndex);
 
             edge = newEdgeIndex;
             return true;
