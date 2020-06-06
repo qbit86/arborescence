@@ -32,13 +32,13 @@
                 {
                     for (int e = 0; e < graph.EdgeCount; ++e)
                     {
-                        if (!graph.TryGetTail(e, out int source))
+                        if (!graph.TryGetTail(e, out int tail))
                             continue;
 
-                        if (!graph.TryGetHead(e, out int target))
+                        if (!graph.TryGetHead(e, out int head))
                             continue;
 
-                        textWriter.Write($"  {IndexToString(source)} -> {IndexToString(target)}");
+                        textWriter.Write($"  {IndexToString(tail)} -> {IndexToString(head)}");
 
                         DfsStepKind edgeKind = edgeKinds[e];
 
