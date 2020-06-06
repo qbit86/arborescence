@@ -27,28 +27,28 @@ namespace Ubiquitous.Models
         public bool TryGetTail(int edge, out int tail)
         {
             int actualEdge = edge < 0 ? ~edge : edge;
-            ReadOnlySpan<int> actualSources = edge < 0 ? GetTargets() : GetSources();
-            if (actualEdge >= actualSources.Length)
+            ReadOnlySpan<int> actualTails = edge < 0 ? GetHeads() : GetTails();
+            if (actualEdge >= actualTails.Length)
             {
                 tail = default;
                 return false;
             }
 
-            tail = actualSources[actualEdge];
+            tail = actualTails[actualEdge];
             return true;
         }
 
         public bool TryGetHead(int edge, out int head)
         {
             int actualEdge = edge < 0 ? ~edge : edge;
-            ReadOnlySpan<int> actualTargets = edge < 0 ? GetSources() : GetTargets();
-            if (actualEdge >= actualTargets.Length)
+            ReadOnlySpan<int> actualHeads = edge < 0 ? GetTails() : GetHeads();
+            if (actualEdge >= actualHeads.Length)
             {
                 head = default;
                 return false;
             }
 
-            head = actualTargets[actualEdge];
+            head = actualHeads[actualEdge];
             return true;
         }
 
@@ -76,10 +76,10 @@ namespace Ubiquitous.Models
         private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetSources() => _storage.AsSpan(1 + 2 * VertexCount + 3 * EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + 2 * VertexCount + 3 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTargets() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()
