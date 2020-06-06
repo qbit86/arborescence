@@ -24,9 +24,9 @@ namespace Ubiquitous
 
             for (int e = 0; e < edgeCount; ++e)
             {
-                int source = prng.Next(vertexCount);
-                int target = prng.Next(vertexCount);
-                builder.TryAdd(source, target, out _);
+                int tail = prng.Next(vertexCount);
+                int head = prng.Next(vertexCount);
+                builder.TryAdd(tail, head, out _);
             }
 
             AdjacencyListIncidenceGraph result = builder.ToGraph();

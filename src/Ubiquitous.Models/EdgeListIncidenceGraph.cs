@@ -5,12 +5,12 @@ namespace Ubiquitous.Models
     using static System.Diagnostics.Debug;
 
     public readonly struct EdgeListIncidenceGraph :
-        IIncidenceGraph<int, SourceTargetPair<int>, ArraySegmentEnumerator<SourceTargetPair<int>>>,
+        IIncidenceGraph<int, Endpoints<int>, ArraySegmentEnumerator<Endpoints<int>>>,
         IEquatable<EdgeListIncidenceGraph>
     {
-        private readonly SourceTargetPair<int>[] _storage;
+        private readonly Endpoints<int>[] _storage;
 
-        internal EdgeListIncidenceGraph(int vertexCount, SourceTargetPair<int>[] storage)
+        internal EdgeListIncidenceGraph(int vertexCount, Endpoints<int>[] storage)
         {
             Assert(vertexCount >= 0, "vertexCount >= 0");
             Assert(storage != null, "storage != null");
@@ -23,54 +23,54 @@ namespace Ubiquitous.Models
 
         public int EdgeCount => _storage?.Length - VertexCount ?? 0;
 
-        public bool TryGetSource(SourceTargetPair<int> edge, out int source)
+        public bool TryGetTail(Endpoints<int> edge, out int tail)
         {
-            if ((uint)edge.Source >= (uint)VertexCount)
+            if ((uint)edge.Tail >= (uint)VertexCount)
             {
-                source = default;
+                tail = default;
                 return false;
             }
 
-            if ((uint)edge.Target >= (uint)VertexCount)
+            if ((uint)edge.Head >= (uint)VertexCount)
             {
-                source = default;
+                tail = default;
                 return false;
             }
 
-            source = edge.Source;
+            tail = edge.Tail;
             return true;
         }
 
-        public bool TryGetTarget(SourceTargetPair<int> edge, out int target)
+        public bool TryGetHead(Endpoints<int> edge, out int head)
         {
-            if ((uint)edge.Source >= (uint)VertexCount)
+            if ((uint)edge.Tail >= (uint)VertexCount)
             {
-                target = default;
+                head = default;
                 return false;
             }
 
-            if ((uint)edge.Target >= (uint)VertexCount)
+            if ((uint)edge.Head >= (uint)VertexCount)
             {
-                target = default;
+                head = default;
                 return false;
             }
 
-            target = edge.Target;
+            head = edge.Head;
             return true;
         }
 
-        public ArraySegmentEnumerator<SourceTargetPair<int>> EnumerateOutEdges(int vertex)
+        public ArraySegmentEnumerator<Endpoints<int>> EnumerateOutEdges(int vertex)
         {
-            ReadOnlySpan<SourceTargetPair<int>> edgeBounds = GetEdgeBounds();
+            ReadOnlySpan<Endpoints<int>> edgeBounds = GetEdgeBounds();
             if ((uint)vertex >= (uint)edgeBounds.Length)
             {
-                return new ArraySegmentEnumerator<SourceTargetPair<int>>(
-                    ArrayBuilder<SourceTargetPair<int>>.EmptyArray, 0, 0);
+                return new ArraySegmentEnumerator<Endpoints<int>>(
+                    ArrayBuilder<Endpoints<int>>.EmptyArray, 0, 0);
             }
 
-            int start = edgeBounds[vertex].Source;
-            int length = edgeBounds[vertex].Target;
-            return new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, length);
+            int start = edgeBounds[vertex].Tail;
+            int length = edgeBounds[vertex].Head;
+            return new ArraySegmentEnumerator<Endpoints<int>>(_storage, start, length);
         }
 
         public bool Equals(EdgeListIncidenceGraph other) =>
@@ -81,7 +81,7 @@ namespace Ubiquitous.Models
         public override int GetHashCode() => unchecked(VertexCount * 397) ^ (_storage?.GetHashCode() ?? 0);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<SourceTargetPair<int>> GetEdgeBounds() => _storage.AsSpan(EdgeCount, VertexCount);
+        private ReadOnlySpan<Endpoints<int>> GetEdgeBounds() => _storage.AsSpan(EdgeCount, VertexCount);
 
         public static bool operator ==(EdgeListIncidenceGraph left, EdgeListIncidenceGraph right) =>
             left.Equals(right);

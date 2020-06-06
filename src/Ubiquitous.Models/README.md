@@ -45,15 +45,15 @@ Used in general case where graph is permitted to have parallel edges.
 |                      1 | _vertexCount_      |
 |      2 × _vertexCount_ | _edgeBounds_       |
 |            _edgeCount_ | _reorderedEdges_   |
-|            _edgeCount_ | _targets_          |
-|            _edgeCount_ | _sources_          |
+|            _edgeCount_ | _heads_            |
+|            _edgeCount_ | _tails_            |
 
 ```
-vertexCount    reorderedEdges     sources
+vertexCount    reorderedEdges     tails
         ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
         [4][_^|_^|_^|_^][021][bcb][aca]
            ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-              edgeBounds     targets
+              edgeBounds     heads
 ```
 
 ### Sorted-AdjacencyList-IncidenceGraph
@@ -62,17 +62,17 @@ vertexCount    reorderedEdges     sources
 |-------------------:|:-------------------|
 |                  1 | _vertexCount_      |
 |      _vertexCount_ | _edgeUpperBounds_  |
-|        _edgeCount_ | _targets_          |
-|        _edgeCount_ | _orderedSources_   |
+|        _edgeCount_ | _heads_            |
+|        _edgeCount_ | _orderedTails_     |
 
 _edgeCount_ = (_length_ − 1 − _vertexCount_) / 2
 
 ```
-vertexCount      targets
+vertexCount      heads
         ↓↓↓      ↓↓↓↓↓
         [4][^^^^][bbc][aac]
            ↑↑↑↑↑↑     ↑↑↑↑↑
-  edgeUpperBounds     orderedSources
+  edgeUpperBounds     orderedTails
 ```
 
 ### EdgeList-IncidenceGraph

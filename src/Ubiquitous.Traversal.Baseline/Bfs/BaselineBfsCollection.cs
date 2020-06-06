@@ -14,7 +14,7 @@ namespace Ubiquitous.Traversal
             TGraphPolicy, TColorMapPolicy>
         : IEnumerable<TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
+        where TGraphPolicy : IGetHeadPolicy<TGraph, TVertex, TEdge>,
         IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
 #pragma warning restore CA1815 // Override equals and operator equals on value types
@@ -95,7 +95,7 @@ namespace Ubiquitous.Traversal
                     {
                         TEdge e = outEdges.Current;
 
-                        if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
+                        if (!GraphPolicy.TryGetHead(Graph, e, out TVertex v))
                             continue;
 
                         Color color = GetColorOrDefault(colorMap, v);

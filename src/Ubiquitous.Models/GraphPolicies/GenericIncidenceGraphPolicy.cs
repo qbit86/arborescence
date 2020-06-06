@@ -2,14 +2,14 @@ namespace Ubiquitous.Models
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct GenericIncidenceGraphPolicy<TGraph, TVertex, TEdge, TEdges> :
-        IGetSourcePolicy<TGraph, TVertex, TEdge>,
-        IGetTargetPolicy<TGraph, TVertex, TEdge>,
+        IGetTailPolicy<TGraph, TVertex, TEdge>,
+        IGetHeadPolicy<TGraph, TVertex, TEdge>,
         IOutEdgesPolicy<TGraph, TVertex, TEdges>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdges>
     {
-        public bool TryGetSource(TGraph graph, TEdge edge, out TVertex source) => graph.TryGetSource(edge, out source);
+        public bool TryGetTail(TGraph graph, TEdge edge, out TVertex tail) => graph.TryGetTail(edge, out tail);
 
-        public bool TryGetTarget(TGraph graph, TEdge edge, out TVertex target) => graph.TryGetTarget(edge, out target);
+        public bool TryGetHead(TGraph graph, TEdge edge, out TVertex head) => graph.TryGetHead(edge, out head);
 
         public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex) => graph.EnumerateOutEdges(vertex);
     }

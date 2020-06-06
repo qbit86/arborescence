@@ -2,20 +2,20 @@ namespace Ubiquitous.Models
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct UncheckedEdgeIncidenceGraphPolicy<TGraph, TEdges> :
-        IGetSourcePolicy<TGraph, int, SourceTargetPair<int>>,
-        IGetTargetPolicy<TGraph, int, SourceTargetPair<int>>,
+        IGetTailPolicy<TGraph, int, Endpoints<int>>,
+        IGetHeadPolicy<TGraph, int, Endpoints<int>>,
         IOutEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IIncidence<int, TEdges>
     {
-        public bool TryGetSource(TGraph graph, SourceTargetPair<int> edge, out int source)
+        public bool TryGetTail(TGraph graph, Endpoints<int> edge, out int tail)
         {
-            source = edge.Source;
+            tail = edge.Tail;
             return true;
         }
 
-        public bool TryGetTarget(TGraph graph, SourceTargetPair<int> edge, out int target)
+        public bool TryGetHead(TGraph graph, Endpoints<int> edge, out int head)
         {
-            target = edge.Target;
+            head = edge.Head;
             return true;
         }
 

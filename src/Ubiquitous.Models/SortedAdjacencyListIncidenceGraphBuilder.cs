@@ -7,14 +7,12 @@ namespace Ubiquitous.Models
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
     {
-        private ArrayBuilder<int> _orderedSources;
-        private ArrayBuilder<int> _targets;
+        private ArrayBuilder<int> _orderedTails;
+        private ArrayBuilder<int> _heads;
         private ArrayPrefix<int> _edgeUpperBounds;
-        private int _lastSource;
+        private int _lastTail;
 
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
-
-        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
+        public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -22,9 +20,9 @@ namespace Ubiquitous.Models
             if (edgeCapacity < 0)
                 throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-            _orderedSources = new ArrayBuilder<int>(edgeCapacity);
-            _targets = new ArrayBuilder<int>(edgeCapacity);
-            _lastSource = 0;
+            _orderedTails = new ArrayBuilder<int>(edgeCapacity);
+            _heads = new ArrayBuilder<int>(edgeCapacity);
+            _lastTail = 0;
             int[] edgeUpperBounds = Pool.Rent(initialVertexCount);
             Array.Clear(edgeUpperBounds, 0, initialVertexCount);
             _edgeUpperBounds = ArrayPrefix.Create(edgeUpperBounds, initialVertexCount);
@@ -40,66 +38,66 @@ namespace Ubiquitous.Models
                 _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out int edge)
+        public bool TryAdd(int tail, int head, out int edge)
         {
-            if (source < 0)
+            if (tail < 0)
             {
                 edge = default;
                 return false;
             }
 
-            if (target < 0)
+            if (head < 0)
             {
                 edge = default;
                 return false;
             }
 
-            int max = Math.Max(source, target);
+            int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            if (source < _lastSource)
+            if (tail < _lastTail)
             {
                 edge = default;
                 return false;
             }
 
-            Assert(_orderedSources.Count == _targets.Count);
-            int newEdgeIndex = _targets.Count;
-            _orderedSources.Add(source);
-            _targets.Add(target);
+            Assert(_orderedTails.Count == _heads.Count);
+            int newEdgeIndex = _heads.Count;
+            _orderedTails.Add(tail);
+            _heads.Add(head);
 
-            _edgeUpperBounds[source] = newEdgeIndex + 1;
-            _lastSource = source;
+            _edgeUpperBounds[tail] = newEdgeIndex + 1;
+            _lastTail = tail;
 
             edge = newEdgeIndex;
             return true;
         }
 
         // Storage layout:
-        // vertexCount      targets
+        // vertexCount      heads
         //         ↓↓↓      ↓↓↓↓↓
         //         [4][^^^^][bbc][aac]
         //            ↑↑↑↑↑↑     ↑↑↑↑↑
-        //   edgeUpperBounds     orderedSources
+        //   edgeUpperBounds     orderedTails
 
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
-            Assert(_orderedSources.Count == _targets.Count);
+            Assert(_orderedTails.Count == _heads.Count);
             int vertexCount = VertexCount;
-            int targetCount = _targets.Count;
-            int orderedSourceCount = _orderedSources.Count;
-            var storage = new int[1 + vertexCount + targetCount + orderedSourceCount];
+            int headCount = _heads.Count;
+            int orderedTailCount = _orderedTails.Count;
+            var storage = new int[1 + vertexCount + headCount + orderedTailCount];
             storage[0] = vertexCount;
 
-            ReadOnlySpan<int> targetsBuffer = _targets.AsSpan();
-            targetsBuffer.CopyTo(storage.AsSpan(1 + vertexCount, targetCount));
-            _targets.Dispose(false);
+            ReadOnlySpan<int> headsBuffer = _heads.AsSpan();
+            headsBuffer.CopyTo(storage.AsSpan(1 + vertexCount, headCount));
+            _heads.Dispose(false);
 
-            ReadOnlySpan<int> orderedSourcesBuffer = _orderedSources.AsSpan();
-            orderedSourcesBuffer.CopyTo(storage.AsSpan(1 + vertexCount + targetCount, orderedSourceCount));
-            _orderedSources.Dispose(false);
+            ReadOnlySpan<int> orderedTailsBuffer = _orderedTails.AsSpan();
+            orderedTailsBuffer.CopyTo(storage.AsSpan(1 + vertexCount + headCount, orderedTailCount));
+            _orderedTails.Dispose(false);
 
-            // Make EdgeUpperBounds monotonic in case if we skipped some sources.
+            // Make EdgeUpperBounds monotonic in case if we skipped some tails.
             for (int v = 1; v < _edgeUpperBounds.Count; ++v)
             {
                 if (_edgeUpperBounds[v] < _edgeUpperBounds[v - 1])
@@ -111,7 +109,7 @@ namespace Ubiquitous.Models
                 Pool.Return(_edgeUpperBounds.Array);
             _edgeUpperBounds = ArrayPrefix<int>.Empty;
 
-            _lastSource = 0;
+            _lastTail = 0;
 
             return new SortedAdjacencyListIncidenceGraph(storage);
         }

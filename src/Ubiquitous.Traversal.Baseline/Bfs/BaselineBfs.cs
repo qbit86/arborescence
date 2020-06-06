@@ -10,7 +10,7 @@ namespace Ubiquitous.Traversal
         public static BaselineBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
             Create<TGraphPolicy, TColorMapPolicy>(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-            IGetTargetPolicy<TGraph, TVertex, TEdge>
+            IGetHeadPolicy<TGraph, TVertex, TEdge>
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
@@ -23,7 +23,7 @@ namespace Ubiquitous.Traversal
     public readonly struct BaselineBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IGetTargetPolicy<TGraph, TVertex, TEdge>,
+        where TGraphPolicy : IGetHeadPolicy<TGraph, TVertex, TEdge>,
         IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
 #pragma warning restore CA1815 // Override equals and operator equals on value types

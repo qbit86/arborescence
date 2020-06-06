@@ -10,8 +10,8 @@
         // Layout:
         // [0..1) — VertexCount
         // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - 1 - VertexCount) / 2
-        // [1 + VertexCount..Offset₂ + EdgeCount) — Targets
-        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Sources
+        // [1 + VertexCount..Offset₂ + EdgeCount) — Heads
+        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Tails
         private readonly int[] _storage;
 
         internal SortedAdjacencyListIncidenceGraph(int[] storage)
@@ -22,8 +22,8 @@
             Assert(storage[0] >= 0, "storage[0] >= 0");
             Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
 
-            // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
-            // Assert: `endpoints` are sorted by source(edge).
+            // Assert: `endpoints` are consistent. For each edge: tail(edge) and head(edge) belong to vertices.
+            // Assert: `endpoints` are sorted by tail(edge).
             // Assert: `edgeBounds` are vertexCount in length.
             // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
@@ -34,29 +34,29 @@
 
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
 
-        public bool TryGetSource(int edge, out int source)
+        public bool TryGetTail(int edge, out int tail)
         {
-            ReadOnlySpan<int> sources = GetSources();
-            if ((uint)edge >= (uint)sources.Length)
+            ReadOnlySpan<int> tails = GetTails();
+            if ((uint)edge >= (uint)tails.Length)
             {
-                source = default;
+                tail = default;
                 return false;
             }
 
-            source = sources[edge];
+            tail = tails[edge];
             return true;
         }
 
-        public bool TryGetTarget(int edge, out int target)
+        public bool TryGetHead(int edge, out int head)
         {
-            ReadOnlySpan<int> targets = GetTargets();
-            if ((uint)edge >= (uint)targets.Length)
+            ReadOnlySpan<int> heads = GetHeads();
+            if ((uint)edge >= (uint)heads.Length)
             {
-                target = default;
+                head = default;
                 return false;
             }
 
-            target = targets[edge];
+            head = heads[edge];
             return true;
         }
 
@@ -84,10 +84,10 @@
         private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetSources() => _storage.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTargets() => _storage.AsSpan(1 + VertexCount, EdgeCount);
+        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + VertexCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()

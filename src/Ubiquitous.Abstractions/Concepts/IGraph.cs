@@ -2,7 +2,7 @@ namespace Ubiquitous
 {
     public interface IGraph<TVertex, in TEdge>
     {
-        bool TryGetSource(TEdge edge, out TVertex source);
-        bool TryGetTarget(TEdge edge, out TVertex target);
+        bool TryGetTail(TEdge edge, out TVertex tail);
+        bool TryGetHead(TEdge edge, out TVertex head);
     }
 }

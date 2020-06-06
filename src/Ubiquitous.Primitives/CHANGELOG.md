@@ -2,4 +2,4 @@
 
 ## Unreleased
 ### Added
-- `SourceTargetPair<TVertex>` generic class for source/target pair.
+- `Endpoints<TVertex>` generic class for tail/head pair.

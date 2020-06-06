@@ -2,15 +2,15 @@ namespace Ubiquitous.Models
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct IndexedBidirectionalGraphPolicy<TGraph, TEdges> :
-        IGetSourcePolicy<TGraph, int, int>,
-        IGetTargetPolicy<TGraph, int, int>,
+        IGetTailPolicy<TGraph, int, int>,
+        IGetHeadPolicy<TGraph, int, int>,
         IOutEdgesPolicy<TGraph, int, TEdges>,
         IInEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IBidirectionalGraph<int, int, TEdges>
     {
-        public bool TryGetSource(TGraph graph, int edge, out int source) => graph.TryGetSource(edge, out source);
+        public bool TryGetTail(TGraph graph, int edge, out int tail) => graph.TryGetTail(edge, out tail);
 
-        public bool TryGetTarget(TGraph graph, int edge, out int target) => graph.TryGetTarget(edge, out target);
+        public bool TryGetHead(TGraph graph, int edge, out int head) => graph.TryGetHead(edge, out head);
 
         public TEdges EnumerateOutEdges(TGraph graph, int vertex) => graph.EnumerateOutEdges(vertex);
 

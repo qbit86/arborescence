@@ -6,14 +6,14 @@ namespace Ubiquitous.Models
     internal readonly struct JaggedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
         IEquatable<JaggedAdjacencyListIncidenceGraph>
     {
-        // Layout: endpoints start with targets, then sources follow.
+        // Layout: endpoints start with heads, then tails follow.
         internal JaggedAdjacencyListIncidenceGraph(int[] endpoints, ArrayPrefix<int>[] outEdges)
         {
             Assert(endpoints != null, "endpoints != null");
             Assert(outEdges != null, "outEdges != null");
 
-            // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
-            // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): source(edge) = vertex.
+            // Assert: `endpoints` are consistent. For each edge: tail(edge) and head(edge) belong to vertices.
+            // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): tail(edge) = vertex.
 
             Endpoints = endpoints;
             OutEdges = outEdges;
@@ -27,31 +27,31 @@ namespace Ubiquitous.Models
 
         private ArrayPrefix<int>[] OutEdges { get; }
 
-        public bool TryGetSource(int edge, out int source)
+        public bool TryGetTail(int edge, out int tail)
         {
             int edgeCount = EdgeCount;
 
             if ((uint)edge >= (uint)edgeCount)
             {
-                source = -1;
+                tail = -1;
                 return false;
             }
 
             Assert(Endpoints != null, "Endpoints != null");
-            source = Endpoints[edgeCount + edge];
+            tail = Endpoints[edgeCount + edge];
             return true;
         }
 
-        public bool TryGetTarget(int edge, out int target)
+        public bool TryGetHead(int edge, out int head)
         {
             if ((uint)edge >= (uint)EdgeCount)
             {
-                target = -1;
+                head = -1;
                 return false;
             }
 
             Assert(Endpoints != null, "Endpoints != null");
-            target = Endpoints[edge];
+            head = Endpoints[edge];
             return true;
         }
 

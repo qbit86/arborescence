@@ -15,9 +15,9 @@ namespace Ubiquitous
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("05"))
             {
-                IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (SourceTargetPair<int> edge in edges)
-                    builder.TryAdd(edge.Source, edge.Target, out _);
+                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (Endpoints<int> edge in edges)
+                    builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
             UndirectedAdjacencyListIncidenceGraph graph = builder.ToGraph();
@@ -40,9 +40,9 @@ namespace Ubiquitous
                 ArraySegmentEnumerator<int> edges = graph.EnumerateOutEdges(vertex);
                 foreach (int edge in edges)
                 {
-                    string sourceString = graph.TryGetSource(edge, out int source) ? IndexToString(source) : "?";
-                    string targetString = graph.TryGetTarget(edge, out int target) ? IndexToString(target) : "?";
-                    string endpointsString = $"{sourceString} -> {targetString}";
+                    string tailString = graph.TryGetTail(edge, out int tail) ? IndexToString(tail) : "?";
+                    string headString = graph.TryGetHead(edge, out int head) ? IndexToString(head) : "?";
+                    string endpointsString = $"{tailString} -> {headString}";
                     Console.WriteLine($"{edge.ToString(CultureInfo.InvariantCulture)}: {endpointsString}");
                 }
             }

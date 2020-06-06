@@ -24,7 +24,7 @@ namespace Ubiquitous
 
             var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexCount);
             EdgeListIncidenceGraph edgeList =
-                BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
+                BuildHelpers<EdgeListIncidenceGraph, Endpoints<int>>.CreateGraph(ref edgeListBuilder, testName);
 
             Assert.Equal(jaggedAdjacencyList.VertexCount, edgeList.VertexCount);
 
@@ -35,15 +35,15 @@ namespace Ubiquitous
 
                 int defensiveCopy = v;
                 var jaggedOutEndpoints = jaggedOutEdgesEnumerator
-                    .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
-                    .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
+                    .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int head), Head = head })
+                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Head))
                     .ToRist();
 
-                ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
+                ArraySegmentEnumerator<Endpoints<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
 
-                Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
+                Rist<Endpoints<int>> outEdges = RistFactory<Endpoints<int>>.Create(outEdgesEnumerator);
 
-                IEnumerable<SourceTargetPair<int>> difference = jaggedOutEndpoints.Except(outEdges);
+                IEnumerable<Endpoints<int>> difference = jaggedOutEndpoints.Except(outEdges);
 
                 // Assert
                 Assert.Empty(difference);
@@ -65,24 +65,24 @@ namespace Ubiquitous
 
             var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexCount);
             EdgeListIncidenceGraph edgeList =
-                BuildHelpers<EdgeListIncidenceGraph, SourceTargetPair<int>>.CreateGraph(ref edgeListBuilder, testName);
+                BuildHelpers<EdgeListIncidenceGraph, Endpoints<int>>.CreateGraph(ref edgeListBuilder, testName);
 
             // Act
             for (int v = 0; v < edgeList.VertexCount; ++v)
             {
-                ArraySegmentEnumerator<SourceTargetPair<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
+                ArraySegmentEnumerator<Endpoints<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
 
-                Rist<SourceTargetPair<int>> outEdges = RistFactory<SourceTargetPair<int>>.Create(outEdgesEnumerator);
+                Rist<Endpoints<int>> outEdges = RistFactory<Endpoints<int>>.Create(outEdgesEnumerator);
 
                 ArrayPrefixEnumerator<int> jaggedOutEdgesEnumerator = jaggedAdjacencyList.EnumerateOutEdges(v);
 
                 int defensiveCopy = v;
                 var jaggedOutEndpoints = jaggedOutEdgesEnumerator
-                    .Select(e => new { Success = jaggedAdjacencyList.TryGetTarget(e, out int target), Target = target })
-                    .Where(p => p.Success).Select(p => SourceTargetPair.Create(defensiveCopy, p.Target))
+                    .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int head), Head = head })
+                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Head))
                     .ToRist();
 
-                IEnumerable<SourceTargetPair<int>> difference = outEdges.Except(jaggedOutEndpoints);
+                IEnumerable<Endpoints<int>> difference = outEdges.Except(jaggedOutEndpoints);
 
                 // Assert
                 Assert.Empty(difference);

@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> : IDisposable
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetPolicy<TGraph, TVertex, TEdge>
+        IGetHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TGraphPolicy _graphPolicy;
@@ -90,7 +90,7 @@ namespace Ubiquitous.Traversal
                             continue;
                         }
 
-                        if (!_graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex))
+                        if (!_graphPolicy.TryGetHead(_graph, _edgeEnumerator.Current, out _neighborVertex))
                         {
                             _state = 4;
                             continue;

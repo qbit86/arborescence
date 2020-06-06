@@ -103,17 +103,17 @@ namespace Ubiquitous
             // Act
             for (int e = 0; e < actualEdgeCount; ++e)
             {
-                bool hasExpectedSource = jaggedAdjacencyList.TryGetSource(e, out int expectedSource);
-                bool hasActualSource = adjacencyList.TryGetSource(e, out int actualSource);
+                bool hasExpectedTail = jaggedAdjacencyList.TryGetTail(e, out int expectedTail);
+                bool hasActualTail = adjacencyList.TryGetTail(e, out int actualTail);
 
-                Assert.Equal(hasExpectedSource, hasActualSource);
-                Assert.Equal(expectedSource, actualSource);
+                Assert.Equal(hasExpectedTail, hasActualTail);
+                Assert.Equal(expectedTail, actualTail);
 
-                bool hasExpectedTarget = jaggedAdjacencyList.TryGetTarget(e, out int expectedTarget);
-                bool hasActualTarget = adjacencyList.TryGetTarget(e, out int actualTarget);
+                bool hasExpectedHead = jaggedAdjacencyList.TryGetHead(e, out int expectedHead);
+                bool hasActualHead = adjacencyList.TryGetHead(e, out int actualHead);
 
-                Assert.Equal(hasExpectedTarget, hasActualTarget);
-                Assert.Equal(expectedTarget, actualTarget);
+                Assert.Equal(hasExpectedHead, hasActualHead);
+                Assert.Equal(expectedHead, actualHead);
             }
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores

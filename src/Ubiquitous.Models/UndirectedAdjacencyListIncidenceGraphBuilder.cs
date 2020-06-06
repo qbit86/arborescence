@@ -11,8 +11,8 @@
         private const int DefaultInitialOutDegree = 8;
 
         private int _initialOutDegree;
-        private ArrayBuilder<int> _sources;
-        private ArrayBuilder<int> _targets;
+        private ArrayBuilder<int> _tails;
+        private ArrayBuilder<int> _heads;
         private ArrayPrefix<ArrayBuilder<int>> _outEdges;
 
         public UndirectedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
@@ -25,8 +25,8 @@
 
             _initialOutDegree = DefaultInitialOutDegree;
             int effectiveEdgeCapacity = Math.Max(2 * edgeCapacity, DefaultInitialOutDegree);
-            _sources = new ArrayBuilder<int>(effectiveEdgeCapacity);
-            _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _tails = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _heads = new ArrayBuilder<int>(effectiveEdgeCapacity);
             ArrayBuilder<int>[] outEdges = Pool.Rent(initialVertexCount);
             Array.Clear(outEdges, 0, initialVertexCount);
             _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
@@ -48,53 +48,53 @@
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
-        public bool TryAdd(int source, int target, out int edge)
+        public bool TryAdd(int tail, int head, out int edge)
         {
-            if (source < 0)
+            if (tail < 0)
             {
                 edge = default;
                 return false;
             }
 
-            if (target < 0)
+            if (head < 0)
             {
                 edge = default;
                 return false;
             }
 
-            int max = Math.Max(source, target);
+            int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            Assert(_sources.Count == _targets.Count);
-            int newEdgeIndex = _targets.Count;
-            _sources.Add(source);
-            _targets.Add(target);
+            Assert(_tails.Count == _heads.Count);
+            int newEdgeIndex = _heads.Count;
+            _tails.Add(tail);
+            _heads.Add(head);
 
-            if (_outEdges[source].Buffer == null)
-                _outEdges[source] = new ArrayBuilder<int>(InitialOutDegree);
+            if (_outEdges[tail].Buffer == null)
+                _outEdges[tail] = new ArrayBuilder<int>(InitialOutDegree);
 
-            _outEdges.Array[source].Add(newEdgeIndex);
-            _outEdges.Array[target].Add(~newEdgeIndex);
+            _outEdges.Array[tail].Add(newEdgeIndex);
+            _outEdges.Array[head].Add(~newEdgeIndex);
 
             edge = newEdgeIndex;
             return true;
         }
 
         // Storage layout:
-        // vertexCount          reorderedEdges     sources
+        // vertexCount          reorderedEdges     tails
         //         ↓↓↓             ↓↓↓↓↓↓↓↓↓↓↓     ↓↓↓↓↓
         //         [4][_^|_^|_^|_^][021~0~2~1][bcb][aca]
         //            ↑↑↑↑↑↑↑↑↑↑↑↑↑           ↑↑↑↑↑
-        //               edgeBounds           targets
+        //               edgeBounds           heads
 
         public UndirectedAdjacencyListIncidenceGraph ToGraph()
         {
-            Assert(_sources.Count == _targets.Count);
+            Assert(_tails.Count == _heads.Count);
             int vertexCount = VertexCount;
-            int sourceCount = _sources.Count;
-            int targetCount = _targets.Count;
-            int reorderedEdgeCount = 2 * sourceCount;
-            var storage = new int[1 + 2 * vertexCount + reorderedEdgeCount + targetCount + sourceCount];
+            int tailCount = _tails.Count;
+            int headCount = _heads.Count;
+            int reorderedEdgeCount = 2 * tailCount;
+            var storage = new int[1 + 2 * vertexCount + reorderedEdgeCount + headCount + tailCount];
             storage[0] = vertexCount;
 
             Span<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
@@ -116,13 +116,13 @@
                 Pool.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
-            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount, targetCount);
-            _targets.AsSpan().CopyTo(destTargets);
-            _targets.Dispose(false);
+            Span<int> destHeads = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount, headCount);
+            _heads.AsSpan().CopyTo(destHeads);
+            _heads.Dispose(false);
 
-            Span<int> destSources = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount + targetCount, sourceCount);
-            _sources.AsSpan().CopyTo(destSources);
-            _sources.Dispose(false);
+            Span<int> destTails = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount + headCount, tailCount);
+            _tails.AsSpan().CopyTo(destTails);
+            _tails.Dispose(false);
 
             return new UndirectedAdjacencyListIncidenceGraph(storage);
         }
