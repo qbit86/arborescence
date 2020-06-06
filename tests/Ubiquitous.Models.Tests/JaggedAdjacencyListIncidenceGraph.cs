@@ -27,7 +27,7 @@ namespace Ubiquitous.Models
 
         private ArrayPrefix<int>[] OutEdges { get; }
 
-        public bool TryGetSource(int edge, out int source)
+        public bool TryGetTail(int edge, out int source)
         {
             int edgeCount = EdgeCount;
 
@@ -42,7 +42,7 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetTarget(int edge, out int target)
+        public bool TryGetHead(int edge, out int target)
         {
             if ((uint)edge >= (uint)EdgeCount)
             {

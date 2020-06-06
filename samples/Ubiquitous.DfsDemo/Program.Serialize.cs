@@ -32,10 +32,10 @@
                 {
                     for (int e = 0; e < graph.EdgeCount; ++e)
                     {
-                        if (!graph.TryGetSource(e, out int source))
+                        if (!graph.TryGetTail(e, out int source))
                             continue;
 
-                        if (!graph.TryGetTarget(e, out int target))
+                        if (!graph.TryGetHead(e, out int target))
                             continue;
 
                         textWriter.Write($"  {IndexToString(source)} -> {IndexToString(target)}");

@@ -24,7 +24,7 @@ namespace Ubiquitous.Models
 
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 4;
 
-        public bool TryGetSource(int edge, out int source)
+        public bool TryGetTail(int edge, out int source)
         {
             int actualEdge = edge < 0 ? ~edge : edge;
             ReadOnlySpan<int> actualSources = edge < 0 ? GetTargets() : GetSources();
@@ -38,7 +38,7 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetTarget(int edge, out int target)
+        public bool TryGetHead(int edge, out int target)
         {
             int actualEdge = edge < 0 ? ~edge : edge;
             ReadOnlySpan<int> actualTargets = edge < 0 ? GetSources() : GetTargets();

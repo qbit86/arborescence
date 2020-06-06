@@ -8,9 +8,9 @@ namespace Ubiquitous.Models
         IInEdgesPolicy<TGraph, TVertex, TEdges>
         where TGraph : IBidirectionalGraph<TVertex, TEdge, TEdges>
     {
-        public bool TryGetTail(TGraph graph, TEdge edge, out TVertex source) => graph.TryGetSource(edge, out source);
+        public bool TryGetTail(TGraph graph, TEdge edge, out TVertex source) => graph.TryGetTail(edge, out source);
 
-        public bool TryGetHead(TGraph graph, TEdge edge, out TVertex target) => graph.TryGetTarget(edge, out target);
+        public bool TryGetHead(TGraph graph, TEdge edge, out TVertex target) => graph.TryGetHead(edge, out target);
 
         public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex) => graph.EnumerateOutEdges(vertex);
 

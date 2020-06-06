@@ -23,7 +23,7 @@ namespace Ubiquitous.Models
 
         public int EdgeCount => _storage?.Length - VertexCount ?? 0;
 
-        public bool TryGetSource(SourceTargetPair<int> edge, out int source)
+        public bool TryGetTail(SourceTargetPair<int> edge, out int source)
         {
             if ((uint)edge.Source >= (uint)VertexCount)
             {
@@ -41,7 +41,7 @@ namespace Ubiquitous.Models
             return true;
         }
 
-        public bool TryGetTarget(SourceTargetPair<int> edge, out int target)
+        public bool TryGetHead(SourceTargetPair<int> edge, out int target)
         {
             if ((uint)edge.Source >= (uint)VertexCount)
             {

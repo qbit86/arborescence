@@ -8,10 +8,10 @@ namespace Ubiquitous.Models
         where TGraph : IIncidenceGraph<int, SourceTargetPair<int>, TEdges>
     {
         public bool TryGetTail(TGraph graph, SourceTargetPair<int> edge, out int source) =>
-            graph.TryGetSource(edge, out source);
+            graph.TryGetTail(edge, out source);
 
         public bool TryGetHead(TGraph graph, SourceTargetPair<int> edge, out int target) =>
-            graph.TryGetTarget(edge, out target);
+            graph.TryGetHead(edge, out target);
 
         public TEdges EnumerateOutEdges(TGraph graph, int vertex) => graph.EnumerateOutEdges(vertex);
     }

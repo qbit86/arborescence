@@ -103,14 +103,14 @@ namespace Ubiquitous
             // Act
             for (int e = 0; e < actualEdgeCount; ++e)
             {
-                bool hasExpectedSource = jaggedAdjacencyList.TryGetSource(e, out int expectedSource);
-                bool hasActualSource = adjacencyList.TryGetSource(e, out int actualSource);
+                bool hasExpectedSource = jaggedAdjacencyList.TryGetTail(e, out int expectedSource);
+                bool hasActualSource = adjacencyList.TryGetTail(e, out int actualSource);
 
                 Assert.Equal(hasExpectedSource, hasActualSource);
                 Assert.Equal(expectedSource, actualSource);
 
-                bool hasExpectedTarget = jaggedAdjacencyList.TryGetTarget(e, out int expectedTarget);
-                bool hasActualTarget = adjacencyList.TryGetTarget(e, out int actualTarget);
+                bool hasExpectedTarget = jaggedAdjacencyList.TryGetHead(e, out int expectedTarget);
+                bool hasActualTarget = adjacencyList.TryGetHead(e, out int actualTarget);
 
                 Assert.Equal(hasExpectedTarget, hasActualTarget);
                 Assert.Equal(expectedTarget, actualTarget);
