@@ -34,7 +34,7 @@ namespace Ubiquitous.Workbench
                     continue;
 
                 string leftToken = leftTokens[leftTokens.Length - 1];
-                if (!TryParse(leftToken.AsSpan(), out int source))
+                if (!TryParse(leftToken.AsSpan(), out int tail))
                     continue;
 
                 string[] rightTokens = parts[1].Split(default(char[]), 2, StringSplitOptions.RemoveEmptyEntries);
@@ -42,10 +42,10 @@ namespace Ubiquitous.Workbench
                     continue;
 
                 string rightToken = rightTokens[0];
-                if (!TryParse(rightToken.AsSpan(), out int target))
+                if (!TryParse(rightToken.AsSpan(), out int head))
                     continue;
 
-                yield return Endpoints.Create(source, target);
+                yield return Endpoints.Create(tail, head);
             }
         }
 
