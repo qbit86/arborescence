@@ -10,13 +10,11 @@ namespace Ubiquitous.Models
         private const int DefaultInitialOutDegree = 4;
 
         private int _initialOutDegree;
-        private ArrayBuilder<int> _sources;
-        private ArrayBuilder<int> _targets;
+        private ArrayBuilder<int> _tails;
+        private ArrayBuilder<int> _heads;
         private ArrayPrefix<ArrayBuilder<int>> _outEdges;
 
-        public AdjacencyListIncidenceGraphBuilder(int initialVertexCount) : this(initialVertexCount, 0) { }
-
-        public AdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity)
+        public AdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -26,8 +24,8 @@ namespace Ubiquitous.Models
 
             _initialOutDegree = DefaultInitialOutDegree;
             int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
-            _sources = new ArrayBuilder<int>(effectiveEdgeCapacity);
-            _targets = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _tails = new ArrayBuilder<int>(effectiveEdgeCapacity);
+            _heads = new ArrayBuilder<int>(effectiveEdgeCapacity);
             ArrayBuilder<int>[] outEdges = Pool.Rent(initialVertexCount);
             Array.Clear(outEdges, 0, initialVertexCount);
             _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
@@ -66,10 +64,10 @@ namespace Ubiquitous.Models
             int max = Math.Max(tail, head);
             EnsureVertexCount(max + 1);
 
-            Assert(_sources.Count == _targets.Count);
-            int newEdgeIndex = _targets.Count;
-            _sources.Add(tail);
-            _targets.Add(head);
+            Assert(_tails.Count == _heads.Count);
+            int newEdgeIndex = _heads.Count;
+            _tails.Add(tail);
+            _heads.Add(head);
 
             if (_outEdges[tail].Buffer == null)
                 _outEdges[tail] = new ArrayBuilder<int>(InitialOutDegree);
@@ -81,24 +79,24 @@ namespace Ubiquitous.Models
         }
 
         // Storage layout:
-        // vertexCount    reorderedEdges     sources
+        // vertexCount    reorderedEdges     tails
         //         ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
         //         [4][_^|_^|_^|_^][021][bcb][aca]
         //            ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-        //               edgeBounds     targets
+        //               edgeBounds     heads
 
         public AdjacencyListIncidenceGraph ToGraph()
         {
-            Assert(_sources.Count == _targets.Count);
+            Assert(_tails.Count == _heads.Count);
             int vertexCount = VertexCount;
-            int sourceCount = _sources.Count;
-            int targetCount = _targets.Count;
-            var storage = new int[1 + 2 * vertexCount + sourceCount + targetCount + sourceCount];
+            int tailCount = _tails.Count;
+            int headCount = _heads.Count;
+            var storage = new int[1 + 2 * vertexCount + tailCount + headCount + tailCount];
             storage[0] = vertexCount;
 
             Span<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
             Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexCount);
-            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, sourceCount);
+            Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, tailCount);
 
             for (int s = 0, currentBound = 0; s != outEdges.Length; ++s)
             {
@@ -115,13 +113,13 @@ namespace Ubiquitous.Models
                 Pool.Return(_outEdges.Array, true);
             _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
-            Span<int> destTargets = storage.AsSpan(1 + 2 * vertexCount + sourceCount, targetCount);
-            _targets.AsSpan().CopyTo(destTargets);
-            _targets.Dispose(false);
+            Span<int> destHeads = storage.AsSpan(1 + 2 * vertexCount + tailCount, headCount);
+            _heads.AsSpan().CopyTo(destHeads);
+            _heads.Dispose(false);
 
-            Span<int> destSources = storage.AsSpan(1 + 2 * vertexCount + sourceCount + targetCount, sourceCount);
-            _sources.AsSpan().CopyTo(destSources);
-            _sources.Dispose(false);
+            Span<int> destTails = storage.AsSpan(1 + 2 * vertexCount + tailCount + headCount, tailCount);
+            _tails.AsSpan().CopyTo(destTails);
+            _tails.Dispose(false);
 
             return new AdjacencyListIncidenceGraph(storage);
         }
