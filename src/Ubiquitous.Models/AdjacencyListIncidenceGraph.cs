@@ -24,29 +24,29 @@ namespace Ubiquitous.Models
 
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
 
-        public bool TryGetTail(int edge, out int source)
+        public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> sources = GetSources();
             if ((uint)edge >= (uint)sources.Length)
             {
-                source = default;
+                tail = default;
                 return false;
             }
 
-            source = sources[edge];
+            tail = sources[edge];
             return true;
         }
 
-        public bool TryGetHead(int edge, out int target)
+        public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> targets = GetTargets();
             if ((uint)edge >= (uint)targets.Length)
             {
-                target = default;
+                head = default;
                 return false;
             }
 
-            target = targets[edge];
+            head = targets[edge];
             return true;
         }
 

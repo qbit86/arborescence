@@ -23,39 +23,39 @@ namespace Ubiquitous.Models
 
         public int EdgeCount => _storage?.Length - VertexCount ?? 0;
 
-        public bool TryGetTail(Endpoints<int> edge, out int source)
+        public bool TryGetTail(Endpoints<int> edge, out int tail)
         {
             if ((uint)edge.Tail >= (uint)VertexCount)
             {
-                source = default;
+                tail = default;
                 return false;
             }
 
             if ((uint)edge.Head >= (uint)VertexCount)
             {
-                source = default;
+                tail = default;
                 return false;
             }
 
-            source = edge.Tail;
+            tail = edge.Tail;
             return true;
         }
 
-        public bool TryGetHead(Endpoints<int> edge, out int target)
+        public bool TryGetHead(Endpoints<int> edge, out int head)
         {
             if ((uint)edge.Tail >= (uint)VertexCount)
             {
-                target = default;
+                head = default;
                 return false;
             }
 
             if ((uint)edge.Head >= (uint)VertexCount)
             {
-                target = default;
+                head = default;
                 return false;
             }
 
-            target = edge.Head;
+            head = edge.Head;
             return true;
         }
 

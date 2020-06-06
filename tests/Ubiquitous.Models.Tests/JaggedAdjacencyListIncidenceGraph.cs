@@ -27,31 +27,31 @@ namespace Ubiquitous.Models
 
         private ArrayPrefix<int>[] OutEdges { get; }
 
-        public bool TryGetTail(int edge, out int source)
+        public bool TryGetTail(int edge, out int tail)
         {
             int edgeCount = EdgeCount;
 
             if ((uint)edge >= (uint)edgeCount)
             {
-                source = -1;
+                tail = -1;
                 return false;
             }
 
             Assert(Endpoints != null, "Endpoints != null");
-            source = Endpoints[edgeCount + edge];
+            tail = Endpoints[edgeCount + edge];
             return true;
         }
 
-        public bool TryGetHead(int edge, out int target)
+        public bool TryGetHead(int edge, out int head)
         {
             if ((uint)edge >= (uint)EdgeCount)
             {
-                target = -1;
+                head = -1;
                 return false;
             }
 
             Assert(Endpoints != null, "Endpoints != null");
-            target = Endpoints[edge];
+            head = Endpoints[edge];
             return true;
         }
 
