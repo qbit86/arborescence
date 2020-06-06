@@ -95,8 +95,8 @@ namespace Ubiquitous.Traversal
             yield return StepPolicy.CreateEdgeStep(DfsStepKind.ExamineEdge, edge, isReversed);
 
             bool hasNeighbour = isReversed
-                ? GraphPolicy.TryGetSource(Graph, edge, out TVertex neighbour)
-                : GraphPolicy.TryGetTarget(Graph, edge, out neighbour);
+                ? GraphPolicy.TryGetTail(Graph, edge, out TVertex neighbour)
+                : GraphPolicy.TryGetHead(Graph, edge, out neighbour);
             if (hasNeighbour)
             {
                 Color neighborColor = GetVertexColorOrDefault(_vertexColorMap, neighbour);

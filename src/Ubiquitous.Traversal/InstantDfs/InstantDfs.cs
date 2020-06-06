@@ -77,7 +77,7 @@ namespace Ubiquitous.Traversal
                 while (edges.MoveNext())
                 {
                     TEdge e = edges.Current;
-                    if (!GraphPolicy.TryGetTarget(graph, e, out TVertex v))
+                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                         continue;
 
                     handler.OnExamineEdge(graph, e);

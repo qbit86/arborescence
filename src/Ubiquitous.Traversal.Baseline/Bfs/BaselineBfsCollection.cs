@@ -95,7 +95,7 @@ namespace Ubiquitous.Traversal
                     {
                         TEdge e = outEdges.Current;
 
-                        if (!GraphPolicy.TryGetTarget(Graph, e, out TVertex v))
+                        if (!GraphPolicy.TryGetHead(Graph, e, out TVertex v))
                             continue;
 
                         Color color = GetColorOrDefault(colorMap, v);

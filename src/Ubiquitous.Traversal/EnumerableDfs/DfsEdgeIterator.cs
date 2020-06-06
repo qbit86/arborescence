@@ -90,7 +90,7 @@ namespace Ubiquitous.Traversal
                             continue;
                         }
 
-                        if (!_graphPolicy.TryGetTarget(_graph, _edgeEnumerator.Current, out _neighborVertex))
+                        if (!_graphPolicy.TryGetHead(_graph, _edgeEnumerator.Current, out _neighborVertex))
                         {
                             _state = 4;
                             continue;

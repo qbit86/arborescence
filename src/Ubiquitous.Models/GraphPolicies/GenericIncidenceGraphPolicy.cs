@@ -7,9 +7,9 @@ namespace Ubiquitous.Models
         IOutEdgesPolicy<TGraph, TVertex, TEdges>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdges>
     {
-        public bool TryGetSource(TGraph graph, TEdge edge, out TVertex source) => graph.TryGetSource(edge, out source);
+        public bool TryGetTail(TGraph graph, TEdge edge, out TVertex source) => graph.TryGetSource(edge, out source);
 
-        public bool TryGetTarget(TGraph graph, TEdge edge, out TVertex target) => graph.TryGetTarget(edge, out target);
+        public bool TryGetHead(TGraph graph, TEdge edge, out TVertex target) => graph.TryGetTarget(edge, out target);
 
         public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex) => graph.EnumerateOutEdges(vertex);
     }

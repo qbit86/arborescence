@@ -8,13 +8,13 @@ namespace Ubiquitous.Models
         IInEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IBidirectional<int, TEdges>
     {
-        public bool TryGetSource(TGraph graph, SourceTargetPair<int> edge, out int source)
+        public bool TryGetTail(TGraph graph, SourceTargetPair<int> edge, out int source)
         {
             source = edge.Source;
             return true;
         }
 
-        public bool TryGetTarget(TGraph graph, SourceTargetPair<int> edge, out int target)
+        public bool TryGetHead(TGraph graph, SourceTargetPair<int> edge, out int target)
         {
             target = edge.Target;
             return true;
