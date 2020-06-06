@@ -7,15 +7,15 @@ namespace Ubiquitous.Models
         IOutEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IIncidence<int, TEdges>
     {
-        public bool TryGetTail(TGraph graph, SourceTargetPair<int> edge, out int source)
+        public bool TryGetTail(TGraph graph, SourceTargetPair<int> edge, out int tail)
         {
-            source = edge.Source;
+            tail = edge.Source;
             return true;
         }
 
-        public bool TryGetHead(TGraph graph, SourceTargetPair<int> edge, out int target)
+        public bool TryGetHead(TGraph graph, SourceTargetPair<int> edge, out int head)
         {
-            target = edge.Target;
+            head = edge.Target;
             return true;
         }
 
