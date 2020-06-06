@@ -25,7 +25,7 @@
                 return;
 
             Pool.Return(_arrayFromPool, ShouldClear());
-            this = default;
+            _arrayFromPool = null;
         }
 
         public void Add(T item)
