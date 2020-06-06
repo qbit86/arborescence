@@ -40,9 +40,9 @@ namespace Ubiquitous
                 ArraySegmentEnumerator<int> edges = graph.EnumerateOutEdges(vertex);
                 foreach (int edge in edges)
                 {
-                    string sourceString = graph.TryGetTail(edge, out int source) ? IndexToString(source) : "?";
-                    string targetString = graph.TryGetHead(edge, out int target) ? IndexToString(target) : "?";
-                    string endpointsString = $"{sourceString} -> {targetString}";
+                    string tailString = graph.TryGetTail(edge, out int tail) ? IndexToString(tail) : "?";
+                    string headString = graph.TryGetHead(edge, out int head) ? IndexToString(head) : "?";
+                    string endpointsString = $"{tailString} -> {headString}";
                     Console.WriteLine($"{edge.ToString(CultureInfo.InvariantCulture)}: {endpointsString}");
                 }
             }
