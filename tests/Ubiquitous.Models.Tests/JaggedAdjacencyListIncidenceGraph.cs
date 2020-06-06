@@ -12,8 +12,8 @@ namespace Ubiquitous.Models
             Assert(endpoints != null, "endpoints != null");
             Assert(outEdges != null, "outEdges != null");
 
-            // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
-            // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): source(edge) = vertex.
+            // Assert: `endpoints` are consistent. For each edge: tail(edge) and head(edge) belong to vertices.
+            // Assert: `outEdges` are consistent. For each vertex and for each edge in outEdges(vertex): tail(edge) = vertex.
 
             Endpoints = endpoints;
             OutEdges = outEdges;

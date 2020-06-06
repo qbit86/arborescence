@@ -22,8 +22,8 @@
             Assert(storage[0] >= 0, "storage[0] >= 0");
             Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
 
-            // Assert: `endpoints` are consistent. For each edge: source(edge) and target(edge) belong to vertices.
-            // Assert: `endpoints` are sorted by source(edge).
+            // Assert: `endpoints` are consistent. For each edge: tail(edge) and head(edge) belong to vertices.
+            // Assert: `endpoints` are sorted by tail(edge).
             // Assert: `edgeBounds` are vertexCount in length.
             // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 

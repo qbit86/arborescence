@@ -49,35 +49,35 @@
     /// </remarks>
     public readonly struct SourceTargetPair<TVertex> : IEquatable<SourceTargetPair<TVertex>>
     {
-        public TVertex Source { get; }
-        public TVertex Target { get; }
+        public TVertex Tail { get; }
+        public TVertex Head { get; }
 
-        public SourceTargetPair(TVertex source, TVertex target)
+        public SourceTargetPair(TVertex tail, TVertex head)
         {
-            Source = source;
-            Target = target;
+            Tail = tail;
+            Head = head;
         }
 
         public override string ToString()
         {
-            return SourceTargetPair.PairToString(Source?.ToString(), Target?.ToString());
+            return SourceTargetPair.PairToString(Tail?.ToString(), Head?.ToString());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void Deconstruct(out TVertex source, out TVertex target)
         {
-            source = Source;
-            target = Target;
+            source = Tail;
+            target = Head;
         }
 
         public bool Equals(SourceTargetPair<TVertex> other)
         {
             EqualityComparer<TVertex> comparer = EqualityComparer<TVertex>.Default;
 
-            if (!comparer.Equals(Source, other.Source))
+            if (!comparer.Equals(Tail, other.Tail))
                 return false;
 
-            if (!comparer.Equals(Target, other.Target))
+            if (!comparer.Equals(Head, other.Head))
                 return false;
 
             return true;
@@ -90,8 +90,8 @@
 
         public override int GetHashCode()
         {
-            return unchecked(EqualityComparer<TVertex>.Default.GetHashCode(Source) * 397) ^
-                EqualityComparer<TVertex>.Default.GetHashCode(Target);
+            return unchecked(EqualityComparer<TVertex>.Default.GetHashCode(Tail) * 397) ^
+                EqualityComparer<TVertex>.Default.GetHashCode(Head);
         }
 
         public static bool operator ==(SourceTargetPair<TVertex> left, SourceTargetPair<TVertex> right)

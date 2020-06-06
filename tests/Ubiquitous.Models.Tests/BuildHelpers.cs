@@ -33,9 +33,9 @@ namespace Ubiquitous
             {
                 IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 if (orderBySource)
-                    edges = edges.OrderBy(st => st.Source);
+                    edges = edges.OrderBy(st => st.Tail);
                 foreach (SourceTargetPair<int> edge in edges)
-                    builder.TryAdd(edge.Source, edge.Target, out _);
+                    builder.TryAdd(edge.Tail, edge.Head, out _);
             }
         }
     }

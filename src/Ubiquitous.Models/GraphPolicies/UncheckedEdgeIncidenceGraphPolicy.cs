@@ -9,13 +9,13 @@ namespace Ubiquitous.Models
     {
         public bool TryGetTail(TGraph graph, SourceTargetPair<int> edge, out int tail)
         {
-            tail = edge.Source;
+            tail = edge.Tail;
             return true;
         }
 
         public bool TryGetHead(TGraph graph, SourceTargetPair<int> edge, out int head)
         {
-            head = edge.Target;
+            head = edge.Head;
             return true;
         }
 

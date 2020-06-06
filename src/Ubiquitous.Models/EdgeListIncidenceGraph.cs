@@ -25,37 +25,37 @@ namespace Ubiquitous.Models
 
         public bool TryGetTail(SourceTargetPair<int> edge, out int source)
         {
-            if ((uint)edge.Source >= (uint)VertexCount)
+            if ((uint)edge.Tail >= (uint)VertexCount)
             {
                 source = default;
                 return false;
             }
 
-            if ((uint)edge.Target >= (uint)VertexCount)
+            if ((uint)edge.Head >= (uint)VertexCount)
             {
                 source = default;
                 return false;
             }
 
-            source = edge.Source;
+            source = edge.Tail;
             return true;
         }
 
         public bool TryGetHead(SourceTargetPair<int> edge, out int target)
         {
-            if ((uint)edge.Source >= (uint)VertexCount)
+            if ((uint)edge.Tail >= (uint)VertexCount)
             {
                 target = default;
                 return false;
             }
 
-            if ((uint)edge.Target >= (uint)VertexCount)
+            if ((uint)edge.Head >= (uint)VertexCount)
             {
                 target = default;
                 return false;
             }
 
-            target = edge.Target;
+            target = edge.Head;
             return true;
         }
 
@@ -68,8 +68,8 @@ namespace Ubiquitous.Models
                     ArrayBuilder<SourceTargetPair<int>>.EmptyArray, 0, 0);
             }
 
-            int start = edgeBounds[vertex].Source;
-            int length = edgeBounds[vertex].Target;
+            int start = edgeBounds[vertex].Tail;
+            int length = edgeBounds[vertex].Head;
             return new ArraySegmentEnumerator<SourceTargetPair<int>>(_storage, start, length);
         }
 

@@ -24,7 +24,7 @@ namespace Ubiquitous
             {
                 IEnumerable<SourceTargetPair<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 foreach (SourceTargetPair<int> edge in edges)
-                    builder.TryAdd(edge.Source, edge.Target, out _);
+                    builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
