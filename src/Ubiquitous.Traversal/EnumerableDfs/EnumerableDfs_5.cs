@@ -9,7 +9,7 @@
         public static EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
             Create<TGraphPolicy, TColorMapPolicy>(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-            IGetTargetPolicy<TGraph, TVertex, TEdge>
+            IGetHeadPolicy<TGraph, TVertex, TEdge>
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         {
             return new EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(

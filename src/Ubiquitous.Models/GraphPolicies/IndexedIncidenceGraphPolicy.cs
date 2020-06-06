@@ -2,8 +2,8 @@ namespace Ubiquitous.Models
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct IndexedIncidenceGraphPolicy<TGraph, TEdges> :
-        IGetSourcePolicy<TGraph, int, int>,
-        IGetTargetPolicy<TGraph, int, int>,
+        IGetTailPolicy<TGraph, int, int>,
+        IGetHeadPolicy<TGraph, int, int>,
         IOutEdgesPolicy<TGraph, int, TEdges>
         where TGraph : IIncidenceGraph<int, int, TEdges>
     {

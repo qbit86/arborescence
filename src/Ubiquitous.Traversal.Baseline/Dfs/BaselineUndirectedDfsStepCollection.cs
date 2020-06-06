@@ -11,8 +11,8 @@ namespace Ubiquitous.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
         IInEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetPolicy<TGraph, TVertex, TEdge>,
-        IGetSourcePolicy<TGraph, TVertex, TEdge>
+        IGetHeadPolicy<TGraph, TVertex, TEdge>,
+        IGetTailPolicy<TGraph, TVertex, TEdge>
         where TVertexColorMapPolicy : IMapPolicy<TVertexColorMap, TVertex, Color>
         where TEdgeColorMapPolicy : IMapPolicy<TEdgeColorMap, TEdge, Color>
         where TStepPolicy : IUndirectedStepPolicy<DfsStepKind, TVertex, TEdge, TStep>

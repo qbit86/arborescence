@@ -9,7 +9,7 @@ namespace Ubiquitous.Traversal
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IGetTargetPolicy<TGraph, TVertex, TEdge>
+        IGetHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TGraphPolicy GraphPolicy { get; }
