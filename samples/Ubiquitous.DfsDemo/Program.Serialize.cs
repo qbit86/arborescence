@@ -23,7 +23,10 @@
                 if (!vertexKinds.IsEmpty)
                 {
                     for (int v = 0; v < graph.VertexCount; ++v)
-                        textWriter.Write(v == 0 ? $"  {IndexToString(v)}" : $" {IndexToString(v)}");
+                    {
+                        textWriter.Write(v == 0 ? "  " : " ");
+                        textWriter.Write(IndexToString(v));
+                    }
 
                     textWriter.WriteLine();
                 }
