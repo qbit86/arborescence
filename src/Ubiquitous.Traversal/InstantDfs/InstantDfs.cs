@@ -13,7 +13,7 @@ namespace Ubiquitous.Traversal
         public static InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
             Create<TGraphPolicy, TColorMapPolicy>(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
             where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-            IGetHeadPolicy<TGraph, TVertex, TEdge>
+            IHeadPolicy<TGraph, TVertex, TEdge>
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         {
             return new InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
@@ -27,7 +27,7 @@ namespace Ubiquitous.Traversal
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IGetHeadPolicy<TGraph, TVertex, TEdge>
+        IHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TGraphPolicy GraphPolicy { get; }
