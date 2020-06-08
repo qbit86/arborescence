@@ -16,7 +16,6 @@
   <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
   <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
   <ProjectReference Include="..\..\src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
-  <ProjectReference Include="..\..\src\Ubiquitous.Traversal.Baseline\Ubiquitous.Traversal.Baseline.csproj" />
   <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
 </ItemGroup>
 <Import Project="..\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems" Label="Shared" />
