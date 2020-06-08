@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy> : IDisposable
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IGetHeadPolicy<TGraph, TVertex, TEdge>
+        IHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         private TGraphPolicy _graphPolicy;
