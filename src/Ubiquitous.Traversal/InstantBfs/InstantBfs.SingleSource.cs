@@ -1,7 +1,11 @@
 namespace Ubiquitous.Traversal
 {
     using System;
+    using System.Collections.Generic;
+    using Collections;
+    using Internal;
 
+    // ReSharper disable UnusedTypeParameter
     public readonly partial struct InstantBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
     {
@@ -12,7 +16,22 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            throw new NotImplementedException();
+            Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
+            try
+            {
+                var queueAdapter = new QueueAdapter<TVertex>(queue);
+
+                ColorMapPolicy.AddOrUpdate(colorMap, source, Color.Gray);
+                handler.OnDiscoverVertex(graph, source);
+                queueAdapter.Add(source);
+
+                TraverseCore(graph, queueAdapter, colorMap, handler);
+            }
+            finally
+            {
+                QueueCache<TVertex>.Release(queue);
+            }
         }
     }
+    // ReSharper restore UnusedTypeParameter
 }

@@ -5,6 +5,7 @@ namespace Ubiquitous.Traversal
     using Collections;
     using Internal;
 
+    // ReSharper disable UnusedTypeParameter
     public readonly partial struct InstantBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
     {
@@ -40,4 +41,5 @@ namespace Ubiquitous.Traversal
             }
         }
     }
+    // ReSharper restore UnusedTypeParameter
 }
