@@ -5,8 +5,8 @@ namespace Ubiquitous.Traversal
     using Collections;
     using Internal;
 
-    public readonly partial struct InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
-        TColorMapPolicy>
+    public readonly partial struct InstantBfs<
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
     {
         public void Traverse<TVertexEnumerator, THandler>(
             TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler)
