@@ -1,5 +1,7 @@
 namespace Ubiquitous.Traversal
 {
+    // https://www.boost.org/doc/libs/1_73_0/libs/graph/doc/DFSVisitor.html
+
     public interface IDfsHandler<in TGraph, in TVertex, in TEdge>
     {
         void OnStartVertex(TGraph g, TVertex v);

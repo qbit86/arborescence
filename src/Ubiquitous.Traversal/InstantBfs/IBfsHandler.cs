@@ -1,5 +1,7 @@
 ﻿namespace Ubiquitous.Traversal
 {
+    // https://www.boost.org/doc/libs/1_73_0/libs/graph/doc/BFSVisitor.html
+
     public interface IBfsHandler<in TGraph, in TVertex, in TEdge>
     {
         void OnDiscoverVertex(TGraph g, TVertex v);
