@@ -1,7 +1,7 @@
 namespace Ubiquitous.Traversal
 {
-    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Collections;
 
     // ReSharper disable UnusedTypeParameter
@@ -12,7 +12,26 @@ namespace Ubiquitous.Traversal
             TGraph graph, TContainer queue, TExploredSet exploredSet)
             where TContainer : IContainer<TVertex>
         {
-            throw new NotImplementedException();
+            Debug.Assert(queue != null, "queue != null");
+
+            while (queue.TryTake(out TVertex u))
+            {
+                TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                while (outEdges.MoveNext())
+                {
+                    TEdge e = outEdges.Current;
+                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        continue;
+
+                    bool vExplored = ExploredSetPolicy.Contains(exploredSet, v);
+                    if (!vExplored)
+                    {
+                        yield return e;
+                        ExploredSetPolicy.Add(exploredSet, v);
+                        queue.Add(v);
+                    }
+                }
+            }
         }
     }
     // ReSharper restore UnusedTypeParameter
