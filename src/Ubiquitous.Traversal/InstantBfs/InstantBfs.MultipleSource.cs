@@ -11,7 +11,7 @@ namespace Ubiquitous.Traversal
         public void Traverse<TVertexEnumerator, THandler>(
             TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler)
             where TVertexEnumerator : IEnumerator<TVertex>
-            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
+            where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             if (sources == null)
                 throw new ArgumentNullException(nameof(sources));

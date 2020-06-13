@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Collections;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
@@ -30,13 +31,49 @@
         private void TraverseCore<TContainer, THandler>(
             TGraph graph, TContainer queue, TColorMap colorMap, THandler handler)
             where TContainer : IContainer<TVertex>
-            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
+            where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             Debug.Assert(queue != null, "queue != null");
             Debug.Assert(handler != null, "handler != null");
 
-            throw new NotImplementedException();
+            while (queue.TryTake(out TVertex u))
+            {
+                handler.OnExamineVertex(graph, u);
+                TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                while (outEdges.MoveNext())
+                {
+                    TEdge e = outEdges.Current;
+                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        continue;
+
+                    handler.OnExamineEdge(graph, e);
+                    Color vColor = GetColorOrDefault(colorMap, v);
+                    switch (vColor)
+                    {
+                        case Color.None:
+                        case Color.White:
+                            handler.OnTreeEdge(graph, e);
+                            ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
+                            handler.OnDiscoverVertex(graph, v);
+                            queue.Add(v);
+                            break;
+                        case Color.Gray:
+                            handler.OnNonTreeGrayHeadEdge(graph, e);
+                            break;
+                        case Color.Black:
+                            handler.OnNonTreeBlackHeadEdge(graph, e);
+                            break;
+                    }
+                }
+
+                ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                handler.OnFinishVertex(graph, u);
+            }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
+            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
