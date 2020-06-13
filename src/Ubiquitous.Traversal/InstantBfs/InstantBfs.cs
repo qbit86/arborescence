@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using Collections;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly struct InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
+    public readonly partial struct InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
@@ -23,6 +25,17 @@
 
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
+        }
+
+        private void TraverseCore<TContainer, THandler>(
+            TGraph graph, TContainer queue, TColorMap colorMap, THandler handler)
+            where TContainer : IContainer<TVertex>
+            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
+        {
+            Debug.Assert(queue != null, "queue != null");
+            Debug.Assert(handler != null, "handler != null");
+
+            throw new NotImplementedException();
         }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
