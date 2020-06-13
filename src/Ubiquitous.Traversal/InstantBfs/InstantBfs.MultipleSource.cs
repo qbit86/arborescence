@@ -19,9 +19,6 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            // TODO: Add check.
-            ColorMapPolicy.Clear(colorMap);
-
             Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
             try
             {
