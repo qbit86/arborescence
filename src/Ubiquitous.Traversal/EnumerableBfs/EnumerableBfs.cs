@@ -4,7 +4,7 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly struct EnumerableBfs<
+    public readonly partial struct EnumerableBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
