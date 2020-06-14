@@ -5,8 +5,8 @@ namespace Ubiquitous.Traversal
     using Internal;
 
     // ReSharper disable UnusedTypeParameter
-    public readonly partial struct EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy,
-        TExploredSetPolicy>
+    public readonly partial struct EnumerableBfs<
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
