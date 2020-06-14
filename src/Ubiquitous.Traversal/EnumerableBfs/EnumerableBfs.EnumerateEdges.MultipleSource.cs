@@ -13,23 +13,16 @@ namespace Ubiquitous.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
         {
             Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
-            try
-            {
-                var queueAdapter = new QueueAdapter<TVertex>(queue);
+            var queueAdapter = new QueueAdapter<TVertex>(queue);
 
-                while (sources.MoveNext())
-                {
-                    TVertex s = sources.Current;
-                    ExploredSetPolicy.Add(exploredSet, s);
-                    queueAdapter.Add(s);
-                }
-
-                return EnumerateEdgesCore(graph, queueAdapter, exploredSet);
-            }
-            finally
+            while (sources.MoveNext())
             {
-                QueueCache<TVertex>.Release(queue);
+                TVertex s = sources.Current;
+                ExploredSetPolicy.Add(exploredSet, s);
+                queueAdapter.Add(s);
             }
+
+            return EnumerateEdgesCore(graph, queueAdapter, exploredSet);
         }
     }
     // ReSharper restore UnusedTypeParameter

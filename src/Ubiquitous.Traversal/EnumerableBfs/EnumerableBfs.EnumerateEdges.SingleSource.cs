@@ -11,19 +11,12 @@ namespace Ubiquitous.Traversal
         public IEnumerator<TEdge> EnumerateEdges(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
             Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
-            try
-            {
-                var queueAdapter = new QueueAdapter<TVertex>(queue);
+            var queueAdapter = new QueueAdapter<TVertex>(queue);
 
-                ExploredSetPolicy.Add(exploredSet, source);
-                queueAdapter.Add(source);
+            ExploredSetPolicy.Add(exploredSet, source);
+            queueAdapter.Add(source);
 
-                return EnumerateEdgesCore(graph, queueAdapter, exploredSet);
-            }
-            finally
-            {
-                QueueCache<TVertex>.Release(queue);
-            }
+            return EnumerateEdgesCore(graph, queueAdapter, exploredSet);
         }
     }
     // ReSharper restore UnusedTypeParameter
