@@ -42,7 +42,7 @@ namespace Ubiquitous
 
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
-        private void EnumerableEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -91,7 +91,7 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(instantColorMap);
         }
 
-        private void EnumerableEdgesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateEdgesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -156,19 +156,19 @@ namespace Ubiquitous
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [CombinatorialData]
-        public void Enumerable_edges_single_source_combinatorial(
+        public void Enumerate_edges_single_source_combinatorial(
             [CombinatorialValues(1, 10, 100)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
             double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerableEdgesSingleSourceCore(graph);
+            EnumerateEdgesSingleSourceCore(graph);
         }
 
         [Theory]
         [MemberData(nameof(TestCases))]
-        public void Enumerable_edges_single_source_member(string testCase)
+        public void Enumerate_edges_single_source_member(string testCase)
         {
             Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
@@ -182,24 +182,24 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerableEdgesSingleSourceCore(graph);
+            EnumerateEdgesSingleSourceCore(graph);
         }
 
         [Theory]
         [CombinatorialData]
-        public void Enumerable_edges_multiple_source_combinatorial(
+        public void Enumerate_edges_multiple_source_combinatorial(
             [CombinatorialValues(1, 10, 100)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
             double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerableEdgesMultipleSourceCore(graph);
+            EnumerateEdgesMultipleSourceCore(graph);
         }
 
         [Theory]
         [MemberData(nameof(TestCases))]
-        public void Enumerable_edges_multiple_source_member(string testCase)
+        public void Enumerate_edges_multiple_source_member(string testCase)
         {
             Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
@@ -213,7 +213,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerableEdgesMultipleSourceCore(graph);
+            EnumerateEdgesMultipleSourceCore(graph);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
