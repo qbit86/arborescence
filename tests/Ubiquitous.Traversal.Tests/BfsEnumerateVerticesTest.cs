@@ -1,10 +1,12 @@
 namespace Ubiquitous
 {
     using System;
+    using System.Buffers;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using Misnomer;
     using Models;
     using Traversal;
     using Workbench;
@@ -42,7 +44,53 @@ namespace Ubiquitous
 
         private void EnumerateVerticesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
-            throw new NotImplementedException();
+            Debug.Assert(graph != null, "graph != null");
+
+            // Arrange
+
+            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+            int source = graph.VertexCount - 1;
+
+            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(instantColorMap, 0, instantColorMap.Length);
+            var enumerableExploredSet = new BitArray(graph.VertexCount);
+
+            var instantSteps = new Rist<int>(graph.VertexCount);
+            var enumerableSteps = new Rist<int>(graph.VertexCount);
+            BfsHandler<AdjacencyListIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
+
+            // Act
+
+            InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+            IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, source, enumerableExploredSet);
+            while (vertices.MoveNext())
+                enumerableSteps.Add(vertices.Current);
+
+            // Assert
+
+            int instantStepCount = instantSteps.Count;
+            int enumerableStepCount = enumerableSteps.Count;
+            Assert.Equal(instantStepCount, enumerableStepCount);
+
+            int count = instantStepCount;
+            for (int i = 0; i != count; ++i)
+            {
+                int instantStep = instantSteps[i];
+                int enumerableStep = enumerableSteps[i];
+
+                Assert.True(graph.TryGetHead(instantStep, out int head));
+
+                if (head == enumerableStep)
+                    continue;
+
+                Assert.Equal(instantStep, enumerableStep);
+            }
+
+            // Cleanup
+
+            enumerableSteps.Dispose();
+            instantSteps.Dispose();
+            ArrayPool<byte>.Shared.Return(instantColorMap);
         }
 
         private void EnumerateVerticesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
