@@ -40,7 +40,7 @@ namespace Ubiquitous
 
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
-        private void EnumerableVerticesSingleComponentCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateVerticesSingleComponentCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -90,7 +90,7 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(instantColorMap);
         }
 
-        private void EnumerableVerticesCrossComponentCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateVerticesCrossComponentCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -158,19 +158,19 @@ namespace Ubiquitous
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [CombinatorialData]
-        public void Enumerable_vertices_single_component_combinatorial(
+        public void Enumerate_vertices_single_component_combinatorial(
             [CombinatorialValues(1, 10, 100)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
             double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerableVerticesSingleComponentCore(graph);
+            EnumerateVerticesSingleComponentCore(graph);
         }
 
         [Theory]
         [MemberData(nameof(TestCases))]
-        public void Enumerable_vertices_single_component_member(string testCase)
+        public void Enumerate_vertices_single_component_member(string testCase)
         {
             Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
@@ -184,24 +184,24 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerableVerticesSingleComponentCore(graph);
+            EnumerateVerticesSingleComponentCore(graph);
         }
 
         [Theory]
         [CombinatorialData]
-        public void Enumerable_vertices_cross_component_combinatorial(
+        public void Enumerate_vertices_cross_component_combinatorial(
             [CombinatorialValues(1, 10, 100)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
             double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerableVerticesCrossComponentCore(graph);
+            EnumerateVerticesCrossComponentCore(graph);
         }
 
         [Theory]
         [MemberData(nameof(TestCases))]
-        public void Enumerable_vertices_cross_component_member(string testCase)
+        public void Enumerate_vertices_cross_component_member(string testCase)
         {
             Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
@@ -215,7 +215,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerableVerticesCrossComponentCore(graph);
+            EnumerateVerticesCrossComponentCore(graph);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
