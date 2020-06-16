@@ -20,10 +20,10 @@
 
         public bool Contains(byte[] items, int item)
         {
-            if (items == null || (uint)item >= (uint)items.Length)
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (items == null || (uint)byteIndex >= (uint)items.Length)
                 return false;
 
-            int byteIndex = Div8Rem(item, out int bitIndex);
             byte bitMask = (byte)(1 << bitIndex);
 
             return (items[byteIndex] & bitMask) != 0;
@@ -31,10 +31,10 @@
 
         public void Add(byte[] items, int item)
         {
-            if (items == null || (uint)item >= (uint)items.Length)
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (items == null || (uint)byteIndex >= (uint)items.Length)
                 return;
 
-            int byteIndex = Div8Rem(item, out int bitIndex);
             byte bitMask = (byte)(1 << bitIndex);
 
             items[byteIndex] |= bitMask;
