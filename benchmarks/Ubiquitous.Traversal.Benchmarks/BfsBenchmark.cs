@@ -2,7 +2,6 @@
 {
     using System;
     using System.Buffers;
-    using System.Collections;
     using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
     using Models;
@@ -18,7 +17,7 @@
             new DummyHandler<AdjacencyListIncidenceGraph>();
 
         private byte[] _colorMap = Array.Empty<byte>();
-        private BitArray _exploredSet;
+        private byte[] _exploredSet = Array.Empty<byte>();
 
         [Params(10, 100, 1000)]
         // ReSharper disable once MemberCanBePrivate.Global
@@ -29,8 +28,8 @@
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; set; }
 
-        private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray,
-                IndexedAdjacencyListGraphPolicy, BitArraySetPolicy>
+        private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; set; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
@@ -42,16 +41,16 @@
 
             IndexedAdjacencyListGraphPolicy graphPolicy = default;
             IndexedColorMapPolicy colorMapPolicy = default;
-            BitArraySetPolicy exploredSetPolicy = default;
+            IndexedSetPolicy exploredSetPolicy = default;
 
             InstantBfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(graphPolicy, colorMapPolicy);
 
-            EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray>
+            EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(graphPolicy, exploredSetPolicy);
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
-            _exploredSet = new BitArray(Graph.VertexCount);
+            _exploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _handler.Reset();
         }
 
@@ -60,7 +59,8 @@
         {
             ArrayPool<byte>.Shared.Return(_colorMap, true);
             _colorMap = Array.Empty<byte>();
-            _exploredSet = null;
+            ArrayPool<byte>.Shared.Return(_exploredSet, true);
+            _exploredSet = Array.Empty<byte>();
         }
 
         [Benchmark(Baseline = true)]
@@ -74,7 +74,7 @@
         [Benchmark]
         public int EnumerableBfsEdges()
         {
-            _exploredSet.SetAll(false);
+            Array.Clear(_exploredSet, 0, _exploredSet.Length);
             IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, _exploredSet);
             int count = 0;
             while (steps.MoveNext())
@@ -87,7 +87,7 @@
         [Benchmark]
         public int EnumerableBfsVertices()
         {
-            _exploredSet.SetAll(false);
+            Array.Clear(_exploredSet, 0, _exploredSet.Length);
             IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, _exploredSet);
             int count = 0;
             while (steps.MoveNext())
