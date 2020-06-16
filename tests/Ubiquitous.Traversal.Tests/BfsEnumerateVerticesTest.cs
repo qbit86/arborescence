@@ -2,7 +2,6 @@ namespace Ubiquitous
 {
     using System;
     using System.Buffers;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
@@ -27,8 +26,8 @@ namespace Ubiquitous
             InstantBfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
                 graphPolicy, colorMapPolicy);
 
-            BitArraySetPolicy exploredSetPolicy = default;
-            EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray>.Create(
+            IndexedSetPolicy exploredSetPolicy = default;
+            EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
                 graphPolicy, exploredSetPolicy);
         }
 
@@ -36,8 +35,8 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
-        private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray,
-                IndexedAdjacencyListGraphPolicy, BitArraySetPolicy>
+        private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
 
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
@@ -53,7 +52,8 @@ namespace Ubiquitous
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            var enumerableExploredSet = new BitArray(graph.VertexCount);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
             var instantSteps = new Rist<int>(graph.VertexCount);
             var enumerableSteps = new Rist<int>(graph.VertexCount);
@@ -90,6 +90,7 @@ namespace Ubiquitous
             enumerableSteps.Dispose();
             instantSteps.Dispose();
             ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
         private void EnumerateVerticesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
@@ -107,7 +108,8 @@ namespace Ubiquitous
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            var enumerableExploredSet = new BitArray(graph.VertexCount);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
             var instantSteps = new Rist<int>(graph.VertexCount);
             var enumerableSteps = new Rist<int>(graph.VertexCount);
@@ -144,6 +146,7 @@ namespace Ubiquitous
             enumerableSteps.Dispose();
             instantSteps.Dispose();
             ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
         private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateBfsHandler(IList<int> treeEdges)
