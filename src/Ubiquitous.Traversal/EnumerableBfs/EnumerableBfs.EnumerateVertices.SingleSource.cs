@@ -1,8 +1,6 @@
 namespace Ubiquitous.Traversal
 {
     using System.Collections.Generic;
-    using Collections;
-    using Internal;
 
     // ReSharper disable UnusedTypeParameter
     public readonly partial struct EnumerableBfs<
@@ -10,13 +8,12 @@ namespace Ubiquitous.Traversal
     {
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
-            System.Collections.Generic.Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
-            var queueAdapter = new QueueAdapter<TVertex>(queue);
+            var queue = new Internal.Queue<TVertex>();
 
             ExploredSetPolicy.Add(exploredSet, source);
-            queueAdapter.Add(source);
+            queue.Add(source);
 
-            return EnumerateVerticesCore(graph, queueAdapter, exploredSet);
+            return EnumerateVerticesCore(graph, queue, exploredSet);
         }
     }
     // ReSharper restore UnusedTypeParameter
