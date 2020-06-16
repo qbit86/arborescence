@@ -20,8 +20,8 @@ namespace Ubiquitous
 
         public DfsEnumerateVerticesTest()
         {
-            var graphPolicy = default(IndexedAdjacencyListGraphPolicy);
-            var colorMapPolicy = default(IndexedColorMapPolicy);
+            IndexedAdjacencyListGraphPolicy graphPolicy = default;
+            IndexedColorMapPolicy colorMapPolicy = default;
 
             InstantDfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
                 graphPolicy, colorMapPolicy);
