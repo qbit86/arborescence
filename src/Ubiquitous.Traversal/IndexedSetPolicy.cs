@@ -1,27 +1,60 @@
 ﻿namespace Ubiquitous.Traversal
 {
-    using System.Collections;
+    using System;
+    using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly struct IndexedSetPolicy : ISetPolicy<BitArray, int>
+    public readonly struct IndexedSetPolicy : ISetPolicy<byte[], int>
     {
-        public bool Contains(BitArray items, int item)
+        private const int BitShiftPerByte = 3;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetByteCount(int count)
         {
-            if (items == null || (uint)item >= (uint)items.Length)
+            if (count <= 0)
+                return 0;
+
+            uint temp = (uint)(count - 1 + (1 << BitShiftPerByte));
+            return (int)(temp >> BitShiftPerByte);
+        }
+
+        public bool Contains(byte[] items, int item)
+        {
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (items == null || (uint)byteIndex >= (uint)items.Length)
                 return false;
 
-            return items.Get(item);
+            byte bitMask = (byte)(1 << bitIndex);
+
+            return (items[byteIndex] & bitMask) != 0;
         }
 
-        public void Add(BitArray items, int item)
+        public void Add(byte[] items, int item)
         {
-            if (items == null || (uint)item >= (uint)items.Length)
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (items == null || (uint)byteIndex >= (uint)items.Length)
                 return;
 
-            items.Set(item, true);
+            byte bitMask = (byte)(1 << bitIndex);
+
+            items[byteIndex] |= bitMask;
         }
 
-        public void Clear(BitArray items) => items?.SetAll(false);
+        public void Clear(byte[] items)
+        {
+            if (items == null)
+                return;
+
+            Array.Clear(items, 0, items.Length);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int Div8Rem(int number, out int remainder)
+        {
+            uint quotient = (uint)number >> 3;
+            remainder = number & 0b111;
+            return (int)quotient;
+        }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
