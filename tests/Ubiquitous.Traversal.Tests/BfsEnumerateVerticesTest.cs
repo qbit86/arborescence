@@ -83,7 +83,7 @@ namespace Ubiquitous
                 if (head == enumerableStep)
                     continue;
 
-                Assert.Equal(instantStep, enumerableStep);
+                Assert.Equal(head, enumerableStep);
             }
 
             // Cleanup
@@ -120,7 +120,7 @@ namespace Ubiquitous
             // Act
 
             InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
-            IEnumerator<int> edges = EnumerableBfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+            IEnumerator<int> edges = EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
             while (edges.MoveNext())
                 enumerableSteps.Add(edges.Current);
 
@@ -140,7 +140,7 @@ namespace Ubiquitous
                 if (head == enumerableStep)
                     continue;
 
-                Assert.Equal(instantStep, enumerableStep);
+                Assert.Equal(head, enumerableStep);
             }
 
             // Cleanup
