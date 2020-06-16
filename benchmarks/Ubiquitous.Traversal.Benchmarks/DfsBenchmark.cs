@@ -57,7 +57,7 @@ namespace Ubiquitous
         public int InstantDfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            var handler = new DummyDfsHandler<AdjacencyListIncidenceGraph>();
+            var handler = new DummyHandler<AdjacencyListIncidenceGraph>();
             InstantDfs.Traverse(Graph, 0, _colorMap, handler);
             return handler.Count;
         }
