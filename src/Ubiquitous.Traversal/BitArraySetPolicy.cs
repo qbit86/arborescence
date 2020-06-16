@@ -3,7 +3,7 @@
     using System.Collections;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly struct IndexedSetPolicy : ISetPolicy<BitArray, int>
+    public readonly struct BitArraySetPolicy : ISetPolicy<BitArray, int>
     {
         public bool Contains(BitArray items, int item)
         {

@@ -27,7 +27,7 @@ namespace Ubiquitous
             InstantBfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
                 graphPolicy, colorMapPolicy);
 
-            IndexedSetPolicy exploredSetPolicy = default;
+            BitArraySetPolicy exploredSetPolicy = default;
             EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray>.Create(
                 graphPolicy, exploredSetPolicy);
         }
@@ -37,7 +37,7 @@ namespace Ubiquitous
             InstantBfs { get; }
 
         private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray,
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedAdjacencyListGraphPolicy, BitArraySetPolicy>
             EnumerableBfs { get; }
 
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();

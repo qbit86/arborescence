@@ -30,7 +30,7 @@
             InstantBfs { get; set; }
 
         private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, BitArray,
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedAdjacencyListGraphPolicy, BitArraySetPolicy>
             EnumerableBfs { get; set; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
@@ -42,7 +42,7 @@
 
             IndexedAdjacencyListGraphPolicy graphPolicy = default;
             IndexedColorMapPolicy colorMapPolicy = default;
-            IndexedSetPolicy exploredSetPolicy = default;
+            BitArraySetPolicy exploredSetPolicy = default;
 
             InstantBfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
                 .Create(graphPolicy, colorMapPolicy);
