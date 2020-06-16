@@ -49,7 +49,21 @@
 
         public bool TryTake(out T result)
         {
-            throw new NotImplementedException();
+            if (_size == 0)
+            {
+                result = default;
+                return false;
+            }
+
+            int head = _head;
+            T[] array = _arrayFromPool ?? Array.Empty<T>();
+            result = array[head];
+            if (ShouldClear())
+                array[head] = default;
+
+            MoveNext(ref _head);
+            --_size;
+            return true;
         }
 
         // Increments the index wrapping it if necessary.
