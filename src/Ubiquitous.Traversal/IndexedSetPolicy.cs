@@ -48,6 +48,7 @@
             Array.Clear(items, 0, items.Length);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int Div8Rem(int number, out int remainder)
         {
             uint quotient = (uint)number >> 3;
