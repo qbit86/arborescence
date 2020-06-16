@@ -70,7 +70,7 @@ namespace Ubiquitous
             Assert.Equal(instantStepCount, enumerableStepCount);
 
             int count = instantStepCount;
-            for (int i = 0; i != count; ++i)
+            for (int i = 0; i < count; ++i)
             {
                 DfsStep<int> instantStep = instantSteps[i];
                 DfsStep<int> enumerableStep = enumerableSteps[i];
@@ -124,7 +124,7 @@ namespace Ubiquitous
             Assert.Equal(instantStepCount, enumerableStepCount);
 
             int count = instantStepCount;
-            for (int i = 0; i != count; ++i)
+            for (int i = 0; i < count; ++i)
             {
                 DfsStep<int> instantStep = instantSteps[i];
                 DfsStep<int> enumerableStep = enumerableSteps[i];
