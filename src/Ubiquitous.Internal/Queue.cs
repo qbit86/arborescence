@@ -2,6 +2,7 @@
 {
     using System;
     using System.Buffers;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using Collections;
 
@@ -37,7 +38,8 @@
 
             if (_size == _arrayFromPool.Length)
             {
-                throw new NotImplementedException();
+                int newCapacity = _size << 1;
+                SetCapacity(newCapacity);
             }
 
             _arrayFromPool[_tail] = item;
@@ -58,6 +60,29 @@
                 temp = 0;
 
             index = temp;
+        }
+
+        private void SetCapacity(int capacity)
+        {
+            Debug.Assert(capacity > 0, "capacity > 0");
+
+            T[] newArray = Pool.Rent(capacity);
+            if (_size > 0)
+            {
+                if (_head < _tail)
+                {
+                    Array.Copy(_arrayFromPool, _head, newArray, 0, _size);
+                }
+                else
+                {
+                    Array.Copy(_arrayFromPool, _head, newArray, 0, _arrayFromPool.Length - _head);
+                    Array.Copy(_arrayFromPool, 0, newArray, _arrayFromPool.Length - _head, _tail);
+                }
+            }
+
+            _arrayFromPool = newArray;
+            _head = 0;
+            _tail = _size == capacity ? 0 : _size;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
