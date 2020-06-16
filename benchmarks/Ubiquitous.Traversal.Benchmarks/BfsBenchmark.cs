@@ -64,7 +64,7 @@
         }
 
         [Benchmark(Baseline = true)]
-        public int InstantDfsSteps()
+        public int InstantBfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             InstantBfs.Traverse(Graph, 0, _colorMap, _handler);
@@ -72,7 +72,7 @@
         }
 
         [Benchmark]
-        public int EnumerableDfsEdges()
+        public int EnumerableBfsEdges()
         {
             _exploredSet.SetAll(false);
             IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, _exploredSet);
@@ -85,7 +85,7 @@
         }
 
         [Benchmark]
-        public int EnumerableDfsVertices()
+        public int EnumerableBfsVertices()
         {
             _exploredSet.SetAll(false);
             IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, _exploredSet);
