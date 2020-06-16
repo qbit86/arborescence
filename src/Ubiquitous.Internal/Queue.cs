@@ -35,12 +35,29 @@
             if (_arrayFromPool is null)
                 _arrayFromPool = Pool.Rent(DefaultCapacity);
 
-            throw new NotImplementedException();
+            if (_size == _arrayFromPool.Length)
+            {
+                throw new NotImplementedException();
+            }
+
+            _arrayFromPool[_tail] = item;
+            MoveNext(ref _tail);
+            ++_size;
         }
 
         public bool TryTake(out T result)
         {
             throw new NotImplementedException();
+        }
+
+        // Increments the index wrapping it if necessary.
+        private void MoveNext(ref int index)
+        {
+            int temp = index + 1;
+            if (temp == _arrayFromPool.Length)
+                temp = 0;
+
+            index = temp;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
