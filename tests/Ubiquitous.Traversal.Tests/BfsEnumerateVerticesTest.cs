@@ -52,7 +52,8 @@ namespace Ubiquitous
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
+                IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
             var instantSteps = new Rist<int>(graph.VertexCount);
@@ -108,7 +109,8 @@ namespace Ubiquitous
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
+                IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
             var instantSteps = new Rist<int>(graph.VertexCount);

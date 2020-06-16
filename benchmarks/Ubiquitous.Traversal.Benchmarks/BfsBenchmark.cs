@@ -50,7 +50,7 @@
                 .Create(graphPolicy, exploredSetPolicy);
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
-            _exploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
+            _exploredSet = ArrayPool<byte>.Shared.Rent(IndexedSetPolicy.GetByteCount(Graph.VertexCount));
             _handler.Reset();
         }
 
