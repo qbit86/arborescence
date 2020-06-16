@@ -82,7 +82,7 @@ namespace Ubiquitous.Models
             Span<Endpoints<int>> destReorderedEdges = storage.AsSpan(0, _edgeCount);
             Span<Endpoints<int>> destEdgeBounds = storage.AsSpan(_edgeCount, vertexCount);
 
-            for (int s = 0, currentOffset = 0; s != vertexCount; ++s)
+            for (int s = 0, currentOffset = 0; s < vertexCount; ++s)
             {
                 ReadOnlySpan<Endpoints<int>> currentOutEdges = _outEdges[s].AsSpan();
                 Span<Endpoints<int>> destOutEdges =

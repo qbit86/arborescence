@@ -101,7 +101,7 @@
             Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexCount);
             Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, reorderedEdgeCount);
 
-            for (int s = 0, currentBound = 0; s != outEdges.Length; ++s)
+            for (int s = 0, currentBound = 0; s < outEdges.Length; ++s)
             {
                 ReadOnlySpan<int> currentOutEdges = outEdges[s].AsSpan();
                 currentOutEdges.CopyTo(destReorderedEdges.Slice(currentBound, currentOutEdges.Length));
