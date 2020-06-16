@@ -3,8 +3,9 @@
     using System;
     using System.Buffers;
     using System.Runtime.CompilerServices;
+    using Collections;
 
-    internal struct Queue<T> : IDisposable
+    internal struct Queue<T> : IDisposable, IContainer<T>
     {
         private const int DefaultCapacity = 4;
 
@@ -14,6 +15,8 @@
         private int _size;
 
         private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
+
+        public bool IsEmpty => _size == 0;
 
         public void Dispose()
         {
@@ -27,12 +30,12 @@
             _arrayFromPool = null;
         }
 
-        internal void Add(T item)
+        public void Add(T item)
         {
             throw new NotImplementedException();
         }
 
-        internal bool TryTake(out T result)
+        public bool TryTake(out T result)
         {
             throw new NotImplementedException();
         }
