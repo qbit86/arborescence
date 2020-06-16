@@ -12,6 +12,9 @@ namespace Ubiquitous
     [MemoryDiagnoser]
     public abstract class DfsBenchmark
     {
+        private readonly DummyHandler<AdjacencyListIncidenceGraph> _handler =
+            new DummyHandler<AdjacencyListIncidenceGraph>();
+
         private byte[] _colorMap = Array.Empty<byte>();
 
         [Params(10, 100, 1000)]
@@ -44,6 +47,7 @@ namespace Ubiquitous
                 .Create(graphPolicy, colorMapPolicy);
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
+            _handler.Reset();
         }
 
         [GlobalCleanup]
@@ -57,9 +61,8 @@ namespace Ubiquitous
         public int InstantDfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            var handler = new DummyHandler<AdjacencyListIncidenceGraph>();
-            InstantDfs.Traverse(Graph, 0, _colorMap, handler);
-            return handler.Count;
+            InstantDfs.Traverse(Graph, 0, _colorMap, _handler);
+            return _handler.Count;
         }
 
         [Benchmark]
