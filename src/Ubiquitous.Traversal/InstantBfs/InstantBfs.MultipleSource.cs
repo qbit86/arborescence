@@ -20,7 +20,7 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
+            System.Collections.Generic.Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
             try
             {
                 var queueAdapter = new QueueAdapter<TVertex>(queue);

@@ -10,7 +10,7 @@ namespace Ubiquitous.Traversal
     {
         public IEnumerator<TEdge> EnumerateEdges(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
-            Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
+            System.Collections.Generic.Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
             var queueAdapter = new QueueAdapter<TVertex>(queue);
 
             ExploredSetPolicy.Add(exploredSet, source);

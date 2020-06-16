@@ -12,7 +12,7 @@ namespace Ubiquitous.Traversal
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
-            Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
+            System.Collections.Generic.Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
             var queueAdapter = new QueueAdapter<TVertex>(queue);
 
             while (sources.MoveNext())

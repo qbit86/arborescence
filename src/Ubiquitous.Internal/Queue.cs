@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Internal.Experimental
+﻿namespace Ubiquitous.Internal
 {
     using System;
     using System.Buffers;
