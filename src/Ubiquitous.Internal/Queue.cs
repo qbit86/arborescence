@@ -32,6 +32,9 @@
 
         public void Add(T item)
         {
+            if (_arrayFromPool is null)
+                _arrayFromPool = Pool.Rent(DefaultCapacity);
+
             throw new NotImplementedException();
         }
 
