@@ -12,8 +12,7 @@
 
         internal AdjacencyListIncidenceGraph GetGraph(int vertexCount)
         {
-            if (_cache is null)
-                _cache = new Dictionary<int, AdjacencyListIncidenceGraph>();
+            _cache ??= new Dictionary<int, AdjacencyListIncidenceGraph>();
 
             if (_cache.TryGetValue(vertexCount, out AdjacencyListIncidenceGraph result))
                 return result;
