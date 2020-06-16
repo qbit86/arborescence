@@ -94,6 +94,7 @@
                 }
             }
 
+            Pool.Return(_arrayFromPool, ShouldClear());
             _arrayFromPool = newArray;
             _head = 0;
             _tail = _size == capacity ? 0 : _size;
