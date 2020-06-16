@@ -17,7 +17,7 @@
             uint remainingBits = (uint)value;
             Span<char> buffer = stackalloc char[MaxLength];
             int length = 0;
-            for (int i = 0; i != buffer.Length; ++i)
+            for (int i = 0; i < buffer.Length; ++i)
             {
                 uint mod = remainingBits & 0b11111u;
                 buffer[i] = Alphabet[(int)mod];
@@ -41,7 +41,7 @@
                 : value;
 
             uint resultBits = 0;
-            for (int i = 0; i != input.Length; ++i)
+            for (int i = 0; i < input.Length; ++i)
             {
                 resultBits <<= 5;
                 char c = char.ToLowerInvariant(input[i]);
