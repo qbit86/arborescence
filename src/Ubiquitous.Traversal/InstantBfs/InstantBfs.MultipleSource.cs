@@ -2,8 +2,6 @@ namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;
-    using Collections;
-    using Internal;
 
     // ReSharper disable UnusedTypeParameter
     public readonly partial struct InstantBfs<
@@ -20,24 +18,17 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            System.Collections.Generic.Queue<TVertex> queue = QueueCache<TVertex>.Acquire();
-            try
+            using (var queue = new Internal.Queue<TVertex>())
             {
-                var queueAdapter = new QueueAdapter<TVertex>(queue);
-
                 while (sources.MoveNext())
                 {
                     TVertex s = sources.Current;
                     ColorMapPolicy.AddOrUpdate(colorMap, s, Color.Gray);
                     handler.OnDiscoverVertex(graph, s);
-                    queueAdapter.Add(s);
+                    queue.Add(s);
                 }
 
-                TraverseCore(graph, queueAdapter, colorMap, handler);
-            }
-            finally
-            {
-                QueueCache<TVertex>.Release(queue);
+                TraverseCore(graph, queue, colorMap, handler);
             }
         }
     }
