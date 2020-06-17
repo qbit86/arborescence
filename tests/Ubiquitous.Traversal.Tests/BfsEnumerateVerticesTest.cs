@@ -164,7 +164,7 @@ namespace Ubiquitous
         [Theory]
         [CombinatorialData]
         public void Enumerate_vertices_single_source_combinatorial(
-            [CombinatorialValues(1, 10, 100)] int vertexCount,
+            [CombinatorialValues(1, 10, 30, 100, 300, 1000)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
             double densityPower)
         {
@@ -195,7 +195,7 @@ namespace Ubiquitous
         [Theory]
         [CombinatorialData]
         public void Enumerate_vertices_multiple_source_combinatorial(
-            [CombinatorialValues(1, 10, 100)] int vertexCount,
+            [CombinatorialValues(1, 10, 30, 100, 300, 1000)] int vertexCount,
             [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
             double densityPower)
         {
