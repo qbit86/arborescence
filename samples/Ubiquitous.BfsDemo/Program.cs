@@ -35,9 +35,22 @@
                 default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(Console.Out);
+            TextWriter w = Console.Out;
+            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w);
+
+            w.WriteLine("digraph {");
+            w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
+            for (int v = 0; v < graph.VertexCount; ++v)
+            {
+                w.Write(v == 0 ? "  " : " ");
+                w.Write(S(v));
+            }
+
+            w.WriteLine();
 
             bfs.Traverse(graph, 0, colorMap, handler);
+
+            w.WriteLine("}");
 
             ArrayPool<byte>.Shared.Return(colorMap);
         }
@@ -50,8 +63,8 @@
             result.DiscoverVertex +=
                 (_, v) => w.WriteLine($"  {S(v)} [style=filled] // {nameof(result.DiscoverVertex)}");
             return result;
-
-            static string S(int i) => Base32.ToString(i);
         }
+
+        private static string S(int i) => Base32.ToString(i);
     }
 }
