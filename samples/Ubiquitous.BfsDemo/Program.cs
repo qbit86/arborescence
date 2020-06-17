@@ -3,6 +3,7 @@
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using Models;
@@ -34,17 +35,23 @@
                 default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler();
+            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(Console.Out);
 
             bfs.Traverse(graph, 0, colorMap, handler);
 
             ArrayPool<byte>.Shared.Return(colorMap);
         }
 
-        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler()
+        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(TextWriter w)
         {
+            Debug.Assert(w != null, "w != null");
+
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            result.DiscoverVertex +=
+                (_, v) => w.WriteLine($"  {S(v)} [style=filled] // {nameof(result.DiscoverVertex)}");
             return result;
+
+            static string S(int i) => Base32.ToString(i);
         }
     }
 }
