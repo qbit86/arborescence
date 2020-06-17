@@ -43,7 +43,7 @@
             for (int v = 0; v < graph.VertexCount; ++v)
             {
                 w.Write(v == 0 ? "  " : " ");
-                w.Write(S(v));
+                w.Write(V(v));
             }
 
             w.WriteLine();
@@ -61,12 +61,21 @@
 
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
             result.DiscoverVertex +=
-                (_, v) => w.WriteLine($"  {S(v)} [style=filled] // {nameof(result.DiscoverVertex)}");
-            result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {S(v)}");
-            result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {S(v)}");
+                (_, v) => w.WriteLine($"  {V(v)} [style=filled] // {nameof(result.DiscoverVertex)}");
+            result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
+            result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
+            result.ExamineEdge += (g, e) =>
+                w.WriteLine($"  // {nameof(result.ExamineEdge)} {e.ToString(F)}: {E(g, e)}");
             return result;
         }
 
-        private static string S(int i) => Base32.ToString(i);
+        private static string V(int v) => Base32.ToString(v);
+
+        private static string E(AdjacencyListIncidenceGraph g, int e)
+        {
+            string head = g.TryGetHead(e, out int h) ? V(h) : "?";
+            string tail = g.TryGetTail(e, out int t) ? V(t) : "?";
+            return string.Concat(tail, " -> ", head);
+        }
     }
 }
