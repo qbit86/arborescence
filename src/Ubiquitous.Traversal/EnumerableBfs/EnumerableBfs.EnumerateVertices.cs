@@ -1,5 +1,6 @@
 namespace Ubiquitous.Traversal
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using Collections;
@@ -10,25 +11,28 @@ namespace Ubiquitous.Traversal
     {
         private IEnumerator<TVertex> EnumerateVerticesCore<TContainer>(
             TGraph graph, TContainer queue, TExploredSet exploredSet)
-            where TContainer : IContainer<TVertex>
+            where TContainer : IContainer<TVertex>, IDisposable
         {
             Debug.Assert(queue != null, "queue != null");
 
-            while (queue.TryTake(out TVertex u))
+            using (queue)
             {
-                TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                while (outEdges.MoveNext())
+                while (queue.TryTake(out TVertex u))
                 {
-                    TEdge e = outEdges.Current;
-                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
-                        continue;
-
-                    bool vExplored = ExploredSetPolicy.Contains(exploredSet, v);
-                    if (!vExplored)
+                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                    while (outEdges.MoveNext())
                     {
-                        ExploredSetPolicy.Add(exploredSet, v);
-                        yield return v;
-                        queue.Add(v);
+                        TEdge e = outEdges.Current;
+                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                            continue;
+
+                        bool vExplored = ExploredSetPolicy.Contains(exploredSet, v);
+                        if (!vExplored)
+                        {
+                            ExploredSetPolicy.Add(exploredSet, v);
+                            yield return v;
+                            queue.Add(v);
+                        }
                     }
                 }
             }
