@@ -48,7 +48,8 @@
 
             w.WriteLine();
 
-            bfs.Traverse(graph, 0, colorMap, handler);
+            const int source = 4;
+            bfs.Traverse(graph, source, colorMap, handler);
 
             w.WriteLine("}");
 
