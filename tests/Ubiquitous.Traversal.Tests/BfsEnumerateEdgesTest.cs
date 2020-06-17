@@ -16,6 +16,7 @@ namespace Ubiquitous
 
     public sealed class BfsEnumerateEdgesTest
     {
+        private static IEnumerable<object[]> s_graphSizes;
         private static IEnumerable<object[]> s_testCases;
 
         public BfsEnumerateEdgesTest()
@@ -39,6 +40,7 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
 
+        public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
         private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
@@ -160,11 +162,8 @@ namespace Ubiquitous
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [CombinatorialData]
-        public void Enumerate_edges_single_source_combinatorial(
-            [CombinatorialValues(1, 10, 30, 100, 300, 1000)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
-            double densityPower)
+        [MemberData(nameof(GraphSizes))]
+        public void Enumerate_edges_single_source_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
@@ -191,11 +190,8 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [CombinatorialData]
-        public void Enumerate_edges_multiple_source_combinatorial(
-            [CombinatorialValues(1, 10, 30, 100, 300, 1000)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
-            double densityPower)
+        [MemberData(nameof(GraphSizes))]
+        public void Enumerate_edges_multiple_source_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
