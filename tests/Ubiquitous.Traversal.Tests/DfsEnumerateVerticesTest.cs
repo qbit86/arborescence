@@ -16,6 +16,7 @@ namespace Ubiquitous
 
     public sealed class DfsEnumerateVerticesTest
     {
+        private static IEnumerable<object[]> s_graphSizes;
         private static IEnumerable<object[]> s_testCases;
 
         public DfsEnumerateVerticesTest()
@@ -38,6 +39,7 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             EnumerableDfs { get; }
 
+        public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
         private void EnumerateVerticesSingleComponentCore(AdjacencyListIncidenceGraph graph)
@@ -157,11 +159,8 @@ namespace Ubiquitous
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [CombinatorialData]
-        public void Enumerate_vertices_single_component_combinatorial(
-            [CombinatorialValues(1, 10, 100)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
-            double densityPower)
+        [MemberData(nameof(GraphSizes))]
+        public void Enumerate_vertices_single_component_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
@@ -188,11 +187,8 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [CombinatorialData]
-        public void Enumerate_vertices_cross_component_combinatorial(
-            [CombinatorialValues(1, 10, 100)] int vertexCount,
-            [CombinatorialValues(1.0, 1.414, 1.618, 2.0)]
-            double densityPower)
+        [MemberData(nameof(GraphSizes))]
+        public void Enumerate_vertices_cross_component_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
