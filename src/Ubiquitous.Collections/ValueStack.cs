@@ -17,15 +17,15 @@
 
         public bool IsEmpty => _count == 0;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             _count = 0;
-            if (_arrayFromPool is null)
+            T[]? arrayFromPool = _arrayFromPool;
+            _arrayFromPool = null;
+            if (arrayFromPool is null)
                 return;
 
-            Pool.Return(_arrayFromPool, ShouldClear());
-            _arrayFromPool = null;
+            Pool.Return(arrayFromPool, ShouldClear());
         }
 
         public void Add(T item)
@@ -76,8 +76,10 @@
             T[] newArray = Pool.Rent(newCapacity);
             Array.Copy(_arrayFromPool!, newArray, count);
             newArray[count] = item;
-            Pool.Return(_arrayFromPool!, ShouldClear());
+
+            T[] arrayFromPool = _arrayFromPool;
             _arrayFromPool = newArray;
+            Pool.Return(arrayFromPool!, ShouldClear());
             _count = count + 1;
         }
 
