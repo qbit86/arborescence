@@ -62,6 +62,8 @@
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
             result.DiscoverVertex +=
                 (_, v) => w.WriteLine($"  {S(v)} [style=filled] // {nameof(result.DiscoverVertex)}");
+            result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {S(v)}");
+            result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {S(v)}");
             return result;
         }
 
