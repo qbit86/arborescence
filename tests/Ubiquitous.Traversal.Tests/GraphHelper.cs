@@ -8,10 +8,27 @@ namespace Ubiquitous
 
     internal static class GraphHelper
     {
+        private static readonly double[] s_densityPowers = { 1.0, Math.Sqrt(2.0), 0.5 * (1.0 + Math.Sqrt(5.0)), 2.0 };
+
         internal static IEnumerable<object[]> CreateTestCases()
         {
             return Enumerable.Range(1, 7)
                 .Select(it => new object[] { it.ToString("D2", CultureInfo.InvariantCulture) });
+        }
+
+        internal static IEnumerable<object[]> CreateGraphSizes()
+        {
+            yield return new object[] { 1, 1.0 };
+
+            for (int power = 1; power < 7; ++power)
+            {
+                double exp = Math.Pow(10.0, 0.5 * power);
+                int vertexCount = (int)Math.Ceiling(exp);
+                foreach (double densityPower in s_densityPowers)
+                {
+                    yield return new object[] { vertexCount, densityPower };
+                }
+            }
         }
 
         internal static AdjacencyListIncidenceGraph GenerateAdjacencyListIncidenceGraph(
