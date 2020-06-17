@@ -24,11 +24,12 @@
             _head = 0;
             _tail = 0;
             _size = 0;
-            if (_arrayFromPool is null)
+            T[] arrayFromPool = _arrayFromPool;
+            _arrayFromPool = null;
+            if (arrayFromPool is null)
                 return;
 
-            Pool.Return(_arrayFromPool, ShouldClear());
-            _arrayFromPool = null;
+            Pool.Return(arrayFromPool, ShouldClear());
         }
 
         public void Add(T item)
@@ -94,8 +95,10 @@
                 }
             }
 
-            Pool.Return(_arrayFromPool, ShouldClear());
+            T[] arrayFromPool = _arrayFromPool;
             _arrayFromPool = newArray;
+            Debug.Assert(arrayFromPool != null, "arrayFromPool != null");
+            Pool.Return(arrayFromPool, ShouldClear());
             _head = 0;
             _tail = _size == capacity ? 0 : _size;
         }
