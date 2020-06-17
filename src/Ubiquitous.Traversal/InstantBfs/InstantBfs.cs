@@ -36,7 +36,7 @@
             Debug.Assert(queue != null, "queue != null");
             Debug.Assert(handler != null, "handler != null");
 
-            using (queue)
+            try
             {
                 while (queue.TryTake(out TVertex u))
                 {
@@ -71,6 +71,11 @@
                     ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
                     handler.OnFinishVertex(graph, u);
                 }
+            }
+            finally
+            {
+                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
+                queue.Dispose();
             }
         }
 
