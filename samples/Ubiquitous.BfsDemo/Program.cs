@@ -61,11 +61,14 @@
 
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
             result.DiscoverVertex +=
-                (_, v) => w.WriteLine($"  {V(v)} [style=filled] // {nameof(result.DiscoverVertex)}");
+                (_, v) => w.WriteLine($"  {V(v)} [style=filled]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
             result.ExamineEdge += (g, e) =>
                 w.WriteLine($"  // {nameof(result.ExamineEdge)} {e.ToString(F)}: {E(g, e)}");
+            result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
+            result.NonTreeGrayHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
+            result.NonTreeBlackHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dotted]");
             return result;
         }
 
