@@ -15,7 +15,7 @@ namespace Ubiquitous.Traversal
         {
             Debug.Assert(queue != null, "queue != null");
 
-            using (queue)
+            try
             {
                 while (queue.TryTake(out TVertex u))
                 {
@@ -35,6 +35,11 @@ namespace Ubiquitous.Traversal
                         }
                     }
                 }
+            }
+            finally
+            {
+                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
+                queue.Dispose();
             }
         }
     }
