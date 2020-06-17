@@ -39,15 +39,15 @@ namespace Ubiquitous
             var vertices = new IndexEnumerator(graph.VertexCount);
             var vertexKinds = new DfsStepKind[graph.VertexCount];
             var edgeKinds = new DfsStepKind[graph.EdgeCount];
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(vertexKinds, edgeKinds);
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(vertexKinds, edgeKinds);
 
-            dfs.Traverse(graph, vertices, colorMap, dfsHandler);
+            dfs.Traverse(graph, vertices, colorMap, handler);
 
             SerializeGraph(graph, vertexKinds, edgeKinds, "DFS forest", Console.Out);
             ArrayPool<byte>.Shared.Return(colorMap);
         }
 
-        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(
+        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
             DfsStepKind[] vertexKinds, DfsStepKind[] edgeKinds)
         {
             Assert(vertexKinds != null, "vertexKinds != null");

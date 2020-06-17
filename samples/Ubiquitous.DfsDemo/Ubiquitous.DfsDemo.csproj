@@ -4,14 +4,14 @@
     <FileVersion>0.1.0</FileVersion>
     <OutputType>Exe</OutputType>
     <Product>Ubiquitous</Product>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
     <VersionPrefix>$(FileVersion)</VersionPrefix>
     <Description>DFS Demo.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
