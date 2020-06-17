@@ -18,18 +18,16 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            using (var queue = new Internal.Queue<TVertex>())
+            var queue = new Internal.Queue<TVertex>();
+            while (sources.MoveNext())
             {
-                while (sources.MoveNext())
-                {
-                    TVertex s = sources.Current;
-                    ColorMapPolicy.AddOrUpdate(colorMap, s, Color.Gray);
-                    handler.OnDiscoverVertex(graph, s);
-                    queue.Add(s);
-                }
-
-                TraverseCore(graph, queue, colorMap, handler);
+                TVertex s = sources.Current;
+                ColorMapPolicy.AddOrUpdate(colorMap, s, Color.Gray);
+                handler.OnDiscoverVertex(graph, s);
+                queue.Add(s);
             }
+
+            TraverseCore(graph, queue, colorMap, handler);
         }
     }
     // ReSharper restore UnusedTypeParameter

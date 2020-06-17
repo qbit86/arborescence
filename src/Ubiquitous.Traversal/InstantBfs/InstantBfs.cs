@@ -30,44 +30,47 @@
 
         private void TraverseCore<TContainer, THandler>(
             TGraph graph, TContainer queue, TColorMap colorMap, THandler handler)
-            where TContainer : IContainer<TVertex>
+            where TContainer : IContainer<TVertex>, IDisposable
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             Debug.Assert(queue != null, "queue != null");
             Debug.Assert(handler != null, "handler != null");
 
-            while (queue.TryTake(out TVertex u))
+            using (queue)
             {
-                handler.OnExamineVertex(graph, u);
-                TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                while (outEdges.MoveNext())
+                while (queue.TryTake(out TVertex u))
                 {
-                    TEdge e = outEdges.Current;
-                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
-                        continue;
-
-                    handler.OnExamineEdge(graph, e);
-                    Color vColor = GetColorOrDefault(colorMap, v);
-                    switch (vColor)
+                    handler.OnExamineVertex(graph, u);
+                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                    while (outEdges.MoveNext())
                     {
-                        case Color.None:
-                        case Color.White:
-                            handler.OnTreeEdge(graph, e);
-                            ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
-                            handler.OnDiscoverVertex(graph, v);
-                            queue.Add(v);
-                            break;
-                        case Color.Gray:
-                            handler.OnNonTreeGrayHeadEdge(graph, e);
-                            break;
-                        case Color.Black:
-                            handler.OnNonTreeBlackHeadEdge(graph, e);
-                            break;
-                    }
-                }
+                        TEdge e = outEdges.Current;
+                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                            continue;
 
-                ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
-                handler.OnFinishVertex(graph, u);
+                        handler.OnExamineEdge(graph, e);
+                        Color vColor = GetColorOrDefault(colorMap, v);
+                        switch (vColor)
+                        {
+                            case Color.None:
+                            case Color.White:
+                                handler.OnTreeEdge(graph, e);
+                                ColorMapPolicy.AddOrUpdate(colorMap, v, Color.Gray);
+                                handler.OnDiscoverVertex(graph, v);
+                                queue.Add(v);
+                                break;
+                            case Color.Gray:
+                                handler.OnNonTreeGrayHeadEdge(graph, e);
+                                break;
+                            case Color.Black:
+                                handler.OnNonTreeBlackHeadEdge(graph, e);
+                                break;
+                        }
+                    }
+
+                    ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                    handler.OnFinishVertex(graph, u);
+                }
             }
         }
 
