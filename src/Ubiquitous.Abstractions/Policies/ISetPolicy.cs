@@ -4,6 +4,5 @@
     {
         bool Contains(TSet items, TItem item);
         void Add(TSet items, TItem item);
-        void Clear(TSet items);
     }
 }

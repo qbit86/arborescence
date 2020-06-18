@@ -1,6 +1,5 @@
 ﻿namespace Ubiquitous.Traversal
 {
-    using System;
     using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
@@ -38,14 +37,6 @@
             byte bitMask = (byte)(1 << bitIndex);
 
             items[byteIndex] |= bitMask;
-        }
-
-        public void Clear(byte[] items)
-        {
-            if (items == null)
-                return;
-
-            Array.Clear(items, 0, items.Length);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
