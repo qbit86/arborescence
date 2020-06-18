@@ -35,6 +35,8 @@
 
             w.WriteLine("digraph {");
             w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
+
+            // Enumerate vertices.
             for (int v = 0; v < graph.VertexCount; ++v)
             {
                 w.Write(v == 0 ? "  " : " ");
@@ -48,25 +50,41 @@
             const int source = 0;
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w);
+            var examinedEdges = new HashSet<int>(graph.EdgeCount);
+            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, source, colorMap, handler);
+
+            // Enumerate rest of edges.
+            w.WriteLine();
+            for (int v = 0; v < graph.VertexCount; ++v)
+            {
+                ArraySegmentEnumerator<int> outEdges = graph.EnumerateOutEdges(v);
+                while (outEdges.MoveNext())
+                {
+                    int e = outEdges.Current;
+                    if (examinedEdges.Contains(e))
+                        continue;
+
+                    w.WriteLine($"  {E(graph, e)} [label={e} style=dotted]");
+                }
+            }
 
             w.WriteLine("}");
 
             ArrayPool<byte>.Shared.Return(colorMap);
         }
 
-        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(TextWriter w)
+        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
+            TextWriter w, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
+            Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
-            result.DiscoverVertex +=
-                (_, v) => w.WriteLine($"  {V(v)} [style=filled]");
+            result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=filled]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
-            result.ExamineEdge += (g, e) =>
-                w.WriteLine($"  // {nameof(result.ExamineEdge)} {e.ToString(F)}: {E(g, e)}");
+            result.ExamineEdge += (g, e) => examinedEdges.Add(e);
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
             result.NonTreeGrayHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e}]");
             result.NonTreeBlackHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
