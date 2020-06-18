@@ -65,7 +65,7 @@ namespace Ubiquitous
             // Act
 
             InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
-            IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, source, enumerableExploredSet);
+            using IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, source, enumerableExploredSet);
             while (vertices.MoveNext())
                 enumerableSteps.Add(vertices.Current);
 
@@ -122,7 +122,7 @@ namespace Ubiquitous
             // Act
 
             InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
-            IEnumerator<int> edges = EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
+            using IEnumerator<int> edges = EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
             while (edges.MoveNext())
                 enumerableSteps.Add(edges.Current);
 
