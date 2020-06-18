@@ -1,0 +1,35 @@
+﻿digraph Ordered {
+  node [shape=circle fontname="Times-Italic"]
+  a b c d e f g h i j k l m n o p q
+  a -> e
+  a -> i
+  a -> m
+  b -> g
+  b -> k
+  b -> n
+  c -> f
+  c -> j
+  d -> d
+  d -> h
+  e -> i
+  e -> o
+  f -> a
+  f -> j
+  g -> k
+  i -> m
+  i -> q
+  i -> q
+  j -> a
+  k -> n
+  l -> h
+  l -> m
+  m -> e
+  n -> g
+  o -> e
+  o -> l
+  o -> p
+  o -> q
+  p -> h
+  q -> d
+  q -> p
+}
