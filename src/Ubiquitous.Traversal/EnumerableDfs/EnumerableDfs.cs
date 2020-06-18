@@ -5,8 +5,8 @@ namespace Ubiquitous.Traversal
     using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly partial struct EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+    public readonly partial struct EnumerableDfs<
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>

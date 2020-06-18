@@ -7,8 +7,7 @@ namespace Ubiquitous.Traversal
     public readonly partial struct EnumerableBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>,
-        IHeadPolicy<TGraph, TVertex, TEdge>
+        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
         where TExploredSetPolicy : ISetPolicy<TExploredSet, TVertex>
     {
         private TGraphPolicy GraphPolicy { get; }
