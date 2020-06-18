@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
-    using Collections;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -28,12 +27,10 @@
             ColorMapPolicy = colorMapPolicy;
         }
 
-        private void TraverseCore<TContainer, THandler>(
-            TGraph graph, TContainer queue, TColorMap colorMap, THandler handler)
-            where TContainer : IContainer<TVertex>, IDisposable
+        private void TraverseCore<THandler>(
+            TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorMap, THandler handler)
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
-            Debug.Assert(queue != null, "queue != null");
             Debug.Assert(handler != null, "handler != null");
 
             try

@@ -1,20 +1,14 @@
 namespace Ubiquitous.Traversal
 {
-    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using Collections;
 
     // ReSharper disable UnusedTypeParameter
     public readonly partial struct EnumerableBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
-        private IEnumerator<TVertex> EnumerateVerticesCore<TContainer>(
-            TGraph graph, TContainer queue, TExploredSet exploredSet)
-            where TContainer : IContainer<TVertex>, IDisposable
+        private IEnumerator<TVertex> EnumerateVerticesCore(
+            TGraph graph, Internal.Queue<TVertex> queue, TExploredSet exploredSet)
         {
-            Debug.Assert(queue != null, "queue != null");
-
             try
             {
                 while (queue.TryTake(out TVertex u))
