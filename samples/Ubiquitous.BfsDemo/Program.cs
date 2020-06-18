@@ -31,12 +31,7 @@
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
-            var bfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[]>.Create(
-                default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
             TextWriter w = Console.Out;
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w);
 
             w.WriteLine("digraph {");
             w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
@@ -48,7 +43,12 @@
 
             w.WriteLine();
 
+            InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
             const int source = 0;
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w);
             bfs.Traverse(graph, source, colorMap, handler);
 
             w.WriteLine("}");
@@ -68,8 +68,8 @@
             result.ExamineEdge += (g, e) =>
                 w.WriteLine($"  // {nameof(result.ExamineEdge)} {e.ToString(F)}: {E(g, e)}");
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
-            result.NonTreeGrayHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
-            result.NonTreeBlackHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dotted]");
+            result.NonTreeGrayHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e}]");
+            result.NonTreeBlackHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
             return result;
         }
 
