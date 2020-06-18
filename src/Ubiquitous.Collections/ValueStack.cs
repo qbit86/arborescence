@@ -15,13 +15,10 @@
 
         private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
 
-        public bool IsEmpty => _count == 0;
-
         public void Dispose()
         {
-            _count = 0;
             T[]? arrayFromPool = _arrayFromPool;
-            _arrayFromPool = null;
+            this = default;
             if (arrayFromPool is null)
                 return;
 

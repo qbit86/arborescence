@@ -21,11 +21,8 @@
 
         public void Dispose()
         {
-            _head = 0;
-            _tail = 0;
-            _size = 0;
             T[] arrayFromPool = _arrayFromPool;
-            _arrayFromPool = null;
+            this = default;
             if (arrayFromPool is null)
                 return;
 

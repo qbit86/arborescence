@@ -16,9 +16,8 @@ namespace Ubiquitous.Internal
 
         public void Dispose()
         {
-            _count = 0;
             T[] arrayFromPool = _arrayFromPool;
-            _arrayFromPool = null;
+            this = default;
             if (arrayFromPool is null)
                 return;
 
