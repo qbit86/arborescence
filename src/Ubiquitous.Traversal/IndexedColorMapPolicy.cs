@@ -1,7 +1,5 @@
 namespace Ubiquitous.Traversal
 {
-    using System;
-
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct IndexedColorMapPolicy : IMapPolicy<byte[], int, Color>
     {
@@ -23,14 +21,6 @@ namespace Ubiquitous.Traversal
                 return;
 
             map[key] = (byte)value;
-        }
-
-        public void Clear(byte[] map)
-        {
-            if (map == null)
-                return;
-
-            Array.Clear(map, 0, map.Length);
         }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types

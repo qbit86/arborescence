@@ -34,8 +34,6 @@ namespace Ubiquitous.Traversal
         {
             Debug.Assert(vertices != null, "vertices != null");
 
-            ColorMapPolicy.Clear(colorMap);
-
             while (vertices.MoveNext())
             {
                 TVertex u = vertices.Current;
@@ -57,8 +55,6 @@ namespace Ubiquitous.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
         {
             Debug.Assert(vertices != null, "vertices != null");
-
-            ColorMapPolicy.Clear(colorMap);
 
             yield return new DfsStep<TVertex>(DfsStepKind.StartVertex, startVertex);
             var startIterator = new DfsVertexIterator<

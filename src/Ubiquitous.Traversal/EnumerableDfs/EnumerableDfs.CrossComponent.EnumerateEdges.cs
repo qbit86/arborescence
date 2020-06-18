@@ -34,8 +34,6 @@
         {
             Debug.Assert(vertices != null, "vertices != null");
 
-            ColorMapPolicy.Clear(colorMap);
-
             while (vertices.MoveNext())
             {
                 TVertex u = vertices.Current;
@@ -56,8 +54,6 @@
             where TVertexEnumerator : IEnumerator<TVertex>
         {
             Debug.Assert(vertices != null, "vertices != null");
-
-            ColorMapPolicy.Clear(colorMap);
 
             var startIterator = new DfsEdgeIterator<
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(

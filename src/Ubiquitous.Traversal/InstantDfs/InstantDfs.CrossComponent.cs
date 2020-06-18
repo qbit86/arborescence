@@ -19,8 +19,6 @@ namespace Ubiquitous.Traversal
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            ColorMapPolicy.Clear(colorMap);
-
             while (vertices.MoveNext())
             {
                 TVertex u = vertices.Current;
@@ -43,8 +41,6 @@ namespace Ubiquitous.Traversal
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
-
-            ColorMapPolicy.Clear(colorMap);
 
             handler.OnStartVertex(graph, startVertex);
             TraverseCore(graph, startVertex, colorMap, handler, s_false);
