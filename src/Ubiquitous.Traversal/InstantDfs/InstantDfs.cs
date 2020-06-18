@@ -46,56 +46,60 @@ namespace Ubiquitous.Traversal
             }
 
             var stack = new ValueStack<DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>>();
-
-            TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-            stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, false, default, outEdges));
-
-            while (stack.TryTake(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
+            try
             {
-                u = stackFrame.Vertex;
-                if (stackFrame.HasEdge)
-                    handler.OnFinishEdge(graph, stackFrame.Edge);
+                TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, false, default, outEdges));
 
-                TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
-                while (edges.MoveNext())
+                while (stack.TryTake(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                 {
-                    TEdge e = edges.Current;
-                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
-                        continue;
+                    u = stackFrame.Vertex;
+                    if (stackFrame.HasEdge)
+                        handler.OnFinishEdge(graph, stackFrame.Edge);
 
-                    handler.OnExamineEdge(graph, e);
-                    Color color = GetColorOrDefault(colorMap, v);
-                    if (color == Color.None || color == Color.White)
+                    TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
+                    while (edges.MoveNext())
                     {
-                        handler.OnTreeEdge(graph, e);
-                        stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, true, e, edges));
-                        u = v;
-                        ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
-                        handler.OnDiscoverVertex(graph, u);
+                        TEdge e = edges.Current;
+                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                            continue;
 
-                        edges = GraphPolicy.EnumerateOutEdges(graph, u);
-                        if (terminationCondition(graph, u))
+                        handler.OnExamineEdge(graph, e);
+                        Color color = GetColorOrDefault(colorMap, v);
+                        if (color == Color.None || color == Color.White)
                         {
-                            ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
-                            handler.OnFinishVertex(graph, u);
-                            return;
+                            handler.OnTreeEdge(graph, e);
+                            stack.Add(new DfsStackFrame<TVertex, TEdge, TEdgeEnumerator>(u, true, e, edges));
+                            u = v;
+                            ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
+                            handler.OnDiscoverVertex(graph, u);
+
+                            edges = GraphPolicy.EnumerateOutEdges(graph, u);
+                            if (terminationCondition(graph, u))
+                            {
+                                ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                                handler.OnFinishVertex(graph, u);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            if (color == Color.Gray)
+                                handler.OnBackEdge(graph, e);
+                            else
+                                handler.OnForwardOrCrossEdge(graph, e);
+                            handler.OnFinishEdge(graph, e);
                         }
                     }
-                    else
-                    {
-                        if (color == Color.Gray)
-                            handler.OnBackEdge(graph, e);
-                        else
-                            handler.OnForwardOrCrossEdge(graph, e);
-                        handler.OnFinishEdge(graph, e);
-                    }
+
+                    ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
+                    handler.OnFinishVertex(graph, u);
                 }
-
-                ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Black);
-                handler.OnFinishVertex(graph, u);
             }
-
-            stack.Dispose();
+            finally
+            {
+                stack.Dispose();
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
