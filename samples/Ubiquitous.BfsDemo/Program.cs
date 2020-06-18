@@ -20,7 +20,7 @@
         {
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
 
-            using (TextReader textReader = IndexedGraphs.GetTextReader("03"))
+            using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
             {
                 IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 foreach (Endpoints<int> edge in edges)
@@ -47,12 +47,12 @@
 
             InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
-            const int source = 0;
+            var sources = new IndexEnumerator(2);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
             BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
-            bfs.Traverse(graph, source, colorMap, handler);
+            bfs.Traverse(graph, sources, colorMap, handler);
 
             // Enumerate rest of edges.
             w.WriteLine();
