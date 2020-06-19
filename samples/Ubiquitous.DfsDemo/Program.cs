@@ -18,9 +18,9 @@ namespace Ubiquitous
 
         private static void Main()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(10);
+            var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
 
-            using (TextReader textReader = IndexedGraphs.GetTextReader("03"))
+            using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
             {
                 IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 foreach (Endpoints<int> edge in edges)
@@ -31,12 +31,12 @@ namespace Ubiquitous
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
-            var dfs = InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[]>.Create(
-                default(IndexedAdjacencyListGraphPolicy), default(IndexedColorMapPolicy));
+            InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> dfs = default;
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            var vertices = new IndexEnumerator(graph.VertexCount);
+            var vertices = new IndexEnumerator(2);
             var vertexKinds = new DfsStepKind[graph.VertexCount];
             var edgeKinds = new DfsStepKind[graph.EdgeCount];
             DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(vertexKinds, edgeKinds);
