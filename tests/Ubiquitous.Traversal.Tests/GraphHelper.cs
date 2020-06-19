@@ -12,7 +12,7 @@ namespace Ubiquitous
 
         internal static IEnumerable<object[]> CreateTestCases()
         {
-            return Enumerable.Range(1, 8)
+            return Enumerable.Range(1, 9)
                 .Select(it => new object[] { it.ToString("D2", CultureInfo.InvariantCulture) });
         }
 
