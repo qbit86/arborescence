@@ -37,8 +37,9 @@
 
             w.WriteLine();
 
-            for (int e = 0; e < graph.EdgeCount; ++e)
+            for (int i = 0; i < graph.EdgeCount; ++i)
             {
+                int e = i;
                 w.Write("  ");
                 w.Write(E(graph, e));
                 w.WriteLine($" [label={e.ToString(F)}]");
