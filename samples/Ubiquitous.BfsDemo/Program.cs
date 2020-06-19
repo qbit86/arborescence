@@ -20,7 +20,7 @@
         {
             var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
 
-            using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
+            using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
                 IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 foreach (Endpoints<int> edge in edges)
@@ -33,7 +33,7 @@
 
             TextWriter w = Console.Out;
 
-            w.WriteLine("digraph {");
+            w.WriteLine("digraph \"BFS forest\" {");
             w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
