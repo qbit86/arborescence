@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Models;
     using Workbench;
 
@@ -25,7 +26,7 @@
 
             TextWriter w = Console.Out;
 
-            w.WriteLine("digraph Ordered {");
+            w.WriteLine("digraph Shuffled {");
             w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
@@ -37,12 +38,15 @@
 
             w.WriteLine();
 
+            int[] permutation = Enumerable.Range(0, graph.EdgeCount)
+                .OrderBy(i => new Random(i).Next()).ToArray();
+
             for (int i = 0; i < graph.EdgeCount; ++i)
             {
-                int e = i;
+                int e = permutation[i];
                 w.Write("  ");
                 w.Write(E(graph, e));
-                w.WriteLine($" [label={e.ToString(F)}]");
+                w.WriteLine($" [label={i.ToString(F)}]");
             }
 
             w.WriteLine("}");
