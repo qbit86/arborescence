@@ -37,6 +37,13 @@
 
             w.WriteLine();
 
+            for (int e = 0; e < graph.EdgeCount; ++e)
+            {
+                w.Write("  ");
+                w.Write(E(graph, e));
+                w.WriteLine($" [label={e.ToString(F)}]");
+            }
+
             w.WriteLine("}");
         }
     }

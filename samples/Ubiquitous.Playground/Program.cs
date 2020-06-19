@@ -14,7 +14,6 @@
 
         private static string V(int v) => Base32.ToString(v);
 
-        // ReSharper disable once UnusedMember.Local
         private static string E<TGraph>(TGraph g, int e)
             where TGraph : IGraph<int, int>
         {
