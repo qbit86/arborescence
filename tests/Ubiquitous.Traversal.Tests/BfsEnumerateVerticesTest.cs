@@ -21,15 +21,8 @@ namespace Ubiquitous
 
         public BfsEnumerateVerticesTest()
         {
-            IndexedAdjacencyListGraphPolicy graphPolicy = default;
-            IndexedColorMapPolicy colorMapPolicy = default;
-
-            InstantBfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
-                graphPolicy, colorMapPolicy);
-
-            IndexedSetPolicy exploredSetPolicy = default;
-            EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>.Create(
-                graphPolicy, exploredSetPolicy);
+            InstantBfs = default;
+            EnumerableBfs = default;
         }
 
         private InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
