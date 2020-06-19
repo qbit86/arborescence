@@ -1,35 +1,35 @@
 ﻿digraph Ordered {
   node [shape=circle fontname="Times-Italic"]
-  a b c d e f g h i j k l m n o p q
-  a -> e
-  a -> i
-  a -> m
-  b -> g
-  b -> k
-  b -> n
-  c -> f
-  c -> j
-  d -> d
-  d -> h
+  a b c d e f g h i j k l m n o p q r
+  a -> f
+  a -> j
+  a -> n
+  b -> h
+  b -> l
+  b -> o
+  d -> g
+  d -> k
+  e -> e
   e -> i
-  e -> o
-  f -> a
   f -> j
+  f -> p
+  g -> a
   g -> k
-  i -> m
-  i -> q
-  i -> q
-  j -> a
-  k -> n
-  l -> h
-  l -> m
-  m -> e
-  n -> g
-  o -> e
-  o -> l
-  o -> p
-  o -> q
-  p -> h
-  q -> d
-  q -> p
+  h -> l
+  j -> n
+  j -> r
+  j -> r
+  k -> a
+  l -> o
+  m -> i
+  m -> n
+  n -> f
+  o -> h
+  p -> f
+  p -> m
+  p -> q
+  p -> r
+  q -> i
+  r -> e
+  r -> q
 }
