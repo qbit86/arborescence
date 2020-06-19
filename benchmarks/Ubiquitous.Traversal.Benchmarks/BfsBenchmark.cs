@@ -39,15 +39,8 @@
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            IndexedAdjacencyListGraphPolicy graphPolicy = default;
-            IndexedColorMapPolicy colorMapPolicy = default;
-            IndexedSetPolicy exploredSetPolicy = default;
-
-            InstantBfs = InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
-                .Create(graphPolicy, colorMapPolicy);
-
-            EnumerableBfs = EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[]>
-                .Create(graphPolicy, exploredSetPolicy);
+            InstantBfs = default;
+            EnumerableBfs = default;
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _exploredSet = ArrayPool<byte>.Shared.Rent(IndexedSetPolicy.GetByteCount(Graph.VertexCount));
