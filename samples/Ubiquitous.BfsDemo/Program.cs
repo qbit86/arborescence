@@ -18,7 +18,7 @@
 
         private static void Main()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(10);
+            var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
             {
