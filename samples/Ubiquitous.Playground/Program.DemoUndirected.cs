@@ -9,6 +9,7 @@ namespace Ubiquitous
 
     internal static partial class Program
     {
+        // ReSharper disable once UnusedMember.Local
         private static void DemoUndirected()
         {
             var builder = new UndirectedAdjacencyListIncidenceGraphBuilder(10);
