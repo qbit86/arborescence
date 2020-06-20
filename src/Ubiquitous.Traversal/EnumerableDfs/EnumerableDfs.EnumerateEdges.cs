@@ -14,6 +14,21 @@ namespace Ubiquitous.Traversal
             return EnumerateEdgesCore(graph, stack, exploredSet);
         }
 
+        public IEnumerator<TEdge> EnumerateEdges<TVertexEnumerator>(
+            TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
+            where TVertexEnumerator : IEnumerator<TVertex>
+        {
+            var stack = new Internal.Stack<TVertex>();
+
+            while (sources.MoveNext())
+            {
+                TVertex s = sources.Current;
+                stack.Add(s);
+            }
+
+            return EnumerateEdgesCore(graph, stack, exploredSet);
+        }
+
         private IEnumerator<TEdge> EnumerateEdgesCore(
             TGraph graph, Internal.Stack<TVertex> stack, TExploredSet exploredSet)
         {
