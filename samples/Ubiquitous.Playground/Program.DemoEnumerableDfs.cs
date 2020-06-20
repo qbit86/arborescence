@@ -47,9 +47,43 @@ namespace Ubiquitous
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
                 IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
+            var treeEdges = new HashSet<int>(graph.EdgeCount);
             using IEnumerator<int> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+            while (steps.MoveNext())
+            {
+                int e = steps.Current;
+                w.WriteLine($"  {E(graph, e)} [label={e} style=bold]");
+                treeEdges.Add(e);
+
+                if (graph.TryGetHead(e, out int v))
+                    w.WriteLine($"  {V(v)} [style=solid]");
+            }
 
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
+
+            // Enumerate sources.
+            w.WriteLine();
+            sources.Reset();
+            while (sources.MoveNext())
+            {
+                int v = sources.Current;
+                w.WriteLine($"  {V(v)} [style=filled]");
+            }
+
+            // Enumerate rest of edges.
+            w.WriteLine();
+            for (int v = 0; v < graph.VertexCount; ++v)
+            {
+                ArraySegmentEnumerator<int> outEdges = graph.EnumerateOutEdges(v);
+                while (outEdges.MoveNext())
+                {
+                    int e = outEdges.Current;
+                    if (treeEdges.Contains(e))
+                        continue;
+
+                    w.WriteLine($"  {E(graph, e)} [label={e} style=dotted]");
+                }
+            }
 
             w.WriteLine("}");
         }
