@@ -34,7 +34,7 @@
             TextWriter w = Console.Out;
 
             w.WriteLine("digraph \"BFS forest\" {");
-            w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
+            w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
             for (int v = 0; v < graph.VertexCount; ++v)
@@ -53,6 +53,15 @@
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
             BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
+
+            // Enumerate sources.
+            w.WriteLine();
+            sources.Reset();
+            while (sources.MoveNext())
+            {
+                int v = sources.Current;
+                w.WriteLine($"  {V(v)} [style=filled]");
+            }
 
             // Enumerate rest of edges.
             w.WriteLine();
@@ -81,7 +90,7 @@
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
-            result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=filled]");
+            result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
             result.ExamineEdge += (g, e) => examinedEdges.Add(e);
