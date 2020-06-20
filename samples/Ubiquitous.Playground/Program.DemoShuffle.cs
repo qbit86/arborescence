@@ -9,6 +9,7 @@
 
     internal static partial class Program
     {
+        // ReSharper disable once UnusedMember.Local
         private static void DemoShuffle()
         {
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
