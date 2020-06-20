@@ -7,16 +7,20 @@ namespace Ubiquitous.Traversal
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
         private IEnumerator<TEdge> EnumerateEdgesCore(
-            TGraph graph, Internal.Stack<TVertex> stack, TExploredSet exploredSet)
+            TGraph graph, Internal.Stack<StackFrame> stack, TExploredSet exploredSet)
         {
             try
             {
-                while (stack.TryTake(out TVertex u))
+                while (stack.TryTake(out StackFrame stackFrame))
                 {
+                    TVertex u = stackFrame.ExploredVertex;
                     if (ExploredSetPolicy.Contains(exploredSet, u))
                         continue;
 
+                    if (stackFrame.TryGetInEdge(out TEdge inEdge))
+                        yield return inEdge;
                     ExploredSetPolicy.Add(exploredSet, u);
+
                     TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
                     while (outEdges.MoveNext())
                     {
@@ -24,8 +28,7 @@ namespace Ubiquitous.Traversal
                         if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                             continue;
 
-                        yield return e;
-                        stack.Add(v);
+                        stack.Add(new StackFrame(v, e));
                     }
                 }
             }

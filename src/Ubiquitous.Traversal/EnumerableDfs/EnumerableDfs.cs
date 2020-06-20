@@ -25,6 +25,35 @@ namespace Ubiquitous.Traversal
             GraphPolicy = graphPolicy;
             ExploredSetPolicy = exploredSetPolicy;
         }
+
+        private readonly struct StackFrame
+        {
+            private readonly TVertex _exploredVertex;
+            private readonly TEdge _inEdge;
+            private readonly bool _hasInEdge;
+
+            internal StackFrame(TVertex exploredVertex)
+            {
+                _exploredVertex = exploredVertex;
+                _inEdge = default;
+                _hasInEdge = false;
+            }
+
+            internal StackFrame(TVertex exploredVertex, TEdge inEdge)
+            {
+                _exploredVertex = exploredVertex;
+                _inEdge = inEdge;
+                _hasInEdge = true;
+            }
+
+            internal TVertex ExploredVertex => _exploredVertex;
+
+            internal bool TryGetInEdge(out TEdge inEdge)
+            {
+                inEdge = _inEdge;
+                return _hasInEdge;
+            }
+        }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 

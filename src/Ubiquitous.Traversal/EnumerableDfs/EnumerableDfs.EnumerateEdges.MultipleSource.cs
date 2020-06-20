@@ -10,12 +10,12 @@ namespace Ubiquitous.Traversal
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
-            var stack = new Internal.Stack<TVertex>();
+            var stack = new Internal.Stack<StackFrame>();
 
             while (sources.MoveNext())
             {
-                TVertex s = sources.Current;
-                stack.Add(s);
+                TVertex source = sources.Current;
+                stack.Add(new StackFrame(source));
             }
 
             return EnumerateEdgesCore(graph, stack, exploredSet);
