@@ -8,9 +8,9 @@ namespace Ubiquitous.Traversal
     {
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
-            var stack = new Internal.Stack<TVertex>();
+            var stack = new Internal.Stack<VertexInfo>();
 
-            stack.Add(source);
+            stack.Add(new VertexInfo(source, false));
 
             return EnumerateVerticesCore(graph, stack, exploredSet);
         }
