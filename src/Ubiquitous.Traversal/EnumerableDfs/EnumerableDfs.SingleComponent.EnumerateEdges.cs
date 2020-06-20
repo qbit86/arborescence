@@ -1,7 +1,7 @@
 ﻿namespace Ubiquitous.Traversal
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    public readonly partial struct EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
+    public readonly partial struct LegacyDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
         TColorMapPolicy>
     {
         public DfsSingleComponentEdgeEnumerator<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
