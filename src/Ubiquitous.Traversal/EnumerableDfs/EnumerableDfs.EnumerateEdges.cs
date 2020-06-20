@@ -2,6 +2,7 @@ namespace Ubiquitous.Traversal
 {
     using System.Collections.Generic;
 
+    // ReSharper disable UnusedTypeParameter
     public readonly partial struct EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy,
         TExploredSetPolicy>
     {
@@ -58,4 +59,5 @@ namespace Ubiquitous.Traversal
             }
         }
     }
+    // ReSharper restore UnusedTypeParameter
 }
