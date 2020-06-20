@@ -51,8 +51,20 @@ namespace Ubiquitous
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
+            var discoveredVertices = new HashSet<int>(graph.VertexCount);
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> handler =
+                CreateHandler(w, discoveredVertices, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
+
+            // Enumerate rest of vertices.
+            w.WriteLine();
+            for (int v = 0; v < graph.VertexCount; ++v)
+            {
+                if (discoveredVertices.Contains(v))
+                    continue;
+
+                w.WriteLine($"  {V(v)} [style=dashed]");
+            }
 
             // Enumerate rest of edges.
             w.WriteLine();
@@ -75,14 +87,18 @@ namespace Ubiquitous
         }
 
         private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
-            TextWriter w, HashSet<int> examinedEdges)
+            TextWriter w, HashSet<int> discoveredVertices, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
             var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
             result.StartVertex += (_, v) => w.WriteLine($"  {V(v)} [style=filled]");
-            result.DiscoverVertex += (_, v) => w.WriteLine($"  // {nameof(result.DiscoverVertex)} {V(v)}");
+            result.DiscoverVertex += (_, v) =>
+            {
+                discoveredVertices.Add(v);
+                w.WriteLine($"  // {nameof(result.DiscoverVertex)} {V(v)}");
+            };
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
             result.ExamineEdge += (g, e) => examinedEdges.Add(e);
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
