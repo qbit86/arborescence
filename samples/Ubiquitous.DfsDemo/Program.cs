@@ -90,6 +90,7 @@ namespace Ubiquitous
             TextWriter w, HashSet<int> discoveredVertices, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
+            Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
             var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
