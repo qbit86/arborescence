@@ -33,7 +33,7 @@ namespace Ubiquitous.Traversal
                             continue;
 
                         yield return e;
-                        ExploredSetPolicy.Add(exploredSet, v);
+                        stack.Add(v);
                     }
                 }
             }
