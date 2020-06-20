@@ -34,7 +34,7 @@ namespace Ubiquitous
             TextWriter w = Console.Out;
 
             w.WriteLine("digraph \"DFS forest\" {");
-            w.WriteLine("  node [shape=circle fontname=\"Times-Italic\"]");
+            w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
             for (int v = 0; v < graph.VertexCount; ++v)
@@ -51,19 +51,16 @@ namespace Ubiquitous
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
-            var discoveredVertices = new HashSet<int>(graph.VertexCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> handler =
-                CreateHandler(w, discoveredVertices, examinedEdges);
+            DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
 
-            // Enumerate rest of vertices.
+            // Enumerate sources.
             w.WriteLine();
-            for (int v = 0; v < graph.VertexCount; ++v)
+            sources.Reset();
+            while (sources.MoveNext())
             {
-                if (discoveredVertices.Contains(v))
-                    continue;
-
-                w.WriteLine($"  {V(v)} [style=dashed]");
+                int v = sources.Current;
+                w.WriteLine($"  {V(v)} [style=filled]");
             }
 
             // Enumerate rest of edges.
@@ -87,19 +84,14 @@ namespace Ubiquitous
         }
 
         private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
-            TextWriter w, HashSet<int> discoveredVertices, HashSet<int> examinedEdges)
+            TextWriter w, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
-            Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
             var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
-            result.StartVertex += (_, v) => w.WriteLine($"  {V(v)} [style=filled]");
-            result.DiscoverVertex += (_, v) =>
-            {
-                discoveredVertices.Add(v);
-                w.WriteLine($"  // {nameof(result.DiscoverVertex)} {V(v)}");
-            };
+            result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
+            result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
             result.ExamineEdge += (g, e) => examinedEdges.Add(e);
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
