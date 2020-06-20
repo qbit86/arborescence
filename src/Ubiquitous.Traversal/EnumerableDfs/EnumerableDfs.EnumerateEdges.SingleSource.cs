@@ -8,9 +8,9 @@ namespace Ubiquitous.Traversal
     {
         public IEnumerator<TEdge> EnumerateEdges(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
-            var stack = new Internal.Stack<StackFrame>();
+            var stack = new Internal.Stack<EdgeInfo>();
 
-            stack.Add(new StackFrame(source));
+            stack.Add(new EdgeInfo(source));
 
             return EnumerateEdgesCore(graph, stack, exploredSet);
         }

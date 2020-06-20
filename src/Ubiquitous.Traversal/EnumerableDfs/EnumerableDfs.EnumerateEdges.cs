@@ -7,11 +7,11 @@ namespace Ubiquitous.Traversal
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
         private IEnumerator<TEdge> EnumerateEdgesCore(
-            TGraph graph, Internal.Stack<StackFrame> stack, TExploredSet exploredSet)
+            TGraph graph, Internal.Stack<EdgeInfo> stack, TExploredSet exploredSet)
         {
             try
             {
-                while (stack.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out EdgeInfo stackFrame))
                 {
                     TVertex u = stackFrame.ExploredVertex;
                     if (ExploredSetPolicy.Contains(exploredSet, u))
@@ -28,13 +28,42 @@ namespace Ubiquitous.Traversal
                         if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                             continue;
 
-                        stack.Add(new StackFrame(v, e));
+                        stack.Add(new EdgeInfo(v, e));
                     }
                 }
             }
             finally
             {
                 stack.Dispose();
+            }
+        }
+
+        private readonly struct EdgeInfo
+        {
+            private readonly TVertex _exploredVertex;
+            private readonly TEdge _inEdge;
+            private readonly bool _hasInEdge;
+
+            internal EdgeInfo(TVertex exploredVertex)
+            {
+                _exploredVertex = exploredVertex;
+                _inEdge = default;
+                _hasInEdge = false;
+            }
+
+            internal EdgeInfo(TVertex exploredVertex, TEdge inEdge)
+            {
+                _exploredVertex = exploredVertex;
+                _inEdge = inEdge;
+                _hasInEdge = true;
+            }
+
+            internal TVertex ExploredVertex => _exploredVertex;
+
+            internal bool TryGetInEdge(out TEdge inEdge)
+            {
+                inEdge = _inEdge;
+                return _hasInEdge;
             }
         }
     }
