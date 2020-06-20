@@ -20,13 +20,12 @@ namespace Ubiquitous.Traversal
                         if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                             continue;
 
-                        bool vExplored = ExploredSetPolicy.Contains(exploredSet, v);
-                        if (!vExplored)
-                        {
-                            ExploredSetPolicy.Add(exploredSet, v);
-                            yield return v;
-                            queue.Add(v);
-                        }
+                        if (ExploredSetPolicy.Contains(exploredSet, v))
+                            continue;
+
+                        ExploredSetPolicy.Add(exploredSet, v);
+                        yield return v;
+                        queue.Add(v);
                     }
                 }
             }
