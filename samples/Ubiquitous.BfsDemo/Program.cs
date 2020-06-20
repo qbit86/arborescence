@@ -53,6 +53,7 @@
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
             BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
+            ArrayPool<byte>.Shared.Return(colorMap);
 
             // Enumerate sources.
             w.WriteLine();
@@ -79,8 +80,6 @@
             }
 
             w.WriteLine("}");
-
-            ArrayPool<byte>.Shared.Return(colorMap);
         }
 
         private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(

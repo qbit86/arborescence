@@ -53,6 +53,7 @@ namespace Ubiquitous
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
             DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
+            ArrayPool<byte>.Shared.Return(colorMap);
 
             // Enumerate sources.
             w.WriteLine();
@@ -79,8 +80,6 @@ namespace Ubiquitous
             }
 
             w.WriteLine("}");
-
-            ArrayPool<byte>.Shared.Return(colorMap);
         }
 
         private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
