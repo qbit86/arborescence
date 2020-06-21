@@ -30,7 +30,7 @@ namespace Ubiquitous
             InstantDfs { get; }
 
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
         public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
@@ -43,21 +43,24 @@ namespace Ubiquitous
             // Arrange
 
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
-            int startVertex = graph.VertexCount - 1;
+            int source = graph.VertexCount - 1;
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            byte[] enumerableColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(enumerableColorMap, 0, enumerableColorMap.Length);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
+                IndexedSetPolicy.GetByteCount(graph.VertexCount));
+            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
-            var instantSteps = new Rist<DfsStep<int>>(graph.VertexCount);
-            var enumerableSteps = new Rist<DfsStep<int>>(graph.VertexCount);
+            var instantSteps = new Rist<int>(graph.VertexCount);
+            var enumerableSteps = new Rist<int>(graph.VertexCount);
             DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
-            InstantDfs.Traverse(graph, startVertex, instantColorMap, dfsHandler);
-            enumerableSteps.AddRange(EnumerableDfs.EnumerateVertices(graph, startVertex, enumerableColorMap));
+            InstantDfs.Traverse(graph, source, instantColorMap, dfsHandler);
+            using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, enumerableExploredSet);
+            while (vertices.MoveNext())
+                enumerableSteps.Add(vertices.Current);
 
             // Assert
 
@@ -68,9 +71,8 @@ namespace Ubiquitous
             int count = instantStepCount;
             for (int i = 0; i < count; ++i)
             {
-                DfsStep<int> instantStep = instantSteps[i];
-                DfsStep<int> enumerableStep = enumerableSteps[i];
-                Assert.NotEqual(DfsStepKind.None, enumerableStep.Kind);
+                int instantStep = instantSteps[i];
+                int enumerableStep = enumerableSteps[i];
 
                 if (instantStep == enumerableStep)
                     continue;
@@ -82,8 +84,8 @@ namespace Ubiquitous
 
             enumerableSteps.Dispose();
             instantSteps.Dispose();
-            ArrayPool<byte>.Shared.Return(enumerableColorMap);
             ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
         private void EnumerateVerticesCrossComponentCore(AdjacencyListIncidenceGraph graph)
@@ -93,25 +95,28 @@ namespace Ubiquitous
             // Arrange
 
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
-            int startVertex = graph.VertexCount - 1;
-            var vertices = new IndexEnumerator(graph.VertexCount);
+            if (graph.VertexCount < 3)
+                return;
+
+            int sourceCount = graph.VertexCount / 3;
+            var sources = new IndexEnumerator(sourceCount);
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            byte[] enumerableColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(enumerableColorMap, 0, enumerableColorMap.Length);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
+                IndexedSetPolicy.GetByteCount(graph.VertexCount));
+            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
-            var instantSteps = new Rist<DfsStep<int>>(graph.VertexCount);
-            var enumerableSteps = new Rist<DfsStep<int>>(graph.VertexCount);
+            var instantSteps = new Rist<int>(graph.VertexCount);
+            var enumerableSteps = new Rist<int>(graph.VertexCount);
             DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
-            InstantDfs.Traverse(graph, vertices, instantColorMap, dfsHandler, startVertex);
-            IEnumerator<DfsStep<int>> stepEnumerator = EnumerableDfs.EnumerateVertices(
-                graph, vertices, enumerableColorMap, startVertex);
-            while (stepEnumerator.MoveNext())
-                enumerableSteps.Add(stepEnumerator.Current);
+            InstantDfs.Traverse(graph, sources, instantColorMap, dfsHandler);
+            using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, enumerableExploredSet);
+            while (vertices.MoveNext())
+                enumerableSteps.Add(vertices.Current);
 
             // Assert
 
@@ -122,9 +127,8 @@ namespace Ubiquitous
             int count = instantStepCount;
             for (int i = 0; i < count; ++i)
             {
-                DfsStep<int> instantStep = instantSteps[i];
-                DfsStep<int> enumerableStep = enumerableSteps[i];
-                Assert.NotEqual(DfsStepKind.None, enumerableStep.Kind);
+                int instantStep = instantSteps[i];
+                int enumerableStep = enumerableSteps[i];
 
                 if (instantStep == enumerableStep)
                     continue;
@@ -136,23 +140,21 @@ namespace Ubiquitous
 
             enumerableSteps.Dispose();
             instantSteps.Dispose();
-            ArrayPool<byte>.Shared.Return(enumerableColorMap);
             ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(IList<DfsStep<int>> steps)
+        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(IList<int> steps)
         {
             Debug.Assert(steps != null, "steps != null");
 
             var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
-            result.StartVertex += (g, v) => steps.Add(DfsStep.Create(DfsStepKind.StartVertex, v));
-            result.DiscoverVertex += (g, v) => steps.Add(DfsStep.Create(DfsStepKind.DiscoverVertex, v));
-            result.FinishVertex += (g, v) => steps.Add(DfsStep.Create(DfsStepKind.FinishVertex, v));
+            result.DiscoverVertex += (g, v) => steps.Add(v);
             return result;
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(GraphSizes))]
         public void Enumerate_vertices_single_component_combinatorial(int vertexCount, double densityPower)
         {
@@ -161,7 +163,7 @@ namespace Ubiquitous
             EnumerateVerticesSingleComponentCore(graph);
         }
 
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(TestCases))]
         public void Enumerate_vertices_single_component_member(string testCase)
         {
@@ -180,7 +182,7 @@ namespace Ubiquitous
             EnumerateVerticesSingleComponentCore(graph);
         }
 
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(GraphSizes))]
         public void Enumerate_vertices_cross_component_combinatorial(int vertexCount, double densityPower)
         {
@@ -189,7 +191,7 @@ namespace Ubiquitous
             EnumerateVerticesCrossComponentCore(graph);
         }
 
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(TestCases))]
         public void Enumerate_vertices_cross_component_member(string testCase)
         {

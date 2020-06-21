@@ -9,7 +9,7 @@
 
         private static void Main()
         {
-            DemoShuffle();
+            DemoEnumerableDfs();
         }
 
         private static string V(int v) => Base32.ToString(v);

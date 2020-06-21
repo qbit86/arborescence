@@ -2,33 +2,28 @@ namespace Ubiquitous.Traversal
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct EnumerableDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
-        where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
+        where TExploredSetPolicy : ISetPolicy<TExploredSet, TVertex>
     {
         private TGraphPolicy GraphPolicy { get; }
-        private TColorMapPolicy ColorMapPolicy { get; }
+        private TExploredSetPolicy ExploredSetPolicy { get; }
 
-        public EnumerableDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+        public EnumerableDfs(TGraphPolicy graphPolicy, TExploredSetPolicy exploredSetPolicy)
         {
             if (graphPolicy == null)
                 throw new ArgumentNullException(nameof(graphPolicy));
 
-            if (colorMapPolicy == null)
-                throw new ArgumentNullException(nameof(colorMapPolicy));
+            if (exploredSetPolicy == null)
+                throw new ArgumentNullException(nameof(exploredSetPolicy));
 
             GraphPolicy = graphPolicy;
-            ColorMapPolicy = colorMapPolicy;
+            ExploredSetPolicy = exploredSetPolicy;
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
-            ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
