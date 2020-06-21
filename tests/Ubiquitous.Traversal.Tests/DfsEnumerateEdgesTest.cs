@@ -154,7 +154,7 @@ namespace Ubiquitous
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(GraphSizes))]
         public void Enumerate_edges_single_component_combinatorial(int vertexCount, double densityPower)
         {
@@ -163,7 +163,7 @@ namespace Ubiquitous
             EnumerateEdgesSingleComponentCore(graph);
         }
 
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(TestCases))]
         public void Enumerate_edges_single_component_member(string testCase)
         {
@@ -182,7 +182,7 @@ namespace Ubiquitous
             EnumerateEdgesSingleComponentCore(graph);
         }
 
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(GraphSizes))]
         public void Enumerate_edges_cross_component_combinatorial(int vertexCount, double densityPower)
         {
@@ -191,7 +191,7 @@ namespace Ubiquitous
             EnumerateEdgesCrossComponentCore(graph);
         }
 
-        [Theory]
+        [Theory(Skip = "Not implemented yet")]
         [MemberData(nameof(TestCases))]
         public void Enumerate_edges_cross_component_member(string testCase)
         {
