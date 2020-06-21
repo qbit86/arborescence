@@ -1,38 +1,8 @@
-digraph "DFS forest" {
+digraph {
   node [shape=circle fontname="Times-Italic"]
-  a b c d e f g h i j
-  j -> b [label=0 style=bold]
-  d -> g [label=1 style=bold]
-  i -> f [label=2 style=dotted]
-  f -> i [label=3 style=bold]
-  i -> i [label=4 style=dotted]
-  a -> d [label=5 style=bold]
-  c -> j [label=6 style=dotted]
-  c -> i [label=7 style=dashed]
-  g -> j [label=8 style=bold]
-  e -> h [label=9 style=dashed]
-  f -> a [label=10 style=dotted]
-  c -> a [label=11 style=dotted]
-  b -> f [label=12 style=bold]
-  e -> j [label=13 style=dashed]
-  b -> f [label=14 style=dashed]
-  e -> i [label=15 style=dashed]
-  f -> d [label=16 style=dotted]
-  d -> g [label=17 style=dashed]
-  c -> g [label=18 style=dotted]
-  e -> g [label=19 style=dashed]
-  i -> a [label=20 style=dotted]
-  d -> j [label=21 style=dashed]
-  e -> e [label=22 style=dotted]
-  f -> f [label=23 style=dotted]
-  a -> h [label=24 style=dashed]
-  c -> j [label=25 style=dotted]
-  b -> h [label=26 style=bold]
-  d -> j [label=27 style=dashed]
-  j -> c [label=28 style=bold]
-  e -> c [label=29 style=dashed]
-  a -> g [label=30 style=dashed]
-  h -> d [label=31 style=dotted]
-  a [style=filled]
-  e [style=filled]
+  a b c
+  a -> b
+  a -> c
+  b -> c
+  c -> b
 }
