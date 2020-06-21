@@ -2,6 +2,7 @@ namespace Ubiquitous
 {
     using System;
     using System.Buffers;
+    using System.Collections.Generic;
     using BenchmarkDotNet.Attributes;
     using Models;
     using Traversal;
@@ -26,8 +27,8 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; set; }
 
-        private LegacyDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+        private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; set; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
@@ -63,7 +64,7 @@ namespace Ubiquitous
         public int EnumerableDfsEdges()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            var steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
+            IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
@@ -76,7 +77,7 @@ namespace Ubiquitous
         public int EnumerableDfsVertices()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            var steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
+            IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
