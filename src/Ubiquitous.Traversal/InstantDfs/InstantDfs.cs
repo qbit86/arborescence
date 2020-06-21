@@ -54,8 +54,8 @@ namespace Ubiquitous.Traversal
                 while (stack.TryTake(out DfsStackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                 {
                     u = stackFrame.Vertex;
-                    if (stackFrame.HasEdge)
-                        handler.OnFinishEdge(graph, stackFrame.Edge);
+                    if (stackFrame.TryGetEdge(out TEdge inEdge))
+                        handler.OnFinishEdge(graph, inEdge);
 
                     TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
                     while (edges.MoveNext())
