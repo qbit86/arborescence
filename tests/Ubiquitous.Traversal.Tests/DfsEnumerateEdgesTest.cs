@@ -17,7 +17,6 @@ namespace Ubiquitous
     public sealed class DfsEnumerateEdgesTest
     {
         private static IEnumerable<object[]> s_graphSizes;
-        private static IEnumerable<object[]> s_testCases;
 
         public DfsEnumerateEdgesTest()
         {
@@ -34,7 +33,6 @@ namespace Ubiquitous
             EnumerableDfs { get; }
 
         public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
-        public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
         private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
@@ -164,7 +162,7 @@ namespace Ubiquitous
         }
 
         [Theory(Skip = "Not implemented yet")]
-        [MemberData(nameof(TestCases))]
+        [ClassData(typeof(IndexedGraphTestCollection))]
         public void Enumerate_edges_single_component_member(string testCase)
         {
             Assert.NotNull(testCase);
@@ -192,7 +190,7 @@ namespace Ubiquitous
         }
 
         [Theory(Skip = "Not implemented yet")]
-        [MemberData(nameof(TestCases))]
+        [ClassData(typeof(IndexedGraphTestCollection))]
         public void Enumerate_edges_cross_component_member(string testCase)
         {
             Assert.NotNull(testCase);
