@@ -16,8 +16,6 @@ namespace Ubiquitous
 
     public sealed class BfsEnumerateVerticesTest
     {
-        private static IEnumerable<object[]> s_graphSizes;
-
         public BfsEnumerateVerticesTest()
         {
             InstantBfs = default;
@@ -31,8 +29,6 @@ namespace Ubiquitous
         private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
-
-        public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
 
         private void EnumerateVerticesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
@@ -145,7 +141,7 @@ namespace Ubiquitous
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [MemberData(nameof(GraphSizes))]
+        [ClassData(typeof(GraphSizeCollection))]
         public void Enumerate_vertices_single_source_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
@@ -173,7 +169,7 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [MemberData(nameof(GraphSizes))]
+        [ClassData(typeof(GraphSizeCollection))]
         public void Enumerate_vertices_multiple_source_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(

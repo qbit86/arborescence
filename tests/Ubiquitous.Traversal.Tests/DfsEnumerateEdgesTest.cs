@@ -16,8 +16,6 @@ namespace Ubiquitous
 
     public sealed class DfsEnumerateEdgesTest
     {
-        private static IEnumerable<object[]> s_graphSizes;
-
         public DfsEnumerateEdgesTest()
         {
             InstantDfs = default;
@@ -31,8 +29,6 @@ namespace Ubiquitous
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
-
-        public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
 
         private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
@@ -153,7 +149,7 @@ namespace Ubiquitous
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory(Skip = "Not implemented yet")]
-        [MemberData(nameof(GraphSizes))]
+        [ClassData(typeof(GraphSizeCollection))]
         public void Enumerate_edges_single_component_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
@@ -181,7 +177,7 @@ namespace Ubiquitous
         }
 
         [Theory(Skip = "Not implemented yet")]
-        [MemberData(nameof(GraphSizes))]
+        [ClassData(typeof(GraphSizeCollection))]
         public void Enumerate_edges_cross_component_combinatorial(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
