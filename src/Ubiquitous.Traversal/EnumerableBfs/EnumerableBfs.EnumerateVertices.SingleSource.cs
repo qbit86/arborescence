@@ -12,6 +12,7 @@ namespace Ubiquitous.Traversal
             try
             {
                 ExploredSetPolicy.Add(exploredSet, source);
+                yield return source;
                 queue.Add(source);
 
                 while (queue.TryTake(out TVertex u))

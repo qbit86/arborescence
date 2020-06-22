@@ -17,6 +17,7 @@ namespace Ubiquitous.Traversal
                 {
                     TVertex source = sources.Current;
                     ExploredSetPolicy.Add(exploredSet, source);
+                    yield return source;
                     queue.Add(source);
                 }
 
