@@ -11,15 +11,38 @@ namespace Ubiquitous.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
         {
             var queue = new Internal.Queue<TVertex>();
-
-            while (sources.MoveNext())
+            try
             {
-                TVertex s = sources.Current;
-                ExploredSetPolicy.Add(exploredSet, s);
-                queue.Add(s);
-            }
+                while (sources.MoveNext())
+                {
+                    TVertex source = sources.Current;
+                    ExploredSetPolicy.Add(exploredSet, source);
+                    queue.Add(source);
+                }
 
-            return EnumerateVerticesCore(graph, queue, exploredSet);
+                while (queue.TryTake(out TVertex u))
+                {
+                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                    while (outEdges.MoveNext())
+                    {
+                        TEdge e = outEdges.Current;
+                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                            continue;
+
+                        if (ExploredSetPolicy.Contains(exploredSet, v))
+                            continue;
+
+                        ExploredSetPolicy.Add(exploredSet, v);
+                        yield return v;
+                        queue.Add(v);
+                    }
+                }
+            }
+            finally
+            {
+                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
+                queue.Dispose();
+            }
         }
     }
     // ReSharper restore UnusedTypeParameter
