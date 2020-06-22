@@ -150,7 +150,7 @@ namespace Ubiquitous
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory(Skip = "Not implemented yet")]
         [ClassData(typeof(GraphSizeCollection))]
-        public void Enumerate_vertices_single_component_combinatorial(int vertexCount, double densityPower)
+        public void EnumerateVertices_SingleSource_ByGraphSize(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
@@ -159,7 +159,7 @@ namespace Ubiquitous
 
         [Theory(Skip = "Not implemented yet")]
         [ClassData(typeof(TestCaseCollection))]
-        public void Enumerate_vertices_single_component_member(string testCase)
+        public void EnumerateVertices_SingleSource_ByTestCase(string testCase)
         {
             Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
@@ -178,7 +178,7 @@ namespace Ubiquitous
 
         [Theory(Skip = "Not implemented yet")]
         [ClassData(typeof(GraphSizeCollection))]
-        public void Enumerate_vertices_cross_component_combinatorial(int vertexCount, double densityPower)
+        public void EnumerateVertices_MultipleSource_ByGraphSize(int vertexCount, double densityPower)
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
@@ -187,7 +187,7 @@ namespace Ubiquitous
 
         [Theory(Skip = "Not implemented yet")]
         [ClassData(typeof(TestCaseCollection))]
-        public void Enumerate_vertices_cross_component_member(string testCase)
+        public void EnumerateVertices_MultipleSource_ByTestCase(string testCase)
         {
             Assert.NotNull(testCase);
             var builder = new AdjacencyListIncidenceGraphBuilder(10);
