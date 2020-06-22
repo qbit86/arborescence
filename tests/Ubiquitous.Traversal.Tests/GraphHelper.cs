@@ -10,12 +10,6 @@ namespace Ubiquitous
     {
         private static readonly double[] s_densityPowers = { 1.0, Math.Sqrt(2.0), 0.5 * (1.0 + Math.Sqrt(5.0)), 2.0 };
 
-        internal static IEnumerable<object[]> CreateTestCases()
-        {
-            return Enumerable.Range(1, 9)
-                .Select(it => new object[] { it.ToString("D2", CultureInfo.InvariantCulture) });
-        }
-
         internal static IEnumerable<object[]> CreateGraphSizes()
         {
             yield return new object[] { 1, 1.0 };
