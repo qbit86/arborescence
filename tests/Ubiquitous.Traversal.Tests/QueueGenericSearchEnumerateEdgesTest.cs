@@ -30,7 +30,7 @@
                 IndexedAdjacencyListGraphPolicy, QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
 
-        private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
+        private void EnumerateEdgesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -115,7 +115,7 @@
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateEdgesSingleSourceCore(graph, false);
+            EnumerateEdgesCore(graph, false);
         }
 
         [Theory]
@@ -134,7 +134,35 @@
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateEdgesSingleSourceCore(graph, false);
+            EnumerateEdgesCore(graph, false);
+        }
+
+        [Theory]
+        [ClassData(typeof(GraphSizeCollection))]
+        public void EnumerateEdges_MultipleSource_ByGraphSize(int vertexCount, double densityPower)
+        {
+            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                vertexCount, densityPower);
+            EnumerateEdgesCore(graph, true);
+        }
+
+        [Theory]
+        [ClassData(typeof(TestCaseCollection))]
+        public void EnumerateEdges_MultipleSource_ByTestCase(string testCase)
+        {
+            Assert.NotNull(testCase);
+            var builder = new AdjacencyListIncidenceGraphBuilder(10);
+
+            using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
+            {
+                Assert.NotEqual(TextReader.Null, textReader);
+                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (Endpoints<int> edge in edges)
+                    builder.TryAdd(edge.Tail, edge.Head, out _);
+            }
+
+            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            EnumerateEdgesCore(graph, true);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
