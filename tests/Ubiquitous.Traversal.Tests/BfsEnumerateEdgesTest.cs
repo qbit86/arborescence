@@ -162,7 +162,7 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void Enumerate_edges_single_source_member(string testCase)
         {
             Assert.NotNull(testCase);
@@ -190,7 +190,7 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void Enumerate_edges_multiple_source_member(string testCase)
         {
             Assert.NotNull(testCase);

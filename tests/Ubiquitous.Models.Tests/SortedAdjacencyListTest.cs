@@ -12,7 +12,7 @@ namespace Ubiquitous
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void SortedAdjacencyList_ShouldNotBeLess(string testName)
         {
             // Arrange
@@ -50,7 +50,7 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void SortedAdjacencyList_ShouldNotBeGreater(string testName)
         {
             // Arrange
@@ -88,7 +88,7 @@ namespace Ubiquitous
         }
 
         [Theory]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void SortedAdjacencyList_ShouldHaveSameEndpoints(string testName)
         {
             // Arrange

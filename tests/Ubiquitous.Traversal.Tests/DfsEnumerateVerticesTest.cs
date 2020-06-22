@@ -162,7 +162,7 @@ namespace Ubiquitous
         }
 
         [Theory(Skip = "Not implemented yet")]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void Enumerate_vertices_single_component_member(string testCase)
         {
             Assert.NotNull(testCase);
@@ -190,7 +190,7 @@ namespace Ubiquitous
         }
 
         [Theory(Skip = "Not implemented yet")]
-        [ClassData(typeof(IndexedGraphTestCollection))]
+        [ClassData(typeof(TestCaseCollection))]
         public void Enumerate_vertices_cross_component_member(string testCase)
         {
             Assert.NotNull(testCase);
