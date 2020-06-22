@@ -30,14 +30,13 @@
                 IndexedAdjacencyListGraphPolicy, QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
 
-        private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
-            int source = graph.VertexCount >> 1;
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
@@ -52,10 +51,27 @@
 
             // Act
 
-            InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
-            using IEnumerator<int> edges = GenericSearch.EnumerateEdges(
-                graph, source, container, enumerableExploredSet);
-            enumerableSteps.AddEnumerator(edges);
+            if (multipleSource)
+            {
+                if (graph.VertexCount < 3)
+                    return;
+
+                int sourceCount = graph.VertexCount / 3;
+                var sources = new IndexEnumerator(sourceCount);
+
+                InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
+                using IEnumerator<int> edges = GenericSearch.EnumerateEdges(
+                    graph, sources, container, enumerableExploredSet);
+                enumerableSteps.AddEnumerator(edges);
+            }
+            else
+            {
+                int source = graph.VertexCount >> 1;
+                InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+                using IEnumerator<int> edges = GenericSearch.EnumerateEdges(
+                    graph, source, container, enumerableExploredSet);
+                enumerableSteps.AddEnumerator(edges);
+            }
 
             // Assert
 
@@ -99,7 +115,7 @@
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateEdgesSingleSourceCore(graph);
+            EnumerateEdgesSingleSourceCore(graph, false);
         }
 
         [Theory]
@@ -118,7 +134,7 @@
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateEdgesSingleSourceCore(graph);
+            EnumerateEdgesSingleSourceCore(graph, false);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
