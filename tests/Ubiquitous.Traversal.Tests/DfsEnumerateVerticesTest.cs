@@ -36,7 +36,7 @@ namespace Ubiquitous
         public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
-        private void EnumerateVerticesSingleComponentCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateVerticesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -88,7 +88,7 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private void EnumerateVerticesCrossComponentCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateVerticesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -160,7 +160,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateVerticesSingleComponentCore(graph);
+            EnumerateVerticesSingleSourceCore(graph);
         }
 
         [Theory(Skip = "Not implemented yet")]
@@ -179,7 +179,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateVerticesSingleComponentCore(graph);
+            EnumerateVerticesSingleSourceCore(graph);
         }
 
         [Theory(Skip = "Not implemented yet")]
@@ -188,7 +188,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateVerticesCrossComponentCore(graph);
+            EnumerateVerticesMultipleSourceCore(graph);
         }
 
         [Theory(Skip = "Not implemented yet")]
@@ -207,7 +207,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateVerticesCrossComponentCore(graph);
+            EnumerateVerticesMultipleSourceCore(graph);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }

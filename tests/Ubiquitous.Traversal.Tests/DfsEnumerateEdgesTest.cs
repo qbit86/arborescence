@@ -36,7 +36,7 @@ namespace Ubiquitous
         public static IEnumerable<object[]> GraphSizes => s_graphSizes ??= GraphHelper.CreateGraphSizes();
         public static IEnumerable<object[]> TestCases => s_testCases ??= GraphHelper.CreateTestCases();
 
-        private void EnumerateEdgesSingleComponentCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateEdgesSingleSourceCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -88,7 +88,7 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private void EnumerateEdgesCrossComponentCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateEdgesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -160,7 +160,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateEdgesSingleComponentCore(graph);
+            EnumerateEdgesSingleSourceCore(graph);
         }
 
         [Theory(Skip = "Not implemented yet")]
@@ -179,7 +179,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateEdgesSingleComponentCore(graph);
+            EnumerateEdgesSingleSourceCore(graph);
         }
 
         [Theory(Skip = "Not implemented yet")]
@@ -188,7 +188,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateEdgesCrossComponentCore(graph);
+            EnumerateEdgesMultipleSourceCore(graph);
         }
 
         [Theory(Skip = "Not implemented yet")]
@@ -207,7 +207,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateEdgesCrossComponentCore(graph);
+            EnumerateEdgesMultipleSourceCore(graph);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
