@@ -15,9 +15,6 @@ namespace Ubiquitous
                 yield return new object[] { i.ToString("D2", CultureInfo.InvariantCulture) };
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
