@@ -73,12 +73,7 @@ namespace Ubiquitous
             {
                 int instantStep = instantSteps[i];
                 int enumerableStep = enumerableSteps[i];
-
-                Assert.True(graph.TryGetHead(instantStep, out int head));
-                if (head == enumerableStep)
-                    continue;
-
-                Assert.Equal(head, enumerableStep);
+                Assert.Equal(instantStep, enumerableStep);
             }
 
             // Cleanup
@@ -130,12 +125,7 @@ namespace Ubiquitous
             {
                 int instantStep = instantSteps[i];
                 int enumerableStep = enumerableSteps[i];
-
-                Assert.True(graph.TryGetHead(instantStep, out int head));
-                if (head == enumerableStep)
-                    continue;
-
-                Assert.Equal(head, enumerableStep);
+                Assert.Equal(instantStep, enumerableStep);
             }
 
             // Cleanup
@@ -146,12 +136,12 @@ namespace Ubiquitous
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateBfsHandler(IList<int> treeEdges)
+        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
         {
-            Debug.Assert(treeEdges != null, "treeEdges != null");
+            Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
             var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
-            result.TreeEdge += (g, e) => treeEdges.Add(e);
+            result.DiscoverVertex += (g, v) => discoveredVertices.Add(v);
             return result;
         }
 
