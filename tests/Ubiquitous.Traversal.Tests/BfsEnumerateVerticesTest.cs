@@ -110,7 +110,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateVerticesCore(graph, true);
+            EnumerateVerticesCore(graph, false);
         }
 
         [Theory]
@@ -129,7 +129,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateVerticesCore(graph, true);
+            EnumerateVerticesCore(graph, false);
         }
 
         [Theory]
