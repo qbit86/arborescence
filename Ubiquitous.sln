@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Playground", "sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.Collections", "src\Ubiquitous.Collections\Ubiquitous.Collections.csproj", "{BDA3146C-7E28-4B26-89C5-192841CD887D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.BfsDemo", "samples\Ubiquitous.BfsDemo\Ubiquitous.BfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.InstantBfsDemo", "samples\Ubiquitous.InstantBfsDemo\Ubiquitous.InstantBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.GenericSearchDemo", "samples\Ubiquitous.GenericSearchDemo\Ubiquitous.GenericSearchDemo.csproj", "{5446EBC6-AEA7-4EE5-ACF7-73D52BF9A995}"
 EndProject
