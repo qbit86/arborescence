@@ -45,8 +45,8 @@
                 IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
-            var instantSteps = new Rist<int>(graph.VertexCount);
-            var enumerableSteps = new Rist<int>(graph.VertexCount);
+            using var instantSteps = new Rist<int>(graph.VertexCount);
+            using var enumerableSteps = new Rist<int>(graph.VertexCount);
             BfsHandler<AdjacencyListIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
 
             // Act
@@ -93,8 +93,6 @@
 
             // Cleanup
 
-            enumerableSteps.Dispose();
-            instantSteps.Dispose();
             ArrayPool<byte>.Shared.Return(instantColorMap);
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
