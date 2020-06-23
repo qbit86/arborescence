@@ -33,7 +33,10 @@
 
             TextWriter w = Console.Out;
 
-            w.WriteLine("digraph \"BFS forest\" {");
+            InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
+
+            w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
@@ -45,8 +48,6 @@
 
             w.WriteLine();
 
-            InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
             var sources = new IndexEnumerator(2);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
