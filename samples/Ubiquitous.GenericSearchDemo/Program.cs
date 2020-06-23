@@ -32,7 +32,10 @@
 
             TextWriter w = Console.Out;
 
-            w.WriteLine("digraph GenericSearch {");
+            GenericSearch<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, Stack<int>, byte[],
+                IndexedAdjacencyListGraphPolicy, StackPolicy, IndexedSetPolicy> search = default;
+
+            w.WriteLine($"digraph \"{search.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
@@ -44,8 +47,6 @@
 
             w.WriteLine();
 
-            GenericSearch<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, Stack<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, StackPolicy, IndexedSetPolicy> search = default;
             var sources = new IndexEnumerator(1);
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
                 IndexedSetPolicy.GetByteCount(graph.VertexCount));
