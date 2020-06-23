@@ -29,7 +29,10 @@ namespace Ubiquitous
 
             TextWriter w = Console.Out;
 
-            w.WriteLine("digraph \"DFS forest\" {");
+            EnumerableDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy> dfs = default;
+
+            w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
@@ -41,9 +44,7 @@ namespace Ubiquitous
 
             w.WriteLine();
 
-            EnumerableDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy> dfs = default;
-            var sources = new IndexEnumerator(2);
+            var sources = new IndexEnumerator(1);
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
                 IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
