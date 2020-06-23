@@ -8,7 +8,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <VersionPrefix>$(FileVersion)</VersionPrefix>
-    <Description>DFS Demo.</Description>
+    <Description>InstantDfs demo.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
