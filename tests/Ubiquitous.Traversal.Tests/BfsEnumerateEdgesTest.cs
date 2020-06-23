@@ -60,16 +60,14 @@ namespace Ubiquitous
 
                 InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
                 using IEnumerator<int> edges = EnumerableBfs.EnumerateEdges(graph, sources, enumerableExploredSet);
-                while (edges.MoveNext())
-                    enumerableSteps.Add(edges.Current);
+                enumerableSteps.AddEnumerator(edges);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
                 InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
                 using IEnumerator<int> edges = EnumerableBfs.EnumerateEdges(graph, source, enumerableExploredSet);
-                while (edges.MoveNext())
-                    enumerableSteps.Add(edges.Current);
+                enumerableSteps.AddEnumerator(edges);
             }
 
             // Assert

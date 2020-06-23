@@ -60,16 +60,14 @@ namespace Ubiquitous
                 InstantDfs.Traverse(graph, sources, instantColorMap, dfsHandler);
                 using IEnumerator<int> vertices =
                     EnumerableDfs.EnumerateVertices(graph, sources, enumerableExploredSet);
-                while (vertices.MoveNext())
-                    enumerableSteps.Add(vertices.Current);
+                enumerableSteps.AddEnumerator(vertices);
             }
             else
             {
                 int source = graph.VertexCount - 1;
                 InstantDfs.Traverse(graph, source, instantColorMap, dfsHandler);
                 using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, enumerableExploredSet);
-                while (vertices.MoveNext())
-                    enumerableSteps.Add(vertices.Current);
+                enumerableSteps.AddEnumerator(vertices);
             }
 
             // Assert
