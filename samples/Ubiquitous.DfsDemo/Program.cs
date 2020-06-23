@@ -33,7 +33,10 @@ namespace Ubiquitous
 
             TextWriter w = Console.Out;
 
-            w.WriteLine("digraph \"DFS forest\" {");
+            InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> dfs = default;
+
+            w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
@@ -45,14 +48,12 @@ namespace Ubiquitous
 
             w.WriteLine();
 
-            InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
             var sources = new IndexEnumerator(2);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
             DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
-            bfs.Traverse(graph, sources, colorMap, handler);
+            dfs.Traverse(graph, sources, colorMap, handler);
             ArrayPool<byte>.Shared.Return(colorMap);
 
             // Enumerate sources.
