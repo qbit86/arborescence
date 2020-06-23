@@ -30,14 +30,13 @@ namespace Ubiquitous
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
 
-        private void EnumerateVerticesSingleSourceCore(AdjacencyListIncidenceGraph graph)
+        private void EnumerateVerticesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
             Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
-            int source = graph.VertexCount - 1;
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
@@ -51,62 +50,27 @@ namespace Ubiquitous
 
             // Act
 
-            InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
-            using IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, source, enumerableExploredSet);
-            while (vertices.MoveNext())
-                enumerableSteps.Add(vertices.Current);
-
-            // Assert
-
-            int instantStepCount = instantSteps.Count;
-            int enumerableStepCount = enumerableSteps.Count;
-            Assert.Equal(instantStepCount, enumerableStepCount);
-
-            int count = instantStepCount;
-            for (int i = 0; i < count; ++i)
+            if (multipleSource)
             {
-                int instantStep = instantSteps[i];
-                int enumerableStep = enumerableSteps[i];
-                Assert.Equal(instantStep, enumerableStep);
+                if (graph.VertexCount < 3)
+                    return;
+
+                int sourceCount = graph.VertexCount / 3;
+                var sources = new IndexEnumerator(sourceCount);
+
+                InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
+                using IEnumerator<int> edges = EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
+                while (edges.MoveNext())
+                    enumerableSteps.Add(edges.Current);
             }
-
-            // Cleanup
-
-            enumerableSteps.Dispose();
-            instantSteps.Dispose();
-            ArrayPool<byte>.Shared.Return(instantColorMap);
-            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
-        }
-
-        private void EnumerateVerticesMultipleSourceCore(AdjacencyListIncidenceGraph graph)
-        {
-            Debug.Assert(graph != null, "graph != null");
-
-            // Arrange
-
-            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
-            if (graph.VertexCount < 3)
-                return;
-
-            int sourceCount = graph.VertexCount / 3;
-            var sources = new IndexEnumerator(sourceCount);
-
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
-                IndexedSetPolicy.GetByteCount(graph.VertexCount));
-            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
-
-            var instantSteps = new Rist<int>(graph.VertexCount);
-            var enumerableSteps = new Rist<int>(graph.VertexCount);
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
-
-            // Act
-
-            InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
-            using IEnumerator<int> edges = EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
-            while (edges.MoveNext())
-                enumerableSteps.Add(edges.Current);
+            else
+            {
+                int source = graph.VertexCount >> 1;
+                InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+                using IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, source, enumerableExploredSet);
+                while (vertices.MoveNext())
+                    enumerableSteps.Add(vertices.Current);
+            }
 
             // Assert
 
@@ -146,7 +110,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateVerticesSingleSourceCore(graph);
+            EnumerateVerticesCore(graph, true);
         }
 
         [Theory]
@@ -165,7 +129,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateVerticesSingleSourceCore(graph);
+            EnumerateVerticesCore(graph, true);
         }
 
         [Theory]
@@ -174,7 +138,7 @@ namespace Ubiquitous
         {
             AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                 vertexCount, densityPower);
-            EnumerateVerticesMultipleSourceCore(graph);
+            EnumerateVerticesCore(graph, true);
         }
 
         [Theory]
@@ -193,7 +157,7 @@ namespace Ubiquitous
             }
 
             AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            EnumerateVerticesMultipleSourceCore(graph);
+            EnumerateVerticesCore(graph, true);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
