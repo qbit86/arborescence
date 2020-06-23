@@ -59,7 +59,8 @@ namespace Ubiquitous
                 var sources = new IndexEnumerator(sourceCount);
 
                 InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
-                using IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
+                using IEnumerator<int> vertices =
+                    EnumerableBfs.EnumerateVertices(graph, sources, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(vertices);
             }
             else
