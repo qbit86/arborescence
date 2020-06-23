@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.InstantBfsDemo",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.GenericSearchDemo", "samples\Ubiquitous.GenericSearchDemo\Ubiquitous.GenericSearchDemo.csproj", "{5446EBC6-AEA7-4EE5-ACF7-73D52BF9A995}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquitous.EnumerableDfsDemo", "samples\Ubiquitous.EnumerableDfsDemo\Ubiquitous.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
@@ -119,6 +121,10 @@ Global
 		{5446EBC6-AEA7-4EE5-ACF7-73D52BF9A995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5446EBC6-AEA7-4EE5-ACF7-73D52BF9A995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5446EBC6-AEA7-4EE5-ACF7-73D52BF9A995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866FB4B8-0AB1-41FC-9206-13C22EAC625A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866FB4B8-0AB1-41FC-9206-13C22EAC625A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866FB4B8-0AB1-41FC-9206-13C22EAC625A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866FB4B8-0AB1-41FC-9206-13C22EAC625A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +147,7 @@ Global
 		{BDA3146C-7E28-4B26-89C5-192841CD887D} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{483A2A8F-6C85-403A-9F6F-99656E7916C2} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{5446EBC6-AEA7-4EE5-ACF7-73D52BF9A995} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
+		{866FB4B8-0AB1-41FC-9206-13C22EAC625A} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

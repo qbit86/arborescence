@@ -9,7 +9,7 @@
 
         private static void Main()
         {
-            DemoEnumerableDfs();
+            DemoUndirected();
         }
 
         private static string V(int v) => Base32.ToString(v);

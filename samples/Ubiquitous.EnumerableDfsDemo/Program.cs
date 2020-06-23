@@ -1,8 +1,9 @@
-namespace Ubiquitous
+﻿namespace Ubiquitous
 {
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using Models;
     using Traversal;
@@ -10,9 +11,11 @@ namespace Ubiquitous
     using IndexedAdjacencyListGraphPolicy =
         Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
-    internal static partial class Program
+    internal static class Program
     {
-        private static void DemoEnumerableDfs()
+        private static CultureInfo F => CultureInfo.InvariantCulture;
+
+        private static void Main()
         {
             var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
 
@@ -87,6 +90,15 @@ namespace Ubiquitous
             }
 
             w.WriteLine("}");
+        }
+
+        private static string V(int v) => Base32.ToString(v);
+
+        private static string E(AdjacencyListIncidenceGraph g, int e)
+        {
+            string head = g.TryGetHead(e, out int h) ? V(h) : "?";
+            string tail = g.TryGetTail(e, out int t) ? V(t) : "?";
+            return string.Concat(tail, " -> ", head);
         }
     }
 }
