@@ -4,9 +4,8 @@
     using System.Buffers;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
-    using Collections;
 
-    internal struct Queue<T> : IDisposable, IContainer<T>
+    internal struct Queue<T> : IDisposable
     {
         private const int DefaultCapacity = 4;
 
@@ -16,8 +15,6 @@
         private int _size;
 
         private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
-
-        public bool IsEmpty => _size == 0;
 
         public void Dispose()
         {
