@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6561325C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.DfsDemo", "samples\Ubiquitous.DfsDemo\Ubiquitous.DfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.InstantDfsDemo", "samples\Ubiquitous.InstantDfsDemo\Ubiquitous.InstantDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Traversal.Tests", "tests\Ubiquitous.Traversal.Tests\Ubiquitous.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
