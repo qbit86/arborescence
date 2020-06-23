@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
 
+#pragma warning disable CA1812 // GraphSizeCollection is an internal class that is apparently never instantiated.
     internal sealed class GraphSizeCollection : IEnumerable<object[]>
     {
         private static readonly double[] s_densityPowers = { 1.0, Math.Sqrt(2.0), 0.5 * (1.0 + Math.Sqrt(5.0)), 2.0 };
@@ -23,4 +24,5 @@
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
+#pragma warning restore CA1812 // GraphSizeCollection is an internal class that is apparently never instantiated.
 }

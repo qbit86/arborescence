@@ -4,6 +4,7 @@ namespace Ubiquitous
     using System.Collections.Generic;
     using System.Globalization;
 
+#pragma warning disable CA1812 // TestCaseCollection is an internal class that is apparently never instantiated.
     internal sealed class TestCaseCollection : IEnumerable<object[]>
     {
         private const int LowerBound = 1;
@@ -17,4 +18,5 @@ namespace Ubiquitous
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
+#pragma warning restore CA1812 // TestCaseCollection is an internal class that is apparently never instantiated.
 }
