@@ -22,13 +22,12 @@
                     if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                         continue;
 
-                    bool vExplored = ExploredSetPolicy.Contains(exploredSet, v);
-                    if (!vExplored)
-                    {
-                        ExploredSetPolicy.Add(exploredSet, v);
-                        yield return v;
-                        VertexContainerPolicy.Add(vertexContainer, v);
-                    }
+                    if (ExploredSetPolicy.Contains(exploredSet, v))
+                        continue;
+
+                    ExploredSetPolicy.Add(exploredSet, v);
+                    yield return v;
+                    VertexContainerPolicy.Add(vertexContainer, v);
                 }
             }
         }
