@@ -47,7 +47,8 @@
 
             w.WriteLine();
 
-            var sources = new IndexEnumerator(1);
+            static IEnumerator<int> EnumerateSources() { yield return 3; }
+            IEnumerator<int> sources = EnumerateSources();
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
                 IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
@@ -66,7 +67,7 @@
 
             // Enumerate sources.
             w.WriteLine();
-            sources.Reset();
+            sources = EnumerateSources();
             while (sources.MoveNext())
             {
                 int v = sources.Current;
