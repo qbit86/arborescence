@@ -49,7 +49,54 @@
             var enumerableSteps = new Rist<int>(graph.VertexCount);
             BfsHandler<AdjacencyListIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
 
-            throw new NotImplementedException();
+            // Act
+
+            if (multipleSource)
+            {
+                if (graph.VertexCount < 3)
+                    return;
+
+                int sourceCount = graph.VertexCount / 3;
+                var sources = new IndexEnumerator(sourceCount);
+
+                InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
+                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
+                    graph, sources, container, enumerableExploredSet);
+                enumerableSteps.AddEnumerator(vertices);
+            }
+            else
+            {
+                int source = graph.VertexCount >> 1;
+                InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
+                    graph, source, container, enumerableExploredSet);
+                enumerableSteps.AddEnumerator(vertices);
+            }
+
+            // Assert
+
+            int instantStepCount = instantSteps.Count;
+            int enumerableStepCount = enumerableSteps.Count;
+            Assert.Equal(instantStepCount, enumerableStepCount);
+
+            int count = instantStepCount;
+            for (int i = 0; i < count; ++i)
+            {
+                int instantStep = instantSteps[i];
+                int enumerableStep = enumerableSteps[i];
+
+                if (instantStep == enumerableStep)
+                    continue;
+
+                Assert.Equal(instantStep, enumerableStep);
+            }
+
+            // Cleanup
+
+            enumerableSteps.Dispose();
+            instantSteps.Dispose();
+            ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
         private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
