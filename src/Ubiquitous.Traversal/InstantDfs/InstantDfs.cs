@@ -4,7 +4,6 @@ namespace Ubiquitous.Traversal
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
-    using Collections;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
@@ -45,7 +44,7 @@ namespace Ubiquitous.Traversal
                 return;
             }
 
-            var stack = new ValueStack<StackFrame>();
+            var stack = new Internal.Stack<StackFrame>();
             try
             {
                 TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);

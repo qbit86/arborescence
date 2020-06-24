@@ -12,9 +12,11 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
-    <ProjectReference Include="..\Ubiquitous.Collections\Ubiquitous.Collections.csproj" />
   </ItemGroup>
   <Import Project="..\Ubiquitous.Internal\Ubiquitous.Internal.projitems" Label="Shared" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
