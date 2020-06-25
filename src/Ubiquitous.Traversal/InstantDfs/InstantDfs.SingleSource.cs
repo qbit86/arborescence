@@ -9,25 +9,25 @@ namespace Ubiquitous.Traversal
     {
         private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
 
-        public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler)
+        public void Traverse<THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            handler.OnStartVertex(graph, startVertex);
-            TraverseCore(graph, startVertex, colorMap, handler, s_false);
+            handler.OnStartVertex(graph, source);
+            TraverseCore(graph, source, colorMap, handler, s_false);
         }
 
-        public void Traverse<THandler>(TGraph graph, TVertex startVertex, TColorMap colorMap, THandler handler,
+        public void Traverse<THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            handler.OnStartVertex(graph, startVertex);
-            TraverseCore(graph, startVertex, colorMap, handler, terminationCondition ?? s_false);
+            handler.OnStartVertex(graph, source);
+            TraverseCore(graph, source, colorMap, handler, terminationCondition ?? s_false);
         }
     }
     // ReSharper restore UnusedTypeParameter

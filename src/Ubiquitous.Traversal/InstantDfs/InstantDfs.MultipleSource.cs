@@ -9,19 +9,19 @@ namespace Ubiquitous.Traversal
         TGraphPolicy, TColorMapPolicy>
     {
         public void Traverse<TVertexEnumerator, THandler>(
-            TGraph graph, TVertexEnumerator vertices, TColorMap colorMap, THandler handler)
+            TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler)
             where TVertexEnumerator : IEnumerator<TVertex>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
-            if (vertices == null)
-                throw new ArgumentNullException(nameof(vertices));
+            if (sources == null)
+                throw new ArgumentNullException(nameof(sources));
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            while (vertices.MoveNext())
+            while (sources.MoveNext())
             {
-                TVertex u = vertices.Current;
+                TVertex u = sources.Current;
                 Color color = GetColorOrDefault(colorMap, u);
                 if (color != Color.None && color != Color.White)
                     continue;
@@ -32,12 +32,12 @@ namespace Ubiquitous.Traversal
         }
 
         public void Traverse<TVertexEnumerator, THandler>(
-            TGraph graph, TVertexEnumerator vertices, TColorMap colorMap, THandler handler, TVertex startVertex)
+            TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler, TVertex startVertex)
             where TVertexEnumerator : IEnumerator<TVertex>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
-            if (vertices == null)
-                throw new ArgumentNullException(nameof(vertices));
+            if (sources == null)
+                throw new ArgumentNullException(nameof(sources));
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
@@ -45,9 +45,9 @@ namespace Ubiquitous.Traversal
             handler.OnStartVertex(graph, startVertex);
             TraverseCore(graph, startVertex, colorMap, handler, s_false);
 
-            while (vertices.MoveNext())
+            while (sources.MoveNext())
             {
-                TVertex u = vertices.Current;
+                TVertex u = sources.Current;
                 Color color = GetColorOrDefault(colorMap, u);
                 if (color != Color.None && color != Color.White)
                     continue;
