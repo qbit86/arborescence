@@ -3,17 +3,17 @@
     using System.Collections.Generic;
 
     // ReSharper disable UnusedTypeParameter
-    public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TVertexContainer,
-        TExploredSet, TGraphPolicy, TVertexContainerPolicy, TExploredSetPolicy>
+    public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
+        TExploredSet, TGraphPolicy, TFringePolicy, TExploredSetPolicy>
     {
         public IEnumerator<TVertex> EnumerateVertices(
-            TGraph graph, TVertex source, TVertexContainer vertexContainer, TExploredSet exploredSet)
+            TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
         {
             ExploredSetPolicy.Add(exploredSet, source);
             yield return source;
-            VertexContainerPolicy.Add(vertexContainer, source);
+            FringePolicy.Add(fringe, source);
 
-            while (VertexContainerPolicy.TryTake(vertexContainer, out TVertex u))
+            while (FringePolicy.TryTake(fringe, out TVertex u))
             {
                 TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
                 while (outEdges.MoveNext())
@@ -27,7 +27,7 @@
 
                     ExploredSetPolicy.Add(exploredSet, v);
                     yield return v;
-                    VertexContainerPolicy.Add(vertexContainer, v);
+                    FringePolicy.Add(fringe, v);
                 }
             }
         }

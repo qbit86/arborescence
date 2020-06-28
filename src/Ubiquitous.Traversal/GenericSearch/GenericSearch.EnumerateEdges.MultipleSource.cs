@@ -3,21 +3,21 @@
     using System.Collections.Generic;
 
     // ReSharper disable UnusedTypeParameter
-    public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TVertexContainer,
-        TExploredSet, TGraphPolicy, TVertexContainerPolicy, TExploredSetPolicy>
+    public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe, TExploredSet,
+        TGraphPolicy, TFringePolicy, TExploredSetPolicy>
     {
         public IEnumerator<TEdge> EnumerateEdges<TVertexEnumerator>(
-            TGraph graph, TVertexEnumerator sources, TVertexContainer vertexContainer, TExploredSet exploredSet)
+            TGraph graph, TVertexEnumerator sources, TFringe fringe, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
             while (sources.MoveNext())
             {
                 TVertex source = sources.Current;
                 ExploredSetPolicy.Add(exploredSet, source);
-                VertexContainerPolicy.Add(vertexContainer, source);
+                FringePolicy.Add(fringe, source);
             }
 
-            return EnumerateEdgesCore(graph, vertexContainer, exploredSet);
+            return EnumerateEdgesCore(graph, fringe, exploredSet);
         }
     }
     // ReSharper restore UnusedTypeParameter
