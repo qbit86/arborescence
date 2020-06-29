@@ -10,16 +10,16 @@ namespace Ubiquitous.Traversal
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
-            var stack = new Internal.Stack<EdgeInfo>();
+            var stack = new Internal.Stack<EdgeInfo<TVertex, TEdge>>();
             try
             {
                 while (sources.MoveNext())
                 {
                     TVertex source = sources.Current;
-                    stack.Add(new EdgeInfo(source));
+                    stack.Add(new EdgeInfo<TVertex, TEdge>(source));
                 }
 
-                while (stack.TryTake(out EdgeInfo stackFrame))
+                while (stack.TryTake(out EdgeInfo<TVertex, TEdge> stackFrame))
                 {
                     TVertex u = stackFrame.ExploredVertex;
                     if (ExploredSetPolicy.Contains(exploredSet, u))
@@ -36,7 +36,7 @@ namespace Ubiquitous.Traversal
                         if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                             continue;
 
-                        stack.Add(new EdgeInfo(v, e));
+                        stack.Add(new EdgeInfo<TVertex, TEdge>(v, e));
                     }
                 }
             }
