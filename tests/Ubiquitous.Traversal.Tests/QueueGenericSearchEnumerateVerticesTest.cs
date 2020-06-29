@@ -40,7 +40,7 @@
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            var container = new Queue<int>();
+            var fringe = new Queue<int>();
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
                 IndexedSetPolicy.GetByteCount(graph.VertexCount));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
@@ -61,7 +61,7 @@
 
                 InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
                 using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
-                    graph, sources, container, enumerableExploredSet);
+                    graph, sources, fringe, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(vertices);
             }
             else
@@ -69,7 +69,7 @@
                 int source = graph.VertexCount >> 1;
                 InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
                 using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
-                    graph, source, container, enumerableExploredSet);
+                    graph, source, fringe, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(vertices);
             }
 
