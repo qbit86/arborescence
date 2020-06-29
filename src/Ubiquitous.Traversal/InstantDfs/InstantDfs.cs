@@ -44,13 +44,13 @@ namespace Ubiquitous.Traversal
                 return;
             }
 
-            var stack = new Internal.Stack<StackFrame>();
+            var stack = new Internal.Stack<StackFrame<TVertex, TEdge, TEdgeEnumerator>>();
             try
             {
                 TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                stack.Add(new StackFrame(u, outEdges));
+                stack.Add(new StackFrame<TVertex, TEdge, TEdgeEnumerator>(u, outEdges));
 
-                while (stack.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out StackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                 {
                     u = stackFrame.Vertex;
                     if (stackFrame.TryGetEdge(out TEdge inEdge))
@@ -68,7 +68,7 @@ namespace Ubiquitous.Traversal
                         if (color == Color.None || color == Color.White)
                         {
                             handler.OnTreeEdge(graph, e);
-                            stack.Add(new StackFrame(u, e, edges));
+                            stack.Add(new StackFrame<TVertex, TEdge, TEdgeEnumerator>(u, e, edges));
                             u = v;
                             ColorMapPolicy.AddOrUpdate(colorMap, u, Color.Gray);
                             handler.OnDiscoverVertex(graph, u);
@@ -104,37 +104,6 @@ namespace Ubiquitous.Traversal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
             ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
-
-        private readonly struct StackFrame
-        {
-            private readonly TEdge _edge;
-            private readonly bool _hasEdge;
-
-            internal StackFrame(TVertex vertex, TEdgeEnumerator edgeEnumerator)
-            {
-                _hasEdge = false;
-                _edge = default;
-                Vertex = vertex;
-                EdgeEnumerator = edgeEnumerator;
-            }
-
-            internal StackFrame(TVertex vertex, TEdge edge, TEdgeEnumerator edgeEnumerator)
-            {
-                _hasEdge = true;
-                _edge = edge;
-                Vertex = vertex;
-                EdgeEnumerator = edgeEnumerator;
-            }
-
-            internal TVertex Vertex { get; }
-            internal TEdgeEnumerator EdgeEnumerator { get; }
-
-            internal bool TryGetEdge(out TEdge edge)
-            {
-                edge = _edge;
-                return _hasEdge;
-            }
-        }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
