@@ -7,16 +7,16 @@
 #pragma warning disable CA1812 // GraphSizeCollection is an internal class that is apparently never instantiated.
     internal sealed class GraphSizeCollection : IEnumerable<object[]>
     {
-        private static readonly double[] s_densityPowers = { 1.0, Math.Sqrt(2.0), 2.0 };
+        private static readonly double[] s_densityPowers = { 1.0, 1.5, 2.0 };
 
         public IEnumerator<object[]> GetEnumerator()
         {
             yield return new object[] { 1, 1.0 };
 
-            for (int power = 1; power < 7; ++power)
+            for (int i = 1; i < 7; ++i)
             {
-                double exp = Math.Pow(10.0, 0.5 * power);
-                int vertexCount = (int)Math.Ceiling(exp);
+                double power = 0.5 * i;
+                int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
                 foreach (double densityPower in s_densityPowers)
                     yield return new object[] { vertexCount, densityPower };
             }
