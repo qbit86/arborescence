@@ -8,28 +8,29 @@ namespace Ubiquitous.Traversal
     {
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
-            var stack = new Internal.Stack<TVertex>();
+            var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
-                stack.Add(source);
+                ExploredSetPolicy.Add(exploredSet, source);
+                yield return source;
+                stack.Add(GraphPolicy.EnumerateOutEdges(graph, source));
 
-                while (stack.TryTake(out TVertex u))
+                while (stack.TryTake(out TEdgeEnumerator outEdges))
                 {
-                    if (ExploredSetPolicy.Contains(exploredSet, u))
+                    if (!outEdges.MoveNext())
                         continue;
 
-                    ExploredSetPolicy.Add(exploredSet, u);
-                    yield return u;
+                    TEdge e = outEdges.Current;
+                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        continue;
 
-                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                    while (outEdges.MoveNext())
+                    if (!ExploredSetPolicy.Contains(exploredSet, v))
                     {
-                        TEdge e = outEdges.Current;
-                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
-                            continue;
-
-                        stack.Add(v);
+                        ExploredSetPolicy.Add(exploredSet, v);
+                        yield return v;
                     }
+
+                    stack.Add(outEdges);
                 }
             }
             finally
