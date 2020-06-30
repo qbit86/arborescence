@@ -20,17 +20,18 @@ namespace Ubiquitous.Traversal
                     if (!outEdges.MoveNext())
                         continue;
 
+                    stack.Add(outEdges);
+
                     TEdge e = outEdges.Current;
                     if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                         continue;
 
-                    if (!ExploredSetPolicy.Contains(exploredSet, v))
-                    {
-                        ExploredSetPolicy.Add(exploredSet, v);
-                        yield return v;
-                    }
+                    if (ExploredSetPolicy.Contains(exploredSet, v))
+                        continue;
 
-                    stack.Add(outEdges);
+                    ExploredSetPolicy.Add(exploredSet, v);
+                    yield return v;
+                    stack.Add(GraphPolicy.EnumerateOutEdges(graph, v));
                 }
             }
             finally
