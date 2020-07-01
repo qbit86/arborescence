@@ -104,7 +104,7 @@ namespace Ubiquitous
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        [Theory(Skip = "Not implemented yet")]
+        [Theory]
         [ClassData(typeof(GraphSizeCollection))]
         public void EnumerateEdges_SingleSource_ByGraphSize(int vertexCount, double densityPower)
         {
@@ -113,7 +113,7 @@ namespace Ubiquitous
             EnumerateEdgesCore(graph, false);
         }
 
-        [Theory(Skip = "Not implemented yet")]
+        [Theory]
         [ClassData(typeof(TestCaseCollection))]
         public void EnumerateEdges_SingleSource_ByTestCase(string testCase)
         {
@@ -132,7 +132,7 @@ namespace Ubiquitous
             EnumerateEdgesCore(graph, false);
         }
 
-        [Theory(Skip = "Not implemented yet")]
+        [Theory]
         [ClassData(typeof(GraphSizeCollection))]
         public void EnumerateEdges_MultipleSource_ByGraphSize(int vertexCount, double densityPower)
         {
@@ -141,7 +141,7 @@ namespace Ubiquitous
             EnumerateEdgesCore(graph, true);
         }
 
-        [Theory(Skip = "Not implemented yet")]
+        [Theory]
         [ClassData(typeof(TestCaseCollection))]
         public void EnumerateEdges_MultipleSource_ByTestCase(string testCase)
         {

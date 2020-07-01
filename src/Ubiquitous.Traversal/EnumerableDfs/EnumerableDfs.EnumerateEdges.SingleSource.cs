@@ -8,30 +8,29 @@ namespace Ubiquitous.Traversal
     {
         public IEnumerator<TEdge> EnumerateEdges(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
-            var stack = new Internal.Stack<EdgeInfo<TVertex, TEdge>>();
+            var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
-                stack.Add(new EdgeInfo<TVertex, TEdge>(source));
+                ExploredSetPolicy.Add(exploredSet, source);
+                stack.Add(GraphPolicy.EnumerateOutEdges(graph, source));
 
-                while (stack.TryTake(out EdgeInfo<TVertex, TEdge> stackFrame))
+                while (stack.TryTake(out TEdgeEnumerator outEdges))
                 {
-                    TVertex u = stackFrame.ExploredVertex;
-                    if (ExploredSetPolicy.Contains(exploredSet, u))
+                    if (!outEdges.MoveNext())
                         continue;
 
-                    if (stackFrame.TryGetInEdge(out TEdge inEdge))
-                        yield return inEdge;
-                    ExploredSetPolicy.Add(exploredSet, u);
+                    stack.Add(outEdges);
 
-                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                    while (outEdges.MoveNext())
-                    {
-                        TEdge e = outEdges.Current;
-                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
-                            continue;
+                    TEdge e = outEdges.Current;
+                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        continue;
 
-                        stack.Add(new EdgeInfo<TVertex, TEdge>(v, e));
-                    }
+                    if (ExploredSetPolicy.Contains(exploredSet, v))
+                        continue;
+
+                    yield return e;
+                    ExploredSetPolicy.Add(exploredSet, v);
+                    stack.Add(GraphPolicy.EnumerateOutEdges(graph, v));
                 }
             }
             finally
