@@ -6,6 +6,8 @@ namespace Ubiquitous.Traversal
     public readonly partial struct EnumerableDfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
+        // https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html
+
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
             var stack = new Internal.Stack<TEdgeEnumerator>();
