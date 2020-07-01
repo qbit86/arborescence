@@ -10,33 +10,35 @@ namespace Ubiquitous.Traversal
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
-            var stack = new Internal.Stack<EdgeInfo<TVertex, TEdge>>();
+            var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
                 while (sources.MoveNext())
                 {
                     TVertex source = sources.Current;
-                    stack.Add(new EdgeInfo<TVertex, TEdge>(source));
-                }
-
-                while (stack.TryTake(out EdgeInfo<TVertex, TEdge> stackFrame))
-                {
-                    TVertex u = stackFrame.ExploredVertex;
-                    if (ExploredSetPolicy.Contains(exploredSet, u))
+                    if (ExploredSetPolicy.Contains(exploredSet, source))
                         continue;
 
-                    if (stackFrame.TryGetInEdge(out TEdge inEdge))
-                        yield return inEdge;
-                    ExploredSetPolicy.Add(exploredSet, u);
+                    ExploredSetPolicy.Add(exploredSet, source);
+                    stack.Add(GraphPolicy.EnumerateOutEdges(graph, source));
 
-                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                    while (outEdges.MoveNext())
+                    while (stack.TryTake(out TEdgeEnumerator outEdges))
                     {
+                        if (!outEdges.MoveNext())
+                            continue;
+
+                        stack.Add(outEdges);
+
                         TEdge e = outEdges.Current;
                         if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                             continue;
 
-                        stack.Add(new EdgeInfo<TVertex, TEdge>(v, e));
+                        if (ExploredSetPolicy.Contains(exploredSet, v))
+                            continue;
+
+                        yield return e;
+                        ExploredSetPolicy.Add(exploredSet, v);
+                        stack.Add(GraphPolicy.EnumerateOutEdges(graph, v));
                     }
                 }
             }
