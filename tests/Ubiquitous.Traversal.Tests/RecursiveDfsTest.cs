@@ -65,7 +65,7 @@
             {
                 int source = graph.VertexCount >> 1;
                 InstantDfs.Traverse(graph, source, instantColorMap, instantHandler);
-                RecursiveDfs.Traverse(graph, source, instantColorMap, recursiveHandler);
+                RecursiveDfs.Traverse(graph, source, recursiveColorMap, recursiveHandler);
             }
 
             // Assert
