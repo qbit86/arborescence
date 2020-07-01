@@ -36,7 +36,7 @@
                 }
 
                 AdjacencyListIncidenceGraph graph = builder.ToGraph();
-                string description = $"{nameof(testCase)}: {testCase}";
+                string description = $"{{{nameof(testCase)}: {testCase}}}";
                 var graphParameter = new GraphParameter(graph, description);
                 yield return new object[] { graphParameter };
             }
@@ -47,7 +47,7 @@
                 AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                     vertexCount, densityPower);
                 string description =
-                    $"{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}";
+                    $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                 var graphParameter = new GraphParameter(graph, description);
                 yield return new object[] { graphParameter };
             }
@@ -61,7 +61,7 @@
                     AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                         vertexCount, densityPower);
                     string description =
-                        $"{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}";
+                        $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                     var graphParameter = new GraphParameter(graph, description);
                     yield return new object[] { graphParameter };
                 }
