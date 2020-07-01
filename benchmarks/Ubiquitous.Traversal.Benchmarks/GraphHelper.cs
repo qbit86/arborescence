@@ -24,7 +24,7 @@
 
         private static AdjacencyListIncidenceGraph CreateGraph(int vertexCount)
         {
-            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.618));
+            int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
 
             var builder = new AdjacencyListIncidenceGraphBuilder(vertexCount);
             var prng = new Random(1729);
