@@ -12,9 +12,6 @@ namespace Ubiquitous.Traversal
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
-        private TGraphPolicy GraphPolicy { get; }
-        private TColorMapPolicy ColorMapPolicy { get; }
-
         public InstantDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             if (graphPolicy == null)
@@ -26,6 +23,9 @@ namespace Ubiquitous.Traversal
             GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
         }
+
+        private TGraphPolicy GraphPolicy { get; }
+        private TColorMapPolicy ColorMapPolicy { get; }
 
         private void TraverseCore<THandler>(TGraph graph, TVertex u, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
