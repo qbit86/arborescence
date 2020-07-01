@@ -22,9 +22,10 @@ namespace Ubiquitous
         {
             InstantDfs = default;
             EnumerableDfs = default;
+            ReverseDfs = default;
         }
 
-        [Params(10, 100, 1000)]
+        [Params(10, 100, 1000, 10000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
@@ -36,6 +37,10 @@ namespace Ubiquitous
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
+
+        private ReverseDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+            ReverseDfs { get; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
 
@@ -81,6 +86,32 @@ namespace Ubiquitous
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
+            int count = 0;
+            while (steps.MoveNext())
+                ++count;
+
+            steps.Dispose();
+            return count;
+        }
+
+        [Benchmark]
+        public int ReverseDfsEdges()
+        {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            IEnumerator<int> steps = ReverseDfs.EnumerateEdges(Graph, 0, _colorMap);
+            int count = 0;
+            while (steps.MoveNext())
+                ++count;
+
+            steps.Dispose();
+            return count;
+        }
+
+        [Benchmark]
+        public int ReverseDfsVertices()
+        {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            IEnumerator<int> steps = ReverseDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
