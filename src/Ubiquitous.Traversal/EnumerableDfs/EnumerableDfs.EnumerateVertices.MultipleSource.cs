@@ -10,31 +10,36 @@ namespace Ubiquitous.Traversal
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
-            var stack = new Internal.Stack<TVertex>();
+            var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
                 while (sources.MoveNext())
                 {
                     TVertex source = sources.Current;
-                    stack.Add(source);
-                }
-
-                while (stack.TryTake(out TVertex u))
-                {
-                    if (ExploredSetPolicy.Contains(exploredSet, u))
+                    if (ExploredSetPolicy.Contains(exploredSet, source))
                         continue;
 
-                    ExploredSetPolicy.Add(exploredSet, u);
-                    yield return u;
+                    ExploredSetPolicy.Add(exploredSet, source);
+                    yield return source;
+                    stack.Add(GraphPolicy.EnumerateOutEdges(graph, source));
 
-                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
-                    while (outEdges.MoveNext())
+                    while (stack.TryTake(out TEdgeEnumerator outEdges))
                     {
+                        if (!outEdges.MoveNext())
+                            continue;
+
+                        stack.Add(outEdges);
+
                         TEdge e = outEdges.Current;
                         if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
                             continue;
 
-                        stack.Add(v);
+                        if (ExploredSetPolicy.Contains(exploredSet, v))
+                            continue;
+
+                        ExploredSetPolicy.Add(exploredSet, v);
+                        yield return v;
+                        stack.Add(GraphPolicy.EnumerateOutEdges(graph, v));
                     }
                 }
             }
