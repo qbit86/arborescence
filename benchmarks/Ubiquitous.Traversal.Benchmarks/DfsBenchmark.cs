@@ -18,6 +18,12 @@ namespace Ubiquitous
 
         private byte[] _colorMap = Array.Empty<byte>();
 
+        protected DfsBenchmark()
+        {
+            InstantDfs = default;
+            EnumerableDfs = default;
+        }
+
         [Params(10, 100, 1000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -25,11 +31,11 @@ namespace Ubiquitous
 
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; set; }
+            InstantDfs { get; }
 
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
-            EnumerableDfs { get; set; }
+            EnumerableDfs { get; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
 
@@ -37,9 +43,6 @@ namespace Ubiquitous
         public void GlobalSetup()
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
-
-            InstantDfs = default;
-            EnumerableDfs = default;
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _handler.Reset();
