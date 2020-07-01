@@ -21,6 +21,7 @@ namespace Ubiquitous
         protected DfsBenchmark()
         {
             InstantDfs = default;
+            RecursiveDfs = default;
             EnumerableDfs = default;
             ReverseDfs = default;
         }
@@ -33,6 +34,10 @@ namespace Ubiquitous
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
+
+        private RecursiveDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+            RecursiveDfs { get; }
 
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
@@ -65,6 +70,14 @@ namespace Ubiquitous
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             InstantDfs.Traverse(Graph, 0, _colorMap, _handler);
+            return _handler.Count;
+        }
+
+        [Benchmark]
+        public int RecursiveDfsSteps()
+        {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            RecursiveDfs.Traverse(Graph, 0, _colorMap, _handler);
             return _handler.Count;
         }
 
