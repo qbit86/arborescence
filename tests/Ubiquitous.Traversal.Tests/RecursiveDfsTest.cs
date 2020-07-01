@@ -4,11 +4,9 @@
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.IO;
     using Misnomer;
     using Models;
     using Traversal;
-    using Workbench;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
     using IndexedAdjacencyListGraphPolicy =
@@ -110,59 +108,17 @@
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(GraphSizeCollection))]
-        public void Traverse_SingleSource_ByGraphSize(int vertexCount, double densityPower)
+        [ClassData(typeof(GraphCollection))]
+        internal void Traverse_SingleSource(GraphParameter p)
         {
-            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
-                vertexCount, densityPower);
-            TraverseCore(graph, false);
+            TraverseCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void Traverse_SingleSource_ByTestCase(string testCase)
+        [ClassData(typeof(GraphCollection))]
+        internal void Traverse_MultipleSource(GraphParameter p)
         {
-            Assert.NotNull(testCase);
-            var builder = new AdjacencyListIncidenceGraphBuilder(10);
-
-            using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
-            {
-                Assert.NotEqual(TextReader.Null, textReader);
-                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (Endpoints<int> edge in edges)
-                    builder.TryAdd(edge.Tail, edge.Head, out _);
-            }
-
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            TraverseCore(graph, false);
-        }
-
-        [Theory]
-        [ClassData(typeof(GraphSizeCollection))]
-        public void Traverse_MultipleSource_ByGraphSize(int vertexCount, double densityPower)
-        {
-            AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
-                vertexCount, densityPower);
-            TraverseCore(graph, true);
-        }
-
-        [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void Traverse_MultipleSource_ByTestCase(string testCase)
-        {
-            Assert.NotNull(testCase);
-            var builder = new AdjacencyListIncidenceGraphBuilder(10);
-
-            using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
-            {
-                Assert.NotEqual(TextReader.Null, textReader);
-                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (Endpoints<int> edge in edges)
-                    builder.TryAdd(edge.Tail, edge.Head, out _);
-            }
-
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
-            TraverseCore(graph, true);
+            TraverseCore(p.Graph, true);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
