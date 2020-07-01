@@ -18,18 +18,29 @@ namespace Ubiquitous
 
         private byte[] _colorMap = Array.Empty<byte>();
 
-        [Params(10, 100, 1000)]
+        protected DfsBenchmark()
+        {
+            InstantDfs = default;
+            EnumerableDfs = default;
+            ReverseDfs = default;
+        }
+
+        [Params(10, 100, 1000, 10000)]
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; set; }
+            InstantDfs { get; }
 
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
-            EnumerableDfs { get; set; }
+            EnumerableDfs { get; }
+
+        private ReverseDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+            ReverseDfs { get; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
 
@@ -37,9 +48,6 @@ namespace Ubiquitous
         public void GlobalSetup()
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
-
-            InstantDfs = default;
-            EnumerableDfs = default;
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _handler.Reset();
@@ -78,6 +86,32 @@ namespace Ubiquitous
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
+            int count = 0;
+            while (steps.MoveNext())
+                ++count;
+
+            steps.Dispose();
+            return count;
+        }
+
+        [Benchmark]
+        public int ReverseDfsEdges()
+        {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            IEnumerator<int> steps = ReverseDfs.EnumerateEdges(Graph, 0, _colorMap);
+            int count = 0;
+            while (steps.MoveNext())
+                ++count;
+
+            steps.Dispose();
+            return count;
+        }
+
+        [Benchmark]
+        public int ReverseDfsVertices()
+        {
+            Array.Clear(_colorMap, 0, _colorMap.Length);
+            IEnumerator<int> steps = ReverseDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
