@@ -1,4 +1,4 @@
-namespace Ubiquitous.Traversal
+namespace Arborescence.Traversal
 {
     internal readonly struct EdgeInfo<TVertex, TEdge>
     {

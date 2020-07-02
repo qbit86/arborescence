@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Arborescence
 {
     public interface IMapPolicy<in TMap, in TKey, TValue>
     {

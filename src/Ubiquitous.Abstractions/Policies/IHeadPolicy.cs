@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Arborescence
 {
     public interface IHeadPolicy<in TGraph, TVertex, in TEdge>
     {

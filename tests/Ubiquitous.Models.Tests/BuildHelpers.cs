@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Arborescence
 {
     using System.Collections.Generic;
     using System.IO;

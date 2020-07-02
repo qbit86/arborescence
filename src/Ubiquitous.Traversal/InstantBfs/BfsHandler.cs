@@ -1,4 +1,4 @@
-namespace Ubiquitous.Traversal
+namespace Arborescence.Traversal
 {
     public sealed class BfsHandler<TGraph, TVertex, TEdge> : IBfsHandler<TGraph, TVertex, TEdge>
     {

@@ -1,6 +1,6 @@
 // ReSharper disable InconsistentNaming
 
-namespace Ubiquitous
+namespace Arborescence
 {
     // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/Resources/Strings.resx
     internal static class SR

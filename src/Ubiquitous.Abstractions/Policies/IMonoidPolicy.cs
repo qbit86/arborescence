@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Arborescence
 {
     public interface IMonoidPolicy<T>
     {

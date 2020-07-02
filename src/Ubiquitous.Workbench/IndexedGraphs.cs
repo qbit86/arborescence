@@ -1,4 +1,4 @@
-namespace Ubiquitous.Workbench
+namespace Arborescence.Workbench
 {
     using System;
     using System.IO;

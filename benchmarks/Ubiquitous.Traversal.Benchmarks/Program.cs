@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Arborescence
 {
     using BenchmarkDotNet.Configs;
     using BenchmarkDotNet.Jobs;

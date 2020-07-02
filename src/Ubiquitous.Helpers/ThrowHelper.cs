@@ -1,6 +1,6 @@
 ﻿#pragma warning disable CA1303
 
-namespace Ubiquitous
+namespace Arborescence
 {
     using System;
     using System.Diagnostics;

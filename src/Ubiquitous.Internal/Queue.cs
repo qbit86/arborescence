@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous.Internal
+﻿namespace Arborescence.Internal
 {
     using System;
     using System.Buffers;

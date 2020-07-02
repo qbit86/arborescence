@@ -1,4 +1,4 @@
-﻿namespace Ubiquitous
+﻿namespace Arborescence
 {
     public interface IOutEdgesPolicy<in TGraph, in TVertex, out TEdges>
     {

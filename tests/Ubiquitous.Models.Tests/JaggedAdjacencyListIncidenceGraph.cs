@@ -1,4 +1,4 @@
-namespace Ubiquitous.Models
+namespace Arborescence.Models
 {
     using System;
     using static System.Diagnostics.Debug;

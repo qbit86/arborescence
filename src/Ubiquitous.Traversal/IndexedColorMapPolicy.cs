@@ -1,4 +1,4 @@
-namespace Ubiquitous.Traversal
+namespace Arborescence.Traversal
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly struct IndexedColorMapPolicy : IMapPolicy<byte[], int, Color>

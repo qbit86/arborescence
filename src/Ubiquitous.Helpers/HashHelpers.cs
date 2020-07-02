@@ -1,4 +1,4 @@
-namespace Ubiquitous
+namespace Arborescence
 {
     // https://github.com/dotnet/corert/blob/master/src/Common/src/System/Numerics/Hashing/HashHelpers.cs
     internal static class HashHelpers

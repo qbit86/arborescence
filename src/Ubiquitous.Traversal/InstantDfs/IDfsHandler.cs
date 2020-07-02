@@ -1,4 +1,4 @@
-namespace Ubiquitous.Traversal
+namespace Arborescence.Traversal
 {
     // https://www.boost.org/doc/libs/1_73_0/libs/graph/doc/DFSVisitor.html
 

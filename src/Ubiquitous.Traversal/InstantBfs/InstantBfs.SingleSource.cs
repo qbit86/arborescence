@@ -1,4 +1,4 @@
-namespace Ubiquitous.Traversal
+namespace Arborescence.Traversal
 {
     using System;
     using Internal;
