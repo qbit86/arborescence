@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Traversal.Benchmarks", "benchmarks\Ubiquitous.Traversal.Benchmarks\Ubiquitous.Traversal.Benchmarks.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Internal", "src\Ubiquitous.Internal\Ubiquitous.Internal.shproj", "{625CAE8B-4025-45E6-A282-693D067FEBF8}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Internal", "src\Arborescence.Internal\Arborescence.Internal.shproj", "{625CAE8B-4025-45E6-A282-693D067FEBF8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives", "src\Arborescence.Primitives\Arborescence.Primitives.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
@@ -58,7 +58,7 @@ Global
 		tests\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
 		src\Arborescence.Buffers\Arborescence.Buffers.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
 		src\Ubiquitous.Helpers\Ubiquitous.Helpers.projitems*{4341ae5a-0459-488e-afe6-e075e645e3bd}*SharedItemsImports = 13
-		src\Ubiquitous.Internal\Ubiquitous.Internal.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
+		src\Arborescence.Internal\Arborescence.Internal.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
