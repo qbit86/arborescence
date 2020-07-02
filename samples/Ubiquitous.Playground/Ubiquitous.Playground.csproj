@@ -8,7 +8,7 @@
     <PackageReference Include="Misnomer.Rist" Version="0.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />

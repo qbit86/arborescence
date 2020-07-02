@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Abstractions", "src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Abstractions", "src\Arborescence.Abstractions\Arborescence.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Models", "src\Ubiquitous.Models\Ubiquitous.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
 EndProject

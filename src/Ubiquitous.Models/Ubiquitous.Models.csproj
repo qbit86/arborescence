@@ -16,7 +16,7 @@
     <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+    <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
   </ItemGroup>
   <Import Project="..\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />

@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ubiquitous.Abstractions\Ubiquitous.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
