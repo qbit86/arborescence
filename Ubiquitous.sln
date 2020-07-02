@@ -27,9 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.InstantDfsDemo", "samples\Ubiquitous.InstantDfsDemo\Ubiquitous.InstantDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Traversal.Tests", "tests\Ubiquitous.Traversal.Tests\Ubiquitous.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Tests", "tests\Arborescence.Traversal.Tests\Arborescence.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Models.Tests", "tests\Ubiquitous.Models.Tests\Ubiquitous.Models.Tests.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Models.Tests", "tests\Arborescence.Models.Tests\Arborescence.Models.Tests.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}"
 EndProject
