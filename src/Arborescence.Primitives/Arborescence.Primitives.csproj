@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Description>Low-level building blocks used in public APIs.
 Commonly used types: Endpoints&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Description>
-    <PackageReleaseNotes>https://github.com/qbit86/ubiquitous-graphs/blob/develop/src/Ubiquitous.Primitives/CHANGELOG.md</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/qbit86/ubiquitous-graphs/blob/develop/src/Arborescence.Primitives/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionPrefix>$(FileVersion)</VersionPrefix>
