@@ -2,6 +2,6 @@
   <PropertyGroup>
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
-    <RootNamespace>Ubiquitous</RootNamespace>
+    <RootNamespace>Arborescence</RootNamespace>
   </PropertyGroup>
 </Project>
