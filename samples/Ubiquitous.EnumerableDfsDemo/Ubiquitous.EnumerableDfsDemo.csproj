@@ -16,7 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
-    <ProjectReference Include="..\..\src\Ubiquitous.Traversal\Ubiquitous.Traversal.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
   </ItemGroup>
 </Project>
