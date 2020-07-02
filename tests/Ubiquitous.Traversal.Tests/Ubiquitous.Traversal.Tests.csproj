@@ -15,7 +15,7 @@
   <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
   <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
-  <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
+  <ProjectReference Include="..\..\src\Arborescence.Workbench\Arborescence.Workbench.csproj" />
 </ItemGroup>
 <Import Project="..\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems" Label="Shared" />
 </Project>

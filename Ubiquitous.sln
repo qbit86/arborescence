@@ -43,7 +43,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Helpers", "src\U
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Buffers", "src\Ubiquitous.Buffers\Ubiquitous.Buffers.shproj", "{1FE04D46-B1CA-4801-A399-D3D351BEA8DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Workbench", "src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj", "{4383A396-67D9-4AC8-B1EF-1603F9D181A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Workbench", "src\Arborescence.Workbench\Arborescence.Workbench.csproj", "{4383A396-67D9-4AC8-B1EF-1603F9D181A0}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Tests.Shared", "tests\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.shproj", "{096764F1-8EF8-4961-9AE9-D419FD6B4D29}"
 EndProject

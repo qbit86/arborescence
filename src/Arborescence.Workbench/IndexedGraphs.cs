@@ -15,7 +15,7 @@ namespace Arborescence.Workbench
                 throw new ArgumentNullException(nameof(shortName));
 
             Stream stream = typeof(IndexedGraphs).GetTypeInfo().Assembly
-                .GetManifestResourceStream($"Ubiquitous.Workbench.IndexedGraphs.{shortName}.gv");
+                .GetManifestResourceStream($"Arborescence.Workbench.IndexedGraphs.{shortName}.gv");
             if (stream == null)
                 return TextReader.Null;
 
