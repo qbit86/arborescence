@@ -20,5 +20,5 @@ Commonly used types: Endpoints&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Descriptio
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
-  <Import Project="..\Ubiquitous.Helpers\Ubiquitous.Helpers.projitems" Label="Shared" />
+  <Import Project="..\Arborescence.Helpers\Arborescence.Helpers.projitems" Label="Shared" />
 </Project>

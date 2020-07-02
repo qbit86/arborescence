@@ -39,7 +39,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Internal", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives", "src\Arborescence.Primitives\Arborescence.Primitives.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ubiquitous.Helpers", "src\Ubiquitous.Helpers\Ubiquitous.Helpers.shproj", "{4341AE5A-0459-488E-AFE6-E075E645E3BD}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Helpers", "src\Arborescence.Helpers\Arborescence.Helpers.shproj", "{4341AE5A-0459-488E-AFE6-E075E645E3BD}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Buffers", "src\Arborescence.Buffers\Arborescence.Buffers.shproj", "{1FE04D46-B1CA-4801-A399-D3D351BEA8DD}"
 EndProject
@@ -57,7 +57,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\Ubiquitous.Tests.Shared\Ubiquitous.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
 		src\Arborescence.Buffers\Arborescence.Buffers.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
-		src\Ubiquitous.Helpers\Ubiquitous.Helpers.projitems*{4341ae5a-0459-488e-afe6-e075e645e3bd}*SharedItemsImports = 13
+		src\Arborescence.Helpers\Arborescence.Helpers.projitems*{4341ae5a-0459-488e-afe6-e075e645e3bd}*SharedItemsImports = 13
 		src\Arborescence.Internal\Arborescence.Internal.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
