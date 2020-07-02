@@ -5,7 +5,7 @@ namespace Ubiquitous.Models
         ITailPolicy<TGraph, int, Endpoints<int>>,
         IHeadPolicy<TGraph, int, Endpoints<int>>,
         IOutEdgesPolicy<TGraph, int, TEdges>
-        where TGraph : IIncidence<int, TEdges>
+        where TGraph : IOutEdgesConcept<int, TEdges>
     {
         public bool TryGetTail(TGraph graph, Endpoints<int> edge, out int tail)
         {

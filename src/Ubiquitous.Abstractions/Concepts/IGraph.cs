@@ -1,4 +1,5 @@
 namespace Ubiquitous
 {
-    public interface IGraph<TVertex, in TEdge> : IHeadConcept<TVertex, TEdge>, ITailConcept<TVertex, TEdge> { }
+    public interface IGraph<TVertex, in TEdge> :
+        IHeadConcept<TVertex, TEdge>, ITailConcept<TVertex, TEdge> { }
 }
