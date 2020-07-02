@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Abstractions", "src\Arborescence.Abstractions\Arborescence.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquitous.Models", "src\Ubiquitous.Models\Ubiquitous.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Models", "src\Arborescence.Models\Arborescence.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB074B2E-C4E5-49C4-AA6C-9F1EBC5ED673}"
 	ProjectSection(SolutionItems) = preProject

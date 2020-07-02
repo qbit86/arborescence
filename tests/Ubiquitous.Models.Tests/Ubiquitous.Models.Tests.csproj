@@ -13,7 +13,7 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ubiquitous.Models\Ubiquitous.Models.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
     <ProjectReference Include="..\..\src\Ubiquitous.Workbench\Ubiquitous.Workbench.csproj" />
   </ItemGroup>
   <Import Project="..\..\src\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />

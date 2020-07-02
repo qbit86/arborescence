@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Description>Graph models.</Description>
     <PackageTags>graph;model;adjacency</PackageTags>
-    <RootNamespace>Ubiquitous.Models</RootNamespace>
+    <RootNamespace>Arborescence.Models</RootNamespace>
     <Title>Graph models</Title>
     <VersionPrefix>$(FileVersion)</VersionPrefix>
   </PropertyGroup>
