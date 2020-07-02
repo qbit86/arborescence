@@ -17,7 +17,7 @@
     <EmbeddedResource Include="IndexedGraphs\*.gv" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.1' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Memory" Version="4.5.4" />

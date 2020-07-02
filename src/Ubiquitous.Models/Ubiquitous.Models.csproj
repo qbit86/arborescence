@@ -17,7 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
-    <ProjectReference Include="..\Ubiquitous.Primitives\Ubiquitous.Primitives.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
   <Import Project="..\Ubiquitous.Buffers\Ubiquitous.Buffers.projitems" Label="Shared" />
   <ItemGroup>
