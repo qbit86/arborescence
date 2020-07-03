@@ -1,7 +1,7 @@
 <Project>
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/ubiquitous-graphs.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
     <LangVersion>7.2</LangVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
