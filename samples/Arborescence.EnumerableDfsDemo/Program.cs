@@ -49,8 +49,7 @@
 
             static IEnumerator<int> EnumerateSources() { yield return 3; }
             IEnumerator<int> sources = EnumerateSources();
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
-                IndexedSetPolicy.GetByteCount(graph.VertexCount));
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
             var treeEdges = new HashSet<int>(graph.EdgeCount);
             using IEnumerator<int> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
