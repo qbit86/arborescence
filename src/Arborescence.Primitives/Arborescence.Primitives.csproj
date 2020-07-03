@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <FileVersion>0.1.0</FileVersion>
+    <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Description>Low-level building blocks used in public APIs.
+Commonly used types: Endpoints&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Description>
+    <PackageReleaseNotes>https://github.com/qbit86/arborescence/blob/develop/src/Arborescence.Primitives/CHANGELOG.md</PackageReleaseNotes>
+    <PackageTags>graph;primitive</PackageTags>
+    <Title>Stable primitive types</Title>
+    <VersionPrefix>$(FileVersion)</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DebugType)' == 'portable'">
+    <EmbedAllSources>true</EmbedAllSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
+  </ItemGroup>
+  <Import Project="..\Arborescence.Helpers\Arborescence.Helpers.projitems" Label="Shared" />
+</Project>
