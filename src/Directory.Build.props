@@ -8,7 +8,7 @@
   <PropertyGroup>
     <Authors>Viktor T.</Authors>
     <IncludeSymbols>true</IncludeSymbols>
-    <PackageIcon>kopimi.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -16,6 +16,6 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(RepoRoot)/assets/kopimi.png" Pack="true" PackagePath="" />
+    <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
