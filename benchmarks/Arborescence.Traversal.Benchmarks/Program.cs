@@ -16,7 +16,7 @@
             IConfig config = ManualConfig.Create(DefaultConfig.Instance)
                 .AddJob(job);
 
-            Summary _ = BenchmarkRunner.Run<DfsBenchmark>(config);
+            Summary _ = BenchmarkRunner.Run<CompactSetBenchmark>(config);
         }
     }
 }

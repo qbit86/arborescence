@@ -39,8 +39,7 @@
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
             var fringe = new Queue<int>();
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(
-                IndexedSetPolicy.GetByteCount(graph.VertexCount));
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
