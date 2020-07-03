@@ -1,4 +1,4 @@
-# Ubiquitous Graphs
+# Arborescence Graph Library
 
 ### Online graph visualization
 

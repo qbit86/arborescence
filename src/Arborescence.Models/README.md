@@ -1,4 +1,4 @@
-# Ubiquitous Graphs
+# Arborescence Graph Library
 
 Undirected graphs are basically “duplicated” directed graphs, but storage is more efficient than in case of naive edge duplication.
 

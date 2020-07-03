@@ -1,4 +1,4 @@
-# Ubiquitous Graphs
+# Arborescence Graph Library
 
 Generic graph library inspired by [Concept C#: Type Classes for the Masses](https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md).
 
