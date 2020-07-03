@@ -85,12 +85,11 @@ namespace Arborescence
         public int EnumerableDfsEdges()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
+            using IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
 
@@ -98,12 +97,11 @@ namespace Arborescence
         public int EnumerableDfsVertices()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
+            using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
 
@@ -111,12 +109,11 @@ namespace Arborescence
         public int ReverseDfsEdges()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            IEnumerator<int> steps = ReverseDfs.EnumerateEdges(Graph, 0, _colorMap);
+            using IEnumerator<int> steps = ReverseDfs.EnumerateEdges(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
 
@@ -124,12 +121,11 @@ namespace Arborescence
         public int ReverseDfsVertices()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            IEnumerator<int> steps = ReverseDfs.EnumerateVertices(Graph, 0, _colorMap);
+            using IEnumerator<int> steps = ReverseDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
     }
