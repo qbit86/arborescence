@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}"
 EndProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
-		Ubiquitous.sln.DotSettings = Ubiquitous.sln.DotSettings
+		Arborescence.sln.DotSettings = Arborescence.sln.DotSettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal", "src\Arborescence.Traversal\Arborescence.Traversal.csproj", "{59271DA1-4B19-4804-962C-DF2791D123A2}"
@@ -49,16 +49,22 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Tests.Shared",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Playground", "samples\Arborescence.Playground\Arborescence.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.InstantBfsDemo", "samples\Arborescence.InstantBfsDemo\Arborescence.InstantBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.InstantBfsDemo", "samples\Arborescence.InstantBfsDemo\Arborescence.InstantBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.EnumerableDfsDemo", "samples\Arborescence.EnumerableDfsDemo\Arborescence.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EnumerableDfsDemo", "samples\Arborescence.EnumerableDfsDemo\Arborescence.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
 		src\Arborescence.Buffers\Arborescence.Buffers.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
 		src\Arborescence.Helpers\Arborescence.Helpers.projitems*{4341ae5a-0459-488e-afe6-e075e645e3bd}*SharedItemsImports = 13
+		src\Arborescence.Internal\Arborescence.Internal.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
 		src\Arborescence.Internal\Arborescence.Internal.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
+		src\Arborescence.Buffers\Arborescence.Buffers.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
+		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
+		src\Arborescence.Helpers\Arborescence.Helpers.projitems*{b2acc725-7026-4d5d-a17f-f4ffa9e26871}*SharedItemsImports = 5
+		src\Arborescence.Buffers\Arborescence.Buffers.projitems*{cb3deaad-9869-45c9-82d5-7d5ee7ad5cee}*SharedItemsImports = 5
+		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{fcc994d6-1fae-469f-9c1e-9712d46b9ea8}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
