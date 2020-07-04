@@ -12,7 +12,7 @@ namespace Arborescence
         T Identity { get; }
 
         /// <summary>
-        /// Combines to elements of the monoid into one element of the same monoid.
+        /// Combines two elements of the monoid into one element of the same monoid.
         /// </summary>
         /// <param name="left">The left element to combine.</param>
         /// <param name="right">The right element to combine.</param>
