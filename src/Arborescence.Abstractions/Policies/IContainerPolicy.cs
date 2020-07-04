@@ -1,8 +1,13 @@
 ﻿namespace Arborescence
 {
-    public interface IContainerPolicy<in TContainer, TItem>
+    /// <summary>
+    /// Defines methods to support adding and taking items for the container.
+    /// </summary>
+    /// <typeparam name="TContainer">The type of the container.</typeparam>
+    /// <typeparam name="TElement">The type of elements in the container.</typeparam>
+    public interface IContainerPolicy<in TContainer, TElement>
     {
-        void Add(TContainer container, TItem item);
-        bool TryTake(TContainer container, out TItem result);
+        void Add(TContainer container, TElement item);
+        bool TryTake(TContainer container, out TElement result);
     }
 }
