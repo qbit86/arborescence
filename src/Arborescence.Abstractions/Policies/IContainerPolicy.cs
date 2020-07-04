@@ -7,7 +7,22 @@
     /// <typeparam name="TElement">The type of the elements in the container.</typeparam>
     public interface IContainerPolicy<in TContainer, TElement>
     {
+        /// <summary>
+        /// Adds the item to the <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">The container to add to.</param>
+        /// <param name="item">The item to be added to the <paramref name="container"/>.</param>
         void Add(TContainer container, TElement item);
+
+        /// <summary>
+        /// Attempts to remove and return the item from the <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">The container to take from.</param>
+        /// <param name="result">
+        /// When this method returns, contains the removed item, if the item was removed and returned successfully.
+        /// If no item was available to be removed, the value is unspecified.
+        /// </param>
+        /// <returns><c>true</c> if the item was removed and returned successfully; otherwise, <c>false</c>.</returns>
         bool TryTake(TContainer container, out TElement result);
     }
 }
