@@ -9,7 +9,7 @@
     public interface IMapPolicy<in TMap, in TKey, TValue>
     {
         /// <summary>
-        /// Gets the value associated with the specified key from the <paramref name="map"/>.
+        /// Gets the value associated with the specified key from the map.
         /// </summary>
         /// <param name="map">The map to get from.</param>
         /// <param name="key">The key of the value to get.</param>
@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="map">The map to put to.</param>
         /// <param name="key">The key to add or update.</param>
-        /// <param name="value">The value to associate with <paramref name="key"/>.</param>
+        /// <param name="value">The value to associate with the key.</param>
         void AddOrUpdate(TMap map, TKey key, TValue value);
     }
 }

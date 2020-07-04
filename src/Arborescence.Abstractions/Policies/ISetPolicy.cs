@@ -16,10 +16,10 @@
         bool Contains(TSet items, TElement item);
 
         /// <summary>
-        /// Adds the item to the <paramref name="items"/>.
+        /// Adds the item to the set.
         /// </summary>
         /// <param name="items">The set to add to.</param>
-        /// <param name="item">The item to be added to the <paramref name="items"/>.</param>
+        /// <param name="item">The item to be added to the set.</param>
         void Add(TSet items, TElement item);
     }
 }

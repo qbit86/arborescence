@@ -8,14 +8,14 @@
     public interface IContainerPolicy<in TContainer, TElement>
     {
         /// <summary>
-        /// Adds the item to the <paramref name="container"/>.
+        /// Adds the item to the container.
         /// </summary>
         /// <param name="container">The container to add to.</param>
-        /// <param name="item">The item to be added to the <paramref name="container"/>.</param>
+        /// <param name="item">The item to be added to the container.</param>
         void Add(TContainer container, TElement item);
 
         /// <summary>
-        /// Attempts to remove and return the item from the <paramref name="container"/>.
+        /// Attempts to remove and return the item from the container.
         /// </summary>
         /// <param name="container">The container to take from.</param>
         /// <param name="result">
