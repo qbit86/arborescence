@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Graph models.</Description>
+    <Description>Data structures for graphs and policy models to manipulate them.
+Commonly used types: AdjacencyListIncidenceGraph, IndexedIncidenceGraphPolicy&lt;TGraph, TEdges&gt;.</Description>
     <PackageTags>graph;model;adjacency</PackageTags>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <Title>Graph models</Title>
