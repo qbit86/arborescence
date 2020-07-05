@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>The interface for graphs and some collections to be examined and manipulated in a data-structure agnostic fashion.
-Commonly used types: IIncidenceGraph&lt;TVertex, TEdge, TEdges&gt;, IMapPolicy&lt;TMap, TKey, TValue&gt;.</Description>
+Commonly used types:
+IIncidenceGraph&lt;TVertex, TEdge, TEdges&gt;
+IMapPolicy&lt;TMap, TKey, TValue&gt;</Description>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
     <VersionPrefix>0.1.0</VersionPrefix>
