@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Low-level building blocks used in public APIs.
+    <Description>Basic blocks for building algorithms and data structures.
 Commonly used types: Endpoints&lt;TVertex&gt;, ArrayPrefix&lt;T&gt;.</Description>
     <PackageReleaseNotes>https://github.com/qbit86/arborescence/blob/develop/src/Arborescence.Primitives/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>graph;primitive</PackageTags>
