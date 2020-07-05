@@ -131,12 +131,20 @@ namespace Arborescence
             }
         }
 
+        /// <summary>
+        /// Returns an <see cref="ArrayPrefix{T}.Enumerator"/> that can be used to iterate through the array prefix.
+        /// </summary>
+        /// <returns>An enumerator.</returns>
         public Enumerator GetEnumerator()
         {
             ThrowInvalidOperationIfDefault();
             return new Enumerator(_array, _count);
         }
 
+        /// <summary>
+        /// Returns an <see cref="ArrayPrefixEnumerator{T}"/> that can be used to iterate through the array prefix.
+        /// </summary>
+        /// <returns>An enumerator.</returns>
         public ArrayPrefixEnumerator<T> Enumerate()
         {
             ThrowInvalidOperationIfDefault();
