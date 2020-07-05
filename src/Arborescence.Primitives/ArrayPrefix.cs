@@ -212,6 +212,14 @@ namespace Arborescence
             return other._array == _array && other._count == _count;
         }
 
+        /// <summary>
+        /// Forms a slice out of the current array prefix starting at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to begin the slice.</param>
+        /// <returns>
+        /// An array segment that consists of all elements of the current array prefix
+        /// from <paramref name="index"/> to the end of the array segment.
+        /// </returns>
         public ArraySegment<T> Slice(int index)
         {
             ThrowInvalidOperationIfDefault();
@@ -222,6 +230,14 @@ namespace Arborescence
             return new ArraySegment<T>(_array, index, _count - index);
         }
 
+        /// <summary>
+        /// Forms a slice of the specified length out of the current array prefix starting at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to begin the slice.</param>
+        /// <param name="count">The desired length of the slice.</param>
+        /// <returns>
+        /// An array segment of <paramref name="count"/> elements starting at <paramref name="index"/>.
+        /// </returns>
         public ArraySegment<T> Slice(int index, int count)
         {
             ThrowInvalidOperationIfDefault();
@@ -232,6 +248,10 @@ namespace Arborescence
             return new ArraySegment<T>(_array, index, count);
         }
 
+        /// <summary>
+        /// Copies the contents of this array prefix into a new array.
+        /// </summary>
+        /// <returns>An array containing the elements in the current array prefix.</returns>
         public T[] ToArray()
         {
             ThrowInvalidOperationIfDefault();
