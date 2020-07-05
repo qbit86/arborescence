@@ -151,7 +151,7 @@ namespace Arborescence
             return new ArrayPrefixEnumerator<T>(_array, _count);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             if (_array == null)
@@ -166,18 +166,29 @@ namespace Arborescence
             return hash;
         }
 
-        public void CopyTo(T[] array)
+        /// <summary>
+        /// Copies the contents of this instance into the specified destination array of the same type <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// The array of type <typeparamref name="T"/> into which the contents of this instance will be copied.
+        /// </param>
+        public void CopyTo(T[] destination)
         {
-            CopyTo(array, 0);
+            CopyTo(destination, 0);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void CopyTo(T[] array, int arrayIndex)
         {
             ThrowInvalidOperationIfDefault();
             System.Array.Copy(_array, 0, array, arrayIndex, _count);
         }
 
+        /// <summary>
+        /// Copies the contents of this instance into the specified destination array prefix
+        /// of the same type <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="destination">The array prefix into which the contents of this instance will be copied.</param>
         public void CopyTo(ArrayPrefix<T> destination)
         {
             ThrowInvalidOperationIfDefault();
@@ -189,13 +200,13 @@ namespace Arborescence
             System.Array.Copy(_array, 0, destination._array, 0, _count);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             return obj is ArrayPrefix<T> other && Equals(other);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool Equals(ArrayPrefix<T> other)
         {
             return other._array == _array && other._count == _count;
