@@ -4,7 +4,6 @@
 Commonly used types:
 Endpoints&lt;TVertex&gt;
 ArrayPrefix&lt;T&gt;</Description>
-    <PackageReleaseNotes>https://github.com/qbit86/arborescence/blob/develop/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionPrefix>0.1.0</VersionPrefix>

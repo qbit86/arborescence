@@ -4,7 +4,6 @@
 Commonly used types:
 InstantDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy&gt;
 EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy&gt;</Description>
-    <PackageReleaseNotes>https://github.com/qbit86/arborescence/blob/develop/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>graph;traversal;dfs;bfs</PackageTags>
     <Title>Graph traversal algorithms</Title>
     <VersionPrefix>0.1.0</VersionPrefix>
