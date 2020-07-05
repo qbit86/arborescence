@@ -2,6 +2,7 @@
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
+    <InformationalVersion>$(Version)</InformationalVersion>
     <LangVersion>7.2</LangVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>

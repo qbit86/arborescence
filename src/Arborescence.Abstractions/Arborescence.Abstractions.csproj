@@ -12,7 +12,6 @@ IMapPolicy&lt;TMap, TKey, TValue&gt;</Description>
   <PropertyGroup>
     <AssemblyVersion>0.1</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <InformationalVersion>$(Version)</InformationalVersion>
     <LangVersion>4</LangVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
