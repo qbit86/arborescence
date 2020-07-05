@@ -1,0 +1,4 @@
+digraph "No edges" {
+  node [shape=circle fontname="Times-Italic"]
+  a b
+}

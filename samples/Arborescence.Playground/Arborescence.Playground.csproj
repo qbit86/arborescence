@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyVersion>0.1</AssemblyVersion>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
+    <PackageReference Include="Misnomer.Rist" Version="0.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Primitives\Arborescence.Primitives.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Workbench\Arborescence.Workbench.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <RootNamespace>Arborescence</RootNamespace>
+  </PropertyGroup>
+</Project>
