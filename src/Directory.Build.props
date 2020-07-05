@@ -2,6 +2,8 @@
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
+    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
     <InformationalVersion>$(Version)</InformationalVersion>
     <LangVersion>7.2</LangVersion>
     <SignAssembly>true</SignAssembly>
@@ -19,5 +21,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
+    <SourceRoot Include="$(RepoRoot)" />
   </ItemGroup>
 </Project>
