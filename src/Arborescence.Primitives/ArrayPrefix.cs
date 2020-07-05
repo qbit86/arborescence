@@ -264,17 +264,38 @@ namespace Arborescence
             return array;
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="ArrayPrefix{T}"/> structures are equal.
+        /// </summary>
+        /// <param name="a">The structure on the left side of the equality operator.</param>
+        /// <param name="b">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="ArrayPrefix{T}"/> structures are equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(ArrayPrefix<T> a, ArrayPrefix<T> b)
         {
             return a.Equals(b);
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="ArrayPrefix{T}"/> structures are not equal.
+        /// </summary>
+        /// <param name="a">The structure on the left side of the inequality operator.</param>
+        /// <param name="b">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="ArrayPrefix{T}"/> structures are not equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(ArrayPrefix<T> a, ArrayPrefix<T> b)
         {
             return !(a == b);
         }
 
 #pragma warning disable CA2225 // Operator overloads have named alternates
+        /// <summary>
+        /// Defines an implicit conversion of an array to a <see cref="ArrayPrefix{T}"/>.
+        /// </summary>
+        /// <param name="array">The array to convert.</param>
+        /// <returns>An array prefix.</returns>
         public static implicit operator ArrayPrefix<T>(T[] array)
         {
             return array != null ? new ArrayPrefix<T>(array) : default;
