@@ -52,6 +52,9 @@ namespace Arborescence
 #pragma warning disable CA1825 // Avoid zero-length array allocations.
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
+        /// <summary>
+        /// Represents the empty array prefix.
+        /// </summary>
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 #pragma warning restore CA1825 // Avoid zero-length array allocations.
 #pragma warning restore CA1000 // Do not declare static members on generic types
@@ -95,11 +98,21 @@ namespace Arborescence
         }
 
 #pragma warning disable CA1819 // Properties should not return arrays
+        /// <summary>
+        /// Gets the original array containing the range of elements that the array prefix delimits.
+        /// </summary>
         public T[] Array => _array;
 #pragma warning restore CA1819 // Properties should not return arrays
 
+        /// <summary>
+        /// Gets the number of elements in the range delimited by the array prefix.
+        /// </summary>
         public int Count => _count;
 
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
         public T this[int index]
         {
             get
