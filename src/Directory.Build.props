@@ -4,6 +4,7 @@
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <InformationalVersion>$(Version)</InformationalVersion>
     <LangVersion>7.2</LangVersion>
     <SignAssembly>true</SignAssembly>
