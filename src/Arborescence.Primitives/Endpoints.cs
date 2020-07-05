@@ -58,6 +58,7 @@
             Head = head;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return Endpoints.PairToString(Tail?.ToString(), Head?.ToString());
@@ -70,6 +71,7 @@
             head = Head;
         }
 
+        /// <inheritdoc/>
         public bool Equals(Endpoints<TVertex> other)
         {
             EqualityComparer<TVertex> comparer = EqualityComparer<TVertex>.Default;
@@ -83,11 +85,13 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             return obj is Endpoints<TVertex> other && Equals(other);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return unchecked(EqualityComparer<TVertex>.Default.GetHashCode(Tail) * 397) ^
