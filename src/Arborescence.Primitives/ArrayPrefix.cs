@@ -12,7 +12,8 @@ namespace Arborescence
     public static class ArrayPrefix
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure that delimits all the elements in the specified array.
+        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits all the elements in the specified array.
         /// </summary>
         /// <param name="array">The array to wrap.</param>
         /// <typeparam name="T">The type of the elements in the array.</typeparam>
@@ -24,10 +25,11 @@ namespace Arborescence
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure that delimits the specified range of the elements in the specified array.
+        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits the specified prefix in the specified array.
         /// </summary>
-        /// <param name="array">The array containing the range of elements to delimit.</param>
-        /// <param name="count">The number of elements in the range.</param>
+        /// <param name="array">The array which prefix to delimit.</param>
+        /// <param name="count">The number of elements in the prefix.</param>
         /// <typeparam name="T">The type of the elements in the array.</typeparam>
         /// <returns>An array prefix that delimits <paramref name="count"/> elements in the specified array.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,6 +59,11 @@ namespace Arborescence
         private readonly T[] _array;
         private readonly int _count;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits all the elements in the specified array.
+        /// </summary>
+        /// <param name="array">The array to wrap.</param>
         public ArrayPrefix(T[] array)
         {
             if (array == null)
@@ -69,6 +76,12 @@ namespace Arborescence
 #pragma warning restore CA1062
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits the specified prefix in the specified array.
+        /// </summary>
+        /// <param name="array">The array which prefix to delimit.</param>
+        /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefix(T[] array, int count)
         {
             // Validate arguments, check is minimal instructions with reduced branching for inlinable fast-path
