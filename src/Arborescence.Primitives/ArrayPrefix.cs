@@ -151,6 +151,7 @@ namespace Arborescence
             return new ArrayPrefixEnumerator<T>(_array, _count);
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             if (_array == null)
@@ -170,6 +171,7 @@ namespace Arborescence
             CopyTo(array, 0);
         }
 
+        /// <inheritdoc />
         public void CopyTo(T[] array, int arrayIndex)
         {
             ThrowInvalidOperationIfDefault();
@@ -187,11 +189,13 @@ namespace Arborescence
             System.Array.Copy(_array, 0, destination._array, 0, _count);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             return obj is ArrayPrefix<T> other && Equals(other);
         }
 
+        /// <inheritdoc />
         public bool Equals(ArrayPrefix<T> other)
         {
             return other._array == _array && other._count == _count;

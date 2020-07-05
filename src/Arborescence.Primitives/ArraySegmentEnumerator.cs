@@ -24,6 +24,7 @@ namespace Arborescence
             _current = offset - 1;
         }
 
+        /// <inheritdoc />
         public T Current
         {
             get
@@ -36,6 +37,7 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc />
         public bool MoveNext()
         {
             if (_current < _end)
@@ -59,6 +61,7 @@ namespace Arborescence
             _current = _start - 1;
         }
 
+        /// <inheritdoc />
         public void Dispose() { }
 
         IEnumerator IEnumerable.GetEnumerator()

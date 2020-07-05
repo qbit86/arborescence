@@ -26,6 +26,7 @@ namespace Arborescence
             _current = -1;
         }
 
+        /// <inheritdoc />
         public T Current
         {
             get
@@ -38,6 +39,7 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc />
         public bool MoveNext()
         {
             if (_current < _end)

@@ -24,6 +24,7 @@ namespace Arborescence
             return this;
         }
 
+        /// <inheritdoc />
         public void Reset()
         {
             _current = _start - 1;
@@ -31,14 +32,17 @@ namespace Arborescence
 
         object IEnumerator.Current => _current;
 
+        /// <inheritdoc />
         public int Current => _current;
 
+        /// <inheritdoc />
         public bool MoveNext()
         {
             ++_current;
             return _current < _end;
         }
 
+        /// <inheritdoc />
         public void Dispose() { }
     }
 }
