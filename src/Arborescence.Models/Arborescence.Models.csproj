@@ -4,6 +4,7 @@
 Commonly used types:
 AdjacencyListIncidenceGraph
 IndexedIncidenceGraphPolicy&lt;TGraph, TEdges&gt;</Description>
+    <PackageReleaseNotes>https://github.com/qbit86/arborescence/blob/develop/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>graph;model;adjacency</PackageTags>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <Title>Graph models</Title>
