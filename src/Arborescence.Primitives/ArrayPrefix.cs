@@ -6,14 +6,30 @@ namespace Arborescence
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// A set of initialization methods for instances of <see cref="ArrayPrefix{T}"/>.
+    /// </summary>
     public static class ArrayPrefix
     {
+        /// <summary>
+        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure that delimits all the elements in the specified array.
+        /// </summary>
+        /// <param name="array">The array to wrap.</param>
+        /// <typeparam name="T">The type of the elements in the array.</typeparam>
+        /// <returns>An array prefix that delimits all the elements in the specified array.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array)
         {
             return new ArrayPrefix<T>(array);
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure that delimits the specified range of the elements in the specified array.
+        /// </summary>
+        /// <param name="array">The array containing the range of elements to delimit.</param>
+        /// <param name="count">The number of elements in the range.</param>
+        /// <typeparam name="T">The type of the elements in the array.</typeparam>
+        /// <returns>An array prefix that delimits <paramref name="count"/> elements in the specified array.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array, int count)
         {
@@ -24,6 +40,10 @@ namespace Arborescence
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
+    /// <summary>
+    /// Delimits a prefix of a one-dimensional array.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the array.</typeparam>
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
