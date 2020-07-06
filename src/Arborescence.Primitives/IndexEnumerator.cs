@@ -3,6 +3,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <inheritdoc/>
     public struct IndexEnumerator : IEnumerator<int>
     {
         private readonly int _count;

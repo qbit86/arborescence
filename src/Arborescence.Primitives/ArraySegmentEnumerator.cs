@@ -6,6 +6,7 @@ namespace Arborescence
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
+    /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
     public struct ArraySegmentEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
         private readonly T[] _array;
