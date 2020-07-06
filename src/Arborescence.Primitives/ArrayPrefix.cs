@@ -423,6 +423,9 @@ namespace Arborescence
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
 #pragma warning disable CA1034 // Nested types should not be visible
+        /// <summary>
+        /// Provides an enumerator for the elements of an <see cref="ArrayPrefix{T}"/>.
+        /// </summary>
         public struct Enumerator
         {
             private readonly T[] _array;
@@ -440,6 +443,9 @@ namespace Arborescence
                 _current = -1;
             }
 
+            /// <summary>
+            /// Gets the element at the current position of the enumerator.
+            /// </summary>
             public T Current
             {
                 get
@@ -452,6 +458,13 @@ namespace Arborescence
                 }
             }
 
+            /// <summary>
+            /// Advances the enumerator to the next element of the array prefix.
+            /// </summary>
+            /// <returns>
+            /// <c>true</c> if the enumerator was successfully advanced to the next element;
+            /// <c>false</c> if the enumerator has passed the end of the array prefix.
+            /// </returns>
             public bool MoveNext()
             {
                 if (_current < _end)
