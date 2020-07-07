@@ -62,7 +62,9 @@ namespace Arborescence
         /// <returns>An enumerator for the range of elements.</returns>
         public ArraySegmentEnumerator<T> GetEnumerator()
         {
-            return this;
+            ArraySegmentEnumerator<T> ator = this;
+            ator._current = _start - 1;
+            return ator;
         }
 
         object IEnumerator.Current => Current;

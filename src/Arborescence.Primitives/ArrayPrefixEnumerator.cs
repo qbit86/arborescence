@@ -63,7 +63,9 @@ namespace Arborescence
         /// <returns>An enumerator for the array prefix.</returns>
         public ArrayPrefixEnumerator<T> GetEnumerator()
         {
-            return this;
+            ArrayPrefixEnumerator<T> ator = this;
+            ator._current = -1;
+            return ator;
         }
 
         object IEnumerator.Current => Current;
