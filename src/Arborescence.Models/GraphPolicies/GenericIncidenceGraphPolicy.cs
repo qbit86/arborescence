@@ -7,10 +7,13 @@ namespace Arborescence.Models
         IOutEdgesPolicy<TGraph, TVertex, TEdges>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdges>
     {
+        /// <inheritdoc/>
         public bool TryGetTail(TGraph graph, TEdge edge, out TVertex tail) => graph.TryGetTail(edge, out tail);
 
+        /// <inheritdoc/>
         public bool TryGetHead(TGraph graph, TEdge edge, out TVertex head) => graph.TryGetHead(edge, out head);
 
+        /// <inheritdoc/>
         public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex) => graph.EnumerateOutEdges(vertex);
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types

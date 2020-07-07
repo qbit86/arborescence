@@ -34,6 +34,7 @@
 
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
 
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> tails = GetTails();
@@ -47,6 +48,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> heads = GetHeads();
@@ -60,6 +62,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public RangeEnumerator EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
@@ -73,11 +76,14 @@
             return new RangeEnumerator(start, endExclusive);
         }
 
+        /// <inheritdoc/>
         public bool Equals(SortedAdjacencyListIncidenceGraph other) => Equals(_storage, other._storage);
 
+        /// <inheritdoc/>
         public override bool Equals(object obj) =>
             obj is SortedAdjacencyListIncidenceGraph other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

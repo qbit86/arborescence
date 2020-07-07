@@ -23,6 +23,7 @@ namespace Arborescence.Models
 
         public int EdgeCount => _storage?.Length - VertexCount ?? 0;
 
+        /// <inheritdoc/>
         public bool TryGetTail(Endpoints<int> edge, out int tail)
         {
             if ((uint)edge.Tail >= (uint)VertexCount)
@@ -41,6 +42,7 @@ namespace Arborescence.Models
             return true;
         }
 
+        /// <inheritdoc/>
         public bool TryGetHead(Endpoints<int> edge, out int head)
         {
             if ((uint)edge.Tail >= (uint)VertexCount)
@@ -59,6 +61,7 @@ namespace Arborescence.Models
             return true;
         }
 
+        /// <inheritdoc/>
         public ArraySegmentEnumerator<Endpoints<int>> EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<Endpoints<int>> edgeBounds = GetEdgeBounds();
@@ -73,11 +76,14 @@ namespace Arborescence.Models
             return new ArraySegmentEnumerator<Endpoints<int>>(_storage, start, length);
         }
 
+        /// <inheritdoc/>
         public bool Equals(EdgeListIncidenceGraph other) =>
             VertexCount == other.VertexCount && _storage == other._storage;
 
+        /// <inheritdoc/>
         public override bool Equals(object obj) => obj is EdgeListIncidenceGraph other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode() => unchecked(VertexCount * 397) ^ (_storage?.GetHashCode() ?? 0);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
