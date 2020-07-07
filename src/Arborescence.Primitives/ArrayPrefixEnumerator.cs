@@ -14,6 +14,11 @@ namespace Arborescence
         private readonly int _end;
         private int _current;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArrayPrefixEnumerator{T}"/> structure.
+        /// </summary>
+        /// <param name="array">The array which prefix to enumerate.</param>
+        /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefixEnumerator(T[] array, int count)
         {
             if (array == null)
@@ -52,6 +57,10 @@ namespace Arborescence
             return false;
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An enumerator for the array prefix.</returns>
         public ArrayPrefixEnumerator<T> GetEnumerator()
         {
             return this;
