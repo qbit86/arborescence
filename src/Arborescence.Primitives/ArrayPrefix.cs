@@ -6,14 +6,32 @@ namespace Arborescence
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// A set of initialization methods for instances of <see cref="ArrayPrefix{T}"/>.
+    /// </summary>
     public static class ArrayPrefix
     {
+        /// <summary>
+        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits all the elements in the specified array.
+        /// </summary>
+        /// <param name="array">The array to wrap.</param>
+        /// <typeparam name="T">The type of the elements in the array.</typeparam>
+        /// <returns>An array prefix that delimits all the elements in the specified array.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array)
         {
             return new ArrayPrefix<T>(array);
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits the specified prefix in the specified array.
+        /// </summary>
+        /// <param name="array">The array which prefix to delimit.</param>
+        /// <param name="count">The number of elements in the prefix.</param>
+        /// <typeparam name="T">The type of the elements in the array.</typeparam>
+        /// <returns>An array prefix that delimits <paramref name="count"/> elements in the specified array.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array, int count)
         {
@@ -24,12 +42,19 @@ namespace Arborescence
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
+    /// <summary>
+    /// Delimits a prefix of a one-dimensional array.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements in the array.</typeparam>
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
 #pragma warning disable CA1825 // Avoid zero-length array allocations.
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
+        /// <summary>
+        /// Represents the empty array prefix.
+        /// </summary>
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 #pragma warning restore CA1825 // Avoid zero-length array allocations.
 #pragma warning restore CA1000 // Do not declare static members on generic types
@@ -37,6 +62,11 @@ namespace Arborescence
         private readonly T[] _array;
         private readonly int _count;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits all the elements in the specified array.
+        /// </summary>
+        /// <param name="array">The array to wrap.</param>
         public ArrayPrefix(T[] array)
         {
             if (array == null)
@@ -49,6 +79,12 @@ namespace Arborescence
 #pragma warning restore CA1062
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArrayPrefix{T}"/> structure
+        /// that delimits the specified prefix in the specified array.
+        /// </summary>
+        /// <param name="array">The array which prefix to delimit.</param>
+        /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefix(T[] array, int count)
         {
             // Validate arguments, check is minimal instructions with reduced branching for inlinable fast-path
@@ -62,11 +98,21 @@ namespace Arborescence
         }
 
 #pragma warning disable CA1819 // Properties should not return arrays
+        /// <summary>
+        /// Gets the original array containing the range of elements that the array prefix delimits.
+        /// </summary>
         public T[] Array => _array;
 #pragma warning restore CA1819 // Properties should not return arrays
 
+        /// <summary>
+        /// Gets the number of elements in the range delimited by the array prefix.
+        /// </summary>
         public int Count => _count;
 
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
         public T this[int index]
         {
             get
@@ -85,18 +131,27 @@ namespace Arborescence
             }
         }
 
+        /// <summary>
+        /// Returns an <see cref="ArrayPrefix{T}.Enumerator"/> that can be used to iterate through the array prefix.
+        /// </summary>
+        /// <returns>An enumerator.</returns>
         public Enumerator GetEnumerator()
         {
             ThrowInvalidOperationIfDefault();
             return new Enumerator(_array, _count);
         }
 
+        /// <summary>
+        /// Returns an <see cref="ArrayPrefixEnumerator{T}"/> that can be used to iterate through the array prefix.
+        /// </summary>
+        /// <returns>An enumerator.</returns>
         public ArrayPrefixEnumerator<T> Enumerate()
         {
             ThrowInvalidOperationIfDefault();
             return new ArrayPrefixEnumerator<T>(_array, _count);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             if (_array == null)
@@ -111,17 +166,29 @@ namespace Arborescence
             return hash;
         }
 
-        public void CopyTo(T[] array)
+        /// <summary>
+        /// Copies the contents of this instance into the specified destination array of the same type <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// The array of type <typeparamref name="T"/> into which the contents of this instance will be copied.
+        /// </param>
+        public void CopyTo(T[] destination)
         {
-            CopyTo(array, 0);
+            CopyTo(destination, 0);
         }
 
+        /// <inheritdoc/>
         public void CopyTo(T[] array, int arrayIndex)
         {
             ThrowInvalidOperationIfDefault();
             System.Array.Copy(_array, 0, array, arrayIndex, _count);
         }
 
+        /// <summary>
+        /// Copies the contents of this instance into the specified destination array prefix
+        /// of the same type <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="destination">The array prefix into which the contents of this instance will be copied.</param>
         public void CopyTo(ArrayPrefix<T> destination)
         {
             ThrowInvalidOperationIfDefault();
@@ -133,16 +200,26 @@ namespace Arborescence
             System.Array.Copy(_array, 0, destination._array, 0, _count);
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             return obj is ArrayPrefix<T> other && Equals(other);
         }
 
+        /// <inheritdoc/>
         public bool Equals(ArrayPrefix<T> other)
         {
             return other._array == _array && other._count == _count;
         }
 
+        /// <summary>
+        /// Forms a slice out of the current array prefix starting at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to begin the slice.</param>
+        /// <returns>
+        /// An array segment that consists of all elements of the current array prefix
+        /// from <paramref name="index"/> to the end of the array segment.
+        /// </returns>
         public ArraySegment<T> Slice(int index)
         {
             ThrowInvalidOperationIfDefault();
@@ -153,6 +230,14 @@ namespace Arborescence
             return new ArraySegment<T>(_array, index, _count - index);
         }
 
+        /// <summary>
+        /// Forms a slice of the specified length out of the current array prefix starting at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to begin the slice.</param>
+        /// <param name="count">The desired length of the slice.</param>
+        /// <returns>
+        /// An array segment of <paramref name="count"/> elements starting at <paramref name="index"/>.
+        /// </returns>
         public ArraySegment<T> Slice(int index, int count)
         {
             ThrowInvalidOperationIfDefault();
@@ -163,6 +248,10 @@ namespace Arborescence
             return new ArraySegment<T>(_array, index, count);
         }
 
+        /// <summary>
+        /// Copies the contents of this array prefix into a new array.
+        /// </summary>
+        /// <returns>An array containing the elements in the current array prefix.</returns>
         public T[] ToArray()
         {
             ThrowInvalidOperationIfDefault();
@@ -175,17 +264,38 @@ namespace Arborescence
             return array;
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="ArrayPrefix{T}"/> structures are equal.
+        /// </summary>
+        /// <param name="a">The structure on the left side of the equality operator.</param>
+        /// <param name="b">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="ArrayPrefix{T}"/> structures are equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(ArrayPrefix<T> a, ArrayPrefix<T> b)
         {
             return a.Equals(b);
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="ArrayPrefix{T}"/> structures are not equal.
+        /// </summary>
+        /// <param name="a">The structure on the left side of the inequality operator.</param>
+        /// <param name="b">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="ArrayPrefix{T}"/> structures are not equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(ArrayPrefix<T> a, ArrayPrefix<T> b)
         {
             return !(a == b);
         }
 
 #pragma warning disable CA2225 // Operator overloads have named alternates
+        /// <summary>
+        /// Defines an implicit conversion of an array to a <see cref="ArrayPrefix{T}"/>.
+        /// </summary>
+        /// <param name="array">The array to convert.</param>
+        /// <returns>An array prefix.</returns>
         public static implicit operator ArrayPrefix<T>(T[] array)
         {
             return array != null ? new ArrayPrefix<T>(array) : default;
@@ -313,6 +423,9 @@ namespace Arborescence
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
 #pragma warning disable CA1034 // Nested types should not be visible
+        /// <summary>
+        /// Provides an enumerator for the elements of an <see cref="ArrayPrefix{T}"/>.
+        /// </summary>
         public struct Enumerator
         {
             private readonly T[] _array;
@@ -330,6 +443,9 @@ namespace Arborescence
                 _current = -1;
             }
 
+            /// <summary>
+            /// Gets the element at the current position of the enumerator.
+            /// </summary>
             public T Current
             {
                 get
@@ -342,6 +458,13 @@ namespace Arborescence
                 }
             }
 
+            /// <summary>
+            /// Advances the enumerator to the next element of the array prefix.
+            /// </summary>
+            /// <returns>
+            /// <c>true</c> if the enumerator was successfully advanced to the next element;
+            /// <c>false</c> if the enumerator has passed the end of the array prefix.
+            /// </returns>
             public bool MoveNext()
             {
                 if (_current < _end)

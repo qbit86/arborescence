@@ -7,12 +7,18 @@ namespace Arborescence
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
+    /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
     public struct ArrayPrefixEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
         private readonly T[] _array;
         private readonly int _end;
         private int _current;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArrayPrefixEnumerator{T}"/> structure.
+        /// </summary>
+        /// <param name="array">The array which prefix to enumerate.</param>
+        /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefixEnumerator(T[] array, int count)
         {
             if (array == null)
@@ -26,6 +32,7 @@ namespace Arborescence
             _current = -1;
         }
 
+        /// <inheritdoc/>
         public T Current
         {
             get
@@ -38,6 +45,7 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public bool MoveNext()
         {
             if (_current < _end)
@@ -49,9 +57,15 @@ namespace Arborescence
             return false;
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An enumerator for the array prefix.</returns>
         public ArrayPrefixEnumerator<T> GetEnumerator()
         {
-            return this;
+            ArrayPrefixEnumerator<T> ator = this;
+            ator._current = -1;
+            return ator;
         }
 
         object IEnumerator.Current => Current;
