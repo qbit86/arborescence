@@ -41,6 +41,7 @@ namespace Arborescence.Models
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out Endpoints<int> edge)
         {
             if (tail < 0)
@@ -75,6 +76,7 @@ namespace Arborescence.Models
         //               ↑↑↑↑↑↑
         //               edgeBounds
 
+        /// <inheritdoc/>
         public EdgeListIncidenceGraph ToGraph()
         {
             int vertexCount = VertexCount;

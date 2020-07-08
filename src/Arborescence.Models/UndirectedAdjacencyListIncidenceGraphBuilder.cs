@@ -48,6 +48,7 @@
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out int edge)
         {
             if (tail < 0)
@@ -87,6 +88,7 @@
         //            ↑↑↑↑↑↑↑↑↑↑↑↑↑           ↑↑↑↑↑
         //               edgeBounds           heads
 
+        /// <inheritdoc/>
         public UndirectedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_tails.Count == _heads.Count);

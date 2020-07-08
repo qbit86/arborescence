@@ -38,6 +38,7 @@ namespace Arborescence.Models
                 _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, vertexCount, true);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out int edge)
         {
             if (tail < 0)
@@ -80,6 +81,7 @@ namespace Arborescence.Models
         //            ↑↑↑↑↑↑     ↑↑↑↑↑
         //   edgeUpperBounds     orderedTails
 
+        /// <inheritdoc/>
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_orderedTails.Count == _heads.Count);
