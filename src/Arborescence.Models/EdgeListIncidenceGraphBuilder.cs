@@ -4,6 +4,7 @@ namespace Arborescence.Models
     using System.Buffers;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <inheritdoc/>
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, Endpoints<int>>
     {
         private const int DefaultInitialOutDegree = 4;

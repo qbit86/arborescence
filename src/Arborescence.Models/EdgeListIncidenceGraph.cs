@@ -4,6 +4,7 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public readonly struct EdgeListIncidenceGraph :
         IIncidenceGraph<int, Endpoints<int>, ArraySegmentEnumerator<Endpoints<int>>>,
         IEquatable<EdgeListIncidenceGraph>

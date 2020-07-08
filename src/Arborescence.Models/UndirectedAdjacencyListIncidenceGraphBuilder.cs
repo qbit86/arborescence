@@ -5,6 +5,7 @@
     using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <inheritdoc/>
     public struct UndirectedAdjacencyListIncidenceGraphBuilder :
         IGraphBuilder<UndirectedAdjacencyListIncidenceGraph, int, int>
     {

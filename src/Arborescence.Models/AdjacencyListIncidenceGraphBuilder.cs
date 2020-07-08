@@ -5,6 +5,7 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <inheritdoc/>
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
     {
         private const int DefaultInitialOutDegree = 4;
