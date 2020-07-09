@@ -124,7 +124,9 @@
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="Endpoints{TVertex}"/> structures are equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(Endpoints<TVertex> left, Endpoints<TVertex> right)
         {
             return left.Equals(right);
@@ -135,7 +137,9 @@
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="Endpoints{TVertex}"/> structures are not equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(Endpoints<TVertex> left, Endpoints<TVertex> right)
         {
             return !left.Equals(right);
