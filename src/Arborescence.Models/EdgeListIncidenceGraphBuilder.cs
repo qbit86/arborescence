@@ -28,6 +28,9 @@ namespace Arborescence.Models
         private static ArrayPool<ArrayBuilder<Endpoints<int>>> Pool =>
             ArrayPool<ArrayBuilder<Endpoints<int>>>.Shared;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _outEdges.Count;
 
         public int InitialOutDegree

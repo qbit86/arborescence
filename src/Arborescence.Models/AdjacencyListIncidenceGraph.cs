@@ -21,8 +21,14 @@ namespace Arborescence.Models
             _storage = storage;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
 
         /// <inheritdoc/>

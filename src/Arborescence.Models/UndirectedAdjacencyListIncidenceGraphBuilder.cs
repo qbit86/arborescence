@@ -35,6 +35,9 @@
 
         private static ArrayPool<ArrayBuilder<int>> Pool => ArrayPool<ArrayBuilder<int>>.Shared;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _outEdges.Count;
 
         public int InitialOutDegree

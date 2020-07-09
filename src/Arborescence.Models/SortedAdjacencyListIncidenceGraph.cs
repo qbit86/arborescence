@@ -31,6 +31,9 @@
             _storage = storage;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;

@@ -31,6 +31,9 @@ namespace Arborescence.Models
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _edgeUpperBounds.Count;
 
         public void EnsureVertexCount(int vertexCount)

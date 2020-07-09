@@ -20,6 +20,9 @@ namespace Arborescence.Models
             VertexCount = vertexCount;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount { get; }
 
         public int EdgeCount => _storage?.Length - VertexCount ?? 0;
