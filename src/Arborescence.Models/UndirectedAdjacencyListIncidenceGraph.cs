@@ -26,6 +26,9 @@ namespace Arborescence.Models
         /// </summary>
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 4;
 
         /// <inheritdoc/>
@@ -104,9 +107,27 @@ namespace Arborescence.Models
             return result;
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are equal;
+        /// otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(UndirectedAdjacencyListIncidenceGraph left,
             UndirectedAdjacencyListIncidenceGraph right) => left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are not equal;
+        /// otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(UndirectedAdjacencyListIncidenceGraph left,
             UndirectedAdjacencyListIncidenceGraph right) => !left.Equals(right);
     }
