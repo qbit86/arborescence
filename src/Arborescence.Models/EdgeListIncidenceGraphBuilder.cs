@@ -4,6 +4,7 @@ namespace Arborescence.Models
     using System.Buffers;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <inheritdoc/>
     public struct EdgeListIncidenceGraphBuilder : IGraphBuilder<EdgeListIncidenceGraph, int, Endpoints<int>>
     {
         private const int DefaultInitialOutDegree = 4;
@@ -12,6 +13,13 @@ namespace Arborescence.Models
         private ArrayPrefix<ArrayBuilder<Endpoints<int>>> _outEdges;
         private int _edgeCount;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EdgeListIncidenceGraphBuilder"/> struct.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero.
+        /// </exception>
         public EdgeListIncidenceGraphBuilder(int initialVertexCount)
         {
             if (initialVertexCount < 0)
@@ -27,20 +35,31 @@ namespace Arborescence.Models
         private static ArrayPool<ArrayBuilder<Endpoints<int>>> Pool =>
             ArrayPool<ArrayBuilder<Endpoints<int>>>.Shared;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _outEdges.Count;
 
+        /// <summary>
+        /// Gets the initial number of out-edges for each vertex.
+        /// </summary>
         public int InitialOutDegree
         {
             get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
             set => _initialOutDegree = value;
         }
 
+        /// <summary>
+        /// Ensures that the builder can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out Endpoints<int> edge)
         {
             if (tail < 0)
@@ -75,6 +94,7 @@ namespace Arborescence.Models
         //               ↑↑↑↑↑↑
         //               edgeBounds
 
+        /// <inheritdoc/>
         public EdgeListIncidenceGraph ToGraph()
         {
             int vertexCount = VertexCount;

@@ -4,6 +4,7 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public readonly struct AdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
         IEquatable<AdjacencyListIncidenceGraph>
     {
@@ -20,10 +21,17 @@ namespace Arborescence.Models
             _storage = storage;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
 
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> tails = GetTails();
@@ -37,6 +45,7 @@ namespace Arborescence.Models
             return true;
         }
 
+        /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> heads = GetHeads();
@@ -50,6 +59,7 @@ namespace Arborescence.Models
             return true;
         }
 
+        /// <inheritdoc/>
         public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
@@ -64,10 +74,13 @@ namespace Arborescence.Models
             return new ArraySegmentEnumerator<int>(_storage, start, length);
         }
 
+        /// <inheritdoc/>
         public bool Equals(AdjacencyListIncidenceGraph other) => _storage == other._storage;
 
+        /// <inheritdoc/>
         public override bool Equals(object obj) => obj is AdjacencyListIncidenceGraph other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -92,9 +105,25 @@ namespace Arborescence.Models
             return result;
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="AdjacencyListIncidenceGraph"/> structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="AdjacencyListIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
             left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two <see cref="AdjacencyListIncidenceGraph"/> structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="AdjacencyListIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
             !left.Equals(right);
     }

@@ -5,6 +5,7 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <inheritdoc/>
     public struct SortedAdjacencyListIncidenceGraphBuilder : IGraphBuilder<SortedAdjacencyListIncidenceGraph, int, int>
     {
         private ArrayBuilder<int> _orderedTails;
@@ -12,6 +13,14 @@ namespace Arborescence.Models
         private ArrayPrefix<int> _edgeUpperBounds;
         private int _lastTail;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SortedAdjacencyListIncidenceGraphBuilder"/> struct.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
+        /// </exception>
         public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
@@ -30,14 +39,22 @@ namespace Arborescence.Models
 
         private static ArrayPool<int> Pool => ArrayPool<int>.Shared;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _edgeUpperBounds.Count;
 
+        /// <summary>
+        /// Ensures that the builder can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
                 _edgeUpperBounds = ArrayPrefixBuilder.Resize(_edgeUpperBounds, vertexCount, true);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out int edge)
         {
             if (tail < 0)
@@ -80,6 +97,7 @@ namespace Arborescence.Models
         //            ↑↑↑↑↑↑     ↑↑↑↑↑
         //   edgeUpperBounds     orderedTails
 
+        /// <inheritdoc/>
         public SortedAdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_orderedTails.Count == _heads.Count);

@@ -5,6 +5,7 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <inheritdoc/>
     public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
     {
         private const int DefaultInitialOutDegree = 4;
@@ -14,6 +15,14 @@ namespace Arborescence.Models
         private ArrayBuilder<int> _heads;
         private ArrayPrefix<ArrayBuilder<int>> _outEdges;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdjacencyListIncidenceGraphBuilder"/> struct.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
+        /// </exception>
         public AdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
@@ -33,20 +42,31 @@ namespace Arborescence.Models
 
         private static ArrayPool<ArrayBuilder<int>> Pool => ArrayPool<ArrayBuilder<int>>.Shared;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _outEdges.Count;
 
+        /// <summary>
+        /// Gets the initial number of out-edges for each vertex.
+        /// </summary>
         public int InitialOutDegree
         {
             get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
             set => _initialOutDegree = value;
         }
 
+        /// <summary>
+        /// Ensures that the builder can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
                 _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out int edge)
         {
             if (tail < 0)
@@ -85,6 +105,7 @@ namespace Arborescence.Models
         //            ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
         //               edgeBounds     heads
 
+        /// <inheritdoc/>
         public AdjacencyListIncidenceGraph ToGraph()
         {
             Assert(_tails.Count == _heads.Count);

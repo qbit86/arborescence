@@ -4,6 +4,7 @@
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public readonly struct SortedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, RangeEnumerator>,
         IEquatable<SortedAdjacencyListIncidenceGraph>
     {
@@ -30,10 +31,17 @@
             _storage = storage;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _storage == null ? 0 : GetVertexCount();
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
 
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> tails = GetTails();
@@ -47,6 +55,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> heads = GetHeads();
@@ -60,6 +69,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public RangeEnumerator EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
@@ -73,11 +83,14 @@
             return new RangeEnumerator(start, endExclusive);
         }
 
+        /// <inheritdoc/>
         public bool Equals(SortedAdjacencyListIncidenceGraph other) => Equals(_storage, other._storage);
 
+        /// <inheritdoc/>
         public override bool Equals(object obj) =>
             obj is SortedAdjacencyListIncidenceGraph other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -102,9 +115,27 @@
             return result;
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are equal;
+        /// otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(SortedAdjacencyListIncidenceGraph left,
             SortedAdjacencyListIncidenceGraph right) => left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are not equal;
+        /// otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(SortedAdjacencyListIncidenceGraph left,
             SortedAdjacencyListIncidenceGraph right) => !left.Equals(right);
     }
