@@ -33,39 +33,15 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public bool TryGetTail(Endpoints<int> edge, out int tail)
         {
-            if ((uint)edge.Tail >= (uint)VertexCount)
-            {
-                tail = default;
-                return false;
-            }
-
-            if ((uint)edge.Head >= (uint)VertexCount)
-            {
-                tail = default;
-                return false;
-            }
-
             tail = edge.Tail;
-            return true;
+            return (uint)edge.Tail < (uint)VertexCount;
         }
 
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints<int> edge, out int head)
         {
-            if ((uint)edge.Tail >= (uint)VertexCount)
-            {
-                head = default;
-                return false;
-            }
-
-            if ((uint)edge.Head >= (uint)VertexCount)
-            {
-                head = default;
-                return false;
-            }
-
             head = edge.Head;
-            return true;
+            return (uint)edge.Head < (uint)VertexCount;
         }
 
         /// <inheritdoc/>
