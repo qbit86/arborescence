@@ -1,6 +1,12 @@
 namespace Arborescence.Models
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <summary>
+    /// Provides access to the endpoints of each edge, and the in- and out-edges of each vertex
+    /// in the indexed bidirectional graph.
+    /// </summary>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
     public readonly struct IndexedBidirectionalGraphPolicy<TGraph, TEdges> :
         ITailPolicy<TGraph, int, int>,
         IHeadPolicy<TGraph, int, int>,
