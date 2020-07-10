@@ -13,6 +13,13 @@ namespace Arborescence.Models
         private ArrayPrefix<ArrayBuilder<Endpoints<int>>> _outEdges;
         private int _edgeCount;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EdgeListIncidenceGraphBuilder"/> struct.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero.
+        /// </exception>
         public EdgeListIncidenceGraphBuilder(int initialVertexCount)
         {
             if (initialVertexCount < 0)

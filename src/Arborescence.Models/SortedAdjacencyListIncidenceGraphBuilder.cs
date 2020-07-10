@@ -13,6 +13,14 @@ namespace Arborescence.Models
         private ArrayPrefix<int> _edgeUpperBounds;
         private int _lastTail;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SortedAdjacencyListIncidenceGraphBuilder"/> struct.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
+        /// </exception>
         public SortedAdjacencyListIncidenceGraphBuilder(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
