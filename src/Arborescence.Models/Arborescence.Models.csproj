@@ -4,6 +4,7 @@
 Commonly used types:
 AdjacencyListIncidenceGraph
 IndexedIncidenceGraphPolicy&lt;TGraph, TEdges&gt;</Description>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
     <VersionPrefix>0.1.1</VersionPrefix>
