@@ -42,6 +42,10 @@ namespace Arborescence.Models
             set => _initialOutDegree = value;
         }
 
+        /// <summary>
+        /// Ensures that the builder can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
