@@ -33,6 +33,9 @@ namespace Arborescence.Models
         /// </summary>
         public int VertexCount => _outEdges.Count;
 
+        /// <summary>
+        /// Gets the initial number of out-edges for each vertex.
+        /// </summary>
         public int InitialOutDegree
         {
             get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
