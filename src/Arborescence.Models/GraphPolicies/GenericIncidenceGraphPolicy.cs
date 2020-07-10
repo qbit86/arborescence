@@ -1,6 +1,14 @@
 namespace Arborescence.Models
 {
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <summary>
+    /// Provides access to the endpoints of each edge, and the out-edges of each vertex
+    /// in the generic incidence graph.
+    /// </summary>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
     public readonly struct GenericIncidenceGraphPolicy<TGraph, TVertex, TEdge, TEdges> :
         ITailPolicy<TGraph, TVertex, TEdge>,
         IHeadPolicy<TGraph, TVertex, TEdge>,
