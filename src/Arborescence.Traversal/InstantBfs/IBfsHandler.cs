@@ -35,9 +35,34 @@
         /// <param name="v">The vertex.</param>
         void OnFinishVertex(TGraph g, TVertex v);
 
+        /// <summary>
+        /// This is invoked on every out-edge of each vertex after it is discovered.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnExamineEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on each edge as it becomes a member of the edges that form the search tree.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnTreeEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on the subset of non-tree edges whose head is colored gray at the time of examination.
+        /// The color gray indicates that the vertex is currently in the queue.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnNonTreeGrayHeadEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on the subset of non-tree edges whose head is colored black at the time of examination.
+        /// The color black indicates that the vertex has been removed from the queue.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnNonTreeBlackHeadEdge(TGraph g, TEdge e);
     }
 }

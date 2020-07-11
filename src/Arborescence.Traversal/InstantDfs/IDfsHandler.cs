@@ -35,10 +35,40 @@ namespace Arborescence.Traversal
         /// <param name="v">The vertex.</param>
         void OnFinishVertex(TGraph g, TVertex v);
 
+        /// <summary>
+        /// This is invoked on every out-edge of each vertex after it is discovered.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnExamineEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on each edge as it becomes a member of the edges that form the search tree.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnTreeEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on the back edges in the graph.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnBackEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on forward or cross edges in the graph. In an undirected graph this method is never called.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnForwardOrCrossEdge(TGraph g, TEdge e);
+
+        /// <summary>
+        /// This is invoked on each non-tree edge as well as on each tree edge
+        /// after <see cref="OnFinishVertex"/> has been called on its head.
+        /// </summary>
+        /// <param name="g">The graph.</param>
+        /// <param name="e">The edge.</param>
         void OnFinishEdge(TGraph g, TEdge e);
     }
 }
