@@ -2,6 +2,12 @@
 {
     // https://www.boost.org/doc/libs/1_73_0/libs/graph/doc/BFSVisitor.html
 
+    /// <summary>
+    /// Defines callbacks to be invoked while traversing a graph in a BFS manner.
+    /// </summary>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
     public interface IBfsHandler<in TGraph, in TVertex, in TEdge>
     {
         void OnDiscoverVertex(TGraph g, TVertex v);
