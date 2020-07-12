@@ -7,7 +7,7 @@ namespace Arborescence.Traversal
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
-    /// Represents the DFS algorithm — depth-first traversal of the graph.
+    /// Represents the DFS algorithm — depth-first traversal of the graph in a non-recursive fashion.
     /// </summary>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
