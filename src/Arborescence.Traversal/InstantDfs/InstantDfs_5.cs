@@ -17,7 +17,7 @@ namespace Arborescence.Traversal
 #pragma warning disable CA1000 // Do not declare static members on generic types
         /// <summary>
         /// Creates a new <see cref="InstantDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TGraphPolicy,TColorMapPolicy}"/>
-        /// from the given values.
+        /// algorithm from the given policies.
         /// </summary>
         /// <param name="graphPolicy">The graph policy.</param>
         /// <param name="colorMapPolicy">
