@@ -24,12 +24,40 @@ namespace Arborescence.Traversal
         /// <inheritdoc/>
         public void OnNonTreeBlackHeadEdge(TGraph g, TEdge e) => NonTreeBlackHeadEdge?.Invoke(g, e);
 
+        /// <summary>
+        /// Raised when a vertex is encountered for the first time.
+        /// </summary>
         public event VertexEventHandler<TGraph, TVertex> DiscoverVertex;
+
+        /// <summary>
+        /// Raised when a vertex is taken from the fringe.
+        /// </summary>
         public event VertexEventHandler<TGraph, TVertex> ExamineVertex;
+
+        /// <summary>
+        /// Raised when all of out-edges for a vertex have been added to the search tree
+        /// and all of the adjacent vertices have been discovered.
+        /// </summary>
         public event VertexEventHandler<TGraph, TVertex> FinishVertex;
+
+        /// <summary>
+        /// Raised for every out-edge of each vertex after it is discovered.
+        /// </summary>
         public event EdgeEventHandler<TGraph, TEdge> ExamineEdge;
+
+        /// <summary>
+        /// Raised for each edge as it becomes a member of the search tree.
+        /// </summary>
         public event EdgeEventHandler<TGraph, TEdge> TreeEdge;
+
+        /// <summary>
+        /// Raised for a non-tree edge whose head is currently in the queue.
+        /// </summary>
         public event EdgeEventHandler<TGraph, TEdge> NonTreeGrayHeadEdge;
+
+        /// <summary>
+        /// Raised for a non-tree edge whose head has been removed from the queue.
+        /// </summary>
         public event EdgeEventHandler<TGraph, TEdge> NonTreeBlackHeadEdge;
     }
 }
