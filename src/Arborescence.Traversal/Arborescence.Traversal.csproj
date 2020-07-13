@@ -13,7 +13,6 @@ EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPo
   <PropertyGroup>
     <AssemblyVersion>0.1</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <NoWarn Condition="'$(Configuration)' != 'Release'">$(NoWarn);1591</NoWarn>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1;netcoreapp2.0;netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
