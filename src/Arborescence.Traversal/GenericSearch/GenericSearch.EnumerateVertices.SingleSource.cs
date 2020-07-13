@@ -7,7 +7,7 @@
         TExploredSet, TGraphPolicy, TFringePolicy, TExploredSetPolicy>
     {
         /// <summary>
-        /// Enumerates vertices of the graph in a depth-first order starting from the single source.
+        /// Enumerates vertices of the graph in an order specified by the fringe starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
