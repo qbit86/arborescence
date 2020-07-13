@@ -6,12 +6,34 @@ namespace Arborescence.Traversal
     using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <summary>
+    /// Represents the DFS algorithm — depth-first traversal of the graph in a non-recursive fashion.
+    /// </summary>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
+    /// <typeparam name="TGraphPolicy">The type of the graph policy.</typeparam>
+    /// <typeparam name="TColorMapPolicy">The type of the vertex color map policy.</typeparam>
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="InstantDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TGraphPolicy,TColorMapPolicy}"/> struct.
+        /// </summary>
+        /// <param name="graphPolicy">The graph policy.</param>
+        /// <param name="colorMapPolicy">
+        /// The <see cref="IMapPolicy{TMap,TKey,TValue}"/> implementation to use when marking explored vertices while traversing.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graphPolicy"/> is <see langword="null"/>,
+        /// or <paramref name="colorMapPolicy"/> is <see langword="null"/>.
+        /// </exception>
         public InstantDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
         {
             if (graphPolicy == null)

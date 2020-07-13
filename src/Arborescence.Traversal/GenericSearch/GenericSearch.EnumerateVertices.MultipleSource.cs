@@ -6,6 +6,15 @@
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
         TExploredSet, TGraphPolicy, TFringePolicy, TExploredSetPolicy>
     {
+        /// <summary>
+        /// Enumerates vertices of the graph in an order specified by the fringe starting from the multiple sources.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="fringe">The collection of discovered vertices which are not finished yet.</param>
+        /// <param name="exploredSet">The set of explored vertices.</param>
+        /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
+        /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
         public IEnumerator<TVertex> EnumerateVertices<TVertexEnumerator>(
             TGraph graph, TVertexEnumerator sources, TFringe fringe, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>

@@ -3,10 +3,18 @@
     using System.Runtime.CompilerServices;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <summary>
+    /// Defines methods to support adding and checking items for the set represented as a compact array of bit values.
+    /// </summary>
     public readonly struct CompactSetPolicy : ISetPolicy<byte[], int>
     {
         private const int BitShiftPerByte = 3;
 
+        /// <summary>
+        /// Get the number of bytes required to hold <paramref name="count"/> bit values.
+        /// </summary>
+        /// <param name="count">The number of bit values.</param>
+        /// <returns>The number of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetByteCount(int count)
         {
@@ -17,6 +25,7 @@
             return (int)(temp >> BitShiftPerByte);
         }
 
+        /// <inheritdoc/>
         public bool Contains(byte[] items, int item)
         {
             int byteIndex = Div8Rem(item, out int bitIndex);
@@ -28,6 +37,7 @@
             return (items[byteIndex] & bitMask) != 0;
         }
 
+        /// <inheritdoc/>
         public void Add(byte[] items, int item)
         {
             int byteIndex = Div8Rem(item, out int bitIndex);

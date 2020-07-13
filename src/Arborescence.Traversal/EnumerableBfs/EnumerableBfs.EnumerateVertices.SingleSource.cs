@@ -6,6 +6,13 @@ namespace Arborescence.Traversal
     public readonly partial struct EnumerableBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
+        /// <summary>
+        /// Enumerates vertices of the graph in a breadth-first order starting from the single source.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="source">The source.</param>
+        /// <param name="exploredSet">The set of explored vertices.</param>
+        /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
             var queue = new Internal.Queue<TVertex>();

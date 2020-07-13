@@ -4,6 +4,19 @@
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    /// <summary>
+    /// Represents the generic search algorithm — traversal of the graph
+    /// where the order of exploring discovered vertices is determined by the specified policy.
+    /// </summary>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    /// <typeparam name="TFringe">The type of the generic queue.</typeparam>
+    /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
+    /// <typeparam name="TGraphPolicy">The type of the graph policy.</typeparam>
+    /// <typeparam name="TFringePolicy">The type of the generic queue policy.</typeparam>
+    /// <typeparam name="TExploredSetPolicy">The type of the set policy.</typeparam>
     public readonly partial struct GenericSearch<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe, TExploredSet, TGraphPolicy, TFringePolicy, TExploredSetPolicy>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -15,6 +28,24 @@
         private TFringePolicy FringePolicy { get; }
         private TExploredSetPolicy ExploredSetPolicy { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see
+        ///     cref="GenericSearch{TGraph,TVertex,TEdge,TEdgeEnumerator,TFringe,TExploredSet,TGraphPolicy,TFringePolicy,TExploredSetPolicy}"/>
+        /// struct.
+        /// </summary>
+        /// <param name="graphPolicy">The graph policy.</param>
+        /// <param name="fringePolicy">
+        /// The <see cref="IContainerPolicy{TContainer,TElement}"/> implementation to use as the frontier while traversing.
+        /// </param>
+        /// <param name="exploredSetPolicy">
+        /// The <see cref="ISetPolicy{TSet,TElement}"/> implementation to use when marking explored vertices while traversing.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graphPolicy"/> is <see langword="null"/>,
+        /// or <paramref name="fringePolicy"/> is <see langword="null"/>,
+        /// or <paramref name="exploredSetPolicy"/> is <see langword="null"/>.
+        /// </exception>
         public GenericSearch(TGraphPolicy graphPolicy,
             TFringePolicy fringePolicy, TExploredSetPolicy exploredSetPolicy)
         {
