@@ -8,7 +8,7 @@ namespace Arborescence
     internal sealed class TestCaseCollection : IEnumerable<object[]>
     {
         private const int LowerBound = 1;
-        private const int UpperBound = 10;
+        private const int UpperBound = 11;
 
         public IEnumerator<object[]> GetEnumerator()
         {
