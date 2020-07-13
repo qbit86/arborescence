@@ -35,7 +35,7 @@ namespace Arborescence.Traversal
 
         /// <summary>
         /// Traverses the graph in a DFS manner starting from the single source
-        /// until the spanning tree is built or until the specified condition is satisfied.
+        /// until the search tree is built or until the specified condition is satisfied.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
