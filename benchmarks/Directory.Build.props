@@ -2,6 +2,7 @@
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
