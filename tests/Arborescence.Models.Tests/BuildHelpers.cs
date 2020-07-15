@@ -1,41 +1,38 @@
 namespace Arborescence
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using Models;
-    using Workbench;
 
     internal static class BuildHelpers<TGraph, TEdge>
     {
-        internal static TGraph CreateGraph<TBuilder>(ref TBuilder builder, string testName)
+        internal static TGraph CreateGraph<TBuilder>(ref TBuilder builder, GraphDefinitionParameter parameter)
             where TBuilder : IGraphBuilder<TGraph, int, TEdge>
         {
-            return CreateGraph(ref builder, testName, false);
+            return CreateGraph(ref builder, parameter, false);
         }
 
-        internal static TGraph CreateGraph<TBuilder>(ref TBuilder builder, string testName, bool orderByTail)
+        internal static TGraph CreateGraph<TBuilder>(
+            ref TBuilder builder, GraphDefinitionParameter parameter, bool orderByTail)
             where TBuilder : IGraphBuilder<TGraph, int, TEdge>
         {
-            PopulateFromIndexedGraph(ref builder, testName, orderByTail);
+            PopulateFromIndexedGraph(ref builder, parameter, orderByTail);
 
             return builder.ToGraph();
         }
 
-        private static void PopulateFromIndexedGraph<TBuilder>(ref TBuilder builder, string testName, bool orderByTail)
+        private static void PopulateFromIndexedGraph<TBuilder>(
+            ref TBuilder builder, GraphDefinitionParameter parameter, bool orderByTail)
             where TBuilder : IGraphBuilder<TGraph, int, TEdge>
         {
-            if (string.IsNullOrWhiteSpace(testName))
+            if (parameter is null)
                 return;
 
-            using (TextReader textReader = IndexedGraphs.GetTextReader(testName))
-            {
-                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                if (orderByTail)
-                    edges = edges.OrderBy(st => st.Tail);
-                foreach (Endpoints<int> edge in edges)
-                    builder.TryAdd(edge.Tail, edge.Head, out _);
-            }
+            IEnumerable<Endpoints<int>> edges = parameter.Edges;
+            if (orderByTail)
+                edges = edges.OrderBy(st => st.Tail);
+            foreach (Endpoints<int> edge in edges)
+                builder.TryAdd(edge.Tail, edge.Head, out _);
         }
     }
 }

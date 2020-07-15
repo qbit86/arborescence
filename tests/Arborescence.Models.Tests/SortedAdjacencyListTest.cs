@@ -12,19 +12,19 @@ namespace Arborescence
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void SortedAdjacencyList_ShouldNotBeLess(string testName)
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void SortedAdjacencyList_ShouldNotBeLess(GraphDefinitionParameter p)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
-                    testName, true);
+                    p, true);
 
             var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList =
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
-                    testName, true);
+                    p, true);
 
             Assert.Equal(jaggedAdjacencyList.VertexCount, sortedAdjacencyList.VertexCount);
 
@@ -50,19 +50,19 @@ namespace Arborescence
         }
 
         [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void SortedAdjacencyList_ShouldNotBeGreater(string testName)
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void SortedAdjacencyList_ShouldNotBeGreater(GraphDefinitionParameter p)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
-                    testName, true);
+                    p, true);
 
             var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList =
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
-                    testName, true);
+                    p, true);
 
             Assert.Equal(jaggedAdjacencyList.VertexCount, sortedAdjacencyList.VertexCount);
 
@@ -88,19 +88,19 @@ namespace Arborescence
         }
 
         [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void SortedAdjacencyList_ShouldHaveSameEndpoints(string testName)
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void SortedAdjacencyList_ShouldHaveSameEndpoints(GraphDefinitionParameter p)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
-                    testName, true);
+                    p, true);
 
             var sortedAdjacencyListBuilder = new SortedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             SortedAdjacencyListIncidenceGraph sortedAdjacencyList =
                 BuildHelpers<SortedAdjacencyListIncidenceGraph, int>.CreateGraph(ref sortedAdjacencyListBuilder,
-                    testName, true);
+                    p, true);
 
             int actualEdgeCount = sortedAdjacencyList.EdgeCount;
             Assert.Equal(jaggedAdjacencyList.EdgeCount, actualEdgeCount);
