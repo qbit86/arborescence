@@ -13,18 +13,17 @@ namespace Arborescence
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void EdgeList_ShouldNotBeLess(string testName)
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void EdgeList_ShouldNotBeLess(GraphDefinitionParameter p)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
-                BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
-                    testName);
+                BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder, p);
 
             var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexCount);
             EdgeListIncidenceGraph edgeList =
-                BuildHelpers<EdgeListIncidenceGraph, Endpoints<int>>.CreateGraph(ref edgeListBuilder, testName);
+                BuildHelpers<EdgeListIncidenceGraph, Endpoints<int>>.CreateGraph(ref edgeListBuilder, p);
 
             Assert.Equal(jaggedAdjacencyList.VertexCount, edgeList.VertexCount);
 
@@ -36,7 +35,8 @@ namespace Arborescence
                 int defensiveCopy = v;
                 var jaggedOutEndpoints = jaggedOutEdgesEnumerator
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int head), Head = head })
-                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Head))
+                    .Where(it => it.Success)
+                    .Select(it => Endpoints.Create(defensiveCopy, it.Head))
                     .ToRist();
 
                 ArraySegmentEnumerator<Endpoints<int>> outEdgesEnumerator = edgeList.EnumerateOutEdges(v);
@@ -54,18 +54,17 @@ namespace Arborescence
         }
 
         [Theory]
-        [ClassData(typeof(TestCaseCollection))]
-        public void EdgeList_ShouldNotBeGreater(string testName)
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void EdgeList_ShouldNotBeGreater(GraphDefinitionParameter p)
         {
             // Arrange
             var jaggedAdjacencyListBuilder = new JaggedAdjacencyListIncidenceGraphBuilder(InitialVertexCount);
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
-                BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder,
-                    testName);
+                BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder, p);
 
             var edgeListBuilder = new EdgeListIncidenceGraphBuilder(InitialVertexCount);
             EdgeListIncidenceGraph edgeList =
-                BuildHelpers<EdgeListIncidenceGraph, Endpoints<int>>.CreateGraph(ref edgeListBuilder, testName);
+                BuildHelpers<EdgeListIncidenceGraph, Endpoints<int>>.CreateGraph(ref edgeListBuilder, p);
 
             // Act
             for (int v = 0; v < edgeList.VertexCount; ++v)
@@ -79,7 +78,8 @@ namespace Arborescence
                 int defensiveCopy = v;
                 var jaggedOutEndpoints = jaggedOutEdgesEnumerator
                     .Select(e => new { Success = jaggedAdjacencyList.TryGetHead(e, out int head), Head = head })
-                    .Where(p => p.Success).Select(p => Endpoints.Create(defensiveCopy, p.Head))
+                    .Where(it => it.Success)
+                    .Select(it => Endpoints.Create(defensiveCopy, it.Head))
                     .ToRist();
 
                 IEnumerable<Endpoints<int>> difference = outEdges.Except(jaggedOutEndpoints);
