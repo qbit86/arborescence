@@ -1,12 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 namespace Arborescence
 {
     using System;
     using System.Buffers;
     using System.Diagnostics;
+
+#nullable disable
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/System/Collections/Generic/ArrayBuilder.cs
 
@@ -181,4 +179,6 @@ namespace Arborescence
             _array = next;
         }
     }
+
+#nullable restore
 }
