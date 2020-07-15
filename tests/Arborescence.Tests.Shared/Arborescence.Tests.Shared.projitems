@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GraphCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GraphDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GraphDefinitionParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphSizeCollection.cs" />
