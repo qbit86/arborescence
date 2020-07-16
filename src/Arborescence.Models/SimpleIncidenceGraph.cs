@@ -55,7 +55,7 @@
             int upperBound = unchecked((int)UpperBoundByVertex[vertex]);
             Debug.Assert(offset <= upperBound, "offset <= upperBound");
             int count = upperBound - offset;
-            return new ArraySegmentEnumerator<uint>(_storage, offset, count);
+            return new ArraySegmentEnumerator<uint>(_storage, 1 + VertexCount + offset, count);
         }
 
         /// <inheritdoc/>
