@@ -3,7 +3,11 @@
     using System;
     using System.Diagnostics;
 
-    public struct SimpleIncidenceGraph : IIncidenceGraph<int, uint, ArraySegmentEnumerator<uint>>,
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <remarks>
+    /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
+    /// </remarks>
+    public readonly struct SimpleIncidenceGraph : IIncidenceGraph<int, uint, ArraySegmentEnumerator<uint>>,
         IEquatable<SimpleIncidenceGraph>
     {
         private readonly uint[] _storage;
