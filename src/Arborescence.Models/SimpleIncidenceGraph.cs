@@ -14,15 +14,31 @@
             Debug.Assert(storage.Length > 0, "storage.Length > 0");
             Debug.Assert(unchecked((int)storage[0]) >= 0, "storage[0] >= 0");
             Debug.Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
+            Debug.Assert(storage[0] <= short.MaxValue, "storage[0] <= short.MaxValue");
 
             _storage = storage;
         }
 
-        /// <inheritdoc/>
-        public bool TryGetHead(uint edge, out int head) => throw new NotImplementedException();
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
+        public int VertexCount => _storage is null ? 0 : unchecked((int)_storage[0]);
+
+        private ReadOnlySpan<uint> BoundsByVertex => _storage.AsSpan(1, VertexCount);
 
         /// <inheritdoc/>
-        public bool TryGetTail(uint edge, out int tail) => throw new NotImplementedException();
+        public bool TryGetHead(uint edge, out int head)
+        {
+            head = unchecked((int)(edge & 0xFFFF));
+            return head < VertexCount;
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(uint edge, out int tail)
+        {
+            tail = unchecked((int)(edge >> 16));
+            return tail < VertexCount;
+        }
 
         /// <inheritdoc/>
         public ArraySegmentEnumerator<uint> EnumerateOutEdges(int vertex) => throw new NotImplementedException();
