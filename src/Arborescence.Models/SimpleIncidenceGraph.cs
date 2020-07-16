@@ -7,7 +7,7 @@
     /// <remarks>
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
-    public readonly struct SimpleIncidenceGraph : IIncidenceGraph<int, uint, ArraySegmentEnumerator<uint>>,
+    public readonly partial struct SimpleIncidenceGraph : IIncidenceGraph<int, uint, ArraySegmentEnumerator<uint>>,
         IEquatable<SimpleIncidenceGraph>
     {
         private readonly uint[] _storage;
