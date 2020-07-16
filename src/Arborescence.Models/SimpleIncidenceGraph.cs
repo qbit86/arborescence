@@ -12,9 +12,8 @@
         {
             Debug.Assert(storage != null, "storage != null");
             Debug.Assert(storage.Length > 0, "storage.Length > 0");
-            Debug.Assert(unchecked((int)storage[0]) >= 0, "storage[0] >= 0");
-            Debug.Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
             Debug.Assert(storage[0] <= short.MaxValue, "storage[0] <= short.MaxValue");
+            Debug.Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
 
             _storage = storage;
         }
@@ -24,7 +23,9 @@
         /// </summary>
         public int VertexCount => _storage is null ? 0 : unchecked((int)_storage[0]);
 
-        private ReadOnlySpan<uint> BoundsByVertex => _storage.AsSpan(1, VertexCount);
+        private ReadOnlySpan<uint> UpperBoundByVertex => _storage.AsSpan(1, VertexCount);
+
+        private uint UnsignedVertexCount => _storage?[0] ?? 0u;
 
         /// <inheritdoc/>
         public bool TryGetHead(uint edge, out int head)
@@ -41,7 +42,17 @@
         }
 
         /// <inheritdoc/>
-        public ArraySegmentEnumerator<uint> EnumerateOutEdges(int vertex) => throw new NotImplementedException();
+        public ArraySegmentEnumerator<uint> EnumerateOutEdges(int vertex)
+        {
+            if (unchecked((uint)vertex) >= UnsignedVertexCount)
+                return default;
+
+            int offset = vertex == 0 ? 0 : unchecked((int)UpperBoundByVertex[vertex - 1]);
+            int upperBound = unchecked((int)UpperBoundByVertex[vertex]);
+            Debug.Assert(offset <= upperBound, "offset <= upperBound");
+            int count = upperBound - offset;
+            return new ArraySegmentEnumerator<uint>(_storage, offset, count);
+        }
 
         /// <inheritdoc/>
         public bool Equals(SimpleIncidenceGraph other) => _storage == other._storage;
