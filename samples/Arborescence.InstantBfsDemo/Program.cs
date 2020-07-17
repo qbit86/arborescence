@@ -9,8 +9,6 @@
     using Models;
     using Traversal;
     using Workbench;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
@@ -34,7 +32,7 @@
             TextWriter w = Console.Out;
 
             InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> bfs = default;
 
             w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");

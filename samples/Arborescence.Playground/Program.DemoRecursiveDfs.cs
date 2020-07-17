@@ -7,8 +7,6 @@
     using Models;
     using Traversal;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static partial class Program
     {
@@ -23,7 +21,7 @@
             var steps = new List<int>();
             DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
             RecursiveDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> dfs = default;
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> dfs = default;
 
             dfs.Traverse(graph, 0, colorMap, dfsHandler);
             Console.WriteLine(steps.Count);

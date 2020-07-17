@@ -8,8 +8,6 @@
     using Models;
     using Traversal;
     using Workbench;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
@@ -33,7 +31,7 @@
             TextWriter w = Console.Out;
 
             EnumerableDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy> dfs = default;
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");

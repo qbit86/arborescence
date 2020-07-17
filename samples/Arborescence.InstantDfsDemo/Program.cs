@@ -9,8 +9,6 @@ namespace Arborescence
     using Models;
     using Traversal;
     using Workbench;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
@@ -34,7 +32,7 @@ namespace Arborescence
             TextWriter w = Console.Out;
 
             InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> dfs = default;
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
