@@ -7,7 +7,9 @@
         /// <inheritdoc/>
         public sealed class OrderedBuilder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
-            private int _currentVertexCount;
+            private int _currentTail;
+            private int _vertexCount;
+            private ArrayBuilder<int> _upperBoundByVertex;
             private ArrayBuilder<uint> _edges;
 
             /// <summary>
@@ -26,7 +28,8 @@
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _currentVertexCount = initialVertexCount;
+                _vertexCount = initialVertexCount;
+                _upperBoundByVertex = new ArrayBuilder<int>(initialVertexCount);
                 _edges = new ArrayBuilder<uint>(edgeCapacity);
             }
 
@@ -45,10 +48,11 @@
                     return false;
                 }
 
+                edge = unchecked(((uint)tail << 16) | (uint)head);
+
                 int max = Math.Max(tail, head);
                 EnsureVertexCount(max + 1);
 
-                edge = unchecked(((uint)tail << 16) | (uint)head);
                 _edges.Add(edge);
 
                 // TODO: Update bound.
