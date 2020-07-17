@@ -8,8 +8,8 @@
         /// <inheritdoc/>
         public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
-            private int _vertexCount;
             private ArrayPrefix<uint> _edges;
+            private int _vertexCount;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Builder"/> class.
