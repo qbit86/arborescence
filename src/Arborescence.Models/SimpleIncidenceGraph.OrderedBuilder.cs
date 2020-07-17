@@ -6,20 +6,20 @@
     public readonly partial struct SimpleIncidenceGraph
     {
         /// <inheritdoc/>
-        public sealed class OrderedBuilder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
+        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
             private int _vertexCount;
             private ArrayPrefix<uint> _edges;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="OrderedBuilder"/> class.
+            /// Initializes a new instance of the <see cref="Builder"/> class.
             /// </summary>
             /// <param name="initialVertexCount">The initial number of vertices.</param>
             /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
             /// <exception cref="ArgumentOutOfRangeException">
             /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
             /// </exception>
-            public OrderedBuilder(int initialVertexCount, int edgeCapacity = 0)
+            public Builder(int initialVertexCount, int edgeCapacity = 0)
             {
                 if (initialVertexCount < 0)
                     throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
