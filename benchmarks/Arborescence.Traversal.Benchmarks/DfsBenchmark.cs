@@ -7,8 +7,6 @@ namespace Arborescence
     using Models;
     using Traversal;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     [MemoryDiagnoser]
     public abstract class DfsBenchmark
@@ -32,19 +30,19 @@ namespace Arborescence
         public int VertexCount { get; set; }
 
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
         private RecursiveDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
         private ReverseDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             ReverseDfs { get; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }

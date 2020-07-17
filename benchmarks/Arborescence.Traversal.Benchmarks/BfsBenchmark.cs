@@ -7,8 +7,6 @@
     using Models;
     using Traversal;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     [MemoryDiagnoser]
     public abstract class BfsBenchmark
@@ -25,11 +23,11 @@
         public int VertexCount { get; set; }
 
         private InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; set; }
 
         private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; set; }
 
         private AdjacencyListIncidenceGraph Graph { get; set; }
