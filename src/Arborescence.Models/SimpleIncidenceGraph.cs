@@ -16,7 +16,7 @@
         {
             Debug.Assert(storage != null, "storage != null");
             Debug.Assert(storage.Length > 0, "storage.Length > 0");
-            Debug.Assert(storage[0] <= short.MaxValue, "storage[0] <= short.MaxValue");
+            Debug.Assert(storage[0] <= 0x10000u, "storage[0] <= 0x10000u");
             Debug.Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
 
             _storage = storage;
@@ -25,7 +25,7 @@
         /// <summary>
         /// Gets the number of vertices.
         /// </summary>
-        public int VertexCount => _storage is null ? 0 : unchecked((int)_storage[0]);
+        public int VertexCount => _storage is null ? 0 : (int)_storage[0];
 
         private ReadOnlySpan<uint> UpperBoundByVertex => _storage.AsSpan(1, VertexCount);
 
@@ -34,14 +34,14 @@
         /// <inheritdoc/>
         public bool TryGetHead(uint edge, out int head)
         {
-            head = unchecked((int)(edge & 0xFFFF));
+            head = (int)(edge & 0xFFFF);
             return head < VertexCount;
         }
 
         /// <inheritdoc/>
         public bool TryGetTail(uint edge, out int tail)
         {
-            tail = unchecked((int)(edge >> 16));
+            tail = (int)(edge >> 16);
             return tail < VertexCount;
         }
 
@@ -51,8 +51,8 @@
             if (unchecked((uint)vertex) >= UnsignedVertexCount)
                 return default;
 
-            int offset = vertex == 0 ? 0 : unchecked((int)UpperBoundByVertex[vertex - 1]);
-            int upperBound = unchecked((int)UpperBoundByVertex[vertex]);
+            int offset = vertex == 0 ? 0 : (int)UpperBoundByVertex[vertex - 1];
+            int upperBound = (int)UpperBoundByVertex[vertex];
             Debug.Assert(offset <= upperBound, "offset <= upperBound");
             int count = upperBound - offset;
             return new ArraySegmentEnumerator<uint>(_storage, 1 + VertexCount + offset, count);
