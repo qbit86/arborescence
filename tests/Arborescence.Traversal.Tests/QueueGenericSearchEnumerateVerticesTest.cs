@@ -9,8 +9,6 @@
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public class QueueGenericSearchEnumerateVerticesTest
     {
@@ -21,11 +19,11 @@
         }
 
         private InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
         private GenericSearch<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Queue<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, QueuePolicy, IndexedSetPolicy>
+                IndexedIncidenceGraphPolicy, QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
 
         private void EnumerateVerticesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)

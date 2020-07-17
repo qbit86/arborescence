@@ -9,8 +9,6 @@ namespace Arborescence
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public sealed class BfsEnumerateEdgesTest
     {
@@ -21,11 +19,11 @@ namespace Arborescence
         }
 
         private InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
         private EnumerableBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
 
         private void EnumerateEdgesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)

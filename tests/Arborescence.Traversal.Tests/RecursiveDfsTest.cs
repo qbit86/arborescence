@@ -9,8 +9,6 @@
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public sealed class RecursiveDfsTest
     {
@@ -21,11 +19,11 @@
         }
 
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
         private RecursiveDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
         private void TraverseCore(AdjacencyListIncidenceGraph graph, bool multipleSource)

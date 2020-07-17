@@ -9,8 +9,6 @@ namespace Arborescence
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public sealed class DfsEnumerateVerticesTest
     {
@@ -21,11 +19,11 @@ namespace Arborescence
         }
 
         private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
         private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
         private void EnumerateVerticesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
