@@ -1,16 +1,15 @@
 ﻿namespace Arborescence.Models
 {
     using System;
+    using System.Buffers;
 
     public readonly partial struct SimpleIncidenceGraph
     {
         /// <inheritdoc/>
         public sealed class OrderedBuilder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
-            private int _currentTail;
             private int _vertexCount;
-            private ArrayBuilder<int> _upperBoundByVertex;
-            private ArrayBuilder<uint> _edges;
+            private ArrayPrefix<uint> _edges;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="OrderedBuilder"/> class.
@@ -29,8 +28,12 @@
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
                 _vertexCount = initialVertexCount;
-                _upperBoundByVertex = new ArrayBuilder<int>(initialVertexCount);
-                _edges = new ArrayBuilder<uint>(edgeCapacity);
+                _edges = ArrayPrefix<uint>.Empty;
+                if (edgeCapacity > 0)
+                {
+                    uint[] edges = ArrayPool<uint>.Shared.Rent(edgeCapacity);
+                    _edges = ArrayPrefix.Create(edges, 0);
+                }
             }
 
             /// <inheritdoc/>
@@ -53,10 +56,7 @@
                 int max = Math.Max(tail, head);
                 EnsureVertexCount(max + 1);
 
-                _edges.Add(edge);
-
-                // TODO: Update bound.
-
+                _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
                 return true;
             }
 
