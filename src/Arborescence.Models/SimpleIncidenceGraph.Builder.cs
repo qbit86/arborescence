@@ -7,6 +7,7 @@
         /// <inheritdoc/>
         public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
+            private int _currentMaxTail;
             private ArrayPrefix<uint> _edges;
             private int _vertexCount;
 
@@ -26,8 +27,9 @@
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _vertexCount = initialVertexCount;
+                _currentMaxTail = 0;
                 _edges = ArrayPrefixBuilder.Create<uint>(edgeCapacity);
+                _vertexCount = initialVertexCount;
             }
 
             /// <inheritdoc/>
@@ -45,10 +47,13 @@
                     return false;
                 }
 
-                edge = unchecked(((uint)tail << 16) | (uint)head);
+                edge = ((uint)tail << 16) | (uint)head;
 
-                int max = Math.Max(tail, head);
-                EnsureVertexCount(max + 1);
+                _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
+
+                int newVertexCountCandidate = Math.Max(tail, head) + 1;
+                if (newVertexCountCandidate > _vertexCount)
+                    _vertexCount = newVertexCountCandidate;
 
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
                 return true;
@@ -56,12 +61,6 @@
 
             /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph() => throw new NotImplementedException();
-
-            /// <summary>
-            /// Ensures that the builder can hold the specified number of vertices without growing.
-            /// </summary>
-            /// <param name="vertexCount">The number of vertices.</param>
-            public void EnsureVertexCount(int vertexCount) => throw new NotImplementedException();
         }
     }
 }
