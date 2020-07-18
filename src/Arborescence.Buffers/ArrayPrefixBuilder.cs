@@ -9,6 +9,14 @@ namespace Arborescence
         private const int DefaultCapacity = 4;
         private const int MaxCoreClrArrayLength = 0x7fefffff; // For byte arrays the limit is slightly larger
 
+        internal static ArrayPrefix<T> Create<T>(int capacity)
+        {
+            Assert(capacity >= 0, "capacity >= 0");
+
+            T[] array = ArrayPool<T>.Shared.Rent(capacity);
+            return ArrayPrefix.Create(array, 0);
+        }
+
         internal static ArrayPrefix<T> Add<T>(ArrayPrefix<T> arrayPrefix, T item, bool clearArray)
         {
             int capacity = arrayPrefix.Array?.Length ?? 0;

@@ -1,7 +1,6 @@
 ﻿namespace Arborescence.Models
 {
     using System;
-    using System.Buffers;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -28,12 +27,7 @@
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
                 _vertexCount = initialVertexCount;
-                _edges = ArrayPrefix<uint>.Empty;
-                if (edgeCapacity > 0)
-                {
-                    uint[] edges = ArrayPool<uint>.Shared.Rent(edgeCapacity);
-                    _edges = ArrayPrefix.Create(edges, 0);
-                }
+                _edges = ArrayPrefixBuilder.Create<uint>(edgeCapacity);
             }
 
             /// <inheritdoc/>
