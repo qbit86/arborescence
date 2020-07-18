@@ -1,6 +1,7 @@
 ﻿namespace Arborescence.Models
 {
     using System;
+    using System.Collections.Generic;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -60,7 +61,26 @@
             }
 
             /// <inheritdoc/>
-            public SimpleIncidenceGraph ToGraph() => throw new NotImplementedException();
+            public SimpleIncidenceGraph ToGraph()
+            {
+                if (_currentMaxTail == int.MaxValue)
+                    Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
+
+                throw new NotImplementedException();
+            }
+        }
+
+        internal sealed class EdgeComparer : IComparer<uint>
+        {
+            public static EdgeComparer Instance { get; } = new EdgeComparer();
+
+            public int Compare(uint x, uint y)
+            {
+                const uint mask = 0xFFFF0000u;
+                uint left = x & mask;
+                uint right = y & mask;
+                return left.CompareTo(right);
+            }
         }
     }
 }
