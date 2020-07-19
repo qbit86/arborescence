@@ -6,6 +6,7 @@
     public readonly partial struct SimpleIncidenceGraph
     {
         /// <inheritdoc/>
+#pragma warning disable CA1034 // Nested types should not be visible
         public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
             private int _currentMaxTail;
@@ -91,5 +92,6 @@
                 return left.CompareTo(right);
             }
         }
+#pragma warning restore CA1034 // Nested types should not be visible
     }
 }
