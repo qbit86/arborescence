@@ -7,6 +7,33 @@ namespace Arborescence
 
     public sealed class SimpleIncidenceGraphTest
     {
+        private static bool TryGetEndpoints(SimpleIncidenceGraph graph, uint edge, out Endpoints<int> endpoints)
+        {
+            if (!graph.TryGetTail(edge, out int tail))
+            {
+                endpoints = default;
+                return false;
+            }
+
+            if (!graph.TryGetHead(edge, out int head))
+            {
+                endpoints = default;
+                return false;
+            }
+
+            endpoints = Endpoints.Create(tail, head);
+            return true;
+        }
+
+        internal sealed class HashSetEqualityComparer : IEqualityComparer<HashSet<Endpoints<int>>>
+        {
+            public static HashSetEqualityComparer Instance { get; } = new HashSetEqualityComparer();
+
+            public bool Equals(HashSet<Endpoints<int>> x, HashSet<Endpoints<int>> y) => x.SetEquals(y);
+
+            public int GetHashCode(HashSet<Endpoints<int>> obj) => obj.GetHashCode();
+        }
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
@@ -43,33 +70,38 @@ namespace Arborescence
             // Assert
             Assert.Equal(expectedEdgeSet, actualEdgeSet, HashSetEqualityComparer.Instance);
         }
+
+        [Theory]
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void SimpleIncidenceGraph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
+        {
+            // Arrange
+            var builder = new SimpleIncidenceGraph.Builder(p.VertexCount, p.Edges.Count);
+            foreach (Endpoints<int> endpoints in p.Edges)
+            {
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                if (!wasAdded)
+                    Assert.True(wasAdded);
+            }
+
+            SimpleIncidenceGraph graph = builder.ToGraph();
+
+            // Act
+            for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
+            {
+                ArraySegmentEnumerator<uint> outEdges = graph.EnumerateOutEdges(vertex);
+                while (outEdges.MoveNext())
+                {
+                    uint edge = outEdges.Current;
+                    bool hasTail = graph.TryGetTail(edge, out int tail);
+                    if (!hasTail)
+                        Assert.True(hasTail);
+
+                    // Assert
+                    Assert.Equal(vertex, tail);
+                }
+            }
+        }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
-
-        private static bool TryGetEndpoints(SimpleIncidenceGraph graph, uint edge, out Endpoints<int> endpoints)
-        {
-            if (!graph.TryGetTail(edge, out int tail))
-            {
-                endpoints = default;
-                return false;
-            }
-
-            if (!graph.TryGetHead(edge, out int head))
-            {
-                endpoints = default;
-                return false;
-            }
-
-            endpoints = Endpoints.Create(tail, head);
-            return true;
-        }
-
-        internal sealed class HashSetEqualityComparer : IEqualityComparer<HashSet<Endpoints<int>>>
-        {
-            public static HashSetEqualityComparer Instance { get; } = new HashSetEqualityComparer();
-
-            public bool Equals(HashSet<Endpoints<int>> x, HashSet<Endpoints<int>> y) => x.SetEquals(y);
-
-            public int GetHashCode(HashSet<Endpoints<int>> obj) => obj.GetHashCode();
-        }
     }
 }
