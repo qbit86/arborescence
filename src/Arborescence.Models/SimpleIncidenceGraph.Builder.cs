@@ -64,19 +64,30 @@
             /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph()
             {
+                int edgeCount = _edges.Count;
                 if (_currentMaxTail == int.MaxValue)
-                    Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
+                    Array.Sort(_edges.Array, 0, edgeCount, EdgeComparer.Instance);
 
-                int storageLength = 1 + _vertexCount + _edges.Count;
+                int storageLength = 1 + _vertexCount + edgeCount;
 #if NET5
                 uint[] storage = GC.AllocateUninitializedArray<uint>(storageLength);
 #else
                 var storage = new uint[storageLength];
 #endif
                 storage[0] = (uint)_vertexCount;
+                // TODO: Test for empty _edges (when no calls to TryAdd were performed).
                 _edges.CopyTo(storage, 1 + _vertexCount);
                 Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
-                // TODO: Populate storage.
+                upperBoundByVertex.Fill(0u);
+                for (int edgeIndex = 0; edgeIndex < edgeCount; ++edgeIndex)
+                {
+                    uint edge = _edges[edgeIndex];
+                    int tail = (int)(edge >> 16);
+                    ++upperBoundByVertex[tail];
+                }
+
+                for (int vertex = 1; vertex < _vertexCount; ++vertex)
+                    upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
                 _edges = ArrayPrefixBuilder.Dispose(_edges, false);
 
