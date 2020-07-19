@@ -11,8 +11,8 @@ namespace Arborescence
     [MemoryDiagnoser]
     public abstract class DfsBenchmark
     {
-        private readonly DummyHandler<AdjacencyListIncidenceGraph> _handler =
-            new DummyHandler<AdjacencyListIncidenceGraph>();
+        private readonly DummyHandler<IndexedIncidenceGraph> _handler =
+            new DummyHandler<IndexedIncidenceGraph>();
 
         private byte[] _colorMap = Array.Empty<byte>();
 
@@ -29,23 +29,23 @@ namespace Arborescence
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private RecursiveDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
-        private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
-        private ReverseDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private ReverseDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             ReverseDfs { get; }
 
-        private AdjacencyListIncidenceGraph Graph { get; set; }
+        private IndexedIncidenceGraph Graph { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup()

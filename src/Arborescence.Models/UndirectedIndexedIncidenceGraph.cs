@@ -5,12 +5,18 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly struct UndirectedAdjacencyListIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>, IEquatable<UndirectedAdjacencyListIncidenceGraph>
+    public readonly partial struct UndirectedIndexedIncidenceGraph :
+        IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>, IEquatable<UndirectedIndexedIncidenceGraph>
     {
+        // Layout:
+        // vertexCount          reorderedEdges     tails
+        //         ↓↓↓             ↓↓↓↓↓↓↓↓↓↓↓     ↓↓↓↓↓
+        //         [4][_^|_^|_^|_^][021~0~2~1][bcb][aca]
+        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑           ↑↑↑↑↑
+        //               edgeBounds           heads
         private readonly int[] _storage;
 
-        internal UndirectedAdjacencyListIncidenceGraph(int[] storage)
+        internal UndirectedIndexedIncidenceGraph(int[] storage)
         {
             Assert(storage != null, "storage != null");
             Assert(storage.Length > 0, "storage.Length > 0");
@@ -77,10 +83,10 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool Equals(UndirectedAdjacencyListIncidenceGraph other) => _storage == other._storage;
+        public bool Equals(UndirectedIndexedIncidenceGraph other) => _storage == other._storage;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is UndirectedAdjacencyListIncidenceGraph other && Equals(other);
+        public override bool Equals(object obj) => obj is UndirectedIndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
@@ -108,27 +114,27 @@ namespace Arborescence.Models
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are equal.
+        /// Indicates whether two <see cref="UndirectedIndexedIncidenceGraph"/> structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are equal;
+        /// <c>true</c> if the two <see cref="UndirectedIndexedIncidenceGraph"/> structures are equal;
         /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(UndirectedAdjacencyListIncidenceGraph left,
-            UndirectedAdjacencyListIncidenceGraph right) => left.Equals(right);
+        public static bool operator ==(UndirectedIndexedIncidenceGraph left,
+            UndirectedIndexedIncidenceGraph right) => left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are not equal.
+        /// Indicates whether two <see cref="UndirectedIndexedIncidenceGraph"/> structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="UndirectedAdjacencyListIncidenceGraph"/> structures are not equal;
+        /// <c>true</c> if the two <see cref="UndirectedIndexedIncidenceGraph"/> structures are not equal;
         /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(UndirectedAdjacencyListIncidenceGraph left,
-            UndirectedAdjacencyListIncidenceGraph right) => !left.Equals(right);
+        public static bool operator !=(UndirectedIndexedIncidenceGraph left,
+            UndirectedIndexedIncidenceGraph right) => !left.Equals(right);
     }
 }

@@ -12,7 +12,7 @@
         // ReSharper disable once UnusedMember.Local
         private static void DemoShuffle()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(10);
+            var builder = new IndexedIncidenceGraph.Builder(10);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
             {
@@ -21,7 +21,7 @@
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            IndexedIncidenceGraph graph = builder.ToGraph();
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 

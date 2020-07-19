@@ -9,7 +9,7 @@
 
         private static void Main()
         {
-            DemoRecursiveDfs();
+            DemoUndirected();
         }
 
         private static string V(int v) => Base32.ToString(v);

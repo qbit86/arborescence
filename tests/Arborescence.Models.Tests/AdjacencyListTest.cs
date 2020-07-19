@@ -20,8 +20,8 @@ namespace Arborescence
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder, p);
 
-            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(InitialVertexCount);
-            AdjacencyListIncidenceGraph adjacencyList = BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(
+            IndexedIncidenceGraph.Builder adjacencyListBuilder = new IndexedIncidenceGraph.Builder(InitialVertexCount);
+            IndexedIncidenceGraph adjacencyList = BuildHelpers<IndexedIncidenceGraph, int>.CreateGraph(
                 ref adjacencyListBuilder, p);
 
             Assert.Equal(jaggedAdjacencyList.VertexCount, adjacencyList.VertexCount);
@@ -56,9 +56,9 @@ namespace Arborescence
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder, p);
 
-            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(InitialVertexCount);
-            AdjacencyListIncidenceGraph adjacencyList =
-                BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(ref adjacencyListBuilder, p);
+            IndexedIncidenceGraph.Builder adjacencyListBuilder = new IndexedIncidenceGraph.Builder(InitialVertexCount);
+            IndexedIncidenceGraph adjacencyList =
+                BuildHelpers<IndexedIncidenceGraph, int>.CreateGraph(ref adjacencyListBuilder, p);
 
             // Act
             for (int v = 0; v < adjacencyList.VertexCount; ++v)
@@ -90,9 +90,9 @@ namespace Arborescence
             JaggedAdjacencyListIncidenceGraph jaggedAdjacencyList =
                 BuildHelpers<JaggedAdjacencyListIncidenceGraph, int>.CreateGraph(ref jaggedAdjacencyListBuilder, p);
 
-            var adjacencyListBuilder = new AdjacencyListIncidenceGraphBuilder(InitialVertexCount);
-            AdjacencyListIncidenceGraph adjacencyList =
-                BuildHelpers<AdjacencyListIncidenceGraph, int>.CreateGraph(ref adjacencyListBuilder, p);
+            IndexedIncidenceGraph.Builder adjacencyListBuilder = new IndexedIncidenceGraph.Builder(InitialVertexCount);
+            IndexedIncidenceGraph adjacencyList =
+                BuildHelpers<IndexedIncidenceGraph, int>.CreateGraph(ref adjacencyListBuilder, p);
 
             int actualEdgeCount = adjacencyList.EdgeCount;
             Assert.Equal(jaggedAdjacencyList.EdgeCount, actualEdgeCount);

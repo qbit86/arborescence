@@ -6,15 +6,15 @@
 
     internal struct GraphHelper
     {
-        private Dictionary<int, AdjacencyListIncidenceGraph> _cache;
+        private Dictionary<int, IndexedIncidenceGraph> _cache;
 
         internal static GraphHelper Default { get; } = new GraphHelper();
 
-        internal AdjacencyListIncidenceGraph GetGraph(int vertexCount)
+        internal IndexedIncidenceGraph GetGraph(int vertexCount)
         {
-            _cache ??= new Dictionary<int, AdjacencyListIncidenceGraph>();
+            _cache ??= new Dictionary<int, IndexedIncidenceGraph>();
 
-            if (_cache.TryGetValue(vertexCount, out AdjacencyListIncidenceGraph result))
+            if (_cache.TryGetValue(vertexCount, out IndexedIncidenceGraph result))
                 return result;
 
             result = CreateGraph(vertexCount);
@@ -22,11 +22,11 @@
             return result;
         }
 
-        private static AdjacencyListIncidenceGraph CreateGraph(int vertexCount)
+        private static IndexedIncidenceGraph CreateGraph(int vertexCount)
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
 
-            var builder = new AdjacencyListIncidenceGraphBuilder(vertexCount);
+            var builder = new IndexedIncidenceGraph.Builder(vertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)

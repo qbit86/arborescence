@@ -12,7 +12,7 @@ namespace Arborescence
         // ReSharper disable once UnusedMember.Local
         private static void DemoUndirected()
         {
-            var builder = new UndirectedAdjacencyListIncidenceGraphBuilder(10);
+            var builder = new UndirectedIndexedIncidenceGraph.Builder(10);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("05"))
             {
@@ -21,7 +21,7 @@ namespace Arborescence
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            UndirectedAdjacencyListIncidenceGraph graph = builder.ToGraph();
+            UndirectedIndexedIncidenceGraph graph = builder.ToGraph();
 
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount}");
@@ -36,7 +36,7 @@ namespace Arborescence
 
             PrintIncidentEdges(graph, graph.VertexCount - 1);
 
-            static void PrintIncidentEdges(UndirectedAdjacencyListIncidenceGraph graph, int vertex)
+            static void PrintIncidentEdges(UndirectedIndexedIncidenceGraph graph, int vertex)
             {
                 ArraySegmentEnumerator<int> edges = graph.EnumerateOutEdges(vertex);
                 foreach (int edge in edges)
