@@ -66,7 +66,16 @@
                 if (_currentMaxTail == int.MaxValue)
                     Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
 
-                throw new NotImplementedException();
+                int storageLength = 1 + _vertexCount + _edges.Count;
+#if NET5
+                uint[] storage = GC.AllocateUninitializedArray<uint>(storageLength);
+#else
+                var storage = new uint[storageLength];
+#endif
+                // TODO: Populate storage.
+                _edges = ArrayPrefixBuilder.Dispose(_edges, false);
+
+                return new SimpleIncidenceGraph(storage);
             }
         }
 

@@ -45,6 +45,12 @@ namespace Arborescence
             return arrayPrefix;
         }
 
+        internal static ArrayPrefix<T> Dispose<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
+        {
+            ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
+            return ArrayPrefix<T>.Empty;
+        }
+
         private static void UncheckedGrow<T>(ref ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
         {
             Assert(arrayPrefix.Count < size, "arrayPrefix.Count < size");
