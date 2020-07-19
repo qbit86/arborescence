@@ -18,15 +18,15 @@
             GenericSearch = default;
         }
 
-        private InstantBfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
-        private GenericSearch<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, Queue<int>, byte[],
+        private GenericSearch<IndexedIncidenceGraph, int, int, EdgeEnumerator, Queue<int>, byte[],
                 IndexedIncidenceGraphPolicy, QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
 
-        private void EnumerateVerticesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
+        private void EnumerateVerticesCore(IndexedIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -42,7 +42,7 @@
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
+            BfsHandler<IndexedIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
 
             // Act
 
@@ -92,11 +92,11 @@
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
+        private static BfsHandler<IndexedIncidenceGraph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
         {
             Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
-            var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
             result.DiscoverVertex += (g, v) => discoveredVertices.Add(v);
             return result;
         }

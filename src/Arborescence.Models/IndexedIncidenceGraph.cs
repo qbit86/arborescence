@@ -5,12 +5,12 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly struct AdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
-        IEquatable<AdjacencyListIncidenceGraph>
+    public readonly struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
+        IEquatable<IndexedIncidenceGraph>
     {
         private readonly int[] _storage;
 
-        internal AdjacencyListIncidenceGraph(int[] storage)
+        internal IndexedIncidenceGraph(int[] storage)
         {
             Assert(storage != null, "storage != null");
             Assert(storage.Length > 0, "storage.Length > 0");
@@ -75,10 +75,10 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool Equals(AdjacencyListIncidenceGraph other) => _storage == other._storage;
+        public bool Equals(IndexedIncidenceGraph other) => _storage == other._storage;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is AdjacencyListIncidenceGraph other && Equals(other);
+        public override bool Equals(object obj) => obj is IndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
@@ -106,25 +106,25 @@ namespace Arborescence.Models
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="AdjacencyListIncidenceGraph"/> structures are equal.
+        /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="AdjacencyListIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
+        public static bool operator ==(IndexedIncidenceGraph left, IndexedIncidenceGraph right) =>
             left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="AdjacencyListIncidenceGraph"/> structures are not equal.
+        /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="AdjacencyListIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
+        public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) =>
             !left.Equals(right);
     }
 }

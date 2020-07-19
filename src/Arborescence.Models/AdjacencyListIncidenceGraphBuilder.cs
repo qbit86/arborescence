@@ -6,7 +6,7 @@ namespace Arborescence.Models
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <inheritdoc/>
-    public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<AdjacencyListIncidenceGraph, int, int>
+    public struct AdjacencyListIncidenceGraphBuilder : IGraphBuilder<IndexedIncidenceGraph, int, int>
     {
         private const int DefaultInitialOutDegree = 4;
 
@@ -106,7 +106,7 @@ namespace Arborescence.Models
         //               edgeBounds     heads
 
         /// <inheritdoc/>
-        public AdjacencyListIncidenceGraph ToGraph()
+        public IndexedIncidenceGraph ToGraph()
         {
             Assert(_tails.Count == _heads.Count);
             int vertexCount = VertexCount;
@@ -142,7 +142,7 @@ namespace Arborescence.Models
             _tails.AsSpan().CopyTo(destTails);
             _tails.Dispose(false);
 
-            return new AdjacencyListIncidenceGraph(storage);
+            return new IndexedIncidenceGraph(storage);
         }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types

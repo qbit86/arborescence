@@ -18,15 +18,15 @@ namespace Arborescence
             EnumerableDfs = default;
         }
 
-        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
-        private void EnumerateVerticesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
+        private void EnumerateVerticesCore(IndexedIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -41,7 +41,7 @@ namespace Arborescence
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
@@ -89,11 +89,11 @@ namespace Arborescence
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(IList<int> steps)
+        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<int> steps)
         {
             Debug.Assert(steps != null, "steps != null");
 
-            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
             result.DiscoverVertex += (g, v) => steps.Add(v);
             return result;
         }

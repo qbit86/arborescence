@@ -6,7 +6,7 @@
 
     internal static class GraphHelper
     {
-        internal static AdjacencyListIncidenceGraph GenerateAdjacencyListIncidenceGraph(
+        internal static IndexedIncidenceGraph GenerateAdjacencyListIncidenceGraph(
             int vertexCount, double densityPower)
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
@@ -21,7 +21,7 @@
                 builder.TryAdd(tail, head, out _);
             }
 
-            AdjacencyListIncidenceGraph result = builder.ToGraph();
+            IndexedIncidenceGraph result = builder.ToGraph();
             return result;
         }
 

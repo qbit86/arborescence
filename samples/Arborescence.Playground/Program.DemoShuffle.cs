@@ -21,7 +21,7 @@
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            IndexedIncidenceGraph graph = builder.ToGraph();
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
