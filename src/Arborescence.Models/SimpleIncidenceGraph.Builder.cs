@@ -90,7 +90,9 @@
                 for (int vertex = 1; vertex < _vertexCount; ++vertex)
                     upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
+                _currentMaxTail = 0;
                 _edges = ArrayPrefixBuilder.Dispose(_edges, false);
+                _vertexCount = 0;
 
                 return new SimpleIncidenceGraph(storage);
             }
