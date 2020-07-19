@@ -27,6 +27,22 @@
         /// </summary>
         public int VertexCount => _storage is null ? 0 : (int)_storage[0];
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
+        public int EdgeCount
+        {
+            get
+            {
+                if (VertexCount == 0)
+                    return 0;
+
+                int edgeCount = _storage.Length - 1 - VertexCount;
+                Debug.Assert(edgeCount == (int)UpperBoundByVertex[VertexCount - 1]);
+                return edgeCount;
+            }
+        }
+
         private ReadOnlySpan<uint> UpperBoundByVertex => _storage.AsSpan(1, VertexCount);
 
         private uint UnsignedVertexCount => _storage?[0] ?? 0u;
