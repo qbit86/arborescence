@@ -12,7 +12,7 @@ namespace Arborescence
         // ReSharper disable once UnusedMember.Local
         private static void DemoUndirected()
         {
-            var builder = new UndirectedAdjacencyListIncidenceGraphBuilder(10);
+            var builder = new UndirectedIndexedIncidenceGraph.Builder(10);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("05"))
             {
