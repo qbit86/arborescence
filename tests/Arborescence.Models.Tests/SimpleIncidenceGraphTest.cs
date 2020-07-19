@@ -7,6 +7,9 @@ namespace Arborescence
 
     public sealed class SimpleIncidenceGraphTest
     {
+        private static IEqualityComparer<HashSet<Endpoints<int>>> HashSetEqualityComparer { get; } =
+            HashSet<Endpoints<int>>.CreateSetComparer();
+
         private static bool TryGetEndpoints(SimpleIncidenceGraph graph, uint edge, out Endpoints<int> endpoints)
         {
             if (!graph.TryGetTail(edge, out int tail))
@@ -23,15 +26,6 @@ namespace Arborescence
 
             endpoints = Endpoints.Create(tail, head);
             return true;
-        }
-
-        internal sealed class HashSetEqualityComparer : IEqualityComparer<HashSet<Endpoints<int>>>
-        {
-            public static HashSetEqualityComparer Instance { get; } = new HashSetEqualityComparer();
-
-            public bool Equals(HashSet<Endpoints<int>> x, HashSet<Endpoints<int>> y) => x.SetEquals(y);
-
-            public int GetHashCode(HashSet<Endpoints<int>> obj) => obj.GetHashCode();
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -68,7 +62,7 @@ namespace Arborescence
             }
 
             // Assert
-            Assert.Equal(expectedEdgeSet, actualEdgeSet, HashSetEqualityComparer.Instance);
+            Assert.Equal(expectedEdgeSet, actualEdgeSet, HashSetEqualityComparer);
         }
 
         [Theory]
