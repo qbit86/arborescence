@@ -73,7 +73,11 @@
 #else
                 var storage = new uint[storageLength];
 #endif
+                storage[0] = (uint)_vertexCount;
+                _edges.CopyTo(storage, 1 + _vertexCount);
+                Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
                 // TODO: Populate storage.
+
                 _edges = ArrayPrefixBuilder.Dispose(_edges, false);
 
                 return new SimpleIncidenceGraph(storage);
