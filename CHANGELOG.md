@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.2.0] - 2020-07-20
 ### Added
 - Models: `SimpleIncidenceGraph`, `SimpleIncidenceGraphPolicy`.
 
@@ -23,6 +23,6 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.1.1...HEAD
+[0.2.0]: https://github.com/qbit86/arborescence/compare/traversal-0.1.1...models-0.2.0
 [0.1.1]: https://github.com/qbit86/arborescence/compare/abstractions-0.1.0...traversal-0.1.1
 [0.1.0]: https://github.com/qbit86/arborescence/releases/tag/abstractions-0.1.0
