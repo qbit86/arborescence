@@ -29,10 +29,11 @@
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _currentMaxTail = 0;
                 _edges = ArrayPrefixBuilder.Create<uint>(edgeCapacity);
                 _vertexCount = initialVertexCount;
             }
+
+            private bool NeedsReordering => _currentMaxTail == int.MaxValue;
 
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out uint edge)
@@ -65,7 +66,7 @@
             public SimpleIncidenceGraph ToGraph()
             {
                 int edgeCount = _edges.Count;
-                if (_currentMaxTail == int.MaxValue)
+                if (NeedsReordering)
                     Array.Sort(_edges.Array, 0, edgeCount, EdgeComparer.Instance);
 
                 int storageLength = 1 + _vertexCount + edgeCount;
