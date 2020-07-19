@@ -29,8 +29,9 @@
                     continue;
 
                 var edges = IndexedEdgeListParser.ParseEdges(textReader).ToList();
+                int vertexCount = edges.Count == 0 ? 0 : edges.Select(e => Math.Max(e.Tail, e.Head)).Max() + 1;
                 string description = $"{{{nameof(testCase)}: {testCase}}}";
-                var parameter = new GraphDefinitionParameter(0, edges, description);
+                var parameter = new GraphDefinitionParameter(vertexCount, edges, description);
                 yield return new object[] { parameter };
             }
 

@@ -31,6 +31,27 @@ namespace Arborescence
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
+        internal void SimpleIncidenceGraph_SizeShouldMatch(GraphDefinitionParameter p)
+        {
+            // Arrange
+            var builder = new SimpleIncidenceGraph.Builder(p.VertexCount, p.Edges.Count);
+            foreach (Endpoints<int> endpoints in p.Edges)
+            {
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                if (!wasAdded)
+                    Assert.True(wasAdded);
+            }
+
+            // Act
+            SimpleIncidenceGraph graph = builder.ToGraph();
+
+            // Assert
+            Assert.Equal(p.VertexCount, graph.VertexCount);
+            Assert.Equal(p.Edges.Count, graph.EdgeCount);
+        }
+
+        [Theory]
+        [ClassData(typeof(GraphDefinitionCollection))]
         internal void SimpleIncidenceGraph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
