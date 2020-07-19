@@ -5,9 +5,15 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly struct UndirectedIndexedIncidenceGraph :
+    public readonly partial struct UndirectedIndexedIncidenceGraph :
         IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>, IEquatable<UndirectedIndexedIncidenceGraph>
     {
+        // Layout:
+        // vertexCount          reorderedEdges     tails
+        //         ↓↓↓             ↓↓↓↓↓↓↓↓↓↓↓     ↓↓↓↓↓
+        //         [4][_^|_^|_^|_^][021~0~2~1][bcb][aca]
+        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑           ↑↑↑↑↑
+        //               edgeBounds           heads
         private readonly int[] _storage;
 
         internal UndirectedIndexedIncidenceGraph(int[] storage)
