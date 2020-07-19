@@ -9,8 +9,6 @@
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public sealed class RecursiveDfsTest
     {
@@ -20,15 +18,15 @@
             RecursiveDfs = default;
         }
 
-        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private RecursiveDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
-        private void TraverseCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
+        private void TraverseCore(IndexedIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -39,12 +37,12 @@
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
             using var instantSteps = new Rist<(string, int)>(graph.VertexCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> instantHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<IndexedIncidenceGraph, int, int> instantHandler = CreateDfsHandler(instantSteps);
 
             byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
             using var recursiveSteps = new Rist<(string, int)>(graph.VertexCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
+            DfsHandler<IndexedIncidenceGraph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
             // Act
 
@@ -90,11 +88,11 @@
             ArrayPool<byte>.Shared.Return(recursiveColorMap);
         }
 
-        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(IList<(string, int)> steps)
+        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<(string, int)> steps)
         {
             Debug.Assert(steps != null, "steps != null");
 
-            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
             result.StartVertex += (g, v) => steps.Add((nameof(result.OnStartVertex), v));
             result.DiscoverVertex += (g, v) => steps.Add((nameof(result.DiscoverVertex), v));
             result.FinishVertex += (g, v) => steps.Add((nameof(result.FinishVertex), v));

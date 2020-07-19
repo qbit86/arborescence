@@ -10,11 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GraphCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GraphDefinitionCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GraphDefinitionParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphParameter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GraphSizeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ListExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestCaseCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RistFactory.cs" />
   </ItemGroup>
 </Project>

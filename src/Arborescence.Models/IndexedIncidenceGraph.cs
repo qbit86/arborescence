@@ -1,32 +1,28 @@
-﻿namespace Arborescence.Models
+namespace Arborescence.Models
 {
     using System;
     using System.Runtime.CompilerServices;
     using static System.Diagnostics.Debug;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly struct SortedAdjacencyListIncidenceGraph : IIncidenceGraph<int, int, RangeEnumerator>,
-        IEquatable<SortedAdjacencyListIncidenceGraph>
+    public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
+        IEquatable<IndexedIncidenceGraph>
     {
         // Layout:
-        // [0..1) — VertexCount
-        // [1..Offset₁ + VertexCount) — EdgeBounds; EdgeCount := (Length - 1 - VertexCount) / 2
-        // [1 + VertexCount..Offset₂ + EdgeCount) — Heads
-        // [1 + VertexCount + EdgeCount..Offset₃ + EdgeCount) — Tails
+        // vertexCount    reorderedEdges     tails
+        //         ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
+        //         [4][_^|_^|_^|_^][021][bcb][aca]
+        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
+        //               edgeBounds     heads
         private readonly int[] _storage;
 
-        internal SortedAdjacencyListIncidenceGraph(int[] storage)
+        internal IndexedIncidenceGraph(int[] storage)
         {
             Assert(storage != null, "storage != null");
             Assert(storage.Length > 0, "storage.Length > 0");
 
             Assert(storage[0] >= 0, "storage[0] >= 0");
             Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
-
-            // Assert: `endpoints` are consistent. For each edge: tail(edge) and head(edge) belong to vertices.
-            // Assert: `endpoints` are sorted by tail(edge).
-            // Assert: `edgeBounds` are vertexCount in length.
-            // Assert: `edgeBounds` contain increasing indices pointing to Endpoints.
 
             _storage = storage;
         }
@@ -39,7 +35,7 @@
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - GetVertexCount()) / 2;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
 
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
@@ -70,37 +66,37 @@
         }
 
         /// <inheritdoc/>
-        public RangeEnumerator EnumerateOutEdges(int vertex)
+        public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
-            if ((uint)vertex >= (uint)edgeBounds.Length)
-                return new RangeEnumerator(0, 0);
 
-            int start = vertex > 0 ? edgeBounds[vertex - 1] : 0;
-            int endExclusive = edgeBounds[vertex];
-            Assert(start <= endExclusive, "start <= endExclusive");
+            if ((uint)(2 * vertex) >= (uint)edgeBounds.Length)
+                return new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
 
-            return new RangeEnumerator(start, endExclusive);
+            int start = edgeBounds[2 * vertex];
+            int length = edgeBounds[2 * vertex + 1];
+            Assert(length >= 0, "length >= 0");
+
+            return new ArraySegmentEnumerator<int>(_storage, start, length);
         }
 
         /// <inheritdoc/>
-        public bool Equals(SortedAdjacencyListIncidenceGraph other) => Equals(_storage, other._storage);
+        public bool Equals(IndexedIncidenceGraph other) => _storage == other._storage;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) =>
-            obj is SortedAdjacencyListIncidenceGraph other && Equals(other);
+        public override bool Equals(object obj) => obj is IndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, VertexCount);
+        private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + VertexCount, EdgeCount);
+        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + 2 * VertexCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()
@@ -110,33 +106,31 @@
 
             int result = _storage[0];
             Assert(result >= 0, "result >= 0");
-            Assert(result <= _storage.Length - 1, "result <= _storage.Length - 1");
+            Assert(2 * result <= _storage.Length - 1, "2 * result <= _storage.Length - 1");
 
             return result;
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are equal.
+        /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are equal;
-        /// otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(SortedAdjacencyListIncidenceGraph left,
-            SortedAdjacencyListIncidenceGraph right) => left.Equals(right);
+        public static bool operator ==(IndexedIncidenceGraph left, IndexedIncidenceGraph right) =>
+            left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are not equal.
+        /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="SortedAdjacencyListIncidenceGraph"/> structures are not equal;
-        /// otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(SortedAdjacencyListIncidenceGraph left,
-            SortedAdjacencyListIncidenceGraph right) => !left.Equals(right);
+        public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) =>
+            !left.Equals(right);
     }
 }

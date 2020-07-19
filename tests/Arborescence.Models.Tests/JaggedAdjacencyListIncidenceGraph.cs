@@ -72,7 +72,7 @@ namespace Arborescence.Models
             return Equals(Endpoints, other.Endpoints) && Equals(OutEdges, other.OutEdges);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is JaggedAdjacencyListIncidenceGraph other && Equals(other);
         }

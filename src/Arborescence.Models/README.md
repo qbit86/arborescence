@@ -36,17 +36,17 @@ digraph Sorted {
 }
 ```
 
-### AdjacencyList-IncidenceGraph
+### IndexedIncidenceGraph
 
 Used in general case where graph is permitted to have parallel edges.
 
-|                 Length | Content            |
-|-----------------------:|:-------------------|
-|                      1 | _vertexCount_      |
-|      2 × _vertexCount_ | _edgeBounds_       |
-|            _edgeCount_ | _reorderedEdges_   |
-|            _edgeCount_ | _heads_            |
-|            _edgeCount_ | _tails_            |
+|         Length | Content             |
+|---------------:|:--------------------|
+|              1 | _vertexCount_ (_n_) |
+|        2 × _n_ | _edgeBoundByVertex_ |
+|            _m_ | _reorderedEdges_    |
+|            _m_ | _heads_             |
+|            _m_ | _tails_             |
 
 ```
 vertexCount    reorderedEdges     tails
@@ -56,67 +56,10 @@ vertexCount    reorderedEdges     tails
               edgeBounds     heads
 ```
 
-### Sorted-AdjacencyList-IncidenceGraph
+### SimpleIncidenceGraph
 
-|             Length | Content            |
-|-------------------:|:-------------------|
-|                  1 | _vertexCount_      |
-|      _vertexCount_ | _edgeUpperBounds_  |
-|        _edgeCount_ | _heads_            |
-|        _edgeCount_ | _orderedTails_     |
-
-_edgeCount_ = (_length_ − 1 − _vertexCount_) / 2
-
-```
-vertexCount      heads
-        ↓↓↓      ↓↓↓↓↓
-        [4][^^^^][bbc][aac]
-           ↑↑↑↑↑↑     ↑↑↑↑↑
-  edgeUpperBounds     orderedTails
-```
-
-### EdgeList-IncidenceGraph
-
-Used for simple graphs where edge is unambiguously determined by a pair of vertices.
-
-_vertexCount_
-
-|             Length | Content          |
-|-------------------:|:-----------------|
-|        _edgeCount_ | _reorderedEdges_ |
-|      _vertexCount_ | _edgeBounds_     |
-
-```
-reorderedEdges
-         ↓↓↓↓↓
-         [aac][____]
-         [bbc][^^^^]
-              ↑↑↑↑↑↑
-              edgeBounds
-```
-
-### Sorted-EdgeList-IncidenceGraph
-
-|             Length | Content            |
-|-------------------:|:-------------------|
-|                  1 | _vertexCount_      |
-|      _vertexCount_ | _edgeBounds_       |
-
-```
-vertexCount
-        ↓↓↓
-        [4][^^^^]
-           ↑↑↑↑↑↑
-           edgeBounds
-```
-
-|        Length | Content          |
-|--------------:|:-----------------|
-|   _edgeCount_ | _sortedEdges_    |
-
-```
-sortedEdges
-      ↓↓↓↓↓
-      [aac]
-      [bbc]
-```
+|         Length | Content              |
+|---------------:|:---------------------|
+|              1 | _vertexCount_ (_n_)  |
+|            _n_ | _UpperBoundByVertex_ |
+|            _m_ | _edges_              |

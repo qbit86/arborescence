@@ -3,22 +3,22 @@ namespace Arborescence.Models
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the in- and out-edges of each vertex
-    /// in the indexed bidirectional graph.
+    /// in the simple bidirectional graph.
     /// </summary>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
-    public readonly struct EdgeBidirectionalGraphPolicy<TGraph, TEdges> :
-        ITailPolicy<TGraph, int, Endpoints<int>>,
-        IHeadPolicy<TGraph, int, Endpoints<int>>,
+    public readonly struct SimpleBidirectionalGraphPolicy<TGraph, TEdges> :
+        ITailPolicy<TGraph, int, uint>,
+        IHeadPolicy<TGraph, int, uint>,
         IOutEdgesPolicy<TGraph, int, TEdges>,
         IInEdgesPolicy<TGraph, int, TEdges>
-        where TGraph : IBidirectionalGraph<int, Endpoints<int>, TEdges>
+        where TGraph : IBidirectionalGraph<int, uint, TEdges>
     {
         /// <inheritdoc/>
-        public bool TryGetTail(TGraph graph, Endpoints<int> edge, out int tail) => graph.TryGetTail(edge, out tail);
+        public bool TryGetTail(TGraph graph, uint edge, out int tail) => graph.TryGetTail(edge, out tail);
 
         /// <inheritdoc/>
-        public bool TryGetHead(TGraph graph, Endpoints<int> edge, out int head) => graph.TryGetHead(edge, out head);
+        public bool TryGetHead(TGraph graph, uint edge, out int head) => graph.TryGetHead(edge, out head);
 
         /// <inheritdoc/>
         public TEdges EnumerateOutEdges(TGraph graph, int vertex) => graph.EnumerateOutEdges(vertex);

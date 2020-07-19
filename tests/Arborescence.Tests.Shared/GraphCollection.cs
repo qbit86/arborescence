@@ -23,7 +23,7 @@
             for (int i = LowerBound; i < UpperBound; ++i)
             {
                 string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
-                var builder = new AdjacencyListIncidenceGraphBuilder(10);
+                var builder = new IndexedIncidenceGraph.Builder(10);
 
                 using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
                 {
@@ -35,7 +35,7 @@
                         builder.TryAdd(edge.Tail, edge.Head, out _);
                 }
 
-                AdjacencyListIncidenceGraph graph = builder.ToGraph();
+                IndexedIncidenceGraph graph = builder.ToGraph();
                 string description = $"{{{nameof(testCase)}: {testCase}}}";
                 var graphParameter = new GraphParameter(graph, description);
                 yield return new object[] { graphParameter };
@@ -44,7 +44,7 @@
             {
                 const int vertexCount = 1;
                 const double densityPower = 1.0;
-                AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                IndexedIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                     vertexCount, densityPower);
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
@@ -58,7 +58,7 @@
                 int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
                 foreach (double densityPower in s_densityPowers)
                 {
-                    AdjacencyListIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
+                    IndexedIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
                         vertexCount, densityPower);
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";

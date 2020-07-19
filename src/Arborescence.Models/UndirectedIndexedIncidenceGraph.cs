@@ -5,12 +5,18 @@ namespace Arborescence.Models
     using static System.Diagnostics.Debug;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly struct AdjacencyListIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
-        IEquatable<AdjacencyListIncidenceGraph>
+    public readonly partial struct UndirectedIndexedIncidenceGraph :
+        IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>, IEquatable<UndirectedIndexedIncidenceGraph>
     {
+        // Layout:
+        // vertexCount          reorderedEdges     tails
+        //         ↓↓↓             ↓↓↓↓↓↓↓↓↓↓↓     ↓↓↓↓↓
+        //         [4][_^|_^|_^|_^][021~0~2~1][bcb][aca]
+        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑           ↑↑↑↑↑
+        //               edgeBounds           heads
         private readonly int[] _storage;
 
-        internal AdjacencyListIncidenceGraph(int[] storage)
+        internal UndirectedIndexedIncidenceGraph(int[] storage)
         {
             Assert(storage != null, "storage != null");
             Assert(storage.Length > 0, "storage.Length > 0");
@@ -29,33 +35,35 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
+        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 4;
 
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            ReadOnlySpan<int> tails = GetTails();
-            if ((uint)edge >= (uint)tails.Length)
+            int actualEdge = edge < 0 ? ~edge : edge;
+            ReadOnlySpan<int> actualTails = edge < 0 ? GetHeads() : GetTails();
+            if (actualEdge >= actualTails.Length)
             {
                 tail = default;
                 return false;
             }
 
-            tail = tails[edge];
+            tail = actualTails[actualEdge];
             return true;
         }
 
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            ReadOnlySpan<int> heads = GetHeads();
-            if ((uint)edge >= (uint)heads.Length)
+            int actualEdge = edge < 0 ? ~edge : edge;
+            ReadOnlySpan<int> actualHeads = edge < 0 ? GetTails() : GetHeads();
+            if (actualEdge >= actualHeads.Length)
             {
                 head = default;
                 return false;
             }
 
-            head = heads[edge];
+            head = actualHeads[actualEdge];
             return true;
         }
 
@@ -75,10 +83,10 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool Equals(AdjacencyListIncidenceGraph other) => _storage == other._storage;
+        public bool Equals(UndirectedIndexedIncidenceGraph other) => _storage == other._storage;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is AdjacencyListIncidenceGraph other && Equals(other);
+        public override bool Equals(object obj) => obj is UndirectedIndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
@@ -87,10 +95,10 @@ namespace Arborescence.Models
         private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + 2 * VertexCount + 3 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + 2 * VertexCount + EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()
@@ -106,25 +114,27 @@ namespace Arborescence.Models
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="AdjacencyListIncidenceGraph"/> structures are equal.
+        /// Indicates whether two <see cref="UndirectedIndexedIncidenceGraph"/> structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="AdjacencyListIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="UndirectedIndexedIncidenceGraph"/> structures are equal;
+        /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
-            left.Equals(right);
+        public static bool operator ==(UndirectedIndexedIncidenceGraph left,
+            UndirectedIndexedIncidenceGraph right) => left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="AdjacencyListIncidenceGraph"/> structures are not equal.
+        /// Indicates whether two <see cref="UndirectedIndexedIncidenceGraph"/> structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="AdjacencyListIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="UndirectedIndexedIncidenceGraph"/> structures are not equal;
+        /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(AdjacencyListIncidenceGraph left, AdjacencyListIncidenceGraph right) =>
-            !left.Equals(right);
+        public static bool operator !=(UndirectedIndexedIncidenceGraph left,
+            UndirectedIndexedIncidenceGraph right) => !left.Equals(right);
     }
 }

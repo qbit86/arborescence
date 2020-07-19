@@ -8,8 +8,6 @@
     using Models;
     using Traversal;
     using Workbench;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
@@ -17,7 +15,7 @@
 
         private static void Main()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
+            var builder = new SimpleIncidenceGraph.Builder(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
@@ -26,14 +24,14 @@
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            SimpleIncidenceGraph graph = builder.ToGraph();
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
             TextWriter w = Console.Out;
 
-            EnumerableDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy> dfs = default;
+            EnumerableDfs<SimpleIncidenceGraph, int, uint, ArraySegmentEnumerator<uint>, byte[],
+                SimpleIncidenceGraphPolicy, IndexedSetPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -51,12 +49,12 @@
             IEnumerator<int> sources = EnumerateSources();
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
-            var treeEdges = new HashSet<int>(graph.EdgeCount);
-            using IEnumerator<int> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+            var treeEdges = new HashSet<uint>(graph.EdgeCount);
+            using IEnumerator<uint> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
             while (steps.MoveNext())
             {
-                int e = steps.Current;
-                w.WriteLine($"  {E(graph, e)} [label={e} style=bold]");
+                uint e = steps.Current;
+                w.WriteLine($"  {E(graph, e)} [style=bold]");
                 treeEdges.Add(e);
 
                 if (graph.TryGetHead(e, out int v))
@@ -78,14 +76,14 @@
             w.WriteLine();
             for (int v = 0; v < graph.VertexCount; ++v)
             {
-                ArraySegmentEnumerator<int> outEdges = graph.EnumerateOutEdges(v);
+                ArraySegmentEnumerator<uint> outEdges = graph.EnumerateOutEdges(v);
                 while (outEdges.MoveNext())
                 {
-                    int e = outEdges.Current;
+                    uint e = outEdges.Current;
                     if (treeEdges.Contains(e))
                         continue;
 
-                    w.WriteLine($"  {E(graph, e)} [label={e} style=dotted]");
+                    w.WriteLine($"  {E(graph, e)} [style=dotted]");
                 }
             }
 
@@ -94,7 +92,7 @@
 
         private static string V(int v) => Base32.ToString(v);
 
-        private static string E(AdjacencyListIncidenceGraph g, int e)
+        private static string E(SimpleIncidenceGraph g, uint e)
         {
             string head = g.TryGetHead(e, out int h) ? V(h) : "?";
             string tail = g.TryGetTail(e, out int t) ? V(t) : "?";

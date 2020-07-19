@@ -1,0 +1,11 @@
+﻿digraph Packages {
+  rankdir = BT
+  node [shape=box fixedsize=true width=1.8 fontname="JetBrains Mono"]
+  a [label=Abstractions]
+  b [label=Primitives]
+  c [label=Models]
+  d [label=Traversal]
+  c -> a
+  c -> b
+  d -> a
+}

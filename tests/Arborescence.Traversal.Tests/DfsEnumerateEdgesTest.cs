@@ -9,8 +9,6 @@ namespace Arborescence
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     public sealed class DfsEnumerateEdgesTest
     {
@@ -20,15 +18,15 @@ namespace Arborescence
             EnumerableDfs = default;
         }
 
-        private InstantDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
-        private void EnumerateEdgesCore(AdjacencyListIncidenceGraph graph, bool multipleSource)
+        private void EnumerateEdgesCore(IndexedIncidenceGraph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -43,7 +41,7 @@ namespace Arborescence
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
@@ -91,11 +89,11 @@ namespace Arborescence
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateDfsHandler(IList<int> treeEdges)
+        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<int> treeEdges)
         {
             Debug.Assert(treeEdges != null, "treeEdges != null");
 
-            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
             result.TreeEdge += (g, e) => treeEdges.Add(e);
             return result;
         }

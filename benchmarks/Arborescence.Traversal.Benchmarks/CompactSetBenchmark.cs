@@ -7,8 +7,6 @@
     using Models;
     using Traversal;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     [MemoryDiagnoser]
     public abstract class CompactSetBenchmark
@@ -27,15 +25,15 @@
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
-        private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, CompactSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedIncidenceGraphPolicy, CompactSetPolicy>
             CompactDfs { get; }
 
-        private EnumerableDfs<AdjacencyListIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
+                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             FastDfs { get; }
 
-        private AdjacencyListIncidenceGraph Graph { get; set; }
+        private IndexedIncidenceGraph Graph { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup()

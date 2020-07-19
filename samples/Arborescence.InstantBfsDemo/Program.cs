@@ -9,8 +9,6 @@
     using Models;
     using Traversal;
     using Workbench;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
@@ -18,7 +16,7 @@
 
         private static void Main()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
+            var builder = new IndexedIncidenceGraph.Builder(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
@@ -27,14 +25,14 @@
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            IndexedIncidenceGraph graph = builder.ToGraph();
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
             TextWriter w = Console.Out;
 
-            InstantBfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> bfs = default;
+            InstantBfs<IndexedIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> bfs = default;
 
             w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -52,7 +50,7 @@
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
-            BfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
+            BfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
             ArrayPool<byte>.Shared.Return(colorMap);
 
@@ -83,13 +81,13 @@
             w.WriteLine("}");
         }
 
-        private static BfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
+        private static BfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
-            var result = new BfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
@@ -102,7 +100,7 @@
 
         private static string V(int v) => Base32.ToString(v);
 
-        private static string E(AdjacencyListIncidenceGraph g, int e)
+        private static string E(IndexedIncidenceGraph g, int e)
         {
             string head = g.TryGetHead(e, out int h) ? V(h) : "?";
             string tail = g.TryGetTail(e, out int t) ? V(t) : "?";

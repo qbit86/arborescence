@@ -9,8 +9,6 @@ namespace Arborescence
     using Models;
     using Traversal;
     using Workbench;
-    using IndexedAdjacencyListGraphPolicy =
-        Models.IndexedIncidenceGraphPolicy<Models.AdjacencyListIncidenceGraph, ArraySegmentEnumerator<int>>;
 
     internal static class Program
     {
@@ -18,7 +16,7 @@ namespace Arborescence
 
         private static void Main()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
+            var builder = new IndexedIncidenceGraph.Builder(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
@@ -27,14 +25,14 @@ namespace Arborescence
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            AdjacencyListIncidenceGraph graph = builder.ToGraph();
+            IndexedIncidenceGraph graph = builder.ToGraph();
             Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
             Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
 
             TextWriter w = Console.Out;
 
-            InstantDfs<AdjacencyListIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
-                IndexedAdjacencyListGraphPolicy, IndexedColorMapPolicy> dfs = default;
+            InstantDfs<IndexedIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -52,7 +50,7 @@ namespace Arborescence
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
-            DfsHandler<AdjacencyListIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
+            DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             dfs.Traverse(graph, sources, colorMap, handler);
             ArrayPool<byte>.Shared.Return(colorMap);
 
@@ -83,13 +81,13 @@ namespace Arborescence
             w.WriteLine("}");
         }
 
-        private static DfsHandler<AdjacencyListIncidenceGraph, int, int> CreateHandler(
+        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
-            var result = new DfsHandler<AdjacencyListIncidenceGraph, int, int>();
+            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
             result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
@@ -103,7 +101,7 @@ namespace Arborescence
 
         private static string V(int v) => Base32.ToString(v);
 
-        private static string E(AdjacencyListIncidenceGraph g, int e)
+        private static string E(IndexedIncidenceGraph g, int e)
         {
             string head = g.TryGetHead(e, out int h) ? V(h) : "?";
             string tail = g.TryGetTail(e, out int t) ? V(t) : "?";
