@@ -8,6 +8,12 @@ namespace Arborescence.Models
     public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
         IEquatable<IndexedIncidenceGraph>
     {
+        // Layout:
+        // vertexCount    reorderedEdges     tails
+        //         ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
+        //         [4][_^|_^|_^|_^][021][bcb][aca]
+        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
+        //               edgeBounds     heads
         private readonly int[] _storage;
 
         internal IndexedIncidenceGraph(int[] storage)
