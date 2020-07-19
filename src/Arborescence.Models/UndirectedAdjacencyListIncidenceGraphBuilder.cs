@@ -7,7 +7,7 @@
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <inheritdoc/>
     public struct UndirectedAdjacencyListIncidenceGraphBuilder :
-        IGraphBuilder<UndirectedAdjacencyListIncidenceGraph, int, int>
+        IGraphBuilder<UndirectedIndexedIncidenceGraph, int, int>
     {
         private const int DefaultInitialOutDegree = 8;
 
@@ -108,7 +108,7 @@
         //               edgeBounds           heads
 
         /// <inheritdoc/>
-        public UndirectedAdjacencyListIncidenceGraph ToGraph()
+        public UndirectedIndexedIncidenceGraph ToGraph()
         {
             Assert(_tails.Count == _heads.Count);
             int vertexCount = VertexCount;
@@ -145,7 +145,7 @@
             _tails.AsSpan().CopyTo(destTails);
             _tails.Dispose(false);
 
-            return new UndirectedAdjacencyListIncidenceGraph(storage);
+            return new UndirectedIndexedIncidenceGraph(storage);
         }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
