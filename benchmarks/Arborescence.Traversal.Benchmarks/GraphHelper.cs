@@ -26,7 +26,7 @@
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, 1.5));
 
-            var builder = new AdjacencyListIncidenceGraphBuilder(vertexCount);
+            var builder = new IndexedIncidenceGraph.Builder(vertexCount);
             var prng = new Random(1729);
 
             for (int e = 0; e < edgeCount; ++e)

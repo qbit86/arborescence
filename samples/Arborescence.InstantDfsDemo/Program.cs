@@ -16,7 +16,7 @@ namespace Arborescence
 
         private static void Main()
         {
-            var builder = new AdjacencyListIncidenceGraphBuilder(0, 31);
+            var builder = new IndexedIncidenceGraph.Builder(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {

@@ -23,7 +23,7 @@
             for (int i = LowerBound; i < UpperBound; ++i)
             {
                 string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
-                var builder = new AdjacencyListIncidenceGraphBuilder(10);
+                var builder = new IndexedIncidenceGraph.Builder(10);
 
                 using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
                 {
