@@ -76,7 +76,6 @@
                 var storage = new uint[storageLength];
 #endif
                 storage[0] = (uint)_vertexCount;
-                // TODO: Test for empty _edges (when no calls to TryAdd were performed).
                 _edges.CopyTo(storage, 1 + _vertexCount);
                 Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
                 upperBoundByVertex.Fill(0u);
