@@ -10,6 +10,10 @@
     public readonly partial struct SimpleIncidenceGraph : IIncidenceGraph<int, uint, ArraySegmentEnumerator<uint>>,
         IEquatable<SimpleIncidenceGraph>
     {
+        // Layout:
+        // 1    | n — the number of vertices
+        // n    | upper bounds of out-edge enumerators
+        // m    | edges
         private readonly uint[] _storage;
 
         private SimpleIncidenceGraph(uint[] storage)
