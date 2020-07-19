@@ -5,8 +5,8 @@
 
     public readonly partial struct SimpleIncidenceGraph
     {
-        /// <inheritdoc/>
 #pragma warning disable CA1034 // Nested types should not be visible
+        /// <inheritdoc/>
         public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
         {
             private int _currentMaxTail;
