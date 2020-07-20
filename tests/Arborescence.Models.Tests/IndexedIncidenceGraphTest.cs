@@ -1,17 +1,17 @@
-namespace Arborescence
+﻿namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
-    using Graph = Models.SimpleIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<uint>;
+    using Graph = Models.IndexedIncidenceGraph;
+    using EdgeEnumerator = ArraySegmentEnumerator<int>;
 
-    public sealed class SimpleIncidenceGraphTest
+    public sealed class IndexedIncidenceGraphTest
     {
         private static IEqualityComparer<HashSet<Endpoints<int>>> HashSetEqualityComparer { get; } =
             HashSet<Endpoints<int>>.CreateSetComparer();
 
-        private static bool TryGetEndpoints(Graph graph, uint edge, out Endpoints<int> endpoints)
+        private static bool TryGetEndpoints(Graph graph, int edge, out Endpoints<int> endpoints)
         {
             if (!graph.TryGetTail(edge, out int tail))
             {
@@ -32,7 +32,7 @@ namespace Arborescence
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void SimpleIncidenceGraph_SizeShouldMatch(GraphDefinitionParameter p)
+        internal void IndexedIncidenceGraph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -53,7 +53,7 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void SimpleIncidenceGraph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
+        internal void IndexedIncidenceGraph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -74,7 +74,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    uint edge = outEdges.Current;
+                    int edge = outEdges.Current;
                     bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints<int> endpoints);
                     if (!hasEndpoints)
                         Assert.True(hasEndpoints);
@@ -89,7 +89,7 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void SimpleIncidenceGraph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
+        internal void IndexedIncidenceGraph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -108,7 +108,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    uint edge = outEdges.Current;
+                    int edge = outEdges.Current;
                     bool hasTail = graph.TryGetTail(edge, out int tail);
                     if (!hasTail)
                         Assert.True(hasTail);
