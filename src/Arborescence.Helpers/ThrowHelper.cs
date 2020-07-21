@@ -1,14 +1,14 @@
-﻿#pragma warning disable CA1303
-
-namespace Arborescence
+﻿namespace Arborescence
 {
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-    // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/System/ThrowHelper.cs
+    // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs
+
     internal static class ThrowHelper
     {
+#pragma warning disable CA1303
         internal static void ThrowArgumentException_DestinationTooShort()
         {
             throw new ArgumentException(SR.Argument_DestinationTooShort);
@@ -92,7 +92,7 @@ namespace Arborescence
                 case ExceptionArgument.start:
                     return nameof(ExceptionArgument.start);
                 default:
-                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
+                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument enum.");
                     return string.Empty;
             }
         }
@@ -107,10 +107,11 @@ namespace Arborescence
                 case ExceptionResource.InvalidOperation_NullArray:
                     return SR.InvalidOperation_NullArray;
                 default:
-                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource Enum.");
-                    return "";
+                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource enum.");
+                    return string.Empty;
             }
         }
+#pragma warning restore CA1303
     }
 
     // ReSharper disable InconsistentNaming
