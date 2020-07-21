@@ -4,6 +4,9 @@
 ### Added
 - Models: non-generic `UndirectedIndexedIncidenceGraphPolicy`.
 
+### Changed
+- Models: Bumped minimum target platform to `netstandard1.3`.
+
 ## [0.2.0] - 2020-07-20
 ### Added
 - Models: `SimpleIncidenceGraph`, `SimpleIncidenceGraphPolicy`.
