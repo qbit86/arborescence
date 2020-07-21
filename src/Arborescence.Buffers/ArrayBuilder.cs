@@ -19,12 +19,6 @@ namespace Arborescence
         private const int DefaultCapacity = 4;
         private const int MaxCoreClrArrayLength = 0x7fefffff; // For byte arrays the limit is slightly larger
 
-#pragma warning disable CA1825 // Avoid zero-length array allocations.
-        // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
-        // instantiating another generic type in addition to ArrayBuilder<T> for new type parameters.
-        private static readonly T[] s_emptyArray = new T[0];
-#pragma warning restore CA1825 // Avoid zero-length array allocations.
-
         private T[] _array; // Starts out null, initialized on first Add.
         private int _count; // Number of items into _array we're using.
 
@@ -38,8 +32,6 @@ namespace Arborescence
             if (capacity > 0)
                 _array = Pool.Rent(capacity);
         }
-
-        public static T[] EmptyArray => s_emptyArray;
 
         private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
 
@@ -110,7 +102,7 @@ namespace Arborescence
         public T[] ToArray()
         {
             if (_count == 0)
-                return s_emptyArray;
+                return Array.Empty<T>();
 
             Debug.Assert(_array != null); // Nonzero _count should imply this
 
