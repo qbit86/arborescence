@@ -13,7 +13,7 @@
         // Layout:
         // 1    | n — the number of vertices
         // n    | upper bounds of out-edge enumerators
-        // m    | edges
+        // m    | edges sorted by tail
         private readonly uint[] _storage;
 
         private SimpleIncidenceGraph(uint[] storage)
