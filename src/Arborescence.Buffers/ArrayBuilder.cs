@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 namespace Arborescence
@@ -9,7 +8,7 @@ namespace Arborescence
     using System.Buffers;
     using System.Diagnostics;
 
-    // https://github.com/dotnet/corefx/blob/master/src/Common/src/System/Collections/Generic/ArrayBuilder.cs
+    // https://github.com/dotnet/runtime/blob/master/src/libraries/Common/src/System/Collections/Generic/ArrayBuilder.cs
 
     /// <summary>
     /// Helper type for avoiding allocations while building arrays.
