@@ -2,11 +2,11 @@
   <PropertyGroup>
     <Description>Basic blocks for building algorithms and data structures.
 Commonly used types:
-Endpoints&lt;TVertex&gt;
-ArrayPrefix&lt;T&gt;</Description>
+• Endpoints&lt;TVertex&gt;
+• ArrayPrefix&lt;T&gt;</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionPrefix>0.2.0</VersionPrefix>
+    <VersionPrefix>0.2.1</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
