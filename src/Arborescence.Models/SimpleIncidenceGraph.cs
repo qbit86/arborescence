@@ -71,11 +71,11 @@
             if (unchecked((uint)vertex) >= UnsignedVertexCount)
                 return default;
 
-            int offset = vertex == 0 ? 0 : (int)UpperBoundByVertex[vertex - 1];
+            int lowerBound = vertex == 0 ? 0 : (int)UpperBoundByVertex[vertex - 1];
             int upperBound = (int)UpperBoundByVertex[vertex];
-            Debug.Assert(offset <= upperBound, "offset <= upperBound");
-            int count = upperBound - offset;
-            return new ArraySegmentEnumerator<uint>(_storage, 1 + VertexCount + offset, count);
+            Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
+            int offset = 1 + VertexCount;
+            return new ArraySegmentEnumerator<uint>(_storage, offset + lowerBound, offset + upperBound);
         }
 
         /// <inheritdoc/>

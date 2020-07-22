@@ -79,7 +79,7 @@ namespace Arborescence.Models
             int length = edgeBounds[2 * vertex + 1];
             Assert(length >= 0, "length >= 0");
 
-            return new ArraySegmentEnumerator<int>(_storage, start, length);
+            return new ArraySegmentEnumerator<int>(_storage, start, start + length);
         }
 
         /// <inheritdoc/>

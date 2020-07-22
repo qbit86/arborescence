@@ -34,6 +34,12 @@
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
         }
 
+        internal static void ThrowArraySegmentEnumeratorCtorValidationFailedExceptions(
+            Array array, int start, int endExclusive)
+        {
+            throw GetArraySegmentEnumeratorCtorValidationFailedException(array, start, endExclusive);
+        }
+
         internal static void ThrowInvalidOperationException(ExceptionResource resource)
         {
             throw new InvalidOperationException(GetResourceString(resource));
@@ -57,7 +63,7 @@
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static Exception GetArraySegmentCtorValidationFailedException(Array array, int offset, int count)
         {
-            if (array == null)
+            if (array is null)
                 return new ArgumentNullException(nameof(array));
 
             if (offset < 0)
@@ -69,6 +75,25 @@
             Debug.Assert(array.Length - offset < count);
 
             return new ArgumentException(SR.Argument_InvalidOffLen);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static Exception GetArraySegmentEnumeratorCtorValidationFailedException(
+            Array array, int start, int endExclusive)
+        {
+            if (array is null)
+                return new ArgumentNullException(nameof(array));
+
+            if (start < 0)
+                return new ArgumentOutOfRangeException(nameof(start), SR.ArgumentOutOfRange_NeedNonNegNum);
+
+            if (start > array.Length)
+                return new ArgumentOutOfRangeException(nameof(start));
+
+            if (endExclusive < 0)
+                return new ArgumentOutOfRangeException(nameof(endExclusive), SR.ArgumentOutOfRange_NeedNonNegNum);
+
+            return new ArgumentOutOfRangeException(nameof(endExclusive));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

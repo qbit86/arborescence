@@ -13,7 +13,7 @@ Commonly used types:
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.1</AssemblyVersion>
+    <AssemblyVersion>0.2</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>8.0</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
