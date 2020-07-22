@@ -45,7 +45,7 @@ namespace Arborescence
             return arrayPrefix;
         }
 
-        internal static ArrayPrefix<T> Dispose<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
+        internal static ArrayPrefix<T> Release<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
         {
             ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
             return ArrayPrefix<T>.Empty;
