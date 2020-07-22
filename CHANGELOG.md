@@ -5,6 +5,7 @@
 - Models: non-generic `UndirectedIndexedIncidenceGraphPolicy`.
 
 ### Changed
+- Primitives: `ArraySegmentEnumerator<T>` constructor.
 - Models: Bumped minimum target platform to `netstandard1.3`.
 
 ## [0.2.0] - 2020-07-20
