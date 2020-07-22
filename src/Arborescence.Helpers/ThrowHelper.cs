@@ -78,7 +78,8 @@
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static Exception GetArraySegmentEnumeratorCtorValidationFailedException(Array array, int start, int endExclusive)
+        private static Exception GetArraySegmentEnumeratorCtorValidationFailedException(
+            Array array, int start, int endExclusive)
         {
             if (array is null)
                 return new ArgumentNullException(nameof(array));
