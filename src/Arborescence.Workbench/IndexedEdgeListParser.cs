@@ -2,8 +2,8 @@ namespace Arborescence.Workbench
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
-    using static System.Diagnostics.Debug;
 
     public static class IndexedEdgeListParser
     {
@@ -21,9 +21,8 @@ namespace Arborescence.Workbench
 
         private static IEnumerable<Endpoints<int>> ParseEdgesCore(TextReader textReader)
         {
-            Assert(textReader != null);
-
-            for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
+            Debug.Assert(textReader != null, nameof(textReader) + " != null");
+            for (string line = textReader!.ReadLine(); line != null; line = textReader.ReadLine())
             {
                 string[] parts = line.Split(s_arrowSeparator, 2, StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length < 2)
