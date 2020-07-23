@@ -13,7 +13,7 @@ namespace Arborescence.Workbench
 
         public static IEnumerable<Endpoints<int>> ParseEdges(TextReader textReader)
         {
-            if (textReader == null)
+            if (textReader is null)
                 throw new ArgumentNullException(nameof(textReader));
 
             return ParseEdgesCore(textReader);
