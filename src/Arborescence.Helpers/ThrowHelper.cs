@@ -8,7 +8,7 @@
 
     internal static class ThrowHelper
     {
-#pragma warning disable CA1303
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
         internal static void ThrowArgumentException_DestinationTooShort()
         {
             throw new ArgumentException(SR.Argument_DestinationTooShort);
@@ -32,12 +32,6 @@
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
-        }
-
-        internal static void ThrowArraySegmentEnumeratorCtorValidationFailedExceptions(
-            Array array, int start, int endExclusive)
-        {
-            throw GetArraySegmentEnumeratorCtorValidationFailedException(array, start, endExclusive);
         }
 
         internal static void ThrowInvalidOperationException(ExceptionResource resource)
@@ -75,25 +69,6 @@
             Debug.Assert(array.Length - offset < count);
 
             return new ArgumentException(SR.Argument_InvalidOffLen);
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static Exception GetArraySegmentEnumeratorCtorValidationFailedException(
-            Array array, int start, int endExclusive)
-        {
-            if (array is null)
-                return new ArgumentNullException(nameof(array));
-
-            if (start < 0)
-                return new ArgumentOutOfRangeException(nameof(start), SR.ArgumentOutOfRange_NeedNonNegNum);
-
-            if (start > array.Length)
-                return new ArgumentOutOfRangeException(nameof(start));
-
-            if (endExclusive < 0)
-                return new ArgumentOutOfRangeException(nameof(endExclusive), SR.ArgumentOutOfRange_NeedNonNegNum);
-
-            return new ArgumentOutOfRangeException(nameof(endExclusive));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -136,7 +111,7 @@
                     return string.Empty;
             }
         }
-#pragma warning restore CA1303
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
 
     // ReSharper disable InconsistentNaming

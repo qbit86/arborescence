@@ -23,7 +23,7 @@ namespace Arborescence
         public ArraySegmentEnumerator(T[] array, int start, int endExclusive)
         {
             if (array is null || unchecked((uint)start > (uint)array.Length || (uint)endExclusive > (uint)array.Length))
-                ThrowHelper.ThrowArraySegmentEnumeratorCtorValidationFailedExceptions(array, start, endExclusive);
+                ArraySegmentEnumeratorHelper.ThrowCtorValidationFailedExceptions(array, start, endExclusive);
 
             _array = array;
             _start = start;
@@ -37,9 +37,9 @@ namespace Arborescence
             get
             {
                 if (_current < _start)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                    ArraySegmentEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                 if (_current >= _end)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                    ArraySegmentEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
                 return _array[_current];
             }
         }
