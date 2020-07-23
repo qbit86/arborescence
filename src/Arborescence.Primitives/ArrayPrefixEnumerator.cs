@@ -21,11 +21,8 @@ namespace Arborescence
         /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefixEnumerator(T[] array, int count)
         {
-            if (array == null)
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-
-            if (array == null || (uint)count > (uint)array.Length)
-                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
+            if (array is null || unchecked((uint)count > (uint)array.Length))
+                ArrayPrefixEnumeratorHelper.ThrowCtorValidationFailedExceptions(array, count);
 
             _array = array;
             _end = count;
@@ -38,9 +35,9 @@ namespace Arborescence
             get
             {
                 if (_current < 0)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                    ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                 if (_current >= _end)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                    ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
                 return _array[_current];
             }
         }
