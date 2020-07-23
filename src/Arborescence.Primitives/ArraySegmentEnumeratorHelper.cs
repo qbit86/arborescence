@@ -3,19 +3,32 @@ namespace Arborescence
     using System;
     using System.Runtime.CompilerServices;
 
+#if NETSTANDARD2_1
+    using System.Diagnostics.CodeAnalysis;
+#endif
+
     internal static class ArraySegmentEnumeratorHelper
     {
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
+#if NETSTANDARD2_1
+        [DoesNotReturn]
+#endif
         internal static void ThrowCtorValidationFailedExceptions(Array array, int start, int endExclusive)
         {
             throw GetCtorValidationFailedException(array, start, endExclusive);
         }
 
+#if NETSTANDARD2_1
+        [DoesNotReturn]
+#endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
         {
             throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
         }
 
+#if NETSTANDARD2_1
+        [DoesNotReturn]
+#endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()
         {
             throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
