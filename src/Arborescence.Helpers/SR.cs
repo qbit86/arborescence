@@ -17,5 +17,6 @@ namespace Arborescence
         internal const string InvalidOperation_EnumEnded = "Enumeration already finished.";
         internal const string InvalidOperation_EnumNotStarted = "Enumeration has not started. Call MoveNext.";
         internal const string InvalidOperation_NullArray = "The underlying array is null.";
+        internal const string UnreachableLocation = "This program location is thought to be unreachable.";
     }
 }

@@ -49,7 +49,10 @@ namespace Arborescence
             if (endExclusive < 0)
                 return new ArgumentOutOfRangeException(nameof(endExclusive), SR.ArgumentOutOfRange_NeedNonNegNum);
 
-            return new ArgumentOutOfRangeException(nameof(endExclusive));
+            if (endExclusive > array.Length)
+                return new ArgumentOutOfRangeException(nameof(endExclusive));
+
+            throw new InvalidOperationException(SR.UnreachableLocation);
         }
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
