@@ -30,7 +30,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public T Current
+        public readonly T Current
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Arborescence
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An enumerator for the array prefix.</returns>
-        public ArrayPrefixEnumerator<T> GetEnumerator()
+        public readonly ArrayPrefixEnumerator<T> GetEnumerator()
         {
             ArrayPrefixEnumerator<T> ator = this;
             ator._current = -1;
@@ -69,15 +69,9 @@ namespace Arborescence
 
         void IDisposable.Dispose() { }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this;
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this;
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return this;
-        }
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
 
         void IEnumerator.Reset()
         {

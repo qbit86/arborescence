@@ -32,7 +32,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public T Current
+        public readonly T Current
         {
             get
             {
@@ -60,7 +60,7 @@ namespace Arborescence
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An enumerator for the range of elements.</returns>
-        public ArraySegmentEnumerator<T> GetEnumerator()
+        public readonly ArraySegmentEnumerator<T> GetEnumerator()
         {
             ArraySegmentEnumerator<T> ator = this;
             ator._current = _start - 1;
@@ -77,15 +77,9 @@ namespace Arborescence
         /// <inheritdoc/>
         public void Dispose() { }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this;
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this;
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return this;
-        }
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
     }
 #pragma warning restore CA1710 // Identifiers should have correct suffix
 }
