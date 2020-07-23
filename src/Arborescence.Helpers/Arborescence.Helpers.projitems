@@ -9,6 +9,7 @@
     <Import_RootNamespace>Arborescence</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ExceptionArgument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HashHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SR.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThrowHelper.cs" />

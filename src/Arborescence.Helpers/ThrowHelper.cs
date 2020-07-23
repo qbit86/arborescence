@@ -115,14 +115,6 @@
     }
 
     // ReSharper disable InconsistentNaming
-    internal enum ExceptionArgument
-    {
-        array,
-        count,
-        index,
-        start
-    }
-
     internal enum ExceptionResource
     {
         ArgumentOutOfRange_Index,
