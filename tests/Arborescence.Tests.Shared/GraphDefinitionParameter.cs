@@ -7,18 +7,18 @@
     {
         private readonly string _description;
 
-        public GraphDefinitionParameter(int vertexCount, IReadOnlyList<Endpoints<int>> edges, string description)
+        public GraphDefinitionParameter(int vertexCount, IReadOnlyList<Endpoints> edges, string description)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
             VertexCount = vertexCount;
-            Edges = edges ?? Array.Empty<Endpoints<int>>();
+            Edges = edges ?? Array.Empty<Endpoints>();
             _description = description ?? string.Empty;
         }
 
         internal int VertexCount { get; }
-        internal IReadOnlyList<Endpoints<int>> Edges { get; }
+        internal IReadOnlyList<Endpoints> Edges { get; }
 
         public override string ToString() => _description;
     }

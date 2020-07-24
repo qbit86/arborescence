@@ -3,7 +3,6 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
-    using System.Runtime.CompilerServices;
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
@@ -28,6 +27,8 @@
             _data = unchecked(((ulong)tail << 32) | (uint)head);
         }
 
+        private static CultureInfo F => CultureInfo.InvariantCulture;
+
         /// <summary>
         /// Gets the tail of the edge.
         /// </summary>
@@ -44,8 +45,7 @@
         public override string ToString()
         {
             // Consider using int.TryFormat() for netstandard2.1.
-            CultureInfo f = CultureInfo.InvariantCulture;
-            return EndpointsHelper.PairToString(Tail.ToString(f), Head.ToString(f));
+            return EndpointsHelper.PairToString(Tail.ToString(F), Head.ToString(F));
         }
 
         /// <summary>
@@ -60,19 +60,6 @@
             head = Head;
         }
 
-        /// <summary>
-        /// Creates a new <see cref="Endpoints{TVertex}"/> from the given values.
-        /// </summary>
-        /// <param name="tail">The tail of the edge.</param>
-        /// <param name="head">The head of the edge.</param>
-        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-        /// <returns>A new instance of the <see cref="Endpoints{TVertex}"/> structure.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head)
-        {
-            return new Endpoints<TVertex>(tail, head);
-        }
-
         /// <inheritdoc/>
         public bool Equals(Endpoints other) => _data == other._data;
 
@@ -80,7 +67,7 @@
         public override bool Equals(object obj) => obj is Endpoints other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _data.GetHashCode();
+        public override int GetHashCode() => unchecked(Tail.GetHashCode() * 397) ^ Head.GetHashCode();
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints"/> structures are equal.
@@ -90,10 +77,7 @@
         /// <returns>
         /// <c>true</c> if the two <see cref="Endpoints"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(Endpoints left, Endpoints right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(Endpoints left, Endpoints right) => left.Equals(right);
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints"/> structures are not equal.
@@ -103,9 +87,6 @@
         /// <returns>
         /// <c>true</c> if the two <see cref="Endpoints"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(Endpoints left, Endpoints right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(Endpoints left, Endpoints right) => !left.Equals(right);
     }
 }

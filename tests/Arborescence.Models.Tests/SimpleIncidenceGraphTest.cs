@@ -8,10 +8,10 @@ namespace Arborescence
 
     public sealed class SimpleIncidenceGraphTest
     {
-        private static IEqualityComparer<HashSet<Endpoints<int>>> HashSetEqualityComparer { get; } =
-            HashSet<Endpoints<int>>.CreateSetComparer();
+        private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
+            HashSet<Endpoints>.CreateSetComparer();
 
-        private static bool TryGetEndpoints(Graph graph, uint edge, out Endpoints<int> endpoints)
+        private static bool TryGetEndpoints(Graph graph, uint edge, out Endpoints endpoints)
         {
             if (!graph.TryGetTail(edge, out int tail))
             {
@@ -25,7 +25,7 @@ namespace Arborescence
                 return false;
             }
 
-            endpoints = Endpoints.Create(tail, head);
+            endpoints = new Endpoints(tail, head);
             return true;
         }
 
@@ -36,7 +36,7 @@ namespace Arborescence
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
-            foreach (Endpoints<int> endpoints in p.Edges)
+            foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
@@ -57,7 +57,7 @@ namespace Arborescence
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
-            foreach (Endpoints<int> endpoints in p.Edges)
+            foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
@@ -65,17 +65,17 @@ namespace Arborescence
             }
 
             Graph graph = builder.ToGraph();
-            HashSet<Endpoints<int>> expectedEdgeSet = p.Edges.ToHashSet();
+            HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
 
             // Act
-            var actualEdgeSet = new HashSet<Endpoints<int>>();
+            var actualEdgeSet = new HashSet<Endpoints>();
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
             {
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
                     uint edge = outEdges.Current;
-                    bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints<int> endpoints);
+                    bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
                     if (!hasEndpoints)
                         Assert.True(hasEndpoints);
 
@@ -93,7 +93,7 @@ namespace Arborescence
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
-            foreach (Endpoints<int> endpoints in p.Edges)
+            foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
