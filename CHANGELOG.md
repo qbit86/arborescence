@@ -2,7 +2,8 @@
 
 ## [Unreleased]
 ### Added
-- Models: non-generic `UndirectedIndexedIncidenceGraphPolicy`.
+- Primitives: non-generic `Endpoints` struct.
+- Models: non-generic `UndirectedIndexedIncidenceGraphPolicy` struct.
 
 ### Changed
 - Primitives: `ArraySegmentEnumerator<T>` constructor.
