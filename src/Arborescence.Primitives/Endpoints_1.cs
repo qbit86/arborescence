@@ -3,26 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
-    /// <summary>
-    /// Provides the Create factory method for <see cref="Endpoints{TVertex}"/>.
-    /// </summary>
-    public static class Endpoints
-    {
-        /// <summary>
-        /// Creates a new <see cref="Endpoints{TVertex}"/> from the given values.
-        /// </summary>
-        /// <param name="tail">The tail of the edge.</param>
-        /// <param name="head">The head of the edge.</param>
-        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-        /// <returns>A new instance of the <see cref="Endpoints{TVertex}"/> structure.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head)
-        {
-            return new Endpoints<TVertex>(tail, head);
-        }
-    }
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
