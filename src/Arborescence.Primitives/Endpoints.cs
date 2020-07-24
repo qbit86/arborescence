@@ -27,6 +27,8 @@
             _data = unchecked(((ulong)tail << 32) | (uint)head);
         }
 
+        private static CultureInfo F => CultureInfo.InvariantCulture;
+
         /// <summary>
         /// Gets the tail of the edge.
         /// </summary>
@@ -43,8 +45,7 @@
         public override string ToString()
         {
             // Consider using int.TryFormat() for netstandard2.1.
-            CultureInfo f = CultureInfo.InvariantCulture;
-            return EndpointsHelper.PairToString(Tail.ToString(f), Head.ToString(f));
+            return EndpointsHelper.PairToString(Tail.ToString(F), Head.ToString(F));
         }
 
         /// <summary>
@@ -76,10 +77,7 @@
         /// <returns>
         /// <c>true</c> if the two <see cref="Endpoints"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(Endpoints left, Endpoints right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(Endpoints left, Endpoints right) => left.Equals(right);
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints"/> structures are not equal.
@@ -89,9 +87,6 @@
         /// <returns>
         /// <c>true</c> if the two <see cref="Endpoints"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(Endpoints left, Endpoints right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(Endpoints left, Endpoints right) => !left.Equals(right);
     }
 }

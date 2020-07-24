@@ -32,6 +32,8 @@
             Head = head;
         }
 
+        private static EqualityComparer<TVertex> C => EqualityComparer<TVertex>.Default;
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -51,31 +53,13 @@
         }
 
         /// <inheritdoc/>
-        public bool Equals(Endpoints<TVertex> other)
-        {
-            EqualityComparer<TVertex> comparer = EqualityComparer<TVertex>.Default;
-
-            if (!comparer.Equals(Tail, other.Tail))
-                return false;
-
-            if (!comparer.Equals(Head, other.Head))
-                return false;
-
-            return true;
-        }
+        public bool Equals(Endpoints<TVertex> other) => C.Equals(Tail, other.Tail) && C.Equals(Head, other.Head);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-        {
-            return obj is Endpoints<TVertex> other && Equals(other);
-        }
+        public override bool Equals(object obj) => obj is Endpoints<TVertex> other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return unchecked(EqualityComparer<TVertex>.Default.GetHashCode(Tail) * 397) ^
-                EqualityComparer<TVertex>.Default.GetHashCode(Head);
-        }
+        public override int GetHashCode() => unchecked(C.GetHashCode(Tail) * 397) ^ C.GetHashCode(Head);
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints{TVertex}"/> structures are equal.
@@ -85,10 +69,7 @@
         /// <returns>
         /// <c>true</c> if the two <see cref="Endpoints{TVertex}"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(Endpoints<TVertex> left, Endpoints<TVertex> right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(Endpoints<TVertex> left, Endpoints<TVertex> right) => left.Equals(right);
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints{TVertex}"/> structures are not equal.
@@ -98,9 +79,6 @@
         /// <returns>
         /// <c>true</c> if the two <see cref="Endpoints{TVertex}"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(Endpoints<TVertex> left, Endpoints<TVertex> right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(Endpoints<TVertex> left, Endpoints<TVertex> right) => !left.Equals(right);
     }
 }
