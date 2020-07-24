@@ -40,7 +40,7 @@
             {
                 int tail = prng.Next(vertexCount);
                 int head = prng.Next(vertexCount);
-                edges.Add(Endpoints.Create(tail, head));
+                edges.Add(new Endpoints(tail, head));
             }
         }
     }

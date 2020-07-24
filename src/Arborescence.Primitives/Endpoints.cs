@@ -3,7 +3,6 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
-    using System.Runtime.CompilerServices;
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
@@ -58,18 +57,6 @@
         {
             tail = Tail;
             head = Head;
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="Endpoints"/> from the given values.
-        /// </summary>
-        /// <param name="tail">The tail of the edge.</param>
-        /// <param name="head">The head of the edge.</param>
-        /// <returns>A new instance of the <see cref="Endpoints"/> structure.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Endpoints Create(int tail, int head)
-        {
-            return new Endpoints(tail, head);
         }
 
         /// <inheritdoc/>

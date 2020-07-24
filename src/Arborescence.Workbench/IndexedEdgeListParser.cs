@@ -44,7 +44,7 @@ namespace Arborescence.Workbench
                 if (!TryParse(rightToken.AsSpan(), out int head))
                     continue;
 
-                yield return Endpoints.Create(tail, head);
+                yield return new Endpoints(tail, head);
             }
         }
 

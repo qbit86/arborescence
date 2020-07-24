@@ -25,7 +25,7 @@
                 return false;
             }
 
-            endpoints = Endpoints.Create(tail, head);
+            endpoints = new Endpoints(tail, head);
             return true;
         }
 
