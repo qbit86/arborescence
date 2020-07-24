@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using System.Text;
 
     /// <summary>
     /// Provides the Create factory method for <see cref="Endpoints{TVertex}"/>.
@@ -22,27 +21,6 @@
         public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head)
         {
             return new Endpoints<TVertex>(tail, head);
-        }
-
-        /// <summary>
-        /// Used by <see cref="Endpoints{TVertex}.ToString"/> to reduce generic code.
-        /// </summary>
-        internal static string PairToString(string tail, string head)
-        {
-            var s = new StringBuilder();
-            s.Append('[');
-
-            if (tail != null)
-                s.Append(tail);
-
-            s.Append(", ");
-
-            if (head != null)
-                s.Append(head);
-
-            s.Append(']');
-
-            return s.ToString();
         }
     }
 
@@ -77,7 +55,7 @@
         /// <inheritdoc/>
         public override string ToString()
         {
-            return Endpoints.PairToString(Tail?.ToString(), Head?.ToString());
+            return EndpointsHelper.PairToString(Tail?.ToString(), Head?.ToString());
         }
 
         /// <summary>
