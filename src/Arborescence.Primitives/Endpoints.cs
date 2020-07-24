@@ -61,16 +61,15 @@
         }
 
         /// <summary>
-        /// Creates a new <see cref="Endpoints{TVertex}"/> from the given values.
+        /// Creates a new <see cref="Endpoints"/> from the given values.
         /// </summary>
         /// <param name="tail">The tail of the edge.</param>
         /// <param name="head">The head of the edge.</param>
-        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-        /// <returns>A new instance of the <see cref="Endpoints{TVertex}"/> structure.</returns>
+        /// <returns>A new instance of the <see cref="Endpoints"/> structure.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head)
+        public static Endpoints Create(int tail, int head)
         {
-            return new Endpoints<TVertex>(tail, head);
+            return new Endpoints(tail, head);
         }
 
         /// <inheritdoc/>

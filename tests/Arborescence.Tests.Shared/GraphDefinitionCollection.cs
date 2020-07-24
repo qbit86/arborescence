@@ -41,7 +41,7 @@
                 int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
                 foreach (double densityPower in s_densityPowers)
                 {
-                    var edges = new List<Endpoints<int>>();
+                    var edges = new List<Endpoints>();
                     GraphHelper.GenerateEdges(vertexCount, densityPower, edges);
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";

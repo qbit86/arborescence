@@ -16,8 +16,8 @@
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
             {
-                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (Endpoints<int> edge in edges)
+                IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (Endpoints edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 

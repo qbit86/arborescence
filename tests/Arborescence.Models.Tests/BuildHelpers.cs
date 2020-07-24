@@ -28,10 +28,10 @@ namespace Arborescence
             if (parameter is null)
                 return;
 
-            IEnumerable<Endpoints<int>> edges = parameter.Edges;
+            IEnumerable<Endpoints> edges = parameter.Edges;
             if (orderByTail)
                 edges = edges.OrderBy(st => st.Tail);
-            foreach (Endpoints<int> edge in edges)
+            foreach (Endpoints edge in edges)
                 builder.TryAdd(edge.Tail, edge.Head, out _);
         }
     }
