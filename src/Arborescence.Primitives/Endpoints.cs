@@ -66,7 +66,7 @@
         public override bool Equals(object obj) => obj is Endpoints other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _data.GetHashCode();
+        public override int GetHashCode() => unchecked(Tail.GetHashCode() * 397) ^ Head.GetHashCode();
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints"/> structures are equal.
