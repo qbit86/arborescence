@@ -3,14 +3,15 @@
     using System;
 
     public sealed class MutableIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>
+        IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
+        IGraphBuilder<IndexedIncidenceGraph, int, int>
     {
         private const int DefaultInitialOutDegree = 4;
 
-        private int _initialOutDegree = DefaultInitialOutDegree;
-        private ArrayPrefix<int> _tailByEdge;
         private ArrayPrefix<int> _headByEdge;
+        private int _initialOutDegree = DefaultInitialOutDegree;
         private ArrayPrefix<ArrayPrefix<int>> _outEdgesByVertex;
+        private ArrayPrefix<int> _tailByEdge;
 
         public MutableIndexedIncidenceGraph(int initialVertexCount, int edgeCapacity = 0)
         {
@@ -25,6 +26,10 @@
             _headByEdge = ArrayPrefixBuilder.Create<int>(effectiveEdgeCapacity);
             _outEdgesByVertex = ArrayPrefixBuilder.Create<ArrayPrefix<int>>(initialVertexCount);
         }
+
+        public bool TryAdd(int tail, int head, out int edge) => throw new NotImplementedException();
+
+        public IndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
 
         public bool TryGetHead(int edge, out int head)
         {
