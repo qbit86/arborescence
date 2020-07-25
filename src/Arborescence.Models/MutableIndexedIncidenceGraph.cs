@@ -66,7 +66,36 @@
             return true;
         }
 
-        public IndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
+        public IndexedIncidenceGraph ToGraph()
+        {
+            int n = VertexCount;
+            int m = _tailByEdge.Count;
+            Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+
+            var data = new int[1 + n + m + m + m];
+            data[0] = n;
+
+            Span<int> destUpperBoundByVertex = data.AsSpan(1, n);
+            Span<int> destReorderedEdges = data.AsSpan(1 + n, m);
+            for (int vertex = 0, currentLowerBound = 0; vertex < n; ++vertex)
+            {
+                ReadOnlySpan<int> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
+                Span<int> destCurrentOutEdges = destReorderedEdges.Slice(currentLowerBound, currentOutEdges.Length);
+                currentOutEdges.CopyTo(destCurrentOutEdges);
+                int currentUpperBound = currentLowerBound + currentOutEdges.Length;
+                destUpperBoundByVertex[vertex] = currentUpperBound;
+                currentLowerBound = currentUpperBound;
+            }
+
+            Span<int> destHeadByEdge = data.AsSpan(1 + n + m, m);
+            _headByEdge.AsSpan().CopyTo(destHeadByEdge);
+
+            Span<int> destTailByEdge = data.AsSpan(1 + n + m + m, m);
+            _tailByEdge.AsSpan().CopyTo(destTailByEdge);
+
+            // TODO: Add disposal of arrays.
+            return new IndexedIncidenceGraph(data);
+        }
 
         public bool TryGetHead(int edge, out int head)
         {
@@ -104,7 +133,7 @@
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
-                _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, false);
+                _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
         }
     }
 }
