@@ -1,6 +1,7 @@
 ﻿namespace Arborescence.Models
 {
     using System;
+    using System.Diagnostics;
 
     public sealed class MutableIndexedIncidenceGraph :
         IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
@@ -27,7 +28,43 @@
             _outEdgesByVertex = ArrayPrefixBuilder.Create<ArrayPrefix<int>>(initialVertexCount);
         }
 
-        public bool TryAdd(int tail, int head, out int edge) => throw new NotImplementedException();
+        public int VertexCount => _outEdgesByVertex.Count;
+
+        public int InitialOutDegree
+        {
+            get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
+            set => _initialOutDegree = value;
+        }
+
+        public bool TryAdd(int tail, int head, out int edge)
+        {
+            if (tail < 0)
+            {
+                edge = default;
+                return false;
+            }
+
+            if (head < 0)
+            {
+                edge = default;
+                return false;
+            }
+
+            int max = Math.Max(tail, head);
+            EnsureVertexCount(max + 1);
+
+            Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+            int newEdgeIndex = _headByEdge.Count;
+            _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
+            _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
+
+            if (_outEdgesByVertex[tail].Array is null)
+                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<int>(InitialOutDegree);
+            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], newEdgeIndex, false);
+
+            edge = newEdgeIndex;
+            return true;
+        }
 
         public IndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
 
@@ -62,6 +99,12 @@
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
             return new ArrayPrefixEnumerator<int>(outEdges.Array, outEdges.Count);
+        }
+
+        public void EnsureVertexCount(int vertexCount)
+        {
+            if (vertexCount > VertexCount)
+                _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, false);
         }
     }
 }
