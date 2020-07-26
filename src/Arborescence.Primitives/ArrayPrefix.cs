@@ -6,6 +6,10 @@ namespace Arborescence
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
+#if NETSTANDARD2_1
+    using System.Diagnostics.CodeAnalysis;
+#endif
+
     /// <summary>
     /// A set of initialization methods for instances of <see cref="ArrayPrefix{T}"/>.
     /// </summary>
@@ -118,14 +122,14 @@ namespace Arborescence
             get
             {
                 if ((uint)index >= (uint)_count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ThrowIndexOutOfRangeException();
 
                 _array[index] = value;
             }
@@ -225,7 +229,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count)
-                ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                ThrowIndexOutOfRangeException();
 
             return new ArraySegment<T>(_array, index, _count - index);
         }
@@ -243,7 +247,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
-                ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                ThrowIndexOutOfRangeException();
 
             return new ArraySegment<T>(_array, index, count);
         }
@@ -310,7 +314,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
@@ -319,7 +323,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ThrowIndexOutOfRangeException();
 
                 _array[index] = value;
             }
@@ -356,7 +360,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
@@ -415,10 +419,21 @@ namespace Arborescence
 
         #endregion
 
+#if NETSTANDARD2_1
+        [DoesNotReturn]
+#endif
         private void ThrowInvalidOperationIfDefault()
         {
             if (_array == null)
                 ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
+        }
+
+#if NETSTANDARD2_1
+        [DoesNotReturn]
+#endif
+        private static void ThrowIndexOutOfRangeException()
+        {
+            throw new IndexOutOfRangeException();
         }
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types

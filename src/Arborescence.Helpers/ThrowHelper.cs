@@ -19,16 +19,6 @@
             throw new ArgumentNullException(GetArgumentName(argument));
         }
 
-        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument)
-        {
-            throw new ArgumentOutOfRangeException(GetArgumentName(argument));
-        }
-
-        internal static void ThrowArgumentOutOfRange_IndexException()
-        {
-            throw GetArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_Index);
-        }
-
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
@@ -72,13 +62,6 @@
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument,
-            ExceptionResource resource)
-        {
-            return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
         private static string GetArgumentName(ExceptionArgument argument)
         {
             switch (argument)
@@ -102,8 +85,6 @@
         {
             switch (resource)
             {
-                case ExceptionResource.ArgumentOutOfRange_Index:
-                    return SR.ArgumentOutOfRange_Index;
                 case ExceptionResource.InvalidOperation_NullArray:
                     return SR.InvalidOperation_NullArray;
                 default:
@@ -117,7 +98,6 @@
     // ReSharper disable InconsistentNaming
     internal enum ExceptionResource
     {
-        ArgumentOutOfRange_Index,
         InvalidOperation_NullArray
     }
     // ReSharper restore InconsistentNaming
