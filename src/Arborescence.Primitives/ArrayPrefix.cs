@@ -399,9 +399,6 @@ namespace Arborescence
 
         #endregion
 
-#if NETSTANDARD2_1
-        [DoesNotReturn]
-#endif
         private void ThrowInvalidOperationIfDefault()
         {
             if (_array is null)
