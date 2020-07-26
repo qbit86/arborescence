@@ -32,7 +32,7 @@ namespace Arborescence
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void SimpleIncidenceGraph_SizeShouldMatch(GraphDefinitionParameter p)
+        internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -53,7 +53,7 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void SimpleIncidenceGraph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
+        internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -89,7 +89,7 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void SimpleIncidenceGraph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
+        internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);

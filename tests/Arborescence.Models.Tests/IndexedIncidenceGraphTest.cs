@@ -32,7 +32,7 @@
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void IndexedIncidenceGraph_SizeShouldMatch(GraphDefinitionParameter p)
+        internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -53,7 +53,7 @@
 
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void IndexedIncidenceGraph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
+        internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
@@ -89,7 +89,7 @@
 
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
-        internal void IndexedIncidenceGraph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
+        internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
