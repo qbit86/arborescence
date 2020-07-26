@@ -44,7 +44,7 @@
 
             // Assert
             Assert.Equal(p.VertexCount, graph.VertexCount);
-            // Assert.Equal(p.Edges.Count, graph.EdgeCount);
+            Assert.Equal(p.Edges.Count, graph.EdgeCount);
         }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }

@@ -30,6 +30,8 @@
 
         public int VertexCount => _outEdgesByVertex.Count;
 
+        public int EdgeCount => _headByEdge.Count;
+
         public int InitialOutDegree
         {
             get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
@@ -69,8 +71,7 @@
         public IndexedIncidenceGraph ToGraph()
         {
             int n = VertexCount;
-            int m = _tailByEdge.Count;
-            Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+            int m = EdgeCount;
 
             var data = new int[1 + n + m + m + m];
             data[0] = n;
