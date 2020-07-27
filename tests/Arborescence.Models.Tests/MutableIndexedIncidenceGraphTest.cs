@@ -82,6 +82,36 @@
             // Assert
             Assert.Equal(expectedEdgeSet, actualEdgeSet, HashSetEqualityComparer);
         }
+
+        [Theory]
+        [ClassData(typeof(GraphDefinitionCollection))]
+        internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
+        {
+            // Arrange
+            var graph = new Graph(p.VertexCount, p.Edges.Count);
+            foreach (Endpoints endpoints in p.Edges)
+            {
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                if (!wasAdded)
+                    Assert.True(wasAdded);
+            }
+
+            // Act
+            for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
+            {
+                EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
+                while (outEdges.MoveNext())
+                {
+                    int edge = outEdges.Current;
+                    bool hasTail = graph.TryGetTail(edge, out int tail);
+                    if (!hasTail)
+                        Assert.True(hasTail);
+
+                    // Assert
+                    Assert.Equal(vertex, tail);
+                }
+            }
+        }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }
