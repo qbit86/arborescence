@@ -49,8 +49,6 @@
 
         private ReadOnlySpan<uint> UpperBoundByVertex => _storage.AsSpan(1, VertexCount);
 
-        private uint UnsignedVertexCount => _storage?[0] ?? 0u;
-
         /// <inheritdoc/>
         public bool TryGetHead(uint edge, out int head)
         {
@@ -68,8 +66,9 @@
         /// <inheritdoc/>
         public ArraySegmentEnumerator<uint> EnumerateOutEdges(int vertex)
         {
-            if (unchecked((uint)vertex) >= UnsignedVertexCount)
-                return default;
+            ReadOnlySpan<uint> upperBoundByVertex = UpperBoundByVertex;
+            if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
+                return new ArraySegmentEnumerator<uint>(Array.Empty<uint>(), 0, 0);
 
             int lowerBound = vertex == 0 ? 0 : (int)UpperBoundByVertex[vertex - 1];
             int upperBound = (int)UpperBoundByVertex[vertex];
