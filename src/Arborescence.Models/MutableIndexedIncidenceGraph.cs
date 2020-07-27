@@ -128,7 +128,7 @@
                 return new ArrayPrefixEnumerator<int>(Array.Empty<int>(), 0);
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
-            return new ArrayPrefixEnumerator<int>(outEdges.Array, outEdges.Count);
+            return new ArrayPrefixEnumerator<int>(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
         }
 
         public void EnsureVertexCount(int vertexCount)
