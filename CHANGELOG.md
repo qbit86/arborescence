@@ -10,6 +10,7 @@
 - Primitives: Added target framework `netstandard2.1` to support nullability attributes.
 - Primitives: Make `Current` properties of enumerator structs `readonly`.
 - Primitives: Bumped minimum target framework to `netstandard1.3`.
+- Primitives: Add `Empty` property to enumerators.
 - Models: Bumped minimum target framework to `netstandard1.3`.
 
 ## [0.2.0] - 2020-07-20

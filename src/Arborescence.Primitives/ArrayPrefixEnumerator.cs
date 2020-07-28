@@ -29,6 +29,13 @@ namespace Arborescence
             _current = -1;
         }
 
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        /// <summary>
+        /// Gets an empty <see cref="ArrayPrefixEnumerator{T}"/> struct.
+        /// </summary>
+        public static ArrayPrefixEnumerator<T> Empty { get; } = new ArrayPrefixEnumerator<T>(Array.Empty<T>(), 0);
+#pragma warning restore CA1000 // Do not declare static members on generic types
+
         /// <inheritdoc/>
         public readonly T Current
         {

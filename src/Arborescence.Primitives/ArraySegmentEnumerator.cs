@@ -1,5 +1,6 @@
 namespace Arborescence
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -30,6 +31,13 @@ namespace Arborescence
             _end = endExclusive;
             _current = start - 1;
         }
+
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        /// <summary>
+        /// Gets an empty <see cref="ArraySegmentEnumerator{T}"/> struct.
+        /// </summary>
+        public static ArraySegmentEnumerator<T> Empty { get; } = new ArraySegmentEnumerator<T>(Array.Empty<T>(), 0, 0);
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
         /// <inheritdoc/>
         public readonly T Current
