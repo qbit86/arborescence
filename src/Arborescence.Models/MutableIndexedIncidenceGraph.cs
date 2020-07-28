@@ -73,7 +73,12 @@
             int n = VertexCount;
             int m = EdgeCount;
 
-            var data = new int[1 + n + m + m + m];
+            int dataLength = 1 + n + m + m + m;
+#if NET5
+            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
+#else
+            var data = new int[dataLength];
+#endif
             data[0] = n;
 
             Span<int> destUpperBoundByVertex = data.AsSpan(1, n);
