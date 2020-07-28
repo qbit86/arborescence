@@ -91,9 +91,6 @@ namespace Arborescence.Models
         private ReadOnlySpan<int> GetUpperBoundByVertex() => _data.AsSpan(1, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgesSortedByTail() => _data.AsSpan(1 + VertexCount, EdgeCount);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTailByEdge() => _data.AsSpan(1 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
