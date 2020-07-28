@@ -78,7 +78,7 @@
                 storage[0] = (uint)_vertexCount;
                 _edges.CopyTo(storage, 1 + _vertexCount);
                 Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
-                upperBoundByVertex.Fill(0u);
+                upperBoundByVertex.Clear();
                 for (int edgeIndex = 0; edgeIndex < edgeCount; ++edgeIndex)
                 {
                     uint edge = _edges[edgeIndex];
