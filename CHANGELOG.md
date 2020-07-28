@@ -7,9 +7,10 @@
 
 ### Changed
 - Primitives: `ArraySegmentEnumerator<T>` constructor.
-- Primitives: Added target platform `netstandard2.1` to support nullability attributes.
+- Primitives: Added target framework `netstandard2.1` to support nullability attributes.
 - Primitives: Make `Current` properties of enumerator structs `readonly`.
-- Models: Bumped minimum target platform to `netstandard1.3`.
+- Primitives: Bumped minimum target framework to `netstandard1.3`.
+- Models: Bumped minimum target framework to `netstandard1.3`.
 
 ## [0.2.0] - 2020-07-20
 ### Added
