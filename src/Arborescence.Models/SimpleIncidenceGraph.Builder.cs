@@ -69,6 +69,7 @@
             /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph()
             {
+#if false
                 int edgeCount = _edges.Count;
                 if (NeedsReordering)
                     Array.Sort(_edges.Array, 0, edgeCount, EdgeComparer.Instance);
@@ -98,6 +99,9 @@
                 _vertexCount = 0;
 
                 return new SimpleIncidenceGraph(storage);
+#else
+                throw new NotImplementedException();
+#endif
             }
         }
 

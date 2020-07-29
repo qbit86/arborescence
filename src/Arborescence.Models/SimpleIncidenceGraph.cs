@@ -11,44 +11,26 @@
         IIncidenceGraph<int, Endpoints, ArraySegmentEnumerator<Endpoints>>,
         IEquatable<SimpleIncidenceGraph>
     {
-        // Layout:
-        // 1    | n — the number of vertices
-        // n    | upper bounds of out-edge enumerators
-        // m    | edges sorted by tail
-        private readonly uint[] _storage;
+        private readonly int[] _upperBoundByVertex;
+        private readonly Endpoints[] _edgesOrderedByTail;
 
-        private SimpleIncidenceGraph(uint[] storage)
+        private SimpleIncidenceGraph(int[] upperBoundByVertex, Endpoints[] edgesOrderedByTail)
         {
-            Debug.Assert(storage != null, "storage != null");
-            Debug.Assert(storage.Length > 0, "storage.Length > 0");
-            Debug.Assert(storage[0] <= 0x10000u, "storage[0] <= 0x10000u");
-            Debug.Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
-
-            _storage = storage;
+            Debug.Assert(upperBoundByVertex != null, nameof(upperBoundByVertex) + " != null");
+            Debug.Assert(edgesOrderedByTail != null, nameof(edgesOrderedByTail) + " != null");
+            _upperBoundByVertex = upperBoundByVertex;
+            _edgesOrderedByTail = edgesOrderedByTail;
         }
 
         /// <summary>
         /// Gets the number of vertices.
         /// </summary>
-        public int VertexCount => _storage is null ? 0 : (int)_storage[0];
+        public int VertexCount => (_upperBoundByVertex?.Length).GetValueOrDefault();
 
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount
-        {
-            get
-            {
-                if (VertexCount == 0)
-                    return 0;
-
-                int edgeCount = _storage.Length - 1 - VertexCount;
-                Debug.Assert(edgeCount == (int)UpperBoundByVertex[VertexCount - 1]);
-                return edgeCount;
-            }
-        }
-
-        private ReadOnlySpan<uint> UpperBoundByVertex => _storage.AsSpan(1, VertexCount);
+        public int EdgeCount => (_edgesOrderedByTail?.Length).GetValueOrDefault();
 
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints edge, out int head)
@@ -83,13 +65,16 @@
         }
 
         /// <inheritdoc/>
-        public bool Equals(SimpleIncidenceGraph other) => _storage == other._storage;
+        public bool Equals(SimpleIncidenceGraph other) =>
+            _upperBoundByVertex == other._upperBoundByVertex && _edgesOrderedByTail == other._edgesOrderedByTail;
 
         /// <inheritdoc/>
         public override bool Equals(object obj) => obj is SimpleIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => (_storage?.GetHashCode()).GetValueOrDefault();
+        public override int GetHashCode() => _upperBoundByVertex is null || _edgesOrderedByTail is null
+            ? 0
+            : unchecked(_upperBoundByVertex.GetHashCode() * 397) ^ _edgesOrderedByTail.GetHashCode();
 
         /// <summary>
         /// Indicates whether two <see cref="SimpleIncidenceGraph"/> structures are equal.
