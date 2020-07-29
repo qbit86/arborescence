@@ -4,14 +4,14 @@ namespace Arborescence
     using System.Linq;
     using Xunit;
     using Graph = Models.SimpleIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<uint>;
+    using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
 
     public sealed class SimpleIncidenceGraphTest
     {
         private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
             HashSet<Endpoints>.CreateSetComparer();
 
-        private static bool TryGetEndpoints(Graph graph, uint edge, out Endpoints endpoints)
+        private static bool TryGetEndpoints(Graph graph, Endpoints edge, out Endpoints endpoints)
         {
             if (!graph.TryGetTail(edge, out int tail))
             {
@@ -74,7 +74,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    uint edge = outEdges.Current;
+                    Endpoints edge = outEdges.Current;
                     bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
                     if (!hasEndpoints)
                         Assert.True(hasEndpoints);
@@ -108,7 +108,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    uint edge = outEdges.Current;
+                    Endpoints edge = outEdges.Current;
                     bool hasTail = graph.TryGetTail(edge, out int tail);
                     if (!hasTail)
                         Assert.True(hasTail);
