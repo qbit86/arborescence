@@ -1,6 +1,7 @@
 namespace Arborescence.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
 
     public readonly partial struct UndirectedIndexedIncidenceGraph
@@ -33,8 +34,6 @@ namespace Arborescence.Models
                 _tailByEdge = ArrayPrefixBuilder.Create<int>(edgeCapacity);
                 _vertexCount = initialVertexCount;
             }
-
-            private static bool NeedsReordering { get; } = true;
 
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out int edge)
@@ -74,47 +73,67 @@ namespace Arborescence.Models
                 data[1] = m;
 
                 Span<int> destReorderedEdges = data.AsSpan(2 + n, m + m);
+                int invertedEdgeCount = 0;
                 for (int edge = 0; edge < m; ++edge)
                 {
                     destReorderedEdges[edge] = edge;
-                    destReorderedEdges[m + edge] = ~edge;
+                    int head = _headByEdge[edge];
+                    int tail = _tailByEdge[edge];
+                    if (head != tail)
+                        destReorderedEdges[m + invertedEdgeCount++] = ~edge;
                 }
 
-#if false
-                if (NeedsReordering)
-                    Array.Sort(data, 2 + n, m + m, new EdgeComparer(_tailByEdge.Array));
+                int directedEdgeCount = m + invertedEdgeCount;
+                Array.Sort(data, 2 + n, directedEdgeCount, new EdgeComparer(_tailByEdge.Array, _headByEdge.Array));
 
                 Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
                 destUpperBoundByVertex.Clear();
-                for (int edge = 0; edge < m; ++edge)
+                for (int i = 0; i < directedEdgeCount; ++i)
                 {
-                    int tail = _tailByEdge[edge];
+                    int edge = destReorderedEdges[i];
+                    int tail = edge < 0 ? _headByEdge[~edge] : _tailByEdge[edge];
                     ++destUpperBoundByVertex[tail];
-                }
-                for (int edge = 0; edge < m; ++edge)
-                {
-                    int head = _headByEdge[edge];
-                    ++destUpperBoundByVertex[head];
                 }
 
                 for (int vertex = 1; vertex < n; ++vertex)
                     destUpperBoundByVertex[vertex] += destUpperBoundByVertex[vertex - 1];
 
-                Span<int> destHeadByEdge = data.AsSpan(2 + n + m, m);
+                Span<int> destHeadByEdge = data.AsSpan(2 + n + m + m, m);
                 _headByEdge.AsSpan().CopyTo(destHeadByEdge);
 
-                Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
+                Span<int> destTailByEdge = data.AsSpan(2 + n + m + m + m, m);
                 _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-                _currentMaxTail = 0;
                 _headByEdge = ArrayPrefixBuilder.Release(_headByEdge, false);
                 _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
                 _vertexCount = 0;
 
                 return new UndirectedIndexedIncidenceGraph(data);
-#else
-                throw new NotImplementedException();
-#endif
+            }
+        }
+
+        private sealed class EdgeComparer : IComparer<int>
+        {
+            private readonly int[] _headByEdge;
+            private readonly int[] _tailByEdge;
+
+            public EdgeComparer(int[] tailByEdge, int[] headByEdge)
+            {
+                Debug.Assert(tailByEdge != null, nameof(tailByEdge) + " != null");
+                Debug.Assert(headByEdge != null, nameof(headByEdge) + " != null");
+                _tailByEdge = tailByEdge;
+                _headByEdge = headByEdge;
+            }
+
+            public int Compare(int x, int y)
+            {
+                int leftIndex = x < 0 ? ~x : x;
+                int[] leftTailByEdge = x < 0 ? _headByEdge : _tailByEdge;
+                int leftTail = leftTailByEdge[leftIndex];
+                int rightIndex = y < 0 ? ~y : y;
+                int[] rightTailByEdge = y < 0 ? _headByEdge : _tailByEdge;
+                int rightTail = rightTailByEdge[rightIndex];
+                return leftTail.CompareTo(rightTail);
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
