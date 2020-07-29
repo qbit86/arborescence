@@ -166,19 +166,8 @@ namespace Arborescence
             return hash;
         }
 
-        /// <summary>
-        /// Copies the contents of this instance into the specified destination array of the same type <typeparamref name="T"/>.
-        /// </summary>
-        /// <param name="destination">
-        /// The array of type <typeparamref name="T"/> into which the contents of this instance will be copied.
-        /// </param>
-        public void CopyTo(T[] destination)
-        {
-            CopyTo(destination, 0);
-        }
-
         /// <inheritdoc/>
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex = 0)
         {
             ThrowInvalidOperationIfDefault();
             System.Array.Copy(_array, 0, array, arrayIndex, _count);
