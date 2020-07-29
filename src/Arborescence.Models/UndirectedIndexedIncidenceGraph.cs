@@ -73,7 +73,7 @@ namespace Arborescence.Models
             ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
 
             if ((uint)(2 * vertex) >= (uint)edgeBounds.Length)
-                return new ArraySegmentEnumerator<int>(Array.Empty<int>(), 0, 0);
+                return ArraySegmentEnumerator<int>.Empty;
 
             int start = edgeBounds[2 * vertex];
             int length = edgeBounds[2 * vertex + 1];

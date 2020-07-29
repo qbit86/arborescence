@@ -69,7 +69,7 @@ namespace Arborescence.Models
         {
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return new ArraySegmentEnumerator<int>(Array.Empty<int>(), 0, 0);
+                return ArraySegmentEnumerator<int>.Empty;
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];

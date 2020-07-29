@@ -163,7 +163,7 @@
         public ArrayPrefixEnumerator<int> EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex > (uint)_outEdgesByVertex.Count))
-                return new ArrayPrefixEnumerator<int>(Array.Empty<int>(), 0);
+                return ArrayPrefixEnumerator<int>.Empty;
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
             return new ArrayPrefixEnumerator<int>(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
