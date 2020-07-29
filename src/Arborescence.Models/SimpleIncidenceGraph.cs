@@ -49,19 +49,13 @@
         /// <inheritdoc/>
         public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(int vertex)
         {
-#if false
-            ReadOnlySpan<uint> upperBoundByVertex = UpperBoundByVertex;
-            if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return new ArraySegmentEnumerator<uint>(Array.Empty<uint>(), 0, 0);
+            if (unchecked((uint)vertex >= (uint)_upperBoundByVertex.Length))
+                return ArraySegmentEnumerator<Endpoints>.Empty;
 
-            int lowerBound = vertex == 0 ? 0 : (int)UpperBoundByVertex[vertex - 1];
-            int upperBound = (int)UpperBoundByVertex[vertex];
+            int lowerBound = vertex == 0 ? 0 : _upperBoundByVertex[vertex - 1];
+            int upperBound = _upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
-            int offset = 1 + VertexCount;
-            return new ArraySegmentEnumerator<uint>(_storage, offset + lowerBound, offset + upperBound);
-#else
-            throw new NotImplementedException();
-#endif
+            return new ArraySegmentEnumerator<Endpoints>(_edgesOrderedByTail, lowerBound, upperBound);
         }
 
         /// <inheritdoc/>
