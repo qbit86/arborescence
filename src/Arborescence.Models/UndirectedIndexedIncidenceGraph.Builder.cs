@@ -60,13 +60,7 @@ namespace Arborescence.Models
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out int edge)
             {
-                if (tail < 0)
-                {
-                    edge = default;
-                    return false;
-                }
-
-                if (head < 0)
+                if (tail < 0 || head < 0)
                 {
                     edge = default;
                     return false;
