@@ -51,19 +51,17 @@
             /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph()
             {
-#if false
-                int edgeCount = _edges.Count;
+                int m = _edges.Count;
                 if (NeedsReordering)
-                    Array.Sort(_edges.Array, 0, edgeCount, EdgeComparer.Instance);
+                    Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
 
-                int storageLength = 1 + _vertexCount + edgeCount;
 #if NET5
-                uint[] storage = GC.AllocateUninitializedArray<uint>(storageLength);
+                Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
-                var storage = new uint[storageLength];
+                var edgesOrderedByTail = new Endpoints[m];
 #endif
-                storage[0] = (uint)_vertexCount;
-                _edges.CopyTo(storage, 1 + _vertexCount);
+#if false
+                _edges.CopyTo(edgesOrderedByTail);
                 Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
                 upperBoundByVertex.Clear();
                 for (int edgeIndex = 0; edgeIndex < edgeCount; ++edgeIndex)
@@ -87,15 +85,14 @@
             }
         }
 
-        internal sealed class EdgeComparer : IComparer<uint>
+        internal sealed class EdgeComparer : IComparer<Endpoints>
         {
             public static EdgeComparer Instance { get; } = new EdgeComparer();
 
-            public int Compare(uint x, uint y)
+            public int Compare(Endpoints x, Endpoints y)
             {
-                const uint mask = 0xFFFF0000u;
-                uint left = x & mask;
-                uint right = y & mask;
+                int left = x.Tail;
+                int right = y.Tail;
                 return left.CompareTo(right);
             }
         }
