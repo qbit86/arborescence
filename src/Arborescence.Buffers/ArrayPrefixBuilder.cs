@@ -47,7 +47,8 @@ namespace Arborescence
 
         internal static ArrayPrefix<T> Release<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
         {
-            ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
+            if (arrayPrefix.Array is {} array)
+                ArrayPool<T>.Shared.Return(array, clearArray);
             return ArrayPrefix<T>.Empty;
         }
 
