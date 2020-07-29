@@ -98,16 +98,17 @@
             int n = VertexCount;
             int m = EdgeCount;
 
-            int dataLength = 1 + n + m + m + m;
+            int dataLength = 2 + n + m + m + m;
 #if NET5
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
             var data = new int[dataLength];
 #endif
             data[0] = n;
+            data[1] = m;
 
-            Span<int> destUpperBoundByVertex = data.AsSpan(1, n);
-            Span<int> destReorderedEdges = data.AsSpan(1 + n, m);
+            Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
+            Span<int> destReorderedEdges = data.AsSpan(2 + n, m);
             for (int vertex = 0, currentLowerBound = 0; vertex < n; ++vertex)
             {
                 ReadOnlySpan<int> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
@@ -118,10 +119,10 @@
                 currentLowerBound = currentUpperBound;
             }
 
-            Span<int> destHeadByEdge = data.AsSpan(1 + n + m, m);
+            Span<int> destHeadByEdge = data.AsSpan(2 + n + m, m);
             _headByEdge.AsSpan().CopyTo(destHeadByEdge);
 
-            Span<int> destTailByEdge = data.AsSpan(1 + n + m + m, m);
+            Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
             _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
             return new IndexedIncidenceGraph(data);

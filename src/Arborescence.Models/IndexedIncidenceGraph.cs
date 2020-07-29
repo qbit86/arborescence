@@ -10,6 +10,7 @@ namespace Arborescence.Models
     {
         // Layout:
         // 1    | n — the number of vertices
+        // 1    | m — the number of edges
         // n    | upper bounds of out-edge enumerators indexed by vertices
         // m    | edges sorted by tail
         // m    | heads indexed by edges
@@ -21,7 +22,9 @@ namespace Arborescence.Models
             Debug.Assert(data != null, nameof(data) + " != null");
             Debug.Assert(data.Length > 0, "data.Length > 0");
             Debug.Assert(data[0] >= 0, "data[0] >= 0");
-            Debug.Assert(data[0] <= data.Length - 1, "data[0] <= data.Length - 1");
+            Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
+            Debug.Assert(data[1] >= 0, "data[1] >= 0");
+            Debug.Assert(data[1] <= data.Length - 2, "data[1] <= data.Length - 2");
 
             _data = data;
         }
@@ -34,7 +37,7 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => IsDefault ? 0 : (_data.Length - 1 - VertexCount) / 3;
+        public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
         private bool IsDefault => _data is null;
 
@@ -76,7 +79,7 @@ namespace Arborescence.Models
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
-            int offset = 1 + VertexCount;
+            int offset = 2 + VertexCount;
             return new ArraySegmentEnumerator<int>(_data, offset + lowerBound, offset + upperBound);
         }
 
@@ -91,15 +94,15 @@ namespace Arborescence.Models
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetUpperBoundByVertex() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(1, VertexCount);
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTailByEdge() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(1 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetHeadByEdge() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount, EdgeCount);
 
         /// <summary>
         /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are equal.

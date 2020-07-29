@@ -68,22 +68,23 @@ namespace Arborescence.Models
                 int m = _tailByEdge.Count;
                 Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
 
-                int dataLength = 1 + n + m + m + m;
+                int dataLength = 2 + n + m + m + m;
 #if NET5
                 int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
                 var data = new int[dataLength];
 #endif
                 data[0] = n;
+                data[1] = m;
 
-                Span<int> destReorderedEdges = data.AsSpan(1 + n, m);
+                Span<int> destReorderedEdges = data.AsSpan(2 + n, m);
                 for (int edge = 0; edge < m; ++edge)
                     destReorderedEdges[edge] = edge;
 
                 if (NeedsReordering)
-                    Array.Sort(data, 1 + n, m, new EdgeComparer(_tailByEdge.Array));
+                    Array.Sort(data, 2 + n, m, new EdgeComparer(_tailByEdge.Array));
 
-                Span<int> destUpperBoundByVertex = data.AsSpan(1, n);
+                Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
                 destUpperBoundByVertex.Clear();
                 for (int edge = 0; edge < m; ++edge)
                 {
@@ -94,10 +95,10 @@ namespace Arborescence.Models
                 for (int vertex = 1; vertex < n; ++vertex)
                     destUpperBoundByVertex[vertex] += destUpperBoundByVertex[vertex - 1];
 
-                Span<int> destHeadByEdge = data.AsSpan(1 + n + m, m);
+                Span<int> destHeadByEdge = data.AsSpan(2 + n + m, m);
                 _headByEdge.AsSpan().CopyTo(destHeadByEdge);
 
-                Span<int> destTailByEdge = data.AsSpan(1 + n + m + m, m);
+                Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
                 _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
                 _currentMaxTail = 0;
