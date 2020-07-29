@@ -89,7 +89,7 @@ namespace Arborescence.Models
         public override bool Equals(object obj) => obj is UndirectedIndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
+        public override int GetHashCode() => (_storage?.GetHashCode()).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);

@@ -84,7 +84,7 @@
         public override bool Equals(object obj) => obj is SimpleIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
+        public override int GetHashCode() => (_storage?.GetHashCode()).GetValueOrDefault();
 
         /// <summary>
         /// Indicates whether two <see cref="SimpleIncidenceGraph"/> structures are equal.
