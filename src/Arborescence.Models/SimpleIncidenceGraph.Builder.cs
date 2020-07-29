@@ -7,7 +7,7 @@
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
-        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
+        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
             private int _currentMaxTail;
             private ArrayPrefix<uint> _edges;
@@ -36,8 +36,9 @@
             private bool NeedsReordering => _currentMaxTail == int.MaxValue;
 
             /// <inheritdoc/>
-            public bool TryAdd(int tail, int head, out uint edge)
+            public bool TryAdd(int tail, int head, out Endpoints edge)
             {
+#if false
                 if (unchecked((uint)tail) > ushort.MaxValue)
                 {
                     edge = default;
@@ -60,6 +61,9 @@
 
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
                 return true;
+#else
+                throw new NotImplementedException();
+#endif
             }
 
             /// <inheritdoc/>

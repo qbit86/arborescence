@@ -7,7 +7,7 @@
     /// <remarks>
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
-    public readonly partial struct SimpleIncidenceGraph : IIncidenceGraph<int, uint, ArraySegmentEnumerator<uint>>,
+    public readonly partial struct SimpleIncidenceGraph : IIncidenceGraph<int, Endpoints, ArraySegmentEnumerator<Endpoints>>,
         IEquatable<SimpleIncidenceGraph>
     {
         // Layout:
@@ -50,22 +50,23 @@
         private ReadOnlySpan<uint> UpperBoundByVertex => _storage.AsSpan(1, VertexCount);
 
         /// <inheritdoc/>
-        public bool TryGetHead(uint edge, out int head)
+        public bool TryGetHead(Endpoints edge, out int head)
         {
-            head = (int)(edge & 0xFFFF);
+            head = edge.Head;
             return head < VertexCount;
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(uint edge, out int tail)
+        public bool TryGetTail(Endpoints edge, out int tail)
         {
-            tail = (int)(edge >> 16);
+            tail = edge.Tail;
             return tail < VertexCount;
         }
 
         /// <inheritdoc/>
-        public ArraySegmentEnumerator<uint> EnumerateOutEdges(int vertex)
+        public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(int vertex)
         {
+#if false
             ReadOnlySpan<uint> upperBoundByVertex = UpperBoundByVertex;
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return new ArraySegmentEnumerator<uint>(Array.Empty<uint>(), 0, 0);
@@ -75,6 +76,9 @@
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 1 + VertexCount;
             return new ArraySegmentEnumerator<uint>(_storage, offset + lowerBound, offset + upperBound);
+#else
+            throw new NotImplementedException();
+#endif
         }
 
         /// <inheritdoc/>
