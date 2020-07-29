@@ -10,7 +10,7 @@
         public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
             private int _currentMaxTail;
-            private ArrayPrefix<uint> _edges;
+            private ArrayPrefix<Endpoints> _edges;
             private int _vertexCount;
 
             /// <summary>
@@ -29,7 +29,7 @@
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _edges = ArrayPrefixBuilder.Create<uint>(edgeCapacity);
+                _edges = ArrayPrefixBuilder.Create<Endpoints>(edgeCapacity);
                 _vertexCount = initialVertexCount;
             }
 
@@ -38,32 +38,14 @@
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
-#if false
-                if (unchecked((uint)tail) > ushort.MaxValue)
-                {
-                    edge = default;
-                    return false;
-                }
-
-                if (unchecked((uint)head) > ushort.MaxValue)
-                {
-                    edge = default;
-                    return false;
-                }
-
-                edge = ((uint)tail << 16) | (uint)head;
-
+                edge = new Endpoints(tail, head);
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
-
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
 
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
                 return true;
-#else
-                throw new NotImplementedException();
-#endif
             }
 
             /// <inheritdoc/>
