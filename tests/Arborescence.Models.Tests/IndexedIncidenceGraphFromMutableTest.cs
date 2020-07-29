@@ -36,7 +36,7 @@
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new MutableIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
+            using var builder = new MutableIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
@@ -57,7 +57,7 @@
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new MutableIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
+            using var builder = new MutableIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
@@ -93,7 +93,7 @@
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new MutableIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
+            using var builder = new MutableIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);

@@ -5,7 +5,8 @@
 
     public sealed class MutableIndexedIncidenceGraph :
         IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
-        IGraphBuilder<IndexedIncidenceGraph, int, int>
+        IGraphBuilder<IndexedIncidenceGraph, int, int>,
+        IDisposable
     {
         private const int DefaultInitialOutDegree = 4;
 
@@ -36,6 +37,15 @@
         {
             get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
             set => _initialOutDegree = value;
+        }
+
+        public void Dispose()
+        {
+            for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
+                _outEdgesByVertex[vertex] = ArrayPrefixBuilder.Release(_outEdgesByVertex[vertex], false);
+            _outEdgesByVertex = ArrayPrefixBuilder.Release(_outEdgesByVertex, true);
+            _headByEdge = ArrayPrefixBuilder.Release(_headByEdge, false);
+            _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
         }
 
         public bool TryAdd(int tail, int head, out int edge)
@@ -99,7 +109,6 @@
             Span<int> destTailByEdge = data.AsSpan(1 + n + m + m, m);
             _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-            // TODO: Add disposal of arrays.
             return new IndexedIncidenceGraph(data);
         }
 

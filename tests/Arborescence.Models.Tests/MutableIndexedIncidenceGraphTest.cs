@@ -35,7 +35,7 @@
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            var graph = new Graph(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
@@ -53,7 +53,7 @@
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            var graph = new Graph(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
@@ -88,7 +88,7 @@
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            var graph = new Graph(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
                 bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
