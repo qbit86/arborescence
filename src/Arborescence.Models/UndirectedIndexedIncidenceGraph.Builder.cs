@@ -12,10 +12,10 @@ namespace Arborescence.Models
         {
             private const int DefaultInitialOutDegree = 8;
 
-            private ArrayBuilder<int> _heads;
+            private ArrayBuilder<int> _headByEdge;
             private int _initialOutDegree = DefaultInitialOutDegree;
-            private ArrayPrefix<ArrayBuilder<int>> _outEdges;
-            private ArrayBuilder<int> _tails;
+            private ArrayPrefix<ArrayBuilder<int>> _outEdgesByVertex;
+            private ArrayBuilder<int> _tailByEdge;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Builder"/> class.
@@ -34,11 +34,11 @@ namespace Arborescence.Models
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
                 int effectiveEdgeCapacity = Math.Max(2 * edgeCapacity, DefaultInitialOutDegree);
-                _tails = new ArrayBuilder<int>(effectiveEdgeCapacity);
-                _heads = new ArrayBuilder<int>(effectiveEdgeCapacity);
+                _tailByEdge = new ArrayBuilder<int>(effectiveEdgeCapacity);
+                _headByEdge = new ArrayBuilder<int>(effectiveEdgeCapacity);
                 ArrayBuilder<int>[] outEdges = Pool.Rent(initialVertexCount);
                 Array.Clear(outEdges, 0, initialVertexCount);
-                _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
+                _outEdgesByVertex = ArrayPrefix.Create(outEdges, initialVertexCount);
             }
 
             private static ArrayPool<ArrayBuilder<int>> Pool => ArrayPool<ArrayBuilder<int>>.Shared;
@@ -46,7 +46,7 @@ namespace Arborescence.Models
             /// <summary>
             /// Gets the number of vertices.
             /// </summary>
-            public int VertexCount => _outEdges.Count;
+            public int VertexCount => _outEdgesByVertex.Count;
 
             /// <summary>
             /// Gets the initial number of out-edges for each vertex.
@@ -69,16 +69,16 @@ namespace Arborescence.Models
                 int max = Math.Max(tail, head);
                 EnsureVertexCount(max + 1);
 
-                Debug.Assert(_tails.Count == _heads.Count);
-                int newEdgeIndex = _heads.Count;
-                _tails.Add(tail);
-                _heads.Add(head);
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count);
+                int newEdgeIndex = _headByEdge.Count;
+                _tailByEdge.Add(tail);
+                _headByEdge.Add(head);
 
-                if (_outEdges[tail].Buffer == null)
-                    _outEdges[tail] = new ArrayBuilder<int>(InitialOutDegree);
+                if (_outEdgesByVertex[tail].Buffer is null)
+                    _outEdgesByVertex[tail] = new ArrayBuilder<int>(InitialOutDegree);
 
-                _outEdges.Array[tail].Add(newEdgeIndex);
-                _outEdges.Array[head].Add(~newEdgeIndex);
+                _outEdgesByVertex.Array[tail].Add(newEdgeIndex);
+                _outEdgesByVertex.Array[head].Add(~newEdgeIndex);
 
                 edge = newEdgeIndex;
                 return true;
@@ -87,15 +87,15 @@ namespace Arborescence.Models
             /// <inheritdoc/>
             public UndirectedIndexedIncidenceGraph ToGraph()
             {
-                Debug.Assert(_tails.Count == _heads.Count);
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count);
                 int vertexCount = VertexCount;
-                int tailCount = _tails.Count;
-                int headCount = _heads.Count;
+                int tailCount = _tailByEdge.Count;
+                int headCount = _headByEdge.Count;
                 int reorderedEdgeCount = 2 * tailCount;
                 var storage = new int[1 + 2 * vertexCount + reorderedEdgeCount + headCount + tailCount];
                 storage[0] = vertexCount;
 
-                Span<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
+                Span<ArrayBuilder<int>> outEdges = _outEdgesByVertex.AsSpan();
                 Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexCount);
                 Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, reorderedEdgeCount);
 
@@ -110,17 +110,17 @@ namespace Arborescence.Models
                     outEdges[s].Dispose(false);
                 }
 
-                if (_outEdges.Array != null)
-                    Pool.Return(_outEdges.Array, true);
-                _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
+                if (_outEdgesByVertex.Array != null)
+                    Pool.Return(_outEdgesByVertex.Array, true);
+                _outEdgesByVertex = ArrayPrefix<ArrayBuilder<int>>.Empty;
 
                 Span<int> destHeads = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount, headCount);
-                _heads.AsSpan().CopyTo(destHeads);
-                _heads.Dispose(false);
+                _headByEdge.AsSpan().CopyTo(destHeads);
+                _headByEdge.Dispose(false);
 
                 Span<int> destTails = storage.AsSpan(1 + 2 * vertexCount + reorderedEdgeCount + headCount, tailCount);
-                _tails.AsSpan().CopyTo(destTails);
-                _tails.Dispose(false);
+                _tailByEdge.AsSpan().CopyTo(destTails);
+                _tailByEdge.Dispose(false);
 
                 return new UndirectedIndexedIncidenceGraph(storage);
             }
@@ -132,7 +132,7 @@ namespace Arborescence.Models
             public void EnsureVertexCount(int vertexCount)
             {
                 if (vertexCount > VertexCount)
-                    _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
+                    _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
