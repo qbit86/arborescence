@@ -34,7 +34,9 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => _data is null ? 0 : (_data.Length - 1 - VertexCount) / 3;
+        public int EdgeCount => IsDefault ? 0 : (_data.Length - 1 - VertexCount) / 3;
+
+        private bool IsDefault => _data is null;
 
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
@@ -88,13 +90,16 @@ namespace Arborescence.Models
         public override int GetHashCode() => (_data?.GetHashCode()).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetUpperBoundByVertex() => _data.AsSpan(1, VertexCount);
+        private ReadOnlySpan<int> GetUpperBoundByVertex() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(1, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTailByEdge() => _data.AsSpan(1 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTailByEdge() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(1 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetHeadByEdge() => _data.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetHeadByEdge() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(1 + VertexCount + EdgeCount, EdgeCount);
 
         /// <summary>
         /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are equal.

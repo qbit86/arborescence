@@ -37,6 +37,8 @@ namespace Arborescence.Models
         /// </summary>
         public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 4;
 
+        private bool IsDefault => _storage is null;
+
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
@@ -92,13 +94,16 @@ namespace Arborescence.Models
         public override int GetHashCode() => (_storage?.GetHashCode()).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
+        private ReadOnlySpan<int> GetEdgeBounds() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _storage.AsSpan(1, 2 * VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + 2 * VertexCount + 3 * EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTails() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _storage.AsSpan(1 + 2 * VertexCount + 3 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetHeads() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetVertexCount()

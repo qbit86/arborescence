@@ -32,6 +32,8 @@
         /// </summary>
         public int EdgeCount => (_edgesOrderedByTail?.Length).GetValueOrDefault();
 
+        private bool IsDefault => _upperBoundByVertex is null || _edgesOrderedByTail is null;
+
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints edge, out int head)
         {
@@ -49,7 +51,7 @@
         /// <inheritdoc/>
         public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(int vertex)
         {
-            if (unchecked((uint)vertex >= (uint)_upperBoundByVertex.Length))
+            if (IsDefault || unchecked((uint)vertex >= (uint)_upperBoundByVertex.Length))
                 return ArraySegmentEnumerator<Endpoints>.Empty;
 
             int lowerBound = vertex == 0 ? 0 : _upperBoundByVertex[vertex - 1];
@@ -66,7 +68,7 @@
         public override bool Equals(object obj) => obj is SimpleIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _upperBoundByVertex is null || _edgesOrderedByTail is null
+        public override int GetHashCode() => IsDefault
             ? 0
             : unchecked(_upperBoundByVertex.GetHashCode() * 397) ^ _edgesOrderedByTail.GetHashCode();
 
