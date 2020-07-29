@@ -51,6 +51,7 @@
             /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph()
             {
+                int n = _vertexCount;
                 int m = _edges.Count;
                 if (NeedsReordering)
                     Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
@@ -60,28 +61,23 @@
 #else
                 var edgesOrderedByTail = new Endpoints[m];
 #endif
-#if false
                 _edges.CopyTo(edgesOrderedByTail);
-                Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
-                upperBoundByVertex.Clear();
-                for (int edgeIndex = 0; edgeIndex < edgeCount; ++edgeIndex)
+
+                var upperBoundByVertex = new int[n];
+                foreach (Endpoints edge in _edges)
                 {
-                    uint edge = _edges[edgeIndex];
-                    int tail = (int)(edge >> 16);
+                    int tail = edge.Tail;
                     ++upperBoundByVertex[tail];
                 }
 
-                for (int vertex = 1; vertex < _vertexCount; ++vertex)
+                for (int vertex = 1; vertex < n; ++vertex)
                     upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
                 _currentMaxTail = 0;
                 _edges = ArrayPrefixBuilder.Release(_edges, false);
                 _vertexCount = 0;
 
-                return new SimpleIncidenceGraph(storage);
-#else
-                throw new NotImplementedException();
-#endif
+                return new SimpleIncidenceGraph(upperBoundByVertex, edgesOrderedByTail);
             }
         }
 
