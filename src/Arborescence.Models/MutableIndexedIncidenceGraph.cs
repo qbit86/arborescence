@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
 
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableIndexedIncidenceGraph :
         IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
@@ -15,6 +16,14 @@
         private ArrayPrefix<ArrayPrefix<int>> _outEdgesByVertex;
         private ArrayPrefix<int> _tailByEdge;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MutableIndexedIncidenceGraph"/> class.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
+        /// </exception>
         public MutableIndexedIncidenceGraph(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
@@ -29,16 +38,26 @@
             _outEdgesByVertex = ArrayPrefixBuilder.Create<ArrayPrefix<int>>(initialVertexCount);
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount => _outEdgesByVertex.Count;
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount => _headByEdge.Count;
 
+        /// <summary>
+        /// Gets the initial number of out-edges for each vertex.
+        /// </summary>
         public int InitialOutDegree
         {
             get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
             set => _initialOutDegree = value;
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
@@ -48,6 +67,7 @@
             _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
         }
 
+        /// <inheritdoc/>
         public bool TryAdd(int tail, int head, out int edge)
         {
             if (tail < 0)
@@ -78,6 +98,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public IndexedIncidenceGraph ToGraph()
         {
             int n = VertexCount;
@@ -112,6 +133,7 @@
             return new IndexedIncidenceGraph(data);
         }
 
+        /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             if (unchecked((uint)edge > (uint)_headByEdge.Count))
@@ -124,6 +146,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             if (unchecked((uint)edge > (uint)_tailByEdge.Count))
@@ -136,6 +159,7 @@
             return true;
         }
 
+        /// <inheritdoc/>
         public ArrayPrefixEnumerator<int> EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex > (uint)_outEdgesByVertex.Count))
@@ -145,6 +169,10 @@
             return new ArrayPrefixEnumerator<int>(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
         }
 
+        /// <summary>
+        /// Ensures that the graph can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
