@@ -39,7 +39,7 @@ namespace Arborescence
         /// Gets the number of items this instance can store without re-allocating,
         /// or 0 if the backing array is <c>null</c>.
         /// </summary>
-        public int Capacity => _array?.Length ?? 0;
+        public int Capacity => (_array?.Length).GetValueOrDefault();
 
         /// <summary>Gets the current underlying array.</summary>
         public T[] Buffer => _array;
