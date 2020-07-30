@@ -111,6 +111,7 @@ namespace Arborescence.Models
                 return new UndirectedIndexedIncidenceGraph(data);
             }
         }
+#pragma warning restore CA1034 // Nested types should not be visible
 
         private sealed class EdgeComparer : IComparer<int>
         {
@@ -136,6 +137,5 @@ namespace Arborescence.Models
                 return leftTail.CompareTo(rightTail);
             }
         }
-#pragma warning restore CA1034 // Nested types should not be visible
     }
 }
