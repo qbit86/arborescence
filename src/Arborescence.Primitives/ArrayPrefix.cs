@@ -152,19 +152,8 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            if (_array is null)
-                return 0;
-
-            int hash = 5381;
-            hash = HashHelpers.Combine(hash, _count);
-
-            // The array hash is expected to be an evenly-distributed mixture of bits,
-            // so rather than adding the cost of another rotation we just xor it.
-            hash ^= _array.GetHashCode();
-            return hash;
-        }
+        public override int GetHashCode() =>
+            _array is null ? 0 : unchecked(_array.GetHashCode() * 397) ^ _count.GetHashCode();
 
         /// <inheritdoc/>
         public void CopyTo(T[] array, int arrayIndex = 0)
