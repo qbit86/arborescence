@@ -11,11 +11,6 @@
     {
         private readonly ulong _data;
 
-        internal Endpoints(long data)
-        {
-            _data = unchecked((ulong)data);
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Endpoints"/> structure
         /// with the specified tail and head.
@@ -38,8 +33,6 @@
         /// Gets the head of the edge.
         /// </summary>
         public int Head => unchecked((int)_data);
-
-        internal long Data => unchecked((long)_data);
 
         /// <inheritdoc/>
         public override string ToString()
