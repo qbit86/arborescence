@@ -47,7 +47,8 @@ namespace Arborescence
 
         internal static ArrayPrefix<T> Release<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
         {
-            if (arrayPrefix.Array is {} array)
+            // ReSharper disable once PatternAlwaysOfType
+            if (arrayPrefix.Array is T[] array)
                 ArrayPool<T>.Shared.Return(array, clearArray);
             return ArrayPrefix<T>.Empty;
         }
