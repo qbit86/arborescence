@@ -1,20 +1,25 @@
 # Changelog
 
-## [Unreleased] - 2020-07-30
+## [Unreleased] - 2020-07-31
 ### Added
-- Primitives: non-generic `Endpoints` struct.
 - Models: non-generic `UndirectedIndexedIncidenceGraphPolicy` struct.
 - Models: `MutableIndexedIncidenceGraph`.
 
 ### Changed
-- Primitives: `ArraySegmentEnumerator<T>` constructor.
-- Primitives: Added target framework `netstandard2.1` to support nullability attributes.
-- Primitives: Make `Current` properties of enumerator structs `readonly`.
-- Primitives: Bumped minimum target framework to `netstandard1.3`.
-- Primitives: Add `Empty` property to enumerators.
 - Models: Bumped minimum target framework to `netstandard1.3`.
 - Models: Reimplement `IndexedIncidenceGraph.Builder` and `UndirectedIndexedIncidenceGraph.Builder` with sorting.
 - Models: Reimplement `SimpleIncidenceGraph` with `Endpoints` as edge.
+
+## [0.3.0] - 2020-07-31
+### Added
+- Primitives: non-generic `Endpoints` struct.
+- Primitives: Target framework `netstandard2.1` to support nullability attributes.
+- Primitives: `Empty` property to enumerators.
+
+### Changed
+- Primitives: `ArraySegmentEnumerator<T>` constructor.
+- Primitives: Made `Current` properties of enumerator structs `readonly`.
+- Primitives: Bumped minimum target framework to `netstandard1.3`.
 
 ## [0.2.0] - 2020-07-20
 ### Added
@@ -39,7 +44,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.2.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/primitives-0.3.0...HEAD
+[0.3.0]: https://github.com/qbit86/arborescence/compare/models-0.2.0...primitives-0.3.0
 [0.2.0]: https://github.com/qbit86/arborescence/compare/traversal-0.1.1...models-0.2.0
 [0.1.1]: https://github.com/qbit86/arborescence/compare/abstractions-0.1.0...traversal-0.1.1
 [0.1.0]: https://github.com/qbit86/arborescence/releases/tag/abstractions-0.1.0
