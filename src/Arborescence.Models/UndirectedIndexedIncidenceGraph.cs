@@ -20,7 +20,7 @@ namespace Arborescence.Models
         internal UndirectedIndexedIncidenceGraph(int[] data)
         {
             Debug.Assert(data != null, nameof(data) + " != null");
-            Debug.Assert(data.Length > 0, "data.Length > 0");
+            Debug.Assert(data.Length >= 2, "data.Length >= 2");
             Debug.Assert(data[0] >= 0, "data[0] >= 0");
             Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
             Debug.Assert(data[1] >= 0, "data[1] >= 0");
