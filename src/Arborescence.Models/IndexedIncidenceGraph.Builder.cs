@@ -1,7 +1,7 @@
 namespace Arborescence.Models
 {
     using System;
-    using System.Buffers;
+    using System.Collections.Generic;
     using System.Diagnostics;
 
     public readonly partial struct IndexedIncidenceGraph
@@ -10,12 +10,10 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public sealed class Builder : IGraphBuilder<IndexedIncidenceGraph, int, int>
         {
-            private const int DefaultInitialOutDegree = 4;
-
-            private ArrayBuilder<int> _heads;
-            private int _initialOutDegree = DefaultInitialOutDegree;
-            private ArrayPrefix<ArrayBuilder<int>> _outEdges;
-            private ArrayBuilder<int> _tails;
+            private int _currentMaxTail;
+            private ArrayPrefix<int> _headByEdge;
+            private ArrayPrefix<int> _tailByEdge;
+            private int _vertexCount;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Builder"/> class.
@@ -33,112 +31,102 @@ namespace Arborescence.Models
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
-                _tails = new ArrayBuilder<int>(effectiveEdgeCapacity);
-                _heads = new ArrayBuilder<int>(effectiveEdgeCapacity);
-                ArrayBuilder<int>[] outEdges = Pool.Rent(initialVertexCount);
-                Array.Clear(outEdges, 0, initialVertexCount);
-                _outEdges = ArrayPrefix.Create(outEdges, initialVertexCount);
+                _headByEdge = ArrayPrefixBuilder.Create<int>(edgeCapacity);
+                _tailByEdge = ArrayPrefixBuilder.Create<int>(edgeCapacity);
+                _vertexCount = initialVertexCount;
             }
 
-            private static ArrayPool<ArrayBuilder<int>> Pool => ArrayPool<ArrayBuilder<int>>.Shared;
-
-            /// <summary>
-            /// Gets the number of vertices.
-            /// </summary>
-            public int VertexCount => _outEdges.Count;
-
-            /// <summary>
-            /// Gets the initial number of out-edges for each vertex.
-            /// </summary>
-            public int InitialOutDegree
-            {
-                get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
-                set => _initialOutDegree = value;
-            }
+            private bool NeedsReordering => _currentMaxTail == int.MaxValue;
 
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out int edge)
             {
-                if (tail < 0)
+                if (tail < 0 || head < 0)
                 {
                     edge = default;
                     return false;
                 }
 
-                if (head < 0)
-                {
-                    edge = default;
-                    return false;
-                }
+                edge = _tailByEdge.Count;
 
-                int max = Math.Max(tail, head);
-                EnsureVertexCount(max + 1);
+                _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
 
-                Debug.Assert(_tails.Count == _heads.Count);
-                int newEdgeIndex = _heads.Count;
-                _tails.Add(tail);
-                _heads.Add(head);
+                int newVertexCountCandidate = Math.Max(tail, head) + 1;
+                if (newVertexCountCandidate > _vertexCount)
+                    _vertexCount = newVertexCountCandidate;
 
-                if (_outEdges[tail].Buffer == null)
-                    _outEdges[tail] = new ArrayBuilder<int>(InitialOutDegree);
-
-                _outEdges.Array[tail].Add(newEdgeIndex);
-
-                edge = newEdgeIndex;
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+                _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
+                _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
                 return true;
             }
 
             /// <inheritdoc/>
             public IndexedIncidenceGraph ToGraph()
             {
-                Debug.Assert(_tails.Count == _heads.Count);
-                int vertexCount = VertexCount;
-                int tailCount = _tails.Count;
-                int headCount = _heads.Count;
-                var storage = new int[1 + 2 * vertexCount + tailCount + headCount + tailCount];
-                storage[0] = vertexCount;
+                int n = _vertexCount;
+                int m = _tailByEdge.Count;
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
 
-                Span<ArrayBuilder<int>> outEdges = _outEdges.AsSpan();
-                Span<int> destEdgeBounds = storage.AsSpan(1, 2 * vertexCount);
-                Span<int> destReorderedEdges = storage.AsSpan(1 + 2 * vertexCount, tailCount);
+                int dataLength = 2 + n + m + m + m;
+#if NET5
+                int[] data = GC.AllocateUninitializedArray<int>(dataLength);
+#else
+                var data = new int[dataLength];
+#endif
+                data[0] = n;
+                data[1] = m;
 
-                for (int s = 0, currentBound = 0; s < outEdges.Length; ++s)
+                Span<int> destReorderedEdges = data.AsSpan(2 + n, m);
+                for (int edge = 0; edge < m; ++edge)
+                    destReorderedEdges[edge] = edge;
+
+                if (NeedsReordering)
+                    Array.Sort(data, 2 + n, m, new EdgeComparer(_tailByEdge.Array));
+
+                Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
+                destUpperBoundByVertex.Clear();
+                for (int edge = 0; edge < m; ++edge)
                 {
-                    ReadOnlySpan<int> currentOutEdges = outEdges[s].AsSpan();
-                    currentOutEdges.CopyTo(destReorderedEdges.Slice(currentBound, currentOutEdges.Length));
-                    int finalLeftBound = 1 + 2 * vertexCount + currentBound;
-                    destEdgeBounds[2 * s] = finalLeftBound;
-                    destEdgeBounds[2 * s + 1] = currentOutEdges.Length;
-                    currentBound += currentOutEdges.Length;
-                    outEdges[s].Dispose(false);
+                    int tail = _tailByEdge[edge];
+                    ++destUpperBoundByVertex[tail];
                 }
 
-                if (_outEdges.Array != null)
-                    Pool.Return(_outEdges.Array, true);
-                _outEdges = ArrayPrefix<ArrayBuilder<int>>.Empty;
+                for (int vertex = 1; vertex < n; ++vertex)
+                    destUpperBoundByVertex[vertex] += destUpperBoundByVertex[vertex - 1];
 
-                Span<int> destHeads = storage.AsSpan(1 + 2 * vertexCount + tailCount, headCount);
-                _heads.AsSpan().CopyTo(destHeads);
-                _heads.Dispose(false);
+                Span<int> destHeadByEdge = data.AsSpan(2 + n + m, m);
+                _headByEdge.AsSpan().CopyTo(destHeadByEdge);
 
-                Span<int> destTails = storage.AsSpan(1 + 2 * vertexCount + tailCount + headCount, tailCount);
-                _tails.AsSpan().CopyTo(destTails);
-                _tails.Dispose(false);
+                Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
+                _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-                return new IndexedIncidenceGraph(storage);
-            }
+                _currentMaxTail = 0;
+                _headByEdge = ArrayPrefixBuilder.Release(_headByEdge, false);
+                _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
+                _vertexCount = 0;
 
-            /// <summary>
-            /// Ensures that the builder can hold the specified number of vertices without growing.
-            /// </summary>
-            /// <param name="vertexCount">The number of vertices.</param>
-            public void EnsureVertexCount(int vertexCount)
-            {
-                if (vertexCount > VertexCount)
-                    _outEdges = ArrayPrefixBuilder.Resize(_outEdges, vertexCount, true);
+                return new IndexedIncidenceGraph(data);
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
+
+        private sealed class EdgeComparer : IComparer<int>
+        {
+            private readonly int[] _tailByEdge;
+
+            public EdgeComparer(int[] tailByEdge)
+            {
+                Debug.Assert(tailByEdge != null, nameof(tailByEdge) + " != null");
+                _tailByEdge = tailByEdge;
+            }
+
+            public int Compare(int x, int y)
+            {
+                int leftTail = _tailByEdge[x];
+                int rightTail = _tailByEdge[y];
+                return leftTail.CompareTo(rightTail);
+            }
+        }
     }
 }

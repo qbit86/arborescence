@@ -1,17 +1,17 @@
-namespace Arborescence
+﻿namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
-    using Graph = Models.SimpleIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
+    using Graph = Models.IndexedIncidenceGraph;
+    using EdgeEnumerator = ArraySegmentEnumerator<int>;
 
-    public sealed class SimpleIncidenceGraphTest
+    public sealed class IndexedIncidenceGraphTest
     {
         private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
             HashSet<Endpoints>.CreateSetComparer();
 
-        private static bool TryGetEndpoints(Graph graph, Endpoints edge, out Endpoints endpoints)
+        private static bool TryGetEndpoints(Graph graph, int edge, out Endpoints endpoints)
         {
             if (!graph.TryGetTail(edge, out int tail) || !graph.TryGetHead(edge, out int head))
             {
@@ -68,7 +68,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    Endpoints edge = outEdges.Current;
+                    int edge = outEdges.Current;
                     bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
                     if (!hasEndpoints)
                         Assert.True(hasEndpoints);
@@ -102,7 +102,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    Endpoints edge = outEdges.Current;
+                    int edge = outEdges.Current;
                     bool hasTail = graph.TryGetTail(edge, out int tail);
                     if (!hasTail)
                         Assert.True(hasTail);

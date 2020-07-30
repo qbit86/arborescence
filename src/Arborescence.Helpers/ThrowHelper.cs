@@ -1,14 +1,14 @@
-﻿#pragma warning disable CA1303
-
-namespace Arborescence
+﻿namespace Arborescence
 {
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-    // https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/src/System/ThrowHelper.cs
+    // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs
+
     internal static class ThrowHelper
     {
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
         internal static void ThrowArgumentException_DestinationTooShort()
         {
             throw new ArgumentException(SR.Argument_DestinationTooShort);
@@ -17,16 +17,6 @@ namespace Arborescence
         internal static void ThrowArgumentNullException(ExceptionArgument argument)
         {
             throw new ArgumentNullException(GetArgumentName(argument));
-        }
-
-        internal static void ThrowArgumentOutOfRangeException(ExceptionArgument argument)
-        {
-            throw new ArgumentOutOfRangeException(GetArgumentName(argument));
-        }
-
-        internal static void ThrowArgumentOutOfRange_IndexException()
-        {
-            throw GetArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_Index);
         }
 
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
@@ -57,7 +47,7 @@ namespace Arborescence
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static Exception GetArraySegmentCtorValidationFailedException(Array array, int offset, int count)
         {
-            if (array == null)
+            if (array is null)
                 return new ArgumentNullException(nameof(array));
 
             if (offset < 0)
@@ -69,13 +59,6 @@ namespace Arborescence
             Debug.Assert(array.Length - offset < count);
 
             return new ArgumentException(SR.Argument_InvalidOffLen);
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(ExceptionArgument argument,
-            ExceptionResource resource)
-        {
-            return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -92,7 +75,7 @@ namespace Arborescence
                 case ExceptionArgument.start:
                     return nameof(ExceptionArgument.start);
                 default:
-                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument Enum.");
+                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument enum.");
                     return string.Empty;
             }
         }
@@ -102,29 +85,19 @@ namespace Arborescence
         {
             switch (resource)
             {
-                case ExceptionResource.ArgumentOutOfRange_Index:
-                    return SR.ArgumentOutOfRange_Index;
                 case ExceptionResource.InvalidOperation_NullArray:
                     return SR.InvalidOperation_NullArray;
                 default:
-                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource Enum.");
-                    return "";
+                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource enum.");
+                    return string.Empty;
             }
         }
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
 
     // ReSharper disable InconsistentNaming
-    internal enum ExceptionArgument
-    {
-        array,
-        count,
-        index,
-        start
-    }
-
     internal enum ExceptionResource
     {
-        ArgumentOutOfRange_Index,
         InvalidOperation_NullArray
     }
     // ReSharper restore InconsistentNaming

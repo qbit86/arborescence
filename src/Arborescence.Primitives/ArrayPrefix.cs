@@ -69,7 +69,7 @@ namespace Arborescence
         /// <param name="array">The array to wrap.</param>
         public ArrayPrefix(T[] array)
         {
-            if (array == null)
+            if (array is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
 
 #pragma warning disable CA1062
@@ -90,7 +90,7 @@ namespace Arborescence
             // Validate arguments, check is minimal instructions with reduced branching for inlinable fast-path
             // Negative values discovered though conversion to high values when converted to unsigned
             // Failure should be rare and location determination and message is delegated to failure functions
-            if (array == null || (uint)count > (uint)array.Length)
+            if (array is null || (uint)count > (uint)array.Length)
                 ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
 
             _array = array;
@@ -118,14 +118,14 @@ namespace Arborescence
             get
             {
                 if ((uint)index >= (uint)_count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 _array[index] = value;
             }
@@ -152,33 +152,11 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            if (_array == null)
-                return 0;
-
-            int hash = 5381;
-            hash = HashHelpers.Combine(hash, _count);
-
-            // The array hash is expected to be an evenly-distributed mixture of bits,
-            // so rather than adding the cost of another rotation we just xor it.
-            hash ^= _array.GetHashCode();
-            return hash;
-        }
-
-        /// <summary>
-        /// Copies the contents of this instance into the specified destination array of the same type <typeparamref name="T"/>.
-        /// </summary>
-        /// <param name="destination">
-        /// The array of type <typeparamref name="T"/> into which the contents of this instance will be copied.
-        /// </param>
-        public void CopyTo(T[] destination)
-        {
-            CopyTo(destination, 0);
-        }
+        public override int GetHashCode() =>
+            _array is null ? 0 : unchecked(_array.GetHashCode() * 397) ^ _count.GetHashCode();
 
         /// <inheritdoc/>
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex = 0)
         {
             ThrowInvalidOperationIfDefault();
             System.Array.Copy(_array, 0, array, arrayIndex, _count);
@@ -201,16 +179,10 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-        {
-            return obj is ArrayPrefix<T> other && Equals(other);
-        }
+        public override bool Equals(object obj) => obj is ArrayPrefix<T> other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ArrayPrefix<T> other)
-        {
-            return other._array == _array && other._count == _count;
-        }
+        public bool Equals(ArrayPrefix<T> other) => other._array == _array && other._count == _count;
 
         /// <summary>
         /// Forms a slice out of the current array prefix starting at the specified index.
@@ -225,7 +197,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count)
-                ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
             return new ArraySegment<T>(_array, index, _count - index);
         }
@@ -243,7 +215,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
-                ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
             return new ArraySegment<T>(_array, index, count);
         }
@@ -272,10 +244,7 @@ namespace Arborescence
         /// <returns>
         /// <c>true</c> if the two <see cref="ArrayPrefix{T}"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(ArrayPrefix<T> a, ArrayPrefix<T> b)
-        {
-            return a.Equals(b);
-        }
+        public static bool operator ==(ArrayPrefix<T> a, ArrayPrefix<T> b) => a.Equals(b);
 
         /// <summary>
         /// Indicates whether two <see cref="ArrayPrefix{T}"/> structures are not equal.
@@ -285,10 +254,7 @@ namespace Arborescence
         /// <returns>
         /// <c>true</c> if the two <see cref="ArrayPrefix{T}"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(ArrayPrefix<T> a, ArrayPrefix<T> b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(ArrayPrefix<T> a, ArrayPrefix<T> b) => !a.Equals(b);
 
 #pragma warning disable CA2225 // Operator overloads have named alternates
         /// <summary>
@@ -296,10 +262,8 @@ namespace Arborescence
         /// </summary>
         /// <param name="array">The array to convert.</param>
         /// <returns>An array prefix.</returns>
-        public static implicit operator ArrayPrefix<T>(T[] array)
-        {
-            return array != null ? new ArrayPrefix<T>(array) : default;
-        }
+        public static implicit operator ArrayPrefix<T>(T[] array) =>
+            array != null ? new ArrayPrefix<T>(array) : default;
 #pragma warning restore CA2225 // Operator overloads have named alternates
 
         #region IList<T>
@@ -310,7 +274,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
@@ -319,7 +283,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 _array[index] = value;
             }
@@ -356,7 +320,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ThrowHelper.ThrowArgumentOutOfRange_IndexException();
+                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
@@ -399,25 +363,19 @@ namespace Arborescence
 
         #region IEnumerable<T>
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return Enumerate();
-        }
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => Enumerate();
 
         #endregion
 
         #region IEnumerable
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return Enumerate();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => Enumerate();
 
         #endregion
 
         private void ThrowInvalidOperationIfDefault()
         {
-            if (_array == null)
+            if (_array is null)
                 ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
         }
 

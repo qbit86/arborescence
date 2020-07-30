@@ -11,12 +11,12 @@ namespace Arborescence.Workbench
 
         public static TextReader GetTextReader(string shortName)
         {
-            if (shortName == null)
+            if (shortName is null)
                 throw new ArgumentNullException(nameof(shortName));
 
             Stream stream = typeof(IndexedGraphs).GetTypeInfo().Assembly
                 .GetManifestResourceStream($"Arborescence.Workbench.IndexedGraphs.{shortName}.gv");
-            if (stream == null)
+            if (stream is null)
                 return TextReader.Null;
 
             return new StreamReader(stream, s_utf8Encoding, false);

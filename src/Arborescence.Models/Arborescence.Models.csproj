@@ -2,21 +2,23 @@
   <PropertyGroup>
     <Description>Data structures for graphs and policy models to manipulate them.
 Commonly used types:
-AdjacencyListIncidenceGraph
-IndexedIncidenceGraphPolicy&lt;TGraph, TEdges&gt;</Description>
+• IndexedIncidenceGraph
+• IndexedIncidenceGraphPolicy
+• SimpleIncidenceGraph
+• SimpleIncidenceGraphPolicy</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.2.0</VersionPrefix>
+    <VersionPrefix>0.3.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.1</AssemblyVersion>
+    <AssemblyVersion>0.3</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <LangVersion>8.0</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
-    <TargetFrameworks>net461;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.1' OR '$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>

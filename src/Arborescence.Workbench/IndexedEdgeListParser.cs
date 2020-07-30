@@ -2,8 +2,8 @@ namespace Arborescence.Workbench
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
-    using static System.Diagnostics.Debug;
 
     public static class IndexedEdgeListParser
     {
@@ -11,19 +11,18 @@ namespace Arborescence.Workbench
 
         // Treats nodes as Base32 numbers: https://en.wikipedia.org/wiki/Base32#RFC_4648_Base32_alphabet
 
-        public static IEnumerable<Endpoints<int>> ParseEdges(TextReader textReader)
+        public static IEnumerable<Endpoints> ParseEdges(TextReader textReader)
         {
-            if (textReader == null)
+            if (textReader is null)
                 throw new ArgumentNullException(nameof(textReader));
 
             return ParseEdgesCore(textReader);
         }
 
-        private static IEnumerable<Endpoints<int>> ParseEdgesCore(TextReader textReader)
+        private static IEnumerable<Endpoints> ParseEdgesCore(TextReader textReader)
         {
-            Assert(textReader != null);
-
-            for (string line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
+            Debug.Assert(textReader != null, nameof(textReader) + " != null");
+            for (string line = textReader!.ReadLine(); line != null; line = textReader.ReadLine())
             {
                 string[] parts = line.Split(s_arrowSeparator, 2, StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length < 2)
@@ -45,7 +44,7 @@ namespace Arborescence.Workbench
                 if (!TryParse(rightToken.AsSpan(), out int head))
                     continue;
 
-                yield return Endpoints.Create(tail, head);
+                yield return new Endpoints(tail, head);
             }
         }
 

@@ -8,9 +8,11 @@
   <PropertyGroup>
     <AssemblyVersion>0.1</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
+    <LangVersion>latest</LangVersion>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <Nullable>enable</Nullable>
     <RootNamespace>Arborescence.Workbench</RootNamespace>
-    <TargetFrameworks>net461;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="IndexedGraphs\*.gv" />
@@ -21,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.1' OR '$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
   <ItemGroup>

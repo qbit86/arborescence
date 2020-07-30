@@ -5,7 +5,7 @@ namespace Arborescence.Models
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the indexed incidence graph.
     /// </summary>
-    public struct IndexedIncidenceGraphPolicy :
+    public readonly struct IndexedIncidenceGraphPolicy :
         ITailPolicy<IndexedIncidenceGraph, int, int>,
         IHeadPolicy<IndexedIncidenceGraph, int, int>,
         IOutEdgesPolicy<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>>

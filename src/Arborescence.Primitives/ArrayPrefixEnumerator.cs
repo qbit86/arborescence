@@ -21,26 +21,30 @@ namespace Arborescence
         /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefixEnumerator(T[] array, int count)
         {
-            if (array == null)
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-
-            if (array == null || (uint)count > (uint)array.Length)
-                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
+            if (array is null || unchecked((uint)count > (uint)array.Length))
+                ArrayPrefixEnumeratorHelper.ThrowCtorValidationFailedExceptions(array, count);
 
             _array = array;
             _end = count;
             _current = -1;
         }
 
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        /// <summary>
+        /// Gets an empty <see cref="ArrayPrefixEnumerator{T}"/> struct.
+        /// </summary>
+        public static ArrayPrefixEnumerator<T> Empty { get; } = new ArrayPrefixEnumerator<T>(Array.Empty<T>(), 0);
+#pragma warning restore CA1000 // Do not declare static members on generic types
+
         /// <inheritdoc/>
-        public T Current
+        public readonly T Current
         {
             get
             {
                 if (_current < 0)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                    ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                 if (_current >= _end)
-                    ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                    ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
                 return _array[_current];
             }
         }
@@ -61,7 +65,7 @@ namespace Arborescence
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An enumerator for the array prefix.</returns>
-        public ArrayPrefixEnumerator<T> GetEnumerator()
+        public readonly ArrayPrefixEnumerator<T> GetEnumerator()
         {
             ArrayPrefixEnumerator<T> ator = this;
             ator._current = -1;
@@ -72,15 +76,9 @@ namespace Arborescence
 
         void IDisposable.Dispose() { }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this;
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this;
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return this;
-        }
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
 
         void IEnumerator.Reset()
         {

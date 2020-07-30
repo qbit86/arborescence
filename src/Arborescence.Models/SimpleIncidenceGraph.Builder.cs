@@ -7,10 +7,10 @@
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
-        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, uint>
+        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
             private int _currentMaxTail;
-            private ArrayPrefix<uint> _edges;
+            private ArrayPrefix<Endpoints> _edges;
             private int _vertexCount;
 
             /// <summary>
@@ -29,31 +29,17 @@
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _edges = ArrayPrefixBuilder.Create<uint>(edgeCapacity);
+                _edges = ArrayPrefixBuilder.Create<Endpoints>(edgeCapacity);
                 _vertexCount = initialVertexCount;
             }
 
             private bool NeedsReordering => _currentMaxTail == int.MaxValue;
 
             /// <inheritdoc/>
-            public bool TryAdd(int tail, int head, out uint edge)
+            public bool TryAdd(int tail, int head, out Endpoints edge)
             {
-                if (unchecked((uint)tail) > ushort.MaxValue)
-                {
-                    edge = default;
-                    return false;
-                }
-
-                if (unchecked((uint)head) > ushort.MaxValue)
-                {
-                    edge = default;
-                    return false;
-                }
-
-                edge = ((uint)tail << 16) | (uint)head;
-
+                edge = new Endpoints(tail, head);
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
-
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
@@ -65,47 +51,44 @@
             /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph()
             {
-                int edgeCount = _edges.Count;
+                int n = _vertexCount;
+                int m = _edges.Count;
                 if (NeedsReordering)
-                    Array.Sort(_edges.Array, 0, edgeCount, EdgeComparer.Instance);
+                    Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
 
-                int storageLength = 1 + _vertexCount + edgeCount;
 #if NET5
-                uint[] storage = GC.AllocateUninitializedArray<uint>(storageLength);
+                Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
-                var storage = new uint[storageLength];
+                var edgesOrderedByTail = new Endpoints[m];
 #endif
-                storage[0] = (uint)_vertexCount;
-                _edges.CopyTo(storage, 1 + _vertexCount);
-                Span<uint> upperBoundByVertex = storage.AsSpan(1, _vertexCount);
-                upperBoundByVertex.Fill(0u);
-                for (int edgeIndex = 0; edgeIndex < edgeCount; ++edgeIndex)
+                _edges.CopyTo(edgesOrderedByTail);
+
+                var upperBoundByVertex = new int[n];
+                foreach (Endpoints edge in _edges)
                 {
-                    uint edge = _edges[edgeIndex];
-                    int tail = (int)(edge >> 16);
+                    int tail = edge.Tail;
                     ++upperBoundByVertex[tail];
                 }
 
-                for (int vertex = 1; vertex < _vertexCount; ++vertex)
+                for (int vertex = 1; vertex < n; ++vertex)
                     upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
                 _currentMaxTail = 0;
-                _edges = ArrayPrefixBuilder.Dispose(_edges, false);
+                _edges = ArrayPrefixBuilder.Release(_edges, false);
                 _vertexCount = 0;
 
-                return new SimpleIncidenceGraph(storage);
+                return new SimpleIncidenceGraph(upperBoundByVertex, edgesOrderedByTail);
             }
         }
 
-        internal sealed class EdgeComparer : IComparer<uint>
+        internal sealed class EdgeComparer : IComparer<Endpoints>
         {
             public static EdgeComparer Instance { get; } = new EdgeComparer();
 
-            public int Compare(uint x, uint y)
+            public int Compare(Endpoints x, Endpoints y)
             {
-                const uint mask = 0xFFFF0000u;
-                uint left = x & mask;
-                uint right = y & mask;
+                int left = x.Tail;
+                int right = y.Tail;
                 return left.CompareTo(right);
             }
         }

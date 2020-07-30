@@ -1,17 +1,17 @@
-namespace Arborescence
+﻿namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
-    using Graph = Models.SimpleIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
+    using Graph = Models.MutableIndexedIncidenceGraph;
+    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
 
-    public sealed class SimpleIncidenceGraphTest
+    public sealed class MutableIndexedIncidenceGraphTest
     {
         private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
             HashSet<Endpoints>.CreateSetComparer();
 
-        private static bool TryGetEndpoints(Graph graph, Endpoints edge, out Endpoints endpoints)
+        private static bool TryGetEndpoints(Graph graph, int edge, out Endpoints endpoints)
         {
             if (!graph.TryGetTail(edge, out int tail) || !graph.TryGetHead(edge, out int head))
             {
@@ -29,16 +29,13 @@ namespace Arborescence
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
-
-            // Act
-            Graph graph = builder.ToGraph();
 
             // Assert
             Assert.Equal(p.VertexCount, graph.VertexCount);
@@ -50,15 +47,14 @@ namespace Arborescence
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
 
-            Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
 
             // Act
@@ -68,7 +64,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    Endpoints edge = outEdges.Current;
+                    int edge = outEdges.Current;
                     bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
                     if (!hasEndpoints)
                         Assert.True(hasEndpoints);
@@ -86,15 +82,13 @@ namespace Arborescence
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
-
-            Graph graph = builder.ToGraph();
 
             // Act
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
@@ -102,7 +96,7 @@ namespace Arborescence
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    Endpoints edge = outEdges.Current;
+                    int edge = outEdges.Current;
                     bool hasTail = graph.TryGetTail(edge, out int tail);
                     if (!hasTail)
                         Assert.True(hasTail);

@@ -10,6 +10,7 @@
 
     internal static partial class Program
     {
+        // ReSharper disable once UnusedMember.Local
         private static void DemoRecursiveDfs()
         {
             const int vertexCount = 10000;

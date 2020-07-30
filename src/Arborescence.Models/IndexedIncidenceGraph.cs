@@ -1,115 +1,108 @@
 namespace Arborescence.Models
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
-    using static System.Diagnostics.Debug;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
         IEquatable<IndexedIncidenceGraph>
     {
         // Layout:
-        // vertexCount    reorderedEdges     tails
-        //         ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
-        //         [4][_^|_^|_^|_^][021][bcb][aca]
-        //            ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-        //               edgeBounds     heads
-        private readonly int[] _storage;
+        // 1    | n — the number of vertices
+        // 1    | m — the number of edges
+        // n    | upper bounds of out-edge enumerators indexed by vertices
+        // m    | edges sorted by tail
+        // m    | heads indexed by edges
+        // m    | tails indexed by edges
+        private readonly int[] _data;
 
-        internal IndexedIncidenceGraph(int[] storage)
+        internal IndexedIncidenceGraph(int[] data)
         {
-            Assert(storage != null, "storage != null");
-            Assert(storage.Length > 0, "storage.Length > 0");
+            Debug.Assert(data != null, nameof(data) + " != null");
+            Debug.Assert(data.Length > 0, "data.Length > 0");
+            Debug.Assert(data[0] >= 0, "data[0] >= 0");
+            Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
+            Debug.Assert(data[1] >= 0, "data[1] >= 0");
+            Debug.Assert(data[1] <= data.Length - 2, "data[1] <= data.Length - 2");
 
-            Assert(storage[0] >= 0, "storage[0] >= 0");
-            Assert(storage[0] <= storage.Length - 1, "storage[0] <= storage.Length - 1");
-
-            _storage = storage;
+            _data = data;
         }
 
         /// <summary>
         /// Gets the number of vertices.
         /// </summary>
-        public int VertexCount => _storage == null ? 0 : GetVertexCount();
+        public int VertexCount => (_data?[0]).GetValueOrDefault();
 
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => _storage == null ? 0 : (_storage.Length - 1 - 2 * GetVertexCount()) / 3;
+        public int EdgeCount => (_data?[1]).GetValueOrDefault();
+
+        private bool IsDefault => _data is null;
 
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            ReadOnlySpan<int> tails = GetTails();
-            if ((uint)edge >= (uint)tails.Length)
+            ReadOnlySpan<int> tailByEdge = GetTailByEdge();
+            if (unchecked((uint)edge >= (uint)tailByEdge.Length))
             {
                 tail = default;
                 return false;
             }
 
-            tail = tails[edge];
+            tail = tailByEdge[edge];
             return true;
         }
 
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            ReadOnlySpan<int> heads = GetHeads();
-            if ((uint)edge >= (uint)heads.Length)
+            ReadOnlySpan<int> headByEdge = GetHeadByEdge();
+            if (unchecked((uint)edge >= (uint)headByEdge.Length))
             {
                 head = default;
                 return false;
             }
 
-            head = heads[edge];
+            head = headByEdge[edge];
             return true;
         }
 
         /// <inheritdoc/>
         public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
         {
-            ReadOnlySpan<int> edgeBounds = GetEdgeBounds();
+            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
+            if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
+                return ArraySegmentEnumerator<int>.Empty;
 
-            if ((uint)(2 * vertex) >= (uint)edgeBounds.Length)
-                return new ArraySegmentEnumerator<int>(ArrayBuilder<int>.EmptyArray, 0, 0);
-
-            int start = edgeBounds[2 * vertex];
-            int length = edgeBounds[2 * vertex + 1];
-            Assert(length >= 0, "length >= 0");
-
-            return new ArraySegmentEnumerator<int>(_storage, start, length);
+            int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
+            int upperBound = upperBoundByVertex[vertex];
+            Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
+            int offset = 2 + VertexCount;
+            return new ArraySegmentEnumerator<int>(_data, offset + lowerBound, offset + upperBound);
         }
 
         /// <inheritdoc/>
-        public bool Equals(IndexedIncidenceGraph other) => _storage == other._storage;
+        public bool Equals(IndexedIncidenceGraph other) => _data == other._data;
 
         /// <inheritdoc/>
         public override bool Equals(object obj) => obj is IndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _storage?.GetHashCode() ?? 0;
+        public override int GetHashCode() => (_data?.GetHashCode()).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetEdgeBounds() => _storage.AsSpan(1, 2 * VertexCount);
+        private ReadOnlySpan<int> GetUpperBoundByVertex() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTails() => _storage.AsSpan(1 + 2 * VertexCount + 2 * EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTailByEdge() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetHeads() => _storage.AsSpan(1 + 2 * VertexCount + EdgeCount, EdgeCount);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetVertexCount()
-        {
-            Assert(_storage != null, "_storage != null");
-            Assert(_storage.Length > 0, "_storage.Length > 0");
-
-            int result = _storage[0];
-            Assert(result >= 0, "result >= 0");
-            Assert(2 * result <= _storage.Length - 1, "2 * result <= _storage.Length - 1");
-
-            return result;
-        }
+        private ReadOnlySpan<int> GetHeadByEdge() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount, EdgeCount);
 
         /// <summary>
         /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are equal.
@@ -119,8 +112,7 @@ namespace Arborescence.Models
         /// <returns>
         /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(IndexedIncidenceGraph left, IndexedIncidenceGraph right) =>
-            left.Equals(right);
+        public static bool operator ==(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => left.Equals(right);
 
         /// <summary>
         /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are not equal.
@@ -130,7 +122,6 @@ namespace Arborescence.Models
         /// <returns>
         /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) =>
-            !left.Equals(right);
+        public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => !left.Equals(right);
     }
 }
