@@ -48,19 +48,18 @@
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                int m = _edges.Count;
-                Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
+                Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
 
 #if NET5
                 Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
-                var edgesOrderedByTail = new Endpoints[m];
+                var edgesOrderedByTail = new Endpoints[_edges.Count];
 #endif
                 _edges.CopyTo(edgesOrderedByTail);
 
                 var data = new int[2 + n];
                 data[0] = n;
-                data[1] = m;
+                data[1] = _edgeCount;
 
                 Span<int> upperBoundByVertex = data.AsSpan(2);
                 foreach (Endpoints edge in _edges)
