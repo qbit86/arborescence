@@ -15,7 +15,6 @@ Commonly used types:
   <PropertyGroup>
     <AssemblyVersion>0.3</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <LangVersion>8</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <TargetFrameworks>netcoreapp2.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
