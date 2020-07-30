@@ -2,8 +2,8 @@
   <PropertyGroup>
     <Description>Graph traversal algorithms: DFS, BFS.
 Commonly used types:
-InstantDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy&gt;
-EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy&gt;</Description>
+• InstantDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy&gt;
+• EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;traversal;dfs;bfs</PackageTags>
     <Title>Graph traversal algorithms</Title>
