@@ -5,12 +5,21 @@
     public readonly partial struct SimpleIncidenceGraph
     {
 #pragma warning disable CA1034 // Nested types should not be visible
+        /// <inheritdoc/>
         public sealed class UndirectedBuilder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
             private int _edgeCount;
             private ArrayPrefix<Endpoints> _edges;
             private int _vertexCount;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="UndirectedBuilder"/> class.
+            /// </summary>
+            /// <param name="initialVertexCount">The initial number of vertices.</param>
+            /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
+            /// <exception cref="ArgumentOutOfRangeException">
+            /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
+            /// </exception>
             public UndirectedBuilder(int initialVertexCount, int edgeCapacity = 0)
             {
                 if (initialVertexCount < 0)
@@ -23,6 +32,7 @@
                 _vertexCount = initialVertexCount;
             }
 
+            /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
                 edge = new Endpoints(tail, head);
@@ -45,6 +55,7 @@
                 return true;
             }
 
+            /// <inheritdoc/>
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
