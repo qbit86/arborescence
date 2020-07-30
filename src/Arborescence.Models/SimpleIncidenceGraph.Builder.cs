@@ -39,6 +39,9 @@
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
                 edge = new Endpoints(tail, head);
+                if (tail < 0 || head < 0)
+                    return false;
+
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
@@ -84,8 +87,9 @@
                 return new SimpleIncidenceGraph(data, edgesOrderedByTail);
             }
         }
+#pragma warning restore CA1034 // Nested types should not be visible
 
-        internal sealed class EdgeComparer : IComparer<Endpoints>
+        private sealed class EdgeComparer : IComparer<Endpoints>
         {
             public static EdgeComparer Instance { get; } = new EdgeComparer();
 
@@ -96,6 +100,5 @@
                 return left.CompareTo(right);
             }
         }
-#pragma warning restore CA1034 // Nested types should not be visible
     }
 }
