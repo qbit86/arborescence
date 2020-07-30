@@ -13,7 +13,7 @@
 - Primitives: Bumped minimum target framework to `netstandard1.3`.
 - Primitives: Add `Empty` property to enumerators.
 - Models: Bumped minimum target framework to `netstandard1.3`.
-- Models: Reimplement `IndexedIncidenceGraph.Builder` with sorting.
+- Models: Reimplement `IndexedIncidenceGraph.Builder` and `UndirectedIndexedIncidenceGraph.Builder` with sorting.
 - Models: Reimplement `SimpleIncidenceGraph` with `Endpoints` as edge.
 
 ## [0.2.0] - 2020-07-20
