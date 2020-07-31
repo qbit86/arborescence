@@ -9,6 +9,7 @@
     {
         private const int DefaultInitialOutDegree = 4;
 
+        private int _edgeCount;
         private int _initialOutDegree = DefaultInitialOutDegree;
         private ArrayPrefix<ArrayPrefix<Endpoints>> _outEdgesByVertex;
 
@@ -24,6 +25,11 @@
         /// Gets the number of vertices.
         /// </summary>
         public int VertexCount => _outEdgesByVertex.Count;
+
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
+        public int EdgeCount => _edgeCount;
 
         /// <summary>
         /// Gets the initial number of out-edges for each vertex.
@@ -55,11 +61,31 @@
             if (_outEdgesByVertex[tail].Array is null)
                 _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
             _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], edge, false);
+            ++_edgeCount;
 
             return true;
         }
 
-        public SimpleIncidenceGraph ToGraph() => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public SimpleIncidenceGraph ToGraph()
+        {
+            int n = VertexCount;
+            int m = EdgeCount;
+
+#if NET5
+            Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+#else
+            var edgesOrderedByTail = new Endpoints[m];
+#endif
+
+            var data = new int[2 + n];
+            data[0] = n;
+            data[1] = m;
+
+            _edgeCount = 0;
+
+            return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+        }
 
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints edge, out int head)
