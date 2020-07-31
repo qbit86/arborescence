@@ -1,27 +1,26 @@
 ﻿namespace Arborescence.Models
 {
     using System;
-    using System.Collections.Generic;
 
     public readonly partial struct SimpleIncidenceGraph
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
-        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
+        public sealed class UndirectedBuilder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
-            private int _currentMaxTail;
+            private int _edgeCount;
             private ArrayPrefix<Endpoints> _edges;
             private int _vertexCount;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Builder"/> class.
+            /// Initializes a new instance of the <see cref="UndirectedBuilder"/> class.
             /// </summary>
             /// <param name="initialVertexCount">The initial number of vertices.</param>
             /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
             /// <exception cref="ArgumentOutOfRangeException">
             /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
             /// </exception>
-            public Builder(int initialVertexCount, int edgeCapacity = 0)
+            public UndirectedBuilder(int initialVertexCount, int edgeCapacity = 0)
             {
                 if (initialVertexCount < 0)
                     throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -33,8 +32,6 @@
                 _vertexCount = initialVertexCount;
             }
 
-            private bool NeedsReordering => _currentMaxTail == int.MaxValue;
-
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
@@ -42,12 +39,19 @@
                 if (tail < 0 || head < 0)
                     return false;
 
-                _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
 
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
+                ++_edgeCount;
+
+                if (tail != head)
+                {
+                    var invertedEdge = new Endpoints(head, tail);
+                    _edges = ArrayPrefixBuilder.Add(_edges, invertedEdge, false);
+                }
+
                 return true;
             }
 
@@ -55,20 +59,18 @@
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                int m = _edges.Count;
-                if (NeedsReordering)
-                    Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
+                Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
 
 #if NET5
                 Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
-                var edgesOrderedByTail = new Endpoints[m];
+                var edgesOrderedByTail = new Endpoints[_edges.Count];
 #endif
                 _edges.CopyTo(edgesOrderedByTail);
 
                 var data = new int[2 + n];
                 data[0] = n;
-                data[1] = m;
+                data[1] = _edgeCount;
 
                 Span<int> upperBoundByVertex = data.AsSpan(2);
                 foreach (Endpoints edge in _edges)
@@ -80,7 +82,6 @@
                 for (int vertex = 1; vertex < n; ++vertex)
                     upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
-                _currentMaxTail = 0;
                 _edges = ArrayPrefixBuilder.Release(_edges, false);
                 _vertexCount = 0;
 
@@ -88,17 +89,5 @@
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
-
-        private sealed class EdgeComparer : IComparer<Endpoints>
-        {
-            public static EdgeComparer Instance { get; } = new EdgeComparer();
-
-            public int Compare(Endpoints x, Endpoints y)
-            {
-                int left = x.Tail;
-                int right = y.Tail;
-                return left.CompareTo(right);
-            }
-        }
     }
 }
