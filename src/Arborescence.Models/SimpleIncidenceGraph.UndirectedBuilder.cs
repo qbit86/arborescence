@@ -67,13 +67,14 @@
                 var edgesOrderedByTail = new Endpoints[_edges.Count];
 #endif
                 _edges.CopyTo(edgesOrderedByTail);
+                _edges = ArrayPrefixBuilder.Release(_edges, false);
 
                 var data = new int[2 + n];
                 data[0] = n;
                 data[1] = _edgeCount;
 
                 Span<int> upperBoundByVertex = data.AsSpan(2);
-                foreach (Endpoints edge in _edges)
+                foreach (Endpoints edge in edgesOrderedByTail)
                 {
                     int tail = edge.Tail;
                     ++upperBoundByVertex[tail];
@@ -82,7 +83,6 @@
                 for (int vertex = 1; vertex < n; ++vertex)
                     upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
-                _edges = ArrayPrefixBuilder.Release(_edges, false);
                 _vertexCount = 0;
 
                 return new SimpleIncidenceGraph(data, edgesOrderedByTail);
