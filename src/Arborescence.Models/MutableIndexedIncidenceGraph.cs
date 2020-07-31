@@ -76,8 +76,8 @@
                 return false;
             }
 
-            int max = Math.Max(tail, head);
-            EnsureVertexCount(max + 1);
+            int newVertexCountCandidate = Math.Max(tail, head) + 1;
+            EnsureVertexCount(newVertexCountCandidate);
 
             Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
             int newEdgeIndex = _headByEdge.Count;
