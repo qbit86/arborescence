@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2020-07-31
+### Added
+- Models: `SimpleIncidenceGraph.UndirectedBuilder`.
+
 ## [0.3.0] - 2020-07-31
 ### Added
 - Primitives: non-generic `Endpoints` struct.
