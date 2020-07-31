@@ -59,13 +59,22 @@
                 if (NeedsReordering)
                     Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
 
+                Endpoints[] edgesOrderedByTail;
+                if (_edges.Array.Length == _edges.Count)
+                {
+                    edgesOrderedByTail = _edges.Array;
+                    _edges = ArrayPrefix<Endpoints>.Empty;
+                }
+                else
+                {
 #if NET5
-                Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+                    edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
-                var edgesOrderedByTail = new Endpoints[m];
+                    edgesOrderedByTail = new Endpoints[m];
 #endif
-                _edges.CopyTo(edgesOrderedByTail);
-                _edges = ArrayPrefixBuilder.Release(_edges, false);
+                    _edges.CopyTo(edgesOrderedByTail);
+                    _edges = ArrayPrefixBuilder.Release(_edges, false);
+                }
 
                 var data = new int[2 + n];
                 data[0] = n;

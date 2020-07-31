@@ -61,13 +61,22 @@
                 int n = _vertexCount;
                 Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
 
+                Endpoints[] edgesOrderedByTail;
+                if (_edges.Array.Length == _edges.Count)
+                {
+                    edgesOrderedByTail = _edges.Array;
+                    _edges = ArrayPrefix<Endpoints>.Empty;
+                }
+                else
+                {
 #if NET5
-                Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+                    edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(_edges.Count);
 #else
-                var edgesOrderedByTail = new Endpoints[_edges.Count];
+                    edgesOrderedByTail = new Endpoints[_edges.Count];
 #endif
-                _edges.CopyTo(edgesOrderedByTail);
-                _edges = ArrayPrefixBuilder.Release(_edges, false);
+                    _edges.CopyTo(edgesOrderedByTail);
+                    _edges = ArrayPrefixBuilder.Release(_edges, false);
+                }
 
                 var data = new int[2 + n];
                 data[0] = n;
