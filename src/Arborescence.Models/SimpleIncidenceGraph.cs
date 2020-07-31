@@ -19,7 +19,7 @@
         private readonly int[] _data;
         private readonly Endpoints[] _edgesOrderedByTail;
 
-        private SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
+        internal SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
         {
             Debug.Assert(edgesOrderedByTail != null, nameof(edgesOrderedByTail) + " != null");
             Debug.Assert(data != null, nameof(data) + " != null");
