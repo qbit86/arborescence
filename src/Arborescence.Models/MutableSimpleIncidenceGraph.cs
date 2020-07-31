@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableSimpleIncidenceGraph :
         IIncidenceGraph<int, Endpoints, ArrayPrefixEnumerator<Endpoints>>,
         IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
@@ -13,6 +14,13 @@
         private int _initialOutDegree = DefaultInitialOutDegree;
         private ArrayPrefix<ArrayPrefix<Endpoints>> _outEdgesByVertex;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MutableSimpleIncidenceGraph"/> class.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero.
+        /// </exception>
         public MutableSimpleIncidenceGraph(int initialVertexCount)
         {
             if (initialVertexCount < 0)
@@ -91,8 +99,7 @@
                 Span<Endpoints> destCurrentOutEdges =
                     edgesOrderedByTail.AsSpan(currentLowerBound, currentOutEdges.Length);
                 currentOutEdges.CopyTo(destCurrentOutEdges);
-                int currentUpperBound = currentLowerBound + currentOutEdges.Length;
-                destUpperBoundByVertex[vertex] = currentUpperBound;
+                destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
             }
 
             _edgeCount = 0;
