@@ -80,15 +80,15 @@
                 data[0] = n;
                 data[1] = m;
 
-                Span<int> upperBoundByVertex = data.AsSpan(2);
+                Span<int> destUpperBoundByVertex = data.AsSpan(2);
                 foreach (Endpoints edge in edgesOrderedByTail)
                 {
                     int tail = edge.Tail;
-                    ++upperBoundByVertex[tail];
+                    ++destUpperBoundByVertex[tail];
                 }
 
                 for (int vertex = 1; vertex < n; ++vertex)
-                    upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
+                    destUpperBoundByVertex[vertex] += destUpperBoundByVertex[vertex - 1];
 
                 _currentMaxTail = 0;
                 _vertexCount = 0;
