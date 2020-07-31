@@ -42,7 +42,22 @@
             _outEdgesByVertex = ArrayPrefixBuilder.Release(_outEdgesByVertex, true);
         }
 
-        public bool TryAdd(int tail, int head, out Endpoints edge) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool TryAdd(int tail, int head, out Endpoints edge)
+        {
+            edge = new Endpoints(tail, head);
+            if (tail < 0 || head < 0)
+                return false;
+
+            int newVertexCountCandidate = Math.Max(tail, head) + 1;
+            EnsureVertexCount(newVertexCountCandidate);
+
+            if (_outEdgesByVertex[tail].Array is null)
+                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
+            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], edge, false);
+
+            return true;
+        }
 
         public SimpleIncidenceGraph ToGraph() => throw new NotImplementedException();
 
@@ -68,6 +83,16 @@
 
             ArrayPrefix<Endpoints> outEdges = _outEdgesByVertex[vertex];
             return new ArrayPrefixEnumerator<Endpoints>(outEdges.Array ?? Array.Empty<Endpoints>(), outEdges.Count);
+        }
+
+        /// <summary>
+        /// Ensures that the graph can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
+        public void EnsureVertexCount(int vertexCount)
+        {
+            if (vertexCount > VertexCount)
+                _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
         }
     }
 }
