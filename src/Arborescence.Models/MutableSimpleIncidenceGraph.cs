@@ -25,7 +25,22 @@
         /// </summary>
         public int VertexCount => _outEdgesByVertex.Count;
 
-        public void Dispose() => throw new NotImplementedException();
+        /// <summary>
+        /// Gets the initial number of out-edges for each vertex.
+        /// </summary>
+        public int InitialOutDegree
+        {
+            get => _initialOutDegree <= 0 ? DefaultInitialOutDegree : _initialOutDegree;
+            set => _initialOutDegree = value;
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
+                _outEdgesByVertex[vertex] = ArrayPrefixBuilder.Release(_outEdgesByVertex[vertex], false);
+            _outEdgesByVertex = ArrayPrefixBuilder.Release(_outEdgesByVertex, true);
+        }
 
         public bool TryAdd(int tail, int head, out Endpoints edge) => throw new NotImplementedException();
 
