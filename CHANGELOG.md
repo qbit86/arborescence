@@ -4,6 +4,9 @@
 ### Added
 - Models: `SimpleIncidenceGraph.UndirectedBuilder`.
 
+### Fixed
+- Models: Argument checking in a couple of graph models.
+
 ## [0.3.0] - 2020-07-31
 ### Added
 - Primitives: non-generic `Endpoints` struct.

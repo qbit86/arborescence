@@ -157,7 +157,7 @@
         /// <inheritdoc/>
         public ArrayPrefixEnumerator<int> EnumerateOutEdges(int vertex)
         {
-            if (unchecked((uint)vertex > (uint)_outEdgesByVertex.Count))
+            if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
                 return ArrayPrefixEnumerator<int>.Empty;
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];

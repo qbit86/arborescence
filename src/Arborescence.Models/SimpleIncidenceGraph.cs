@@ -49,14 +49,14 @@
         public bool TryGetHead(Endpoints edge, out int head)
         {
             head = edge.Head;
-            return head < VertexCount;
+            return unchecked((uint)head < (uint)VertexCount);
         }
 
         /// <inheritdoc/>
         public bool TryGetTail(Endpoints edge, out int tail)
         {
             tail = edge.Tail;
-            return tail < VertexCount;
+            return unchecked((uint)tail < (uint)VertexCount);
         }
 
         /// <inheritdoc/>
