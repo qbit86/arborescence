@@ -56,6 +56,13 @@
 
             Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
+            foreach (Endpoints edge in p.Edges)
+            {
+                if (edge.Tail == edge.Head)
+                    continue;
+                var invertedEdge = new Endpoints(edge.Head, edge.Tail);
+                expectedEdgeSet.Add(invertedEdge);
+            }
 
             // Act
             var actualEdgeSet = new HashSet<Endpoints>();
