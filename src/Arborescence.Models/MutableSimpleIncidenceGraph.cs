@@ -72,15 +72,28 @@
             int n = VertexCount;
             int m = EdgeCount;
 
+            int dataLength = 2 + n;
 #if NET5
+            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
             Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
+            var data = new int[dataLength];
             var edgesOrderedByTail = new Endpoints[m];
 #endif
-
-            var data = new int[2 + n];
             data[0] = n;
             data[1] = m;
+
+            Span<int> destUpperBoundByVertex = data.AsSpan(2);
+            for (int vertex = 0; vertex < n; ++vertex)
+            {
+                ReadOnlySpan<Endpoints> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
+                int currentLowerBound = vertex > 0 ? destUpperBoundByVertex[vertex - 1] : 0;
+                Span<Endpoints> destCurrentOutEdges =
+                    edgesOrderedByTail.AsSpan(currentLowerBound, currentOutEdges.Length);
+                currentOutEdges.CopyTo(destCurrentOutEdges);
+                int currentUpperBound = currentLowerBound + currentOutEdges.Length;
+                destUpperBoundByVertex[vertex] = currentUpperBound;
+            }
 
             _edgeCount = 0;
 
