@@ -21,13 +21,13 @@
 
         private SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
         {
+            Debug.Assert(edgesOrderedByTail != null, nameof(edgesOrderedByTail) + " != null");
             Debug.Assert(data != null, nameof(data) + " != null");
             Debug.Assert(data.Length >= 2, "data.Length >= 2");
             Debug.Assert(data[0] >= 0, "data[0] >= 0");
             Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
             Debug.Assert(data[1] >= 0, "data[1] >= 0");
-            Debug.Assert(data[1] <= data.Length - 2, "data[1] <= data.Length - 2");
-            Debug.Assert(edgesOrderedByTail != null, nameof(edgesOrderedByTail) + " != null");
+            Debug.Assert(data[1] <= edgesOrderedByTail.Length, "data[1] <= edgesOrderedByTail.Length");
 
             _data = data;
             _edgesOrderedByTail = edgesOrderedByTail;
