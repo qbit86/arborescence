@@ -3,6 +3,7 @@
 ## [Unreleased] - 2020-07-31
 ### Added
 - Models: `SimpleIncidenceGraph.UndirectedBuilder`.
+- Models: `MutableUndirectedSimpleIncidenceGraph`.
 
 ### Fixed
 - Models: Argument checking in a couple of graph models.

@@ -3,25 +3,19 @@
     using System;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public sealed class MutableSimpleIncidenceGraph :
+    public sealed class MutableUndirectedSimpleIncidenceGraph :
         IIncidenceGraph<int, Endpoints, ArrayPrefixEnumerator<Endpoints>>,
         IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
         IDisposable
     {
-        private const int DefaultInitialOutDegree = 4;
+        private const int DefaultInitialOutDegree = 8;
 
         private int _edgeCount;
         private int _initialOutDegree = DefaultInitialOutDegree;
+        private int _invertedEdgeCount;
         private ArrayPrefix<ArrayPrefix<Endpoints>> _outEdgesByVertex;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MutableSimpleIncidenceGraph"/> class.
-        /// </summary>
-        /// <param name="initialVertexCount">The initial number of vertices.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="initialVertexCount"/> is less than zero.
-        /// </exception>
-        public MutableSimpleIncidenceGraph(int initialVertexCount)
+        public MutableUndirectedSimpleIncidenceGraph(int initialVertexCount)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -52,6 +46,7 @@
         public void Dispose()
         {
             _edgeCount = 0;
+            _invertedEdgeCount = 0;
             for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
                 _outEdgesByVertex[vertex] = ArrayPrefixBuilder.Release(_outEdgesByVertex[vertex], false);
             _outEdgesByVertex = ArrayPrefixBuilder.Release(_outEdgesByVertex, true);
@@ -72,6 +67,16 @@
             _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], edge, false);
             ++_edgeCount;
 
+            if (tail != head)
+            {
+                if (_outEdgesByVertex[head].Array is null)
+                    _outEdgesByVertex[head] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
+
+                var invertedEdge = new Endpoints(head, tail);
+                _outEdgesByVertex[head] = ArrayPrefixBuilder.Add(_outEdgesByVertex[head], invertedEdge, false);
+                ++_invertedEdgeCount;
+            }
+
             return true;
         }
 
@@ -79,18 +84,17 @@
         public SimpleIncidenceGraph ToGraph()
         {
             int n = VertexCount;
-            int m = EdgeCount;
 
             int dataLength = 2 + n;
 #if NET5
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
-            Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+            Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(EdgeCount + _invertedEdgeCount);
 #else
             var data = new int[dataLength];
-            var edgesOrderedByTail = new Endpoints[m];
+            var edgesOrderedByTail = new Endpoints[EdgeCount + _invertedEdgeCount];
 #endif
             data[0] = n;
-            data[1] = m;
+            data[1] = EdgeCount;
 
             Span<int> destUpperBoundByVertex = data.AsSpan(2);
             for (int vertex = 0; vertex < n; ++vertex)
