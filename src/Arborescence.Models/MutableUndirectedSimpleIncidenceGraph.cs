@@ -81,7 +81,34 @@
         }
 
         /// <inheritdoc/>
-        public SimpleIncidenceGraph ToGraph() => throw new NotImplementedException();
+        public SimpleIncidenceGraph ToGraph()
+        {
+            int n = VertexCount;
+
+            int dataLength = 2 + n;
+#if NET5
+            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
+            Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(EdgeCount + _invertedEdgeCount);
+#else
+            var data = new int[dataLength];
+            var edgesOrderedByTail = new Endpoints[EdgeCount + _invertedEdgeCount];
+#endif
+            data[0] = n;
+            data[1] = EdgeCount;
+
+            Span<int> destUpperBoundByVertex = data.AsSpan(2);
+            for (int vertex = 0; vertex < n; ++vertex)
+            {
+                ReadOnlySpan<Endpoints> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
+                int currentLowerBound = vertex > 0 ? destUpperBoundByVertex[vertex - 1] : 0;
+                Span<Endpoints> destCurrentOutEdges =
+                    edgesOrderedByTail.AsSpan(currentLowerBound, currentOutEdges.Length);
+                currentOutEdges.CopyTo(destCurrentOutEdges);
+                destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
+            }
+
+            return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+        }
 
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints edge, out int head)
