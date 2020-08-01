@@ -102,8 +102,6 @@
                 destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
             }
 
-            _edgeCount = 0;
-
             return new SimpleIncidenceGraph(data, edgesOrderedByTail);
         }
 
