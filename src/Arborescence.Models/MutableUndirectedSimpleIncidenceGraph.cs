@@ -15,6 +15,13 @@
         private int _invertedEdgeCount;
         private ArrayPrefix<ArrayPrefix<Endpoints>> _outEdgesByVertex;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MutableUndirectedSimpleIncidenceGraph"/> class.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero.
+        /// </exception>
         public MutableUndirectedSimpleIncidenceGraph(int initialVertexCount)
         {
             if (initialVertexCount < 0)
