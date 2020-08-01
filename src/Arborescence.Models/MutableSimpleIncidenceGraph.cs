@@ -51,6 +51,7 @@
         /// <inheritdoc/>
         public void Dispose()
         {
+            _edgeCount = 0;
             for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
                 _outEdgesByVertex[vertex] = ArrayPrefixBuilder.Release(_outEdgesByVertex[vertex], false);
             _outEdgesByVertex = ArrayPrefixBuilder.Release(_outEdgesByVertex, true);
