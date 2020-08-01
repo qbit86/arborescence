@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableUndirectedSimpleIncidenceGraph :
         IIncidenceGraph<int, Endpoints, ArrayPrefixEnumerator<Endpoints>>,
         IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
@@ -11,6 +12,7 @@
 
         private int _edgeCount;
         private int _initialOutDegree = DefaultInitialOutDegree;
+        private int _invertedEdgeCount;
         private ArrayPrefix<ArrayPrefix<Endpoints>> _outEdgesByVertex;
 
         public MutableUndirectedSimpleIncidenceGraph(int initialVertexCount)
@@ -44,6 +46,7 @@
         public void Dispose()
         {
             _edgeCount = 0;
+            _invertedEdgeCount = 0;
             for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
                 _outEdgesByVertex[vertex] = ArrayPrefixBuilder.Release(_outEdgesByVertex[vertex], false);
             _outEdgesByVertex = ArrayPrefixBuilder.Release(_outEdgesByVertex, true);
@@ -70,7 +73,8 @@
                     _outEdgesByVertex[head] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
 
                 var invertedEdge = new Endpoints(head, tail);
-                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[head], invertedEdge, false);
+                _outEdgesByVertex[head] = ArrayPrefixBuilder.Add(_outEdgesByVertex[head], invertedEdge, false);
+                ++_invertedEdgeCount;
             }
 
             return true;
