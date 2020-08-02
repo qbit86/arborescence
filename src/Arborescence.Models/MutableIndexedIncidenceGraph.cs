@@ -130,7 +130,7 @@
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            if (unchecked((uint)edge > (uint)_headByEdge.Count))
+            if (unchecked((uint)edge >= (uint)_headByEdge.Count))
             {
                 head = default;
                 return false;
@@ -143,7 +143,7 @@
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            if (unchecked((uint)edge > (uint)_tailByEdge.Count))
+            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
             {
                 tail = default;
                 return false;
