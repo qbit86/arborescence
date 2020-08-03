@@ -1,6 +1,7 @@
 namespace Arborescence.Models
 {
     using System;
+    using System.Diagnostics;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableUndirectedIndexedIncidenceGraph :
@@ -60,7 +61,38 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool TryAdd(int tail, int head, out int edge) => throw new NotImplementedException();
+        public bool TryAdd(int tail, int head, out int edge)
+        {
+            if (tail < 0 || head < 0)
+            {
+                edge = default;
+                return false;
+            }
+
+            int newVertexCountCandidate = Math.Max(tail, head) + 1;
+            EnsureVertexCount(newVertexCountCandidate);
+
+            Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+            int newEdgeIndex = _headByEdge.Count;
+            _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
+            _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
+
+            if (_outEdgesByVertex[tail].Array is null)
+                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<int>(InitialOutDegree);
+            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], newEdgeIndex, false);
+            ++_edgeCount;
+
+            if (tail != head)
+            {
+                int invertedEdge = ~newEdgeIndex;
+                if (_outEdgesByVertex[head].Array is null)
+                    _outEdgesByVertex[head] = ArrayPrefixBuilder.Create<int>(InitialOutDegree);
+                _outEdgesByVertex[head] = ArrayPrefixBuilder.Add(_outEdgesByVertex[head], invertedEdge, false);
+            }
+
+            edge = newEdgeIndex;
+            return true;
+        }
 
         /// <inheritdoc/>
         public IndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
@@ -99,6 +131,16 @@ namespace Arborescence.Models
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
             return new ArrayPrefixEnumerator<int>(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
+        }
+
+        /// <summary>
+        /// Ensures that the graph can hold the specified number of vertices without growing.
+        /// </summary>
+        /// <param name="vertexCount">The number of vertices.</param>
+        public void EnsureVertexCount(int vertexCount)
+        {
+            if (vertexCount > VertexCount)
+                _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
         }
     }
 }
