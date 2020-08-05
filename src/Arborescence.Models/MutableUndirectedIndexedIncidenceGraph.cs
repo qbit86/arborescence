@@ -6,7 +6,7 @@ namespace Arborescence.Models
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableUndirectedIndexedIncidenceGraph :
         IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
-        IGraphBuilder<IndexedIncidenceGraph, int, int>,
+        IGraphBuilder<UndirectedIndexedIncidenceGraph, int, int>,
         IDisposable
     {
         private const int DefaultInitialOutDegree = 8;
@@ -95,7 +95,7 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public IndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
+        public UndirectedIndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
