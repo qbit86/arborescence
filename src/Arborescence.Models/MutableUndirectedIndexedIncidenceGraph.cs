@@ -100,26 +100,30 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            if (unchecked((uint)edge >= (uint)_headByEdge.Count))
+            int edgeIndex = edge < 0 ? ~edge : edge;
+            ArrayPrefix<int> endpointByEdge = edge < 0 ? _tailByEdge : _headByEdge;
+            if (edgeIndex >= endpointByEdge.Count)
             {
                 head = default;
                 return false;
             }
 
-            head = _headByEdge[edge];
+            head = endpointByEdge[edgeIndex];
             return true;
         }
 
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
+            int edgeIndex = edge < 0 ? ~edge : edge;
+            ArrayPrefix<int> endpointByEdge = edge < 0 ? _headByEdge : _tailByEdge;
+            if (edgeIndex >= endpointByEdge.Count)
             {
                 tail = default;
                 return false;
             }
 
-            tail = _tailByEdge[edge];
+            tail = endpointByEdge[edgeIndex];
             return true;
         }
 
