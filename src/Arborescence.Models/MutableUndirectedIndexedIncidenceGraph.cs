@@ -95,7 +95,22 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public UndirectedIndexedIncidenceGraph ToGraph() => throw new NotImplementedException();
+        public UndirectedIndexedIncidenceGraph ToGraph()
+        {
+            int n = VertexCount;
+            int m = EdgeCount;
+
+            int dataLength = 2 + n + m + m + m + m;
+#if NET5
+            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
+#else
+            var data = new int[dataLength];
+#endif
+            data[0] = n;
+            data[1] = m;
+
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
