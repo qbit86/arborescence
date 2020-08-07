@@ -109,7 +109,24 @@ namespace Arborescence.Models
             data[0] = n;
             data[1] = m;
 
-            throw new NotImplementedException();
+            Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
+            Span<int> destEdgesOrderedByTail = data.AsSpan(2 + n, m + m);
+            for (int vertex = 0; vertex < n; ++vertex)
+            {
+                ReadOnlySpan<int> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
+                int currentLowerBound = vertex > 0 ? destUpperBoundByVertex[vertex - 1] : 0;
+                Span<int> destCurrentOutEdges = destEdgesOrderedByTail.Slice(currentLowerBound, currentOutEdges.Length);
+                currentOutEdges.CopyTo(destCurrentOutEdges);
+                destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
+            }
+
+            Span<int> destHeadByEdge = data.AsSpan(2 + n + m + m, m);
+            _headByEdge.AsSpan().CopyTo(destHeadByEdge);
+
+            Span<int> destTailByEdge = data.AsSpan(2 + n + m + m + m, m);
+            _tailByEdge.AsSpan().CopyTo(destTailByEdge);
+
+            return new UndirectedIndexedIncidenceGraph(data);
         }
 
         /// <inheritdoc/>
