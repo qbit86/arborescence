@@ -72,15 +72,15 @@ namespace Arborescence.Models
                 data[0] = n;
                 data[1] = m;
 
-                Span<int> destReorderedEdges = data.AsSpan(2 + n, m + m);
+                Span<int> destEdgesOrderedByTail = data.AsSpan(2 + n, m + m);
                 int invertedEdgeCount = 0;
                 for (int edge = 0; edge < m; ++edge)
                 {
-                    destReorderedEdges[edge] = edge;
+                    destEdgesOrderedByTail[edge] = edge;
                     int head = _headByEdge[edge];
                     int tail = _tailByEdge[edge];
                     if (head != tail)
-                        destReorderedEdges[m + invertedEdgeCount++] = ~edge;
+                        destEdgesOrderedByTail[m + invertedEdgeCount++] = ~edge;
                 }
 
                 int directedEdgeCount = m + invertedEdgeCount;
@@ -90,7 +90,7 @@ namespace Arborescence.Models
                 destUpperBoundByVertex.Clear();
                 for (int i = 0; i < directedEdgeCount; ++i)
                 {
-                    int edge = destReorderedEdges[i];
+                    int edge = destEdgesOrderedByTail[i];
                     int tail = edge < 0 ? _headByEdge[~edge] : _tailByEdge[edge];
                     ++destUpperBoundByVertex[tail];
                 }
