@@ -21,8 +21,8 @@
 - Primitives: Made `Current` properties of enumerator structs `readonly`.
 - Primitives: Bumped minimum target framework to `netstandard1.3`.
 - Models: Bumped minimum target framework to `netstandard1.3`.
-- Models: Reimplement `IndexedIncidenceGraph.Builder` and `UndirectedIndexedIncidenceGraph.Builder` with sorting.
-- Models: Reimplement `SimpleIncidenceGraph` with `Endpoints` as edge.
+- Models: Reimplemented `IndexedIncidenceGraph.Builder` and `UndirectedIndexedIncidenceGraph.Builder` with sorting.
+- Models: Reimplemented `SimpleIncidenceGraph` with `Endpoints` as edge.
 
 ## [0.2.0] - 2020-07-20
 ### Added
