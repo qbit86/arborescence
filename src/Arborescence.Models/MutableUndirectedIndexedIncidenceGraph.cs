@@ -17,6 +17,14 @@ namespace Arborescence.Models
         private ArrayPrefix<ArrayPrefix<int>> _outEdgesByVertex;
         private ArrayPrefix<int> _tailByEdge;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MutableUndirectedIndexedIncidenceGraph"/> class.
+        /// </summary>
+        /// <param name="initialVertexCount">The initial number of vertices.</param>
+        /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
+        /// </exception>
         public MutableUndirectedIndexedIncidenceGraph(int initialVertexCount, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
