@@ -9,8 +9,7 @@
     using Xunit;
     using EdgeEnumerator = ArrayPrefixEnumerator<Endpoints>;
     using Graph = Models.MutableSimpleIncidenceGraph;
-    using GraphPolicy =
-        Models.SimpleIncidenceGraphPolicy<Models.MutableSimpleIncidenceGraph, ArrayPrefixEnumerator<Endpoints>>;
+    using GraphPolicy = Models.MutableSimpleIncidenceGraphPolicy;
 
     public class QueueGenericSearchEnumerateVerticesTest
     {
