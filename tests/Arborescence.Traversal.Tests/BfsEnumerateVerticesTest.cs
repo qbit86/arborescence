@@ -5,11 +5,12 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
-    using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using Graph = Models.IndexedIncidenceGraph;
+    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
+    using Graph = Models.MutableIndexedIncidenceGraph;
+    using GraphPolicy = Models.IndexedIncidenceGraphPolicy<
+        Models.MutableIndexedIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
     public sealed class BfsEnumerateVerticesTest
     {
@@ -19,10 +20,10 @@ namespace Arborescence
             EnumerableBfs = default;
         }
 
-        private InstantBfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantBfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
-        private EnumerableBfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableBfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
@@ -96,14 +97,14 @@ namespace Arborescence
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(IndexedGraphCollection))]
+        [ClassData(typeof(MutableIndexedGraphCollection))]
         internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(IndexedGraphCollection))]
+        [ClassData(typeof(MutableIndexedGraphCollection))]
         internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, true);

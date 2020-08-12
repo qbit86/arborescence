@@ -94,5 +94,53 @@
             return new MutableIndexedIncidenceGraph(initialVertexCount);
         }
     }
+
+    internal sealed class MutableIndexedGraphCollection : GraphCollection<
+        MutableIndexedIncidenceGraph, int, ArrayPrefixEnumerator<int>, MutableIndexedIncidenceGraphBuilder>
+    {
+        protected override MutableIndexedIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableIndexedIncidenceGraphBuilder(initialVertexCount);
+        }
+    }
 #pragma warning restore CA1812 // GraphCollection is an internal class that is apparently never instantiated.
+
+    internal sealed class MutableIndexedIncidenceGraphBuilder :
+        IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,
+        IDisposable
+    {
+        private MutableIndexedIncidenceGraph? _graph;
+
+        public MutableIndexedIncidenceGraphBuilder(int initialVertexCount)
+        {
+            _graph = new MutableIndexedIncidenceGraph(initialVertexCount);
+        }
+
+        public void Dispose()
+        {
+            if (_graph is null)
+                return;
+
+            _graph.Dispose();
+            _graph = null;
+        }
+
+        public bool TryAdd(int tail, int head, out int edge)
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            return _graph.TryAdd(tail, head, out edge);
+        }
+
+        public MutableIndexedIncidenceGraph ToGraph()
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            MutableIndexedIncidenceGraph result = _graph;
+            _graph = null;
+            return result;
+        }
+    }
 }
