@@ -121,6 +121,15 @@
             return new MutableSimpleIncidenceGraph(initialVertexCount);
         }
     }
+
+    internal sealed class MutableSimpleGraphCollection : GraphCollection<
+        MutableSimpleIncidenceGraph, Endpoints, ArrayPrefixEnumerator<Endpoints>, MutableSimpleIncidenceGraphBuilder>
+    {
+        protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableSimpleIncidenceGraphBuilder(initialVertexCount);
+        }
+    }
 #pragma warning restore CA1812 // GraphCollection is an internal class that is apparently never instantiated.
 
     internal sealed class MutableIndexedIncidenceGraphBuilder :
@@ -157,6 +166,45 @@
                 throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
 
             MutableIndexedIncidenceGraph result = _graph;
+            _graph = null;
+            return result;
+        }
+    }
+
+    internal sealed class MutableSimpleIncidenceGraphBuilder :
+        IGraphBuilder<MutableSimpleIncidenceGraph, int, Endpoints>,
+        IDisposable
+    {
+        private MutableSimpleIncidenceGraph? _graph;
+
+        public MutableSimpleIncidenceGraphBuilder(int initialVertexCount)
+        {
+            _graph = new MutableSimpleIncidenceGraph(initialVertexCount);
+        }
+
+        public void Dispose()
+        {
+            if (_graph is null)
+                return;
+
+            _graph.Dispose();
+            _graph = null;
+        }
+
+        public bool TryAdd(int tail, int head, out Endpoints edge)
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            return _graph.TryAdd(tail, head, out edge);
+        }
+
+        public MutableSimpleIncidenceGraph ToGraph()
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            MutableSimpleIncidenceGraph result = _graph;
             _graph = null;
             return result;
         }
