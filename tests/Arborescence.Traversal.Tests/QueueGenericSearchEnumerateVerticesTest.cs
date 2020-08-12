@@ -32,7 +32,7 @@
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);

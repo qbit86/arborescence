@@ -22,7 +22,7 @@
             for (int i = LowerBound; i < UpperBound; ++i)
             {
                 string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
-                TGraphBuilder builder = CreateGraphBuilder(10);
+                TGraphBuilder builder = CreateGraphBuilder(0);
 
                 using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
                 {
@@ -75,8 +75,8 @@
     }
 
 #pragma warning disable CA1812 // GraphCollection is an internal class that is apparently never instantiated.
-    internal sealed class IndexedGraphCollection : GraphCollection<IndexedIncidenceGraph, int,
-        ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>
+    internal sealed class IndexedGraphCollection :
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>
     {
         protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount)
         {
