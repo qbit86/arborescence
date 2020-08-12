@@ -9,8 +9,7 @@
     using Xunit;
     using EdgeEnumerator = ArrayPrefixEnumerator<int>;
     using Graph = Models.MutableIndexedIncidenceGraph;
-    using GraphPolicy = Models.IndexedIncidenceGraphPolicy<
-        Models.MutableIndexedIncidenceGraph, ArrayPrefixEnumerator<int>>;
+    using GraphPolicy = Models.MutableIndexedIncidenceGraphPolicy;
 
     public sealed class RecursiveDfsTest
     {
