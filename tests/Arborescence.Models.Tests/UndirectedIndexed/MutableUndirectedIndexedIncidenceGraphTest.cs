@@ -1,26 +1,25 @@
-﻿namespace Arborescence
+namespace Arborescence
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Xunit;
-    using Graph = Models.UndirectedIndexedIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using Graph = Models.MutableUndirectedIndexedIncidenceGraph;
+    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
 
-    public sealed class UndirectedIndexedIncidenceGraphTest
+    public sealed class MutableUndirectedIndexedIncidenceGraphTest
     {
+        private static CultureInfo F => CultureInfo.InvariantCulture;
+
         private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
             HashSet<Endpoints>.CreateSetComparer();
 
         private static bool TryGetEndpoints(Graph graph, int edge, out Endpoints endpoints)
         {
-            if (!graph.TryGetTail(edge, out int tail) || !graph.TryGetHead(edge, out int head))
-            {
-                endpoints = default;
-                return false;
-            }
-
+            bool hasTail = graph.TryGetTail(edge, out int tail);
+            bool hasHead = graph.TryGetHead(edge, out int head);
             endpoints = new Endpoints(tail, head);
-            return true;
+            return hasTail && hasHead;
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -29,16 +28,13 @@
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
-
-            // Act
-            Graph graph = builder.ToGraph();
 
             // Assert
             Assert.Equal(p.VertexCount, graph.VertexCount);
@@ -50,15 +46,14 @@
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
 
-            Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
             foreach (Endpoints edge in p.Edges)
             {
@@ -78,7 +73,10 @@
                     int edge = outEdges.Current;
                     bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
                     if (!hasEndpoints)
-                        Assert.True(hasEndpoints);
+                    {
+                        Assert.True(hasEndpoints,
+                            $"{nameof(edge)}: {edge.ToString(F)}, {nameof(endpoints)}: {endpoints.ToString()}");
+                    }
 
                     actualEdgeSet.Add(endpoints);
                 }
@@ -93,15 +91,13 @@
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
-
-            Graph graph = builder.ToGraph();
 
             // Act
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)

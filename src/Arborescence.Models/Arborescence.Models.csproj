@@ -9,7 +9,7 @@ Commonly used types:
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.3.0</VersionPrefix>
+    <VersionPrefix>0.3.1</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.3</AssemblyVersion>

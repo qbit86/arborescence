@@ -76,8 +76,8 @@
                 return false;
             }
 
-            int max = Math.Max(tail, head);
-            EnsureVertexCount(max + 1);
+            int newVertexCountCandidate = Math.Max(tail, head) + 1;
+            EnsureVertexCount(newVertexCountCandidate);
 
             Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
             int newEdgeIndex = _headByEdge.Count;
@@ -108,15 +108,14 @@
             data[1] = m;
 
             Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
-            Span<int> destReorderedEdges = data.AsSpan(2 + n, m);
-            for (int vertex = 0, currentLowerBound = 0; vertex < n; ++vertex)
+            Span<int> destEdgesOrderedByTail = data.AsSpan(2 + n, m);
+            for (int vertex = 0; vertex < n; ++vertex)
             {
                 ReadOnlySpan<int> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
-                Span<int> destCurrentOutEdges = destReorderedEdges.Slice(currentLowerBound, currentOutEdges.Length);
+                int currentLowerBound = vertex > 0 ? destUpperBoundByVertex[vertex - 1] : 0;
+                Span<int> destCurrentOutEdges = destEdgesOrderedByTail.Slice(currentLowerBound, currentOutEdges.Length);
                 currentOutEdges.CopyTo(destCurrentOutEdges);
-                int currentUpperBound = currentLowerBound + currentOutEdges.Length;
-                destUpperBoundByVertex[vertex] = currentUpperBound;
-                currentLowerBound = currentUpperBound;
+                destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
             }
 
             Span<int> destHeadByEdge = data.AsSpan(2 + n + m, m);
@@ -131,7 +130,7 @@
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            if (unchecked((uint)edge > (uint)_headByEdge.Count))
+            if (unchecked((uint)edge >= (uint)_headByEdge.Count))
             {
                 head = default;
                 return false;
@@ -144,7 +143,7 @@
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            if (unchecked((uint)edge > (uint)_tailByEdge.Count))
+            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
             {
                 tail = default;
                 return false;
@@ -157,7 +156,7 @@
         /// <inheritdoc/>
         public ArrayPrefixEnumerator<int> EnumerateOutEdges(int vertex)
         {
-            if (unchecked((uint)vertex > (uint)_outEdgesByVertex.Count))
+            if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
                 return ArrayPrefixEnumerator<int>.Empty;
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];

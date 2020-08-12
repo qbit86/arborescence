@@ -1,26 +1,22 @@
-﻿namespace Arborescence
+namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
-    using Graph = Models.IndexedIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using Graph = Models.SimpleIncidenceGraph;
+    using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
 
-    public sealed class IndexedIncidenceGraphTest
+    public sealed class SimpleIncidenceGraphTest
     {
         private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
             HashSet<Endpoints>.CreateSetComparer();
 
-        private static bool TryGetEndpoints(Graph graph, int edge, out Endpoints endpoints)
+        private static bool TryGetEndpoints(Graph graph, Endpoints edge, out Endpoints endpoints)
         {
-            if (!graph.TryGetTail(edge, out int tail) || !graph.TryGetHead(edge, out int head))
-            {
-                endpoints = default;
-                return false;
-            }
-
+            bool hasTail = graph.TryGetTail(edge, out int tail);
+            bool hasHead = graph.TryGetHead(edge, out int head);
             endpoints = new Endpoints(tail, head);
-            return true;
+            return hasTail && hasHead;
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -68,7 +64,7 @@
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    int edge = outEdges.Current;
+                    Endpoints edge = outEdges.Current;
                     bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
                     if (!hasEndpoints)
                         Assert.True(hasEndpoints);
@@ -102,7 +98,7 @@
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
                 while (outEdges.MoveNext())
                 {
-                    int edge = outEdges.Current;
+                    Endpoints edge = outEdges.Current;
                     bool hasTail = graph.TryGetTail(edge, out int tail);
                     if (!hasTail)
                         Assert.True(hasTail);

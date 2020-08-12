@@ -15,7 +15,7 @@
         {
             const int vertexCount = 10000;
             const double densityPower = 1.5;
-            IndexedIncidenceGraph graph = GenerateAdjacencyListIncidenceGraph(vertexCount, densityPower);
+            IndexedIncidenceGraph graph = GenerateIncidenceGraph(vertexCount, densityPower);
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
@@ -39,8 +39,7 @@
             return result;
         }
 
-        private static IndexedIncidenceGraph GenerateAdjacencyListIncidenceGraph(
-            int vertexCount, double densityPower)
+        private static IndexedIncidenceGraph GenerateIncidenceGraph(int vertexCount, double densityPower)
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
 

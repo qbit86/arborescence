@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     /// <remarks>
@@ -11,58 +12,69 @@
         IIncidenceGraph<int, Endpoints, ArraySegmentEnumerator<Endpoints>>,
         IEquatable<SimpleIncidenceGraph>
     {
-        private readonly int[] _upperBoundByVertex;
+        // Layout:
+        // 1    | n — the number of vertices
+        // 1    | m — the number of edges
+        // n    | upper bounds of out-edge enumerators indexed by vertices
+        private readonly int[] _data;
         private readonly Endpoints[] _edgesOrderedByTail;
 
-        private SimpleIncidenceGraph(int[] upperBoundByVertex, Endpoints[] edgesOrderedByTail)
+        internal SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
         {
-            Debug.Assert(upperBoundByVertex != null, nameof(upperBoundByVertex) + " != null");
             Debug.Assert(edgesOrderedByTail != null, nameof(edgesOrderedByTail) + " != null");
-            _upperBoundByVertex = upperBoundByVertex;
+            Debug.Assert(data != null, nameof(data) + " != null");
+            Debug.Assert(data.Length >= 2, "data.Length >= 2");
+            Debug.Assert(data[0] >= 0, "data[0] >= 0");
+            Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
+            Debug.Assert(data[1] >= 0, "data[1] >= 0");
+            Debug.Assert(data[1] <= edgesOrderedByTail.Length, "data[1] <= edgesOrderedByTail.Length");
+
+            _data = data;
             _edgesOrderedByTail = edgesOrderedByTail;
         }
 
         /// <summary>
         /// Gets the number of vertices.
         /// </summary>
-        public int VertexCount => (_upperBoundByVertex?.Length).GetValueOrDefault();
+        public int VertexCount => (_data?[0]).GetValueOrDefault();
 
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => (_edgesOrderedByTail?.Length).GetValueOrDefault();
+        public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
-        private bool IsDefault => _upperBoundByVertex is null || _edgesOrderedByTail is null;
+        private bool IsDefault => _data is null || _edgesOrderedByTail is null;
 
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints edge, out int head)
         {
             head = edge.Head;
-            return head < VertexCount;
+            return unchecked((uint)head < (uint)VertexCount);
         }
 
         /// <inheritdoc/>
         public bool TryGetTail(Endpoints edge, out int tail)
         {
             tail = edge.Tail;
-            return tail < VertexCount;
+            return unchecked((uint)tail < (uint)VertexCount);
         }
 
         /// <inheritdoc/>
         public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(int vertex)
         {
-            if (IsDefault || unchecked((uint)vertex >= (uint)_upperBoundByVertex.Length))
+            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
+            if (IsDefault || unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegmentEnumerator<Endpoints>.Empty;
 
-            int lowerBound = vertex == 0 ? 0 : _upperBoundByVertex[vertex - 1];
-            int upperBound = _upperBoundByVertex[vertex];
+            int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
+            int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             return new ArraySegmentEnumerator<Endpoints>(_edgesOrderedByTail, lowerBound, upperBound);
         }
 
         /// <inheritdoc/>
         public bool Equals(SimpleIncidenceGraph other) =>
-            _upperBoundByVertex == other._upperBoundByVertex && _edgesOrderedByTail == other._edgesOrderedByTail;
+            _data == other._data && _edgesOrderedByTail == other._edgesOrderedByTail;
 
         /// <inheritdoc/>
         public override bool Equals(object obj) => obj is SimpleIncidenceGraph other && Equals(other);
@@ -70,7 +82,11 @@
         /// <inheritdoc/>
         public override int GetHashCode() => IsDefault
             ? 0
-            : unchecked(_upperBoundByVertex.GetHashCode() * 397) ^ _edgesOrderedByTail.GetHashCode();
+            : unchecked(_data.GetHashCode() * 397) ^ _edgesOrderedByTail.GetHashCode();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetUpperBoundByVertex() =>
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
 
         /// <summary>
         /// Indicates whether two <see cref="SimpleIncidenceGraph"/> structures are equal.

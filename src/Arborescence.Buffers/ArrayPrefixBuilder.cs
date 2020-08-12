@@ -2,7 +2,7 @@ namespace Arborescence
 {
     using System;
     using System.Buffers;
-    using static System.Diagnostics.Debug;
+    using System.Diagnostics;
 
     internal static class ArrayPrefixBuilder
     {
@@ -11,7 +11,7 @@ namespace Arborescence
 
         internal static ArrayPrefix<T> Create<T>(int capacity)
         {
-            Assert(capacity >= 0, "capacity >= 0");
+            Debug.Assert(capacity >= 0, "capacity >= 0");
 
             T[] array = ArrayPool<T>.Shared.Rent(capacity);
             return ArrayPrefix.Create(array, 0);
@@ -55,21 +55,21 @@ namespace Arborescence
 
         private static void UncheckedGrow<T>(ref ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
         {
-            Assert(arrayPrefix.Count < size, "arrayPrefix.Count < size");
+            Debug.Assert(arrayPrefix.Count < size, "arrayPrefix.Count < size");
 
             int capacity = (arrayPrefix.Array?.Length).GetValueOrDefault();
             if (capacity < size)
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, size, clearArray);
 
             int oldCount = arrayPrefix.Count;
-            Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
+            Debug.Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
             Array.Clear(arrayPrefix.Array, oldCount, size - oldCount);
             arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, size);
         }
 
         private static void UncheckedShrink<T>(ref ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
         {
-            Assert(arrayPrefix.Count > size, "arrayPrefix.Count > size");
+            Debug.Assert(arrayPrefix.Count > size, "arrayPrefix.Count > size");
 
             int oldCount = arrayPrefix.Count;
             arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, size);
@@ -79,8 +79,8 @@ namespace Arborescence
 
         private static void UncheckedAdd<T>(ref ArrayPrefix<T> arrayPrefix, T item)
         {
-            Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
-            Assert(arrayPrefix.Count < arrayPrefix.Array.Length, "arrayPrefix.Count < arrayPrefix.Array.Length");
+            Debug.Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
+            Debug.Assert(arrayPrefix.Count < arrayPrefix.Array.Length, "arrayPrefix.Count < arrayPrefix.Array.Length");
 
             arrayPrefix.Array[arrayPrefix.Count] = item;
             arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, arrayPrefix.Count + 1);
@@ -89,7 +89,7 @@ namespace Arborescence
         private static void UncheckedEnsureCapacity<T>(ref ArrayPrefix<T> arrayPrefix, int capacity, int minimum,
             bool clearArray)
         {
-            Assert(minimum > capacity, "minimum > capacity");
+            Debug.Assert(minimum > capacity, "minimum > capacity");
 
             int nextCapacity = capacity == 0 ? DefaultCapacity : unchecked(2 * capacity);
 
@@ -101,7 +101,7 @@ namespace Arborescence
             T[] next = ArrayPool<T>.Shared.Rent(nextCapacity);
             if (arrayPrefix.Count > 0)
             {
-                Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
+                Debug.Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
                 Array.Copy(arrayPrefix.Array, 0, next, 0, arrayPrefix.Count);
                 ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
             }

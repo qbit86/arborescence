@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1] - 2020-08-13
+### Added
+- Models: `SimpleIncidenceGraph.UndirectedBuilder`.
+- Models: `MutableUndirectedSimpleIncidenceGraph`.
+
+### Fixed
+- Models: Argument checking in a couple of graph models.
+
 ## [0.3.0] - 2020-07-31
 ### Added
 - Primitives: non-generic `Endpoints` struct.
@@ -13,8 +21,8 @@
 - Primitives: Made `Current` properties of enumerator structs `readonly`.
 - Primitives: Bumped minimum target framework to `netstandard1.3`.
 - Models: Bumped minimum target framework to `netstandard1.3`.
-- Models: Reimplement `IndexedIncidenceGraph.Builder` and `UndirectedIndexedIncidenceGraph.Builder` with sorting.
-- Models: Reimplement `SimpleIncidenceGraph` with `Endpoints` as edge.
+- Models: Reimplemented `IndexedIncidenceGraph.Builder` and `UndirectedIndexedIncidenceGraph.Builder` with sorting.
+- Models: Reimplemented `SimpleIncidenceGraph` with `Endpoints` as edge.
 
 ## [0.2.0] - 2020-07-20
 ### Added
@@ -39,7 +47,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.3.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.3.1...HEAD
+[0.3.1]: https://github.com/qbit86/arborescence/compare/models-0.3.0...models-0.3.1
 [0.3.0]: https://github.com/qbit86/arborescence/compare/models-0.2.0...models-0.3.0
 [0.2.0]: https://github.com/qbit86/arborescence/compare/traversal-0.1.1...models-0.2.0
 [0.1.1]: https://github.com/qbit86/arborescence/compare/abstractions-0.1.0...traversal-0.1.1

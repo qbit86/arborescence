@@ -5,10 +5,11 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
-    using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using EdgeEnumerator = ArrayPrefixEnumerator<Endpoints>;
+    using Graph = Models.MutableSimpleIncidenceGraph;
+    using GraphPolicy = Models.MutableSimpleIncidenceGraphPolicy;
 
     public class QueueGenericSearchEnumerateVerticesTest
     {
@@ -18,21 +19,20 @@
             GenericSearch = default;
         }
 
-        private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
-        private GenericSearch<IndexedIncidenceGraph, int, int, EdgeEnumerator, Queue<int>, byte[],
-                IndexedIncidenceGraphPolicy, QueuePolicy, IndexedSetPolicy>
+        private GenericSearch<
+                Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], GraphPolicy, QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
 
-        private void EnumerateVerticesCore(IndexedIncidenceGraph graph, bool multipleSource)
+        private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
@@ -42,7 +42,7 @@
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            BfsHandler<IndexedIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
+            BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(instantSteps);
 
             // Act
 
@@ -92,26 +92,26 @@
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static BfsHandler<IndexedIncidenceGraph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
+        private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
         {
             Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
-            var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
+            var result = new BfsHandler<Graph, int, Endpoints>();
             result.DiscoverVertex += (g, v) => discoveredVertices.Add(v);
             return result;
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(GraphCollection))]
-        internal void EnumerateVertices_SingleSource(GraphParameter p)
+        [ClassData(typeof(MutableSimpleGraphCollection))]
+        internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(GraphCollection))]
-        internal void EnumerateVertices_MultipleSource(GraphParameter p)
+        [ClassData(typeof(MutableSimpleGraphCollection))]
+        internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, true);
         }

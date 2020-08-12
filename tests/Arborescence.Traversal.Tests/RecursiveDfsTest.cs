@@ -5,10 +5,11 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
-    using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
+    using Graph = Models.MutableIndexedIncidenceGraph;
+    using GraphPolicy = Models.MutableIndexedIncidenceGraphPolicy;
 
     public sealed class RecursiveDfsTest
     {
@@ -18,31 +19,29 @@
             RecursiveDfs = default;
         }
 
-        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
-        private void TraverseCore(IndexedIncidenceGraph graph, bool multipleSource)
+        private void TraverseCore(Graph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
             using var instantSteps = new Rist<(string, int)>(graph.VertexCount);
-            DfsHandler<IndexedIncidenceGraph, int, int> instantHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<Graph, int, int> instantHandler = CreateDfsHandler(instantSteps);
 
             byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
             using var recursiveSteps = new Rist<(string, int)>(graph.VertexCount);
-            DfsHandler<IndexedIncidenceGraph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
+            DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
             // Act
 
@@ -88,11 +87,11 @@
             ArrayPool<byte>.Shared.Return(recursiveColorMap);
         }
 
-        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<(string, int)> steps)
+        private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<(string, int)> steps)
         {
             Debug.Assert(steps != null, "steps != null");
 
-            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
+            var result = new DfsHandler<Graph, int, int>();
             result.StartVertex += (g, v) => steps.Add((nameof(result.OnStartVertex), v));
             result.DiscoverVertex += (g, v) => steps.Add((nameof(result.DiscoverVertex), v));
             result.FinishVertex += (g, v) => steps.Add((nameof(result.FinishVertex), v));
@@ -106,15 +105,15 @@
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(GraphCollection))]
-        internal void Traverse_SingleSource(GraphParameter p)
+        [ClassData(typeof(MutableIndexedGraphCollection))]
+        internal void Traverse_SingleSource(GraphParameter<Graph> p)
         {
             TraverseCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(GraphCollection))]
-        internal void Traverse_MultipleSource(GraphParameter p)
+        [ClassData(typeof(MutableIndexedGraphCollection))]
+        internal void Traverse_MultipleSource(GraphParameter<Graph> p)
         {
             TraverseCore(p.Graph, true);
         }

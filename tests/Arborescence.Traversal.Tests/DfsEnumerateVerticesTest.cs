@@ -9,6 +9,7 @@ namespace Arborescence
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using Graph = Models.IndexedIncidenceGraph;
 
     public sealed class DfsEnumerateVerticesTest
     {
@@ -18,21 +19,19 @@ namespace Arborescence
             EnumerableDfs = default;
         }
 
-        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
-        private void EnumerateVerticesCore(IndexedIncidenceGraph graph, bool multipleSource)
+        private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
@@ -41,7 +40,7 @@ namespace Arborescence
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
@@ -89,26 +88,26 @@ namespace Arborescence
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<int> steps)
+        private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> steps)
         {
             Debug.Assert(steps != null, "steps != null");
 
-            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
+            var result = new DfsHandler<Graph, int, int>();
             result.DiscoverVertex += (g, v) => steps.Add(v);
             return result;
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(GraphCollection))]
-        internal void EnumerateVertices_SingleSource(GraphParameter p)
+        [ClassData(typeof(FromMutableIndexedGraphCollection))]
+        internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(GraphCollection))]
-        internal void EnumerateVertices_MultipleSource(GraphParameter p)
+        [ClassData(typeof(FromMutableIndexedGraphCollection))]
+        internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, true);
         }
