@@ -6,14 +6,14 @@
 
     internal static class GraphHelper
     {
-        internal static IndexedIncidenceGraph GenerateAdjacencyListIncidenceGraph(
-            int vertexCount, double densityPower)
+        internal static TGraph GenerateIncidenceGraph<TGraph, TEdge, TEdges, TGraphBuilder>(
+            TGraphBuilder builder, int vertexCount, double densityPower)
+            where TGraph : IIncidenceGraph<int, TEdge, TEdges>
+            where TGraphBuilder : IGraphBuilder<TGraph, int, TEdge>
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
 
-            var builder = new IndexedIncidenceGraph.Builder(vertexCount);
             var prng = new Random(1729);
-
             for (int e = 0; e < edgeCount; ++e)
             {
                 int tail = prng.Next(vertexCount);
@@ -21,7 +21,7 @@
                 builder.TryAdd(tail, head, out _);
             }
 
-            IndexedIncidenceGraph result = builder.ToGraph();
+            TGraph result = builder.ToGraph();
             return result;
         }
 

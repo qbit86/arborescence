@@ -44,8 +44,10 @@
             {
                 const int vertexCount = 1;
                 const double densityPower = 1.0;
-                IndexedIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
-                    vertexCount, densityPower);
+                var builder = new IndexedIncidenceGraph.Builder(1);
+                IndexedIncidenceGraph graph = GraphHelper.GenerateIncidenceGraph<
+                    IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>(
+                    builder, vertexCount, densityPower);
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                 var graphParameter = new GraphParameter(graph, description);
@@ -58,8 +60,10 @@
                 int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
                 foreach (double densityPower in s_densityPowers)
                 {
-                    IndexedIncidenceGraph graph = GraphHelper.GenerateAdjacencyListIncidenceGraph(
-                        vertexCount, densityPower);
+                    var builder = new IndexedIncidenceGraph.Builder(1);
+                    IndexedIncidenceGraph graph = GraphHelper.GenerateIncidenceGraph<
+                        IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>(
+                        builder, vertexCount, densityPower);
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                     var graphParameter = new GraphParameter(graph, description);
