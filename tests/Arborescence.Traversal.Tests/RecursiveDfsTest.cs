@@ -106,14 +106,14 @@
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(GraphCollection))]
+        [ClassData(typeof(IndexedGraphCollection))]
         internal void Traverse_SingleSource(GraphParameter<Graph> p)
         {
             TraverseCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(GraphCollection))]
+        [ClassData(typeof(IndexedGraphCollection))]
         internal void Traverse_MultipleSource(GraphParameter<Graph> p)
         {
             TraverseCore(p.Graph, true);
