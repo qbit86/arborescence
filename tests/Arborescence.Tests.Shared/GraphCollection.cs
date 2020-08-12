@@ -44,8 +44,9 @@
                 const int vertexCount = 1;
                 const double densityPower = 1.0;
                 TGraphBuilder builder = CreateGraphBuilder(1);
-                TGraph graph = GraphHelper.GenerateIncidenceGraph<TGraph, TEdge, TEdges, TGraphBuilder>(
+                GraphHelper.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                     builder, vertexCount, densityPower);
+                TGraph graph = builder.ToGraph();
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                 var graphParameter = GraphParameter.Create(graph, description);
@@ -59,8 +60,9 @@
                 foreach (double densityPower in GraphHelper.DensityPowers)
                 {
                     TGraphBuilder builder = CreateGraphBuilder(1);
-                    TGraph graph = GraphHelper.GenerateIncidenceGraph<TGraph, TEdge, TEdges, TGraphBuilder>(
+                    GraphHelper.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                         builder, vertexCount, densityPower);
+                    TGraph graph = builder.ToGraph();
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                     var graphParameter = GraphParameter.Create(graph, description);
