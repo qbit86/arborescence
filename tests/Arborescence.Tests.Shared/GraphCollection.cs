@@ -37,7 +37,7 @@
 
                 IndexedIncidenceGraph graph = builder.ToGraph();
                 string description = $"{{{nameof(testCase)}: {testCase}}}";
-                var graphParameter = new GraphParameter(graph, description);
+                var graphParameter = GraphParameter.Create(graph, description);
                 yield return new object[] { graphParameter };
             }
 
@@ -50,7 +50,7 @@
                     builder, vertexCount, densityPower);
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
-                var graphParameter = new GraphParameter(graph, description);
+                var graphParameter = GraphParameter.Create(graph, description);
                 yield return new object[] { graphParameter };
             }
 
@@ -66,7 +66,7 @@
                         builder, vertexCount, densityPower);
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
-                    var graphParameter = new GraphParameter(graph, description);
+                    var graphParameter = GraphParameter.Create(graph, description);
                     yield return new object[] { graphParameter };
                 }
             }

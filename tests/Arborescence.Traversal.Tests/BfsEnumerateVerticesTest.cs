@@ -9,6 +9,7 @@ namespace Arborescence
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using Graph = Models.IndexedIncidenceGraph;
 
     public sealed class BfsEnumerateVerticesTest
     {
@@ -18,15 +19,13 @@ namespace Arborescence
             EnumerableBfs = default;
         }
 
-        private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantBfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantBfs { get; }
 
-        private EnumerableBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableBfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableBfs { get; }
 
-        private void EnumerateVerticesCore(IndexedIncidenceGraph graph, bool multipleSource)
+        private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -41,7 +40,7 @@ namespace Arborescence
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            BfsHandler<IndexedIncidenceGraph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
+            BfsHandler<Graph, int, int> bfsHandler = CreateBfsHandler(instantSteps);
 
             // Act
 
@@ -86,11 +85,11 @@ namespace Arborescence
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static BfsHandler<IndexedIncidenceGraph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
+        private static BfsHandler<Graph, int, int> CreateBfsHandler(IList<int> discoveredVertices)
         {
             Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
-            var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
+            var result = new BfsHandler<Graph, int, int>();
             result.DiscoverVertex += (g, v) => discoveredVertices.Add(v);
             return result;
         }
@@ -98,14 +97,14 @@ namespace Arborescence
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphCollection))]
-        internal void EnumerateVertices_SingleSource(GraphParameter p)
+        internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, false);
         }
 
         [Theory]
         [ClassData(typeof(GraphCollection))]
-        internal void EnumerateVertices_MultipleSource(GraphParameter p)
+        internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, true);
         }

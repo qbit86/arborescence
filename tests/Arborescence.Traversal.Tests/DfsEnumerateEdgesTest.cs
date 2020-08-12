@@ -9,6 +9,7 @@ namespace Arborescence
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using Graph = Models.IndexedIncidenceGraph;
 
     public sealed class DfsEnumerateEdgesTest
     {
@@ -18,15 +19,13 @@ namespace Arborescence
             EnumerableDfs = default;
         }
 
-        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
             EnumerableDfs { get; }
 
-        private void EnumerateEdgesCore(IndexedIncidenceGraph graph, bool multipleSource)
+        private void EnumerateEdgesCore(Graph graph, bool multipleSource)
         {
             Debug.Assert(graph != null, "graph != null");
 
@@ -41,7 +40,7 @@ namespace Arborescence
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
 
             // Act
 
@@ -89,11 +88,11 @@ namespace Arborescence
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
-        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<int> treeEdges)
+        private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> treeEdges)
         {
             Debug.Assert(treeEdges != null, "treeEdges != null");
 
-            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
+            var result = new DfsHandler<Graph, int, int>();
             result.TreeEdge += (g, e) => treeEdges.Add(e);
             return result;
         }
@@ -101,14 +100,14 @@ namespace Arborescence
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphCollection))]
-        internal void EnumerateEdges_SingleSource(GraphParameter p)
+        internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p)
         {
             EnumerateEdgesCore(p.Graph, false);
         }
 
         [Theory]
         [ClassData(typeof(GraphCollection))]
-        internal void EnumerateEdges_MultipleSource(GraphParameter p)
+        internal void EnumerateEdges_MultipleSource(GraphParameter<Graph> p)
         {
             EnumerateEdgesCore(p.Graph, true);
         }
