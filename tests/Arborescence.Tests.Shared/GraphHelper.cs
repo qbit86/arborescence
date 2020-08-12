@@ -6,7 +6,9 @@
 
     internal static class GraphHelper
     {
-        internal static TGraph GenerateIncidenceGraph<TGraph, TEdge, TEdges, TGraphBuilder>(
+        internal static double[] DensityPowers { get; } = { 1.0, 1.5, 2.0 };
+
+        internal static void PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
             TGraphBuilder builder, int vertexCount, double densityPower)
             where TGraph : IIncidenceGraph<int, TEdge, TEdges>
             where TGraphBuilder : IGraphBuilder<TGraph, int, TEdge>
@@ -20,9 +22,6 @@
                 int head = prng.Next(vertexCount);
                 builder.TryAdd(tail, head, out _);
             }
-
-            TGraph result = builder.ToGraph();
-            return result;
         }
 
         internal static void GenerateEdges(int vertexCount, double densityPower, IList<Endpoints> edges)
@@ -35,7 +34,6 @@
                 list.Capacity = edgeCount;
 
             var prng = new Random(1729);
-
             for (int e = 0; e < edgeCount; ++e)
             {
                 int tail = prng.Next(vertexCount);

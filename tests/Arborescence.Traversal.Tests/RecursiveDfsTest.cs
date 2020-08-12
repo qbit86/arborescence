@@ -5,11 +5,12 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
-    using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
-    using Graph = Models.IndexedIncidenceGraph;
+    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
+    using Graph = Models.MutableIndexedIncidenceGraph;
+    using GraphPolicy = Models.IndexedIncidenceGraphPolicy<
+        Models.MutableIndexedIncidenceGraph, ArrayPrefixEnumerator<int>>;
 
     public sealed class RecursiveDfsTest
     {
@@ -19,11 +20,10 @@
             RecursiveDfs = default;
         }
 
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
         private void TraverseCore(Graph graph, bool multipleSource)
@@ -32,7 +32,7 @@
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount > 0, "graph.VertexCount > 0");
+            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
 
             byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
@@ -106,14 +106,14 @@
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(GraphCollection))]
+        [ClassData(typeof(MutableIndexedGraphCollection))]
         internal void Traverse_SingleSource(GraphParameter<Graph> p)
         {
             TraverseCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(GraphCollection))]
+        [ClassData(typeof(MutableIndexedGraphCollection))]
         internal void Traverse_MultipleSource(GraphParameter<Graph> p)
         {
             TraverseCore(p.Graph, true);

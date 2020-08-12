@@ -8,13 +8,12 @@
     using Models;
     using Workbench;
 
-#pragma warning disable CA1812 // GraphCollection is an internal class that is apparently never instantiated.
-    internal sealed class GraphCollection : IEnumerable<object[]>
+    internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : IEnumerable<object[]>
+        where TGraph : IIncidenceGraph<int, TEdge, TEdges>
+        where TGraphBuilder : IGraphBuilder<TGraph, int, TEdge>
     {
         private const int LowerBound = 1;
         private const int UpperBound = 10;
-
-        private static readonly double[] s_densityPowers = { 1.0, 1.5, 2.0 };
 
         private static CultureInfo F => CultureInfo.InvariantCulture;
 
@@ -23,7 +22,7 @@
             for (int i = LowerBound; i < UpperBound; ++i)
             {
                 string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
-                var builder = new IndexedIncidenceGraph.Builder(10);
+                TGraphBuilder builder = CreateGraphBuilder(0);
 
                 using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
                 {
@@ -35,7 +34,7 @@
                         builder.TryAdd(edge.Tail, edge.Head, out _);
                 }
 
-                IndexedIncidenceGraph graph = builder.ToGraph();
+                TGraph graph = builder.ToGraph();
                 string description = $"{{{nameof(testCase)}: {testCase}}}";
                 var graphParameter = GraphParameter.Create(graph, description);
                 yield return new object[] { graphParameter };
@@ -44,10 +43,10 @@
             {
                 const int vertexCount = 1;
                 const double densityPower = 1.0;
-                var builder = new IndexedIncidenceGraph.Builder(1);
-                IndexedIncidenceGraph graph = GraphHelper.GenerateIncidenceGraph<
-                    IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>(
+                TGraphBuilder builder = CreateGraphBuilder(1);
+                GraphHelper.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                     builder, vertexCount, densityPower);
+                TGraph graph = builder.ToGraph();
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                 var graphParameter = GraphParameter.Create(graph, description);
@@ -58,12 +57,12 @@
             {
                 double power = 0.5 * i;
                 int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
-                foreach (double densityPower in s_densityPowers)
+                foreach (double densityPower in GraphHelper.DensityPowers)
                 {
-                    var builder = new IndexedIncidenceGraph.Builder(1);
-                    IndexedIncidenceGraph graph = GraphHelper.GenerateIncidenceGraph<
-                        IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>(
+                    TGraphBuilder builder = CreateGraphBuilder(1);
+                    GraphHelper.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                         builder, vertexCount, densityPower);
+                    TGraph graph = builder.ToGraph();
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                     var graphParameter = GraphParameter.Create(graph, description);
@@ -73,6 +72,150 @@
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        protected abstract TGraphBuilder CreateGraphBuilder(int initialVertexCount);
+    }
+
+#pragma warning disable CA1812 // GraphCollection is an internal class that is apparently never instantiated.
+    internal sealed class IndexedGraphCollection :
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>
+    {
+        protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new IndexedIncidenceGraph.Builder(initialVertexCount);
+        }
+    }
+
+    internal sealed class FromMutableIndexedGraphCollection :
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, MutableIndexedIncidenceGraph>
+    {
+        protected override MutableIndexedIncidenceGraph CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableIndexedIncidenceGraph(initialVertexCount);
+        }
+    }
+
+    internal sealed class MutableIndexedGraphCollection : GraphCollection<
+        MutableIndexedIncidenceGraph, int, ArrayPrefixEnumerator<int>, MutableIndexedIncidenceGraphBuilder>
+    {
+        protected override MutableIndexedIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableIndexedIncidenceGraphBuilder(initialVertexCount);
+        }
+    }
+
+    internal sealed class SimpleGraphCollection : GraphCollection<
+        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, SimpleIncidenceGraph.Builder>
+    {
+        protected override SimpleIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new SimpleIncidenceGraph.Builder(initialVertexCount);
+        }
+    }
+
+    internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
+        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, MutableSimpleIncidenceGraph>
+    {
+        protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableSimpleIncidenceGraph(initialVertexCount);
+        }
+    }
+
+    internal sealed class MutableSimpleGraphCollection : GraphCollection<
+        MutableSimpleIncidenceGraph, Endpoints, ArrayPrefixEnumerator<Endpoints>, MutableSimpleIncidenceGraphBuilder>
+    {
+        protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableSimpleIncidenceGraphBuilder(initialVertexCount);
+        }
+    }
+
+    internal sealed class UndirectedSimpleGraphCollection : GraphCollection<
+        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, SimpleIncidenceGraph.UndirectedBuilder>
+    {
+        protected override SimpleIncidenceGraph.UndirectedBuilder CreateGraphBuilder(int initialVertexCount)
+        {
+            return new SimpleIncidenceGraph.UndirectedBuilder(initialVertexCount);
+        }
     }
 #pragma warning restore CA1812 // GraphCollection is an internal class that is apparently never instantiated.
+
+    internal sealed class MutableIndexedIncidenceGraphBuilder :
+        IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,
+        IDisposable
+    {
+        private MutableIndexedIncidenceGraph? _graph;
+
+        public MutableIndexedIncidenceGraphBuilder(int initialVertexCount)
+        {
+            _graph = new MutableIndexedIncidenceGraph(initialVertexCount);
+        }
+
+        public void Dispose()
+        {
+            if (_graph is null)
+                return;
+
+            _graph.Dispose();
+            _graph = null;
+        }
+
+        public bool TryAdd(int tail, int head, out int edge)
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            return _graph.TryAdd(tail, head, out edge);
+        }
+
+        public MutableIndexedIncidenceGraph ToGraph()
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            MutableIndexedIncidenceGraph result = _graph;
+            _graph = null;
+            return result;
+        }
+    }
+
+    internal sealed class MutableSimpleIncidenceGraphBuilder :
+        IGraphBuilder<MutableSimpleIncidenceGraph, int, Endpoints>,
+        IDisposable
+    {
+        private MutableSimpleIncidenceGraph? _graph;
+
+        public MutableSimpleIncidenceGraphBuilder(int initialVertexCount)
+        {
+            _graph = new MutableSimpleIncidenceGraph(initialVertexCount);
+        }
+
+        public void Dispose()
+        {
+            if (_graph is null)
+                return;
+
+            _graph.Dispose();
+            _graph = null;
+        }
+
+        public bool TryAdd(int tail, int head, out Endpoints edge)
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            return _graph.TryAdd(tail, head, out edge);
+        }
+
+        public MutableSimpleIncidenceGraph ToGraph()
+        {
+            if (_graph is null)
+                throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
+
+            MutableSimpleIncidenceGraph result = _graph;
+            _graph = null;
+            return result;
+        }
+    }
 }
