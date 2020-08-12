@@ -112,6 +112,15 @@
             return new SimpleIncidenceGraph.Builder(initialVertexCount);
         }
     }
+
+    internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
+        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, MutableSimpleIncidenceGraph>
+    {
+        protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount)
+        {
+            return new MutableSimpleIncidenceGraph(initialVertexCount);
+        }
+    }
 #pragma warning restore CA1812 // GraphCollection is an internal class that is apparently never instantiated.
 
     internal sealed class MutableIndexedIncidenceGraphBuilder :

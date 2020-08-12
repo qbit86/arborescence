@@ -96,14 +96,14 @@ namespace Arborescence
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
-        [ClassData(typeof(SimpleGraphCollection))]
+        [ClassData(typeof(FromMutableSimpleGraphCollection))]
         internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, false);
         }
 
         [Theory]
-        [ClassData(typeof(SimpleGraphCollection))]
+        [ClassData(typeof(FromMutableSimpleGraphCollection))]
         internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p)
         {
             EnumerateVerticesCore(p.Graph, true);
