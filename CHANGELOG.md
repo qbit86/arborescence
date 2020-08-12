@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2020-07-31
+## [0.3.1] - 2020-08-13
 ### Added
 - Models: `SimpleIncidenceGraph.UndirectedBuilder`.
 - Models: `MutableUndirectedSimpleIncidenceGraph`.
@@ -47,7 +47,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.3.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.3.1...HEAD
+[0.3.1]: https://github.com/qbit86/arborescence/compare/models-0.3.0...models-0.3.1
 [0.3.0]: https://github.com/qbit86/arborescence/compare/models-0.2.0...models-0.3.0
 [0.2.0]: https://github.com/qbit86/arborescence/compare/traversal-0.1.1...models-0.2.0
 [0.1.1]: https://github.com/qbit86/arborescence/compare/abstractions-0.1.0...traversal-0.1.1
