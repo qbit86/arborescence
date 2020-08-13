@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageTags>graph;traversal;dfs;bfs</PackageTags>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>0.3.1</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyVersion>0.3</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <RootNamespace>Arborescence.Traversal.Specialized</RootNamespace>
+    <TargetFrameworks>netcoreapp2.0;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Arborescence.Traversal\Arborescence.Traversal.csproj" />
+  </ItemGroup>
+  <Import Project="..\Arborescence.Internal\Arborescence.Internal.projitems" Label="Shared" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
