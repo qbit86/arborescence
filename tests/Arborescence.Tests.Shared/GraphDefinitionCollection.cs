@@ -25,7 +25,7 @@
                 string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
 
                 using TextReader textReader = IndexedGraphs.GetTextReader(testCase);
-                if (textReader is null || textReader == TextReader.Null)
+                if (textReader == TextReader.Null)
                     continue;
 
                 var edges = IndexedEdgeListParser.ParseEdges(textReader).ToList();
