@@ -30,8 +30,7 @@ namespace Arborescence.Traversal.Specialized
             var queue = new Internal.Queue<int>();
             try
             {
-                IndexedSetPolicy exploredSetPolicy = default;
-                exploredSetPolicy.Add(exploredSet, source);
+                SetHelpers.Add(exploredSet, source);
                 queue.Add(source);
 
                 while (queue.TryTake(out int u))
@@ -43,11 +42,11 @@ namespace Arborescence.Traversal.Specialized
                         if (!graph.TryGetHead(e, out int v))
                             continue;
 
-                        if (exploredSetPolicy.Contains(exploredSet, v))
+                        if (SetHelpers.Contains(exploredSet, v))
                             continue;
 
                         yield return e;
-                        exploredSetPolicy.Add(exploredSet, v);
+                        SetHelpers.Add(exploredSet, v);
                         queue.Add(v);
                     }
                 }

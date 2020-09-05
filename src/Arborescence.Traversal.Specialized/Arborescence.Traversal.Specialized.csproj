@@ -13,7 +13,7 @@
     <TargetFrameworks>netcoreapp2.0;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Arborescence.Traversal\Arborescence.Traversal.csproj" />
+    <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
   <Import Project="..\Arborescence.Internal\Arborescence.Internal.projitems" Label="Shared" />
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
