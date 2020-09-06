@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -56,13 +57,16 @@
             {
                 int n = _vertexCount;
                 int m = _edges.Count;
+                Endpoints[] array = _edges.Array;
+                Debug.Assert(array != null, nameof(array) + " != null");
+
                 if (NeedsReordering)
-                    Array.Sort(_edges.Array, 0, m, EdgeComparer.Instance);
+                    Array.Sort(array, 0, m, EdgeComparer.Instance);
 
                 Endpoints[] edgesOrderedByTail;
-                if (_edges.Array.Length == _edges.Count)
+                if (array.Length == _edges.Count)
                 {
-                    edgesOrderedByTail = _edges.Array;
+                    edgesOrderedByTail = array;
                     _edges = ArrayPrefix<Endpoints>.Empty;
                 }
                 else

@@ -1,6 +1,7 @@
 ﻿namespace Arborescence.Models
 {
     using System;
+    using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -59,12 +60,15 @@
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
+                Endpoints[] array = _edges.Array;
+                Debug.Assert(array != null, nameof(array) + " != null");
+
+                Array.Sort(array, 0, _edges.Count, EdgeComparer.Instance);
 
                 Endpoints[] edgesOrderedByTail;
-                if (_edges.Array.Length == _edges.Count)
+                if (array.Length == _edges.Count)
                 {
-                    edgesOrderedByTail = _edges.Array;
+                    edgesOrderedByTail = array;
                     _edges = ArrayPrefix<Endpoints>.Empty;
                 }
                 else
