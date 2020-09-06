@@ -1,4 +1,4 @@
-namespace Arborescence.Traversal.Dfs
+namespace Arborescence.Traversal
 {
     using System;
     using System.Buffers;
