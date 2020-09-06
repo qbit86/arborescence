@@ -1,4 +1,4 @@
-﻿namespace Arborescence.Traversal
+﻿namespace Arborescence.Models
 {
     using System.Runtime.CompilerServices;
 
