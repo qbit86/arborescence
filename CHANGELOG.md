@@ -2,7 +2,7 @@
 
 ## [Unreleased] - 2020-09-06
 ### Added
-- Models: Moved `IndexedSetPolicy` and `CompactSetPolicy` from Traversal.
+- Models: `IndexedSetPolicy` and `CompactSetPolicy`.
 - Traversal: The most basic versions of BFS and DFS.
 
 ### Removed
