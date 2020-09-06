@@ -9,7 +9,7 @@ Commonly used types:
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.3.1</VersionPrefix>
+    <VersionPrefix>0.3.2</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.3</AssemblyVersion>
@@ -27,7 +27,7 @@ Commonly used types:
   </ItemGroup>
   <Import Project="..\Arborescence.Buffers\Arborescence.Buffers.projitems" Label="Shared" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>

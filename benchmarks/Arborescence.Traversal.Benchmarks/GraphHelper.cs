@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using Models;
 
-    internal struct GraphHelper
+    internal sealed class GraphHelper
     {
-        private Dictionary<int, IndexedIncidenceGraph> _cache;
+        private Dictionary<int, IndexedIncidenceGraph>? _cache;
 
         internal static GraphHelper Default { get; } = new GraphHelper();
 

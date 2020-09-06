@@ -26,7 +26,7 @@
 
                 using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
                 {
-                    if (textReader is null || textReader == TextReader.Null)
+                    if (textReader == TextReader.Null)
                         continue;
 
                     IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);

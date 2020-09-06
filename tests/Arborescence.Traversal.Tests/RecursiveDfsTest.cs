@@ -13,17 +13,11 @@
 
     public sealed class RecursiveDfsTest
     {
-        public RecursiveDfsTest()
-        {
-            InstantDfs = default;
-            RecursiveDfs = default;
-        }
-
         private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; }
+            InstantDfs { get; } = default;
 
         private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            RecursiveDfs { get; }
+            RecursiveDfs { get; } = default;
 
         private void TraverseCore(Graph graph, bool multipleSource)
         {
@@ -103,7 +97,6 @@
             return result;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(MutableIndexedGraphCollection))]
         internal void Traverse_SingleSource(GraphParameter<Graph> p)
@@ -117,6 +110,5 @@
         {
             TraverseCore(p.Graph, true);
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }

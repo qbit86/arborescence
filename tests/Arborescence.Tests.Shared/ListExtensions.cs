@@ -8,9 +8,6 @@
             where TList : IList<int>
             where TEnumerator : IEnumerator<int>
         {
-            if (list is null || enumerator is null)
-                return;
-
             while (enumerator.MoveNext())
                 list.Add(enumerator.Current);
         }

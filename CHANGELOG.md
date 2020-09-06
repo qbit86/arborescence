@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased] - 2020-09-06
+### Added
+- Traversal: The most basic versions of BFS and DFS.
+
+### Removed
+- Traversal: Moved `IndexedSetPolicy` and `CompactSetPolicy` to Models.
+
+## [0.3.2] - 2020-09-06
+### Added
+- Models: Moved `IndexedSetPolicy` and `CompactSetPolicy` from Traversal.
+
 ## [0.3.1] - 2020-08-13
 ### Added
 - Models: `SimpleIncidenceGraph.UndirectedBuilder`.
@@ -10,7 +21,7 @@
 
 ## [0.3.0] - 2020-07-31
 ### Added
-- Primitives: non-generic `Endpoints` struct.
+- Primitives: Non-generic `Endpoints` struct.
 - Primitives: Target framework `netstandard2.1` to support nullability attributes.
 - Primitives: `Empty` property to enumerators.
 - Models: non-generic `UndirectedIndexedIncidenceGraphPolicy` struct.
@@ -47,7 +58,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.3.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.3.2...HEAD
+[0.3.2]: https://github.com/qbit86/arborescence/compare/models-0.3.1...models-0.3.2
 [0.3.1]: https://github.com/qbit86/arborescence/compare/models-0.3.0...models-0.3.1
 [0.3.0]: https://github.com/qbit86/arborescence/compare/models-0.2.0...models-0.3.0
 [0.2.0]: https://github.com/qbit86/arborescence/compare/traversal-0.1.1...models-0.2.0

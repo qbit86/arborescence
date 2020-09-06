@@ -14,7 +14,7 @@
 
         internal GraphParameter(TGraph graph, string description)
         {
-            _description = description ?? string.Empty;
+            _description = description;
             Graph = graph;
         }
 

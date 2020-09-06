@@ -9,7 +9,7 @@ namespace Arborescence.Traversal
         /// <inheritdoc/>
         public bool TryGetValue(byte[] map, int key, out Color value)
         {
-            if (map == null || (uint)key >= (uint)map.Length)
+            if (map is null || (uint)key >= (uint)map.Length)
             {
                 value = default;
                 return false;
@@ -22,7 +22,7 @@ namespace Arborescence.Traversal
         /// <inheritdoc/>
         public void AddOrUpdate(byte[] map, int key, Color value)
         {
-            if (map == null || (uint)key >= (uint)map.Length)
+            if (map is null || (uint)key >= (uint)map.Length)
                 return;
 
             map[key] = (byte)value;

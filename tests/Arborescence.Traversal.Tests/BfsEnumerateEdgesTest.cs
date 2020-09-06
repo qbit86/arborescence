@@ -5,6 +5,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
+    using Models;
     using Traversal;
     using Xunit;
     using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
@@ -13,17 +14,11 @@ namespace Arborescence
 
     public sealed class BfsEnumerateEdgesTest
     {
-        public BfsEnumerateEdgesTest()
-        {
-            InstantBfs = default;
-            EnumerableBfs = default;
-        }
-
         private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantBfs { get; }
+            InstantBfs { get; } = default;
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
-            EnumerableBfs { get; }
+            EnumerableBfs { get; } = default;
 
         private void EnumerateEdgesCore(Graph graph, bool multipleSource)
         {
@@ -100,7 +95,6 @@ namespace Arborescence
             return result;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]
         internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p)
@@ -114,6 +108,5 @@ namespace Arborescence
         {
             EnumerateEdgesCore(p.Graph, true);
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }

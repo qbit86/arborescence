@@ -13,17 +13,11 @@ namespace Arborescence
 
     public sealed class DfsEnumerateVerticesTest
     {
-        public DfsEnumerateVerticesTest()
-        {
-            InstantDfs = default;
-            EnumerableDfs = default;
-        }
-
         private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; }
+            InstantDfs { get; } = default;
 
         private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
-            EnumerableDfs { get; }
+            EnumerableDfs { get; } = default;
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
@@ -97,7 +91,6 @@ namespace Arborescence
             return result;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(FromMutableIndexedGraphCollection))]
         internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
@@ -111,6 +104,5 @@ namespace Arborescence
         {
             EnumerateVerticesCore(p.Graph, true);
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }
