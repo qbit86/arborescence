@@ -6,6 +6,17 @@ namespace Arborescence.Traversal.Dfs
 
     public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
     {
+        /// <summary>
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <param name="source">The source.</param>
+        /// <returns>An enumerator to enumerate the edges of the the graph.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero,
+        /// or <paramref name="source"/> is greater than or equal to <paramref name="vertexCount"/>.
+        /// </exception>
         public IEnumerator<TEdge> EnumerateEdges(TGraph graph, int vertexCount, int source)
         {
             if (vertexCount < 0)

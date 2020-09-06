@@ -3,6 +3,16 @@ namespace Arborescence.Traversal.Dfs
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
+    // ReSharper disable once UnusedTypeParameter
+    /// <summary>
+    /// Represents the DFS algorithm — depth-first traversal of the graph — implemented as enumerator.
+    /// </summary>
+    /// <remarks>
+    /// This implementation assumes vertices to be indices in range [0, vertexCount).
+    /// </remarks>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IOutEdgesConcept<int, TEdgeEnumerator>, IHeadConcept<int, TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
