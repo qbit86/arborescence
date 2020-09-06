@@ -13,17 +13,11 @@
 
     public sealed class RecursiveDfsTest
     {
-        public RecursiveDfsTest()
-        {
-            InstantDfs = default;
-            RecursiveDfs = default;
-        }
-
         private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; }
+            InstantDfs { get; } = default;
 
         private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            RecursiveDfs { get; }
+            RecursiveDfs { get; } = default;
 
         private void TraverseCore(Graph graph, bool multipleSource)
         {

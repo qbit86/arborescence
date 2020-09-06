@@ -13,16 +13,10 @@ namespace Arborescence
 
     public sealed class BasicBfsTest
     {
-        private Bfs<Graph, Endpoints, EdgeEnumerator> Bfs { get; }
+        private Bfs<Graph, Endpoints, EdgeEnumerator> Bfs { get; } = default;
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
-            EnumerableBfs { get; }
-
-        public BasicBfsTest()
-        {
-            Bfs = default;
-            EnumerableBfs = default;
-        }
+            EnumerableBfs { get; } = default;
 
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]

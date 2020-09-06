@@ -13,17 +13,11 @@ namespace Arborescence
 
     public sealed class DfsEnumerateVerticesTest
     {
-        public DfsEnumerateVerticesTest()
-        {
-            InstantDfs = default;
-            EnumerableDfs = default;
-        }
-
         private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; }
+            InstantDfs { get; } = default;
 
         private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
-            EnumerableDfs { get; }
+            EnumerableDfs { get; } = default;
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {

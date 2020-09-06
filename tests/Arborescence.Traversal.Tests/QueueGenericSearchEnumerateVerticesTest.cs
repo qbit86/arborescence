@@ -14,18 +14,12 @@
 
     public class QueueGenericSearchEnumerateVerticesTest
     {
-        public QueueGenericSearchEnumerateVerticesTest()
-        {
-            InstantBfs = default;
-            GenericSearch = default;
-        }
-
         private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantBfs { get; }
+            InstantBfs { get; } = default;
 
         private GenericSearch<
                 Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], GraphPolicy, QueuePolicy, IndexedSetPolicy>
-            GenericSearch { get; }
+            GenericSearch { get; } = default;
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
