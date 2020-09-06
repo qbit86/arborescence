@@ -1,8 +1,11 @@
 # Changelog
 
 ## [Unreleased] - 2020-09-06
-### Added:
-- Traversal: The most basic versions of BFS and DFS. 
+### Added
+- Traversal: The most basic versions of BFS and DFS.
+
+### Changed
+- Traversal: Moved `IndexedSetPolicy` and `CompactSetPolicy` to Models.
 
 ## [0.3.1] - 2020-08-13
 ### Added
