@@ -4,7 +4,7 @@ namespace Arborescence.Traversal.Specialized
     using System.Buffers;
     using System.Collections.Generic;
 
-    public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
     {
         /// <summary>
         /// Enumerates edges of the graph in a breadth-first order.

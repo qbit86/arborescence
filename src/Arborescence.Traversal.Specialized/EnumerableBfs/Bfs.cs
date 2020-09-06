@@ -13,7 +13,7 @@ namespace Arborescence.Traversal.Specialized
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
-    public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IOutEdgesConcept<int, TEdgeEnumerator>, IHeadConcept<int, TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
