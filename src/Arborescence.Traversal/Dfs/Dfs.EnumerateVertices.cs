@@ -14,8 +14,7 @@ namespace Arborescence.Traversal
         /// <param name="source">The source.</param>
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="vertexCount"/> is less than zero,
-        /// or <paramref name="source"/> is greater than or equal to <paramref name="vertexCount"/>.
+        /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         public IEnumerator<int> EnumerateVertices(TGraph graph, int vertexCount, int source)
         {
@@ -23,7 +22,10 @@ namespace Arborescence.Traversal
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
             if ((uint)source >= (uint)vertexCount)
-                throw new ArgumentOutOfRangeException(nameof(source));
+            {
+                yield return source;
+                yield break;
+            }
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(exploredSet, 0, exploredSet.Length);
