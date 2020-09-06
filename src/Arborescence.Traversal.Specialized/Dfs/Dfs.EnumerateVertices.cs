@@ -6,7 +6,7 @@ namespace Arborescence.Traversal.Dfs
 
     public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
     {
-        public IEnumerator<TEdge> EnumerateVertices(TGraph graph, int vertexCount, int source)
+        public IEnumerator<int> EnumerateVertices(TGraph graph, int vertexCount, int source)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
@@ -19,7 +19,28 @@ namespace Arborescence.Traversal.Dfs
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
-                throw new NotImplementedException();
+                SetHelpers.Add(exploredSet, source);
+                yield return source;
+                stack.Add(graph.EnumerateOutEdges(source));
+
+                while (stack.TryTake(out TEdgeEnumerator outEdges))
+                {
+                    if (!outEdges.MoveNext())
+                        continue;
+
+                    stack.Add(outEdges);
+
+                    TEdge e = outEdges.Current;
+                    if (!graph.TryGetHead(e, out int v))
+                        continue;
+
+                    if (SetHelpers.Contains(exploredSet, v))
+                        continue;
+
+                    SetHelpers.Add(exploredSet, v);
+                    yield return v;
+                    stack.Add(graph.EnumerateOutEdges(v));
+                }
             }
             finally
             {

@@ -19,7 +19,27 @@ namespace Arborescence.Traversal.Dfs
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
-                throw new NotImplementedException();
+                SetHelpers.Add(exploredSet, source);
+                stack.Add(graph.EnumerateOutEdges(source));
+
+                while (stack.TryTake(out TEdgeEnumerator outEdges))
+                {
+                    if (!outEdges.MoveNext())
+                        continue;
+
+                    stack.Add(outEdges);
+
+                    TEdge e = outEdges.Current;
+                    if (!graph.TryGetHead(e, out int v))
+                        continue;
+
+                    if (SetHelpers.Contains(exploredSet, v))
+                        continue;
+
+                    yield return e;
+                    SetHelpers.Add(exploredSet, v);
+                    stack.Add(graph.EnumerateOutEdges(v));
+                }
             }
             finally
             {
