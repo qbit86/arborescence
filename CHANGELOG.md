@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2020-09-06
+### Added:
+- Traversal: The most basic versions of BFS and DFS. 
+
 ## [0.3.1] - 2020-08-13
 ### Added
 - Models: `SimpleIncidenceGraph.UndirectedBuilder`.
@@ -10,7 +14,7 @@
 
 ## [0.3.0] - 2020-07-31
 ### Added
-- Primitives: non-generic `Endpoints` struct.
+- Primitives: Non-generic `Endpoints` struct.
 - Primitives: Target framework `netstandard2.1` to support nullability attributes.
 - Primitives: `Empty` property to enumerators.
 - Models: non-generic `UndirectedIndexedIncidenceGraphPolicy` struct.
