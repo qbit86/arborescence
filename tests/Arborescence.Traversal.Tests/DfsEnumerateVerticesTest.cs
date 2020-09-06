@@ -91,7 +91,6 @@ namespace Arborescence
             return result;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(FromMutableIndexedGraphCollection))]
         internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
@@ -105,6 +104,5 @@ namespace Arborescence
         {
             EnumerateVerticesCore(p.Graph, true);
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }

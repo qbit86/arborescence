@@ -96,7 +96,6 @@
             return result;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(MutableSimpleGraphCollection))]
         internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
@@ -110,6 +109,5 @@
         {
             EnumerateVerticesCore(p.Graph, true);
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }

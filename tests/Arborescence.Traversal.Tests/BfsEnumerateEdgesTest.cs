@@ -95,7 +95,6 @@ namespace Arborescence
             return result;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]
         internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p)
@@ -109,6 +108,5 @@ namespace Arborescence
         {
             EnumerateEdgesCore(p.Graph, true);
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }
