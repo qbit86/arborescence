@@ -73,7 +73,8 @@
 
         private void SetCapacity(int capacity)
         {
-            Debug.Assert(capacity > 0, "capacity > 0");
+            Debug.Assert(capacity > 0, nameof(capacity) + " > 0");
+            Debug.Assert(_arrayFromPool != null, nameof(_arrayFromPool) + " != null");
 
             T[] newArray = Pool.Rent(capacity);
             if (_size > 0)
