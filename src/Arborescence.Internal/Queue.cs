@@ -64,6 +64,8 @@
         // Increments the index wrapping it if necessary.
         private void MoveNext(ref int index)
         {
+            Debug.Assert(_arrayFromPool != null, nameof(_arrayFromPool) + " != null");
+
             int temp = index + 1;
             if (temp == _arrayFromPool.Length)
                 temp = 0;
