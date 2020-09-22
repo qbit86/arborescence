@@ -123,7 +123,7 @@
     }
 
     internal sealed class MutableSimpleGraphCollection : GraphCollection<
-        MutableSimpleIncidenceGraph, Endpoints, ArrayPrefixEnumerator<Endpoints>, MutableSimpleIncidenceGraphBuilder>
+        MutableSimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, MutableSimpleIncidenceGraphBuilder>
     {
         protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
         {
