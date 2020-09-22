@@ -63,7 +63,7 @@
                 Endpoints[] array = _edges.Array;
                 Debug.Assert(array != null, nameof(array) + " != null");
 
-                Array.Sort(array, 0, _edges.Count, EdgeComparer.Instance);
+                Array.Sort(array, 0, _edges.Count, SimpleEdgeComparer.Instance);
 
                 Endpoints[] edgesOrderedByTail;
                 if (array.Length == _edges.Count)

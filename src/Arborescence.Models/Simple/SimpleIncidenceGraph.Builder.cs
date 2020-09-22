@@ -1,7 +1,6 @@
 ﻿namespace Arborescence.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
@@ -61,7 +60,7 @@
                 Debug.Assert(array != null, nameof(array) + " != null");
 
                 if (NeedsReordering)
-                    Array.Sort(array, 0, m, EdgeComparer.Instance);
+                    Array.Sort(array, 0, m, SimpleEdgeComparer.Instance);
 
                 Endpoints[] edgesOrderedByTail;
                 if (array.Length == _edges.Count)
@@ -101,17 +100,5 @@
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
-
-        private sealed class EdgeComparer : IComparer<Endpoints>
-        {
-            public static EdgeComparer Instance { get; } = new EdgeComparer();
-
-            public int Compare(Endpoints x, Endpoints y)
-            {
-                int left = x.Tail;
-                int right = y.Tail;
-                return left.CompareTo(right);
-            }
-        }
     }
 }
