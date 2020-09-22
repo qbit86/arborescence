@@ -38,9 +38,10 @@ namespace Arborescence
 
             static void PrintIncidentEdges(UndirectedIndexedIncidenceGraph graph, int vertex)
             {
-                ArraySegmentEnumerator<int> edges = graph.EnumerateOutEdges(vertex);
-                foreach (int edge in edges)
+                ArraySegment<int>.Enumerator edges = graph.EnumerateOutEdges(vertex);
+                while (edges.MoveNext())
                 {
+                    int edge = edges.Current;
                     string tailString = graph.TryGetTail(edge, out int tail) ? IndexToString(tail) : "?";
                     string headString = graph.TryGetHead(edge, out int head) ? IndexToString(head) : "?";
                     string endpointsString = $"{tailString} -> {headString}";
