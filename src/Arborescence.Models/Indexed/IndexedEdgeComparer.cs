@@ -7,7 +7,7 @@
     {
         private readonly int[] _tailByEdge;
 
-        public IndexedEdgeComparer(int[] tailByEdge)
+        internal IndexedEdgeComparer(int[] tailByEdge)
         {
             Debug.Assert(tailByEdge != null, nameof(tailByEdge) + " != null");
             _tailByEdge = tailByEdge;
