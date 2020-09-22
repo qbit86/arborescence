@@ -1,5 +1,9 @@
-﻿namespace Arborescence.Models
+﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+
+namespace Arborescence.Models
 {
+    using System;
+
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
@@ -8,7 +12,7 @@
     public readonly struct SimpleIncidenceGraphPolicy :
         ITailPolicy<SimpleIncidenceGraph, int, Endpoints>,
         IHeadPolicy<SimpleIncidenceGraph, int, Endpoints>,
-        IOutEdgesPolicy<SimpleIncidenceGraph, int, ArraySegmentEnumerator<Endpoints>>
+        IOutEdgesPolicy<SimpleIncidenceGraph, int, ArraySegment<Endpoints>.Enumerator>
     {
         /// <inheritdoc/>
         public bool TryGetTail(SimpleIncidenceGraph graph, Endpoints edge, out int tail) =>
@@ -19,8 +23,10 @@
             graph.TryGetHead(edge, out head);
 
         /// <inheritdoc/>
-        public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(SimpleIncidenceGraph graph, int vertex) =>
+        public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(SimpleIncidenceGraph graph, int vertex) =>
             graph.EnumerateOutEdges(vertex);
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
+
+#endif
