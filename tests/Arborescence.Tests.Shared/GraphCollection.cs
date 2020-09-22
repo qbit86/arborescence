@@ -78,7 +78,7 @@
 
 #pragma warning disable CA1812 // GraphCollection is an internal class that is apparently never instantiated.
     internal sealed class IndexedGraphCollection :
-        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, IndexedIncidenceGraph.Builder>
     {
         protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount)
         {
@@ -87,7 +87,7 @@
     }
 
     internal sealed class FromMutableIndexedGraphCollection :
-        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, MutableIndexedIncidenceGraph>
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, MutableIndexedIncidenceGraph>
     {
         protected override MutableIndexedIncidenceGraph CreateGraphBuilder(int initialVertexCount)
         {
