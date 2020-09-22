@@ -12,6 +12,5 @@
             int right = y.Tail;
             return left.CompareTo(right);
         }
-
     }
 }

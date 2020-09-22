@@ -1,7 +1,6 @@
 namespace Arborescence.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
 
     public readonly partial struct IndexedIncidenceGraph
@@ -82,7 +81,7 @@ namespace Arborescence.Models
                     destReorderedEdges[edge] = edge;
 
                 if (NeedsReordering)
-                    Array.Sort(data, 2 + n, m, new EdgeComparer(_tailByEdge.Array));
+                    Array.Sort(data, 2 + n, m, new IndexedEdgeComparer(_tailByEdge.Array));
 
                 Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
                 destUpperBoundByVertex.Clear();
@@ -110,23 +109,5 @@ namespace Arborescence.Models
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
-
-        private sealed class EdgeComparer : IComparer<int>
-        {
-            private readonly int[] _tailByEdge;
-
-            public EdgeComparer(int[] tailByEdge)
-            {
-                Debug.Assert(tailByEdge != null, nameof(tailByEdge) + " != null");
-                _tailByEdge = tailByEdge;
-            }
-
-            public int Compare(int x, int y)
-            {
-                int leftTail = _tailByEdge[x];
-                int rightTail = _tailByEdge[y];
-                return leftTail.CompareTo(rightTail);
-            }
-        }
     }
 }
