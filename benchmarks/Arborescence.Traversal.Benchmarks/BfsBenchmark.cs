@@ -6,7 +6,7 @@
     using BenchmarkDotNet.Attributes;
     using Models;
     using Traversal;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
     [MemoryDiagnoser]
     public abstract class BfsBenchmark
