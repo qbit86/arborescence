@@ -1,6 +1,4 @@
-﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
-namespace Arborescence.Models
+﻿namespace Arborescence.Models.Compatibility
 {
     using System;
     using System.Diagnostics;
@@ -9,21 +7,21 @@ namespace Arborescence.Models
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
-        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
+        public sealed class UndirectedBuilder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
-            private int _currentMaxTail;
+            private int _edgeCount;
             private ArrayPrefix<Endpoints> _edges;
             private int _vertexCount;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Builder"/> class.
+            /// Initializes a new instance of the <see cref="UndirectedBuilder"/> class.
             /// </summary>
             /// <param name="initialVertexCount">The initial number of vertices.</param>
             /// <param name="edgeCapacity">The initial capacity of the internal backing storage for the edges.</param>
             /// <exception cref="ArgumentOutOfRangeException">
             /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
             /// </exception>
-            public Builder(int initialVertexCount, int edgeCapacity = 0)
+            public UndirectedBuilder(int initialVertexCount, int edgeCapacity = 0)
             {
                 if (initialVertexCount < 0)
                     throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -35,8 +33,6 @@ namespace Arborescence.Models
                 _vertexCount = initialVertexCount;
             }
 
-            private bool NeedsReordering => _currentMaxTail == int.MaxValue;
-
             /// <inheritdoc/>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
@@ -44,12 +40,19 @@ namespace Arborescence.Models
                 if (tail < 0 || head < 0)
                     return false;
 
-                _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
 
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
+                ++_edgeCount;
+
+                if (tail != head)
+                {
+                    var invertedEdge = new Endpoints(head, tail);
+                    _edges = ArrayPrefixBuilder.Add(_edges, invertedEdge, false);
+                }
+
                 return true;
             }
 
@@ -57,12 +60,10 @@ namespace Arborescence.Models
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                int m = _edges.Count;
                 Endpoints[] array = _edges.Array;
                 Debug.Assert(array != null, nameof(array) + " != null");
 
-                if (NeedsReordering)
-                    Array.Sort(array, 0, m, SimpleEdgeComparer.Instance);
+                Array.Sort(array, 0, _edges.Count, SimpleEdgeComparer.Instance);
 
                 Endpoints[] edgesOrderedByTail;
                 if (array.Length == _edges.Count)
@@ -73,9 +74,9 @@ namespace Arborescence.Models
                 else
                 {
 #if NET5
-                    edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+                    edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(_edges.Count);
 #else
-                    edgesOrderedByTail = new Endpoints[m];
+                    edgesOrderedByTail = new Endpoints[_edges.Count];
 #endif
                     _edges.CopyTo(edgesOrderedByTail);
                     _edges = ArrayPrefixBuilder.Release(_edges, false);
@@ -83,19 +84,18 @@ namespace Arborescence.Models
 
                 var data = new int[2 + n];
                 data[0] = n;
-                data[1] = m;
+                data[1] = _edgeCount;
 
-                Span<int> destUpperBoundByVertex = data.AsSpan(2);
+                Span<int> upperBoundByVertex = data.AsSpan(2);
                 foreach (Endpoints edge in edgesOrderedByTail)
                 {
                     int tail = edge.Tail;
-                    ++destUpperBoundByVertex[tail];
+                    ++upperBoundByVertex[tail];
                 }
 
                 for (int vertex = 1; vertex < n; ++vertex)
-                    destUpperBoundByVertex[vertex] += destUpperBoundByVertex[vertex - 1];
+                    upperBoundByVertex[vertex] += upperBoundByVertex[vertex - 1];
 
-                _currentMaxTail = 0;
                 _vertexCount = 0;
 
                 return new SimpleIncidenceGraph(data, edgesOrderedByTail);
@@ -104,5 +104,3 @@ namespace Arborescence.Models
 #pragma warning restore CA1034 // Nested types should not be visible
     }
 }
-
-#endif

@@ -1,6 +1,4 @@
-﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
-namespace Arborescence.Models
+﻿namespace Arborescence.Models.Compatibility
 {
     using System;
     using System.Diagnostics;
@@ -11,7 +9,7 @@ namespace Arborescence.Models
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
     public readonly partial struct SimpleIncidenceGraph :
-        IIncidenceGraph<int, Endpoints, ArraySegment<Endpoints>.Enumerator>,
+        IIncidenceGraph<int, Endpoints, ArraySegmentEnumerator<Endpoints>>,
         IEquatable<SimpleIncidenceGraph>
     {
         // Layout:
@@ -62,17 +60,16 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(int vertex)
+        public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
             if (IsDefault || unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+                return ArraySegmentEnumerator<Endpoints>.Empty;
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
-            return new ArraySegment<Endpoints>(
-                _edgesOrderedByTail, lowerBound, upperBound - lowerBound).GetEnumerator();
+            return new ArraySegmentEnumerator<Endpoints>(_edgesOrderedByTail, lowerBound, upperBound);
         }
 
         /// <inheritdoc/>
@@ -112,5 +109,3 @@ namespace Arborescence.Models
         public static bool operator !=(SimpleIncidenceGraph left, SimpleIncidenceGraph right) => !left.Equals(right);
     }
 }
-
-#endif

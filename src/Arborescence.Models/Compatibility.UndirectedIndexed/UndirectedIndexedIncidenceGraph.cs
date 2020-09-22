@@ -1,25 +1,23 @@
-#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
-namespace Arborescence.Models
+namespace Arborescence.Models.Compatibility
 {
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
-        IEquatable<IndexedIncidenceGraph>
+    public readonly partial struct UndirectedIndexedIncidenceGraph :
+        IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>, IEquatable<UndirectedIndexedIncidenceGraph>
     {
         // Layout:
         // 1    | n — the number of vertices
         // 1    | m — the number of edges
         // n    | upper bounds of out-edge enumerators indexed by vertices
-        // m    | edges sorted by tail
+        // 2×m  | edges sorted by tail
         // m    | heads indexed by edges
         // m    | tails indexed by edges
         private readonly int[] _data;
 
-        internal IndexedIncidenceGraph(int[] data)
+        internal UndirectedIndexedIncidenceGraph(int[] data)
         {
             Debug.Assert(data != null, nameof(data) + " != null");
             Debug.Assert(data.Length >= 2, "data.Length >= 2");
@@ -46,50 +44,52 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            ReadOnlySpan<int> tailByEdge = GetTailByEdge();
-            if (unchecked((uint)edge >= (uint)tailByEdge.Length))
+            int edgeIndex = edge < 0 ? ~edge : edge;
+            ReadOnlySpan<int> endpointByEdge = edge < 0 ? GetHeadByEdge() : GetTailByEdge();
+            if (edgeIndex >= endpointByEdge.Length)
             {
                 tail = default;
                 return false;
             }
 
-            tail = tailByEdge[edge];
+            tail = endpointByEdge[edgeIndex];
             return true;
         }
 
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            ReadOnlySpan<int> headByEdge = GetHeadByEdge();
-            if (unchecked((uint)edge >= (uint)headByEdge.Length))
+            int edgeIndex = edge < 0 ? ~edge : edge;
+            ReadOnlySpan<int> endpointByEdge = edge < 0 ? GetTailByEdge() : GetHeadByEdge();
+            if (edgeIndex >= endpointByEdge.Length)
             {
                 head = default;
                 return false;
             }
 
-            head = headByEdge[edge];
+            head = endpointByEdge[edgeIndex];
             return true;
         }
 
         /// <inheritdoc/>
-        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
+        public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return ArraySegmentEnumerator<int>.Empty;
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + VertexCount;
-            return new ArraySegment<int>(_data, offset + lowerBound, upperBound - lowerBound).GetEnumerator();
+            return new ArraySegmentEnumerator<int>(_data, offset + lowerBound, offset + upperBound);
         }
 
         /// <inheritdoc/>
-        public bool Equals(IndexedIncidenceGraph other) => _data == other._data;
+        public bool Equals(UndirectedIndexedIncidenceGraph other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedIncidenceGraph other && Equals(other);
+        public override bool Equals(object obj) => obj is UndirectedIndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => (_data?.GetHashCode()).GetValueOrDefault();
@@ -99,33 +99,36 @@ namespace Arborescence.Models
             IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetTailByEdge() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
+        private ReadOnlySpan<int> GetTailByEdge() => IsDefault
+            ? ReadOnlySpan<int>.Empty
+            : _data.AsSpan(2 + VertexCount + EdgeCount + EdgeCount + EdgeCount, EdgeCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetHeadByEdge() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount, EdgeCount);
+            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2 + VertexCount + EdgeCount + EdgeCount, EdgeCount);
 
         /// <summary>
-        /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are equal.
+        /// Indicates whether two <see cref="UndirectedIndexedIncidenceGraph"/> structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="UndirectedIndexedIncidenceGraph"/> structures are equal;
+        /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => left.Equals(right);
+        public static bool operator ==(UndirectedIndexedIncidenceGraph left,
+            UndirectedIndexedIncidenceGraph right) => left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="IndexedIncidenceGraph"/> structures are not equal.
+        /// Indicates whether two <see cref="UndirectedIndexedIncidenceGraph"/> structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="UndirectedIndexedIncidenceGraph"/> structures are not equal;
+        /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => !left.Equals(right);
+        public static bool operator !=(UndirectedIndexedIncidenceGraph left,
+            UndirectedIndexedIncidenceGraph right) => !left.Equals(right);
     }
 }
-
-#endif

@@ -1,18 +1,17 @@
-﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
-namespace Arborescence.Models
+namespace Arborescence.Models.Compatibility
 {
     using System;
     using System.Diagnostics;
 
-    public readonly partial struct SimpleIncidenceGraph
+    public readonly partial struct IndexedIncidenceGraph
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
-        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
+        public sealed class Builder : IGraphBuilder<IndexedIncidenceGraph, int, int>
         {
             private int _currentMaxTail;
-            private ArrayPrefix<Endpoints> _edges;
+            private ArrayPrefix<int> _headByEdge;
+            private ArrayPrefix<int> _tailByEdge;
             private int _vertexCount;
 
             /// <summary>
@@ -31,78 +30,84 @@ namespace Arborescence.Models
                 if (edgeCapacity < 0)
                     throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _edges = ArrayPrefixBuilder.Create<Endpoints>(edgeCapacity);
+                _headByEdge = ArrayPrefixBuilder.Create<int>(edgeCapacity);
+                _tailByEdge = ArrayPrefixBuilder.Create<int>(edgeCapacity);
                 _vertexCount = initialVertexCount;
             }
 
             private bool NeedsReordering => _currentMaxTail == int.MaxValue;
 
             /// <inheritdoc/>
-            public bool TryAdd(int tail, int head, out Endpoints edge)
+            public bool TryAdd(int tail, int head, out int edge)
             {
-                edge = new Endpoints(tail, head);
                 if (tail < 0 || head < 0)
+                {
+                    edge = default;
                     return false;
+                }
+
+                edge = _tailByEdge.Count;
 
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
+
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
 
-                _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+                _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
+                _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
                 return true;
             }
 
             /// <inheritdoc/>
-            public SimpleIncidenceGraph ToGraph()
+            public IndexedIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                int m = _edges.Count;
-                Endpoints[] array = _edges.Array;
-                Debug.Assert(array != null, nameof(array) + " != null");
+                int m = _tailByEdge.Count;
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
 
-                if (NeedsReordering)
-                    Array.Sort(array, 0, m, SimpleEdgeComparer.Instance);
-
-                Endpoints[] edgesOrderedByTail;
-                if (array.Length == _edges.Count)
-                {
-                    edgesOrderedByTail = array;
-                    _edges = ArrayPrefix<Endpoints>.Empty;
-                }
-                else
-                {
+                int dataLength = 2 + n + m + m + m;
 #if NET5
-                    edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+                int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
-                    edgesOrderedByTail = new Endpoints[m];
+                var data = new int[dataLength];
 #endif
-                    _edges.CopyTo(edgesOrderedByTail);
-                    _edges = ArrayPrefixBuilder.Release(_edges, false);
-                }
-
-                var data = new int[2 + n];
                 data[0] = n;
                 data[1] = m;
 
-                Span<int> destUpperBoundByVertex = data.AsSpan(2);
-                foreach (Endpoints edge in edgesOrderedByTail)
+                Span<int> destReorderedEdges = data.AsSpan(2 + n, m);
+                for (int edge = 0; edge < m; ++edge)
+                    destReorderedEdges[edge] = edge;
+
+                if (NeedsReordering)
+                    Array.Sort(data, 2 + n, m, new IndexedEdgeComparer(_tailByEdge.Array));
+
+                Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
+                destUpperBoundByVertex.Clear();
+                for (int edge = 0; edge < m; ++edge)
                 {
-                    int tail = edge.Tail;
+                    int tail = _tailByEdge[edge];
                     ++destUpperBoundByVertex[tail];
                 }
 
                 for (int vertex = 1; vertex < n; ++vertex)
                     destUpperBoundByVertex[vertex] += destUpperBoundByVertex[vertex - 1];
 
+                Span<int> destHeadByEdge = data.AsSpan(2 + n + m, m);
+                _headByEdge.AsSpan().CopyTo(destHeadByEdge);
+
+                Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
+                _tailByEdge.AsSpan().CopyTo(destTailByEdge);
+
                 _currentMaxTail = 0;
+                _headByEdge = ArrayPrefixBuilder.Release(_headByEdge, false);
+                _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
                 _vertexCount = 0;
 
-                return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+                return new IndexedIncidenceGraph(data);
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
     }
 }
-
-#endif

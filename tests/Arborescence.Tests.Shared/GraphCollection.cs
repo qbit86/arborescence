@@ -78,7 +78,7 @@
 
 #pragma warning disable CA1812 // GraphCollection is an internal class that is apparently never instantiated.
     internal sealed class IndexedGraphCollection :
-        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, IndexedIncidenceGraph.Builder>
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, IndexedIncidenceGraph.Builder>
     {
         protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount)
         {
@@ -87,7 +87,7 @@
     }
 
     internal sealed class FromMutableIndexedGraphCollection :
-        GraphCollection<IndexedIncidenceGraph, int, ArraySegmentEnumerator<int>, MutableIndexedIncidenceGraph>
+        GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, MutableIndexedIncidenceGraph>
     {
         protected override MutableIndexedIncidenceGraph CreateGraphBuilder(int initialVertexCount)
         {
@@ -105,7 +105,7 @@
     }
 
     internal sealed class SimpleGraphCollection : GraphCollection<
-        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, SimpleIncidenceGraph.Builder>
+        SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, SimpleIncidenceGraph.Builder>
     {
         protected override SimpleIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount)
         {
@@ -114,7 +114,7 @@
     }
 
     internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
-        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, MutableSimpleIncidenceGraph>
+        SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, MutableSimpleIncidenceGraph>
     {
         protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount)
         {
@@ -132,7 +132,7 @@
     }
 
     internal sealed class UndirectedSimpleGraphCollection : GraphCollection<
-        SimpleIncidenceGraph, Endpoints, ArraySegmentEnumerator<Endpoints>, SimpleIncidenceGraph.UndirectedBuilder>
+        SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, SimpleIncidenceGraph.UndirectedBuilder>
     {
         protected override SimpleIncidenceGraph.UndirectedBuilder CreateGraphBuilder(int initialVertexCount)
         {

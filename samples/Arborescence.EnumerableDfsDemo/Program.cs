@@ -30,7 +30,7 @@
 
             TextWriter w = Console.Out;
 
-            EnumerableDfs<SimpleIncidenceGraph, int, Endpoints, ArraySegmentEnumerator<Endpoints>, byte[],
+            EnumerableDfs<SimpleIncidenceGraph, int, Endpoints, ArraySegment<Endpoints>.Enumerator, byte[],
                 SimpleIncidenceGraphPolicy, IndexedSetPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
@@ -76,7 +76,7 @@
             w.WriteLine();
             for (int v = 0; v < graph.VertexCount; ++v)
             {
-                ArraySegmentEnumerator<Endpoints> outEdges = graph.EnumerateOutEdges(v);
+                ArraySegment<Endpoints>.Enumerator outEdges = graph.EnumerateOutEdges(v);
                 while (outEdges.MoveNext())
                 {
                     Endpoints e = outEdges.Current;

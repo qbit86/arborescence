@@ -5,7 +5,7 @@ namespace Arborescence
     using Models;
     using Xunit;
     using Graph = Models.SimpleIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
+    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 
     public sealed class UndirectedSimpleIncidenceGraphFromMutableTest
     {
