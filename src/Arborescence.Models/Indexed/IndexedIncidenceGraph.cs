@@ -1,3 +1,5 @@
+#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+
 namespace Arborescence.Models
 {
     using System;
@@ -5,7 +7,7 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,
+    public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
         IEquatable<IndexedIncidenceGraph>
     {
         // Layout:
@@ -70,17 +72,17 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
+        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
         {
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegmentEnumerator<int>.Empty;
+                return ArraySegment<int>.Empty.GetEnumerator();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + VertexCount;
-            return new ArraySegmentEnumerator<int>(_data, offset + lowerBound, offset + upperBound);
+            return new ArraySegment<int>(_data, offset + lowerBound, upperBound - lowerBound).GetEnumerator();
         }
 
         /// <inheritdoc/>
@@ -125,3 +127,5 @@ namespace Arborescence.Models
         public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => !left.Equals(right);
     }
 }
+
+#endif
