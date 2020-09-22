@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2020-09-22
+### Added
+- Models: `netcoreapp2.0` as another target framework.
+
 ## [0.3.2] - 2020-09-06
 ### Added
 - Models: Moved `IndexedSetPolicy` and `CompactSetPolicy` from Traversal.
