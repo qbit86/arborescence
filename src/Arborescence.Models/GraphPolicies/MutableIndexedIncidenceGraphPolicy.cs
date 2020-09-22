@@ -12,7 +12,7 @@ namespace Arborescence.Models
     public readonly struct MutableIndexedIncidenceGraphPolicy :
         ITailPolicy<MutableIndexedIncidenceGraph, int, int>,
         IHeadPolicy<MutableIndexedIncidenceGraph, int, int>,
-        IOutEdgesPolicy<MutableIndexedIncidenceGraph, int, ArrayPrefixEnumerator<int>>
+        IOutEdgesPolicy<MutableIndexedIncidenceGraph, int, ArraySegment<int>.Enumerator>
     {
         /// <inheritdoc/>
         public bool TryGetTail(MutableIndexedIncidenceGraph graph, int edge, out int tail)
@@ -33,9 +33,9 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArrayPrefixEnumerator<int> EnumerateOutEdges(MutableIndexedIncidenceGraph graph, int vertex)
+        public ArraySegment<int>.Enumerator EnumerateOutEdges(MutableIndexedIncidenceGraph graph, int vertex)
         {
-            return graph is null ? ArrayPrefixEnumerator<int>.Empty : graph.EnumerateOutEdges(vertex);
+            return graph is null ? ArraySegment<int>.Empty.GetEnumerator() : graph.EnumerateOutEdges(vertex);
         }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
