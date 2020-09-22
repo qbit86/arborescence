@@ -31,7 +31,7 @@ namespace Arborescence
 
             TextWriter w = Console.Out;
 
-            InstantDfs<IndexedIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+            InstantDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
@@ -67,7 +67,7 @@ namespace Arborescence
             w.WriteLine();
             for (int v = 0; v < graph.VertexCount; ++v)
             {
-                ArraySegmentEnumerator<int> outEdges = graph.EnumerateOutEdges(v);
+                ArraySegment<int>.Enumerator outEdges = graph.EnumerateOutEdges(v);
                 while (outEdges.MoveNext())
                 {
                     int e = outEdges.Current;
