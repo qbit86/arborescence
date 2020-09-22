@@ -1,13 +1,14 @@
 # Changelog
 
-## [Unreleased] - 2020-09-22
+## [Unreleased] - 2020-09-23
 ### Added
 - Models: `netcoreapp2.0` as another target framework.
 - Models: `Arborescence.Models.Compatibility` namespace for the legacy types depending on `ArraySegmentEnumerator<T>`.
 
 ### Changed
-- Models: Reimplemented the graph models in terms of `ArraySegment<T>.Enumerator`, for the latest versions of BCL only.
+- Models: Reimplemented the graph models in terms of `ArraySegment<T>.Enumerator`, for newer versions of the BCL only.
 - Models: Moved original versions of the models to `Arborescence.Models.Compatibility` namespace.
+- Primitives: Marked `ArraySegmentEnumerator<T>` as obsolete for newer versions of the BCL.
 
 ## [0.3.2] - 2020-09-06
 ### Added
