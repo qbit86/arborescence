@@ -8,6 +8,9 @@ namespace Arborescence
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
+#if NETSTANDARD2_1 || NETCOREAPP2_0
+    [Obsolete("Please use System.ArraySegment<T>.Enumerator instead.")]
+#endif
     public struct ArraySegmentEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
         private readonly T[] _array;

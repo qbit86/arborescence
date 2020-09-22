@@ -7,13 +7,14 @@ Commonly used types:
 • ArraySegmentEnumerator&lt;T&gt;</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionPrefix>0.3.0</VersionPrefix>
+    <VersionPrefix>0.4.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.3</AssemblyVersion>
+    <AssemblyVersion>0.4</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>8</LangVersion>
-    <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
     <EmbedAllSources>true</EmbedAllSources>

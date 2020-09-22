@@ -8,6 +8,9 @@
     /// <remarks>
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
+#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+    [Obsolete("Please use Arborescence.Models.SimpleIncidenceGraph instead.")]
+#endif
     public readonly partial struct SimpleIncidenceGraph :
         IIncidenceGraph<int, Endpoints, ArraySegmentEnumerator<Endpoints>>,
         IEquatable<SimpleIncidenceGraph>

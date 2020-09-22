@@ -5,6 +5,9 @@
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the undirected indexed incidence graph.
     /// </summary>
+#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+    [System.Obsolete("Please use Arborescence.Models.UndirectedIndexedIncidenceGraphPolicy instead.")]
+#endif
     public readonly struct UndirectedIndexedIncidenceGraphPolicy :
         ITailPolicy<UndirectedIndexedIncidenceGraph, int, int>,
         IHeadPolicy<UndirectedIndexedIncidenceGraph, int, int>,
