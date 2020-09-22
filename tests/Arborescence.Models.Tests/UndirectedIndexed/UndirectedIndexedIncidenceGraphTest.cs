@@ -4,7 +4,7 @@
     using System.Linq;
     using Xunit;
     using Graph = Models.UndirectedIndexedIncidenceGraph;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
     public sealed class UndirectedIndexedIncidenceGraphTest
     {
