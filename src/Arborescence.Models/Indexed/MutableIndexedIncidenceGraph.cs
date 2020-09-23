@@ -7,7 +7,7 @@ namespace Arborescence.Models
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArrayPrefixEnumerator<int>>,
+        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
         IDisposable
     {
@@ -156,13 +156,16 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArrayPrefixEnumerator<int> EnumerateOutEdges(int vertex)
+        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
-                return ArrayPrefixEnumerator<int>.Empty;
+                return ArraySegment<int>.Empty.GetEnumerator();
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
-            return new ArrayPrefixEnumerator<int>(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
+            if (outEdges.Array is null)
+                return ArraySegment<int>.Empty.GetEnumerator();
+
+            return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
         }
 
         /// <summary>

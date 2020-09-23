@@ -7,7 +7,7 @@
     using Misnomer;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
     using Graph = Models.MutableIndexedIncidenceGraph;
     using GraphPolicy = Models.MutableIndexedIncidenceGraphPolicy;
 

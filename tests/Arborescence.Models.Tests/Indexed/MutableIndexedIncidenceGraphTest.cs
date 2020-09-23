@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
     using Graph = Models.MutableIndexedIncidenceGraph;
-    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
 
     public sealed class MutableIndexedIncidenceGraphTest
     {

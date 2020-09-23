@@ -96,7 +96,7 @@
     }
 
     internal sealed class MutableIndexedGraphCollection : GraphCollection<
-        MutableIndexedIncidenceGraph, int, ArrayPrefixEnumerator<int>, MutableIndexedIncidenceGraphBuilder>
+        MutableIndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, MutableIndexedIncidenceGraphBuilder>
     {
         protected override MutableIndexedIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
         {
@@ -123,7 +123,7 @@
     }
 
     internal sealed class MutableSimpleGraphCollection : GraphCollection<
-        MutableSimpleIncidenceGraph, Endpoints, ArrayPrefixEnumerator<Endpoints>, MutableSimpleIncidenceGraphBuilder>
+        MutableSimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, MutableSimpleIncidenceGraphBuilder>
     {
         protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount)
         {
