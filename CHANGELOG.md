@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2020-09-23
+## [0.4.0] - 2020-09-24
 ### Added
 - Models: `netcoreapp2.0` as another target framework.
 - Models: `Arborescence.Models.Compatibility` namespace for the legacy types depending on `ArraySegmentEnumerator<T>`.
@@ -65,7 +65,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.4.0...HEAD
+[0.4.0]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...models-0.4.0
 [0.3.2]: https://github.com/qbit86/arborescence/compare/models-0.3.1...traversal-0.3.2
 [0.3.1]: https://github.com/qbit86/arborescence/compare/models-0.3.0...models-0.3.1
 [0.3.0]: https://github.com/qbit86/arborescence/compare/models-0.2.0...models-0.3.0
