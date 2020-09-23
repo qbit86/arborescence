@@ -7,6 +7,9 @@ namespace Arborescence.Models.Compatibility
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the mutable indexed incidence graph.
     /// </summary>
+#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+    [Obsolete("Please use Arborescence.Models.MutableIndexedIncidenceGraphPolicy instead.")]
+#endif
     public readonly struct MutableIndexedIncidenceGraphPolicy :
         ITailPolicy<MutableIndexedIncidenceGraph, int, int>,
         IHeadPolicy<MutableIndexedIncidenceGraph, int, int>,
