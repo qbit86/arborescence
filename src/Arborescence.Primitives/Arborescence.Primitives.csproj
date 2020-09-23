@@ -4,7 +4,7 @@
 Commonly used types:
 • Endpoints
 • ArrayPrefix&lt;T&gt;
-• ArraySegmentEnumerator&lt;T&gt;</Description>
+• ArrayPrefixEnumerator&lt;T&gt;</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionPrefix>0.4.0</VersionPrefix>
