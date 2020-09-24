@@ -4,11 +4,10 @@
 Commonly used types:
 • Endpoints
 • ArrayPrefix&lt;T&gt;
-• ArraySegmentEnumerator&lt;T&gt;</Description>
+• ArrayPrefixEnumerator&lt;T&gt;</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionPrefix>0.4.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.4</AssemblyVersion>
