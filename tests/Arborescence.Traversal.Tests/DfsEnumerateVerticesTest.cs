@@ -8,7 +8,7 @@ namespace Arborescence
     using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
     using Graph = Models.IndexedIncidenceGraph;
 
     public sealed class DfsEnumerateVerticesTest

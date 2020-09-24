@@ -65,7 +65,7 @@ namespace Arborescence.Internal
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void ResizeThenAdd(T item)
         {
-            Debug.Assert(_arrayFromPool != null, "_arrayFromPool != null");
+            Debug.Assert(_arrayFromPool != null, nameof(_arrayFromPool) + " != null");
             Debug.Assert(_arrayFromPool.Length > 0, "_arrayFromPool.Length > 0");
 
             int count = _count;

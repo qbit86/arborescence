@@ -5,7 +5,7 @@ namespace Arborescence
     using System.Linq;
     using Xunit;
     using Graph = Models.MutableUndirectedIndexedIncidenceGraph;
-    using EdgeEnumerator = ArrayPrefixEnumerator<int>;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
     public sealed class MutableUndirectedIndexedIncidenceGraphTest
     {

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.0] - 2020-09-24
+### Added
+- Models: `netcoreapp2.0` as another target framework.
+- Models: `Arborescence.Models.Compatibility` namespace for the legacy types depending on `ArraySegmentEnumerator<T>`.
+
+### Changed
+- Models: Reimplemented the graph models in terms of `ArraySegment<T>.Enumerator`, for newer versions of the BCL only.
+- Models: Moved original versions of the models to `Arborescence.Models.Compatibility` namespace.
+- Primitives: Marked `ArraySegmentEnumerator<T>` as obsolete for newer versions of the BCL.
+
 ## [0.3.2] - 2020-09-06
 ### Added
 - Models: Moved `IndexedSetPolicy` and `CompactSetPolicy` from Traversal.
@@ -55,7 +65,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.4.0...HEAD
+[0.4.0]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...models-0.4.0
 [0.3.2]: https://github.com/qbit86/arborescence/compare/models-0.3.1...traversal-0.3.2
 [0.3.1]: https://github.com/qbit86/arborescence/compare/models-0.3.0...models-0.3.1
 [0.3.0]: https://github.com/qbit86/arborescence/compare/models-0.2.0...models-0.3.0

@@ -64,6 +64,8 @@
         // Increments the index wrapping it if necessary.
         private void MoveNext(ref int index)
         {
+            Debug.Assert(_arrayFromPool != null, nameof(_arrayFromPool) + " != null");
+
             int temp = index + 1;
             if (temp == _arrayFromPool.Length)
                 temp = 0;
@@ -73,7 +75,8 @@
 
         private void SetCapacity(int capacity)
         {
-            Debug.Assert(capacity > 0, "capacity > 0");
+            Debug.Assert(capacity > 0, nameof(capacity) + " > 0");
+            Debug.Assert(_arrayFromPool != null, nameof(_arrayFromPool) + " != null");
 
             T[] newArray = Pool.Rent(capacity);
             if (_size > 0)

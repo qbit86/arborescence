@@ -1,3 +1,5 @@
+#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+
 namespace Arborescence.Models
 {
     using System;
@@ -10,7 +12,7 @@ namespace Arborescence.Models
     public readonly struct MutableSimpleIncidenceGraphPolicy :
         ITailPolicy<MutableSimpleIncidenceGraph, int, Endpoints>,
         IHeadPolicy<MutableSimpleIncidenceGraph, int, Endpoints>,
-        IOutEdgesPolicy<MutableSimpleIncidenceGraph, int, ArrayPrefixEnumerator<Endpoints>>
+        IOutEdgesPolicy<MutableSimpleIncidenceGraph, int, ArraySegment<Endpoints>.Enumerator>
     {
         /// <inheritdoc/>
         public bool TryGetTail(MutableSimpleIncidenceGraph graph, Endpoints edge, out int tail)
@@ -31,10 +33,12 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArrayPrefixEnumerator<Endpoints> EnumerateOutEdges(MutableSimpleIncidenceGraph graph, int vertex)
+        public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(MutableSimpleIncidenceGraph graph, int vertex)
         {
-            return graph is null ? ArrayPrefixEnumerator<Endpoints>.Empty : graph.EnumerateOutEdges(vertex);
+            return graph is null ? ArraySegment<Endpoints>.Empty.GetEnumerator() : graph.EnumerateOutEdges(vertex);
         }
     }
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }
+
+#endif

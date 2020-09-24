@@ -6,7 +6,7 @@
     using System.Diagnostics;
     using Models;
     using Traversal;
-    using EdgeEnumerator = ArraySegmentEnumerator<int>;
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
     internal static partial class Program
     {

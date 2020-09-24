@@ -1,6 +1,9 @@
-﻿namespace Arborescence.Models
+﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+
+namespace Arborescence.Models
 {
     using System;
+    using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -59,12 +62,15 @@
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                Array.Sort(_edges.Array, 0, _edges.Count, EdgeComparer.Instance);
+                Endpoints[] array = _edges.Array;
+                Debug.Assert(array != null, nameof(array) + " != null");
+
+                Array.Sort(array, 0, _edges.Count, SimpleEdgeComparer.Instance);
 
                 Endpoints[] edgesOrderedByTail;
-                if (_edges.Array.Length == _edges.Count)
+                if (array.Length == _edges.Count)
                 {
-                    edgesOrderedByTail = _edges.Array;
+                    edgesOrderedByTail = array;
                     _edges = ArrayPrefix<Endpoints>.Empty;
                 }
                 else
@@ -100,3 +106,5 @@
 #pragma warning restore CA1034 // Nested types should not be visible
     }
 }
+
+#endif

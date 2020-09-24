@@ -31,7 +31,7 @@
 
             TextWriter w = Console.Out;
 
-            InstantBfs<IndexedIncidenceGraph, int, int, ArraySegmentEnumerator<int>, byte[],
+            InstantBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
                 IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> bfs = default;
 
             w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
@@ -67,7 +67,7 @@
             w.WriteLine();
             for (int v = 0; v < graph.VertexCount; ++v)
             {
-                ArraySegmentEnumerator<int> outEdges = graph.EnumerateOutEdges(v);
+                ArraySegment<int>.Enumerator outEdges = graph.EnumerateOutEdges(v);
                 while (outEdges.MoveNext())
                 {
                     int e = outEdges.Current;

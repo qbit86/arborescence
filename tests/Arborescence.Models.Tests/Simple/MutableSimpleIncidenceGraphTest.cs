@@ -4,7 +4,7 @@
     using System.Linq;
     using Xunit;
     using Graph = Models.MutableSimpleIncidenceGraph;
-    using EdgeEnumerator = ArrayPrefixEnumerator<Endpoints>;
+    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 
     public sealed class MutableSimpleIncidenceGraphTest
     {

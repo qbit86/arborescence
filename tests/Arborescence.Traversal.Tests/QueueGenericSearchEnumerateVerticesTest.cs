@@ -8,7 +8,7 @@
     using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArrayPrefixEnumerator<Endpoints>;
+    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.MutableSimpleIncidenceGraph;
     using GraphPolicy = Models.MutableSimpleIncidenceGraphPolicy;
 

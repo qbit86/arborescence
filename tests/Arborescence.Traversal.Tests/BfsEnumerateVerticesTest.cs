@@ -8,7 +8,7 @@ namespace Arborescence
     using Models;
     using Traversal;
     using Xunit;
-    using EdgeEnumerator = ArraySegmentEnumerator<Endpoints>;
+    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.SimpleIncidenceGraph;
     using GraphPolicy = Models.SimpleIncidenceGraphPolicy;
 

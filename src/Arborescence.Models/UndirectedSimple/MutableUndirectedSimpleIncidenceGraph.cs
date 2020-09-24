@@ -1,10 +1,12 @@
-﻿namespace Arborescence.Models
+﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+
+namespace Arborescence.Models
 {
     using System;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableUndirectedSimpleIncidenceGraph :
-        IIncidenceGraph<int, Endpoints, ArrayPrefixEnumerator<Endpoints>>,
+        IIncidenceGraph<int, Endpoints, ArraySegment<Endpoints>.Enumerator>,
         IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
         IDisposable
     {
@@ -132,13 +134,16 @@
         }
 
         /// <inheritdoc/>
-        public ArrayPrefixEnumerator<Endpoints> EnumerateOutEdges(int vertex)
+        public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
-                return ArrayPrefixEnumerator<Endpoints>.Empty;
+                return ArraySegment<Endpoints>.Empty.GetEnumerator();
 
             ArrayPrefix<Endpoints> outEdges = _outEdgesByVertex[vertex];
-            return new ArrayPrefixEnumerator<Endpoints>(outEdges.Array ?? Array.Empty<Endpoints>(), outEdges.Count);
+            if (outEdges.Array is null)
+                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+
+            return new ArraySegment<Endpoints>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
         }
 
         /// <summary>
@@ -152,3 +157,5 @@
         }
     }
 }
+
+#endif
