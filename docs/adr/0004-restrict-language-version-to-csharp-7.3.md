@@ -26,7 +26,7 @@ Chosen option: “C# 7.3”.
 “C# 8.0” would also work, but it [doesn't add](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8) much value for this particular library comparing to C# 7.3.
 It's probably worth keeping source compatibility (C# 7.3) with Unity 2018.4, even if binary compatibility (.NET Standard 2.0) would be sufficient.
 
-The latest available compiler version C# 9.0 at the moment of writing (Oct 2020) is not supported by some popular online coding platforms.
+The latest available compiler version C# 9.0 is not supported by some popular online coding platforms as of October 2020.
 
 ### Positive Consequences <!-- optional -->
 
