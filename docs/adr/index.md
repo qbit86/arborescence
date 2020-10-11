@@ -6,6 +6,7 @@ This log lists the architectural decisions for [project name].
 
 - [ADR-0000](0000-use-markdown-architectural-decision-records.md) - Use Markdown Architectural Decision Records
 - [ADR-0003](0003-place-using-directives-inside-namespace.md) - Place using directives inside a namespace
+- [ADR-0004](0004-restrict-language-version-to-csharp-7.3.md) - Restrict language version to C# 7.3
 
 <!-- adrlogstop -->
 
