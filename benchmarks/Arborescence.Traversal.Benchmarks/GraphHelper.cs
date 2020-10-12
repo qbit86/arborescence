@@ -33,7 +33,7 @@
             {
                 int tail = prng.Next(vertexCount);
                 int head = prng.Next(vertexCount);
-                builder.TryAdd(tail, head, out _);
+                builder.TryAdd(tail, head);
             }
 
             return builder.ToGraph();

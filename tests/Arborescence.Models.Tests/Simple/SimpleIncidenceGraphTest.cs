@@ -3,6 +3,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
+    using Models;
     using Graph = Models.SimpleIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 
@@ -28,7 +29,7 @@ namespace Arborescence
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -49,7 +50,7 @@ namespace Arborescence
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -85,7 +86,7 @@ namespace Arborescence
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }

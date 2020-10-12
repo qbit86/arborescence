@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Models;
     using Xunit;
     using Graph = Models.SimpleIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
@@ -28,7 +29,7 @@
             var builder = new Graph.UndirectedBuilder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -49,7 +50,7 @@
             var builder = new Graph.UndirectedBuilder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -92,7 +93,7 @@
             var builder = new Graph.UndirectedBuilder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
