@@ -2,8 +2,8 @@ namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Xunit;
     using Models;
+    using Xunit;
     using Graph = Models.SimpleIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 
