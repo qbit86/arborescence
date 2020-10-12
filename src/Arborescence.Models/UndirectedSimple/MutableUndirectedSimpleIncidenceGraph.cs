@@ -1,5 +1,4 @@
 ﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
 namespace Arborescence.Models
 {
     using System;
@@ -157,5 +156,4 @@ namespace Arborescence.Models
         }
     }
 }
-
 #endif

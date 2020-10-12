@@ -1,5 +1,4 @@
 #if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
 namespace Arborescence.Models
 {
     using System;
@@ -113,5 +112,4 @@ namespace Arborescence.Models
 #pragma warning restore CA1034 // Nested types should not be visible
     }
 }
-
 #endif
