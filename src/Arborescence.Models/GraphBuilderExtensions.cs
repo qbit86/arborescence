@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Extension methods for <see cref="IGraphBuilder{TGraph,TVertex,TEdge}"/>.
+    /// </summary>
     public static class GraphBuilderExtensions
     {
         /// <summary>
