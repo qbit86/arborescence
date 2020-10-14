@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2020-10-14
+### Added
+- Models: `GraphBuilderExtensions`.
+
 ## [0.4.0] - 2020-09-24
 ### Added
 - Models: `netcoreapp2.0` as another target framework.
