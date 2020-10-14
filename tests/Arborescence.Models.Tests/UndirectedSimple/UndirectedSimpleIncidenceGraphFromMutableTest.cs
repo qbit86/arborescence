@@ -29,7 +29,7 @@ namespace Arborescence
             using var builder = new MutableUndirectedSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -50,7 +50,7 @@ namespace Arborescence
             using var builder = new MutableUndirectedSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -93,7 +93,7 @@ namespace Arborescence
             using var builder = new MutableUndirectedSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }

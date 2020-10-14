@@ -3,6 +3,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Models;
     using Xunit;
     using Graph = Models.MutableUndirectedIndexedIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
@@ -31,7 +32,7 @@ namespace Arborescence
             using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -49,7 +50,7 @@ namespace Arborescence
             using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -94,7 +95,7 @@ namespace Arborescence
             using var graph = new Graph(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }

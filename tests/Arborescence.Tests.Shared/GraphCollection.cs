@@ -31,7 +31,7 @@
 
                     IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
                     foreach (Endpoints edge in edges)
-                        builder.TryAdd(edge.Tail, edge.Head, out _);
+                        builder.TryAdd(edge.Tail, edge.Head);
                 }
 
                 TGraph graph = builder.ToGraph();

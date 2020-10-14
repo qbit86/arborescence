@@ -29,7 +29,7 @@
             using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -50,7 +50,7 @@
             using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }
@@ -86,7 +86,7 @@
             using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
             {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head, out _);
+                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
                 if (!wasAdded)
                     Assert.True(wasAdded);
             }

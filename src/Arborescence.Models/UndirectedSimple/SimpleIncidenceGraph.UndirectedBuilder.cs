@@ -1,5 +1,4 @@
 ﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
-
 namespace Arborescence.Models
 {
     using System;
@@ -36,6 +35,10 @@ namespace Arborescence.Models
             }
 
             /// <inheritdoc/>
+            /// <returns>A value indicating whether the edge was added successfully.
+            /// <c>true</c> if both <paramref name="tail"/> and <paramref name="head"/> are non-negative;
+            /// otherwise, <c>false</c>.
+            /// </returns>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
                 edge = new Endpoints(tail, head);
@@ -106,5 +109,4 @@ namespace Arborescence.Models
 #pragma warning restore CA1034 // Nested types should not be visible
     }
 }
-
 #endif
