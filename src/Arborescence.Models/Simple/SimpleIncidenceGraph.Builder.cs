@@ -37,6 +37,10 @@ namespace Arborescence.Models
             private bool NeedsReordering => _currentMaxTail == int.MaxValue;
 
             /// <inheritdoc/>
+            /// <returns>A value indicating whether the edge was added successfully.
+            /// <c>true</c> if both <paramref name="tail"/> and <paramref name="head"/> are non-negative;
+            /// otherwise, <c>false</c>.
+            /// </returns>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
                 edge = new Endpoints(tail, head);
