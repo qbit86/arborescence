@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased] - 2020-10-14
+## [0.4.1] - 2020-10-15
 ### Added
-- Models: `GraphBuilderExtensions`.
+- Models: `GraphBuilderExtensions` class with `TryAdd<>()` extension method.
 
 ## [0.4.0] - 2020-09-24
 ### Added
@@ -69,7 +69,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.4.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.4.1...HEAD
+[0.4.1]: https://github.com/qbit86/arborescence/compare/models-0.4.0...models-0.4.1
 [0.4.0]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...models-0.4.0
 [0.3.2]: https://github.com/qbit86/arborescence/compare/models-0.3.1...traversal-0.3.2
 [0.3.1]: https://github.com/qbit86/arborescence/compare/models-0.3.0...models-0.3.1
