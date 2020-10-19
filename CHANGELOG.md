@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2020-10-19
+### Added
+- Models: Fixed documentation comments. 
+
 ## [0.4.1] - 2020-10-15
 ### Added
 - Models: `GraphBuilderExtensions` class with `TryAdd<>()` extension method.
