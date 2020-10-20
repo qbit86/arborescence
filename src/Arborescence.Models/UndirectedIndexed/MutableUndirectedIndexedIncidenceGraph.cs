@@ -26,7 +26,7 @@ namespace Arborescence.Models
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
         /// </exception>
-        public MutableUndirectedIndexedIncidenceGraph(int initialVertexCount, int edgeCapacity = 0)
+        public MutableUndirectedIndexedIncidenceGraph(int initialVertexCount = 0, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
@@ -69,8 +69,17 @@ namespace Arborescence.Models
             _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
         }
 
-        /// <inheritdoc/>
-        /// <returns>A value indicating whether the edge was added successfully.
+        /// <summary>
+        /// Attempts to add the edge with the specified endpoints to the graph.
+        /// </summary>
+        /// <param name="tail">The tail of the edge.</param>
+        /// <param name="head">The head of the edge.</param>
+        /// <param name="edge">
+        /// When this method returns, contains the added edge, if the edge was added to the graph successfully;
+        /// otherwise, the unspecified value.
+        /// </param>
+        /// <returns>
+        /// A value indicating whether the edge was added successfully.
         /// <c>true</c> if both <paramref name="tail"/> and <paramref name="head"/> are non-negative;
         /// otherwise, <c>false</c>.
         /// </returns>

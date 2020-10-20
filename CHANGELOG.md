@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2] - 2020-10-21
+### Added
+- Models: Fixed documentation comments.
+
+### Changed
+- Models: Make `initialVertexCount` optional. 
+
 ## [0.4.1] - 2020-10-15
 ### Added
 - Models: `GraphBuilderExtensions` class with `TryAdd<>()` extension method.
@@ -69,7 +76,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.4.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.4.2...HEAD
+[0.4.2]: https://github.com/qbit86/arborescence/compare/models-0.4.1...models-0.4.2
 [0.4.1]: https://github.com/qbit86/arborescence/compare/models-0.4.0...models-0.4.1
 [0.4.0]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...models-0.4.0
 [0.3.2]: https://github.com/qbit86/arborescence/compare/models-0.3.1...traversal-0.3.2
