@@ -2,7 +2,10 @@
 
 ## [Unreleased] - 2020-10-19
 ### Added
-- Models: Fixed documentation comments. 
+- Models: Fixed documentation comments.
+
+### Changed
+- Models: Make `initialVertexCount` optional. 
 
 ## [0.4.1] - 2020-10-15
 ### Added

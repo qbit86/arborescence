@@ -8,8 +8,7 @@ API structure is partially influenced by [Boost Graph Concepts](https://www.boos
 ## Usage
 
 ```cs
-const int vertexCount = 4;
-var builder = new SimpleIncidenceGraph.Builder(vertexCount);
+var builder = new SimpleIncidenceGraph.Builder();
 builder.TryAdd(0, 2);
 builder.TryAdd(0, 3);
 builder.TryAdd(2, 3);
