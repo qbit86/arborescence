@@ -23,7 +23,7 @@ namespace Arborescence.Models
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="initialVertexCount"/> is less than zero.
         /// </exception>
-        public MutableUndirectedSimpleIncidenceGraph(int initialVertexCount)
+        public MutableUndirectedSimpleIncidenceGraph(int initialVertexCount = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));

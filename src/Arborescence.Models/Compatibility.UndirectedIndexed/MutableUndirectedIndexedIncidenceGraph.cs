@@ -28,7 +28,7 @@ namespace Arborescence.Models.Compatibility
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
         /// </exception>
-        public MutableUndirectedIndexedIncidenceGraph(int initialVertexCount, int edgeCapacity = 0)
+        public MutableUndirectedIndexedIncidenceGraph(int initialVertexCount = 0, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));

@@ -27,7 +27,7 @@
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="initialVertexCount"/> is less than zero, or <paramref name="edgeCapacity"/> is less than zero.
         /// </exception>
-        public MutableIndexedIncidenceGraph(int initialVertexCount, int edgeCapacity = 0)
+        public MutableIndexedIncidenceGraph(int initialVertexCount = 0, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));

@@ -24,7 +24,7 @@
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="initialVertexCount"/> is less than zero.
         /// </exception>
-        public MutableSimpleIncidenceGraph(int initialVertexCount)
+        public MutableSimpleIncidenceGraph(int initialVertexCount = 0)
         {
             if (initialVertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
