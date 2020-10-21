@@ -6,6 +6,14 @@ Arborescence is a generic .NET library for dealing with graphs.
 
 API structure is inspired by [Concept C#] and [Boost Graph Concepts]. 
 
+## Features
+
+* [Abstractions]
+* [Primitives]
+* [Models]
+* Algorithms
+    * [Traversal]
+
 ## Basic usage
 
 ```cs
@@ -33,5 +41,9 @@ while (edges.MoveNext())
 
 The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project. License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
-[Concept C#]: https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md "Concept C#: Type Classes for the Masses"
+[Abstractions]: https://www.nuget.org/packages/Arborescence.Abstractions/
 [Boost Graph Concepts]: https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/graph_concepts.html
+[Concept C#]: https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md
+[Models]: https://www.nuget.org/packages/Arborescence.Models/
+[Primitives]: https://www.nuget.org/packages/Arborescence.Primitives/
+[Traversal]: https://www.nuget.org/packages/Arborescence.Traversal/
