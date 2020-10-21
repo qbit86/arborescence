@@ -13,10 +13,10 @@ namespace Arborescence
 
     public sealed class BasicDfsTest
     {
-        private Dfs<Graph, Endpoints, EdgeEnumerator> Dfs { get; } = default;
+        private Dfs<Graph, Endpoints, EdgeEnumerator> Dfs { get; }
 
         private EnumerableDfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
-            EnumerableDfs { get; } = default;
+            EnumerableDfs { get; }
 
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]

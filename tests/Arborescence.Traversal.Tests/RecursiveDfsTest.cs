@@ -1,4 +1,4 @@
-﻿namespace Arborescence
+namespace Arborescence
 {
     using System;
     using System.Buffers;
@@ -14,10 +14,10 @@
     public sealed class RecursiveDfsTest
     {
         private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; } = default;
+            InstantDfs { get; }
 
         private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            RecursiveDfs { get; } = default;
+            RecursiveDfs { get; }
 
         private void TraverseCore(Graph graph, bool multipleSource)
         {

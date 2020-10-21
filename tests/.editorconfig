@@ -1,0 +1,2 @@
+[*.cs]
+resharper_unassigned_get_only_auto_property_highlighting = suggestion
