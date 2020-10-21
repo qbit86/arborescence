@@ -4,15 +4,15 @@
 
 Arborescence is a generic .NET library for dealing with graphs.
 
-API structure is inspired by [Concept C#] and [Boost Graph Concepts]. 
+API structure is inspired by [Concept C#] and [Boost Graph Concepts].
 
 ## Features
 
-* [Abstractions]
-* [Primitives]
-* [Models]
-* Algorithms
-    * [Traversal]
+* [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
+* [Models] — some particular graph structures implementing the aforementioned interfaces.
+* [Primitives] — basic blocks for building different data structures
+* Algorithms.
+    * [Traversal] — widely used algorithms for traversing graphs such as BFS and DFS.
 
 ## Basic usage
 
