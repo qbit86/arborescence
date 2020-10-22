@@ -10,11 +10,13 @@ API structure is inspired by [Concept C#] and [Boost Graph Concepts].
 
 * [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
 * [Models] — some particular graph structures implementing the aforementioned interfaces.
-* [Primitives] — basic blocks for building different data structures
-* Algorithms.
+* [Primitives] — basic blocks for building different data structures.
+* Algorithms:
     * [Traversal] — widely used algorithms for traversing graphs such as BFS and DFS.
 
 ## Basic usage
+
+![](/assets/example.svg)
 
 ```cs
 var builder = new SimpleIncidenceGraph.Builder();
