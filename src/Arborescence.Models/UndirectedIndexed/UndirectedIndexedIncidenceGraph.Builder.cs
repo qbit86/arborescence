@@ -51,22 +51,9 @@ namespace Arborescence.Models
             /// </returns>
             public bool TryAdd(int tail, int head, out int edge)
             {
-                if (tail < 0 || head < 0)
-                {
-                    edge = default;
-                    return false;
-                }
-
-                edge = _tailByEdge.Count;
-
-                int newVertexCountCandidate = Math.Max(tail, head) + 1;
-                if (newVertexCountCandidate > _vertexCount)
-                    _vertexCount = newVertexCountCandidate;
-
-                Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
-                _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
-                _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
-                return true;
+                bool result = tail >= 0 && head >= 0;
+                edge = result ? UncheckedAdd(tail, head) : default;
+                return result;
             }
 
             /// <inheritdoc/>
@@ -123,6 +110,39 @@ namespace Arborescence.Models
                 _vertexCount = 0;
 
                 return new UndirectedIndexedIncidenceGraph(data);
+            }
+
+            /// <summary>
+            /// Adds the edge with the specified endpoints to the graph.
+            /// </summary>
+            /// <param name="tail">The tail of the edge.</param>
+            /// <param name="head">The head of the edge.</param>
+            /// <returns>The added edge.</returns>
+            /// <exception cref="ArgumentOutOfRangeException">
+            /// <paramref name="tail"/> is less than zero, or <paramref name="head"/> is less than zero.
+            /// </exception>
+            public int Add(int tail, int head)
+            {
+                if (tail < 0)
+                    throw new ArgumentOutOfRangeException(nameof(tail));
+
+                if (head < 0)
+                    throw new ArgumentOutOfRangeException(nameof(head));
+
+                return UncheckedAdd(tail, head);
+            }
+
+            private int UncheckedAdd(int tail, int head)
+            {
+                int newVertexCountCandidate = Math.Max(tail, head) + 1;
+                if (newVertexCountCandidate > _vertexCount)
+                    _vertexCount = newVertexCountCandidate;
+
+                Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+                _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
+                _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
+
+                return _tailByEdge.Count;
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
