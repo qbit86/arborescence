@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased] - 2020-10-24
+### Added
+- Models: throwing `Add()` method to builders in addition to non-throwing `TryAdd()`.
+
+### Removed
+- Models: `GraphBuilderExtensions` class with `TryAdd<>()` extension method.
+
 ## [0.4.2] - 2020-10-21
 ### Added
 - Models: Fixed documentation comments.
