@@ -127,14 +127,14 @@ namespace Arborescence.Models
 
             private Endpoints UncheckedAdd(int tail, int head)
             {
-                var edge = new Endpoints(tail, head);
-
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
 
+                var edge = new Endpoints(tail, head);
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
+
                 return edge;
             }
         }
