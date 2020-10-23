@@ -1,6 +1,7 @@
 ﻿namespace Arborescence.Models.Compatibility
 {
     using System;
+    using System.Diagnostics;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
 #if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
@@ -76,19 +77,9 @@
         /// </returns>
         public bool TryAdd(int tail, int head, out Endpoints edge)
         {
-            edge = new Endpoints(tail, head);
-            if (tail < 0 || head < 0)
-                return false;
-
-            int newVertexCountCandidate = Math.Max(tail, head) + 1;
-            EnsureVertexCount(newVertexCountCandidate);
-
-            if (_outEdgesByVertex[tail].Array is null)
-                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
-            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], edge, false);
-            ++_edgeCount;
-
-            return true;
+            bool result = tail >= 0 && head >= 0;
+            edge = result ? UncheckedAdd(tail, head) : default;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -154,6 +145,43 @@
         {
             if (vertexCount > VertexCount)
                 _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
+        }
+
+        /// <summary>
+        /// Adds the edge with the specified endpoints to the graph.
+        /// </summary>
+        /// <param name="tail">The tail of the edge.</param>
+        /// <param name="head">The head of the edge.</param>
+        /// <returns>The added edge.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="tail"/> is less than zero, or <paramref name="head"/> is less than zero.
+        /// </exception>
+        public Endpoints Add(int tail, int head)
+        {
+            if (tail < 0)
+                throw new ArgumentOutOfRangeException(nameof(tail));
+
+            if (head < 0)
+                throw new ArgumentOutOfRangeException(nameof(head));
+
+            return UncheckedAdd(tail, head);
+        }
+
+        private Endpoints UncheckedAdd(int tail, int head)
+        {
+            Debug.Assert(tail >= 0, "tail >= 0");
+
+            int newVertexCountCandidate = Math.Max(tail, head) + 1;
+            EnsureVertexCount(newVertexCountCandidate);
+
+            if (_outEdgesByVertex[tail].Array is null)
+                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
+
+            var edge = new Endpoints(tail, head);
+            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], edge, false);
+            ++_edgeCount;
+
+            return edge;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Data structures for graphs and policy models to manipulate them.
+    <Description>Data structures for graphs, and policy models to manipulate them.
 Commonly used types:
 • IndexedIncidenceGraph
 • IndexedIncidenceGraphPolicy
@@ -9,7 +9,8 @@ Commonly used types:
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.4.2</VersionPrefix>
+    <VersionPrefix>0.4.3</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.4</AssemblyVersion>

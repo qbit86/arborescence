@@ -18,7 +18,7 @@ namespace Arborescence
             {
                 IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
                 foreach (Endpoints edge in edges)
-                    builder.TryAdd(edge.Tail, edge.Head);
+                    builder.Add(edge.Tail, edge.Head);
             }
 
             UndirectedIndexedIncidenceGraph graph = builder.ToGraph();

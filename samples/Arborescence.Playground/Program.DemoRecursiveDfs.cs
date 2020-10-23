@@ -50,7 +50,7 @@
             {
                 int tail = prng.Next(vertexCount);
                 int head = prng.Next(vertexCount);
-                builder.TryAdd(tail, head);
+                builder.Add(tail, head);
             }
 
             IndexedIncidenceGraph result = builder.ToGraph();

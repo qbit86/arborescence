@@ -28,11 +28,7 @@ namespace Arborescence
             // Arrange
             using var builder = new MutableUndirectedSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             // Act
             Graph graph = builder.ToGraph();
@@ -49,11 +45,7 @@ namespace Arborescence
             // Arrange
             using var builder = new MutableUndirectedSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
@@ -92,11 +84,7 @@ namespace Arborescence
             // Arrange
             using var builder = new MutableUndirectedSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
 
