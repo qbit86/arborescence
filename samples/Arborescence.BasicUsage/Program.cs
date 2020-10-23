@@ -10,13 +10,13 @@
         private static void Main()
         {
             var builder = new SimpleIncidenceGraph.Builder();
-            builder.TryAdd(2, 0);
-            builder.TryAdd(4, 3);
-            builder.TryAdd(0, 4);
-            builder.TryAdd(3, 2);
-            builder.TryAdd(4, 4);
-            builder.TryAdd(0, 2);
-            builder.TryAdd(2, 4);
+            builder.Add(2, 0);
+            builder.Add(4, 3);
+            builder.Add(0, 4);
+            builder.Add(3, 2);
+            builder.Add(4, 4);
+            builder.Add(0, 2);
+            builder.Add(2, 4);
             SimpleIncidenceGraph graph = builder.ToGraph();
 
             Bfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
