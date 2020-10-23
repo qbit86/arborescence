@@ -134,6 +134,8 @@ namespace Arborescence.Models
 
             private int UncheckedAdd(int tail, int head)
             {
+                int edge = _tailByEdge.Count;
+
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
@@ -142,7 +144,7 @@ namespace Arborescence.Models
                 _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
                 _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
 
-                return _tailByEdge.Count;
+                return edge;
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible
