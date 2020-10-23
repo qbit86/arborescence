@@ -129,8 +129,6 @@ namespace Arborescence.Models
 
             private int UncheckedAdd(int tail, int head)
             {
-                int edge = _tailByEdge.Count;
-
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
 
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
@@ -138,6 +136,7 @@ namespace Arborescence.Models
                     _vertexCount = newVertexCountCandidate;
 
                 Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+                int edge = _tailByEdge.Count;
                 _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
                 _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
 
