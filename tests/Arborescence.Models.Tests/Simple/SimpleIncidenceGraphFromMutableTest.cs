@@ -28,11 +28,7 @@
             // Arrange
             using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             // Act
             Graph graph = builder.ToGraph();
@@ -49,11 +45,7 @@
             // Arrange
             using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
@@ -85,11 +77,7 @@
             // Arrange
             using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
 

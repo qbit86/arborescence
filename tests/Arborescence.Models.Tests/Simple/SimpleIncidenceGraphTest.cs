@@ -2,7 +2,6 @@ namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Models;
     using Xunit;
     using Graph = Models.SimpleIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
@@ -28,11 +27,7 @@ namespace Arborescence
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             // Act
             Graph graph = builder.ToGraph();
@@ -49,11 +44,7 @@ namespace Arborescence
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
@@ -85,11 +76,7 @@ namespace Arborescence
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
 
