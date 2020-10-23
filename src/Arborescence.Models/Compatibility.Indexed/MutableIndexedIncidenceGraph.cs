@@ -86,26 +86,9 @@
         /// </returns>
         public bool TryAdd(int tail, int head, out int edge)
         {
-            if (tail < 0 || head < 0)
-            {
-                edge = default;
-                return false;
-            }
-
-            int newVertexCountCandidate = Math.Max(tail, head) + 1;
-            EnsureVertexCount(newVertexCountCandidate);
-
-            Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
-            int newEdgeIndex = _headByEdge.Count;
-            _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
-            _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
-
-            if (_outEdgesByVertex[tail].Array is null)
-                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<int>(InitialOutDegree);
-            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], newEdgeIndex, false);
-
-            edge = newEdgeIndex;
-            return true;
+            bool result = tail >= 0 && head >= 0;
+            edge = result ? UncheckedAdd(tail, head) : default;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -187,6 +170,45 @@
         {
             if (vertexCount > VertexCount)
                 _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
+        }
+
+        /// <summary>
+        /// Adds the edge with the specified endpoints to the graph.
+        /// </summary>
+        /// <param name="tail">The tail of the edge.</param>
+        /// <param name="head">The head of the edge.</param>
+        /// <returns>The added edge.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="tail"/> is less than zero, or <paramref name="head"/> is less than zero.
+        /// </exception>
+        public int Add(int tail, int head)
+        {
+            if (tail < 0)
+                throw new ArgumentOutOfRangeException(nameof(tail));
+
+            if (head < 0)
+                throw new ArgumentOutOfRangeException(nameof(head));
+
+            return UncheckedAdd(tail, head);
+        }
+
+        private int UncheckedAdd(int tail, int head)
+        {
+            Debug.Assert(tail >= 0, "tail >= 0");
+
+            int newVertexCountCandidate = Math.Max(tail, head) + 1;
+            EnsureVertexCount(newVertexCountCandidate);
+
+            Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
+            int newEdgeIndex = _headByEdge.Count;
+            _tailByEdge = ArrayPrefixBuilder.Add(_tailByEdge, tail, false);
+            _headByEdge = ArrayPrefixBuilder.Add(_headByEdge, head, false);
+
+            if (_outEdgesByVertex[tail].Array is null)
+                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<int>(InitialOutDegree);
+            _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], newEdgeIndex, false);
+
+            return newEdgeIndex;
         }
     }
 }
