@@ -14,10 +14,16 @@ API structure is inspired by [Concept C#] and [Boost Graph Concepts].
 * Algorithms:
     * [Traversal] — widely used algorithms for traversing graphs such as BFS and DFS.
 
+## Installation
+
+To install packages of this library with NuGet package manager follow the links above.
+
 ## Basic usage
 
+Let's consider a simple directed graph and a breadth first tree on it:  
 ![](/assets/example.svg)
 
+This is how you create a graph, instantiate an algorithm, and run it against the graph: 
 ```cs
 var builder = new SimpleIncidenceGraph.Builder();
 builder.Add(2, 0);
@@ -35,17 +41,24 @@ IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, graph.VertexCount, sour
 while (edges.MoveNext())
     Console.WriteLine(edges.Current);
 ```
+
+Expected output:
 ```
 [3, 2]
 [2, 0]
 [2, 4]
 ```
 
+## Advanced usage
+
+For more sophisticated examples examine [samples/](samples/) directory.
+
 ## License
 
 [MIT](LICENSE.txt)
 
-The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project. License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project.
+License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 [Abstractions]: https://www.nuget.org/packages/Arborescence.Abstractions/
 [Boost Graph Concepts]: https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/graph_concepts.html
