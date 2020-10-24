@@ -2,7 +2,6 @@ namespace Arborescence
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Models;
     using Xunit;
     using Graph = Models.MutableUndirectedSimpleIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
@@ -28,11 +27,7 @@ namespace Arborescence
             // Arrange
             using var graph = new Graph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                graph.Add(endpoints.Tail, endpoints.Head);
 
             // Assert
             Assert.Equal(p.VertexCount, graph.VertexCount);
@@ -46,11 +41,7 @@ namespace Arborescence
             // Arrange
             using var graph = new Graph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                graph.Add(endpoints.Tail, endpoints.Head);
 
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
             foreach (Endpoints edge in p.Edges)
@@ -88,11 +79,7 @@ namespace Arborescence
             // Arrange
             using var graph = new Graph(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = graph.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                graph.Add(endpoints.Tail, endpoints.Head);
 
             // Act
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)

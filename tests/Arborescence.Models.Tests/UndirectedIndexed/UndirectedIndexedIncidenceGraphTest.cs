@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Models;
     using Xunit;
     using Graph = Models.UndirectedIndexedIncidenceGraph;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
@@ -28,11 +27,7 @@
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             // Act
             Graph graph = builder.ToGraph();
@@ -49,11 +44,7 @@
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
@@ -92,11 +83,7 @@
             // Arrange
             var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
-            {
-                bool wasAdded = builder.TryAdd(endpoints.Tail, endpoints.Head);
-                if (!wasAdded)
-                    Assert.True(wasAdded);
-            }
+                builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
 

@@ -15,10 +15,10 @@ namespace Arborescence
     public sealed class BfsEnumerateVerticesTest
     {
         private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantBfs { get; } = default;
+            InstantBfs { get; }
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
-            EnumerableBfs { get; } = default;
+            EnumerableBfs { get; }
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {

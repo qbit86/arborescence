@@ -1,4 +1,4 @@
-﻿namespace Arborescence
+namespace Arborescence
 {
     using System;
     using System.Buffers;
@@ -15,11 +15,11 @@
     public class QueueGenericSearchEnumerateVerticesTest
     {
         private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantBfs { get; } = default;
+            InstantBfs { get; }
 
         private GenericSearch<
                 Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], GraphPolicy, QueuePolicy, IndexedSetPolicy>
-            GenericSearch { get; } = default;
+            GenericSearch { get; }
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {

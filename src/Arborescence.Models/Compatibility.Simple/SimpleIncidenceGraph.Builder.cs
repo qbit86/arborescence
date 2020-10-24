@@ -51,17 +51,9 @@
             /// </returns>
             public bool TryAdd(int tail, int head, out Endpoints edge)
             {
-                edge = new Endpoints(tail, head);
-                if (tail < 0 || head < 0)
-                    return false;
-
-                _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
-                int newVertexCountCandidate = Math.Max(tail, head) + 1;
-                if (newVertexCountCandidate > _vertexCount)
-                    _vertexCount = newVertexCountCandidate;
-
-                _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
-                return true;
+                bool result = tail >= 0 && head >= 0;
+                edge = result ? UncheckedAdd(tail, head) : default;
+                return result;
             }
 
             /// <inheritdoc/>
@@ -110,6 +102,39 @@
                 _vertexCount = 0;
 
                 return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+            }
+
+            /// <summary>
+            /// Adds the edge with the specified endpoints to the graph.
+            /// </summary>
+            /// <param name="tail">The tail of the edge.</param>
+            /// <param name="head">The head of the edge.</param>
+            /// <returns>The added edge.</returns>
+            /// <exception cref="ArgumentOutOfRangeException">
+            /// <paramref name="tail"/> is less than zero, or <paramref name="head"/> is less than zero.
+            /// </exception>
+            public Endpoints Add(int tail, int head)
+            {
+                if (tail < 0)
+                    throw new ArgumentOutOfRangeException(nameof(tail));
+
+                if (head < 0)
+                    throw new ArgumentOutOfRangeException(nameof(head));
+
+                return UncheckedAdd(tail, head);
+            }
+
+            private Endpoints UncheckedAdd(int tail, int head)
+            {
+                _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
+                int newVertexCountCandidate = Math.Max(tail, head) + 1;
+                if (newVertexCountCandidate > _vertexCount)
+                    _vertexCount = newVertexCountCandidate;
+
+                var edge = new Endpoints(tail, head);
+                _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
+
+                return edge;
             }
         }
 #pragma warning restore CA1034 // Nested types should not be visible

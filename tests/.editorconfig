@@ -1,0 +1,2 @@
+[*.cs]
+dotnet_diagnostic.CA2000.severity = suggestion
