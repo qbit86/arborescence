@@ -23,7 +23,7 @@ To install packages of this library with NuGet package manager follow the links 
 Let's consider a simple directed graph and a breadth first tree on it:  
 ![](/assets/example.svg)
 
-This is how you create a graph, instantiate an algorithm, and run it against the graph: 
+This is how you create a graph, instantiate an algorithm, and run it against the graph:
 ```cs
 var builder = new SimpleIncidenceGraph.Builder();
 builder.Add(2, 0);
