@@ -1,5 +1,6 @@
 # Arborescence
 
+[![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://www.nuget.org/packages/Arborescence.Abstractions/)
 [![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://www.nuget.org/packages/Arborescence.Models/)
 [![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://www.nuget.org/packages/Arborescence.Traversal/)
 
