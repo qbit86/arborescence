@@ -1,6 +1,7 @@
 # Arborescence
 
-[![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg)](https://www.nuget.org/packages/Arborescence.Models/)
+[![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://www.nuget.org/packages/Arborescence.Models/)
+[![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://www.nuget.org/packages/Arborescence.Traversal/)
 
 Arborescence is a generic .NET library for dealing with graphs.
 
