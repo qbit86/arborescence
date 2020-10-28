@@ -57,9 +57,9 @@ For more sophisticated examples examine [samples/](samples/) directory.
 
 ## License
 
-[MIT](LICENSE.txt)
+[![License](https://img.shields.io/github/license/qbit86/arborescence)](LICENSE.txt)
 
-The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project.
+The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project.
 License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 [Abstractions]: https://www.nuget.org/packages/Arborescence.Abstractions/
