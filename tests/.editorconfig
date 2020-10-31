@@ -1,2 +1,5 @@
 [*.cs]
 dotnet_diagnostic.CA2000.severity = suggestion
+
+[*Collection.cs]
+dotnet_diagnostic.CA1812.severity = suggestion # {0} is an internal class that is apparently never instantiated.
