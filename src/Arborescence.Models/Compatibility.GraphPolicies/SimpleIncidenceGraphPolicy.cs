@@ -1,6 +1,5 @@
 ﻿namespace Arborescence.Models.Compatibility
 {
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the simple incidence graph.
@@ -25,5 +24,4 @@
         public ArraySegmentEnumerator<Endpoints> EnumerateOutEdges(SimpleIncidenceGraph graph, int vertex) =>
             graph.EnumerateOutEdges(vertex);
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

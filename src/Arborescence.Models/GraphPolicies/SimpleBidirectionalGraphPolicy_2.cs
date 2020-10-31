@@ -1,6 +1,5 @@
 namespace Arborescence.Models
 {
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the in- and out-edges of each vertex
     /// in the simple bidirectional graph.
@@ -26,5 +25,4 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public TEdges EnumerateInEdges(TGraph graph, int vertex) => graph.EnumerateInEdges(vertex);
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

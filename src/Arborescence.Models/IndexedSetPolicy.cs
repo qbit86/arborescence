@@ -1,6 +1,5 @@
 ﻿namespace Arborescence.Models
 {
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Defines methods to support adding and checking items for the set represented as a byte array.
     /// </summary>
@@ -24,5 +23,4 @@
             items[item] = 1;
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

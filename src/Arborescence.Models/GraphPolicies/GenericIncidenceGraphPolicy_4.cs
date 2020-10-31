@@ -1,6 +1,5 @@
 namespace Arborescence.Models
 {
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the generic incidence graph.
@@ -24,5 +23,4 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public TEdges EnumerateOutEdges(TGraph graph, TVertex vertex) => graph.EnumerateOutEdges(vertex);
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
