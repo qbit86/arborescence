@@ -95,10 +95,8 @@
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
 
-    // ReSharper disable InconsistentNaming
     internal enum ExceptionResource
     {
         InvalidOperation_NullArray
     }
-    // ReSharper restore InconsistentNaming
 }
