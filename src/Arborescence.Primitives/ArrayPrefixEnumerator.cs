@@ -6,7 +6,6 @@ namespace Arborescence
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
     public struct ArrayPrefixEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
@@ -29,12 +28,10 @@ namespace Arborescence
             _current = -1;
         }
 
-#pragma warning disable CA1000 // Do not declare static members on generic types
         /// <summary>
         /// Gets an empty <see cref="ArrayPrefixEnumerator{T}"/> struct.
         /// </summary>
         public static ArrayPrefixEnumerator<T> Empty { get; } = new ArrayPrefixEnumerator<T>(Array.Empty<T>(), 0);
-#pragma warning restore CA1000 // Do not declare static members on generic types
 
         /// <inheritdoc/>
         public readonly T Current
@@ -85,5 +82,4 @@ namespace Arborescence
             _current = -1;
         }
     }
-#pragma warning restore CA1710 // Identifiers should have correct suffix
 }
