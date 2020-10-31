@@ -3,7 +3,6 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    // ReSharper disable UnusedTypeParameter
     public readonly partial struct ReverseDfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
@@ -46,6 +45,5 @@ namespace Arborescence.Traversal
             }
         }
     }
-    // ReSharper restore UnusedTypeParameter
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }

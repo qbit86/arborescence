@@ -18,8 +18,6 @@
         private byte[] _exploredSet = Array.Empty<byte>();
 
         [Params(10, 100, 1000)]
-        // ReSharper disable once MemberCanBePrivate.Global
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
         private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],

@@ -1,0 +1,2 @@
+[*.cs]
+resharper_unused_type_parameter_highlighting = hint

@@ -9,7 +9,6 @@ namespace Arborescence
 
     internal static partial class Program
     {
-        // ReSharper disable once UnusedMember.Local
         private static void DemoUndirected()
         {
             var builder = new UndirectedIndexedIncidenceGraph.Builder(10);
