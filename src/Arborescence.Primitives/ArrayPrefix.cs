@@ -39,7 +39,7 @@ namespace Arborescence
         }
     }
 
-    // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
+    // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
     /// <summary>
     /// Delimits a prefix of a one-dimensional array.

@@ -4,7 +4,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
 
-    // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
+    // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
     public struct ArrayPrefixEnumerator<T> : IEnumerator<T>, IEnumerable<T>

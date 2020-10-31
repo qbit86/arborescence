@@ -3,7 +3,7 @@ namespace Arborescence.Models
     using System;
     using System.Runtime.CompilerServices;
 
-    // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/MemoryExtensions.cs
+    // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/MemoryExtensions.cs
 
     internal static class MemoryExtensions
     {
