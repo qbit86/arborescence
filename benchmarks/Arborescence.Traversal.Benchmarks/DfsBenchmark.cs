@@ -25,7 +25,6 @@ namespace Arborescence
         }
 
         [Params(10, 100, 1000, 10000)]
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
         private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
