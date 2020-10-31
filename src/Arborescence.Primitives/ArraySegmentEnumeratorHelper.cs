@@ -9,7 +9,6 @@ namespace Arborescence
 
     internal static class ArraySegmentEnumeratorHelper
     {
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
 #if NETSTANDARD2_1
         [DoesNotReturn]
 #endif
@@ -54,6 +53,5 @@ namespace Arborescence
 
             throw new InvalidOperationException(SR.UnreachableLocation);
         }
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
 }

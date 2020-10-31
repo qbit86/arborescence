@@ -8,7 +8,6 @@
 
     internal static class ArrayPrefixEnumeratorHelper
     {
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
 #if NETSTANDARD2_1
         [DoesNotReturn]
 #endif
@@ -46,6 +45,5 @@
 
             throw new InvalidOperationException(SR.UnreachableLocation);
         }
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
 }
