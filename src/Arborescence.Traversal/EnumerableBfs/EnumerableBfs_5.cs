@@ -14,7 +14,6 @@ namespace Arborescence.Traversal
     public static class EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
         /// <summary>
         /// Creates a new
         /// <see cref="EnumerableBfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TExploredSet,TGraphPolicy,TExploredSetPolicy}"/>
@@ -37,6 +36,5 @@ namespace Arborescence.Traversal
                 TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>(
                 graphPolicy, exploredSetPolicy);
         }
-#pragma warning restore CA1000 // Do not declare static members on generic types
     }
 }

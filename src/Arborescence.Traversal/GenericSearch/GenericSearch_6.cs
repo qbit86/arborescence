@@ -17,7 +17,6 @@
     public static class GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe, TExploredSet>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
         /// <summary>
         /// Creates a new
         /// <see
@@ -48,6 +47,5 @@
                 TGraphPolicy, TFringePolicy, TExploredSetPolicy>(
                 graphPolicy, fringePolicy, exploredSetPolicy);
         }
-#pragma warning restore CA1000 // Do not declare static members on generic types
     }
 }

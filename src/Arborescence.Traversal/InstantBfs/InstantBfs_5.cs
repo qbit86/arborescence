@@ -14,7 +14,6 @@ namespace Arborescence.Traversal
     public static class InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
         /// <summary>
         /// Creates a new <see cref="InstantBfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TGraphPolicy,TColorMapPolicy}"/>
         /// algorithm from the given policies.
@@ -34,6 +33,5 @@ namespace Arborescence.Traversal
             return new InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>(
                 graphPolicy, colorMapPolicy);
         }
-#pragma warning restore CA1000 // Do not declare static members on generic types
     }
 }
