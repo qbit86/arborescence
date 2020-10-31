@@ -8,7 +8,6 @@
 
     internal static class ThrowHelper
     {
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
         internal static void ThrowArgumentException_DestinationTooShort()
         {
             throw new ArgumentException(SR.Argument_DestinationTooShort);
@@ -92,7 +91,6 @@
                     return string.Empty;
             }
         }
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
     }
 
     internal enum ExceptionResource
