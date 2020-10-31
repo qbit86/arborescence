@@ -2,7 +2,6 @@ namespace Arborescence.Traversal
 {
     using System;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
     {
@@ -59,5 +58,4 @@ namespace Arborescence.Traversal
             TraverseCore(graph, source, colorMap, handler, terminationCondition ?? s_false);
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

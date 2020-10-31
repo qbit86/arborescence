@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
         TColorMapPolicy>
     {
@@ -89,5 +88,4 @@
             }
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

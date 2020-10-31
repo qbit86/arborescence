@@ -1,2 +1,3 @@
 [*.cs]
+dotnet_diagnostic.CA1815.severity = silent # Override equals and operator equals on value types
 resharper_unused_type_parameter_highlighting = hint

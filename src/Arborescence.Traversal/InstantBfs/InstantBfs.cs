@@ -5,7 +5,6 @@
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph.
     /// </summary>
@@ -102,5 +101,4 @@
         private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
             ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

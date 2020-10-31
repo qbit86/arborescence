@@ -3,7 +3,6 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections.Generic;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph — implemented as enumerator.
     /// </summary>
@@ -48,5 +47,4 @@ namespace Arborescence.Traversal
             ExploredSetPolicy = exploredSetPolicy;
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

@@ -3,7 +3,6 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections.Generic;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph —
     /// where for each vertex its out-edges are enumerated in the reverse order as they are added to the LIFO-stack.
@@ -49,5 +48,4 @@ namespace Arborescence.Traversal
             ExploredSetPolicy = exploredSetPolicy;
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
