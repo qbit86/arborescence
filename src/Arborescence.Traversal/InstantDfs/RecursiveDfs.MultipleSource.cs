@@ -4,7 +4,6 @@
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    // ReSharper disable UnusedTypeParameter
     public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
         TColorMapPolicy>
     {
@@ -90,6 +89,5 @@
             }
         }
     }
-    // ReSharper restore UnusedTypeParameter
 #pragma warning restore CA1815 // Override equals and operator equals on value types
 }

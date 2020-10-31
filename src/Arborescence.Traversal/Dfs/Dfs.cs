@@ -3,7 +3,6 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 
 #pragma warning disable CA1815 // Override equals and operator equals on value types
-    // ReSharper disable once UnusedTypeParameter
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph — implemented as enumerator.
     /// </summary>

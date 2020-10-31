@@ -2,7 +2,6 @@ namespace Arborescence.Traversal
 {
     using System.Collections.Generic;
 
-    // ReSharper disable UnusedTypeParameter
     public readonly partial struct EnumerableDfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
     {
@@ -49,5 +48,4 @@ namespace Arborescence.Traversal
             }
         }
     }
-    // ReSharper restore UnusedTypeParameter
 }

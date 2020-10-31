@@ -3,7 +3,6 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections.Generic;
 
-    // ReSharper disable UnusedTypeParameter
     public readonly partial struct InstantBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
     {
@@ -46,5 +45,4 @@ namespace Arborescence.Traversal
             TraverseCore(graph, queue, colorMap, handler);
         }
     }
-    // ReSharper restore UnusedTypeParameter
 }

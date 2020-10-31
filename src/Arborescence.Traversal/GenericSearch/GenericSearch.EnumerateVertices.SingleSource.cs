@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    // ReSharper disable UnusedTypeParameter
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
         TExploredSet, TGraphPolicy, TFringePolicy, TExploredSetPolicy>
     {
@@ -39,5 +38,4 @@
             }
         }
     }
-    // ReSharper restore UnusedTypeParameter
 }
