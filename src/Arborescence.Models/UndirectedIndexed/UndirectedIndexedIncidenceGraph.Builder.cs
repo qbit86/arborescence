@@ -6,7 +6,6 @@ namespace Arborescence.Models
 
     public readonly partial struct UndirectedIndexedIncidenceGraph
     {
-#pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
         public sealed class Builder : IGraphBuilder<UndirectedIndexedIncidenceGraph, int, int>
         {
@@ -146,7 +145,6 @@ namespace Arborescence.Models
                 return edge;
             }
         }
-#pragma warning restore CA1034 // Nested types should not be visible
     }
 }
 #endif
