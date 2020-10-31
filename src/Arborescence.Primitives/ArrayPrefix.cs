@@ -41,14 +41,12 @@ namespace Arborescence
 
     // https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/ArraySegment.cs
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
     /// <summary>
     /// Delimits a prefix of a one-dimensional array.
     /// </summary>
     /// <typeparam name="T">The type of the elements in the array.</typeparam>
     public readonly struct ArrayPrefix<T> : IList<T>, IReadOnlyList<T>, IEquatable<ArrayPrefix<T>>
     {
-#pragma warning disable CA1000 // Do not declare static members on generic types
 #pragma warning disable CA1825 // Avoid zero-length array allocations.
         // Do not replace the array allocation with Array.Empty. We don't want to have the overhead of
         // instantiating another generic type in addition to ArrayPrefix<T> for new type parameters.
@@ -57,7 +55,6 @@ namespace Arborescence
         /// </summary>
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 #pragma warning restore CA1825 // Avoid zero-length array allocations.
-#pragma warning restore CA1000 // Do not declare static members on generic types
 
         private readonly T[] _array;
         private readonly int _count;
@@ -72,11 +69,9 @@ namespace Arborescence
             if (array is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
 
-#pragma warning disable CA1062
             _array = array;
             Debug.Assert(array != null, nameof(array) + " != null");
             _count = array.Length;
-#pragma warning restore CA1062
         }
 
         /// <summary>
@@ -97,12 +92,10 @@ namespace Arborescence
             _count = count;
         }
 
-#pragma warning disable CA1819 // Properties should not return arrays
         /// <summary>
         /// Gets the original array containing the range of elements that the array prefix delimits.
         /// </summary>
         public T[] Array => _array;
-#pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Gets the number of elements in the range delimited by the array prefix.
@@ -256,7 +249,6 @@ namespace Arborescence
         /// </returns>
         public static bool operator !=(ArrayPrefix<T> a, ArrayPrefix<T> b) => !a.Equals(b);
 
-#pragma warning disable CA2225 // Operator overloads have named alternates
         /// <summary>
         /// Defines an implicit conversion of an array to a <see cref="ArrayPrefix{T}"/>.
         /// </summary>
@@ -264,7 +256,6 @@ namespace Arborescence
         /// <returns>An array prefix.</returns>
         public static implicit operator ArrayPrefix<T>(T[] array) =>
             array != null ? new ArrayPrefix<T>(array) : default;
-#pragma warning restore CA2225 // Operator overloads have named alternates
 
         #region IList<T>
 
@@ -379,8 +370,6 @@ namespace Arborescence
                 ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
         }
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
-#pragma warning disable CA1034 // Nested types should not be visible
         /// <summary>
         /// Provides an enumerator for the elements of an <see cref="ArrayPrefix{T}"/>.
         /// </summary>
@@ -434,8 +423,5 @@ namespace Arborescence
                 return false;
             }
         }
-#pragma warning restore CA1034 // Nested types should not be visible
-#pragma warning restore CA1815 // Override equals and operator equals on value types
     }
-#pragma warning restore CA1710 // Identifiers should have correct suffix
 }

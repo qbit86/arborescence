@@ -1,3 +1,11 @@
 [*Enumerator.cs]
 dotnet_diagnostic.CA1000.severity = suggestion # Do not declare static members on generic types
 dotnet_diagnostic.CA1710.severity = suggestion # Identifiers should have correct suffix
+
+[ArrayPrefix.cs]
+dotnet_diagnostic.CA1000.severity = suggestion # Do not declare static members on generic types
+dotnet_diagnostic.CA1034.severity = suggestion # Nested types should not be visible
+dotnet_diagnostic.CA1062.severity = suggestion # Validate arguments of public methods
+dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types
+dotnet_diagnostic.CA1819.severity = suggestion # Properties should not return arrays
+dotnet_diagnostic.CA2225.severity = suggestion # Operator overloads have named alternates
