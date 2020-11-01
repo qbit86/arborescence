@@ -174,7 +174,7 @@ namespace Arborescence.Models.Compatibility
         public void EnsureVertexCount(int vertexCount)
         {
             if (vertexCount > VertexCount)
-                _outEdgesByVertex = ArrayPrefixBuilder.Resize(_outEdgesByVertex, vertexCount, true);
+                _outEdgesByVertex = ArrayPrefixBuilder.EnsureSize(_outEdgesByVertex, vertexCount, true);
         }
 
         /// <summary>
