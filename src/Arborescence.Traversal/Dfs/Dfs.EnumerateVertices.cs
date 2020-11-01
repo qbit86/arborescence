@@ -10,13 +10,13 @@ namespace Arborescence.Traversal
         /// Enumerates vertices of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="vertexCount">The number of vertices.</param>
         /// <param name="source">The source.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
-        public IEnumerator<int> EnumerateVertices(TGraph graph, int vertexCount, int source)
+        public IEnumerator<int> EnumerateVertices(TGraph graph, int source, int vertexCount)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
