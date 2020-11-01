@@ -39,7 +39,7 @@ SimpleIncidenceGraph graph = builder.ToGraph();
 
 Bfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
 
-IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, graph.VertexCount, source: 3);
+IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
 while (edges.MoveNext())
     Console.WriteLine(edges.Current);
 ```

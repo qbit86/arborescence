@@ -10,13 +10,13 @@ namespace Arborescence.Traversal
         /// Enumerates edges of the graph in a breadth-first order.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="vertexCount">The number of vertices.</param>
         /// <param name="source">The source.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
         /// <returns>An enumerator to enumerate the edges of the the graph.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
-        public IEnumerator<TEdge> EnumerateEdges(TGraph graph, int vertexCount, int source)
+        public IEnumerator<TEdge> EnumerateEdges(TGraph graph, int source, int vertexCount)
         {
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
