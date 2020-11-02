@@ -3,7 +3,6 @@ namespace Arborescence.Models
 {
     using System;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the indexed incidence graph.
@@ -23,6 +22,5 @@ namespace Arborescence.Models
         public ArraySegment<int>.Enumerator EnumerateOutEdges(IndexedIncidenceGraph graph, int vertex) =>
             graph.EnumerateOutEdges(vertex);
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
 #endif

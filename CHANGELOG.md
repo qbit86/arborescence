@@ -1,8 +1,11 @@
 # Changelog
 
-## [0.5.0] - 2020-10-24
+## [0.5.0] - 2020-11-03
 ### Added
-- Models: throwing `Add()` method to builders in addition to non-throwing `TryAdd()`.
+- Models: Throwing `Add()` method to builders in addition to non-throwing `TryAdd()`.
+
+### Changed
+- Traversal: The order of parameters in `Enumerate*()` signatures for `Bfs<>` and `Dfs<>`.
 
 ### Removed
 - Models: `GraphBuilderExtensions` class with `TryAdd<>()` extension method.
@@ -83,8 +86,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.5.0...HEAD
-[0.5.0]: https://github.com/qbit86/arborescence/compare/models-0.4.2...models-0.5.0
+[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.5.0...HEAD
+[0.5.0]: https://github.com/qbit86/arborescence/compare/models-0.4.2...traversal-0.5.0
 [0.4.2]: https://github.com/qbit86/arborescence/compare/models-0.4.1...models-0.4.2
 [0.4.1]: https://github.com/qbit86/arborescence/compare/models-0.4.0...models-0.4.1
 [0.4.0]: https://github.com/qbit86/arborescence/compare/traversal-0.3.2...models-0.4.0

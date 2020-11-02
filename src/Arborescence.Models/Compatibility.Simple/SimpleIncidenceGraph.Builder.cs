@@ -5,7 +5,6 @@
 
     public readonly partial struct SimpleIncidenceGraph
     {
-#pragma warning disable CA1034 // Nested types should not be visible
         /// <inheritdoc/>
         public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
         {
@@ -137,6 +136,5 @@
                 return edge;
             }
         }
-#pragma warning restore CA1034 // Nested types should not be visible
     }
 }

@@ -45,6 +45,15 @@ namespace Arborescence
             return arrayPrefix;
         }
 
+        internal static ArrayPrefix<T> EnsureSize<T>(ArrayPrefix<T> arrayPrefix, int size, bool clearArray)
+        {
+            if (size <= arrayPrefix.Count)
+                return arrayPrefix;
+
+            UncheckedGrow(ref arrayPrefix, size, clearArray);
+            return arrayPrefix;
+        }
+
         internal static ArrayPrefix<T> Release<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
         {
             // ReSharper disable once PatternAlwaysOfType

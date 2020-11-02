@@ -34,7 +34,7 @@ namespace Arborescence
 
             // Act
 
-            IEnumerator<Endpoints> basicSteps = Bfs.EnumerateEdges(graph, graph.VertexCount, source)!;
+            IEnumerator<Endpoints> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount)!;
             IEnumerator<Endpoints> enumerableSteps = EnumerableBfs.EnumerateEdges(graph, source, exploredSet)!;
 
             // Assert
@@ -76,7 +76,7 @@ namespace Arborescence
 
             // Act
 
-            IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, graph.VertexCount, source)!;
+            IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, source, graph.VertexCount)!;
             IEnumerator<int> enumerableSteps = EnumerableBfs.EnumerateVertices(graph, source, exploredSet)!;
 
             // Assert

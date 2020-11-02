@@ -19,7 +19,6 @@
             return hasTail && hasHead;
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         [Theory]
         [ClassData(typeof(GraphDefinitionCollection))]
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
@@ -103,6 +102,5 @@
                 }
             }
         }
-#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }

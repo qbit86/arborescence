@@ -8,7 +8,6 @@
     using System.Linq;
     using Workbench;
 
-#pragma warning disable CA1812 // GraphDefinitionCollection is an internal class that is apparently never instantiated.
     internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
     {
         private const int LowerBound = 1;
@@ -53,5 +52,4 @@
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
-#pragma warning restore CA1812 // GraphDefinitionCollection is an internal class that is apparently never instantiated.
 }

@@ -1,0 +1,5 @@
+[*Builder.cs]
+dotnet_diagnostic.CA1034.severity = silent # Nested types should not be visible
+
+[*Policy*.cs]
+dotnet_diagnostic.CA1815.severity = silent # Override equals and operator equals on value types

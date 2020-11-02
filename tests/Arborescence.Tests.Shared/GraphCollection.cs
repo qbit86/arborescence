@@ -76,7 +76,6 @@
         protected abstract TGraphBuilder CreateGraphBuilder(int initialVertexCount);
     }
 
-#pragma warning disable CA1812 // GraphCollection is an internal class that is apparently never instantiated.
     internal sealed class IndexedGraphCollection :
         GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, IndexedIncidenceGraph.Builder>
     {
@@ -139,7 +138,6 @@
             return new SimpleIncidenceGraph.UndirectedBuilder(initialVertexCount);
         }
     }
-#pragma warning restore CA1812 // GraphCollection is an internal class that is apparently never instantiated.
 
     internal sealed class MutableIndexedIncidenceGraphBuilder :
         IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,

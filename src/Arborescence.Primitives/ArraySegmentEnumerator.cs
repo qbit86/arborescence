@@ -6,7 +6,6 @@ namespace Arborescence
 
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
 #if NETSTANDARD2_1 || NETCOREAPP2_0
     [Obsolete("Please use System.ArraySegment<T>.Enumerator instead.")]
@@ -35,12 +34,10 @@ namespace Arborescence
             _current = start - 1;
         }
 
-#pragma warning disable CA1000 // Do not declare static members on generic types
         /// <summary>
         /// Gets an empty <see cref="ArraySegmentEnumerator{T}"/> struct.
         /// </summary>
         public static ArraySegmentEnumerator<T> Empty { get; } = new ArraySegmentEnumerator<T>(Array.Empty<T>(), 0, 0);
-#pragma warning restore CA1000 // Do not declare static members on generic types
 
         /// <inheritdoc/>
         public readonly T Current
@@ -92,5 +89,4 @@ namespace Arborescence
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
     }
-#pragma warning restore CA1710 // Identifiers should have correct suffix
 }

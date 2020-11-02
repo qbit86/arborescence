@@ -5,7 +5,6 @@ namespace Arborescence.Traversal
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph in a non-recursive fashion.
     /// </summary>
@@ -127,5 +126,4 @@ namespace Arborescence.Traversal
         private Color GetColorOrDefault(TColorMap colorMap, TVertex vertex) =>
             ColorMapPolicy.TryGetValue(colorMap, vertex, out Color result) ? result : Color.None;
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

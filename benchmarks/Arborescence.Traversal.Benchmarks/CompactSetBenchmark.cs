@@ -21,8 +21,6 @@
         }
 
         [Params(10, 100, 1000, 10000)]
-        // ReSharper disable once MemberCanBePrivate.Global
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public int VertexCount { get; set; }
 
         private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],

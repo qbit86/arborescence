@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Represents the generic search algorithm — traversal of the graph
     /// where the order of exploring discovered vertices is determined by the specified policy.
@@ -63,5 +62,4 @@
             FringePolicy = fringePolicy;
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

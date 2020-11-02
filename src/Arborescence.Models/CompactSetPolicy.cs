@@ -2,7 +2,6 @@
 {
     using System.Runtime.CompilerServices;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Defines methods to support adding and checking items for the set represented as a compact array of bit values.
     /// </summary>
@@ -57,5 +56,4 @@
             return (int)quotient;
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

@@ -1,6 +1,5 @@
 namespace Arborescence.Traversal
 {
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Defines methods to support getting and putting items for the map represented as a byte array.
     /// </summary>
@@ -28,5 +27,4 @@ namespace Arborescence.Traversal
             map[key] = (byte)value;
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

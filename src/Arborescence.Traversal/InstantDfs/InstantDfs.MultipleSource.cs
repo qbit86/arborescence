@@ -3,8 +3,6 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections.Generic;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
-    // ReSharper disable UnusedTypeParameter
     public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
         TGraphPolicy, TColorMapPolicy>
     {
@@ -90,6 +88,4 @@ namespace Arborescence.Traversal
             }
         }
     }
-    // ReSharper restore UnusedTypeParameter
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

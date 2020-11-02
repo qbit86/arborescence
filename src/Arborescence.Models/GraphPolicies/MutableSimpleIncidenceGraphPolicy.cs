@@ -3,7 +3,6 @@ namespace Arborescence.Models
 {
     using System;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
     /// <summary>
     /// Provides access to the endpoints of each edge, and the out-edges of each vertex
     /// in the mutable simple incidence graph.
@@ -37,6 +36,5 @@ namespace Arborescence.Models
             return graph is null ? ArraySegment<Endpoints>.Empty.GetEnumerator() : graph.EnumerateOutEdges(vertex);
         }
     }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }
 #endif

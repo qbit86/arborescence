@@ -2,8 +2,6 @@ namespace Arborescence.Traversal
 {
     using System.Collections.Generic;
 
-#pragma warning disable CA1815 // Override equals and operator equals on value types
-    // ReSharper disable once UnusedTypeParameter
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph — implemented as enumerator.
     /// </summary>
@@ -16,5 +14,4 @@ namespace Arborescence.Traversal
     public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IOutEdgesConcept<int, TEdgeEnumerator>, IHeadConcept<int, TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
-#pragma warning restore CA1815 // Override equals and operator equals on value types
 }

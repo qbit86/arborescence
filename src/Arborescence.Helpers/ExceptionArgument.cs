@@ -1,6 +1,5 @@
 ﻿namespace Arborescence
 {
-    // ReSharper disable InconsistentNaming
     internal enum ExceptionArgument
     {
         array,
@@ -8,5 +7,4 @@
         index,
         start
     }
-    // ReSharper restore InconsistentNaming
 }

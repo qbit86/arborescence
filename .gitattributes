@@ -13,5 +13,5 @@
 *.props text
 *.shproj    text
 *.sln   text
-*.snk   text
+*.snk   binary
 *.txt   text
