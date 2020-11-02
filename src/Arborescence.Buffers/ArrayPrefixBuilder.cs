@@ -52,7 +52,6 @@ namespace Arborescence
 
             UncheckedGrow(ref arrayPrefix, size, clearArray);
             return arrayPrefix;
-
         }
 
         internal static ArrayPrefix<T> Release<T>(ArrayPrefix<T> arrayPrefix, bool clearArray)
