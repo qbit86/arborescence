@@ -1,11 +1,12 @@
 # Changelog
 
+## [Unreleased] - 2020-11-02
+### Changed
+- Traversal: The order of parameters in `Enumerate*()` signatures for `Bfs<>` and `Dfs<>`.
+
 ## [0.5.0] - 2020-10-24
 ### Added
 - Models: throwing `Add()` method to builders in addition to non-throwing `TryAdd()`.
-
-### Changed
-- Traversal: The order of parameters in `Enumerate*()` signatures for `Bfs<>` and `Dfs<>`.
 
 ### Removed
 - Models: `GraphBuilderExtensions` class with `TryAdd<>()` extension method.
