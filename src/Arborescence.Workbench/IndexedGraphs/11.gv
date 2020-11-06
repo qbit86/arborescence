@@ -1,0 +1,14 @@
+digraph "Dasgupta DFS" {
+  layout=neato
+  node [shape=circle fontname="Times-Italic"]
+  a [pos="0,1.41!"]
+  b [pos="0,0!"]
+  c [pos="-1.22,-0.71!"]
+  d [pos="1.22,-0.71!"]
+  a -> b [style=bold]
+  a -> d [style=solid]
+  b -> c [style=bold]
+  b -> d [style=bold]
+  c -> a [style=dotted]
+  d -> c [style=dashed]
+}
