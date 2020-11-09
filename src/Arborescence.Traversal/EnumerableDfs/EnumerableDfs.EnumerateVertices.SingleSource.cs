@@ -1,5 +1,6 @@
 namespace Arborescence.Traversal
 {
+    using System;
     using System.Collections.Generic;
 
     public readonly partial struct EnumerableDfs<
@@ -14,8 +15,14 @@ namespace Arborescence.Traversal
         /// <param name="source">The source.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>.
+        /// </exception>
         public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {

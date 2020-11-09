@@ -43,6 +43,7 @@
             TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorMap, THandler handler)
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
+            Debug.Assert(graph != null, "graph != null");
             Debug.Assert(handler != null, "handler != null");
 
             try

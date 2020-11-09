@@ -19,7 +19,8 @@ namespace Arborescence.Traversal
         /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="sources"/> is <see langword="null"/>,
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<TVertexEnumerator, THandler>(
@@ -27,6 +28,9 @@ namespace Arborescence.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             if (sources == null)
                 throw new ArgumentNullException(nameof(sources));
 

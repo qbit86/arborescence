@@ -44,6 +44,7 @@
             Func<TGraph, TVertex, bool> terminationCondition)
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
+            Debug.Assert(graph != null, "graph != null");
             Debug.Assert(handler != null, "handler != null");
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 

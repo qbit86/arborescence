@@ -1,5 +1,6 @@
 ﻿namespace Arborescence.Traversal
 {
+    using System;
     using System.Collections.Generic;
 
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
@@ -13,9 +14,15 @@
         /// <param name="fringe">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>.
+        /// </exception>
         public IEnumerator<TVertex> EnumerateVertices(
             TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             FringePolicy.Add(fringe, source);
 
             while (FringePolicy.TryTake(fringe, out TVertex u))
