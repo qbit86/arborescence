@@ -4,7 +4,7 @@
 Commonly used types:
 • Bfs&lt;TGraph, TEdge, TEdgeEnumerator&gt;
 • Dfs&lt;TGraph, TEdge, TEdgeEnumerator&gt;
-• InstantDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy&gt;
+• InstantDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy&gt;
 • IDfsHandler&lt;TGraph, TVertex, TEdge&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;traversal;bfs;dfs</PackageTags>

@@ -4,6 +4,10 @@
 ## Added
 - Abstractions: `IReadOnlySetPolicy<>` and `IReadOnlyMapPolicy<>` interfaces.
 
+## Removed
+- Abstractions: graph policy interfaces.
+- Models: graph policy implementations.
+
 ## [0.5.0] - 2020-11-03
 ### Added
 - Models: Throwing `Add()` method to builders in addition to non-throwing `TryAdd()`.

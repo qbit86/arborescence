@@ -9,15 +9,12 @@ namespace Arborescence
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
     using Graph = Models.MutableIndexedIncidenceGraph;
-    using GraphPolicy = Models.MutableIndexedIncidenceGraphPolicy;
 
     public sealed class RecursiveDfsTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; }
+        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
 
-        private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            RecursiveDfs { get; }
+        private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> RecursiveDfs { get; }
 
         private void TraverseCore(Graph graph, bool multipleSource)
         {

@@ -13,11 +13,17 @@ namespace Arborescence.Traversal
         /// <param name="source">The source.</param>
         /// <param name="vertexCount">The number of vertices.</param>
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>.
+        /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         public IEnumerator<int> EnumerateVertices(TGraph graph, int source, int vertexCount)
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 

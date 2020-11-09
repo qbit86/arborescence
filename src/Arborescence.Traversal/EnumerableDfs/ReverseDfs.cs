@@ -12,39 +12,31 @@ namespace Arborescence.Traversal
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-    /// <typeparam name="TGraphPolicy">The type of the graph policy.</typeparam>
     /// <typeparam name="TExploredSetPolicy">The type of the set policy.</typeparam>
     public readonly partial struct ReverseDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
+        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
         where TExploredSetPolicy : ISetPolicy<TExploredSet, TVertex>
     {
-        private TGraphPolicy GraphPolicy { get; }
         private TExploredSetPolicy ExploredSetPolicy { get; }
 
         /// <summary>
         /// Creates a new
-        /// <see cref="ReverseDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TExploredSet,TGraphPolicy,TExploredSetPolicy}"/>
+        /// <see cref="ReverseDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TExploredSet,TExploredSetPolicy}"/>
         /// algorithm from the given policies.
         /// </summary>
-        /// <param name="graphPolicy">The graph policy.</param>
         /// <param name="exploredSetPolicy">
         /// The <see cref="ISetPolicy{TSet,TElement}"/> implementation to use when marking explored vertices while traversing.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="graphPolicy"/> is <see langword="null"/>,
-        /// or <paramref name="exploredSetPolicy"/> is <see langword="null"/>.
+        /// <paramref name="exploredSetPolicy"/> is <see langword="null"/>.
         /// </exception>
-        public ReverseDfs(TGraphPolicy graphPolicy, TExploredSetPolicy exploredSetPolicy)
+        public ReverseDfs(TExploredSetPolicy exploredSetPolicy)
         {
-            if (graphPolicy == null)
-                throw new ArgumentNullException(nameof(graphPolicy));
-
             if (exploredSetPolicy == null)
                 throw new ArgumentNullException(nameof(exploredSetPolicy));
 
-            GraphPolicy = graphPolicy;
             ExploredSetPolicy = exploredSetPolicy;
         }
     }

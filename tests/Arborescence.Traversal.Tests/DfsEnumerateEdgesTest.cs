@@ -13,11 +13,9 @@ namespace Arborescence
 
     public sealed class DfsEnumerateEdgesTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
-            InstantDfs { get; }
+        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
 
-        private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedIncidenceGraphPolicy, IndexedSetPolicy>
-            EnumerableDfs { get; }
+        private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableDfs { get; }
 
         private void EnumerateEdgesCore(Graph graph, bool multipleSource)
         {

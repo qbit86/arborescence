@@ -27,20 +27,16 @@ namespace Arborescence
         [Params(10, 100, 1000, 10000)]
         public int VertexCount { get; set; }
 
-        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
             InstantDfs { get; }
 
-        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
             EnumerableDfs { get; }
 
-        private ReverseDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private ReverseDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
             ReverseDfs { get; }
 
         private IndexedIncidenceGraph Graph { get; set; }

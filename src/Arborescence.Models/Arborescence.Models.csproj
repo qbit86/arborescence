@@ -3,9 +3,8 @@
     <Description>Data structures for graphs, and policy models to manipulate them.
 Commonly used types:
 • IndexedIncidenceGraph
-• IndexedIncidenceGraphPolicy
 • SimpleIncidenceGraph
-• SimpleIncidenceGraphPolicy</Description>
+• IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>

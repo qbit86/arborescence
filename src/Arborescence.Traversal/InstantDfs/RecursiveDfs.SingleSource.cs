@@ -2,8 +2,7 @@
 {
     using System;
 
-    public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+    public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
     {
         private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
 
@@ -19,11 +18,15 @@
         /// </param>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handler"/> is <see langword="null"/>.
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
@@ -45,12 +48,16 @@
         /// <param name="terminationCondition">The predicate to be checked for each vertex after its discovering.</param>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handler"/> is <see langword="null"/>.
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 

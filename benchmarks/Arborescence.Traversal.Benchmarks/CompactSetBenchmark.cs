@@ -23,12 +23,10 @@
         [Params(10, 100, 1000, 10000)]
         public int VertexCount { get; set; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, CompactSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], CompactSetPolicy>
             CompactDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
             FastDfs { get; }
 
         private IndexedIncidenceGraph Graph { get; set; }

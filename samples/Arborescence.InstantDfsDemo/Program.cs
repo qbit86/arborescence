@@ -32,7 +32,7 @@ namespace Arborescence
             TextWriter w = Console.Out;
 
             InstantDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> dfs = default;
+                IndexedColorMapPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
