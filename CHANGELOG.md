@@ -1,10 +1,10 @@
 # Changelog
 
-## [Unreleased] - 2020-11-09
-## Added
+## [Unreleased] - 2020-11-10
+### Added
 - Abstractions: `IReadOnlySetPolicy<>` and `IReadOnlyMapPolicy<>` interfaces.
 
-## Removed
+### Removed
 - Abstractions: graph policy interfaces.
 - Models: graph policy implementations.
 
