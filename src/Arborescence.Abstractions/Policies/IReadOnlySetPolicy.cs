@@ -1,5 +1,10 @@
 namespace Arborescence
 {
+    /// <summary>
+    /// Defines a method to check if a set contains a specific item.
+    /// </summary>
+    /// <typeparam name="TSet">The type of the set.</typeparam>
+    /// <typeparam name="TElement">The type of the elements in the set.</typeparam>
     public interface IReadOnlySetPolicy<in TSet, in TElement>
     {
         /// <summary>

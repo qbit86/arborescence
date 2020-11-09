@@ -1,5 +1,11 @@
 namespace Arborescence
 {
+    /// <summary>
+    /// Defines a method to get items from a map.
+    /// </summary>
+    /// <typeparam name="TMap">The type of the map.</typeparam>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
     public interface IReadOnlyMapPolicy<in TMap, in TKey, TValue>
     {
         /// <summary>

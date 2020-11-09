@@ -1,7 +1,7 @@
 ﻿namespace Arborescence
 {
     /// <summary>
-    /// Defines methods to support adding and checking items for the set.
+    /// Defines methods to support adding and checking items for a set.
     /// </summary>
     /// <typeparam name="TSet">The type of the set.</typeparam>
     /// <typeparam name="TElement">The type of the elements in the set.</typeparam>

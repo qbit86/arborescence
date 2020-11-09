@@ -1,7 +1,7 @@
 ﻿namespace Arborescence
 {
     /// <summary>
-    /// Defines methods to support getting and putting items for the map.
+    /// Defines methods to support getting and putting items for a map.
     /// </summary>
     /// <typeparam name="TMap">The type of the map.</typeparam>
     /// <typeparam name="TKey">The type of the key.</typeparam>
