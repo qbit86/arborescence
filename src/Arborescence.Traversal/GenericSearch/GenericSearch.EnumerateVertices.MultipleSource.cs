@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
-        TExploredSet, TGraphPolicy, TFringePolicy, TExploredSetPolicy>
+        TExploredSet, TFringePolicy, TExploredSetPolicy>
     {
         /// <summary>
         /// Enumerates vertices of the graph in an order specified by the fringe starting from the multiple sources.
@@ -32,11 +32,11 @@
                 ExploredSetPolicy.Add(exploredSet, u);
                 yield return u;
 
-                TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                 while (outEdges.MoveNext())
                 {
                     TEdge e = outEdges.Current;
-                    if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                    if (!graph.TryGetHead(e, out TVertex v))
                         continue;
 
                     FringePolicy.Add(fringe, v);

@@ -21,7 +21,7 @@
             var steps = new List<int>();
             DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
             RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> dfs = default;
+                IndexedColorMapPolicy> dfs = default;
 
             dfs.Traverse(graph, 0, colorMap, dfsHandler);
             Console.WriteLine(steps.Count);

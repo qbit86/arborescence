@@ -3,7 +3,7 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 
     public readonly partial struct ReverseDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
     {
         /// <summary>
         /// Enumerates edges of the graph in a depth-first order starting from the single source.
@@ -29,11 +29,11 @@ namespace Arborescence.Traversal
                         yield return inEdge;
                     ExploredSetPolicy.Add(exploredSet, u);
 
-                    TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
                     {
                         TEdge e = outEdges.Current;
-                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        if (!graph.TryGetHead(e, out TVertex v))
                             continue;
 
                         stack.Add(new EdgeInfo<TVertex, TEdge>(v, e));

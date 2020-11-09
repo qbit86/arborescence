@@ -20,12 +20,10 @@
         [Params(10, 100, 1000)]
         public int VertexCount { get; set; }
 
-        private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy>
+        private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
             InstantBfs { get; set; }
 
-        private EnumerableBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedSetPolicy>
+        private EnumerableBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
             EnumerableBfs { get; set; }
 
         private IndexedIncidenceGraph Graph { get; set; }

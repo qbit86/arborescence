@@ -2,8 +2,7 @@ namespace Arborescence.Traversal
 {
     using System;
 
-    public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+    public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
     {
         private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
 

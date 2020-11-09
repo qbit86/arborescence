@@ -3,7 +3,7 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 
     public readonly partial struct EnumerableDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
     {
         /// <summary>
         /// Enumerates vertices of the graph in a depth-first order starting from the multiple sources.
@@ -28,7 +28,7 @@ namespace Arborescence.Traversal
 
                     ExploredSetPolicy.Add(exploredSet, source);
                     yield return source;
-                    stack.Add(GraphPolicy.EnumerateOutEdges(graph, source));
+                    stack.Add(graph.EnumerateOutEdges(source));
 
                     while (stack.TryTake(out TEdgeEnumerator outEdges))
                     {
@@ -38,7 +38,7 @@ namespace Arborescence.Traversal
                         stack.Add(outEdges);
 
                         TEdge e = outEdges.Current;
-                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        if (!graph.TryGetHead(e, out TVertex v))
                             continue;
 
                         if (ExploredSetPolicy.Contains(exploredSet, v))
@@ -46,7 +46,7 @@ namespace Arborescence.Traversal
 
                         ExploredSetPolicy.Add(exploredSet, v);
                         yield return v;
-                        stack.Add(GraphPolicy.EnumerateOutEdges(graph, v));
+                        stack.Add(graph.EnumerateOutEdges(v));
                     }
                 }
             }

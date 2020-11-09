@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy,
-        TColorMapPolicy>
+    public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
     {
         /// <summary>
         /// Traverses the graph in a DFS manner starting from the multiple sources.

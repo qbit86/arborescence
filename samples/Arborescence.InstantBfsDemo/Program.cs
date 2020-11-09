@@ -32,7 +32,7 @@
             TextWriter w = Console.Out;
 
             InstantBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
-                IndexedIncidenceGraphPolicy, IndexedColorMapPolicy> bfs = default;
+                IndexedColorMapPolicy> bfs = default;
 
             w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");

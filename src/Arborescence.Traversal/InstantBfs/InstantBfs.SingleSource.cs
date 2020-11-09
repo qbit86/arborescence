@@ -4,7 +4,7 @@ namespace Arborescence.Traversal
     using Internal;
 
     public readonly partial struct InstantBfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
     {
         /// <summary>
         /// Traverses the graph in a BFS manner starting from the single source.

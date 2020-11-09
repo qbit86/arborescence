@@ -31,7 +31,7 @@
             TextWriter w = Console.Out;
 
             EnumerableDfs<SimpleIncidenceGraph, int, Endpoints, ArraySegment<Endpoints>.Enumerator, byte[],
-                SimpleIncidenceGraphPolicy, IndexedSetPolicy> dfs = default;
+                IndexedSetPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
