@@ -3,6 +3,9 @@
     <RootNamespace>Arborescence.Search</RootNamespace>
     <TargetFrameworks>netcoreapp2.0;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
