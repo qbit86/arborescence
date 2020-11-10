@@ -15,7 +15,18 @@ namespace Arborescence.Internal
         private const int DefaultCapacity = 4;
 
         private TElement[] _arrayFromPool;
+        private readonly TPriorityComparer _priorityComparer;
         private int _count;
+
+        public MinHeap(TPriorityComparer priorityComparer)
+        {
+            if (priorityComparer is null)
+                throw new ArgumentNullException(nameof(priorityComparer));
+
+            _arrayFromPool = Array.Empty<TElement>();
+            _priorityComparer = priorityComparer;
+            _count = 0;
+        }
 
         private static ArrayPool<TElement> Pool => ArrayPool<TElement>.Shared;
 
