@@ -7,7 +7,6 @@ Commonly used types:
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
     <VersionPrefix>0.6.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.6</AssemblyVersion>
