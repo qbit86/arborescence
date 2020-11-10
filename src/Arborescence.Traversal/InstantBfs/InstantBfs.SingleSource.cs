@@ -4,7 +4,7 @@ namespace Arborescence.Traversal
     using Internal;
 
     public readonly partial struct InstantBfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TGraphPolicy, TColorMapPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
     {
         /// <summary>
         /// Traverses the graph in a BFS manner starting from the single source.
@@ -18,12 +18,16 @@ namespace Arborescence.Traversal
         /// </param>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handler"/> is <see langword="null"/>.
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<THandler>(
             TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 

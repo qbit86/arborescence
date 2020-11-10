@@ -1,9 +1,10 @@
 namespace Arborescence.Traversal
 {
+    using System;
     using System.Collections.Generic;
 
     public readonly partial struct EnumerableDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TGraphPolicy, TExploredSetPolicy>
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
     {
         /// <summary>
         /// Enumerates edges of the graph in a depth-first order starting from the multiple sources.
@@ -13,10 +14,20 @@ namespace Arborescence.Traversal
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
         /// <returns>An enumerator to enumerate the edges of the the graph.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// </exception>
         public IEnumerator<TEdge> EnumerateEdges<TVertexEnumerator>(
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
         {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
+            if (sources == null)
+                throw new ArgumentNullException(nameof(sources));
+
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
@@ -27,7 +38,7 @@ namespace Arborescence.Traversal
                         continue;
 
                     ExploredSetPolicy.Add(exploredSet, source);
-                    stack.Add(GraphPolicy.EnumerateOutEdges(graph, source));
+                    stack.Add(graph.EnumerateOutEdges(source));
 
                     while (stack.TryTake(out TEdgeEnumerator outEdges))
                     {
@@ -37,7 +48,7 @@ namespace Arborescence.Traversal
                         stack.Add(outEdges);
 
                         TEdge e = outEdges.Current;
-                        if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                        if (!graph.TryGetHead(e, out TVertex v))
                             continue;
 
                         if (ExploredSetPolicy.Contains(exploredSet, v))
@@ -45,7 +56,7 @@ namespace Arborescence.Traversal
 
                         yield return e;
                         ExploredSetPolicy.Add(exploredSet, v);
-                        stack.Add(GraphPolicy.EnumerateOutEdges(graph, v));
+                        stack.Add(graph.EnumerateOutEdges(v));
                     }
                 }
             }

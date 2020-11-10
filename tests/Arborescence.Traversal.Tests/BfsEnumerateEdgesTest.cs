@@ -10,15 +10,12 @@ namespace Arborescence
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.SimpleIncidenceGraph;
-    using GraphPolicy = Models.SimpleIncidenceGraphPolicy;
 
     public sealed class BfsEnumerateEdgesTest
     {
-        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantBfs { get; }
+        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantBfs { get; }
 
-        private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
-            EnumerableBfs { get; }
+        private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableBfs { get; }
 
         private void EnumerateEdgesCore(Graph graph, bool multipleSource)
         {

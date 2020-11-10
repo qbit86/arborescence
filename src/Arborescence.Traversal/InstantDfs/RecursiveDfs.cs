@@ -13,45 +13,38 @@
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
-    /// <typeparam name="TGraphPolicy">The type of the graph policy.</typeparam>
     /// <typeparam name="TColorMapPolicy">The type of the vertex color map policy.</typeparam>
     public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap,
-        TGraphPolicy, TColorMapPolicy>
+        TColorMapPolicy>
+        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TGraphPolicy : IOutEdgesPolicy<TGraph, TVertex, TEdgeEnumerator>, IHeadPolicy<TGraph, TVertex, TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="RecursiveDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TGraphPolicy,TColorMapPolicy}"/> struct.
+        /// <see cref="RecursiveDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/> struct.
         /// </summary>
-        /// <param name="graphPolicy">The graph policy.</param>
         /// <param name="colorMapPolicy">
         /// The <see cref="IMapPolicy{TMap,TKey,TValue}"/> implementation to use when marking explored vertices while traversing.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="graphPolicy"/> is <see langword="null"/>,
-        /// or <paramref name="colorMapPolicy"/> is <see langword="null"/>.
+        /// <paramref name="colorMapPolicy"/> is <see langword="null"/>.
         /// </exception>
-        public RecursiveDfs(TGraphPolicy graphPolicy, TColorMapPolicy colorMapPolicy)
+        public RecursiveDfs(TColorMapPolicy colorMapPolicy)
         {
-            if (graphPolicy == null)
-                throw new ArgumentNullException(nameof(graphPolicy));
-
             if (colorMapPolicy == null)
                 throw new ArgumentNullException(nameof(colorMapPolicy));
 
-            GraphPolicy = graphPolicy;
             ColorMapPolicy = colorMapPolicy;
         }
 
-        private TGraphPolicy GraphPolicy { get; }
         private TColorMapPolicy ColorMapPolicy { get; }
 
         private void TraverseCore<THandler>(TGraph graph, TVertex u, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
+            Debug.Assert(graph != null, "graph != null");
             Debug.Assert(handler != null, "handler != null");
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 
@@ -65,11 +58,11 @@
                 return;
             }
 
-            TEdgeEnumerator outEdges = GraphPolicy.EnumerateOutEdges(graph, u);
+            TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
             while (outEdges.MoveNext())
             {
                 TEdge e = outEdges.Current;
-                if (!GraphPolicy.TryGetHead(graph, e, out TVertex v))
+                if (!graph.TryGetHead(e, out TVertex v))
                     continue;
 
                 handler.OnExamineEdge(graph, e);

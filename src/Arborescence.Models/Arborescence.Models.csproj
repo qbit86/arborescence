@@ -3,16 +3,15 @@
     <Description>Data structures for graphs, and policy models to manipulate them.
 Commonly used types:
 • IndexedIncidenceGraph
-• IndexedIncidenceGraphPolicy
 • SimpleIncidenceGraph
-• SimpleIncidenceGraphPolicy</Description>
+• IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.5.0</VersionPrefix>
+    <VersionPrefix>0.6.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.5</AssemblyVersion>
+    <AssemblyVersion>0.6</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <TargetFrameworks>netcoreapp2.0;netcoreapp2.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>

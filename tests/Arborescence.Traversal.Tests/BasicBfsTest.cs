@@ -9,14 +9,12 @@ namespace Arborescence
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.SimpleIncidenceGraph;
-    using GraphPolicy = Models.SimpleIncidenceGraphPolicy;
 
     public sealed class BasicBfsTest
     {
         private Bfs<Graph, Endpoints, EdgeEnumerator> Bfs { get; }
 
-        private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedSetPolicy>
-            EnumerableBfs { get; }
+        private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableBfs { get; }
 
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]

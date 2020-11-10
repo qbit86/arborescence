@@ -10,15 +10,12 @@ namespace Arborescence
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.MutableSimpleIncidenceGraph;
-    using GraphPolicy = Models.MutableSimpleIncidenceGraphPolicy;
 
     public class QueueGenericSearchEnumerateVerticesTest
     {
-        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], GraphPolicy, IndexedColorMapPolicy>
-            InstantBfs { get; }
+        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantBfs { get; }
 
-        private GenericSearch<
-                Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], GraphPolicy, QueuePolicy, IndexedSetPolicy>
+        private GenericSearch<Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
