@@ -159,6 +159,10 @@ namespace Arborescence.Internal
         private bool TryGetIndex(TElement element, out int index) =>
             _indexMapPolicy.TryGetValue(_indexByElement, element, out index);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryGetPriority(TElement element, out TPriority priority) =>
+            _priorityMapPolicy.TryGetValue(_priorityByElement, element, out priority);
+
         private void UncheckedAdd(TElement element)
         {
             int count = _count;
@@ -219,8 +223,8 @@ namespace Arborescence.Internal
 
         private int Compare(TElement left, TElement right)
         {
-            bool hasLeft = _priorityMapPolicy.TryGetValue(_priorityByElement, left, out TPriority leftPriority);
-            bool hasRight = _priorityMapPolicy.TryGetValue(_priorityByElement, right, out TPriority rightPriority);
+            bool hasLeft = TryGetPriority(left, out TPriority leftPriority);
+            bool hasRight = TryGetPriority(right, out TPriority rightPriority);
             if (!hasLeft)
                 return hasRight ? 1 : 0;
 
