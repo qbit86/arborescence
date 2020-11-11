@@ -55,6 +55,8 @@ namespace Arborescence.Internal
 
         private static ArrayPool<TElement> Pool => ArrayPool<TElement>.Shared;
 
+        internal int Count => _count;
+
         public void Dispose()
         {
             TElement[] arrayFromPool = _arrayFromPool;
@@ -81,11 +83,6 @@ namespace Arborescence.Internal
             VerifyHeap();
         }
 
-        internal void AddOrUpdate(TElement element)
-        {
-            throw new NotImplementedException();
-        }
-
         internal bool TryPeek(out TElement element)
         {
             if (_count == 0)
@@ -105,6 +102,18 @@ namespace Arborescence.Internal
             if (count == 0)
                 return false;
 
+            throw new NotImplementedException();
+        }
+
+        internal void Update(TElement element)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool Contains(TElement element) => _indexMapPolicy.TryGetValue(_indexByElement, element, out _);
+
+        internal void AddOrUpdate(TElement element)
+        {
             throw new NotImplementedException();
         }
 
