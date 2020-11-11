@@ -135,7 +135,9 @@ namespace Arborescence.Internal
             Pool.Return(arrayFromPool, ShouldClear());
         }
 
-        private static int GetParentIndex(int index) => (index - 1) / Arity;
+        private static int GetParent(int index) => (index - 1) / Arity;
+
+        private static int GetChild(int index, int childIndex) => index * Arity + childIndex + 1;
 
         private void Swap(int leftIndex, int rightIndex)
         {
@@ -168,7 +170,7 @@ namespace Arborescence.Internal
         {
             for (int i = 1; i < _arrayFromPool.Length; ++i)
             {
-                int order = Compare(_arrayFromPool[i], _arrayFromPool[GetParentIndex(i)]);
+                int order = Compare(_arrayFromPool[i], _arrayFromPool[GetParent(i)]);
                 if (order < 0)
                     throw new InvalidOperationException("Element is smaller than it's parent.");
             }
