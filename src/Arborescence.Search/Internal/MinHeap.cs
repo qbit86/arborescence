@@ -102,7 +102,29 @@ namespace Arborescence.Internal
             if (count == 0)
                 return false;
 
-            throw new NotImplementedException();
+            TElement[] arrayFromPool = _arrayFromPool;
+            Debug.Assert(arrayFromPool.Length > 0, "arrayFromPool.Length > 0");
+            TElement root = arrayFromPool[0];
+            _indexMapPolicy.AddOrUpdate(_indexByElement, root, -1);
+            if (count == 1)
+            {
+                _count = 0;
+                if (ShouldClear())
+                    arrayFromPool[0] = default;
+
+                return true;
+            }
+
+            int newCount = count - 1;
+            arrayFromPool[0] = arrayFromPool[newCount];
+            _indexMapPolicy.AddOrUpdate(_indexByElement, arrayFromPool[0], 0);
+            _count = newCount;
+            if (ShouldClear())
+                arrayFromPool[newCount] = default;
+
+            HeapifyDown();
+            VerifyHeap();
+            return true;
         }
 
         internal void Update(TElement element)
@@ -110,7 +132,8 @@ namespace Arborescence.Internal
             throw new NotImplementedException();
         }
 
-        internal bool Contains(TElement element) => _indexMapPolicy.TryGetValue(_indexByElement, element, out _);
+        internal bool Contains(TElement element) =>
+            _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
 
         internal void AddOrUpdate(TElement element)
         {
