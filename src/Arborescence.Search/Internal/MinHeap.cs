@@ -91,7 +91,8 @@ namespace Arborescence.Internal
                 return false;
             }
 
-            throw new NotImplementedException();
+            element = _arrayFromPool[0];
+            return true;
         }
 
         internal bool TryTake()
