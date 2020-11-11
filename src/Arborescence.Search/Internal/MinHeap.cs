@@ -97,7 +97,7 @@ namespace Arborescence.Internal
             Debug.Assert(array.Length > 0, "array.Length > 0");
 
             TElement root = array[0];
-            _indexMapPolicy.AddOrUpdate(_indexByElement, root, -1);
+            AddOrUpdateIndex(root, -1);
             if (count == 1)
             {
                 _count = 0;
@@ -109,7 +109,7 @@ namespace Arborescence.Internal
 
             int newCount = count - 1;
             array[0] = array[newCount];
-            _indexMapPolicy.AddOrUpdate(_indexByElement, array[0], 0);
+            AddOrUpdateIndex(array[0], 0);
             _count = newCount;
             if (ShouldClear())
                 array[newCount] = default;
@@ -123,7 +123,7 @@ namespace Arborescence.Internal
         // It assumes the priority has already been updated (using an external write to the priority map or such).
         internal bool Update(TElement element)
         {
-            bool hasIndex = _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
+            bool hasIndex = TryGetIndex(element, out int index) && index != -1;
             if (hasIndex)
             {
                 HeapifyUp(index);
@@ -133,12 +133,11 @@ namespace Arborescence.Internal
             return hasIndex;
         }
 
-        internal bool Contains(TElement element) =>
-            _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
+        internal bool Contains(TElement element) => TryGetIndex(element, out int index) && index != -1;
 
         internal void AddOrUpdate(TElement element)
         {
-            bool hasIndex = _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
+            bool hasIndex = TryGetIndex(element, out int index) && index != -1;
             if (hasIndex)
             {
                 HeapifyUp(index);
@@ -152,6 +151,14 @@ namespace Arborescence.Internal
             VerifyHeap();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void AddOrUpdateIndex(TElement element, int index) =>
+            _indexMapPolicy.AddOrUpdate(_indexByElement, element, index);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryGetIndex(TElement element, out int index) =>
+            _indexMapPolicy.TryGetValue(_indexByElement, element, out index);
+
         private void UncheckedAdd(TElement element)
         {
             int count = _count;
@@ -160,7 +167,7 @@ namespace Arborescence.Internal
 
             array[count] = element;
             _count = count + 1;
-            _indexMapPolicy.AddOrUpdate(_indexByElement, element, count);
+            AddOrUpdateIndex(element, count);
             HeapifyUp(count);
         }
 
@@ -206,8 +213,8 @@ namespace Arborescence.Internal
             TElement right = array[rightIndex];
             array[leftIndex] = right;
             array[rightIndex] = left;
-            _indexMapPolicy.AddOrUpdate(_indexByElement, left, rightIndex);
-            _indexMapPolicy.AddOrUpdate(_indexByElement, right, leftIndex);
+            AddOrUpdateIndex(left, rightIndex);
+            AddOrUpdateIndex(right, leftIndex);
         }
 
         private int Compare(TElement left, TElement right)
