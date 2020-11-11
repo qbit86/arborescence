@@ -132,7 +132,16 @@ namespace Arborescence.Internal
             bool hasIndex = _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
             if (!hasIndex)
             {
-                throw new NotImplementedException();
+                EnsureCapacity();
+
+                int count = _count;
+                TElement[] array = _arrayFromPool;
+                Debug.Assert(unchecked((uint)count < (uint)array.Length), "(uint)count < (uint)array.Length");
+
+                index = count;
+                array[count] = element;
+                _count = count + 1;
+                _indexMapPolicy.AddOrUpdate(_indexByElement, element, count);
             }
 
             HeapifyUp(index);
