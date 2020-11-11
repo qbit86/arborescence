@@ -6,6 +6,8 @@ namespace Arborescence.Internal
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
+    // https://github.com/boostorg/graph/blob/develop/include/boost/graph/detail/d_ary_heap.hpp
+
     internal struct MinHeap<
             TElement, TPriority, TPriorityMap, TIndexMap, TPriorityComparer, TPriorityMapPolicy, TIndexMapPolicy>
         : IDisposable
@@ -133,6 +135,21 @@ namespace Arborescence.Internal
             Pool.Return(arrayFromPool, ShouldClear());
         }
 
+        private static int GetParentIndex(int index) => (index - 1) / Arity;
+
+        private void Swap(int leftIndex, int rightIndex)
+        {
+            Debug.Assert(unchecked((uint)leftIndex < (uint)_count), "(uint)leftIndex < (uint)_count");
+            Debug.Assert(unchecked((uint)rightIndex < (uint)_count), "(uint)rightIndex < (uint)_count");
+
+            TElement left = _arrayFromPool[leftIndex];
+            TElement right = _arrayFromPool[rightIndex];
+            _arrayFromPool[leftIndex] = right;
+            _arrayFromPool[rightIndex] = left;
+            _indexMapPolicy.AddOrUpdate(_indexByElement, left, rightIndex);
+            _indexMapPolicy.AddOrUpdate(_indexByElement, right, leftIndex);
+        }
+
         private int Compare(TElement left, TElement right)
         {
             bool hasLeft = _priorityMapPolicy.TryGetValue(_priorityByElement, left, out TPriority leftPriority);
@@ -146,8 +163,6 @@ namespace Arborescence.Internal
             return _priorityComparer.Compare(leftPriority, rightPriority);
         }
 
-        private static int GetParentIndex(int index) => (index - 1) / Arity;
-
         [Conditional("DEBUG")]
         private void VerifyHeap()
         {
@@ -160,6 +175,11 @@ namespace Arborescence.Internal
         }
 
         private void HeapifyUp(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void HeapifyDown()
         {
             throw new NotImplementedException();
         }
