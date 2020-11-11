@@ -67,19 +67,8 @@ namespace Arborescence.Internal
 
         internal void Add(TElement element)
         {
-            int count = _count;
-            TElement[] array = _arrayFromPool;
-
-            if ((uint)count < (uint)array.Length)
-            {
-                UncheckedAdd(element);
-            }
-            else
-            {
-                UncheckedGrow();
-                UncheckedAdd(element);
-            }
-
+            EnsureCapacity();
+            UncheckedAdd(element);
             VerifyHeap();
         }
 
@@ -90,6 +79,8 @@ namespace Arborescence.Internal
                 element = default;
                 return false;
             }
+
+            Debug.Assert(_arrayFromPool.Length > 0, "_arrayFromPool.Length > 0");
 
             element = _arrayFromPool[0];
             return true;
@@ -102,25 +93,26 @@ namespace Arborescence.Internal
             if (count == 0)
                 return false;
 
-            TElement[] arrayFromPool = _arrayFromPool;
-            Debug.Assert(arrayFromPool.Length > 0, "arrayFromPool.Length > 0");
-            TElement root = arrayFromPool[0];
+            TElement[] array = _arrayFromPool;
+            Debug.Assert(array.Length > 0, "array.Length > 0");
+
+            TElement root = array[0];
             _indexMapPolicy.AddOrUpdate(_indexByElement, root, -1);
             if (count == 1)
             {
                 _count = 0;
                 if (ShouldClear())
-                    arrayFromPool[0] = default;
+                    array[0] = default;
 
                 return true;
             }
 
             int newCount = count - 1;
-            arrayFromPool[0] = arrayFromPool[newCount];
-            _indexMapPolicy.AddOrUpdate(_indexByElement, arrayFromPool[0], 0);
+            array[0] = array[newCount];
+            _indexMapPolicy.AddOrUpdate(_indexByElement, array[0], 0);
             _count = newCount;
             if (ShouldClear())
-                arrayFromPool[newCount] = default;
+                array[newCount] = default;
 
             HeapifyDown();
             VerifyHeap();
@@ -137,14 +129,21 @@ namespace Arborescence.Internal
 
         internal void AddOrUpdate(TElement element)
         {
-            throw new NotImplementedException();
+            bool hasIndex = _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
+            if (!hasIndex)
+            {
+                throw new NotImplementedException();
+            }
+
+            HeapifyUp(index);
+            VerifyHeap();
         }
 
         private void UncheckedAdd(TElement element)
         {
             int count = _count;
             TElement[] array = _arrayFromPool;
-            Debug.Assert((uint)count < (uint)array.Length, "(uint)count < (uint)array.Length");
+            Debug.Assert(unchecked((uint)count < (uint)array.Length), "(uint)count < (uint)array.Length");
 
             array[count] = element;
             _count = count + 1;
@@ -156,7 +155,8 @@ namespace Arborescence.Internal
         {
             int count = _count;
             TElement[] arrayFromPool = _arrayFromPool;
-            Debug.Assert((uint)count == (uint)arrayFromPool.Length, "(uint)count == (uint)arrayFromPool.Length");
+            Debug.Assert(
+                unchecked((uint)count == (uint)arrayFromPool.Length), "(uint)count == (uint)arrayFromPool.Length");
 
             int newCapacity = count > 0 ? count << 1 : DefaultCapacity;
             TElement[] newArrayFromPool = Pool.Rent(newCapacity);
@@ -167,19 +167,32 @@ namespace Arborescence.Internal
             Pool.Return(arrayFromPool, ShouldClear());
         }
 
+        private void EnsureCapacity()
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+
+            if (unchecked((uint)count == (uint)array.Length))
+                UncheckedGrow();
+        }
+
         private static int GetParent(int index) => (index - 1) / Arity;
 
         private static int GetChild(int index, int childIndex) => index * Arity + childIndex + 1;
 
         private void Swap(int leftIndex, int rightIndex)
         {
-            Debug.Assert(unchecked((uint)leftIndex < (uint)_count), "(uint)leftIndex < (uint)_count");
-            Debug.Assert(unchecked((uint)rightIndex < (uint)_count), "(uint)rightIndex < (uint)_count");
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+            Debug.Assert(unchecked((uint)leftIndex < (uint)count), "(uint)leftIndex < (uint)count");
+            Debug.Assert(unchecked((uint)rightIndex < (uint)count), "(uint)rightIndex < (uint)count");
 
-            TElement left = _arrayFromPool[leftIndex];
-            TElement right = _arrayFromPool[rightIndex];
-            _arrayFromPool[leftIndex] = right;
-            _arrayFromPool[rightIndex] = left;
+            TElement left = array[leftIndex];
+            TElement right = array[rightIndex];
+            array[leftIndex] = right;
+            array[rightIndex] = left;
             _indexMapPolicy.AddOrUpdate(_indexByElement, left, rightIndex);
             _indexMapPolicy.AddOrUpdate(_indexByElement, right, leftIndex);
         }
@@ -200,9 +213,13 @@ namespace Arborescence.Internal
         [Conditional("DEBUG")]
         private void VerifyHeap()
         {
-            for (int i = 1; i < _arrayFromPool.Length; ++i)
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+
+            for (int i = 1; i < count; ++i)
             {
-                int order = Compare(_arrayFromPool[i], _arrayFromPool[GetParent(i)]);
+                int order = Compare(array[i], array[GetParent(i)]);
                 if (order < 0)
                     throw new InvalidOperationException("Element is smaller than it's parent.");
             }
