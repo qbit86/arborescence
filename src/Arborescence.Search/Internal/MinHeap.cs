@@ -119,9 +119,18 @@ namespace Arborescence.Internal
             return true;
         }
 
-        internal void Update(TElement element)
+        // This function is also known as DecreaseKey.
+        // It assumes the priority has already been updated (using an external write to the priority map or such).
+        internal bool Update(TElement element)
         {
-            throw new NotImplementedException();
+            bool hasIndex = _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
+            if (hasIndex)
+            {
+                HeapifyUp(index);
+                VerifyHeap();
+            }
+
+            return hasIndex;
         }
 
         internal bool Contains(TElement element) =>
@@ -130,21 +139,16 @@ namespace Arborescence.Internal
         internal void AddOrUpdate(TElement element)
         {
             bool hasIndex = _indexMapPolicy.TryGetValue(_indexByElement, element, out int index) && index != -1;
-            if (!hasIndex)
+            if (hasIndex)
+            {
+                HeapifyUp(index);
+            }
+            else
             {
                 EnsureCapacity();
-
-                int count = _count;
-                TElement[] array = _arrayFromPool;
-                Debug.Assert(unchecked((uint)count < (uint)array.Length), "(uint)count < (uint)array.Length");
-
-                index = count;
-                array[count] = element;
-                _count = count + 1;
-                _indexMapPolicy.AddOrUpdate(_indexByElement, element, count);
+                UncheckedAdd(element);
             }
 
-            HeapifyUp(index);
             VerifyHeap();
         }
 
