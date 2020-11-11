@@ -245,7 +245,28 @@ namespace Arborescence.Internal
 
         private void HeapifyDown()
         {
-            throw new NotImplementedException();
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+
+            if (count == 0)
+                return;
+
+            TElement currentlyBeingMoved = array[0];
+            bool rootHasPriority = _priorityMapPolicy.TryGetValue(
+                _priorityByElement, currentlyBeingMoved, out TPriority currentlyBeingMovedPriority);
+
+            if (!rootHasPriority)
+                throw new InvalidOperationException("Element doesn't have priority.");
+
+            for (int index = 0;;)
+            {
+                int childrenOffset = GetChild(index, 0);
+                if (childrenOffset >= count)
+                    break;
+
+                throw new NotImplementedException();
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
