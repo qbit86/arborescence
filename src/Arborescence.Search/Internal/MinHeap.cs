@@ -112,7 +112,10 @@ namespace Arborescence.Internal
             TElement[] array = _arrayFromPool;
             Debug.Assert((uint)count < (uint)array.Length, "(uint)count < (uint)array.Length");
 
-            throw new NotImplementedException();
+            array[count] = element;
+            _count = count + 1;
+            _indexMapPolicy.AddOrUpdate(_indexByElement, element, count);
+            HeapifyUp(count);
         }
 
         private void UncheckedGrow()
@@ -154,6 +157,11 @@ namespace Arborescence.Internal
                 if (order < 0)
                     throw new InvalidOperationException("Element is smaller than it's parent.");
             }
+        }
+
+        private void HeapifyUp(int index)
+        {
+            throw new NotImplementedException();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
