@@ -13,6 +13,7 @@ namespace Arborescence.Internal
         where TPriorityMapPolicy : IReadOnlyMapPolicy<TPriorityMap, TElement, TPriority>
         where TIndexMapPolicy : IMapPolicy<TIndexMap, TElement, int>
     {
+        private const int Arity = 4;
         private const int DefaultCapacity = 4;
 
         private TElement[] _arrayFromPool;
@@ -129,10 +130,30 @@ namespace Arborescence.Internal
             Pool.Return(arrayFromPool, ShouldClear());
         }
 
+        private int Compare(TElement left, TElement right)
+        {
+            bool hasLeft = _priorityMapPolicy.TryGetValue(_priorityByElement, left, out TPriority leftPriority);
+            bool hasRight = _priorityMapPolicy.TryGetValue(_priorityByElement, right, out TPriority rightPriority);
+            if (!hasLeft)
+                return hasRight ? 1 : 0;
+
+            if (!hasRight)
+                return -1;
+
+            return _priorityComparer.Compare(leftPriority, rightPriority);
+        }
+
+        private static int GetParentIndex(int index) => (index - 1) / Arity;
+
         [Conditional("DEBUG")]
         private void VerifyHeap()
         {
-            throw new NotImplementedException();
+            for (int i = 1; i < _arrayFromPool.Length; ++i)
+            {
+                int order = Compare(_arrayFromPool[i], _arrayFromPool[GetParentIndex(i)]);
+                if (order < 0)
+                    throw new InvalidOperationException("Element is smaller than it's parent.");
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
