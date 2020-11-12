@@ -266,7 +266,45 @@ namespace Arborescence.Internal
             if (index == 0 || count <= 1)
                 return;
 
-            throw new NotImplementedException();
+            if (index >= count)
+                return;
+
+            int originalIndex = index;
+            int levelMovedCount = 0;
+
+            TElement currentlyBeingMovedElement = array[index];
+            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+
+            while (true)
+            {
+                if (index == 0)
+                    break;
+
+                int parentIndex = GetParent(index);
+                TElement parentElement = array[parentIndex];
+                TPriority parentPriority = GetPriorityOrThrow(parentElement);
+                if (_priorityComparer.Compare(currentlyBeingMovedPriority, parentPriority) < 0)
+                {
+                    ++levelMovedCount;
+                    index = parentIndex;
+                    continue;
+                }
+
+                break;
+            }
+
+            index = originalIndex;
+            for (int i = 0; i < levelMovedCount; ++i)
+            {
+                int parentIndex = GetParent(index);
+                TElement parentElement = array[parentIndex];
+                AddOrUpdateIndex(parentElement, index);
+                array[index] = parentElement;
+                index = parentIndex;
+            }
+
+            array[index] = currentlyBeingMovedElement;
+            AddOrUpdateIndex(currentlyBeingMovedElement, index);
         }
 
         private void HeapifyDown()
