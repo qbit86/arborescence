@@ -163,6 +163,14 @@ namespace Arborescence.Internal
         private bool TryGetPriority(TElement element, out TPriority priority) =>
             _priorityMapPolicy.TryGetValue(_priorityByElement, element, out priority);
 
+        private TPriority GetPriorityOrThrow(TElement element)
+        {
+            if (_priorityMapPolicy.TryGetValue(_priorityByElement, element, out TPriority priority))
+                return priority;
+
+            throw new InvalidOperationException("Priority was not found for the given element.");
+        }
+
         private void UncheckedAdd(TElement element)
         {
             int count = _count;
@@ -260,23 +268,41 @@ namespace Arborescence.Internal
             int count = _count;
             Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
 
-            if (count == 0)
+            if (count <= 1)
                 return;
 
-            TElement currentlyBeingMoved = array[0];
-            bool rootHasPriority = _priorityMapPolicy.TryGetValue(
-                _priorityByElement, currentlyBeingMoved, out TPriority currentlyBeingMovedPriority);
-
-            if (!rootHasPriority)
-                throw new InvalidOperationException("Element doesn't have priority.");
-
-            for (int index = 0;;)
+            int currentlyBeingMovedIndex = 0;
+            TElement currentlyBeingMovedElement = array[currentlyBeingMovedIndex];
+            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+            while (true)
             {
-                int childrenOffset = GetChild(index, 0);
-                if (childrenOffset >= count)
+                int childrenOffset = GetChild(currentlyBeingMovedIndex, 0);
+                int childCount = Math.Min(count - childrenOffset, Arity);
+                if (childCount <= 0)
                     break;
 
-                throw new NotImplementedException();
+                var children = new Span<TElement>(array, childrenOffset, childCount);
+                int smallestChildIndex = 0;
+                TPriority smallestChildPriority = GetPriorityOrThrow(children[smallestChildIndex]);
+                for (int i = 1; i < childCount; ++i)
+                {
+                    TElement child = children[i];
+                    TPriority priority = GetPriorityOrThrow(child);
+                    if (_priorityComparer.Compare(priority, smallestChildPriority) < 0)
+                    {
+                        smallestChildIndex = i;
+                        smallestChildPriority = priority;
+                    }
+                }
+
+                if (_priorityComparer.Compare(smallestChildPriority, currentlyBeingMovedPriority) < 0)
+                {
+                    Swap(childrenOffset + smallestChildIndex, currentlyBeingMovedIndex);
+                    currentlyBeingMovedIndex = childrenOffset + smallestChildIndex;
+                    continue;
+                }
+
+                break;
             }
         }
 
