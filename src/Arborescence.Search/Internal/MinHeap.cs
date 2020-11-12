@@ -269,42 +269,39 @@ namespace Arborescence.Internal
             if (index >= count)
                 return;
 
-            int originalIndex = index;
-            int levelMovedCount = 0;
-
             TElement currentlyBeingMovedElement = array[index];
             TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
 
-            while (true)
+            int levelMovedCount = 0;
+            for (int ascendingIndex = index; ascendingIndex != 0;)
             {
-                if (index == 0)
-                    break;
-
-                int parentIndex = GetParent(index);
+                int parentIndex = GetParent(ascendingIndex);
                 TElement parentElement = array[parentIndex];
                 TPriority parentPriority = GetPriorityOrThrow(parentElement);
                 if (_priorityComparer.Compare(currentlyBeingMovedPriority, parentPriority) < 0)
                 {
                     ++levelMovedCount;
-                    index = parentIndex;
+                    ascendingIndex = parentIndex;
                     continue;
                 }
 
                 break;
             }
 
-            index = originalIndex;
+            Debug.Assert(levelMovedCount > 0, "levelMovedCount > 0");
+
+            int topIndex = index;
             for (int i = 0; i < levelMovedCount; ++i)
             {
-                int parentIndex = GetParent(index);
+                int parentIndex = GetParent(topIndex);
                 TElement parentElement = array[parentIndex];
-                AddOrUpdateIndex(parentElement, index);
-                array[index] = parentElement;
-                index = parentIndex;
+                AddOrUpdateIndex(parentElement, topIndex);
+                array[topIndex] = parentElement;
+                topIndex = parentIndex;
             }
 
-            array[index] = currentlyBeingMovedElement;
-            AddOrUpdateIndex(currentlyBeingMovedElement, index);
+            array[topIndex] = currentlyBeingMovedElement;
+            AddOrUpdateIndex(currentlyBeingMovedElement, topIndex);
         }
 
         private void HeapifyDown()
