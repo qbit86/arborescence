@@ -259,6 +259,13 @@ namespace Arborescence.Internal
 
         private void HeapifyUp(int index)
         {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+
+            if (index == 0 || count <= 1)
+                return;
+
             throw new NotImplementedException();
         }
 
