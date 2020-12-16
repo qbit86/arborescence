@@ -3,8 +3,8 @@ namespace Arborescence.Search
     using System;
     using System.Collections.Generic;
 
-    // https://boost.org/doc/libs/1_74_0/libs/graph/doc/astar_search.html
-    // https://boost.org/doc/libs/1_74_0/libs/graph/doc/AStarHeuristic.html
+    // https://boost.org/doc/libs/1_75_0/libs/graph/doc/astar_search.html
+    // https://boost.org/doc/libs/1_75_0/libs/graph/doc/AStarHeuristic.html
 
     public readonly struct AStar<TGraph, TEdge, TEdgeEnumerator, TCost, TWeightMap, TCostMap,
         TCostComparer, TCostMonoidPolicy, TWeightMapPolicy, TCostMapPolicy>
