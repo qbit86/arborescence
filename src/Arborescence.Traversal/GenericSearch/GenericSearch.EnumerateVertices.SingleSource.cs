@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
         TExploredSet, TFringePolicy, TExploredSetPolicy>
@@ -23,16 +24,12 @@
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
+            ExploredSetPolicy.Add(exploredSet, source);
+            yield return source;
             FringePolicy.Add(fringe, source);
-
             while (FringePolicy.TryTake(fringe, out TVertex u))
             {
-                if (ExploredSetPolicy.Contains(exploredSet, u))
-                    continue;
-
-                ExploredSetPolicy.Add(exploredSet, u);
-                yield return u;
-
+                Debug.Assert(ExploredSetPolicy.Contains(exploredSet, u));
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                 while (outEdges.MoveNext())
                 {
@@ -40,6 +37,11 @@
                     if (!graph.TryGetHead(e, out TVertex v))
                         continue;
 
+                    if (ExploredSetPolicy.Contains(exploredSet, v))
+                        continue;
+
+                    ExploredSetPolicy.Add(exploredSet, v);
+                    yield return v;
                     FringePolicy.Add(fringe, v);
                 }
             }
