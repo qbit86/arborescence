@@ -85,7 +85,7 @@ namespace Arborescence
             Debug.Assert(steps != null, "steps != null");
 
             var result = new DfsHandler<Graph, int, int>();
-            result.DiscoverVertex += (g, v) => steps.Add(v);
+            result.DiscoverVertex += (_, v) => steps.Add(v);
             return result;
         }
 

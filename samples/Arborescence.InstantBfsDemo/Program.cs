@@ -91,7 +91,7 @@
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
-            result.ExamineEdge += (g, e) => examinedEdges.Add(e);
+            result.ExamineEdge += (_, e) => examinedEdges.Add(e);
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
             result.NonTreeGrayHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e}]");
             result.NonTreeBlackHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");

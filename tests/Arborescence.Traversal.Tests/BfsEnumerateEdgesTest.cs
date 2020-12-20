@@ -88,7 +88,7 @@ namespace Arborescence
             Debug.Assert(treeEdges != null, "treeEdges != null");
 
             var result = new BfsHandler<Graph, int, Endpoints>();
-            result.TreeEdge += (g, e) => treeEdges.Add(e);
+            result.TreeEdge += (_, e) => treeEdges.Add(e);
             return result;
         }
 

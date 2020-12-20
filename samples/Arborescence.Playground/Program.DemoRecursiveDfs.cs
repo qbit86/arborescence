@@ -34,7 +34,7 @@
             Debug.Assert(steps != null, "steps != null");
 
             var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
-            result.TreeEdge += (g, e) => steps.Add(e);
+            result.TreeEdge += (_, e) => steps.Add(e);
             return result;
         }
 

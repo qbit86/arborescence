@@ -89,7 +89,7 @@ namespace Arborescence
             Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
             var result = new BfsHandler<Graph, int, Endpoints>();
-            result.DiscoverVertex += (g, v) => discoveredVertices.Add(v);
+            result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
             return result;
         }
 

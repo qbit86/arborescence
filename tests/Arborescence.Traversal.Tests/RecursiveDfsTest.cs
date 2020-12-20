@@ -83,14 +83,14 @@ namespace Arborescence
             Debug.Assert(steps != null, "steps != null");
 
             var result = new DfsHandler<Graph, int, int>();
-            result.StartVertex += (g, v) => steps.Add((nameof(result.OnStartVertex), v));
-            result.DiscoverVertex += (g, v) => steps.Add((nameof(result.DiscoverVertex), v));
-            result.FinishVertex += (g, v) => steps.Add((nameof(result.FinishVertex), v));
-            result.TreeEdge += (g, e) => steps.Add((nameof(result.TreeEdge), e));
-            result.BackEdge += (g, e) => steps.Add((nameof(result.BackEdge), e));
-            result.ExamineEdge += (g, e) => steps.Add((nameof(result.ExamineEdge), e));
-            result.ForwardOrCrossEdge += (g, e) => steps.Add((nameof(result.ForwardOrCrossEdge), e));
-            result.FinishEdge += (g, e) => steps.Add((nameof(result.FinishEdge), e));
+            result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
+            result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
+            result.FinishVertex += (_, v) => steps.Add((nameof(result.FinishVertex), v));
+            result.TreeEdge += (_, e) => steps.Add((nameof(result.TreeEdge), e));
+            result.BackEdge += (_, e) => steps.Add((nameof(result.BackEdge), e));
+            result.ExamineEdge += (_, e) => steps.Add((nameof(result.ExamineEdge), e));
+            result.ForwardOrCrossEdge += (_, e) => steps.Add((nameof(result.ForwardOrCrossEdge), e));
+            result.FinishEdge += (_, e) => steps.Add((nameof(result.FinishEdge), e));
             return result;
         }
 
