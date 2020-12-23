@@ -4,6 +4,7 @@
 ### Changed
 - Models: Added arguments check to `IndexedSetPolicy.Add()` to ensure the invariant of “contains after add”.
 - Traversal: Added arguments check to `IndexedColorMapPolicy.AddOrUpdate()` to ensure the invariant of “contains after add”.
+- Dropped support of `netcoreapp2.0` in favor of `netcoreapp2.1`.
 
 ## [0.6.0] - 2020-11-10
 ### Added
