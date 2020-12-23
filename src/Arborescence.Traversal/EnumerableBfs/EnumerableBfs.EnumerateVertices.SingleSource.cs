@@ -31,7 +31,9 @@ namespace Arborescence.Traversal
 
                 while (queue.TryTake(out TVertex u))
                 {
+#if DEBUG
                     Debug.Assert(ExploredSetPolicy.Contains(exploredSet, u));
+#endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
                     {
