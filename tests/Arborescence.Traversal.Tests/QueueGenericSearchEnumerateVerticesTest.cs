@@ -24,12 +24,10 @@ namespace Arborescence
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
-
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
             var fringe = new Queue<int>();
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
             using var instantSteps = new Rist<int>(graph.VertexCount);
