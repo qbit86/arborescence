@@ -21,7 +21,6 @@ namespace Arborescence
             InstantDfs = default;
             RecursiveDfs = default;
             EnumerableDfs = default;
-            ReverseDfs = default;
         }
 
         [Params(10, 100, 1000, 10000)]
@@ -35,9 +34,6 @@ namespace Arborescence
 
         private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
             EnumerableDfs { get; }
-
-        private ReverseDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
-            ReverseDfs { get; }
 
         private IndexedIncidenceGraph Graph { get; set; }
 
@@ -90,30 +86,6 @@ namespace Arborescence
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
-            int count = 0;
-            while (steps.MoveNext())
-                ++count;
-
-            return count;
-        }
-
-        [Benchmark]
-        public int ReverseDfsEdges()
-        {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            using IEnumerator<int> steps = ReverseDfs.EnumerateEdges(Graph, 0, _colorMap);
-            int count = 0;
-            while (steps.MoveNext())
-                ++count;
-
-            return count;
-        }
-
-        [Benchmark]
-        public int ReverseDfsVertices()
-        {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            using IEnumerator<int> steps = ReverseDfs.EnumerateVertices(Graph, 0, _colorMap);
             int count = 0;
             while (steps.MoveNext())
                 ++count;
