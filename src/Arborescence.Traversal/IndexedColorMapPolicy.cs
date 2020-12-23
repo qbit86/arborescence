@@ -26,7 +26,7 @@ namespace Arborescence.Traversal
             if (map is null)
                 throw new ArgumentNullException(nameof(map));
 
-            if (unchecked((uint)key >= (uint)map.Length))
+            if ((uint)key >= (uint)map.Length)
                 throw new ArgumentOutOfRangeException(nameof(key));
 
             map[key] = (byte)value;
