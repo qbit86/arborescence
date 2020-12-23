@@ -5,7 +5,10 @@
 - Dropped support of `netcoreapp2.0` in favor of `netcoreapp2.1`.
 - Models: Added arguments check to `IndexedSetPolicy.Add()` to ensure the invariant of “contains after add”.
 - Traversal: Added arguments check to `IndexedColorMapPolicy.AddOrUpdate()` to ensure the invariant of “contains after add”.
-- Traversal: Refactor `GenericSearch<>` to be O(_n_) instead of O(_m_).
+- Traversal: Refactor `GenericSearch<>` to be O(_n_) instead of O(_m_) in terms of worst-case space complexity.
+
+### Removed
+- Traversal: `ReverseDfs<>` since its worst-case space complexity is O(_m_). 
 
 ## [0.6.0] - 2020-11-10
 ### Added
