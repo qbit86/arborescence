@@ -22,16 +22,14 @@ namespace Arborescence
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
-
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            using var instantSteps = new Rist<(string, int)>(graph.VertexCount);
+            using var instantSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> instantHandler = CreateDfsHandler(instantSteps);
 
-            byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
-            using var recursiveSteps = new Rist<(string, int)>(graph.VertexCount);
+            using var recursiveSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
             // Act

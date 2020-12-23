@@ -2,6 +2,7 @@ namespace Arborescence.Traversal
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public readonly partial struct EnumerableBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
@@ -30,6 +31,9 @@ namespace Arborescence.Traversal
 
                 while (queue.TryTake(out TVertex u))
                 {
+#if DEBUG
+                    Debug.Assert(ExploredSetPolicy.Contains(exploredSet, u));
+#endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
                     {
