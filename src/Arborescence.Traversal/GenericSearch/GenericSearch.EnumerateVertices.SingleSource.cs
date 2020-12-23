@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+#if DEBUG
     using System.Diagnostics;
+
+#endif
 
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
         TExploredSet, TFringePolicy, TExploredSetPolicy>
@@ -29,7 +32,9 @@
             FringePolicy.Add(fringe, source);
             while (FringePolicy.TryTake(fringe, out TVertex u))
             {
+#if DEBUG
                 Debug.Assert(ExploredSetPolicy.Contains(exploredSet, u));
+#endif
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                 while (outEdges.MoveNext())
                 {
