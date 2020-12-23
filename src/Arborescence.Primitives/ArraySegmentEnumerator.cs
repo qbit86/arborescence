@@ -7,7 +7,7 @@ namespace Arborescence
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
-#if NETSTANDARD2_1 || NETCOREAPP2_0
+#if NETSTANDARD2_1 || NETCOREAPP2_1
     [Obsolete("Please use System.ArraySegment<T>.Enumerator instead.")]
 #endif
     public struct ArraySegmentEnumerator<T> : IEnumerator<T>, IEnumerable<T>

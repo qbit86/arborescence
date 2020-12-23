@@ -4,7 +4,7 @@
     using System.Diagnostics;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_1 || NETCOREAPP2_1
     [Obsolete("Please use Arborescence.Models.MutableUndirectedSimpleIncidenceGraph instead.")]
 #endif
     public sealed class MutableUndirectedSimpleIncidenceGraph :
