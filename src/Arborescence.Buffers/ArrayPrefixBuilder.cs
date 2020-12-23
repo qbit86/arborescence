@@ -102,7 +102,7 @@ namespace Arborescence
 
             int nextCapacity = capacity == 0 ? DefaultCapacity : unchecked(2 * capacity);
 
-            if ((uint)nextCapacity > MaxCoreClrArrayLength)
+            if (unchecked((uint)nextCapacity > MaxCoreClrArrayLength))
                 nextCapacity = Math.Max(capacity + 1, MaxCoreClrArrayLength);
 
             nextCapacity = Math.Max(nextCapacity, minimum);

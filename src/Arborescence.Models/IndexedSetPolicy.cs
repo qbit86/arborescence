@@ -22,7 +22,7 @@
             if (items is null)
                 throw new ArgumentNullException(nameof(items));
 
-            if (unchecked((uint)item >= (uint)items.Length))
+            if ((uint)item >= (uint)items.Length)
                 throw new ArgumentOutOfRangeException(nameof(item));
 
             items[item] = 1;
