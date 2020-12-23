@@ -10,7 +10,7 @@
         /// <inheritdoc/>
         public bool Contains(byte[] items, int item)
         {
-            if (items is null || (uint)item >= (uint)items.Length)
+            if (items is null || unchecked((uint)item >= (uint)items.Length))
                 return false;
 
             return items[item] != 0;
@@ -22,7 +22,7 @@
             if (items is null)
                 throw new ArgumentNullException(nameof(items));
 
-            if ((uint)item >= (uint)items.Length)
+            if (unchecked((uint)item >= (uint)items.Length))
                 throw new ArgumentOutOfRangeException(nameof(item));
 
             items[item] = 1;
