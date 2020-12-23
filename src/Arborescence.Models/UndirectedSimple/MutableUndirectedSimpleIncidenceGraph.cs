@@ -92,7 +92,7 @@ namespace Arborescence.Models
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
             Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(EdgeCount + _invertedEdgeCount);
 #else
-            var data = new int[dataLength];
+            int[] data = new int[dataLength];
             var edgesOrderedByTail = new Endpoints[EdgeCount + _invertedEdgeCount];
 #endif
             data[0] = n;

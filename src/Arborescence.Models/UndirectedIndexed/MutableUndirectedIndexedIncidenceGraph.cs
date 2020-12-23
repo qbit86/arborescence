@@ -100,7 +100,7 @@ namespace Arborescence.Models
 #if NET5
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
-            var data = new int[dataLength];
+            int[] data = new int[dataLength];
 #endif
             data[0] = n;
             data[1] = m;

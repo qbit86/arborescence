@@ -93,7 +93,7 @@
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
             Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
-            var data = new int[dataLength];
+            int[] data = new int[dataLength];
             var edgesOrderedByTail = new Endpoints[m];
 #endif
             data[0] = n;

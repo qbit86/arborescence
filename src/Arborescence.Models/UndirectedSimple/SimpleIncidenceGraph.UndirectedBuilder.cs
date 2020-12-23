@@ -80,7 +80,7 @@ namespace Arborescence.Models
                     _edges = ArrayPrefixBuilder.Release(_edges, false);
                 }
 
-                var data = new int[2 + n];
+                int[] data = new int[2 + n];
                 data[0] = n;
                 data[1] = _edgeCount;
 
