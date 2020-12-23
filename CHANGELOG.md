@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] - 2020-12-23
+### Changed
+- Models: Added arguments check to `IndexedSetPolicy.Add()` to ensure the invariant of “contains after add”.
+- Traversal: Added arguments check to `IndexedColorMapPolicy.AddOrUpdate()` to ensure the invariant of “contains after add”.
+
 ## [0.6.0] - 2020-11-10
 ### Added
 - Abstractions: `IReadOnlySetPolicy<>` and `IReadOnlyMapPolicy<>` interfaces.
