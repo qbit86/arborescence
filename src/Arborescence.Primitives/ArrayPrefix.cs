@@ -85,7 +85,7 @@ namespace Arborescence
             // Validate arguments, check is minimal instructions with reduced branching for inlinable fast-path
             // Negative values discovered though conversion to high values when converted to unsigned
             // Failure should be rare and location determination and message is delegated to failure functions
-            if (array is null || (uint)count > (uint)array.Length)
+            if (array is null || unchecked((uint)count > (uint)array.Length))
                 ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
 
             _array = array;
@@ -110,14 +110,14 @@ namespace Arborescence
         {
             get
             {
-                if ((uint)index >= (uint)_count)
+                if (unchecked((uint)index >= (uint)_count))
                     ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 return _array[index];
             }
             set
             {
-                if ((uint)index >= (uint)_count)
+                if (unchecked((uint)index >= (uint)_count))
                     ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
                 _array[index] = value;
@@ -189,7 +189,7 @@ namespace Arborescence
         {
             ThrowInvalidOperationIfDefault();
 
-            if ((uint)index > (uint)_count)
+            if (unchecked((uint)index > (uint)_count))
                 ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
             return new ArraySegment<T>(_array, index, _count - index);
@@ -207,7 +207,7 @@ namespace Arborescence
         {
             ThrowInvalidOperationIfDefault();
 
-            if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
+            if (unchecked((uint)index > (uint)_count || (uint)count > (uint)(_count - index)))
                 ArrayPrefixHelper.ThrowIndexOutOfRangeException();
 
             return new ArraySegment<T>(_array, index, count);

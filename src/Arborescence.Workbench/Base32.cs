@@ -14,7 +14,7 @@
             if (value == 0)
                 return "a";
 
-            uint remainingBits = (uint)value;
+            uint remainingBits = unchecked((uint)value);
             Span<char> buffer = stackalloc char[MaxLength];
             int length = 0;
             for (int i = 0; i < buffer.Length; ++i)
