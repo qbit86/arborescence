@@ -50,6 +50,9 @@
             {
                 while (queue.TryTake(out TVertex u))
                 {
+#if DEBUG
+                    Debug.Assert(GetColorOrDefault(colorMap, u) != default);
+#endif
                     handler.OnExamineVertex(graph, u);
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
