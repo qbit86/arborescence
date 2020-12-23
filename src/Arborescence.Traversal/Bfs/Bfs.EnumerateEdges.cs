@@ -3,6 +3,9 @@ namespace Arborescence.Traversal
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+#if DEBUG
+    using System.Diagnostics;
+#endif
 
     public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
     {
@@ -40,6 +43,9 @@ namespace Arborescence.Traversal
 
                 while (queue.TryTake(out int u))
                 {
+#if DEBUG
+                    Debug.Assert(SetHelpers.Contains(exploredSet, u));
+#endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
                     {
