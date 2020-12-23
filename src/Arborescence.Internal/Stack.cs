@@ -32,7 +32,7 @@ namespace Arborescence.Internal
             int count = _count;
             T[] array = _arrayFromPool;
 
-            if ((uint)count < (uint)array.Length)
+            if (unchecked((uint)count < (uint)array.Length))
             {
                 array[count] = item;
                 _count = count + 1;
@@ -48,7 +48,7 @@ namespace Arborescence.Internal
             int newCount = _count - 1;
             T[] array = _arrayFromPool ?? Array.Empty<T>();
 
-            if ((uint)newCount >= (uint)array.Length)
+            if (unchecked((uint)newCount >= (uint)array.Length))
             {
                 result = default;
                 return false;

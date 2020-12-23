@@ -25,7 +25,7 @@ namespace Arborescence
         /// <param name="endExclusive">The exclusive end index of the range.</param>
         public ArraySegmentEnumerator(T[] array, int start, int endExclusive)
         {
-            if (array is null || unchecked((uint)start > (uint)array.Length || (uint)endExclusive > (uint)array.Length))
+            if (array is null || (uint)start > (uint)array.Length || (uint)endExclusive > (uint)array.Length)
                 ArraySegmentEnumeratorHelper.ThrowCtorValidationFailedExceptions(array, start, endExclusive);
 
             _array = array;

@@ -20,7 +20,7 @@ namespace Arborescence
         /// <param name="count">The number of elements in the prefix.</param>
         public ArrayPrefixEnumerator(T[] array, int count)
         {
-            if (array is null || unchecked((uint)count > (uint)array.Length))
+            if (array is null || (uint)count > (uint)array.Length)
                 ArrayPrefixEnumeratorHelper.ThrowCtorValidationFailedExceptions(array, count);
 
             _array = array;
