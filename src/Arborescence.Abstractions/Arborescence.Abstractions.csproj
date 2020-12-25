@@ -6,10 +6,11 @@ Commonly used types:
 • IMapPolicy&lt;TMap, TKey, TValue&gt;</Description>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionPrefix>0.6.0</VersionPrefix>
+    <VersionPrefix>0.7.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.6</AssemblyVersion>
+    <AssemblyVersion>0.7</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>4</LangVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
