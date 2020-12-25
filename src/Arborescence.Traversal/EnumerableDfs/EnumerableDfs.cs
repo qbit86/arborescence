@@ -14,7 +14,7 @@ namespace Arborescence.Traversal
     /// <typeparam name="TExploredSetPolicy">The type of the set policy.</typeparam>
     public readonly partial struct EnumerableDfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TExploredSetPolicy : ISetPolicy<TExploredSet, TVertex>
     {
