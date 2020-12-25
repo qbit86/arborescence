@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>InstantDfs demo.</Description>
+    <Description>EagerDfs demo.</Description>
     <VersionPrefix>0.1.0</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
