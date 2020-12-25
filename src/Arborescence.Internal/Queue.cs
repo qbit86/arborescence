@@ -103,7 +103,7 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool ShouldClear()
         {
-#if NETSTANDARD2_1 || NETCOREAPP2_0
+#if NETSTANDARD2_1 || NETCOREAPP2_1
             return RuntimeHelpers.IsReferenceOrContainsReferences<T>();
 #else
             return true;

@@ -12,7 +12,7 @@
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
     public static class EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         /// <summary>

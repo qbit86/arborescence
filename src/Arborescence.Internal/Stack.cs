@@ -32,7 +32,7 @@ namespace Arborescence.Internal
             int count = _count;
             T[] array = _arrayFromPool;
 
-            if ((uint)count < (uint)array.Length)
+            if (unchecked((uint)count < (uint)array.Length))
             {
                 array[count] = item;
                 _count = count + 1;
@@ -48,7 +48,7 @@ namespace Arborescence.Internal
             int newCount = _count - 1;
             T[] array = _arrayFromPool ?? Array.Empty<T>();
 
-            if ((uint)newCount >= (uint)array.Length)
+            if (unchecked((uint)newCount >= (uint)array.Length))
             {
                 result = default;
                 return false;
@@ -83,7 +83,7 @@ namespace Arborescence.Internal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool ShouldClear()
         {
-#if NETSTANDARD2_1 || NETCOREAPP2_0
+#if NETSTANDARD2_1 || NETCOREAPP2_1
             return RuntimeHelpers.IsReferenceOrContainsReferences<T>();
 #else
             return true;

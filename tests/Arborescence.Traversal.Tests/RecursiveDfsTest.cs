@@ -12,7 +12,7 @@ namespace Arborescence
 
     public sealed class RecursiveDfsTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
+        private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
 
         private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> RecursiveDfs { get; }
 
@@ -22,16 +22,14 @@ namespace Arborescence
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
+            byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
+            using var eagerSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
+            DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
 
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            using var instantSteps = new Rist<(string, int)>(graph.VertexCount);
-            DfsHandler<Graph, int, int> instantHandler = CreateDfsHandler(instantSteps);
-
-            byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
-            using var recursiveSteps = new Rist<(string, int)>(graph.VertexCount);
+            using var recursiveSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
             // Act
@@ -44,37 +42,37 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantDfs.Traverse(graph, sources, instantColorMap, instantHandler);
+                EagerDfs.Traverse(graph, sources, eagerColorMap, eagerHandler);
                 RecursiveDfs.Traverse(graph, sources, recursiveColorMap, recursiveHandler);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantDfs.Traverse(graph, source, instantColorMap, instantHandler);
+                EagerDfs.Traverse(graph, source, eagerColorMap, eagerHandler);
                 RecursiveDfs.Traverse(graph, source, recursiveColorMap, recursiveHandler);
             }
 
             // Assert
 
-            int instantStepCount = instantSteps.Count;
+            int eagerStepCount = eagerSteps.Count;
             int recursiveStepCount = recursiveSteps.Count;
-            Assert.Equal(instantStepCount, recursiveStepCount);
+            Assert.Equal(eagerStepCount, recursiveStepCount);
 
-            int count = instantStepCount;
+            int count = eagerStepCount;
             for (int i = 0; i < count; ++i)
             {
-                (string, int) instantStep = instantSteps[i];
+                (string, int) eagerStep = eagerSteps[i];
                 (string, int) recursiveStep = recursiveSteps[i];
 
-                if (instantStep == recursiveStep)
+                if (eagerStep == recursiveStep)
                     continue;
 
-                Assert.Equal(instantStep, recursiveStep);
+                Assert.Equal(eagerStep, recursiveStep);
             }
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(eagerColorMap);
             ArrayPool<byte>.Shared.Return(recursiveColorMap);
         }
 
@@ -83,14 +81,14 @@ namespace Arborescence
             Debug.Assert(steps != null, "steps != null");
 
             var result = new DfsHandler<Graph, int, int>();
-            result.StartVertex += (g, v) => steps.Add((nameof(result.OnStartVertex), v));
-            result.DiscoverVertex += (g, v) => steps.Add((nameof(result.DiscoverVertex), v));
-            result.FinishVertex += (g, v) => steps.Add((nameof(result.FinishVertex), v));
-            result.TreeEdge += (g, e) => steps.Add((nameof(result.TreeEdge), e));
-            result.BackEdge += (g, e) => steps.Add((nameof(result.BackEdge), e));
-            result.ExamineEdge += (g, e) => steps.Add((nameof(result.ExamineEdge), e));
-            result.ForwardOrCrossEdge += (g, e) => steps.Add((nameof(result.ForwardOrCrossEdge), e));
-            result.FinishEdge += (g, e) => steps.Add((nameof(result.FinishEdge), e));
+            result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
+            result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
+            result.FinishVertex += (_, v) => steps.Add((nameof(result.FinishVertex), v));
+            result.TreeEdge += (_, e) => steps.Add((nameof(result.TreeEdge), e));
+            result.BackEdge += (_, e) => steps.Add((nameof(result.BackEdge), e));
+            result.ExamineEdge += (_, e) => steps.Add((nameof(result.ExamineEdge), e));
+            result.ForwardOrCrossEdge += (_, e) => steps.Add((nameof(result.ForwardOrCrossEdge), e));
+            result.FinishEdge += (_, e) => steps.Add((nameof(result.FinishEdge), e));
             return result;
         }
 

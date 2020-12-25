@@ -7,7 +7,7 @@ namespace Arborescence
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
-#if NETSTANDARD2_1 || NETCOREAPP2_0
+#if NETSTANDARD2_1 || NETCOREAPP2_1
     [Obsolete("Please use System.ArraySegment<T>.Enumerator instead.")]
 #endif
     public struct ArraySegmentEnumerator<T> : IEnumerator<T>, IEnumerable<T>
@@ -25,7 +25,7 @@ namespace Arborescence
         /// <param name="endExclusive">The exclusive end index of the range.</param>
         public ArraySegmentEnumerator(T[] array, int start, int endExclusive)
         {
-            if (array is null || unchecked((uint)start > (uint)array.Length || (uint)endExclusive > (uint)array.Length))
+            if (array is null || (uint)start > (uint)array.Length || (uint)endExclusive > (uint)array.Length)
                 ArraySegmentEnumeratorHelper.ThrowCtorValidationFailedExceptions(array, start, endExclusive);
 
             _array = array;

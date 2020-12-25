@@ -63,7 +63,7 @@ The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emo
 License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 [Abstractions]: https://www.nuget.org/packages/Arborescence.Abstractions/
-[Boost Graph Concepts]: https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/graph_concepts.html
+[Boost Graph Concepts]: https://www.boost.org/doc/libs/1_75_0/libs/graph/doc/graph_concepts.html
 [Concept C#]: https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md
 [Models]: https://www.nuget.org/packages/Arborescence.Models/
 [Primitives]: https://www.nuget.org/packages/Arborescence.Primitives/

@@ -4,18 +4,18 @@
 Commonly used types:
 • Bfs&lt;TGraph, TEdge, TEdgeEnumerator&gt;
 • Dfs&lt;TGraph, TEdge, TEdgeEnumerator&gt;
-• InstantDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy&gt;
+• EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy&gt;
 • IDfsHandler&lt;TGraph, TVertex, TEdge&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;traversal;bfs;dfs</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.6.0</VersionPrefix>
+    <VersionPrefix>0.7.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.6</AssemblyVersion>
+    <AssemblyVersion>0.7</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
-    <TargetFrameworks>netcoreapp2.0;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />

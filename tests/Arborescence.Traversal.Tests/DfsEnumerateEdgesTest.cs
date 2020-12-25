@@ -13,7 +13,7 @@ namespace Arborescence
 
     public sealed class DfsEnumerateEdgesTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
+        private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
 
         private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableDfs { get; }
 
@@ -23,16 +23,14 @@ namespace Arborescence
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
-
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
+            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
-            using var instantSteps = new Rist<int>(graph.VertexCount);
+            using var eagerSteps = new Rist<int>(graph.VertexCount);
             using var enumerableSteps = new Rist<int>(graph.VertexCount);
-            DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(instantSteps);
+            DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(eagerSteps);
 
             // Act
 
@@ -44,39 +42,39 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantDfs.Traverse(graph, sources, instantColorMap, dfsHandler);
+                EagerDfs.Traverse(graph, sources, eagerColorMap, dfsHandler);
                 using IEnumerator<int> edges = EnumerableDfs.EnumerateEdges(graph, sources, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(edges);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantDfs.Traverse(graph, source, instantColorMap, dfsHandler);
+                EagerDfs.Traverse(graph, source, eagerColorMap, dfsHandler);
                 using IEnumerator<int> edges = EnumerableDfs.EnumerateEdges(graph, source, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(edges);
             }
 
             // Assert
 
-            int instantStepCount = instantSteps.Count;
+            int eagerStepCount = eagerSteps.Count;
             int enumerableStepCount = enumerableSteps.Count;
-            Assert.Equal(instantStepCount, enumerableStepCount);
+            Assert.Equal(eagerStepCount, enumerableStepCount);
 
-            int count = instantStepCount;
+            int count = eagerStepCount;
             for (int i = 0; i < count; ++i)
             {
-                int instantStep = instantSteps[i];
+                int eagerStep = eagerSteps[i];
                 int enumerableStep = enumerableSteps[i];
 
-                if (instantStep == enumerableStep)
+                if (eagerStep == enumerableStep)
                     continue;
 
-                Assert.Equal(instantStep, enumerableStep);
+                Assert.Equal(eagerStep, enumerableStep);
             }
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(eagerColorMap);
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 
@@ -85,7 +83,7 @@ namespace Arborescence
             Debug.Assert(treeEdges != null, "treeEdges != null");
 
             var result = new DfsHandler<Graph, int, int>();
-            result.TreeEdge += (g, e) => treeEdges.Add(e);
+            result.TreeEdge += (_, e) => treeEdges.Add(e);
             return result;
         }
 

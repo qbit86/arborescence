@@ -3,6 +3,11 @@
     using System;
     using System.Collections.Generic;
 
+#if DEBUG
+    using System.Diagnostics;
+
+#endif
+
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe,
         TExploredSet, TFringePolicy, TExploredSetPolicy>
     {
@@ -32,17 +37,16 @@
             while (sources.MoveNext())
             {
                 TVertex source = sources.Current;
+                ExploredSetPolicy.Add(exploredSet, source);
+                yield return source;
                 FringePolicy.Add(fringe, source);
             }
 
             while (FringePolicy.TryTake(fringe, out TVertex u))
             {
-                if (ExploredSetPolicy.Contains(exploredSet, u))
-                    continue;
-
-                ExploredSetPolicy.Add(exploredSet, u);
-                yield return u;
-
+#if DEBUG
+                Debug.Assert(ExploredSetPolicy.Contains(exploredSet, u));
+#endif
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                 while (outEdges.MoveNext())
                 {
@@ -50,6 +54,11 @@
                     if (!graph.TryGetHead(e, out TVertex v))
                         continue;
 
+                    if (ExploredSetPolicy.Contains(exploredSet, v))
+                        continue;
+
+                    ExploredSetPolicy.Add(exploredSet, v);
+                    yield return v;
                     FringePolicy.Add(fringe, v);
                 }
             }

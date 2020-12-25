@@ -1,6 +1,6 @@
 namespace Arborescence.Traversal
 {
-    // https://www.boost.org/doc/libs/1_73_0/libs/graph/doc/DFSVisitor.html
+    // https://www.boost.org/doc/libs/1_75_0/libs/graph/doc/DFSVisitor.html
 
     /// <summary>
     /// Defines callbacks to be invoked while traversing a graph in a DFS manner.

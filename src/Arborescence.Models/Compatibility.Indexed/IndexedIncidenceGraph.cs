@@ -5,7 +5,7 @@ namespace Arborescence.Models.Compatibility
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_1 || NETCOREAPP2_1
     [Obsolete("Please use Arborescence.Models.IndexedIncidenceGraph instead.")]
 #endif
     public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegmentEnumerator<int>>,

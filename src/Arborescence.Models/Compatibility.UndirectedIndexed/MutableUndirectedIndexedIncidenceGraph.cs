@@ -4,7 +4,7 @@ namespace Arborescence.Models.Compatibility
     using System.Diagnostics;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_1 || NETCOREAPP2_1
     [Obsolete("Please use Arborescence.Models.MutableUndirectedIndexedIncidenceGraph instead.")]
 #endif
     public sealed class MutableUndirectedIndexedIncidenceGraph :
@@ -102,7 +102,7 @@ namespace Arborescence.Models.Compatibility
 #if NET5
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
-            var data = new int[dataLength];
+            int[] data = new int[dataLength];
 #endif
             data[0] = n;
             data[1] = m;

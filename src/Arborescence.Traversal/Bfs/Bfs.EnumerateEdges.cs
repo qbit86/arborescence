@@ -4,6 +4,11 @@ namespace Arborescence.Traversal
     using System.Buffers;
     using System.Collections.Generic;
 
+#if DEBUG
+    using System.Diagnostics;
+
+#endif
+
     public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
     {
         /// <summary>
@@ -27,7 +32,7 @@ namespace Arborescence.Traversal
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
-            if ((uint)source >= (uint)vertexCount)
+            if (unchecked((uint)source >= (uint)vertexCount))
                 yield break;
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
@@ -40,6 +45,9 @@ namespace Arborescence.Traversal
 
                 while (queue.TryTake(out int u))
                 {
+#if DEBUG
+                    Debug.Assert(SetHelpers.Contains(exploredSet, u));
+#endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
                     {

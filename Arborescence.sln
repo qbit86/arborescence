@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6561325C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.InstantDfsDemo", "samples\Arborescence.InstantDfsDemo\Arborescence.InstantDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EagerDfsDemo", "samples\Arborescence.EagerDfsDemo\Arborescence.EagerDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Tests", "tests\Arborescence.Traversal.Tests\Arborescence.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
@@ -50,7 +50,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Tests.Shared",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Playground", "samples\Arborescence.Playground\Arborescence.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.InstantBfsDemo", "samples\Arborescence.InstantBfsDemo\Arborescence.InstantBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EagerBfsDemo", "samples\Arborescence.EagerBfsDemo\Arborescence.EagerBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EnumerableDfsDemo", "samples\Arborescence.EnumerableDfsDemo\Arborescence.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
 EndProject

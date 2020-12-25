@@ -25,10 +25,9 @@ namespace Arborescence
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
-            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(exploredSet, 0, exploredSet.Length);
             int source = graph.VertexCount >> 1;
+            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
+            Array.Clear(exploredSet, 0, exploredSet.Length);
 
             // Act
 
@@ -67,10 +66,9 @@ namespace Arborescence
 
             // Arrange
 
-            Debug.Assert(graph.VertexCount >= 0, "graph.VertexCount >= 0");
-            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(exploredSet, 0, exploredSet.Length);
             int source = graph.VertexCount >> 1;
+            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
+            Array.Clear(exploredSet, 0, exploredSet.Length);
 
             // Act
 

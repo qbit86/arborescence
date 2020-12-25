@@ -4,19 +4,19 @@ namespace Arborescence.Traversal
 
     /// <summary>
     /// Provides the <see cref="Create{TColorMapPolicy}"/> factory method
-    /// for <see cref="InstantDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>.
+    /// for <see cref="EagerDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>.
     /// </summary>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
-    public static class InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+    public static class EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         /// <summary>
-        /// Creates a new <see cref="InstantDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>
+        /// Creates a new <see cref="EagerDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>
         /// algorithm from the given policies.
         /// </summary>
         /// <param name="colorMapPolicy">
@@ -24,11 +24,11 @@ namespace Arborescence.Traversal
         /// </param>
         /// <typeparam name="TColorMapPolicy">The type of the vertex color map policy.</typeparam>
         /// <returns>An algorithm instance with specified policies.</returns>
-        public static InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
+        public static EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
             Create<TColorMapPolicy>(TColorMapPolicy colorMapPolicy)
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         {
-            return new InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>(
+            return new EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>(
                 colorMapPolicy);
         }
     }

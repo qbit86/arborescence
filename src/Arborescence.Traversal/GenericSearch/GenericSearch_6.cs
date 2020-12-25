@@ -15,7 +15,7 @@
     /// <typeparam name="TFringe">The type of the generic queue.</typeparam>
     /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
     public static class GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe, TExploredSet>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         /// <summary>

@@ -20,8 +20,8 @@
         [Params(10, 100, 1000)]
         public int VertexCount { get; set; }
 
-        private InstantBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
-            InstantBfs { get; set; }
+        private EagerBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
+            EagerBfs { get; set; }
 
         private EnumerableBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
             EnumerableBfs { get; set; }
@@ -33,7 +33,7 @@
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            InstantBfs = default;
+            EagerBfs = default;
             EnumerableBfs = default;
 
             _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
@@ -51,10 +51,10 @@
         }
 
         [Benchmark(Baseline = true)]
-        public int InstantBfsSteps()
+        public int EagerBfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            InstantBfs.Traverse(Graph, 0, _colorMap, _handler);
+            EagerBfs.Traverse(Graph, 0, _colorMap, _handler);
             return _handler.Count;
         }
 

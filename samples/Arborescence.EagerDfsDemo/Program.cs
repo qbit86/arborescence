@@ -31,7 +31,7 @@ namespace Arborescence
 
             TextWriter w = Console.Out;
 
-            InstantDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
+            EagerDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
                 IndexedColorMapPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
@@ -91,7 +91,7 @@ namespace Arborescence
             result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
-            result.ExamineEdge += (g, e) => examinedEdges.Add(e);
+            result.ExamineEdge += (_, e) => examinedEdges.Add(e);
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
             result.ForwardOrCrossEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=solid]");
             result.BackEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");

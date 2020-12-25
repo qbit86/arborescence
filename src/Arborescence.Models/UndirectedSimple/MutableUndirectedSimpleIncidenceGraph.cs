@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+﻿#if NETSTANDARD2_1 || NETCOREAPP2_1
 namespace Arborescence.Models
 {
     using System;
@@ -92,7 +92,7 @@ namespace Arborescence.Models
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
             Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(EdgeCount + _invertedEdgeCount);
 #else
-            var data = new int[dataLength];
+            int[] data = new int[dataLength];
             var edgesOrderedByTail = new Endpoints[EdgeCount + _invertedEdgeCount];
 #endif
             data[0] = n;

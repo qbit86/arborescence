@@ -1,4 +1,4 @@
-#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_1 || NETCOREAPP2_1
 namespace Arborescence.Models
 {
     using System;
@@ -69,7 +69,7 @@ namespace Arborescence.Models
 #if NET5
                 int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
-                var data = new int[dataLength];
+                int[] data = new int[dataLength];
 #endif
                 data[0] = n;
                 data[1] = m;

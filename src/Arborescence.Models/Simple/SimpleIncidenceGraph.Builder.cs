@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1 || NETCOREAPP2_0 || NETCOREAPP2_1
+﻿#if NETSTANDARD2_1 || NETCOREAPP2_1
 namespace Arborescence.Models
 {
     using System;
@@ -84,7 +84,7 @@ namespace Arborescence.Models
                     _edges = ArrayPrefixBuilder.Release(_edges, false);
                 }
 
-                var data = new int[2 + n];
+                int[] data = new int[2 + n];
                 data[0] = n;
                 data[1] = m;
 

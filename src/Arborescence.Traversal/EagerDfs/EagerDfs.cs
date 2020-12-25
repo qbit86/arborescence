@@ -14,14 +14,14 @@ namespace Arborescence.Traversal
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
     /// <typeparam name="TColorMapPolicy">The type of the vertex color map policy.</typeparam>
-    public readonly partial struct InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+    public readonly partial struct EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="InstantDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/> struct.
+        /// <see cref="EagerDfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/> struct.
         /// </summary>
         /// <param name="colorMapPolicy">
         /// The <see cref="IMapPolicy{TMap,TKey,TValue}"/> implementation to use when marking explored vertices while traversing.
@@ -29,7 +29,7 @@ namespace Arborescence.Traversal
         /// <exception cref="ArgumentNullException">
         /// <paramref name="colorMapPolicy"/> is <see langword="null"/>.
         /// </exception>
-        public InstantDfs(TColorMapPolicy colorMapPolicy)
+        public EagerDfs(TColorMapPolicy colorMapPolicy)
         {
             if (colorMapPolicy == null)
                 throw new ArgumentNullException(nameof(colorMapPolicy));

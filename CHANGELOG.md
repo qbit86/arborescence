@@ -1,12 +1,27 @@
 # Changelog
 
+## [0.7.0] - 2020-12-26
+### Added
+- Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` concepts.
+
+### Changed
+- Dropped support of `netcoreapp2.0` in favor of `netcoreapp2.1`.
+- Models: Added arguments check to `IndexedSetPolicy.Add()` to ensure the invariant of “contains after add”.
+- Traversal: Added arguments check to `IndexedColorMapPolicy.AddOrUpdate()` to ensure the invariant of “contains after add”.
+- Traversal: Refactor `GenericSearch<>` to be O(_n_) instead of O(_m_) in terms of worst-case space complexity.
+- Traversal: Rename `InstantBfs<>` and `InstantDfs<>` to `EagerBfs<>` and `EagerDfs<>` respectively.
+
+### Removed
+- Abstractions: `IHeadConcept<>`, `ITailConcept<>`, `IOutEdgesConcept<>`, `IInEdgesConcept<>`.
+- Traversal: `ReverseDfs<>` since its worst-case space complexity is O(_m_). 
+
 ## [0.6.0] - 2020-11-10
 ### Added
 - Abstractions: `IReadOnlySetPolicy<>` and `IReadOnlyMapPolicy<>` interfaces.
 
 ### Removed
-- Abstractions: graph policy interfaces.
-- Models: graph policy implementations.
+- Abstractions: Graph policy interfaces.
+- Models: Graph policy implementations.
 
 ## [0.5.0] - 2020-11-03
 ### Added
@@ -94,7 +109,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...HEAD
+[0.7.0]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...arborescence-0.7.0
 [0.6.0]: https://github.com/qbit86/arborescence/compare/traversal-0.5.0...abstractions-0.6.0
 [0.5.0]: https://github.com/qbit86/arborescence/compare/models-0.4.2...traversal-0.5.0
 [0.4.2]: https://github.com/qbit86/arborescence/compare/models-0.4.1...models-0.4.2
