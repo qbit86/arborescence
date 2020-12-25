@@ -3,6 +3,7 @@ namespace Arborescence.Traversal
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+
 #if DEBUG
     using System.Diagnostics;
 
