@@ -54,7 +54,7 @@ namespace Arborescence
         }
 
         [Benchmark(Baseline = true)]
-        public int InstantDfsSteps()
+        public int EagerDfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             EagerDfs.Traverse(Graph, 0, _colorMap, _handler);

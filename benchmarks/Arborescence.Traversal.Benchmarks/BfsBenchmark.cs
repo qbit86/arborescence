@@ -51,7 +51,7 @@
         }
 
         [Benchmark(Baseline = true)]
-        public int InstantBfsSteps()
+        public int EagerBfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
             EagerBfs.Traverse(Graph, 0, _colorMap, _handler);
