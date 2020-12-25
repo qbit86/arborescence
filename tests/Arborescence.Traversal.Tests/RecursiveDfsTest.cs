@@ -12,7 +12,7 @@ namespace Arborescence
 
     public sealed class RecursiveDfsTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
+        private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
 
         private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> RecursiveDfs { get; }
 
@@ -42,13 +42,13 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantDfs.Traverse(graph, sources, instantColorMap, instantHandler);
+                EagerDfs.Traverse(graph, sources, instantColorMap, instantHandler);
                 RecursiveDfs.Traverse(graph, sources, recursiveColorMap, recursiveHandler);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantDfs.Traverse(graph, source, instantColorMap, instantHandler);
+                EagerDfs.Traverse(graph, source, instantColorMap, instantHandler);
                 RecursiveDfs.Traverse(graph, source, recursiveColorMap, recursiveHandler);
             }
 

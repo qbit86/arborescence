@@ -31,7 +31,7 @@ namespace Arborescence
 
             TextWriter w = Console.Out;
 
-            InstantDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
+            EagerDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
                 IndexedColorMapPolicy> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");

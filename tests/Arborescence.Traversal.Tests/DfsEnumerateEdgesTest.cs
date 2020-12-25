@@ -13,7 +13,7 @@ namespace Arborescence
 
     public sealed class DfsEnumerateEdgesTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
+        private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
 
         private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableDfs { get; }
 
@@ -42,14 +42,14 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantDfs.Traverse(graph, sources, instantColorMap, dfsHandler);
+                EagerDfs.Traverse(graph, sources, instantColorMap, dfsHandler);
                 using IEnumerator<int> edges = EnumerableDfs.EnumerateEdges(graph, sources, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(edges);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantDfs.Traverse(graph, source, instantColorMap, dfsHandler);
+                EagerDfs.Traverse(graph, source, instantColorMap, dfsHandler);
                 using IEnumerator<int> edges = EnumerableDfs.EnumerateEdges(graph, source, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(edges);
             }
