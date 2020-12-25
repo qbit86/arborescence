@@ -4,7 +4,7 @@ namespace Arborescence.Traversal
 
     /// <summary>
     /// Provides the <see cref="Create{TColorMapPolicy}"/> factory method
-    /// for <see cref="InstantBfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>.
+    /// for <see cref="EagerBfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>.
     /// </summary>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -16,7 +16,7 @@ namespace Arborescence.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         /// <summary>
-        /// Creates a new <see cref="InstantBfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>
+        /// Creates a new <see cref="EagerBfs{TGraph,TVertex,TEdge,TEdgeEnumerator,TColorMap,TColorMapPolicy}"/>
         /// algorithm from the given policies.
         /// </summary>
         /// <param name="colorMapPolicy">
@@ -24,11 +24,11 @@ namespace Arborescence.Traversal
         /// </param>
         /// <typeparam name="TColorMapPolicy">The type of the vertex color map policy.</typeparam>
         /// <returns>An algorithm instance with specified policies.</returns>
-        public static InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
+        public static EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
             Create<TColorMapPolicy>(TColorMapPolicy colorMapPolicy)
             where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
         {
-            return new InstantBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>(colorMapPolicy);
+            return new EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>(colorMapPolicy);
         }
     }
 }

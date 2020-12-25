@@ -31,7 +31,7 @@
 
             TextWriter w = Console.Out;
 
-            InstantBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
+            EagerBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
                 IndexedColorMapPolicy> bfs = default;
 
             w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");

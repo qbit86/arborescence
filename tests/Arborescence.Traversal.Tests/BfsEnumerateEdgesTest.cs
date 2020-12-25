@@ -13,7 +13,7 @@ namespace Arborescence
 
     public sealed class BfsEnumerateEdgesTest
     {
-        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantBfs { get; }
+        private EagerBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerBfs { get; }
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableBfs { get; }
 
@@ -42,7 +42,7 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
                 using IEnumerator<Endpoints> edges =
                     EnumerableBfs.EnumerateEdges(graph, sources, enumerableExploredSet);
                 while (edges.MoveNext())
@@ -51,7 +51,7 @@ namespace Arborescence
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, source, instantColorMap, bfsHandler);
                 using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, enumerableExploredSet);
                 while (edges.MoveNext())
                     enumerableSteps.Add(edges.Current);

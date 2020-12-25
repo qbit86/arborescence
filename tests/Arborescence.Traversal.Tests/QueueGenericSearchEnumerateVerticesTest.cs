@@ -13,7 +13,7 @@ namespace Arborescence
 
     public class QueueGenericSearchEnumerateVerticesTest
     {
-        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantBfs { get; }
+        private EagerBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerBfs { get; }
 
         private GenericSearch<Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], QueuePolicy, IndexedSetPolicy>
             GenericSearch { get; }
@@ -44,7 +44,7 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
                 using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
                     graph, sources, fringe, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(vertices);
@@ -52,7 +52,7 @@ namespace Arborescence
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, source, instantColorMap, bfsHandler);
                 using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
                     graph, source, fringe, enumerableExploredSet);
                 enumerableSteps.AddEnumerator(vertices);
