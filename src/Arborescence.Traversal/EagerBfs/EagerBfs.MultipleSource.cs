@@ -1,40 +1,50 @@
 namespace Arborescence.Traversal
 {
     using System;
-    using Internal;
+    using System.Collections.Generic;
 
-    public readonly partial struct InstantBfs<
+    public readonly partial struct EagerBfs<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
     {
         /// <summary>
-        /// Traverses the graph in a BFS manner starting from the single source.
+        /// Traverses the graph in a BFS manner starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="source">The source.</param>
+        /// <param name="sources">The sources enumerator.</param>
         /// <param name="colorMap">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
-        public void Traverse<THandler>(
-            TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
+        public void Traverse<TVertexEnumerator, THandler>(
+            TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler)
+            where TVertexEnumerator : IEnumerator<TVertex>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
+            if (sources == null)
+                throw new ArgumentNullException(nameof(sources));
+
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            var queue = new Queue<TVertex>();
-            ColorMapPolicy.AddOrUpdate(colorMap, source, Color.Gray);
-            handler.OnDiscoverVertex(graph, source);
-            queue.Add(source);
+            var queue = new Internal.Queue<TVertex>();
+            while (sources.MoveNext())
+            {
+                TVertex s = sources.Current;
+                ColorMapPolicy.AddOrUpdate(colorMap, s, Color.Gray);
+                handler.OnDiscoverVertex(graph, s);
+                queue.Add(s);
+            }
 
             TraverseCore(graph, queue, colorMap, handler);
         }

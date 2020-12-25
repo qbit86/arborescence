@@ -13,7 +13,7 @@ namespace Arborescence
 
     public sealed class BfsEnumerateEdgesTest
     {
-        private InstantBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantBfs { get; }
+        private EagerBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerBfs { get; }
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableBfs { get; }
 
@@ -23,14 +23,14 @@ namespace Arborescence
 
             // Arrange
 
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(instantColorMap, 0, instantColorMap.Length);
+            byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
-            using var instantSteps = new Rist<Endpoints>(graph.VertexCount);
+            using var eagerSteps = new Rist<Endpoints>(graph.VertexCount);
             using var enumerableSteps = new Rist<Endpoints>(graph.VertexCount);
-            BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(instantSteps);
+            BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
 
             // Act
 
@@ -42,7 +42,7 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantBfs.Traverse(graph, sources, instantColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, sources, eagerColorMap, bfsHandler);
                 using IEnumerator<Endpoints> edges =
                     EnumerableBfs.EnumerateEdges(graph, sources, enumerableExploredSet);
                 while (edges.MoveNext())
@@ -51,7 +51,7 @@ namespace Arborescence
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantBfs.Traverse(graph, source, instantColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, source, eagerColorMap, bfsHandler);
                 using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, enumerableExploredSet);
                 while (edges.MoveNext())
                     enumerableSteps.Add(edges.Current);
@@ -59,25 +59,25 @@ namespace Arborescence
 
             // Assert
 
-            int instantStepCount = instantSteps.Count;
+            int eagerStepCount = eagerSteps.Count;
             int enumerableStepCount = enumerableSteps.Count;
-            Assert.Equal(instantStepCount, enumerableStepCount);
+            Assert.Equal(eagerStepCount, enumerableStepCount);
 
-            int count = instantStepCount;
+            int count = eagerStepCount;
             for (int i = 0; i < count; ++i)
             {
-                Endpoints instantStep = instantSteps[i];
+                Endpoints eagerStep = eagerSteps[i];
                 Endpoints enumerableStep = enumerableSteps[i];
 
-                if (instantStep == enumerableStep)
+                if (eagerStep == enumerableStep)
                     continue;
 
-                Assert.Equal(instantStep, enumerableStep);
+                Assert.Equal(eagerStep, enumerableStep);
             }
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(eagerColorMap);
             ArrayPool<byte>.Shared.Return(enumerableExploredSet);
         }
 

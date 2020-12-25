@@ -12,7 +12,7 @@ namespace Arborescence
 
     public sealed class RecursiveDfsTest
     {
-        private InstantDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> InstantDfs { get; }
+        private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
 
         private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> RecursiveDfs { get; }
 
@@ -22,10 +22,10 @@ namespace Arborescence
 
             // Arrange
 
-            byte[] instantColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(instantColorMap, 0, instantColorMap.Length);
-            using var instantSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
-            DfsHandler<Graph, int, int> instantHandler = CreateDfsHandler(instantSteps);
+            byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
+            using var eagerSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
+            DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
 
             byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
@@ -42,37 +42,37 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 var sources = new IndexEnumerator(sourceCount);
 
-                InstantDfs.Traverse(graph, sources, instantColorMap, instantHandler);
+                EagerDfs.Traverse(graph, sources, eagerColorMap, eagerHandler);
                 RecursiveDfs.Traverse(graph, sources, recursiveColorMap, recursiveHandler);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
-                InstantDfs.Traverse(graph, source, instantColorMap, instantHandler);
+                EagerDfs.Traverse(graph, source, eagerColorMap, eagerHandler);
                 RecursiveDfs.Traverse(graph, source, recursiveColorMap, recursiveHandler);
             }
 
             // Assert
 
-            int instantStepCount = instantSteps.Count;
+            int eagerStepCount = eagerSteps.Count;
             int recursiveStepCount = recursiveSteps.Count;
-            Assert.Equal(instantStepCount, recursiveStepCount);
+            Assert.Equal(eagerStepCount, recursiveStepCount);
 
-            int count = instantStepCount;
+            int count = eagerStepCount;
             for (int i = 0; i < count; ++i)
             {
-                (string, int) instantStep = instantSteps[i];
+                (string, int) eagerStep = eagerSteps[i];
                 (string, int) recursiveStep = recursiveSteps[i];
 
-                if (instantStep == recursiveStep)
+                if (eagerStep == recursiveStep)
                     continue;
 
-                Assert.Equal(instantStep, recursiveStep);
+                Assert.Equal(eagerStep, recursiveStep);
             }
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(instantColorMap);
+            ArrayPool<byte>.Shared.Return(eagerColorMap);
             ArrayPool<byte>.Shared.Return(recursiveColorMap);
         }
 

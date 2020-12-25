@@ -1,4 +1,4 @@
-namespace Arborescence
+﻿namespace Arborescence
 {
     using System;
     using System.Buffers;
@@ -31,10 +31,10 @@ namespace Arborescence
 
             TextWriter w = Console.Out;
 
-            InstantDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
-                IndexedColorMapPolicy> dfs = default;
+            EagerBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
+                IndexedColorMapPolicy> bfs = default;
 
-            w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
+            w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
             // Enumerate vertices.
@@ -50,8 +50,8 @@ namespace Arborescence
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
             var examinedEdges = new HashSet<int>(graph.EdgeCount);
-            DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
-            dfs.Traverse(graph, sources, colorMap, handler);
+            BfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
+            bfs.Traverse(graph, sources, colorMap, handler);
             ArrayPool<byte>.Shared.Return(colorMap);
 
             // Enumerate sources.
@@ -81,21 +81,20 @@ namespace Arborescence
             w.WriteLine("}");
         }
 
-        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
+        private static BfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
             Debug.Assert(w != null, "w != null");
             Debug.Assert(examinedEdges != null, "examinedEdges != null");
 
-            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
-            result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
+            var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
+            result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
             result.ExamineEdge += (_, e) => examinedEdges.Add(e);
             result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
-            result.ForwardOrCrossEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=solid]");
-            result.BackEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
-            result.FinishEdge += (g, e) => w.WriteLine($"  // {nameof(result.FinishEdge)} {E(g, e)}");
+            result.NonTreeGrayHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e}]");
+            result.NonTreeBlackHeadEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
             return result;
         }
 

@@ -18,7 +18,7 @@ namespace Arborescence
 
         protected DfsBenchmark()
         {
-            InstantDfs = default;
+            EagerDfs = default;
             RecursiveDfs = default;
             EnumerableDfs = default;
         }
@@ -26,8 +26,8 @@ namespace Arborescence
         [Params(10, 100, 1000, 10000)]
         public int VertexCount { get; set; }
 
-        private InstantDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
-            InstantDfs { get; }
+        private EagerDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
+            EagerDfs { get; }
 
         private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
             RecursiveDfs { get; }
@@ -54,10 +54,10 @@ namespace Arborescence
         }
 
         [Benchmark(Baseline = true)]
-        public int InstantDfsSteps()
+        public int EagerDfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            InstantDfs.Traverse(Graph, 0, _colorMap, _handler);
+            EagerDfs.Traverse(Graph, 0, _colorMap, _handler);
             return _handler.Count;
         }
 
