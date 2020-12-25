@@ -6,6 +6,13 @@ namespace Arborescence
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
-    public interface IIncidenceGraph<TVertex, in TEdge, out TEdges> :
-        IGraph<TVertex, TEdge>, IOutEdgesConcept<TVertex, TEdges> { }
+    public interface IIncidenceGraph<TVertex, in TEdge, out TEdges> : IGraph<TVertex, TEdge>
+    {
+        /// <summary>
+        /// Enumerates the out-edges of the vertex.
+        /// </summary>
+        /// <param name="vertex">The tail of the edges to enumerate.</param>
+        /// <returns>An enumeration of out-edges of the specified vertex.</returns>
+        TEdges EnumerateOutEdges(TVertex vertex);
+    }
 }

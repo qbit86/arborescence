@@ -17,7 +17,7 @@
     /// <typeparam name="TExploredSetPolicy">The type of the set policy.</typeparam>
     public readonly partial struct GenericSearch<
         TGraph, TVertex, TEdge, TEdgeEnumerator, TFringe, TExploredSet, TFringePolicy, TExploredSetPolicy>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TFringePolicy : IContainerPolicy<TFringe, TVertex>
         where TExploredSetPolicy : ISetPolicy<TExploredSet, TVertex>

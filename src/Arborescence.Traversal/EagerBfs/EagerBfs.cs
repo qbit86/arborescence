@@ -15,7 +15,7 @@
     /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
     /// <typeparam name="TColorMapPolicy">The type of the vertex color map policy.</typeparam>
     public readonly partial struct EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy>
-        where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TColorMapPolicy : IMapPolicy<TColorMap, TVertex, Color>
     {
