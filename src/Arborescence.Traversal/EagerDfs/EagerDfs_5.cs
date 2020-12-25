@@ -11,7 +11,7 @@ namespace Arborescence.Traversal
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
-    public static class InstantDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
+    public static class EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap>
         where TGraph : IOutEdgesConcept<TVertex, TEdgeEnumerator>, IHeadConcept<TVertex, TEdge>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
