@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased] - 2020-12-25
+## [Unreleased] - 2020-12-26
+### Added
+- Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` concepts.
+
 ### Changed
 - Dropped support of `netcoreapp2.0` in favor of `netcoreapp2.1`.
 - Models: Added arguments check to `IndexedSetPolicy.Add()` to ensure the invariant of “contains after add”.
@@ -9,6 +12,7 @@
 - Traversal: Rename `InstantBfs<>` and `InstantDfs<>` to `EagerBfs<>` and `EagerDfs<>` respectively.
 
 ### Removed
+- Abstractions: `IHeadConcept<>`, `ITailConcept<>`, `IOutEdgesConcept<>`, `IInEdgesConcept<>`.
 - Traversal: `ReverseDfs<>` since its worst-case space complexity is O(_m_). 
 
 ## [0.6.0] - 2020-11-10
