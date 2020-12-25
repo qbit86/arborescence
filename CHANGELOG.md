@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2020-12-26
+## [0.7.0] - 2020-12-26
 ### Added
 - Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` concepts.
 
@@ -109,7 +109,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...HEAD
+[0.7.0]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...arborescence-0.7.0
 [0.6.0]: https://github.com/qbit86/arborescence/compare/traversal-0.5.0...abstractions-0.6.0
 [0.5.0]: https://github.com/qbit86/arborescence/compare/models-0.4.2...traversal-0.5.0
 [0.4.2]: https://github.com/qbit86/arborescence/compare/models-0.4.1...models-0.4.2
