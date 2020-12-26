@@ -3,7 +3,6 @@
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using Models;
     using Traversal;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
@@ -29,10 +28,8 @@
             ArrayPool<byte>.Shared.Return(colorMap, true);
         }
 
-        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(IList<int> steps)
+        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(ICollection<int> steps)
         {
-            Debug.Assert(steps != null, "steps != null");
-
             var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
             result.TreeEdge += (_, e) => steps.Add(e);
             return result;

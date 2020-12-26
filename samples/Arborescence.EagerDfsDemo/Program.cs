@@ -3,7 +3,6 @@ namespace Arborescence
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using Models;
@@ -84,9 +83,6 @@ namespace Arborescence
         private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
-            Debug.Assert(w != null, "w != null");
-            Debug.Assert(examinedEdges != null, "examinedEdges != null");
-
             var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
             result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
