@@ -112,7 +112,7 @@ csharp_space_between_square_brackets = false
 csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_deconstructed_variable_declaration = true:suggestion
 csharp_style_expression_bodied_accessors = when_on_single_line:suggestion
-csharp_style_expression_bodied_constructors = false:suggestion
+csharp_style_expression_bodied_constructors = when_on_single_line:suggestion
 csharp_style_expression_bodied_indexers = when_on_single_line:suggestion
 csharp_style_expression_bodied_lambdas = true:suggestion
 csharp_style_expression_bodied_local_functions = when_on_single_line:suggestion
@@ -148,3 +148,6 @@ resharper_space_within_single_line_array_initializer_braces = true
 resharper_xmldoc_indent_child_elements = DoNotTouch
 resharper_xmldoc_indent_text = DoNotTouch
 resharper_xmldoc_space_before_self_closing = false
+
+[AssemblyInfo.cs]
+generated_code = true

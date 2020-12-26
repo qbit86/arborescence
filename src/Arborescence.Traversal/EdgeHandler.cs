@@ -7,5 +7,5 @@ namespace Arborescence.Traversal
     /// <param name="e">The edge.</param>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public delegate void EdgeEventHandler<in TGraph, in TEdge>(TGraph g, TEdge e);
+    public delegate void EdgeHandler<in TGraph, in TEdge>(TGraph g, TEdge e);
 }

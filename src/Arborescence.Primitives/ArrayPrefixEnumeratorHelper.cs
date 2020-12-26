@@ -1,15 +1,14 @@
 ﻿namespace Arborescence
 {
     using System;
-
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NETCOREAPP3_1
     using System.Diagnostics.CodeAnalysis;
 
 #endif
 
     internal static class ArrayPrefixEnumeratorHelper
     {
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
 #endif
         internal static void ThrowCtorValidationFailedExceptions(Array array, int count)
@@ -17,7 +16,7 @@
             throw GetCtorValidationFailedException(array, count);
         }
 
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
 #endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
@@ -25,7 +24,7 @@
             throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
         }
 
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
 #endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()

@@ -7,5 +7,5 @@
     /// <param name="v">The vertex.</param>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    public delegate void VertexEventHandler<in TGraph, in TVertex>(TGraph g, TVertex v);
+    public delegate void VertexHandler<in TGraph, in TVertex>(TGraph g, TVertex v);
 }

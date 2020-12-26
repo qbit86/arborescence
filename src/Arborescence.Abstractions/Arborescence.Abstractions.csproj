@@ -6,20 +6,19 @@ Commonly used types:
 • IMapPolicy&lt;TMap, TKey, TValue&gt;</Description>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionPrefix>0.7.0</VersionPrefix>
+    <VersionPrefix>0.7.1</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.7</AssemblyVersion>
+    <AssemblyVersion>0.7.1</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>4</LangVersion>
-    <TargetFrameworks>net461;netstandard1.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
     <EmbedAllSources>true</EmbedAllSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
     {
         private Dictionary<int, IndexedIncidenceGraph>? _cache;
 
-        internal static GraphHelper Default { get; } = new GraphHelper();
+        internal static GraphHelper Default { get; } = new();
 
         internal IndexedIncidenceGraph GetGraph(int vertexCount)
         {

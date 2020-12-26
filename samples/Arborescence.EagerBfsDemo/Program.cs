@@ -3,7 +3,6 @@
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using Models;
@@ -84,9 +83,6 @@
         private static BfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
-            Debug.Assert(w != null, "w != null");
-            Debug.Assert(examinedEdges != null, "examinedEdges != null");
-
             var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");

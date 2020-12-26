@@ -2,7 +2,6 @@ namespace Arborescence
 {
     using Traversal;
 
-#pragma warning disable CA1801 // Review unused parameters
     internal sealed class DummyHandler<TGraph> : IDfsHandler<TGraph, int, int>, IBfsHandler<TGraph, int, int>
     {
         internal int Count { get; private set; }
@@ -31,5 +30,4 @@ namespace Arborescence
 
         public void Reset() => Count = 0;
     }
-#pragma warning restore CA1801
 }

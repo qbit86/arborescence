@@ -19,8 +19,6 @@ namespace Arborescence
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
-            Debug.Assert(graph != null, "graph != null");
-
             // Arrange
 
             if (graph.VertexCount == 0)

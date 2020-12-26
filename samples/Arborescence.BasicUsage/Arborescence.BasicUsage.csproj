@@ -4,9 +4,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="all" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />

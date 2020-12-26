@@ -111,14 +111,14 @@ namespace Arborescence
             get
             {
                 if ((uint)index >= (uint)_count)
-                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 return _array[index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
-                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 _array[index] = value;
             }
@@ -190,7 +190,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count)
-                ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
             return new ArraySegment<T>(_array, index, _count - index);
         }
@@ -208,7 +208,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
-                ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
             return new ArraySegment<T>(_array, index, count);
         }
@@ -265,7 +265,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 return _array[index];
             }
@@ -274,7 +274,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 _array[index] = value;
             }
@@ -311,7 +311,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ArrayPrefixHelper.ThrowIndexOutOfRangeException();
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 return _array[index];
             }

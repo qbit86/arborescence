@@ -2,7 +2,6 @@ namespace Arborescence.Traversal
 {
     using System;
     using System.Collections.Generic;
-
 #if DEBUG
     using System.Diagnostics;
 
