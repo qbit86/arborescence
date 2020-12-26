@@ -1,5 +1,10 @@
 namespace Arborescence
 {
+#if NETSTANDARD2_1 || NETCOREAPP3_1
+    using System.Diagnostics.CodeAnalysis;
+
+#endif
+
     /// <summary>
     /// Defines a method to get items from a map.
     /// </summary>
@@ -18,6 +23,10 @@ namespace Arborescence
         /// otherwise, the unspecified value.
         /// </param>
         /// <returns>A value indicating whether the key was found successfully.</returns>
+#if NETSTANDARD2_1 || NETCOREAPP3_1
+        bool TryGetValue(TMap map, TKey key, [MaybeNullWhen(false)] out TValue value);
+#else
         bool TryGetValue(TMap map, TKey key, out TValue value);
+#endif
     }
 }

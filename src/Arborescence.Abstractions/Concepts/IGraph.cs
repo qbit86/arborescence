@@ -1,5 +1,10 @@
 namespace Arborescence
 {
+#if NETSTANDARD2_1 || NETCOREAPP3_1
+    using System.Diagnostics.CodeAnalysis;
+
+#endif
+
     /// <summary>
     /// Represents a graph as a pair of incidence functions.
     /// </summary>
@@ -16,7 +21,11 @@ namespace Arborescence
         /// otherwise, the unspecified value.
         /// </param>
         /// <returns>A value indicating whether the edge was found successfully.</returns>
+#if NETSTANDARD2_1 || NETCOREAPP3_1
+        bool TryGetHead(TEdge edge, [MaybeNullWhen(false)] out TVertex head);
+#else
         bool TryGetHead(TEdge edge, out TVertex head);
+#endif
 
         /// <summary>
         /// Gets the vertex associated with the specified edge as its tail.
@@ -27,6 +36,10 @@ namespace Arborescence
         /// otherwise, the unspecified value.
         /// </param>
         /// <returns>A value indicating whether the edge was found successfully.</returns>
+#if NETSTANDARD2_1 || NETCOREAPP3_1
+        bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail);
+#else
         bool TryGetTail(TEdge edge, out TVertex tail);
+#endif
     }
 }
