@@ -3,6 +3,7 @@
 ## [Unreleased] - 2020-12-26
 ### Changed
 - Mark assemblies as CLS-compliant.
+- Abstractions: Added nullability annotations.
 - Primitives: Replaced throwing of `IndexOutOfRangeException` with `ArgumentOutOfRangeException`.
 - Traversal: Renamed edge and vertex handlers to `EdgeHandler<>` and `VertexHandler<>`. 
 
