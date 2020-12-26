@@ -19,8 +19,6 @@ namespace Arborescence
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
-            Debug.Assert(graph != null, "graph != null");
-
             // Arrange
 
             byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));

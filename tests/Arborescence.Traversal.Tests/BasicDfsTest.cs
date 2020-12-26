@@ -3,7 +3,6 @@ namespace Arborescence
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using Models;
     using Traversal;
     using Xunit;
@@ -21,7 +20,6 @@ namespace Arborescence
         internal void EnumerateEdges(GraphParameter<Graph> p)
         {
             SimpleIncidenceGraph graph = p.Graph;
-            Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
@@ -62,7 +60,6 @@ namespace Arborescence
         internal void EnumerateVertices(GraphParameter<Graph> p)
         {
             SimpleIncidenceGraph graph = p.Graph;
-            Debug.Assert(graph != null, "graph != null");
 
             // Arrange
 
