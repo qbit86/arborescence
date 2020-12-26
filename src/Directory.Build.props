@@ -20,6 +20,11 @@
     <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+  <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
     <SourceRoot Include="$(RepoRoot)" />

@@ -29,7 +29,6 @@ Commonly used types:
   </ItemGroup>
   <Import Project="..\Arborescence.Buffers\Arborescence.Buffers.projitems" Label="Shared" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>
