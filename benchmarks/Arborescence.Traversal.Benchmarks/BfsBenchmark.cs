@@ -11,8 +11,7 @@
     [MemoryDiagnoser]
     public abstract class BfsBenchmark
     {
-        private readonly DummyHandler<IndexedIncidenceGraph> _handler =
-            new DummyHandler<IndexedIncidenceGraph>();
+        private readonly DummyHandler<IndexedIncidenceGraph> _handler = new();
 
         private byte[] _colorMap = Array.Empty<byte>();
         private byte[] _exploredSet = Array.Empty<byte>();

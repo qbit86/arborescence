@@ -11,8 +11,7 @@ namespace Arborescence
     [MemoryDiagnoser]
     public abstract class DfsBenchmark
     {
-        private readonly DummyHandler<IndexedIncidenceGraph> _handler =
-            new DummyHandler<IndexedIncidenceGraph>();
+        private readonly DummyHandler<IndexedIncidenceGraph> _handler = new();
 
         private byte[] _colorMap = Array.Empty<byte>();
 
