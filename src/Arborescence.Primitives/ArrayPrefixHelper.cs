@@ -12,9 +12,9 @@
 #if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
 #endif
-        internal static void ThrowIndexOutOfRangeException()
+        internal static void ThrowArgumentOutOfRangeException(string paramName)
         {
-            throw new IndexOutOfRangeException();
+            throw new ArgumentOutOfRangeException(paramName);
         }
     }
 }
