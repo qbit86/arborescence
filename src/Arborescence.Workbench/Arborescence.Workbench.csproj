@@ -3,7 +3,6 @@
     <Description>Simple parsers and test resources.</Description>
     <PackageTags>graph;graphviz;dot</PackageTags>
     <VersionPrefix>0.7.1</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.7.1</AssemblyVersion>

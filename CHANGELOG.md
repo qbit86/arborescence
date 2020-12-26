@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased] - 2020-12-26
+## [0.7.1] - 2020-12-26
 ### Changed
-- Mark assemblies as CLS-compliant.
+- Marked assemblies as CLS-compliant.
 - Abstractions: Added nullability annotations.
 - Primitives: Replaced throwing of `IndexOutOfRangeException` with `ArgumentOutOfRangeException`.
 - Traversal: Renamed edge and vertex handlers to `EdgeHandler<>` and `VertexHandler<>`. 
@@ -116,7 +116,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...HEAD
+[0.7.1]: https://github.com/qbit86/arborescence/compare/abstractions-0.7.0...arborescence-0.7.1
 [0.7.0]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...arborescence-0.7.0
 [0.6.0]: https://github.com/qbit86/arborescence/compare/traversal-0.5.0...abstractions-0.6.0
 [0.5.0]: https://github.com/qbit86/arborescence/compare/models-0.4.2...traversal-0.5.0
