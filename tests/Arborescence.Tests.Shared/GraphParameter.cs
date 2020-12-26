@@ -2,10 +2,8 @@
 {
     internal static class GraphParameter
     {
-        internal static GraphParameter<TGraph> Create<TGraph>(TGraph graph, string description)
-        {
-            return new GraphParameter<TGraph>(graph, description);
-        }
+        internal static GraphParameter<TGraph> Create<TGraph>(TGraph graph, string description) =>
+            new(graph, description);
     }
 
     internal sealed class GraphParameter<TGraph>

@@ -3,7 +3,6 @@ namespace Arborescence
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using Misnomer;
     using Traversal;
     using Xunit;
@@ -18,8 +17,6 @@ namespace Arborescence
 
         private void TraverseCore(Graph graph, bool multipleSource)
         {
-            Debug.Assert(graph != null, "graph != null");
-
             // Arrange
 
             byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
@@ -76,10 +73,8 @@ namespace Arborescence
             ArrayPool<byte>.Shared.Return(recursiveColorMap);
         }
 
-        private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<(string, int)> steps)
+        private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)
         {
-            Debug.Assert(steps != null, "steps != null");
-
             var result = new DfsHandler<Graph, int, int>();
             result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
             result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
