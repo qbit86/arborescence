@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2020-12-26
+### Changed
+- Mark assemblies as CLS-compliant.
+
 ## [0.7.0] - 2020-12-26
 ### Added
 - Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` concepts.
