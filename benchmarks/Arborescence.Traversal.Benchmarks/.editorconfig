@@ -4,3 +4,6 @@ csharp_style_var_when_type_is_apparent = true:none
 dotnet_diagnostic.CA5394.severity = suggestion # Do not use insecure randomness
 resharper_member_can_be_private_global_highlighting = hint
 resharper_unused_auto_property_accessor_global_highlighting = hint
+
+[DummyHandler.cs]
+dotnet_diagnostic.CA1801.severity = suggestion # Review unused parameters
