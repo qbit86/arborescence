@@ -3,6 +3,8 @@
 ## [Unreleased] - 2020-12-26
 ### Changed
 - Mark assemblies as CLS-compliant.
+- Primitives: Replaced throwing of `IndexOutOfRangeException` with `ArgumentOutOfRangeException`.
+- Traversal: Renamed edge and vertex handlers to `EdgeHandler<>` and `VertexHandler<>`. 
 
 ## [0.7.0] - 2020-12-26
 ### Added
@@ -12,8 +14,8 @@
 - Dropped support of `netcoreapp2.0` in favor of `netcoreapp2.1`.
 - Models: Added arguments check to `IndexedSetPolicy.Add()` to ensure the invariant of “contains after add”.
 - Traversal: Added arguments check to `IndexedColorMapPolicy.AddOrUpdate()` to ensure the invariant of “contains after add”.
-- Traversal: Refactor `GenericSearch<>` to be O(_n_) instead of O(_m_) in terms of worst-case space complexity.
-- Traversal: Rename `InstantBfs<>` and `InstantDfs<>` to `EagerBfs<>` and `EagerDfs<>` respectively.
+- Traversal: Refactored `GenericSearch<>` to be O(_n_) instead of O(_m_) in terms of worst-case space complexity.
+- Traversal: Renamed `InstantBfs<>` and `InstantDfs<>` to `EagerBfs<>` and `EagerDfs<>` respectively.
 
 ### Removed
 - Abstractions: `IHeadConcept<>`, `ITailConcept<>`, `IOutEdgesConcept<>`, `IInEdgesConcept<>`.
@@ -42,7 +44,7 @@
 - Models: Fixed documentation comments.
 
 ### Changed
-- Models: Make `initialVertexCount` optional. 
+- Models: Made `initialVertexCount` optional. 
 
 ## [0.4.1] - 2020-10-15
 ### Added
