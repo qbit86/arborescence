@@ -1,7 +1,6 @@
 ﻿namespace Arborescence
 {
     using System;
-
 #if NETSTANDARD2_1 || NETCOREAPP3_1
     using System.Diagnostics.CodeAnalysis;
 
