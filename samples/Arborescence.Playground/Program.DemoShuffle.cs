@@ -11,7 +11,7 @@
     {
         private static void DemoShuffle()
         {
-            var builder = new IndexedIncidenceGraph.Builder(10);
+            IndexedIncidenceGraph.Builder builder = new(10);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
             {

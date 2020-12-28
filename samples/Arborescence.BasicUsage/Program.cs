@@ -9,7 +9,7 @@
     {
         private static void Main()
         {
-            var builder = new SimpleIncidenceGraph.Builder();
+            SimpleIncidenceGraph.Builder builder = new();
             builder.Add(2, 0);
             builder.Add(4, 3);
             builder.Add(0, 4);

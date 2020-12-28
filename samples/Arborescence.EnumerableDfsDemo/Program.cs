@@ -15,7 +15,7 @@
 
         private static void Main()
         {
-            var builder = new SimpleIncidenceGraph.Builder(0, 31);
+            SimpleIncidenceGraph.Builder builder = new(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
@@ -49,7 +49,7 @@
             IEnumerator<int> sources = EnumerateSources();
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
-            var treeEdges = new HashSet<Endpoints>(graph.EdgeCount);
+            HashSet<Endpoints> treeEdges = new(graph.EdgeCount);
             using IEnumerator<Endpoints> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
             while (steps.MoveNext())
             {
