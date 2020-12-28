@@ -26,8 +26,8 @@ namespace Arborescence
             byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
 
-            using var eagerSteps = new Rist<int>(graph.VertexCount);
-            using var enumerableSteps = new Rist<int>(graph.VertexCount);
+            using Rist<int> eagerSteps = new(graph.VertexCount);
+            using Rist<int> enumerableSteps = new(graph.VertexCount);
             BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
 
             // Act
@@ -38,7 +38,7 @@ namespace Arborescence
                     return;
 
                 int sourceCount = graph.VertexCount / 3;
-                var sources = new IndexEnumerator(sourceCount);
+                IndexEnumerator sources = new(sourceCount);
 
                 EagerBfs.Traverse(graph, sources, eagerColorMap, bfsHandler);
                 using IEnumerator<int> vertices =
@@ -77,7 +77,7 @@ namespace Arborescence
         {
             Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
-            var result = new BfsHandler<Graph, int, Endpoints>();
+            BfsHandler<Graph, int, Endpoints> result = new();
             result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
             return result;
         }

@@ -21,12 +21,12 @@ namespace Arborescence
 
             byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
-            using var eagerSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
+            using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
 
             byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
-            using var recursiveSteps = new Rist<(string, int)>(Math.Max(graph.VertexCount, 1));
+            using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
             // Act
@@ -37,7 +37,7 @@ namespace Arborescence
                     return;
 
                 int sourceCount = graph.VertexCount / 3;
-                var sources = new IndexEnumerator(sourceCount);
+                IndexEnumerator sources = new(sourceCount);
 
                 EagerDfs.Traverse(graph, sources, eagerColorMap, eagerHandler);
                 RecursiveDfs.Traverse(graph, sources, recursiveColorMap, recursiveHandler);
@@ -75,7 +75,7 @@ namespace Arborescence
 
         private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)
         {
-            var result = new DfsHandler<Graph, int, int>();
+            DfsHandler<Graph, int, int> result = new();
             result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
             result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
             result.FinishVertex += (_, v) => steps.Add((nameof(result.FinishVertex), v));
