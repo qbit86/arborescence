@@ -1,6 +1,5 @@
 [*Enumerator.cs]
 dotnet_diagnostic.CA1000.severity = suggestion # Do not declare static members on generic types
-dotnet_diagnostic.CA1710.severity = suggestion # Identifiers should have correct suffix
 
 [ArrayPrefix.cs]
 dotnet_diagnostic.CA1000.severity = suggestion # Do not declare static members on generic types
