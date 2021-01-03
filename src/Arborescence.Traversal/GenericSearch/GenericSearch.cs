@@ -4,8 +4,8 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents the generic search algorithm — traversal of the graph
-    /// where the order of exploring discovered vertices is determined by the specified policy.
+    /// Represents the generic search algorithm — traversal of the graph
+    /// where the order of exploring vertices is determined by the specified policy.
     /// </summary>
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
