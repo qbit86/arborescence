@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-01-03
+### Added
+- Traversal: Another `GenericSearch<>` struct with less type parameters.
+
 ## [0.7.1] - 2020-12-26
 ### Changed
 - Marked assemblies as CLS-compliant.
