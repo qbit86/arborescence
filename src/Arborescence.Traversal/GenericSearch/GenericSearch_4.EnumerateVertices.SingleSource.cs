@@ -19,7 +19,8 @@
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="graph"/> is <see langword="null"/>.</exception>
         /// <exception cref="InvalidOperationException">
-        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/> returns <see langword="false"/>.
+        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/>
+        /// returns <see langword="false"/>.
         /// </exception>
         public IEnumerator<TVertex> EnumerateVertices<TFringe, TExploredSet>(
             TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)

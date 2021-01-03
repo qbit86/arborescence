@@ -23,7 +23,8 @@ namespace Arborescence.Traversal
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/> returns <see langword="false"/>.
+        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/>
+        /// returns <see langword="false"/>.
         /// </exception>
         public IEnumerator<TVertex> EnumerateVertices<TVertexEnumerator, TFringe, TExploredSet>(
             TGraph graph, TVertexEnumerator sources, TFringe fringe, TExploredSet exploredSet)
