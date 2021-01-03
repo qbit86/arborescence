@@ -14,9 +14,12 @@
         /// <param name="source">The source.</param>
         /// <param name="fringe">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
+        /// <typeparam name="TFringe">The type of the generic queue.</typeparam>
+        /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="graph"/> is <see langword="null"/>.
+        /// <exception cref="ArgumentNullException"><paramref name="graph"/> is <see langword="null"/>.</exception>
+        /// <exception cref="InvalidOperationException">
+        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/> returns <see langword="false"/>.
         /// </exception>
         public IEnumerator<TVertex> EnumerateVertices<TFringe, TExploredSet>(
             TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
