@@ -3,22 +3,22 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections.Generic;
 
-    public readonly partial struct EnumerableDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
+    public readonly partial struct EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
     {
-        // https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html
-
         /// <summary>
         /// Enumerates vertices of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
+        /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerator to enumerate the vertices of a depth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
-        public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
+        public IEnumerator<TVertex> EnumerateVertices<TExploredSet>(
+            TGraph graph, TVertex source, TExploredSet exploredSet)
+            where TExploredSet : ISet<TVertex>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -26,7 +26,7 @@ namespace Arborescence.Traversal
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
-                ExploredSetPolicy.Add(exploredSet, source);
+                exploredSet.Add(source);
                 yield return source;
                 stack.Add(graph.EnumerateOutEdges(source));
 
@@ -41,10 +41,10 @@ namespace Arborescence.Traversal
                     if (!graph.TryGetHead(e, out TVertex v))
                         continue;
 
-                    if (ExploredSetPolicy.Contains(exploredSet, v))
+                    if (exploredSet.Contains(v))
                         continue;
 
-                    ExploredSetPolicy.Add(exploredSet, v);
+                    exploredSet.Add(v);
                     yield return v;
                     stack.Add(graph.EnumerateOutEdges(v));
                 }
