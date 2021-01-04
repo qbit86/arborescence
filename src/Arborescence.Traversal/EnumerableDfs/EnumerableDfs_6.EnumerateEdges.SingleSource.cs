@@ -12,7 +12,7 @@ namespace Arborescence.Traversal
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
-        /// <returns>An enumerator to enumerate the edges of the the graph.</returns>
+        /// <returns>An enumerator to enumerate the edges of a depth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
