@@ -18,7 +18,7 @@
         /// <param name="fringe">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
+        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
