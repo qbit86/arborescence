@@ -8,9 +8,9 @@ namespace Arborescence.Models
     /// Represents a set of values as a byte array.
     /// </summary>
 #if NET5
-    public readonly struct IndexedSet : ISet<int>, IReadOnlySet<int>
+    public readonly struct IndexedSet : IReadOnlySet<int>, ISet<int>, IEquatable<IndexedSet>
 #else
-    public readonly struct IndexedSet : ISet<int>
+    public readonly struct IndexedSet : ISet<int>, IEquatable<IndexedSet>
 #endif
     {
         private readonly byte[] _items;
@@ -126,5 +126,36 @@ namespace Arborescence.Models
 
         /// <inheritdoc/>
         public bool IsReadOnly => false;
+
+        /// <inheritdoc/>
+        public bool Equals(IndexedSet other) => Equals(_items, other._items);
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => obj is IndexedSet other && Equals(other);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
+
+        /// <summary>
+        /// Checks equality between two instances.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying arrays are reference equal;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool operator ==(IndexedSet left, IndexedSet right) => left.Equals(right);
+
+        /// <summary>
+        /// Checks inequality between two instances.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying arrays are not reference equal;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool operator !=(IndexedSet left, IndexedSet right) => !left.Equals(right);
     }
 }
