@@ -1,7 +1,9 @@
 # Changelog
 
-## [Unreleased] - 2021-01-04
+## [Unreleased] - 2021-01-06
 ### Added
+- Models: `net5.0` as another target framework.
+- Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store. 
 - Traversal: Another `GenericSearch<>` struct with less type parameters.
 - Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without policy for the vertex set.
 
