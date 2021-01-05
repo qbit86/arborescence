@@ -4,6 +4,9 @@ namespace Arborescence.Models
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Represents a set of values as a byte array.
+    /// </summary>
 #if NET5
     public readonly struct IndexedSet : ISet<int>, IReadOnlySet<int>
 #else
@@ -12,6 +15,10 @@ namespace Arborescence.Models
     {
         private readonly byte[] _items;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndexedSet"/> structure.
+        /// </summary>
+        /// <param name="items">The backing store for the set.</param>
         public IndexedSet(byte[] items) => _items = items;
 
         /// <inheritdoc/>
