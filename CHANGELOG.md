@@ -3,7 +3,7 @@
 ## [Unreleased] - 2021-01-04
 ### Added
 - Traversal: Another `GenericSearch<>` struct with less type parameters.
-- Traversal: `EnumerableDfs<>` generic type without policy for the vertex set.
+- Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without policy for the vertex set.
 
 ### Fixed
 - Traversal: XML-doc comments.
