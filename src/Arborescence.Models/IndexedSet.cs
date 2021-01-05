@@ -14,7 +14,14 @@ namespace Arborescence.Models
 
         public IndexedSet(byte[] items) => _items = items;
 
-        public IEnumerator<int> GetEnumerator() => throw new NotSupportedException();
+        public IEnumerator<int> GetEnumerator()
+        {
+            for (int i = 0; i < _items.Length; ++i)
+            {
+                if (_items[i] != 0)
+                    yield return i;
+            }
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -26,25 +33,25 @@ namespace Arborescence.Models
             _items[item] = 1;
         }
 
-        public void ExceptWith(IEnumerable<int> other) => throw new NotImplementedException();
+        public void ExceptWith(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public void IntersectWith(IEnumerable<int> other) => throw new NotImplementedException();
+        public void IntersectWith(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public bool IsProperSubsetOf(IEnumerable<int> other) => throw new NotImplementedException();
+        public bool IsProperSubsetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public bool IsProperSupersetOf(IEnumerable<int> other) => throw new NotImplementedException();
+        public bool IsProperSupersetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public bool IsSubsetOf(IEnumerable<int> other) => throw new NotImplementedException();
+        public bool IsSubsetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public bool IsSupersetOf(IEnumerable<int> other) => throw new NotImplementedException();
+        public bool IsSupersetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public bool Overlaps(IEnumerable<int> other) => throw new NotImplementedException();
+        public bool Overlaps(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public bool SetEquals(IEnumerable<int> other) => throw new NotImplementedException();
+        public bool SetEquals(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public void SymmetricExceptWith(IEnumerable<int> other) => throw new NotImplementedException();
+        public void SymmetricExceptWith(IEnumerable<int> other) => throw new NotSupportedException();
 
-        public void UnionWith(IEnumerable<int> other) => throw new NotImplementedException();
+        public void UnionWith(IEnumerable<int> other) => throw new NotSupportedException();
 
         bool ISet<int>.Add(int item)
         {
@@ -56,7 +63,7 @@ namespace Arborescence.Models
             return result;
         }
 
-        public void Clear() => throw new NotImplementedException();
+        public void Clear() => Array.Clear(_items, 0, _items.Length);
 
         public bool Contains(int item)
         {
@@ -66,12 +73,19 @@ namespace Arborescence.Models
             return _items[item] != 0;
         }
 
-        public void CopyTo(int[] array, int arrayIndex) => throw new NotImplementedException();
+        public void CopyTo(int[] array, int arrayIndex) => throw new NotSupportedException();
 
-        public bool Remove(int item) => throw new NotImplementedException();
+        public bool Remove(int item)
+        {
+            if (unchecked((uint)item >= (uint)_items.Length))
+                return false;
 
-        public int Count => throw new NotImplementedException();
+            _items[item] = 0;
+            return true;
+        }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public int Count => throw new NotSupportedException();
+
+        public bool IsReadOnly => false;
     }
 }
