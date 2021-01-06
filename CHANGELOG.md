@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-01-06
+## [0.8.0] - 2021-01-06
 ### Added
 - Models: `net5.0` as another target framework.
 - Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store. 
@@ -126,7 +126,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...HEAD
+[0.8.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...arborescence-0.8.0
 [0.7.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...arborescence-0.7.1
 [0.7.0]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...arborescence-0.7.0
 [0.6.0]: https://github.com/qbit86/arborescence/compare/traversal-0.5.0...abstractions-0.6.0
