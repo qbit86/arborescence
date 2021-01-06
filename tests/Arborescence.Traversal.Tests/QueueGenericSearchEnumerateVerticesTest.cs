@@ -2,6 +2,7 @@ namespace Arborescence
 {
     using System;
     using System.Buffers;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
@@ -15,8 +16,7 @@ namespace Arborescence
     {
         private EagerBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerBfs { get; }
 
-        private GenericSearch<Graph, int, Endpoints, EdgeEnumerator, Queue<int>, byte[], QueuePolicy, IndexedSetPolicy>
-            GenericSearch { get; }
+        private GenericSearch<Graph, int, Endpoints, EdgeEnumerator> GenericSearch { get; }
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
@@ -26,9 +26,10 @@ namespace Arborescence
 
             byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
-            Queue<int> fringe = new();
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
+            ConcurrentQueue<int> fringe = new();
+            byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(setBackingStore, 0, setBackingStore.Length);
+            IndexedSet set = new(setBackingStore);
 
             using Rist<int> eagerSteps = new(graph.VertexCount);
             using Rist<int> enumerableSteps = new(graph.VertexCount);
@@ -45,16 +46,14 @@ namespace Arborescence
                 IndexEnumerator sources = new(sourceCount);
 
                 EagerBfs.Traverse(graph, sources, eagerColorMap, bfsHandler);
-                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
-                    graph, sources, fringe, enumerableExploredSet);
+                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, sources, fringe, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
                 EagerBfs.Traverse(graph, source, eagerColorMap, bfsHandler);
-                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(
-                    graph, source, fringe, enumerableExploredSet);
+                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, source, fringe, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
 
@@ -79,7 +78,7 @@ namespace Arborescence
             // Cleanup
 
             ArrayPool<byte>.Shared.Return(eagerColorMap);
-            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
+            ArrayPool<byte>.Shared.Return(setBackingStore);
         }
 
         private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
