@@ -30,7 +30,7 @@
                 var edges = IndexedEdgeListParser.ParseEdges(textReader).ToList();
                 int vertexCount = edges.Count == 0 ? 0 : edges.Select(e => Math.Max(e.Tail, e.Head)).Max() + 1;
                 string description = $"{{{nameof(testCase)}: {testCase}}}";
-                var parameter = new GraphDefinitionParameter(vertexCount, edges, description);
+                GraphDefinitionParameter parameter = new(vertexCount, edges, description);
                 yield return new object[] { parameter };
             }
 
@@ -40,11 +40,11 @@
                 int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
                 foreach (double densityPower in s_densityPowers)
                 {
-                    var edges = new List<Endpoints>();
+                    List<Endpoints> edges = new();
                     GraphHelper.GenerateEdges(vertexCount, densityPower, edges);
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
-                    var parameter = new GraphDefinitionParameter(vertexCount, edges, description);
+                    GraphDefinitionParameter parameter = new(vertexCount, edges, description);
                     yield return new object[] { parameter };
                 }
             }

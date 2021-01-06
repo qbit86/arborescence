@@ -11,25 +11,37 @@ namespace Arborescence.Traversal
         TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates vertices of the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="source">The source.</param>
+        /// <param name="sources">The sources enumerator.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
-        /// <returns>An enumerator to enumerate the edges of the the graph.</returns>
+        /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
+        /// <returns>An enumerator to enumerate the vertices of a breadth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="graph"/> is <see langword="null"/>.
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
-        public IEnumerator<TEdge> EnumerateEdges(TGraph graph, TVertex source, TExploredSet exploredSet)
+        public IEnumerator<TVertex> EnumerateVertices<TVertexEnumerator>(
+            TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
+            where TVertexEnumerator : IEnumerator<TVertex>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
+            if (sources == null)
+                throw new ArgumentNullException(nameof(sources));
+
             var queue = new Internal.Queue<TVertex>();
             try
             {
-                ExploredSetPolicy.Add(exploredSet, source);
-                queue.Add(source);
+                while (sources.MoveNext())
+                {
+                    TVertex source = sources.Current;
+                    ExploredSetPolicy.Add(exploredSet, source);
+                    yield return source;
+                    queue.Add(source);
+                }
 
                 while (queue.TryTake(out TVertex u))
                 {
@@ -46,8 +58,8 @@ namespace Arborescence.Traversal
                         if (ExploredSetPolicy.Contains(exploredSet, v))
                             continue;
 
-                        yield return e;
                         ExploredSetPolicy.Add(exploredSet, v);
+                        yield return v;
                         queue.Add(v);
                     }
                 }

@@ -7,7 +7,7 @@ namespace Arborescence.Workbench
 
     public static class IndexedGraphs
     {
-        private static readonly UTF8Encoding s_utf8Encoding = new UTF8Encoding(false, false);
+        private static readonly UTF8Encoding s_utf8Encoding = new(false, false);
 
         public static TextReader GetTextReader(string shortName)
         {

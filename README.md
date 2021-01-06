@@ -2,6 +2,7 @@
 
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://www.nuget.org/packages/Arborescence.Abstractions/)
 [![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://www.nuget.org/packages/Arborescence.Models/)
+[![Arborescence.Primitives version](https://img.shields.io/nuget/v/Arborescence.Primitives.svg?label=Primitives&logo=nuget)](https://www.nuget.org/packages/Arborescence.Primitives/)
 [![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://www.nuget.org/packages/Arborescence.Traversal/)
 
 Arborescence is a generic .NET library for dealing with graphs.
@@ -27,7 +28,7 @@ Let's consider a simple directed graph and a breadth first tree on it:
 
 This is how you create a graph, instantiate an algorithm, and run it against the graph:
 ```cs
-var builder = new SimpleIncidenceGraph.Builder();
+SimpleIncidenceGraph.Builder builder = new();
 builder.Add(2, 0);
 builder.Add(4, 3);
 builder.Add(0, 4);

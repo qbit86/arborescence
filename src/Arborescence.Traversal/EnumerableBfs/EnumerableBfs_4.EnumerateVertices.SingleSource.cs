@@ -1,67 +1,55 @@
 namespace Arborescence.Traversal
 {
     using System;
-    using System.Buffers;
     using System.Collections.Generic;
 #if DEBUG
     using System.Diagnostics;
 
 #endif
 
-    public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
     {
         /// <summary>
         /// Enumerates vertices of the graph in a breadth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
-        /// <param name="vertexCount">The number of vertices.</param>
-        /// <returns>An enumerator to enumerate the vertices of a depth-first search tree.</returns>
+        /// <param name="exploredSet">The set of explored vertices.</param>
+        /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
+        /// <returns>An enumerator to enumerate the vertices of a breadth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="vertexCount"/> is less than zero.
-        /// </exception>
-        public IEnumerator<int> EnumerateVertices(TGraph graph, int source, int vertexCount)
+        public IEnumerator<TVertex> EnumerateVertices<TExploredSet>(
+            TGraph graph, TVertex source, TExploredSet exploredSet)
+            where TExploredSet : ISet<TVertex>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
-            if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
-
-            if (unchecked((uint)source >= (uint)vertexCount))
-            {
-                yield return source;
-                yield break;
-            }
-
-            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(exploredSet, 0, exploredSet.Length);
-            var queue = new Internal.Queue<int>();
+            var queue = new Internal.Queue<TVertex>();
             try
             {
-                SetHelpers.Add(exploredSet, source);
+                exploredSet.Add(source);
                 yield return source;
                 queue.Add(source);
 
-                while (queue.TryTake(out int u))
+                while (queue.TryTake(out TVertex u))
                 {
 #if DEBUG
-                    Debug.Assert(SetHelpers.Contains(exploredSet, u));
+                    Debug.Assert(exploredSet.Contains(u));
 #endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
                     {
                         TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out int v))
+                        if (!graph.TryGetHead(e, out TVertex v))
                             continue;
 
-                        if (SetHelpers.Contains(exploredSet, v))
+                        if (exploredSet.Contains(v))
                             continue;
 
-                        SetHelpers.Add(exploredSet, v);
+                        exploredSet.Add(v);
                         yield return v;
                         queue.Add(v);
                     }
@@ -71,7 +59,6 @@ namespace Arborescence.Traversal
             {
                 // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
                 queue.Dispose();
-                ArrayPool<byte>.Shared.Return(exploredSet);
             }
         }
     }

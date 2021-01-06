@@ -25,7 +25,7 @@ namespace Arborescence
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            using var builder = new MutableUndirectedIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
+            using MutableUndirectedIndexedIncidenceGraph builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -42,7 +42,7 @@ namespace Arborescence
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            using var builder = new MutableUndirectedIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
+            using MutableUndirectedIndexedIncidenceGraph builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -52,12 +52,12 @@ namespace Arborescence
             {
                 if (edge.Tail == edge.Head)
                     continue;
-                var invertedEdge = new Endpoints(edge.Head, edge.Tail);
+                Endpoints invertedEdge = new(edge.Head, edge.Tail);
                 expectedEdgeSet.Add(invertedEdge);
             }
 
             // Act
-            var actualEdgeSet = new HashSet<Endpoints>();
+            HashSet<Endpoints> actualEdgeSet = new();
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
             {
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
@@ -81,7 +81,7 @@ namespace Arborescence
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            using var builder = new MutableUndirectedIndexedIncidenceGraph(p.VertexCount, p.Edges.Count);
+            using MutableUndirectedIndexedIncidenceGraph builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 

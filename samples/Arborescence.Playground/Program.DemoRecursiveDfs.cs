@@ -17,7 +17,7 @@
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            var steps = new List<int>();
+            List<int> steps = new();
             DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
             RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
                 IndexedColorMapPolicy> dfs = default;
@@ -30,7 +30,7 @@
 
         private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(ICollection<int> steps)
         {
-            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
+            DfsHandler<IndexedIncidenceGraph, int, int> result = new();
             result.TreeEdge += (_, e) => steps.Add(e);
             return result;
         }
@@ -39,8 +39,8 @@
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
 
-            var builder = new IndexedIncidenceGraph.Builder(vertexCount);
-            var prng = new Random(1729);
+            IndexedIncidenceGraph.Builder builder = new(vertexCount);
+            Random prng = new(1729);
 
             for (int e = 0; e < edgeCount; ++e)
             {

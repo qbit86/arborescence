@@ -25,7 +25,7 @@
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
+            using MutableSimpleIncidenceGraph builder = new(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -42,7 +42,7 @@
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
+            using MutableSimpleIncidenceGraph builder = new(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -50,7 +50,7 @@
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
 
             // Act
-            var actualEdgeSet = new HashSet<Endpoints>();
+            HashSet<Endpoints> actualEdgeSet = new();
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
             {
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
@@ -74,7 +74,7 @@
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            using var builder = new MutableSimpleIncidenceGraph(p.VertexCount);
+            using MutableSimpleIncidenceGraph builder = new(p.VertexCount);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 

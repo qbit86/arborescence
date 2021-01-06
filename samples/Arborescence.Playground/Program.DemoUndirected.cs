@@ -11,7 +11,7 @@ namespace Arborescence
     {
         private static void DemoUndirected()
         {
-            var builder = new UndirectedIndexedIncidenceGraph.Builder(10);
+            UndirectedIndexedIncidenceGraph.Builder builder = new(10);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("05"))
             {

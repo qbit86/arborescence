@@ -24,7 +24,7 @@ namespace Arborescence
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            Graph.Builder builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -41,7 +41,7 @@ namespace Arborescence
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            Graph.Builder builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -49,7 +49,7 @@ namespace Arborescence
             HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
 
             // Act
-            var actualEdgeSet = new HashSet<Endpoints>();
+            HashSet<Endpoints> actualEdgeSet = new();
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
             {
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
@@ -73,7 +73,7 @@ namespace Arborescence
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.Builder(p.VertexCount, p.Edges.Count);
+            Graph.Builder builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 

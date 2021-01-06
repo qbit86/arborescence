@@ -1,44 +1,32 @@
 namespace Arborescence.Traversal
 {
     using System;
-    using System.Buffers;
     using System.Collections.Generic;
 
-    public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct EnumerableDfs<
+        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
     {
+        // https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html
+
         /// <summary>
         /// Enumerates vertices of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
-        /// <param name="vertexCount">The number of vertices.</param>
+        /// <param name="exploredSet">The set of explored vertices.</param>
         /// <returns>An enumerator to enumerate the vertices of a depth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="vertexCount"/> is less than zero.
-        /// </exception>
-        public IEnumerator<int> EnumerateVertices(TGraph graph, int source, int vertexCount)
+        public IEnumerator<TVertex> EnumerateVertices(TGraph graph, TVertex source, TExploredSet exploredSet)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
-            if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
-
-            if (unchecked((uint)source >= (uint)vertexCount))
-            {
-                yield return source;
-                yield break;
-            }
-
-            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(exploredSet, 0, exploredSet.Length);
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
-                SetHelpers.Add(exploredSet, source);
+                ExploredSetPolicy.Add(exploredSet, source);
                 yield return source;
                 stack.Add(graph.EnumerateOutEdges(source));
 
@@ -50,13 +38,13 @@ namespace Arborescence.Traversal
                     stack.Add(outEdges);
 
                     TEdge e = outEdges.Current;
-                    if (!graph.TryGetHead(e, out int v))
+                    if (!graph.TryGetHead(e, out TVertex v))
                         continue;
 
-                    if (SetHelpers.Contains(exploredSet, v))
+                    if (ExploredSetPolicy.Contains(exploredSet, v))
                         continue;
 
-                    SetHelpers.Add(exploredSet, v);
+                    ExploredSetPolicy.Add(exploredSet, v);
                     yield return v;
                     stack.Add(graph.EnumerateOutEdges(v));
                 }
@@ -64,7 +52,6 @@ namespace Arborescence.Traversal
             finally
             {
                 stack.Dispose();
-                ArrayPool<byte>.Shared.Return(exploredSet);
             }
         }
     }

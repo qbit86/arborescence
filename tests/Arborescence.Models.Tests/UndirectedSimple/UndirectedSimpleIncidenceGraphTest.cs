@@ -24,7 +24,7 @@
         internal void Graph_SizeShouldMatch(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.UndirectedBuilder(p.VertexCount, p.Edges.Count);
+            Graph.UndirectedBuilder builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -41,7 +41,7 @@
         internal void Graph_ShouldContainSameSetOfEdges(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.UndirectedBuilder(p.VertexCount, p.Edges.Count);
+            Graph.UndirectedBuilder builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 
@@ -51,12 +51,12 @@
             {
                 if (edge.Tail == edge.Head)
                     continue;
-                var invertedEdge = new Endpoints(edge.Head, edge.Tail);
+                Endpoints invertedEdge = new(edge.Head, edge.Tail);
                 expectedEdgeSet.Add(invertedEdge);
             }
 
             // Act
-            var actualEdgeSet = new HashSet<Endpoints>();
+            HashSet<Endpoints> actualEdgeSet = new();
             for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
             {
                 EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
@@ -80,7 +80,7 @@
         internal void Graph_OutEdgesShouldHaveSameTail(GraphDefinitionParameter p)
         {
             // Arrange
-            var builder = new Graph.UndirectedBuilder(p.VertexCount, p.Edges.Count);
+            Graph.UndirectedBuilder builder = new(p.VertexCount, p.Edges.Count);
             foreach (Endpoints endpoints in p.Edges)
                 builder.Add(endpoints.Tail, endpoints.Head);
 

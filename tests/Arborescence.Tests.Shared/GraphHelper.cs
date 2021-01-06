@@ -15,7 +15,7 @@
         {
             int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
 
-            var prng = new Random(1729);
+            Random prng = new(1729);
             for (int e = 0; e < edgeCount; ++e)
             {
                 int tail = prng.Next(vertexCount);
@@ -33,7 +33,7 @@
             if (edges is List<Endpoints> list)
                 list.Capacity = edgeCount;
 
-            var prng = new Random(1729);
+            Random prng = new(1729);
             for (int e = 0; e < edgeCount; ++e)
             {
                 int tail = prng.Next(vertexCount);

@@ -8,7 +8,7 @@
         internal static Rist<T> Create<TEnumerator>(TEnumerator enumerator, int capacity = 0)
             where TEnumerator : IEnumerator<T>
         {
-            var result = new Rist<T>(capacity);
+            Rist<T> result = new(capacity);
             while (enumerator.MoveNext())
                 result.Add(enumerator.Current);
 

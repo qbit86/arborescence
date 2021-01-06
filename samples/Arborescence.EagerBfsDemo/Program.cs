@@ -15,7 +15,7 @@
 
         private static void Main()
         {
-            var builder = new IndexedIncidenceGraph.Builder(0, 31);
+            IndexedIncidenceGraph.Builder builder = new(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
@@ -45,10 +45,10 @@
 
             w.WriteLine();
 
-            var sources = new IndexEnumerator(2);
+            IndexEnumerator sources = new(2);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            var examinedEdges = new HashSet<int>(graph.EdgeCount);
+            HashSet<int> examinedEdges = new(graph.EdgeCount);
             BfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
             ArrayPool<byte>.Shared.Return(colorMap);
@@ -83,7 +83,7 @@
         private static BfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
-            var result = new BfsHandler<IndexedIncidenceGraph, int, int>();
+            BfsHandler<IndexedIncidenceGraph, int, int> result = new();
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");

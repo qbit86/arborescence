@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.0] - 2021-01-06
+### Added
+- Models: `net5.0` as another target framework.
+- Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store. 
+- Traversal: Another `GenericSearch<>` struct with less type parameters.
+- Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without policy for the vertex set.
+
+### Fixed
+- Traversal: XML-doc comments.
+
 ## [0.7.1] - 2020-12-26
 ### Changed
 - Marked assemblies as CLS-compliant.
@@ -116,8 +126,9 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...HEAD
-[0.7.1]: https://github.com/qbit86/arborescence/compare/abstractions-0.7.0...arborescence-0.7.1
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...HEAD
+[0.8.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...arborescence-0.8.0
+[0.7.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...arborescence-0.7.1
 [0.7.0]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...arborescence-0.7.0
 [0.6.0]: https://github.com/qbit86/arborescence/compare/traversal-0.5.0...abstractions-0.6.0
 [0.5.0]: https://github.com/qbit86/arborescence/compare/models-0.4.2...traversal-0.5.0

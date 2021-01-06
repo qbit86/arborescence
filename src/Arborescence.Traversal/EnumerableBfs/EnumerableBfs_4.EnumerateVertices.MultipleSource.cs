@@ -2,25 +2,30 @@ namespace Arborescence.Traversal
 {
     using System;
     using System.Collections.Generic;
+#if DEBUG
+    using System.Diagnostics;
 
-    public readonly partial struct EnumerableDfs<
-        TGraph, TVertex, TEdge, TEdgeEnumerator, TExploredSet, TExploredSetPolicy>
+#endif
+
+    public readonly partial struct EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a depth-first order starting from the multiple sources.
+        /// Enumerates vertices of the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources enumerator.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the edges of the the graph.</returns>
+        /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
+        /// <returns>An enumerator to enumerate the vertices of a breadth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
-        public IEnumerator<TEdge> EnumerateEdges<TVertexEnumerator>(
+        public IEnumerator<TVertex> EnumerateVertices<TVertexEnumerator, TExploredSet>(
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
+            where TExploredSet : ISet<TVertex>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -28,41 +33,42 @@ namespace Arborescence.Traversal
             if (sources == null)
                 throw new ArgumentNullException(nameof(sources));
 
-            var stack = new Internal.Stack<TEdgeEnumerator>();
+            var queue = new Internal.Queue<TVertex>();
             try
             {
                 while (sources.MoveNext())
                 {
                     TVertex source = sources.Current;
-                    if (ExploredSetPolicy.Contains(exploredSet, source))
-                        continue;
+                    exploredSet.Add(source);
+                    yield return source;
+                    queue.Add(source);
+                }
 
-                    ExploredSetPolicy.Add(exploredSet, source);
-                    stack.Add(graph.EnumerateOutEdges(source));
-
-                    while (stack.TryTake(out TEdgeEnumerator outEdges))
+                while (queue.TryTake(out TVertex u))
+                {
+#if DEBUG
+                    Debug.Assert(exploredSet.Contains(u));
+#endif
+                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
+                    while (outEdges.MoveNext())
                     {
-                        if (!outEdges.MoveNext())
-                            continue;
-
-                        stack.Add(outEdges);
-
                         TEdge e = outEdges.Current;
                         if (!graph.TryGetHead(e, out TVertex v))
                             continue;
 
-                        if (ExploredSetPolicy.Contains(exploredSet, v))
+                        if (exploredSet.Contains(v))
                             continue;
 
-                        yield return e;
-                        ExploredSetPolicy.Add(exploredSet, v);
-                        stack.Add(graph.EnumerateOutEdges(v));
+                        exploredSet.Add(v);
+                        yield return v;
+                        queue.Add(v);
                     }
                 }
             }
             finally
             {
-                stack.Dispose();
+                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
+                queue.Dispose();
             }
         }
     }

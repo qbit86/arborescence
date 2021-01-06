@@ -15,7 +15,7 @@ namespace Arborescence
 
         private static void Main()
         {
-            var builder = new IndexedIncidenceGraph.Builder(0, 31);
+            IndexedIncidenceGraph.Builder builder = new(0, 31);
 
             using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
             {
@@ -45,10 +45,10 @@ namespace Arborescence
 
             w.WriteLine();
 
-            var sources = new IndexEnumerator(2);
+            IndexEnumerator sources = new(2);
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
-            var examinedEdges = new HashSet<int>(graph.EdgeCount);
+            HashSet<int> examinedEdges = new(graph.EdgeCount);
             DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             dfs.Traverse(graph, sources, colorMap, handler);
             ArrayPool<byte>.Shared.Return(colorMap);
@@ -83,7 +83,7 @@ namespace Arborescence
         private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
             TextWriter w, HashSet<int> examinedEdges)
         {
-            var result = new DfsHandler<IndexedIncidenceGraph, int, int>();
+            DfsHandler<IndexedIncidenceGraph, int, int> result = new();
             result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
             result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
             result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");

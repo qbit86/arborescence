@@ -11,36 +11,25 @@
         TExploredSet, TFringePolicy, TExploredSetPolicy>
     {
         /// <summary>
-        /// Enumerates vertices of the graph in an order specified by the fringe starting from the multiple sources.
+        /// Enumerates vertices of the graph in an order specified by the fringe starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="source">The source.</param>
         /// <param name="fringe">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
-        /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of the the graph.</returns>
+        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="graph"/> is <see langword="null"/>,
-        /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
-        public IEnumerator<TVertex> EnumerateVertices<TVertexEnumerator>(
-            TGraph graph, TVertexEnumerator sources, TFringe fringe, TExploredSet exploredSet)
-            where TVertexEnumerator : IEnumerator<TVertex>
+        public IEnumerator<TVertex> EnumerateVertices(
+            TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
-            if (sources == null)
-                throw new ArgumentNullException(nameof(sources));
-
-            while (sources.MoveNext())
-            {
-                TVertex source = sources.Current;
-                ExploredSetPolicy.Add(exploredSet, source);
-                yield return source;
-                FringePolicy.Add(fringe, source);
-            }
-
+            ExploredSetPolicy.Add(exploredSet, source);
+            yield return source;
+            FringePolicy.Add(fringe, source);
             while (FringePolicy.TryTake(fringe, out TVertex u))
             {
 #if DEBUG
