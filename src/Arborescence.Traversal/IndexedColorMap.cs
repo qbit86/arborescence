@@ -45,11 +45,12 @@ namespace Arborescence.Traversal
         public bool Remove(KeyValuePair<int, Color> item) => throw new NotSupportedException();
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public int Count => throw new NotSupportedException();
+        public int Count => _items.Length;
 
         /// <inheritdoc/>
         public bool IsReadOnly => false;
 
+        /// <inheritdoc/>
         public void Add(int key, Color value)
         {
             if ((uint)key >= (uint)_items.Length)
@@ -89,6 +90,7 @@ namespace Arborescence.Traversal
             return true;
         }
 
+        /// <inheritdoc cref="IDictionary{TKey,TValue}"/>
         public Color this[int key]
         {
             get
@@ -101,7 +103,7 @@ namespace Arborescence.Traversal
             set
             {
                 if ((uint)key >= (uint)_items.Length)
-                    throw new KeyNotFoundException();
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _items[key] = (byte)value;
             }
@@ -124,8 +126,26 @@ namespace Arborescence.Traversal
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
 
+        /// <summary>
+        /// Checks equality between two instances.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying arrays are reference equal;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
         public static bool operator ==(IndexedColorMap left, IndexedColorMap right) => left.Equals(right);
 
+        /// <summary>
+        /// Checks inequality between two instances.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying arrays are not reference equal;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
         public static bool operator !=(IndexedColorMap left, IndexedColorMap right) => !left.Equals(right);
     }
 }
