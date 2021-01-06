@@ -157,6 +157,7 @@ namespace Arborescence.Traversal
         /// <see langword="true"/> if the underlying arrays are not reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(IndexedColorDictionary left, IndexedColorDictionary right) => !left.Equals(right);
+        public static bool operator !=(IndexedColorDictionary left, IndexedColorDictionary right) =>
+            !left.Equals(right);
     }
 }
