@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-01-06
+### Added
+- Traversal: `EagerDfs<>` generic type without policy for the vertex color map.
+
 ## [0.8.0] - 2021-01-06
 ### Added
 - Models: `net5.0` as another target framework.
