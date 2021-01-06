@@ -4,8 +4,13 @@ namespace Arborescence.Traversal
     using System.Collections;
     using System.Collections.Generic;
 
-    public readonly struct IndexedColorMap : IReadOnlyDictionary<int, Color>, IDictionary<int, Color>
+    public readonly struct IndexedColorMap :
+        IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorMap>
     {
+        private readonly byte[] _items;
+
+        public IndexedColorMap(byte[] items) => _items = items;
+
         public IEnumerator<KeyValuePair<int, Color>> GetEnumerator() => throw new NotImplementedException();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -50,5 +55,18 @@ namespace Arborescence.Traversal
         ICollection<int> IDictionary<int, Color>.Keys => throw new NotImplementedException();
 
         IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public bool Equals(IndexedColorMap other) => Equals(_items, other._items);
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => obj is IndexedColorMap other && Equals(other);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
+
+        public static bool operator ==(IndexedColorMap left, IndexedColorMap right) => left.Equals(right);
+
+        public static bool operator !=(IndexedColorMap left, IndexedColorMap right) => !left.Equals(right);
     }
 }
