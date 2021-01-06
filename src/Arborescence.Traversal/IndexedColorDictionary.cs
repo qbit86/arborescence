@@ -8,16 +8,16 @@ namespace Arborescence.Traversal
     /// <summary>
     /// Represents a map from an index to a color as a byte array.
     /// </summary>
-    public readonly struct IndexedColorMap :
-        IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorMap>
+    public readonly struct IndexedColorDictionary :
+        IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorDictionary>
     {
         private readonly byte[] _items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IndexedColorMap"/> structure.
+        /// Initializes a new instance of the <see cref="IndexedColorDictionary"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the map.</param>
-        public IndexedColorMap(byte[] items) => _items = items;
+        public IndexedColorDictionary(byte[] items) => _items = items;
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, Color>> GetEnumerator()
@@ -129,10 +129,10 @@ namespace Arborescence.Traversal
         IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => _items.Cast<Color>();
 
         /// <inheritdoc/>
-        public bool Equals(IndexedColorMap other) => Equals(_items, other._items);
+        public bool Equals(IndexedColorDictionary other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedColorMap other && Equals(other);
+        public override bool Equals(object obj) => obj is IndexedColorDictionary other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
@@ -146,7 +146,7 @@ namespace Arborescence.Traversal
         /// <see langword="true"/> if the underlying arrays are reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(IndexedColorMap left, IndexedColorMap right) => left.Equals(right);
+        public static bool operator ==(IndexedColorDictionary left, IndexedColorDictionary right) => left.Equals(right);
 
         /// <summary>
         /// Checks inequality between two instances.
@@ -157,6 +157,6 @@ namespace Arborescence.Traversal
         /// <see langword="true"/> if the underlying arrays are not reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(IndexedColorMap left, IndexedColorMap right) => !left.Equals(right);
+        public static bool operator !=(IndexedColorDictionary left, IndexedColorDictionary right) => !left.Equals(right);
     }
 }
