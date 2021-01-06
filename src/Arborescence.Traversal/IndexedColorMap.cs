@@ -3,6 +3,7 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     public readonly struct IndexedColorMap :
         IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorMap>
@@ -11,50 +12,108 @@ namespace Arborescence.Traversal
 
         public IndexedColorMap(byte[] items) => _items = items;
 
-        public IEnumerator<KeyValuePair<int, Color>> GetEnumerator() => throw new NotImplementedException();
+        public IEnumerator<KeyValuePair<int, Color>> GetEnumerator()
+        {
+            for (int i = 0; i < _items.Length; ++i)
+                yield return new KeyValuePair<int, Color>(i, (Color)_items[i]);
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void Add(KeyValuePair<int, Color> item) => throw new NotImplementedException();
+        public void Add(KeyValuePair<int, Color> item)
+        {
+            if ((uint)item.Key >= (uint)_items.Length)
+                throw new ArgumentOutOfRangeException(nameof(item));
 
-        public void Clear() => throw new NotImplementedException();
+            _items[item.Key] = (byte)item.Value;
+        }
 
-        public bool Contains(KeyValuePair<int, Color> item) => throw new NotImplementedException();
+        public void Clear() => Array.Clear(_items, 0, _items.Length);
 
-        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) => throw new NotImplementedException();
+        public bool Contains(KeyValuePair<int, Color> item)
+        {
+            if (unchecked((uint)item.Key >= (uint)_items.Length))
+                return false;
 
-        public bool Remove(KeyValuePair<int, Color> item) => throw new NotImplementedException();
+            return _items[item.Key] == (byte)item.Value;
+        }
 
-        public int Count => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) => throw new NotSupportedException();
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool Remove(KeyValuePair<int, Color> item) => throw new NotSupportedException();
 
-        public void Add(int key, Color value) => throw new NotImplementedException();
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public int Count => throw new NotSupportedException();
 
-        bool IDictionary<int, Color>.ContainsKey(int key) => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool IsReadOnly => false;
 
-        public bool Remove(int key) => throw new NotImplementedException();
+        public void Add(int key, Color value)
+        {
+            if ((uint)key >= (uint)_items.Length)
+                throw new ArgumentOutOfRangeException(nameof(key));
 
-        bool IDictionary<int, Color>.TryGetValue(int key, out Color value) => throw new NotImplementedException();
+            _items[key] = (byte)value;
+        }
 
-        bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => throw new NotImplementedException();
+        bool IDictionary<int, Color>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
 
-        bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value) =>
-            throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool Remove(int key) => throw new NotSupportedException();
+
+        bool IDictionary<int, Color>.TryGetValue(int key, out Color value)
+        {
+            if (unchecked((uint)key >= (uint)_items.Length))
+            {
+                value = default;
+                return false;
+            }
+
+            value = (Color)_items[key];
+            return true;
+        }
+
+        bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
+
+        bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value)
+        {
+            if (unchecked((uint)key >= (uint)_items.Length))
+            {
+                value = default;
+                return false;
+            }
+
+            value = (Color)_items[key];
+            return true;
+        }
 
         public Color this[int key]
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get
+            {
+                if ((uint)key >= (uint)_items.Length)
+                    throw new KeyNotFoundException();
+
+                return (Color)_items[key];
+            }
+            set
+            {
+                if ((uint)key >= (uint)_items.Length)
+                    throw new KeyNotFoundException();
+
+                _items[key] = (byte)value;
+            }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, Color>.Keys => throw new NotImplementedException();
+        IEnumerable<int> IReadOnlyDictionary<int, Color>.Keys => Enumerable.Range(0, _items.Length);
 
-        ICollection<Color> IDictionary<int, Color>.Values => throw new NotImplementedException();
+        ICollection<Color> IDictionary<int, Color>.Values => throw new NotSupportedException();
 
-        ICollection<int> IDictionary<int, Color>.Keys => throw new NotImplementedException();
+        ICollection<int> IDictionary<int, Color>.Keys => throw new NotSupportedException();
 
-        IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => throw new NotImplementedException();
+        IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => _items.Cast<Color>();
 
         /// <inheritdoc/>
         public bool Equals(IndexedColorMap other) => Equals(_items, other._items);
