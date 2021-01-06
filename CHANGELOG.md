@@ -3,6 +3,7 @@
 ## [Unreleased] - 2021-01-06
 ### Added
 - Traversal: `EagerDfs<>` generic type without policy for the vertex color map.
+- Traversal: `IndexedColorDictionary` structure implementing `IDictionary<int, Color>` with an array as backing store.
 
 ## [0.8.0] - 2021-01-06
 ### Added
