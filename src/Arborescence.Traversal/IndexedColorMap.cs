@@ -5,13 +5,21 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Represents a map from an index to a color as a byte array.
+    /// </summary>
     public readonly struct IndexedColorMap :
         IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorMap>
     {
         private readonly byte[] _items;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndexedColorMap"/> structure.
+        /// </summary>
+        /// <param name="items">The backing store for the map.</param>
         public IndexedColorMap(byte[] items) => _items = items;
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, Color>> GetEnumerator()
         {
             for (int i = 0; i < _items.Length; ++i)
@@ -20,6 +28,7 @@ namespace Arborescence.Traversal
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        /// <inheritdoc/>
         public void Add(KeyValuePair<int, Color> item)
         {
             if ((uint)item.Key >= (uint)_items.Length)
@@ -28,8 +37,10 @@ namespace Arborescence.Traversal
             _items[item.Key] = (byte)item.Value;
         }
 
-        public void Clear() => Array.Clear(_items, 0, _items.Length);
+        /// <inheritdoc/>
+        public void Clear() => throw new NotSupportedException();
 
+        /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, Color> item)
         {
             if (unchecked((uint)item.Key >= (uint)_items.Length))
