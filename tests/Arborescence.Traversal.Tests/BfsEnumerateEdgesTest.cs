@@ -15,7 +15,7 @@ namespace Arborescence
     {
         private EagerBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerBfs { get; }
 
-        private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableBfs { get; }
+        private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
         private void EnumerateEdgesCore(Graph graph, bool multipleSource)
         {
@@ -23,8 +23,9 @@ namespace Arborescence
 
             byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
+            byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(setBackingStore, 0, setBackingStore.Length);
+            IndexedSet set = new(setBackingStore);
 
             using Rist<Endpoints> eagerSteps = new(graph.VertexCount);
             using Rist<Endpoints> enumerableSteps = new(graph.VertexCount);
@@ -42,7 +43,7 @@ namespace Arborescence
 
                 EagerBfs.Traverse(graph, sources, eagerColorMap, bfsHandler);
                 using IEnumerator<Endpoints> edges =
-                    EnumerableBfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+                    EnumerableBfs.EnumerateEdges(graph, sources, set);
                 while (edges.MoveNext())
                     enumerableSteps.Add(edges.Current);
             }
@@ -50,7 +51,7 @@ namespace Arborescence
             {
                 int source = graph.VertexCount >> 1;
                 EagerBfs.Traverse(graph, source, eagerColorMap, bfsHandler);
-                using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, enumerableExploredSet);
+                using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, set);
                 while (edges.MoveNext())
                     enumerableSteps.Add(edges.Current);
             }
@@ -76,7 +77,7 @@ namespace Arborescence
             // Cleanup
 
             ArrayPool<byte>.Shared.Return(eagerColorMap);
-            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
+            ArrayPool<byte>.Shared.Return(setBackingStore);
         }
 
         private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<Endpoints> treeEdges)
