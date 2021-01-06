@@ -30,8 +30,7 @@
 
             TextWriter w = Console.Out;
 
-            EnumerableDfs<SimpleIncidenceGraph, int, Endpoints, ArraySegment<Endpoints>.Enumerator, byte[],
-                IndexedSetPolicy> dfs = default;
+            EnumerableDfs<SimpleIncidenceGraph, int, Endpoints, ArraySegment<Endpoints>.Enumerator> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -47,8 +46,9 @@
 
             static IEnumerator<int> EnumerateSources() { yield return 3; }
             IEnumerator<int> sources = EnumerateSources();
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
+            byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(setBackingStore, 0, setBackingStore.Length);
+            IndexedSet enumerableExploredSet = new(setBackingStore);
             HashSet<Endpoints> treeEdges = new(graph.EdgeCount);
             using IEnumerator<Endpoints> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
             while (steps.MoveNext())
@@ -61,7 +61,7 @@
                     w.WriteLine($"  {V(v)} [style=solid]");
             }
 
-            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
+            ArrayPool<byte>.Shared.Return(setBackingStore);
 
             // Enumerate sources.
             w.WriteLine();
