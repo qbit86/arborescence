@@ -15,7 +15,7 @@ namespace Arborescence
     {
         private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
 
-        private EnumerableDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableDfs { get; }
+        private EnumerableDfs<Graph, int, int, EdgeEnumerator> EnumerableDfs { get; }
 
         private void EnumerateVerticesCore(Graph graph, bool multipleSource)
         {
@@ -26,8 +26,9 @@ namespace Arborescence
 
             byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
-            byte[] enumerableExploredSet = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(enumerableExploredSet, 0, enumerableExploredSet.Length);
+            byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(setBackingStore, 0, setBackingStore.Length);
+            IndexedSet set = new(setBackingStore);
 
             using Rist<int> eagerSteps = new(graph.VertexCount);
             using Rist<int> enumerableSteps = new(graph.VertexCount);
@@ -43,15 +44,14 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 IndexEnumerator sources = new(sourceCount);
                 EagerDfs.Traverse(graph, sources, eagerColorMap, dfsHandler);
-                using IEnumerator<int> vertices =
-                    EnumerableDfs.EnumerateVertices(graph, sources, enumerableExploredSet);
+                using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
             else
             {
                 int source = graph.VertexCount - 1;
                 EagerDfs.Traverse(graph, source, eagerColorMap, dfsHandler);
-                using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, enumerableExploredSet);
+                using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
 
@@ -76,7 +76,7 @@ namespace Arborescence
             // Cleanup
 
             ArrayPool<byte>.Shared.Return(eagerColorMap);
-            ArrayPool<byte>.Shared.Return(enumerableExploredSet);
+            ArrayPool<byte>.Shared.Return(setBackingStore);
         }
 
         private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> steps)
