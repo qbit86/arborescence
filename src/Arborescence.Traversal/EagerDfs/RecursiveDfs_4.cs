@@ -9,6 +9,8 @@ namespace Arborescence.Traversal
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
+        private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
+
         private static void TraverseCore<TColorMap, THandler>(
             TGraph graph, TVertex u, TColorMap colorMap, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
