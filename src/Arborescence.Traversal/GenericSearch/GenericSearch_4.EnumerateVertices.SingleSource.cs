@@ -3,7 +3,10 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Diagnostics;
+#if DEBUG
+    using Debug = System.Diagnostics.Debug;
+
+#endif
 
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>
     {

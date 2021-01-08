@@ -3,7 +3,7 @@ dotnet_diagnostic.CA1000.severity = silent # Do not declare static members on ge
 dotnet_diagnostic.CA1815.severity = silent # Override equals and operator equals on value types
 resharper_unused_type_parameter_highlighting = hint
 
-[*.Enumerate*.MultipleSource.cs]
+[*.MultipleSource.cs]
 resharper_assign_null_to_not_null_attribute_highlighting = hint
 
 [*fsHandler.cs]

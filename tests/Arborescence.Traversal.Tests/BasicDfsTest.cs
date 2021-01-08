@@ -13,19 +13,20 @@ namespace Arborescence
     {
         private Dfs<Graph, Endpoints, EdgeEnumerator> Dfs { get; }
 
-        private EnumerableDfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedSetPolicy> EnumerableDfs { get; }
+        private EnumerableDfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableDfs { get; }
 
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]
         internal void EnumerateEdges(GraphParameter<Graph> p)
         {
-            SimpleIncidenceGraph graph = p.Graph;
+            Graph graph = p.Graph;
 
             // Arrange
 
             int source = graph.VertexCount >> 1;
-            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
-            Array.Clear(exploredSet, 0, exploredSet.Length);
+            byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
+            Array.Clear(setBackingStore, 0, setBackingStore.Length);
+            IndexedSet exploredSet = new(setBackingStore);
 
             // Act
 
@@ -64,8 +65,9 @@ namespace Arborescence
             // Arrange
 
             int source = graph.VertexCount >> 1;
-            byte[] exploredSet = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
-            Array.Clear(exploredSet, 0, exploredSet.Length);
+            byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
+            Array.Clear(setBackingStore, 0, setBackingStore.Length);
+            IndexedSet exploredSet = new(setBackingStore);
 
             // Act
 

@@ -7,10 +7,7 @@
     {
         private static CultureInfo F => CultureInfo.InvariantCulture;
 
-        private static void Main()
-        {
-            DemoUndirected();
-        }
+        private static void Main() => DemoRecursiveDfs();
 
         private static string V(int v) => Base32.ToString(v);
 

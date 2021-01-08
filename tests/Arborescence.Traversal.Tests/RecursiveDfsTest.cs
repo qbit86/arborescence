@@ -11,21 +11,23 @@ namespace Arborescence
 
     public sealed class RecursiveDfsTest
     {
-        private EagerDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerDfs { get; }
+        private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
 
-        private RecursiveDfs<Graph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy> RecursiveDfs { get; }
+        private RecursiveDfs<Graph, int, int, EdgeEnumerator> RecursiveDfs { get; }
 
         private void TraverseCore(Graph graph, bool multipleSource)
         {
             // Arrange
 
-            byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
+            byte[] eagerColorMapBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(eagerColorMapBackingStore, 0, eagerColorMapBackingStore.Length);
+            IndexedColorDictionary eagerColorMap = new(eagerColorMapBackingStore);
             using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
 
-            byte[] recursiveColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(recursiveColorMap, 0, recursiveColorMap.Length);
+            byte[] recursiveColorMapBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(recursiveColorMapBackingStore, 0, recursiveColorMapBackingStore.Length);
+            IndexedColorDictionary recursiveColorMap = new(recursiveColorMapBackingStore);
             using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
@@ -69,8 +71,8 @@ namespace Arborescence
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(eagerColorMap);
-            ArrayPool<byte>.Shared.Return(recursiveColorMap);
+            ArrayPool<byte>.Shared.Return(eagerColorMapBackingStore);
+            ArrayPool<byte>.Shared.Return(recursiveColorMapBackingStore);
         }
 
         private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)

@@ -15,17 +15,17 @@
             const double densityPower = 1.5;
             IndexedIncidenceGraph graph = GenerateIncidenceGraph(vertexCount, densityPower);
 
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
+            byte[] backingStore = ArrayPool<byte>.Shared.Rent(vertexCount);
+            Array.Clear(backingStore, 0, backingStore.Length);
+            IndexedColorDictionary colorMap = new(backingStore);
             List<int> steps = new();
             DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
-            RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[],
-                IndexedColorMapPolicy> dfs = default;
+            RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> dfs = default;
 
             dfs.Traverse(graph, 0, colorMap, dfsHandler);
             Console.WriteLine(steps.Count);
 
-            ArrayPool<byte>.Shared.Return(colorMap, true);
+            ArrayPool<byte>.Shared.Return(backingStore, true);
         }
 
         private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(ICollection<int> steps)

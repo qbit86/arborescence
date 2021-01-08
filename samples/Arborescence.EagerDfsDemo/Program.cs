@@ -30,8 +30,7 @@ namespace Arborescence
 
             TextWriter w = Console.Out;
 
-            EagerDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
-                IndexedColorMapPolicy> dfs = default;
+            EagerDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator> dfs = default;
 
             w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -46,12 +45,13 @@ namespace Arborescence
             w.WriteLine();
 
             IndexEnumerator sources = new(2);
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
+            byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(backingStore, 0, backingStore.Length);
+            IndexedColorDictionary colorMap = new(backingStore);
             HashSet<int> examinedEdges = new(graph.EdgeCount);
             DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             dfs.Traverse(graph, sources, colorMap, handler);
-            ArrayPool<byte>.Shared.Return(colorMap);
+            ArrayPool<byte>.Shared.Return(backingStore);
 
             // Enumerate sources.
             w.WriteLine();

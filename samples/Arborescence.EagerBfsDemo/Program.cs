@@ -30,8 +30,7 @@
 
             TextWriter w = Console.Out;
 
-            EagerBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator, byte[],
-                IndexedColorMapPolicy> bfs = default;
+            EagerBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator> bfs = default;
 
             w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
             w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -46,12 +45,13 @@
             w.WriteLine();
 
             IndexEnumerator sources = new(2);
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(colorMap, 0, colorMap.Length);
+            byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(backingStore, 0, backingStore.Length);
+            IndexedColorDictionary colorMap = new(backingStore);
             HashSet<int> examinedEdges = new(graph.EdgeCount);
             BfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
             bfs.Traverse(graph, sources, colorMap, handler);
-            ArrayPool<byte>.Shared.Return(colorMap);
+            ArrayPool<byte>.Shared.Return(backingStore);
 
             // Enumerate sources.
             w.WriteLine();
