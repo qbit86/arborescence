@@ -13,7 +13,7 @@ namespace Arborescence
 
     public sealed class BfsEnumerateEdgesTest
     {
-        private EagerBfs<Graph, int, Endpoints, EdgeEnumerator, byte[], IndexedColorMapPolicy> EagerBfs { get; }
+        private EagerBfs<Graph, int, Endpoints, EdgeEnumerator> EagerBfs { get; }
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
@@ -21,8 +21,9 @@ namespace Arborescence
         {
             // Arrange
 
-            byte[] eagerColorMap = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(eagerColorMap, 0, eagerColorMap.Length);
+            byte[] mapBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(mapBackingStore, 0, mapBackingStore.Length);
+            IndexedColorDictionary eagerColorMap = new(mapBackingStore);
             byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(setBackingStore, 0, setBackingStore.Length);
             IndexedSet set = new(setBackingStore);
@@ -76,7 +77,7 @@ namespace Arborescence
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(eagerColorMap);
+            ArrayPool<byte>.Shared.Return(mapBackingStore);
             ArrayPool<byte>.Shared.Return(setBackingStore);
         }
 
