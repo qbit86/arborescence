@@ -8,7 +8,7 @@ namespace Arborescence.Traversal
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-        private void TraverseCore<TColorMap, THandler>(
+        private static void TraverseCore<TColorMap, THandler>(
             TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorMap, THandler handler)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
@@ -63,7 +63,7 @@ namespace Arborescence.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Color GetColorOrDefault<TColorMap>(TColorMap colorMap, TVertex vertex)
+        private static Color GetColorOrDefault<TColorMap>(TColorMap colorMap, TVertex vertex)
             where TColorMap : IDictionary<TVertex, Color> =>
             colorMap.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
