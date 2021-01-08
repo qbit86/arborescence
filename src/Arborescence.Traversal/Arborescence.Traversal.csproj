@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Graph traversal algorithms: DFS, BFS.
+    <Description>Graph traversal algorithms: BFS, DFS.
 Commonly used types:
-• Bfs&lt;TGraph, TEdge, TEdgeEnumerator&gt;
-• Dfs&lt;TGraph, TEdge, TEdgeEnumerator&gt;
-• EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator, TColorMap, TColorMapPolicy&gt;
-• IDfsHandler&lt;TGraph, TVertex, TEdge&gt;</Description>
+• GenericSearch&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
+• EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EnumerableDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
+• EagerBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;traversal;bfs;dfs</PackageTags>
     <Title>Graph traversal algorithms</Title>
