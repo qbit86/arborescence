@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-01-08
+## [0.8.1] - 2021-01-08
 ### Added
 - Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without policy for the vertex color map.
 - Traversal: `IndexedColorDictionary` structure implementing `IDictionary<int, Color>` with an array as backing store.
@@ -131,7 +131,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...HEAD
+[0.8.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...traversal-0.8.1
 [0.8.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...arborescence-0.8.0
 [0.7.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...arborescence-0.7.1
 [0.7.0]: https://github.com/qbit86/arborescence/compare/abstractions-0.6.0...arborescence-0.7.0
