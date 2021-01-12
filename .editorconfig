@@ -149,5 +149,5 @@ resharper_xmldoc_indent_child_elements = DoNotTouch
 resharper_xmldoc_indent_text = DoNotTouch
 resharper_xmldoc_space_before_self_closing = false
 
-[AssemblyInfo.cs, NullableAttributes.cs]
+[AssemblyInfo.cs]
 generated_code = true
