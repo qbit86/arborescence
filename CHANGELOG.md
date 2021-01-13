@@ -3,6 +3,9 @@
 ## [Unreleased] - 2021-01-13
 ### Added
 - Abstractions: Nullability attributes for legacy target frameworks.
+  
+### Removed
+- Abstractions: `netcoreapp3.1` from target frameworks.
 
 ## [0.8.1] - 2021-01-08
 ### Added
