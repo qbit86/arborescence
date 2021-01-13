@@ -23,16 +23,16 @@ namespace Arborescence.Search
         public AStar(TCostComparer costComparer, TCostMonoidPolicy costMonoidPolicy,
             TWeightMapPolicy weightMapPolicy, TCostMapPolicy costMapPolicy)
         {
-            if (costComparer is null)
+            if (costComparer == null)
                 throw new ArgumentNullException(nameof(costComparer));
 
-            if (costMonoidPolicy is null)
+            if (costMonoidPolicy == null)
                 throw new ArgumentNullException(nameof(costMonoidPolicy));
 
-            if (weightMapPolicy is null)
+            if (weightMapPolicy == null)
                 throw new ArgumentNullException(nameof(weightMapPolicy));
 
-            if (costMapPolicy is null)
+            if (costMapPolicy == null)
                 throw new ArgumentNullException(nameof(costMapPolicy));
 
             _costComparer = costComparer;

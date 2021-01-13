@@ -29,19 +29,19 @@ namespace Arborescence.Internal
         internal MinHeap(TPriorityMap priorityByElement, TIndexMap indexByElement,
             TPriorityComparer priorityComparer, TPriorityMapPolicy priorityMapPolicy, TIndexMapPolicy indexMapPolicy)
         {
-            if (priorityByElement is null)
+            if (priorityByElement == null)
                 throw new ArgumentNullException(nameof(priorityByElement));
 
-            if (indexByElement is null)
+            if (indexByElement == null)
                 throw new ArgumentNullException(nameof(indexByElement));
 
-            if (priorityComparer is null)
+            if (priorityComparer == null)
                 throw new ArgumentNullException(nameof(priorityComparer));
 
-            if (priorityMapPolicy is null)
+            if (priorityMapPolicy == null)
                 throw new ArgumentNullException(nameof(priorityMapPolicy));
 
-            if (indexMapPolicy is null)
+            if (indexMapPolicy == null)
                 throw new ArgumentNullException(nameof(indexMapPolicy));
 
             _arrayFromPool = Array.Empty<TElement>();
