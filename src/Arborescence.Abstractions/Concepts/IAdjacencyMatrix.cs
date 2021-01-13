@@ -1,9 +1,6 @@
 namespace Arborescence
 {
-#if NETSTANDARD2_1 || NETCOREAPP3_1
     using System.Diagnostics.CodeAnalysis;
-
-#endif
 
     // https://www.boost.org/doc/libs/1_75_0/libs/graph/doc/AdjacencyMatrix.html
 
@@ -24,10 +21,6 @@ namespace Arborescence
         /// otherwise, the unspecified value.
         /// </param>
         /// <returns>A value indicating whether the edge was found successfully.</returns>
-#if NETSTANDARD2_1 || NETCOREAPP3_1
         bool TryGetEdge(TVertex tail, TVertex head, [MaybeNullWhen(false)] out TEdge edge);
-#else
-        bool TryGetEdge(TVertex tail, TVertex head, out TEdge edge);
-#endif
     }
 }
