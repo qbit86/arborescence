@@ -8,7 +8,7 @@ namespace Arborescence.Search
 
     public readonly struct AStar<TGraph, TEdge, TEdgeEnumerator, TCost, TWeightMap, TCostMap,
         TCostComparer, TCostMonoidPolicy, TWeightMapPolicy, TCostMapPolicy>
-        where TGraph : IOutEdgesConcept<int, TEdgeEnumerator>, IHeadConcept<int, TEdge>
+        where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
         where TCostMonoidPolicy : IMonoidPolicy<TCost>
