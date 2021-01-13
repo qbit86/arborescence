@@ -1,9 +1,6 @@
 ﻿namespace Arborescence
 {
-#if NETSTANDARD2_1 || NETCOREAPP3_1
     using System.Diagnostics.CodeAnalysis;
-
-#endif
 
     /// <summary>
     /// Defines methods to support adding and taking items for the container.
@@ -28,10 +25,6 @@
         /// If no item was available to be removed, the value is unspecified.
         /// </param>
         /// <returns><c>true</c> if the item was removed and returned successfully; otherwise, <c>false</c>.</returns>
-#if NETSTANDARD2_1 || NETCOREAPP3_1
         bool TryTake(TContainer container, [MaybeNullWhen(false)] out TElement result);
-#else
-        bool TryTake(TContainer container, out TElement result);
-#endif
     }
 }
