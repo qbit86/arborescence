@@ -1,8 +1,8 @@
 namespace Arborescence
 {
     using System;
-    using System.Runtime.CompilerServices;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
 
     internal static class ArraySegmentEnumeratorHelper
     {

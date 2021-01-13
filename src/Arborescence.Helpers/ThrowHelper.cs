@@ -2,8 +2,8 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Runtime.CompilerServices;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
 
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs
 
