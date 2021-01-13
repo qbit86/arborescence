@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-01-13
+### Added
+- Abstractions: Nullability attributes for legacy target frameworks.
+
 ## [0.8.1] - 2021-01-08
 ### Added
 - Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without policy for the vertex color map.
