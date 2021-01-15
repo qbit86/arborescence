@@ -4,7 +4,7 @@ namespace Arborescence.Traversal
     using System.Buffers;
     using System.Collections.Generic;
 
-    public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>
     {
         /// <summary>
         /// Enumerates vertices of the graph in a depth-first order starting from the single source.
