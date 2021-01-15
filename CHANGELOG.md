@@ -141,8 +141,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.9.0...HEAD
-[0.9.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.1...traversal-0.9.0
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...HEAD
+[0.9.0]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...arborescence-0.9.0
 [0.8.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...traversal-0.8.1
 [0.8.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...arborescence-0.8.0
 [0.7.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...arborescence-0.7.1
