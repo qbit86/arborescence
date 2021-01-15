@@ -6,10 +6,9 @@ Commonly used types:
 • EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EnumerableDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
 • EagerBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <PackageTags>graph;traversal;bfs;dfs</PackageTags>
+    <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
     <VersionPrefix>0.9.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.9</AssemblyVersion>
