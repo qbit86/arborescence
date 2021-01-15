@@ -9,7 +9,6 @@ Commonly used types:
     <PackageTags>graph;traversal;bfs;dfs</PackageTags>
     <Title>Graph traversal algorithms</Title>
     <VersionPrefix>0.9.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.9</AssemblyVersion>
