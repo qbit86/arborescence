@@ -9,9 +9,9 @@ Which language version should we prefer? Should we restrict the version at all?
 
 ## Decision Drivers
 
-* Binary compatibile with Unity 2018.4
-* Source compatibile with Unity 2018.4
-* Source compatibile with online coding platforms like CodinGame or HackerRank
+* Binary compatible with Unity 2018.4
+* Source compatible with Unity 2018.4
+* Source compatible with online coding platforms like CodinGame or HackerRank
 
 ## Considered Options
 

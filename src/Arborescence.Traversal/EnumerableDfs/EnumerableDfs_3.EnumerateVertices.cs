@@ -3,27 +3,23 @@ namespace Arborescence.Traversal
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-#if DEBUG
-    using System.Diagnostics;
 
-#endif
-
-    public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order.
+        /// Enumerates vertices of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
         /// <param name="vertexCount">The number of vertices.</param>
-        /// <returns>An enumerator to enumerate the edges of a depth-first search tree.</returns>
+        /// <returns>An enumerator to enumerate the vertices of a depth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
-        public IEnumerator<TEdge> EnumerateEdges(TGraph graph, int source, int vertexCount)
+        public IEnumerator<int> EnumerateVertices(TGraph graph, int source, int vertexCount)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -32,41 +28,42 @@ namespace Arborescence.Traversal
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
             if (unchecked((uint)source >= (uint)vertexCount))
+            {
+                yield return source;
                 yield break;
+            }
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(exploredSet, 0, exploredSet.Length);
-            var queue = new Internal.Queue<int>();
+            var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
                 SetHelpers.Add(exploredSet, source);
-                queue.Add(source);
+                yield return source;
+                stack.Add(graph.EnumerateOutEdges(source));
 
-                while (queue.TryTake(out int u))
+                while (stack.TryTake(out TEdgeEnumerator outEdges))
                 {
-#if DEBUG
-                    Debug.Assert(SetHelpers.Contains(exploredSet, u));
-#endif
-                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
-                    {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out int v))
-                            continue;
+                    if (!outEdges.MoveNext())
+                        continue;
 
-                        if (SetHelpers.Contains(exploredSet, v))
-                            continue;
+                    stack.Add(outEdges);
 
-                        yield return e;
-                        SetHelpers.Add(exploredSet, v);
-                        queue.Add(v);
-                    }
+                    TEdge e = outEdges.Current;
+                    if (!graph.TryGetHead(e, out int v))
+                        continue;
+
+                    if (SetHelpers.Contains(exploredSet, v))
+                        continue;
+
+                    SetHelpers.Add(exploredSet, v);
+                    yield return v;
+                    stack.Add(graph.EnumerateOutEdges(v));
                 }
             }
             finally
             {
-                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
-                queue.Dispose();
+                stack.Dispose();
                 ArrayPool<byte>.Shared.Return(exploredSet);
             }
         }

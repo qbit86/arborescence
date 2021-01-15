@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.9.0] - 2021-01-13
+### Added
+- Abstractions: Nullability attributes for legacy target frameworks.
+
+### Changed
+- Traversal: Renamed `Bfs<>` and `Dfs<>` to `EnumerableBfs<>` and `EnumerableDfs<>` for consistency with existing generic types.
+  
+### Removed
+- Abstractions: `netcoreapp3.1` from target frameworks.
+
 ## [0.8.1] - 2021-01-08
 ### Added
 - Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without policy for the vertex color map.
@@ -131,7 +141,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.9.0...HEAD
+[0.9.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.1...traversal-0.9.0
 [0.8.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...traversal-0.8.1
 [0.8.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...arborescence-0.8.0
 [0.7.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...arborescence-0.7.1

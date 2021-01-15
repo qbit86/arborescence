@@ -1,33 +1,24 @@
 namespace Arborescence
 {
     using System;
-    using System.Runtime.CompilerServices;
-#if NETSTANDARD2_1 || NETCOREAPP3_1
     using System.Diagnostics.CodeAnalysis;
-
-#endif
+    using System.Runtime.CompilerServices;
 
     internal static class ArraySegmentEnumeratorHelper
     {
-#if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
-#endif
         internal static void ThrowCtorValidationFailedExceptions(Array array, int start, int endExclusive)
         {
             throw GetCtorValidationFailedException(array, start, endExclusive);
         }
 
-#if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
-#endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
         {
             throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
         }
 
-#if NETSTANDARD2_1 || NETCOREAPP3_1
         [DoesNotReturn]
-#endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()
         {
             throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);

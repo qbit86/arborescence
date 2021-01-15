@@ -2,67 +2,50 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Runtime.CompilerServices;
-#if NETCOREAPP3_1 || NETSTANDARD2_1
     using System.Diagnostics.CodeAnalysis;
-
-#endif
+    using System.Runtime.CompilerServices;
 
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs
 
     internal static class ThrowHelper
     {
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowArgumentException_DestinationTooShort()
         {
             throw new ArgumentException(SR.Argument_DestinationTooShort);
         }
 
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowArgumentNullException(ExceptionArgument argument)
         {
             throw new ArgumentNullException(GetArgumentName(argument));
         }
 
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
         }
 
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowInvalidOperationException(ExceptionResource resource)
         {
             throw new InvalidOperationException(GetResourceString(resource));
         }
 
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()
         {
             throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
         }
 
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
         {
             throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
         }
 
-#if NETCOREAPP3_1 || NETSTANDARD2_1
         [DoesNotReturn]
-#endif
         internal static void ThrowNotSupportedException()
         {
             throw new NotSupportedException();

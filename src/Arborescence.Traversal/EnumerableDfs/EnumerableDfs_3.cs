@@ -11,7 +11,7 @@ namespace Arborescence.Traversal
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
-    public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
 }
