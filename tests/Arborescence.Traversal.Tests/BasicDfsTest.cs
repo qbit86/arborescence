@@ -11,7 +11,7 @@ namespace Arborescence
 
     public sealed class BasicDfsTest
     {
-        private Dfs<Graph, Endpoints, EdgeEnumerator> Dfs { get; }
+        private EnumerableDfs<Graph, Endpoints, EdgeEnumerator> Dfs { get; }
 
         private EnumerableDfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableDfs { get; }
 

@@ -3,11 +3,15 @@ namespace Arborescence.Traversal
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+#if DEBUG
+    using System.Diagnostics;
 
-    public readonly partial struct Dfs<TGraph, TEdge, TEdgeEnumerator>
+#endif
+
+    public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a depth-first order starting from the single source.
+        /// Enumerates edges of the graph in a breadth-first order.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -32,34 +36,37 @@ namespace Arborescence.Traversal
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(exploredSet, 0, exploredSet.Length);
-            var stack = new Internal.Stack<TEdgeEnumerator>();
+            var queue = new Internal.Queue<int>();
             try
             {
                 SetHelpers.Add(exploredSet, source);
-                stack.Add(graph.EnumerateOutEdges(source));
+                queue.Add(source);
 
-                while (stack.TryTake(out TEdgeEnumerator outEdges))
+                while (queue.TryTake(out int u))
                 {
-                    if (!outEdges.MoveNext())
-                        continue;
+#if DEBUG
+                    Debug.Assert(SetHelpers.Contains(exploredSet, u));
+#endif
+                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
+                    while (outEdges.MoveNext())
+                    {
+                        TEdge e = outEdges.Current;
+                        if (!graph.TryGetHead(e, out int v))
+                            continue;
 
-                    stack.Add(outEdges);
+                        if (SetHelpers.Contains(exploredSet, v))
+                            continue;
 
-                    TEdge e = outEdges.Current;
-                    if (!graph.TryGetHead(e, out int v))
-                        continue;
-
-                    if (SetHelpers.Contains(exploredSet, v))
-                        continue;
-
-                    yield return e;
-                    SetHelpers.Add(exploredSet, v);
-                    stack.Add(graph.EnumerateOutEdges(v));
+                        yield return e;
+                        SetHelpers.Add(exploredSet, v);
+                        queue.Add(v);
+                    }
                 }
             }
             finally
             {
-                stack.Dispose();
+                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
+                queue.Dispose();
                 ArrayPool<byte>.Shared.Return(exploredSet);
             }
         }
