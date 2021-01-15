@@ -3,6 +3,9 @@
 ## [Unreleased] - 2021-01-13
 ### Added
 - Abstractions: Nullability attributes for legacy target frameworks.
+
+### Changed
+- Traversal: Renamed `Bfs<>` and `Dfs<>` to `EnumerableBfs<>` and `EnumerableDfs<>` for consistency with existing generic types.
   
 ### Removed
 - Abstractions: `netcoreapp3.1` from target frameworks.
