@@ -19,7 +19,7 @@
             builder.Add(2, 4);
             SimpleIncidenceGraph graph = builder.ToGraph();
 
-            Bfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
+            EnumerableBfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
 
             IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
             while (edges.MoveNext())

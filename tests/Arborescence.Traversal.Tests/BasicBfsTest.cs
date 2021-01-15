@@ -11,7 +11,7 @@ namespace Arborescence
 
     public sealed class BasicBfsTest
     {
-        private Bfs<Graph, Endpoints, EdgeEnumerator> Bfs { get; }
+        private EnumerableBfs<Graph, Endpoints, EdgeEnumerator> Bfs { get; }
 
         private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 

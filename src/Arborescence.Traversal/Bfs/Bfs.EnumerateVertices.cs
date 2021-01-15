@@ -8,7 +8,7 @@ namespace Arborescence.Traversal
 
 #endif
 
-    public readonly partial struct Bfs<TGraph, TEdge, TEdgeEnumerator>
+    public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
     {
         /// <summary>
         /// Enumerates vertices of the graph in a breadth-first order starting from the single source.
