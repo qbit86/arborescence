@@ -6,7 +6,7 @@ namespace Arborescence.Search
     // https://boost.org/doc/libs/1_75_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_75_0/libs/graph/doc/AStarHeuristic.html
 
-    public readonly struct AStar<TGraph, TEdge, TEdgeEnumerator, TCost, TWeightMap, TCostMap,
+    public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TWeightMap, TCostMap,
         TCostComparer, TCostMonoidPolicy, TWeightMapPolicy, TCostMapPolicy>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -20,7 +20,7 @@ namespace Arborescence.Search
         private readonly TWeightMapPolicy _weightMapPolicy;
         private readonly TCostMapPolicy _costMapPolicy;
 
-        public AStar(TCostComparer costComparer, TCostMonoidPolicy costMonoidPolicy,
+        public EnumerableAStar(TCostComparer costComparer, TCostMonoidPolicy costMonoidPolicy,
             TWeightMapPolicy weightMapPolicy, TCostMapPolicy costMapPolicy)
         {
             if (costComparer == null)
