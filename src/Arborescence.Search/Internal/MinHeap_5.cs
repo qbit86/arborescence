@@ -3,6 +3,7 @@ namespace Arborescence.Internal
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
     internal struct MinHeap<TElement, TPriority, TPriorityMap, TIndexInHeapMap, TPriorityComparer> : IDisposable
@@ -40,12 +41,44 @@ namespace Arborescence.Internal
 
         private static ArrayPool<TElement> Pool => ArrayPool<TElement>.Shared;
 
+        internal int Count => _count;
+
         public void Dispose()
         {
             TElement[] arrayFromPool = _arrayFromPool;
             this = default;
             if (arrayFromPool != null)
                 Pool.Return(arrayFromPool, ShouldClear());
+        }
+
+        private static int GetParent(int index) => (index - 1) / Arity;
+
+        private int Compare(TElement left, TElement right)
+        {
+            bool hasLeft = _priorityByElement.TryGetValue(left, out TPriority leftPriority);
+            bool hasRight = _priorityByElement.TryGetValue(right, out TPriority rightPriority);
+            if (!hasLeft)
+                return hasRight ? 1 : 0;
+
+            if (!hasRight)
+                return -1;
+
+            return _priorityComparer.Compare(leftPriority, rightPriority);
+        }
+
+        [Conditional("DEBUG")]
+        private void VerifyHeap()
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+
+            for (int i = 1; i < count; ++i)
+            {
+                int order = Compare(array[i], array[GetParent(i)]);
+                if (order < 0)
+                    throw new InvalidOperationException("Element is smaller than it's parent.");
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
