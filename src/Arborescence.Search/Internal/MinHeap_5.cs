@@ -71,13 +71,13 @@ namespace Arborescence.Internal
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
             for (int i = 1; i < count; ++i)
             {
                 int order = Compare(array[i], array[GetParent(i)]);
                 if (order < 0)
-                    throw new InvalidOperationException("Element is smaller than it's parent.");
+                    throw new InvalidOperationException("Element is smaller than its parent.");
             }
         }
 
