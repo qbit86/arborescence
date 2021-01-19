@@ -51,6 +51,31 @@ namespace Arborescence.Internal
                 Pool.Return(arrayFromPool, ShouldClear());
         }
 
+        private void UncheckedGrow()
+        {
+            int count = _count;
+            TElement[] arrayFromPool = _arrayFromPool;
+            Debug.Assert((uint)count == (uint)arrayFromPool.Length, "(uint)count == (uint)arrayFromPool.Length");
+
+            int newCapacity = count > 0 ? count << 1 : DefaultCapacity;
+            TElement[] newArrayFromPool = Pool.Rent(newCapacity);
+            if (count > 0)
+                Array.Copy(arrayFromPool, newArrayFromPool, count);
+
+            _arrayFromPool = newArrayFromPool;
+            Pool.Return(arrayFromPool, ShouldClear());
+        }
+
+        private void EnsureCapacity()
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
+
+            if (count == array.Length)
+                UncheckedGrow();
+        }
+
         private static int GetParent(int index) => (index - 1) / Arity;
 
         private int Compare(TElement left, TElement right)
