@@ -243,21 +243,6 @@ namespace Arborescence.Internal
             return _priorityComparer.Compare(leftPriority, rightPriority);
         }
 
-        [Conditional("DEBUG")]
-        private void VerifyHeap()
-        {
-            TElement[] array = _arrayFromPool;
-            int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
-
-            for (int i = 1; i < count; ++i)
-            {
-                int order = Compare(array[i], array[GetParent(i)]);
-                if (order < 0)
-                    throw new InvalidOperationException("Element is smaller than it's parent.");
-            }
-        }
-
         private void HeapifyUp(int index)
         {
             TElement[] array = _arrayFromPool;
@@ -346,6 +331,21 @@ namespace Arborescence.Internal
                 }
 
                 break;
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private void VerifyHeap()
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+
+            for (int i = 1; i < count; ++i)
+            {
+                int order = Compare(array[i], array[GetParent(i)]);
+                if (order < 0)
+                    throw new InvalidOperationException("Element is smaller than it's parent.");
             }
         }
 
