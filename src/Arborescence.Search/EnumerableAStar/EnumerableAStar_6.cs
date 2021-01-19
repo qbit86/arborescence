@@ -1,6 +1,7 @@
 namespace Arborescence.Search
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
 
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoidPolicy>
@@ -22,6 +23,29 @@ namespace Arborescence.Search
 
             _costComparer = costComparer;
             _costMonoidPolicy = costMonoidPolicy;
+        }
+
+        public IEnumerator<TEdge> EnumerateRelaxedEdges(TGraph graph, int source, int vertexCount)
+        {
+            if (graph == null)
+                throw new ArgumentNullException(nameof(graph));
+
+            if (vertexCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(vertexCount));
+
+            if (unchecked((uint)source >= (uint)vertexCount))
+                yield break;
+
+            byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
+            Array.Clear(colorMap, 0, colorMap.Length);
+            try
+            {
+                throw new NotImplementedException();
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(colorMap);
+            }
         }
     }
 }
