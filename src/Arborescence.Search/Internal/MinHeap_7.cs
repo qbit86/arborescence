@@ -9,31 +9,31 @@ namespace Arborescence.Internal
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/detail/d_ary_heap.hpp
 
     internal struct MinHeap<
-            TElement, TPriority, TPriorityMap, TIndexMap, TPriorityComparer, TPriorityMapPolicy, TIndexMapPolicy>
+            TElement, TPriority, TPriorityMap, TIndexInHeapMap, TPriorityComparer, TPriorityMapPolicy, TIndexMapPolicy>
         : IDisposable
         where TPriorityComparer : IComparer<TPriority>
         where TPriorityMapPolicy : IReadOnlyMapPolicy<TPriorityMap, TElement, TPriority>
-        where TIndexMapPolicy : IMapPolicy<TIndexMap, TElement, int>
+        where TIndexMapPolicy : IMapPolicy<TIndexInHeapMap, TElement, int>
     {
         private const int Arity = 4;
         private const int DefaultCapacity = 4;
 
         private TElement[] _arrayFromPool;
         private readonly TPriorityMap _priorityByElement;
-        private readonly TIndexMap _indexByElement;
+        private readonly TIndexInHeapMap _indexInHeapByElement;
         private readonly TPriorityComparer _priorityComparer;
         private readonly TPriorityMapPolicy _priorityMapPolicy;
         private readonly TIndexMapPolicy _indexMapPolicy;
         private int _count;
 
-        internal MinHeap(TPriorityMap priorityByElement, TIndexMap indexByElement,
+        internal MinHeap(TPriorityMap priorityByElement, TIndexInHeapMap indexInHeapByElement,
             TPriorityComparer priorityComparer, TPriorityMapPolicy priorityMapPolicy, TIndexMapPolicy indexMapPolicy)
         {
             if (priorityByElement == null)
                 throw new ArgumentNullException(nameof(priorityByElement));
 
-            if (indexByElement == null)
-                throw new ArgumentNullException(nameof(indexByElement));
+            if (indexInHeapByElement == null)
+                throw new ArgumentNullException(nameof(indexInHeapByElement));
 
             if (priorityComparer == null)
                 throw new ArgumentNullException(nameof(priorityComparer));
@@ -46,7 +46,7 @@ namespace Arborescence.Internal
 
             _arrayFromPool = Array.Empty<TElement>();
             _priorityByElement = priorityByElement;
-            _indexByElement = indexByElement;
+            _indexInHeapByElement = indexInHeapByElement;
             _priorityComparer = priorityComparer;
             _priorityMapPolicy = priorityMapPolicy;
             _indexMapPolicy = indexMapPolicy;
@@ -153,11 +153,11 @@ namespace Arborescence.Internal
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddOrUpdateIndex(TElement element, int index) =>
-            _indexMapPolicy.AddOrUpdate(_indexByElement, element, index);
+            _indexMapPolicy.AddOrUpdate(_indexInHeapByElement, element, index);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool TryGetIndex(TElement element, out int index) =>
-            _indexMapPolicy.TryGetValue(_indexByElement, element, out index);
+            _indexMapPolicy.TryGetValue(_indexInHeapByElement, element, out index);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool TryGetPriority(TElement element, out TPriority priority) =>
