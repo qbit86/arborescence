@@ -176,7 +176,7 @@ namespace Arborescence.Internal
         {
             int count = _count;
             TElement[] array = _arrayFromPool;
-            Debug.Assert(unchecked((uint)count < (uint)array.Length), "(uint)count < (uint)array.Length");
+            Debug.Assert((uint)count < (uint)array.Length, "(uint)count < (uint)array.Length");
 
             array[count] = element;
             _count = count + 1;
@@ -188,8 +188,7 @@ namespace Arborescence.Internal
         {
             int count = _count;
             TElement[] arrayFromPool = _arrayFromPool;
-            Debug.Assert(
-                unchecked((uint)count == (uint)arrayFromPool.Length), "(uint)count == (uint)arrayFromPool.Length");
+            Debug.Assert((uint)count == (uint)arrayFromPool.Length, "(uint)count == (uint)arrayFromPool.Length");
 
             int newCapacity = count > 0 ? count << 1 : DefaultCapacity;
             TElement[] newArrayFromPool = Pool.Rent(newCapacity);
@@ -204,9 +203,9 @@ namespace Arborescence.Internal
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
-            if (unchecked((uint)count == (uint)array.Length))
+            if (count == array.Length)
                 UncheckedGrow();
         }
 
@@ -218,9 +217,9 @@ namespace Arborescence.Internal
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
-            Debug.Assert(unchecked((uint)leftIndex < (uint)count), "(uint)leftIndex < (uint)count");
-            Debug.Assert(unchecked((uint)rightIndex < (uint)count), "(uint)rightIndex < (uint)count");
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)leftIndex < (uint)count, "(uint)leftIndex < (uint)count");
+            Debug.Assert((uint)rightIndex < (uint)count, "(uint)rightIndex < (uint)count");
 
             TElement left = array[leftIndex];
             TElement right = array[rightIndex];
@@ -247,7 +246,7 @@ namespace Arborescence.Internal
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
             if (index == 0 || count <= 1)
                 return;
@@ -294,7 +293,7 @@ namespace Arborescence.Internal
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
             if (count <= 1)
                 return;
@@ -339,13 +338,13 @@ namespace Arborescence.Internal
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
-            Debug.Assert(unchecked((uint)count <= (uint)array.Length), "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
             for (int i = 1; i < count; ++i)
             {
                 int order = Compare(array[i], array[GetParent(i)]);
                 if (order < 0)
-                    throw new InvalidOperationException("Element is smaller than it's parent.");
+                    throw new InvalidOperationException("Element is smaller than its parent.");
             }
         }
 
