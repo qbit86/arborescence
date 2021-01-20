@@ -17,7 +17,7 @@ namespace Arborescence.Internal
         private TElement[] _arrayFromPool;
         private int _count;
         private readonly TPriorityMap _priorityByElement;
-        private readonly TIndexInHeapMap _indexInHeapByElement;
+        private TIndexInHeapMap _indexInHeapByElement;
         private readonly TPriorityComparer _priorityComparer;
 
         internal MinHeap(
@@ -77,6 +77,24 @@ namespace Arborescence.Internal
         }
 
         private static int GetParent(int index) => (index - 1) / Arity;
+
+        private static int GetChild(int index, int childIndex) => index * Arity + childIndex + 1;
+
+        private void Swap(int leftIndex, int rightIndex)
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
+            Debug.Assert((uint)leftIndex < (uint)count, "(uint)leftIndex < (uint)count");
+            Debug.Assert((uint)rightIndex < (uint)count, "(uint)rightIndex < (uint)count");
+
+            TElement left = array[leftIndex];
+            TElement right = array[rightIndex];
+            array[leftIndex] = right;
+            array[rightIndex] = left;
+            _indexInHeapByElement[left] = rightIndex;
+            _indexInHeapByElement[right] = leftIndex;
+        }
 
         private int Compare(TElement left, TElement right)
         {
