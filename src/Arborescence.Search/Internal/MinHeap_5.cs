@@ -51,6 +51,28 @@ namespace Arborescence.Internal
                 Pool.Return(arrayFromPool, ShouldClear());
         }
 
+        internal bool TryPeek(out TElement element)
+        {
+            if (_count == 0)
+            {
+                element = default;
+                return false;
+            }
+
+            Debug.Assert(_arrayFromPool.Length > 0, "_arrayFromPool.Length > 0");
+
+            element = _arrayFromPool[0];
+            return true;
+        }
+
+        private TPriority GetPriorityOrThrow(TElement element)
+        {
+            if (_priorityByElement.TryGetValue(element, out TPriority priority))
+                return priority;
+
+            throw new InvalidOperationException("Priority was not found for the given element.");
+        }
+
         private void UncheckedGrow()
         {
             int count = _count;
