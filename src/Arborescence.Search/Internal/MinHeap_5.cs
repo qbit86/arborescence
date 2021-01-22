@@ -131,6 +131,53 @@ namespace Arborescence.Internal
             return _priorityComparer.Compare(leftPriority, rightPriority);
         }
 
+        private void HeapifyUp(int index)
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
+
+            if (index == 0 || count <= 1)
+                return;
+
+            if (index >= count)
+                return;
+
+            TElement currentlyBeingMovedElement = array[index];
+            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+
+            int levelMovedCount = 0;
+            for (int ascendingIndex = index; ascendingIndex != 0;)
+            {
+                int parentIndex = GetParent(ascendingIndex);
+                TElement parentElement = array[parentIndex];
+                TPriority parentPriority = GetPriorityOrThrow(parentElement);
+                if (_priorityComparer.Compare(currentlyBeingMovedPriority, parentPriority) < 0)
+                {
+                    ++levelMovedCount;
+                    ascendingIndex = parentIndex;
+                    continue;
+                }
+
+                break;
+            }
+
+            Debug.Assert(levelMovedCount > 0, "levelMovedCount > 0");
+
+            int topIndex = index;
+            for (int i = 0; i < levelMovedCount; ++i)
+            {
+                int parentIndex = GetParent(topIndex);
+                TElement parentElement = array[parentIndex];
+                _indexInHeapByElement[parentElement] = topIndex;
+                array[topIndex] = parentElement;
+                topIndex = parentIndex;
+            }
+
+            array[topIndex] = currentlyBeingMovedElement;
+            _indexInHeapByElement[currentlyBeingMovedElement] = topIndex;
+        }
+
         [Conditional("DEBUG")]
         private void VerifyHeap()
         {
