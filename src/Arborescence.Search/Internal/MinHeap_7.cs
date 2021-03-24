@@ -19,12 +19,12 @@ namespace Arborescence.Internal
         private const int DefaultCapacity = 4;
 
         private TElement[] _arrayFromPool;
+        private int _count;
         private readonly TPriorityMap _priorityByElement;
         private readonly TIndexInHeapMap _indexInHeapByElement;
         private readonly TPriorityComparer _priorityComparer;
         private readonly TPriorityMapPolicy _priorityMapPolicy;
         private readonly TIndexInHeapMapPolicy _indexInHeapMapPolicy;
-        private int _count;
 
         internal MinHeap(
             TPriorityMap priorityByElement, TIndexInHeapMap indexInHeapByElement, TPriorityComparer priorityComparer,
@@ -46,12 +46,12 @@ namespace Arborescence.Internal
                 throw new ArgumentNullException(nameof(indexInHeapMapPolicy));
 
             _arrayFromPool = Array.Empty<TElement>();
+            _count = 0;
             _priorityByElement = priorityByElement;
             _indexInHeapByElement = indexInHeapByElement;
             _priorityComparer = priorityComparer;
             _priorityMapPolicy = priorityMapPolicy;
             _indexInHeapMapPolicy = indexInHeapMapPolicy;
-            _count = 0;
         }
 
         private static ArrayPool<TElement> Pool => ArrayPool<TElement>.Shared;
