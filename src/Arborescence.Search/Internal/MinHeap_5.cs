@@ -227,50 +227,6 @@ namespace Arborescence.Internal
             return _priorityComparer.Compare(leftPriority, rightPriority);
         }
 
-        private void HeapifyDown()
-        {
-            TElement[] array = _arrayFromPool;
-            int count = _count;
-            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
-
-            if (count <= 1)
-                return;
-
-            int currentlyBeingMovedIndex = 0;
-            TElement currentlyBeingMovedElement = array[currentlyBeingMovedIndex];
-            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
-            while (true)
-            {
-                int childrenOffset = GetChild(currentlyBeingMovedIndex, 0);
-                int childCount = Math.Min(count - childrenOffset, Arity);
-                if (childCount <= 0)
-                    break;
-
-                var children = new Span<TElement>(array, childrenOffset, childCount);
-                int smallestChildIndex = 0;
-                TPriority smallestChildPriority = GetPriorityOrThrow(children[smallestChildIndex]);
-                for (int i = 1; i < childCount; ++i)
-                {
-                    TElement child = children[i];
-                    TPriority priority = GetPriorityOrThrow(child);
-                    if (_priorityComparer.Compare(priority, smallestChildPriority) < 0)
-                    {
-                        smallestChildIndex = i;
-                        smallestChildPriority = priority;
-                    }
-                }
-
-                if (_priorityComparer.Compare(smallestChildPriority, currentlyBeingMovedPriority) < 0)
-                {
-                    Swap(childrenOffset + smallestChildIndex, currentlyBeingMovedIndex);
-                    currentlyBeingMovedIndex = childrenOffset + smallestChildIndex;
-                    continue;
-                }
-
-                break;
-            }
-        }
-
         private void HeapifyUp(int index)
         {
             TElement[] array = _arrayFromPool;
@@ -316,6 +272,50 @@ namespace Arborescence.Internal
 
             array[topIndex] = currentlyBeingMovedElement;
             _indexInHeapByElement[currentlyBeingMovedElement] = topIndex;
+        }
+
+        private void HeapifyDown()
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
+
+            if (count <= 1)
+                return;
+
+            int currentlyBeingMovedIndex = 0;
+            TElement currentlyBeingMovedElement = array[currentlyBeingMovedIndex];
+            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+            while (true)
+            {
+                int childrenOffset = GetChild(currentlyBeingMovedIndex, 0);
+                int childCount = Math.Min(count - childrenOffset, Arity);
+                if (childCount <= 0)
+                    break;
+
+                var children = new Span<TElement>(array, childrenOffset, childCount);
+                int smallestChildIndex = 0;
+                TPriority smallestChildPriority = GetPriorityOrThrow(children[smallestChildIndex]);
+                for (int i = 1; i < childCount; ++i)
+                {
+                    TElement child = children[i];
+                    TPriority priority = GetPriorityOrThrow(child);
+                    if (_priorityComparer.Compare(priority, smallestChildPriority) < 0)
+                    {
+                        smallestChildIndex = i;
+                        smallestChildPriority = priority;
+                    }
+                }
+
+                if (_priorityComparer.Compare(smallestChildPriority, currentlyBeingMovedPriority) < 0)
+                {
+                    Swap(childrenOffset + smallestChildIndex, currentlyBeingMovedIndex);
+                    currentlyBeingMovedIndex = childrenOffset + smallestChildIndex;
+                    continue;
+                }
+
+                break;
+            }
         }
 
         [Conditional("DEBUG")]
