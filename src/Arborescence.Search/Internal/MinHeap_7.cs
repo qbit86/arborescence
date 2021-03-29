@@ -152,18 +152,6 @@ namespace Arborescence.Internal
             VerifyHeap();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void AddOrUpdateIndex(TElement element, int index) =>
-            _indexInHeapMapPolicy.AddOrUpdate(_indexInHeapByElement, element, index);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool TryGetIndex(TElement element, out int index) =>
-            _indexInHeapMapPolicy.TryGetValue(_indexInHeapByElement, element, out index);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool TryGetPriority(TElement element, out TPriority priority) =>
-            _priorityMapPolicy.TryGetValue(_priorityByElement, element, out priority);
-
         private TPriority GetPriorityOrThrow(TElement element)
         {
             if (_priorityMapPolicy.TryGetValue(_priorityByElement, element, out TPriority priority))
@@ -357,5 +345,17 @@ namespace Arborescence.Internal
             return true;
 #endif
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void AddOrUpdateIndex(TElement element, int index) =>
+            _indexInHeapMapPolicy.AddOrUpdate(_indexInHeapByElement, element, index);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryGetIndex(TElement element, out int index) =>
+            _indexInHeapMapPolicy.TryGetValue(_indexInHeapByElement, element, out index);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryGetPriority(TElement element, out TPriority priority) =>
+            _priorityMapPolicy.TryGetValue(_priorityByElement, element, out priority);
     }
 }

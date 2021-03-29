@@ -83,7 +83,7 @@ namespace Arborescence.Internal
             Debug.Assert(array.Length > 0, "array.Length > 0");
 
             TElement root = array[0];
-            AddOrUpdateIndex(root, -1);
+            _indexInHeapByElement[root] = -1;
             if (count == 1)
             {
                 _count = 0;
@@ -95,7 +95,7 @@ namespace Arborescence.Internal
 
             int newCount = count - 1;
             array[0] = array[newCount];
-            AddOrUpdateIndex(array[0], 0);
+            _indexInHeapByElement[array[0]] = 0;
             _count = newCount;
             if (ShouldClear())
                 array[newCount] = default;
@@ -109,7 +109,7 @@ namespace Arborescence.Internal
         // It assumes the priority has already been updated (using an external write to the priority map or such).
         internal bool Update(TElement element)
         {
-            bool hasIndex = TryGetIndex(element, out int index) && index != -1;
+            bool hasIndex = _indexInHeapByElement.TryGetValue(element, out int index) && index != -1;
             if (hasIndex)
             {
                 HeapifyUp(index);
@@ -119,11 +119,12 @@ namespace Arborescence.Internal
             return hasIndex;
         }
 
-        internal bool Contains(TElement element) => TryGetIndex(element, out int index) && index != -1;
+        internal bool Contains(TElement element) =>
+            _indexInHeapByElement.TryGetValue(element, out int index) && index != -1;
 
         internal void AddOrUpdate(TElement element)
         {
-            bool hasIndex = TryGetIndex(element, out int index) && index != -1;
+            bool hasIndex = _indexInHeapByElement.TryGetValue(element, out int index) && index != -1;
             if (hasIndex)
             {
                 HeapifyUp(index);
@@ -136,18 +137,6 @@ namespace Arborescence.Internal
 
             VerifyHeap();
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void AddOrUpdateIndex(TElement element, int index) =>
-            _indexInHeapByElement[element] = index;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool TryGetIndex(TElement element, out int index) =>
-            _indexInHeapByElement.TryGetValue(element, out index);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool TryGetPriority(TElement element, out TPriority priority) =>
-            _priorityByElement.TryGetValue(element, out priority);
 
         private TPriority GetPriorityOrThrow(TElement element)
         {
@@ -165,7 +154,7 @@ namespace Arborescence.Internal
 
             array[count] = element;
             _count = count + 1;
-            AddOrUpdateIndex(element, count);
+            _indexInHeapByElement[element] = count;
             HeapifyUp(count);
         }
 
