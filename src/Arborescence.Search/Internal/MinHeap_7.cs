@@ -7,6 +7,7 @@ namespace Arborescence.Internal
     using System.Runtime.CompilerServices;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/detail/d_ary_heap.hpp
+    // https://github.com/dotnet/runtime/tree/main/src/libraries/System.Collections/src/System/Collections/Generic/PriorityQueue.cs
 
     internal struct MinHeap<TElement, TPriority, TPriorityMap, TIndexInHeapMap, TPriorityComparer,
             TPriorityMapPolicy, TIndexInHeapMapPolicy>
