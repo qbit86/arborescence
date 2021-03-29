@@ -51,6 +51,13 @@ namespace Arborescence.Internal
                 Pool.Return(arrayFromPool, ShouldClear());
         }
 
+        internal void Add(TElement element)
+        {
+            EnsureCapacity();
+            UncheckedAdd(element);
+            VerifyHeap();
+        }
+
         internal bool TryPeek(out TElement element)
         {
             if (_count == 0)
@@ -65,12 +72,28 @@ namespace Arborescence.Internal
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void AddOrUpdateIndex(TElement element, int index) =>
+            _indexInHeapByElement[element] = index;
+
         private TPriority GetPriorityOrThrow(TElement element)
         {
             if (_priorityByElement.TryGetValue(element, out TPriority priority))
                 return priority;
 
             throw new InvalidOperationException("Priority was not found for the given element.");
+        }
+
+        private void UncheckedAdd(TElement element)
+        {
+            int count = _count;
+            TElement[] array = _arrayFromPool;
+            Debug.Assert((uint)count < (uint)array.Length, "(uint)count < (uint)array.Length");
+
+            array[count] = element;
+            _count = count + 1;
+            AddOrUpdateIndex(element, count);
+            HeapifyUp(count);
         }
 
         private void UncheckedGrow()
