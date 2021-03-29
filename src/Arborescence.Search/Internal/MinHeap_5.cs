@@ -72,6 +72,39 @@ namespace Arborescence.Internal
             return true;
         }
 
+        internal bool TryTake()
+        {
+            int count = _count;
+
+            if (count == 0)
+                return false;
+
+            TElement[] array = _arrayFromPool;
+            Debug.Assert(array.Length > 0, "array.Length > 0");
+
+            TElement root = array[0];
+            AddOrUpdateIndex(root, -1);
+            if (count == 1)
+            {
+                _count = 0;
+                if (ShouldClear())
+                    array[0] = default;
+
+                return true;
+            }
+
+            int newCount = count - 1;
+            array[0] = array[newCount];
+            AddOrUpdateIndex(array[0], 0);
+            _count = newCount;
+            if (ShouldClear())
+                array[newCount] = default;
+
+            HeapifyDown();
+            VerifyHeap();
+            return true;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddOrUpdateIndex(TElement element, int index) =>
             _indexInHeapByElement[element] = index;
@@ -152,6 +185,50 @@ namespace Arborescence.Internal
                 return -1;
 
             return _priorityComparer.Compare(leftPriority, rightPriority);
+        }
+
+        private void HeapifyDown()
+        {
+            TElement[] array = _arrayFromPool;
+            int count = _count;
+            Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
+
+            if (count <= 1)
+                return;
+
+            int currentlyBeingMovedIndex = 0;
+            TElement currentlyBeingMovedElement = array[currentlyBeingMovedIndex];
+            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+            while (true)
+            {
+                int childrenOffset = GetChild(currentlyBeingMovedIndex, 0);
+                int childCount = Math.Min(count - childrenOffset, Arity);
+                if (childCount <= 0)
+                    break;
+
+                var children = new Span<TElement>(array, childrenOffset, childCount);
+                int smallestChildIndex = 0;
+                TPriority smallestChildPriority = GetPriorityOrThrow(children[smallestChildIndex]);
+                for (int i = 1; i < childCount; ++i)
+                {
+                    TElement child = children[i];
+                    TPriority priority = GetPriorityOrThrow(child);
+                    if (_priorityComparer.Compare(priority, smallestChildPriority) < 0)
+                    {
+                        smallestChildIndex = i;
+                        smallestChildPriority = priority;
+                    }
+                }
+
+                if (_priorityComparer.Compare(smallestChildPriority, currentlyBeingMovedPriority) < 0)
+                {
+                    Swap(childrenOffset + smallestChildIndex, currentlyBeingMovedIndex);
+                    currentlyBeingMovedIndex = childrenOffset + smallestChildIndex;
+                    continue;
+                }
+
+                break;
+            }
         }
 
         private void HeapifyUp(int index)
