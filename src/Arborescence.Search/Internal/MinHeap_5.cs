@@ -105,9 +105,29 @@ namespace Arborescence.Internal
             return true;
         }
 
+        // This function is also known as DecreaseKey.
+        // It assumes the priority has already been updated (using an external write to the priority map or such).
+        internal bool Update(TElement element)
+        {
+            bool hasIndex = TryGetIndex(element, out int index) && index != -1;
+            if (hasIndex)
+            {
+                HeapifyUp(index);
+                VerifyHeap();
+            }
+
+            return hasIndex;
+        }
+
+        internal bool Contains(TElement element) => TryGetIndex(element, out int index) && index != -1;
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddOrUpdateIndex(TElement element, int index) =>
             _indexInHeapByElement[element] = index;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool TryGetIndex(TElement element, out int index) =>
+            _indexInHeapByElement.TryGetValue(element, out index);
 
         private TPriority GetPriorityOrThrow(TElement element)
         {
