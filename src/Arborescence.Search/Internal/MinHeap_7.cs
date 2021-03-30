@@ -199,9 +199,9 @@ namespace Arborescence.Internal
                 UncheckedGrow();
         }
 
-        private static int GetParent(int index) => (index - 1) >> Log2Arity;
+        private static int GetParentIndex(int index) => (index - 1) >> Log2Arity;
 
-        private static int GetChild(int index, int childIndex) => (index << Log2Arity) + childIndex + 1;
+        private static int GetFirstChildIndex(int index) => (index << Log2Arity) + 1;
 
         private void Swap(int leftIndex, int rightIndex)
         {
@@ -250,7 +250,7 @@ namespace Arborescence.Internal
             int levelMovedCount = 0;
             for (int ascendingIndex = index; ascendingIndex != 0;)
             {
-                int parentIndex = GetParent(ascendingIndex);
+                int parentIndex = GetParentIndex(ascendingIndex);
                 TElement parentElement = array[parentIndex];
                 TPriority parentPriority = GetPriorityOrThrow(parentElement);
                 if (_priorityComparer.Compare(currentlyBeingMovedPriority, parentPriority) < 0)
@@ -268,7 +268,7 @@ namespace Arborescence.Internal
             int topIndex = index;
             for (int i = 0; i < levelMovedCount; ++i)
             {
-                int parentIndex = GetParent(topIndex);
+                int parentIndex = GetParentIndex(topIndex);
                 TElement parentElement = array[parentIndex];
                 AddOrUpdateIndex(parentElement, topIndex);
                 array[topIndex] = parentElement;
@@ -293,7 +293,7 @@ namespace Arborescence.Internal
             TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
             while (true)
             {
-                int childrenOffset = GetChild(currentlyBeingMovedIndex, 0);
+                int childrenOffset = GetFirstChildIndex(currentlyBeingMovedIndex);
                 int childCount = Math.Min(count - childrenOffset, Arity);
                 if (childCount <= 0)
                     break;
@@ -332,7 +332,7 @@ namespace Arborescence.Internal
 
             for (int i = 1; i < count; ++i)
             {
-                int order = Compare(array[i], array[GetParent(i)]);
+                int order = Compare(array[i], array[GetParentIndex(i)]);
                 if (order < 0)
                     throw new InvalidOperationException("Element is smaller than its parent.");
             }
