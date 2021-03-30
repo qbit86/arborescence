@@ -17,6 +17,7 @@ namespace Arborescence.Internal
         where TIndexInHeapMapPolicy : IMapPolicy<TIndexInHeapMap, TElement, int>
     {
         private const int Arity = 4;
+        private const int Log2Arity = 2;
         private const int DefaultCapacity = 4;
 
         private TElement[] _arrayFromPool;
@@ -198,9 +199,9 @@ namespace Arborescence.Internal
                 UncheckedGrow();
         }
 
-        private static int GetParent(int index) => (index - 1) / Arity;
+        private static int GetParent(int index) => (index - 1) >> Log2Arity;
 
-        private static int GetChild(int index, int childIndex) => index * Arity + childIndex + 1;
+        private static int GetChild(int index, int childIndex) => (index << Log2Arity) + childIndex + 1;
 
         private void Swap(int leftIndex, int rightIndex)
         {
