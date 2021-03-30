@@ -16,7 +16,6 @@ namespace Arborescence.Internal
     {
         private const int Arity = 4;
         private const int Log2Arity = 2;
-        private const int DefaultCapacity = 4;
 
         private TElement[] _arrayFromPool;
         private int _count;
@@ -168,7 +167,8 @@ namespace Arborescence.Internal
             TElement[] arrayFromPool = _arrayFromPool;
             Debug.Assert((uint)count == (uint)arrayFromPool.Length, "(uint)count == (uint)arrayFromPool.Length");
 
-            int newCapacity = count > 0 ? count << 1 : DefaultCapacity;
+            const int defaultCapacity = 4;
+            int newCapacity = count > 0 ? count << 1 : defaultCapacity;
             TElement[] newArrayFromPool = Pool.Rent(newCapacity);
             if (count > 0)
                 Array.Copy(arrayFromPool, newArrayFromPool, count);
