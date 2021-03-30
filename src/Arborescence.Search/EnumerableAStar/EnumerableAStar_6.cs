@@ -4,6 +4,9 @@ namespace Arborescence.Search
     using System.Buffers;
     using System.Collections.Generic;
 
+    // https://boost.org/doc/libs/1_75_0/libs/graph/doc/astar_search.html
+    // https://boost.org/doc/libs/1_75_0/libs/graph/doc/AStarHeuristic.html
+
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoidPolicy>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
