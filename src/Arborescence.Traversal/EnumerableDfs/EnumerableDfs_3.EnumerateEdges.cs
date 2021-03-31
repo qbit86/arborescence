@@ -27,7 +27,7 @@ namespace Arborescence.Traversal
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
-            if (unchecked((uint)source >= (uint)vertexCount))
+            if (unchecked((uint)source >= vertexCount))
                 yield break;
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
