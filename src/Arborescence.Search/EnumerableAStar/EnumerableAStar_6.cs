@@ -28,8 +28,10 @@ namespace Arborescence.Search
             _costMonoidPolicy = costMonoidPolicy;
         }
 
-        public IEnumerator<TEdge> EnumerateRelaxedEdges(
-            TGraph graph, int source, Func<int, TCost> heuristic, int vertexCount)
+        public IEnumerator<TEdge> EnumerateRelaxedEdges<TWeightMap>(
+            TGraph graph, int source, Func<int, TCost> heuristic, int vertexCount,
+            TWeightMap weightMap)
+            where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -39,6 +41,9 @@ namespace Arborescence.Search
 
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
+
+            if (weightMap == null)
+                throw new ArgumentNullException(nameof(weightMap));
 
             if (unchecked((uint)source >= vertexCount))
                 yield break;
