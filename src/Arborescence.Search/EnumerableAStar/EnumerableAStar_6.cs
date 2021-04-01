@@ -3,6 +3,10 @@ namespace Arborescence.Search
     using System;
     using System.Buffers;
     using System.Collections.Generic;
+#if DEBUG
+    using System.Diagnostics;
+
+#endif
 
     // https://boost.org/doc/libs/1_75_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_75_0/libs/graph/doc/AStarHeuristic.html
@@ -50,12 +54,38 @@ namespace Arborescence.Search
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(colorMap, 0, colorMap.Length);
+            var queue = new Queue<int>();
             try
             {
-                throw new NotImplementedException();
+                MapHelpers.AddOrUpdate(colorMap, source, 1);
+                queue.Enqueue(source);
+                while (queue.Count > 0)
+                {
+                    int u = queue.Dequeue();
+#if DEBUG
+                    Debug.Assert(MapHelpers.ContainsKey(colorMap, u));
+#endif
+                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
+                    while (outEdges.MoveNext())
+                    {
+                        TEdge e = outEdges.Current;
+                        if (!graph.TryGetHead(e, out int v))
+                            continue;
+
+                        if (MapHelpers.ContainsKey(colorMap, v))
+                            continue;
+
+                        yield return e;
+                        MapHelpers.AddOrUpdate(colorMap, v, 1);
+                        queue.Enqueue(v);
+                    }
+
+                    MapHelpers.AddOrUpdate(colorMap, u, 2);
+                }
             }
             finally
             {
+                queue.Clear();
                 ArrayPool<byte>.Shared.Return(colorMap);
             }
         }
