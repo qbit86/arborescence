@@ -3,13 +3,10 @@ namespace Arborescence.Search
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-#if DEBUG
     using System.Diagnostics;
 
-#endif
-
-    // https://boost.org/doc/libs/1_75_0/libs/graph/doc/astar_search.html
-    // https://boost.org/doc/libs/1_75_0/libs/graph/doc/AStarHeuristic.html
+    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
+    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
 
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoidPolicy>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
@@ -88,6 +85,23 @@ namespace Arborescence.Search
                 queue.Clear();
                 ArrayPool<byte>.Shared.Return(colorMap);
             }
+        }
+
+        private static void Fill<T>(T[] array, T value, int startIndex, int count)
+        {
+            Debug.Assert(array != null, "array != null");
+            Debug.Assert(startIndex >= 0, "startIndex >= 0");
+            Debug.Assert(startIndex <= array.Length, "startIndex <= array.Length");
+            Debug.Assert(count >= 0, "count >= 0");
+            int end = startIndex + count;
+            Debug.Assert(end <= array.Length, "end <= array.Length");
+
+#if NETSTANDARD1_3 || NETSTANDARD2_0 || NET461
+            for (int i = startIndex; i < end; ++i)
+                array[i] = value;
+#else
+            Array.Fill(array, value, startIndex, count);
+#endif
         }
     }
 }
