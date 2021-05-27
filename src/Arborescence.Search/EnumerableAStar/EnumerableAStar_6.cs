@@ -4,6 +4,7 @@ namespace Arborescence.Search
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using Internal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
@@ -50,6 +51,13 @@ namespace Arborescence.Search
                 yield break;
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
+            TCost[] priorityByElement = ArrayPool<TCost>.Shared.Rent(vertexCount);
+            Array.Clear(priorityByElement, 0, priorityByElement.Length);
+            int[] indexInHeapByElement = ArrayPool<int>.Shared.Rent(vertexCount);
+            Fill(indexInHeapByElement, -1, 0, indexInHeapByElement.Length);
+            var minHeap = new MinHeap<
+                int, TCost, TCost[], int[], Comparer<TCost>, IndexedMapPolicy<TCost>, IndexedMapPolicy<int>>(
+                priorityByElement, indexInHeapByElement, Comparer<TCost>.Default, default, default);
             Array.Clear(colorMap, 0, colorMap.Length);
             var queue = new Queue<int>();
             try
@@ -83,6 +91,8 @@ namespace Arborescence.Search
             finally
             {
                 queue.Clear();
+                ArrayPool<int>.Shared.Return(indexInHeapByElement);
+                ArrayPool<TCost>.Shared.Return(priorityByElement);
                 ArrayPool<byte>.Shared.Return(colorMap);
             }
         }
