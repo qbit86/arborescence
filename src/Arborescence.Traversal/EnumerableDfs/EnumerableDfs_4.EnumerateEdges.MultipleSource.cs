@@ -16,7 +16,8 @@ namespace Arborescence.Traversal
         /// <returns>An enumerator to enumerate the edges of a depth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
-        /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// or <paramref name="sources"/> is <see langword="null"/>,
+        /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         public IEnumerator<TEdge> EnumerateEdges<TVertexEnumerator, TExploredSet>(
             TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
@@ -28,6 +29,9 @@ namespace Arborescence.Traversal
 
             if (sources == null)
                 throw new ArgumentNullException(nameof(sources));
+
+            if (exploredSet == null)
+                throw new ArgumentNullException(nameof(exploredSet));
 
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
