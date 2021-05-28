@@ -1,11 +1,14 @@
 # Changelog
 
-## [Unreleased] - 2021-05-28
+## [Unreleased] - 2021-05-29
+### Added
+- Models: `CompactSet` structure implementing `ISet<int>` with bit array as backing store.
+
 ### Fixed
 - Traversal: Added throwing `ArgumentNullException` in case if `colorMap`, or `exploredSet`, or `fringe` are `null`.
 
 ### Removed
-- Traversal: ``GenericSearch`8``
+- Traversal: ``EnumerableBfs`6``, ``EnumerableDfs`6``, ``GenericSearch`8``.
 
 ## [0.9.0] - 2021-01-13
 ### Added
