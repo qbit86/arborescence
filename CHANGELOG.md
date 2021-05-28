@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-05-28
+### Fixed
+- Traversal: Added throwing `ArgumentNullException` in case if `colorMap`, or `exploredSet`, or `fringe` are `null`.
+
 ## [0.9.0] - 2021-01-13
 ### Added
 - Abstractions: Nullability attributes for legacy target frameworks.
