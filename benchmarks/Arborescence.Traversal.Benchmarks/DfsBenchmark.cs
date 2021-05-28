@@ -25,14 +25,11 @@ namespace Arborescence
         [Params(10, 100, 1000, 10000)]
         public int VertexCount { get; set; }
 
-        private EagerDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
-            EagerDfs { get; }
+        private EagerDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EagerDfs { get; }
 
-        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
-            RecursiveDfs { get; }
+        private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> RecursiveDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator>
-            EnumerableDfs { get; }
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EnumerableDfs { get; }
 
         private IndexedIncidenceGraph Graph { get; set; }
 
@@ -56,7 +53,7 @@ namespace Arborescence
         public int EagerDfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            EagerDfs.Traverse(Graph, 0, _colorMap, _handler);
+            EagerDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorMap), _handler);
             return _handler.Count;
         }
 
@@ -64,7 +61,7 @@ namespace Arborescence
         public int RecursiveDfsSteps()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            RecursiveDfs.Traverse(Graph, 0, _colorMap, _handler);
+            RecursiveDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorMap), _handler);
             return _handler.Count;
         }
 
