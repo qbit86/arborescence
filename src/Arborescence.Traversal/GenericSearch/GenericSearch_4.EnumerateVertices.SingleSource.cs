@@ -20,7 +20,11 @@
         /// <typeparam name="TFringe">The type of the generic queue.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="graph"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="fringe"/> is <see langword="null"/>,
+        /// or <paramref name="exploredSet"/> is <see langword="null"/>.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/>
         /// returns <see langword="false"/>.
@@ -32,6 +36,12 @@
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
+
+            if (fringe == null)
+                throw new ArgumentNullException(nameof(fringe));
+
+            if (exploredSet == null)
+                throw new ArgumentNullException(nameof(exploredSet));
 
             exploredSet.Add(source);
             yield return source;

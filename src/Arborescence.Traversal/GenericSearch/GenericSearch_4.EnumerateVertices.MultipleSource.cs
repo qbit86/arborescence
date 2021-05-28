@@ -23,7 +23,9 @@ namespace Arborescence.Traversal
         /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
-        /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// or <paramref name="sources"/> is <see langword="null"/>,
+        /// or <paramref name="fringe"/> is <see langword="null"/>,
+        /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/>
@@ -40,6 +42,12 @@ namespace Arborescence.Traversal
 
             if (sources == null)
                 throw new ArgumentNullException(nameof(sources));
+
+            if (fringe == null)
+                throw new ArgumentNullException(nameof(fringe));
+
+            if (exploredSet == null)
+                throw new ArgumentNullException(nameof(exploredSet));
 
             while (sources.MoveNext())
             {
