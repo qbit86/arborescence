@@ -31,7 +31,7 @@ namespace Arborescence
         private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedColorMapPolicy>
             RecursiveDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator>
             EnumerableDfs { get; }
 
         private IndexedIncidenceGraph Graph { get; set; }
@@ -72,7 +72,7 @@ namespace Arborescence
         public int EnumerableDfsEdges()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            using IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, _colorMap);
+            using IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_colorMap));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
@@ -84,7 +84,7 @@ namespace Arborescence
         public int EnumerableDfsVertices()
         {
             Array.Clear(_colorMap, 0, _colorMap.Length);
-            using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, _colorMap);
+            using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new IndexedSet(_colorMap));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
