@@ -19,6 +19,7 @@ namespace Arborescence.Traversal
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="colorMap"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
@@ -27,6 +28,9 @@ namespace Arborescence.Traversal
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
+
+            if (colorMap == null)
+                throw new ArgumentNullException(nameof(colorMap));
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
