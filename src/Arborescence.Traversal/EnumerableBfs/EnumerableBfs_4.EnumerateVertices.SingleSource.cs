@@ -18,7 +18,8 @@ namespace Arborescence.Traversal
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerator to enumerate the vertices of a breadth-first search tree.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="graph"/> is <see langword="null"/>.
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         public IEnumerator<TVertex> EnumerateVertices<TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
@@ -26,6 +27,9 @@ namespace Arborescence.Traversal
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
+
+            if (exploredSet == null)
+                throw new ArgumentNullException(nameof(exploredSet));
 
             var queue = new Internal.Queue<TVertex>();
             try
