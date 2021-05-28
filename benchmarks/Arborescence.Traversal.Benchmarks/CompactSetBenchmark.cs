@@ -23,11 +23,9 @@
         [Params(10, 100, 1000, 10000)]
         public int VertexCount { get; set; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], CompactSetPolicy>
-            CompactDfs { get; }
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> CompactDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator, byte[], IndexedSetPolicy>
-            FastDfs { get; }
+        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> FastDfs { get; }
 
         private IndexedIncidenceGraph Graph { get; set; }
 
@@ -53,7 +51,7 @@
         public int Fast()
         {
             Array.Clear(_fastExploredSet, 0, _fastExploredSet.Length);
-            using IEnumerator<int> steps = FastDfs.EnumerateEdges(Graph, 0, _fastExploredSet);
+            using IEnumerator<int> steps = FastDfs.EnumerateEdges(Graph, 0, new IndexedSet(_fastExploredSet));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
@@ -65,7 +63,7 @@
         public int Compact()
         {
             Array.Clear(_compactExploredSet, 0, _compactExploredSet.Length);
-            using IEnumerator<int> steps = CompactDfs.EnumerateEdges(Graph, 0, _compactExploredSet);
+            using IEnumerator<int> steps = CompactDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
