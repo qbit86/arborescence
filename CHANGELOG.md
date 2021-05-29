@@ -4,6 +4,10 @@
 ### Added
 - Models: `CompactSet` structure implementing `ISet<int>` with bit array as backing store.
 
+### Changed
+- Abstractions: Renamed `IMonoidPolicy<T>` to `IMonoid<T>`.
+- Models: Renamed `Int32AdditiveMonoidPolicy` to `Int32AdditiveMonoid`.
+
 ### Fixed
 - Traversal: Added throwing `ArgumentNullException` in case if `colorMap`, or `exploredSet`, or `fringe` are `null`.
 
