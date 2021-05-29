@@ -25,6 +25,7 @@ namespace Arborescence.Traversal
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             Debug.Assert(graph != null, "graph != null");
+            Debug.Assert(colorMap != null, "colorMap != null");
             Debug.Assert(handler != null, "handler != null");
             Debug.Assert(terminationCondition != null, "terminationCondition != null");
 

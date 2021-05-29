@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.10.0] - 2021-05-30
+### Added
+- Models: `CompactSet` structure implementing `ISet<int>` with bit array as backing store.
+
+### Changed
+- Abstractions: Renamed `IMonoidPolicy<T>` to `IMonoid<T>`.
+- Models: Renamed `Int32AdditiveMonoidPolicy` to `Int32AdditiveMonoid`.
+
+### Fixed
+- Traversal: Added throwing `ArgumentNullException` in case if `colorMap`, or `exploredSet`, or `fringe` are `null`.
+
+### Removed
+- Abstractions: `IReadOnlySetPolicy<>`, `ISetPolicy<>`, `IMapPolicy<>`, `IReadOnlyMapPolicy<>`, `IContainerPolicy<>`.
+- Models: `IndexedSetPolicy`, `CompactSetPolicy`, `IndexedColorMapPolicy`.
+- Traversal: ``EagerBfs`6``, ``EagerDfs`6``, ``RecursiveDfs`6``, ``EnumerableBfs`6``, ``EnumerableDfs`6``, ``GenericSearch`8``.
+
 ## [0.9.0] - 2021-01-13
 ### Added
 - Abstractions: Nullability attributes for legacy target frameworks.
@@ -141,8 +157,9 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.9.0...HEAD
-[0.9.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.1...traversal-0.9.0
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...HEAD
+[0.10.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...arborescence-0.10.0
+[0.9.0]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...arborescence-0.9.0
 [0.8.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...traversal-0.8.1
 [0.8.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.1...arborescence-0.8.0
 [0.7.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.7.0...arborescence-0.7.1
