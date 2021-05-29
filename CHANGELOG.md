@@ -8,7 +8,7 @@
 - Traversal: Added throwing `ArgumentNullException` in case if `colorMap`, or `exploredSet`, or `fringe` are `null`.
 
 ### Removed
-- Abstractions: `IReadOnlySetPolicy<>`, `ISetPolicy<>`, `IMapPolicy`, `IReadOnlyMapPolicy`.
+- Abstractions: `IReadOnlySetPolicy<>`, `ISetPolicy<>`, `IMapPolicy<>`, `IReadOnlyMapPolicy<>`, `IContainerPolicy<>`.
 - Models: `IndexedSetPolicy`, `CompactSetPolicy`, `IndexedColorMapPolicy`.
 - Traversal: ``EagerBfs`6``, ``EagerDfs`6``, ``RecursiveDfs`6``, ``EnumerableBfs`6``, ``EnumerableDfs`6``, ``GenericSearch`8``.
 
