@@ -4,7 +4,7 @@ namespace Arborescence
     /// Represents a monoid — an algebraic structure with a single associative binary operation and an identity element.
     /// </summary>
     /// <typeparam name="T">The type of the elements in the monoid.</typeparam>
-    public interface IMonoidPolicy<T>
+    public interface IMonoid<T>
     {
         /// <summary>
         /// Gets the identity element of the monoid.
