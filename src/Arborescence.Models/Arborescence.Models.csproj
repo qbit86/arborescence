@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Data structures for graphs, and policy models to manipulate them.
+    <Description>Data structures for graphs and some specialized collections.
 Commonly used types:
 • IndexedIncidenceGraph
 • SimpleIncidenceGraph
