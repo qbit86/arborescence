@@ -34,7 +34,7 @@
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            _compactExploredSet = ArrayPool<byte>.Shared.Rent(CompactSetPolicy.GetByteCount(Graph.VertexCount));
+            _compactExploredSet = ArrayPool<byte>.Shared.Rent(CompactSet.GetByteCount(Graph.VertexCount));
             _fastExploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
         }
 
