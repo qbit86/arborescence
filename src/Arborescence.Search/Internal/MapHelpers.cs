@@ -1,4 +1,4 @@
-namespace Arborescence.Search
+namespace Arborescence.Internal
 {
     using System;
 
