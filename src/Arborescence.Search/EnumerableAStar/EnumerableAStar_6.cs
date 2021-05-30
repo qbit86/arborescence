@@ -61,16 +61,17 @@ namespace Arborescence.Search
                 priorityByElement, indexInHeapByElement, Comparer<TCost>.Default);
             byte[] colorMapData = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(colorMapData, 0, colorMapData.Length);
+            var colorMap = new IndexedDictionary<byte>(colorMapData);
             var queue = new Queue<int>();
             try
             {
-                MapHelpers.AddOrUpdate(colorMapData, source, Colors.Gray);
+                colorMap[source] = Colors.Gray;
                 queue.Enqueue(source);
                 while (queue.Count > 0)
                 {
                     int u = queue.Dequeue();
 #if DEBUG
-                    Debug.Assert(MapHelpers.ContainsKey(colorMapData, u));
+                    Debug.Assert(ContainsKey(colorMap, u));
 #endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
@@ -79,15 +80,15 @@ namespace Arborescence.Search
                         if (!graph.TryGetHead(e, out int v))
                             continue;
 
-                        if (MapHelpers.ContainsKey(colorMapData, v))
+                        if (ContainsKey(colorMap, v))
                             continue;
 
                         yield return e;
-                        MapHelpers.AddOrUpdate(colorMapData, v, Colors.Gray);
+                        colorMap[v] = Colors.Gray;
                         queue.Enqueue(v);
                     }
 
-                    MapHelpers.AddOrUpdate(colorMapData, u, Colors.Black);
+                    colorMap[u] = Colors.Black;
                 }
             }
             finally
@@ -117,7 +118,7 @@ namespace Arborescence.Search
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static byte GetColorOrDefault(IndexedDictionary<byte> colorMap, int vertex) =>
-            colorMap.TryGetValue(vertex, out byte result) ? result : default;
+        private static bool ContainsKey(IndexedDictionary<byte> colorMap, int key) =>
+            colorMap.TryGetValue(key, out byte color) && color != 0;
     }
 }
