@@ -4,6 +4,7 @@ namespace Arborescence.Search
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Internal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
@@ -50,7 +51,6 @@ namespace Arborescence.Search
             if (unchecked((uint)source >= vertexCount))
                 yield break;
 
-            byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
             TCost[] priorityByElementData = ArrayPool<TCost>.Shared.Rent(vertexCount);
             Array.Clear(priorityByElementData, 0, priorityByElementData.Length);
             var priorityByElement = new IndexedDictionary<TCost>(priorityByElementData);
@@ -59,17 +59,18 @@ namespace Arborescence.Search
             var indexInHeapByElement = new IndexedDictionary<int>(indexInHeapByElementData);
             var minHeap = new MinHeap<int, TCost, IndexedDictionary<TCost>, IndexedDictionary<int>, Comparer<TCost>>(
                 priorityByElement, indexInHeapByElement, Comparer<TCost>.Default);
-            Array.Clear(colorMap, 0, colorMap.Length);
+            byte[] colorMapData = ArrayPool<byte>.Shared.Rent(vertexCount);
+            Array.Clear(colorMapData, 0, colorMapData.Length);
             var queue = new Queue<int>();
             try
             {
-                MapHelpers.AddOrUpdate(colorMap, source, Colors.Gray);
+                MapHelpers.AddOrUpdate(colorMapData, source, Colors.Gray);
                 queue.Enqueue(source);
                 while (queue.Count > 0)
                 {
                     int u = queue.Dequeue();
 #if DEBUG
-                    Debug.Assert(MapHelpers.ContainsKey(colorMap, u));
+                    Debug.Assert(MapHelpers.ContainsKey(colorMapData, u));
 #endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     while (outEdges.MoveNext())
@@ -78,15 +79,15 @@ namespace Arborescence.Search
                         if (!graph.TryGetHead(e, out int v))
                             continue;
 
-                        if (MapHelpers.ContainsKey(colorMap, v))
+                        if (MapHelpers.ContainsKey(colorMapData, v))
                             continue;
 
                         yield return e;
-                        MapHelpers.AddOrUpdate(colorMap, v, Colors.Gray);
+                        MapHelpers.AddOrUpdate(colorMapData, v, Colors.Gray);
                         queue.Enqueue(v);
                     }
 
-                    MapHelpers.AddOrUpdate(colorMap, u, Colors.Black);
+                    MapHelpers.AddOrUpdate(colorMapData, u, Colors.Black);
                 }
             }
             finally
@@ -94,7 +95,7 @@ namespace Arborescence.Search
                 queue.Clear();
                 ArrayPool<int>.Shared.Return(indexInHeapByElementData);
                 ArrayPool<TCost>.Shared.Return(priorityByElementData);
-                ArrayPool<byte>.Shared.Return(colorMap);
+                ArrayPool<byte>.Shared.Return(colorMapData);
             }
         }
 
@@ -114,5 +115,9 @@ namespace Arborescence.Search
             Array.Fill(array, value, startIndex, count);
 #endif
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static byte GetColorOrDefault(IndexedDictionary<byte> colorMap, int vertex) =>
+            colorMap.TryGetValue(vertex, out byte result) ? result : default;
     }
 }
