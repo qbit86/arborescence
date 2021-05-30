@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-05-30
+## [0.11.0] - 2021-05-30
 ### Added
 - Primitives: Moved `IndexedSet` and `IndexedSet` from Models.
 - Primitives: `IndexedDictionary<TValue>`.
@@ -169,7 +169,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...HEAD
+[0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...0.11.0
 [0.10.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...arborescence-0.10.0
 [0.9.0]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...arborescence-0.9.0
 [0.8.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...traversal-0.8.1
