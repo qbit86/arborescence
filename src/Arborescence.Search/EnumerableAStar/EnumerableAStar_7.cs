@@ -89,10 +89,16 @@ namespace Arborescence.Search
                     while (outEdges.MoveNext())
                     {
                         TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
+                        if (e == null || !graph.TryGetHead(e, out TVertex v))
                             continue;
 
                         // examine_edge
+                        if (!weightByEdge.TryGetValue(e, out TCost eWeight))
+                            continue;
+
+                        if (_costComparer.Compare(eWeight, _costMonoid.Identity) < 0)
+                            AStarHelper.ThrowInvalidOperationException_NegativeWeight();
+
                         Color vColor = GetColorOrDefault(colorByVertex, v);
                         switch (vColor)
                         {
