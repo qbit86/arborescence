@@ -5,11 +5,11 @@ Commonly used types:
 • Endpoints
 • ArrayPrefix&lt;T&gt;
 • ArrayPrefixEnumerator&lt;T&gt;
+• IndexedDictionary&lt;TValue&gt;
 • IndexedSet</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionPrefix>0.11.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.11</AssemblyVersion>
