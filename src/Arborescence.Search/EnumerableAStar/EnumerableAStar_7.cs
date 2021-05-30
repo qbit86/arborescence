@@ -89,15 +89,17 @@ namespace Arborescence.Search
                     while (outEdges.MoveNext())
                     {
                         TEdge e = outEdges.Current;
-                        if (e == null || !graph.TryGetHead(e, out TVertex v))
+                        if (!graph.TryGetHead(e, out TVertex v))
                             continue;
 
                         // examine_edge
-                        if (!weightByEdge.TryGetValue(e, out TCost eWeight))
+                        if (!weightByEdge.TryGetValue(e, out TCost weight))
                             continue;
 
-                        if (_costComparer.Compare(eWeight, _costMonoid.Identity) < 0)
+                        if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
                             AStarHelper.ThrowInvalidOperationException_NegativeWeight();
+
+                        bool decreased = Relax(u, v, weight, predecessorByVertex, distanceByVertex);
 
                         Color vColor = GetColorOrDefault(colorByVertex, v);
                         switch (vColor)
@@ -105,15 +107,29 @@ namespace Arborescence.Search
                             case Color.None:
                             case Color.White:
                                 // tree_edge
-                                yield return e;
+                                if (decreased)
+                                {
+                                    yield return e;
+                                    throw new NotImplementedException();
+                                }
+
                                 colorByVertex[v] = Color.Gray;
                                 queue.Add(v);
                                 break;
                             case Color.Gray:
                                 // gray_target
+                                if (decreased)
+                                    throw new NotImplementedException();
+
                                 break;
                             case Color.Black:
                                 // black_target
+                                if (decreased)
+                                {
+                                    yield return e;
+                                    throw new NotImplementedException();
+                                }
+
                                 break;
                         }
                     }
@@ -126,6 +142,18 @@ namespace Arborescence.Search
                 // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
                 queue.Dispose();
             }
+        }
+
+        private bool Relax<TPredecessorMap, TDistanceMap>(
+            TVertex tail,
+            TVertex head,
+            TCost weight,
+            TPredecessorMap predecessorByVertex,
+            TDistanceMap distanceByVertex)
+            where TPredecessorMap : IDictionary<TVertex, TVertex>
+            where TDistanceMap : IDictionary<TVertex, TCost>
+        {
+            throw new NotImplementedException();
         }
 
         // Ambiguous indexer:
