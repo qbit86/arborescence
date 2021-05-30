@@ -2,6 +2,7 @@ namespace Arborescence.Search
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using Internal;
     using Traversal;
 
@@ -92,10 +93,16 @@ namespace Arborescence.Search
         // Ambiguous indexer:
         // TCost this[TVertex] (in interface IDictionary<TVertex,TCost>)
         // TCost this[TVertex] (in interface IReadOnlyDictionary<TVertex,TCost>)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCost<TCostMap>(TCostMap costByVertex, TVertex vertex, TCost cost)
             where TCostMap : IDictionary<TVertex, TCost>
         {
             costByVertex[vertex] = cost;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Color GetColorOrDefault<TColorMap>(TColorMap colorMap, TVertex vertex)
+            where TColorMap : IDictionary<TVertex, Color> =>
+            colorMap.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }
