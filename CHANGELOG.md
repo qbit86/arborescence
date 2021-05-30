@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased] - 2021-05-30
+### Added
+- Primitives: Moved `IndexedSet` and `IndexedSet` from Models.
+
+### Removed
+- Models: Moved `IndexedSet` and `IndexedSet` to Primitives.
+
 ## [0.10.0] - 2021-05-30
 ### Added
 - Models: `CompactSet` structure implementing `ISet<int>` with bit array as backing store.

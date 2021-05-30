@@ -4,7 +4,8 @@
 Commonly used types:
 • Endpoints
 • ArrayPrefix&lt;T&gt;
-• ArrayPrefixEnumerator&lt;T&gt;</Description>
+• ArrayPrefixEnumerator&lt;T&gt;
+• IndexedSet</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionPrefix>0.10.1</VersionPrefix>
@@ -14,7 +15,7 @@ Commonly used types:
     <AssemblyVersion>0.10.0</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>8</LangVersion>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net461;net5.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
     <EmbedAllSources>true</EmbedAllSources>
