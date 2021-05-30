@@ -8,11 +8,11 @@ Commonly used types:
 • IndexedSet</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionPrefix>0.10.1</VersionPrefix>
+    <VersionPrefix>0.11.0</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.10.0</AssemblyVersion>
+    <AssemblyVersion>0.11</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>8</LangVersion>
     <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net461;net5.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
