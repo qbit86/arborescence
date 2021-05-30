@@ -5,6 +5,7 @@ namespace Arborescence.Search
     using System.Collections.Generic;
     using System.Diagnostics;
     using Internal;
+    using Traversal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
@@ -13,7 +14,7 @@ namespace Arborescence.Search
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
-        where TCostMonoidPolicy : IMonoidPolicy<TCost>
+        where TCostMonoidPolicy : IMonoid<TCost>
     {
         private readonly TCostComparer _costComparer;
         private readonly TCostMonoidPolicy _costMonoidPolicy;
@@ -51,13 +52,14 @@ namespace Arborescence.Search
                 yield break;
 
             byte[] colorMap = ArrayPool<byte>.Shared.Rent(vertexCount);
-            TCost[] priorityByElement = ArrayPool<TCost>.Shared.Rent(vertexCount);
-            Array.Clear(priorityByElement, 0, priorityByElement.Length);
-            int[] indexInHeapByElement = ArrayPool<int>.Shared.Rent(vertexCount);
-            Fill(indexInHeapByElement, -1, 0, indexInHeapByElement.Length);
-            var minHeap = new MinHeap<
-                int, TCost, TCost[], int[], Comparer<TCost>, IndexedMapPolicy<TCost>, IndexedMapPolicy<int>>(
-                priorityByElement, indexInHeapByElement, Comparer<TCost>.Default, default, default);
+            TCost[] priorityByElementData = ArrayPool<TCost>.Shared.Rent(vertexCount);
+            Array.Clear(priorityByElementData, 0, priorityByElementData.Length);
+            var priorityByElement = new IndexedDictionary<TCost>(priorityByElementData);
+            int[] indexInHeapByElementData = ArrayPool<int>.Shared.Rent(vertexCount);
+            Fill(indexInHeapByElementData, -1, 0, indexInHeapByElementData.Length);
+            var indexInHeapByElement = new IndexedDictionary<int>(indexInHeapByElementData);
+            var minHeap = new MinHeap<int, TCost, IndexedDictionary<TCost>, IndexedDictionary<int>, Comparer<TCost>>(
+                priorityByElement, indexInHeapByElement, Comparer<TCost>.Default);
             Array.Clear(colorMap, 0, colorMap.Length);
             var queue = new Queue<int>();
             try
@@ -91,8 +93,8 @@ namespace Arborescence.Search
             finally
             {
                 queue.Clear();
-                ArrayPool<int>.Shared.Return(indexInHeapByElement);
-                ArrayPool<TCost>.Shared.Return(priorityByElement);
+                ArrayPool<int>.Shared.Return(indexInHeapByElementData);
+                ArrayPool<TCost>.Shared.Return(priorityByElementData);
                 ArrayPool<byte>.Shared.Return(colorMap);
             }
         }
