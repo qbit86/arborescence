@@ -76,7 +76,17 @@ namespace Arborescence.Search
 
             var queue = new MinHeap<TVertex, TCost, TCostMap, TIndexMap, TCostComparer>(
                 costByVertex, indexByVertex, _costComparer);
-            throw new NotImplementedException();
+            try
+            {
+                colorByVertex[source] = Color.Gray;
+                queue.Add(source);
+                throw new NotImplementedException();
+            }
+            finally
+            {
+                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
+                queue.Dispose();
+            }
         }
 
         // Ambiguous indexer:
