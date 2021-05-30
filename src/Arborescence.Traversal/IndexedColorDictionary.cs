@@ -108,7 +108,7 @@ namespace Arborescence.Traversal
             set
             {
                 if ((uint)key >= (uint)_items.Length)
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(key));
 
                 _items[key] = (byte)value;
             }
