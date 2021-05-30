@@ -44,7 +44,7 @@
                 const int vertexCount = 1;
                 const double densityPower = 1.0;
                 TGraphBuilder builder = CreateGraphBuilder(1);
-                GraphHelper.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
+                GraphHelpers.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                     builder, vertexCount, densityPower);
                 TGraph graph = builder.ToGraph();
                 string description =
@@ -57,10 +57,10 @@
             {
                 double power = 0.5 * i;
                 int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
-                foreach (double densityPower in GraphHelper.DensityPowers)
+                foreach (double densityPower in GraphHelpers.DensityPowers)
                 {
                     TGraphBuilder builder = CreateGraphBuilder(1);
-                    GraphHelper.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
+                    GraphHelpers.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                         builder, vertexCount, densityPower);
                     TGraph graph = builder.ToGraph();
                     string description =

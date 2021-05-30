@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Models;
 
-    internal static class GraphHelper
+    internal static class GraphHelpers
     {
         internal static double[] DensityPowers { get; } = { 1.0, 1.5, 2.0 };
 
