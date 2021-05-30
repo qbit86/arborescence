@@ -71,7 +71,6 @@ namespace Arborescence
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
 
             _array = array;
-            Debug.Assert(array != null, nameof(array) + " != null");
             _count = array.Length;
         }
 
