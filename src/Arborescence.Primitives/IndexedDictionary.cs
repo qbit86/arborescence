@@ -120,13 +120,19 @@ namespace Arborescence
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Enumerable.Range(0, _items.Length);
+        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
 
         ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
 
         ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
 
-        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => _items;
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public IEnumerable<TValue> Values => _items;
 
         /// <inheritdoc/>
         public bool Equals(IndexedDictionary<TValue> other) => Equals(_items, other._items);
