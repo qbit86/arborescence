@@ -131,8 +131,10 @@ namespace Arborescence
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
 
-        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public IEnumerable<TValue> Values => _items;
+        /// <summary>
+        /// Gets a read-only collection that contains the values in the read-only dictionary.
+        /// </summary>
+        public IReadOnlyCollection<TValue> Values => _items;
 
         /// <inheritdoc/>
         public bool Equals(IndexedDictionary<TValue> other) => Equals(_items, other._items);
