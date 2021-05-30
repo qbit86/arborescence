@@ -3,6 +3,7 @@
 ## [Unreleased] - 2021-05-30
 ### Added
 - Primitives: Moved `IndexedSet` and `IndexedSet` from Models.
+- Primitives: `IndexedDictionary<TValue>`.
 
 ### Removed
 - Models: Moved `IndexedSet` and `IndexedSet` to Primitives.
