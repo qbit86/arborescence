@@ -9,25 +9,25 @@ namespace Arborescence.Search
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
 
-    public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoidPolicy>
+    public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
-        where TCostMonoidPolicy : IMonoid<TCost>
+        where TCostMonoid : IMonoid<TCost>
     {
         private readonly TCostComparer _costComparer;
-        private readonly TCostMonoidPolicy _costMonoidPolicy;
+        private readonly TCostMonoid _costMonoid;
 
-        public EnumerableAStar(TCostComparer costComparer, TCostMonoidPolicy costMonoidPolicy)
+        public EnumerableAStar(TCostComparer costComparer, TCostMonoid costMonoid)
         {
             if (costComparer == null)
                 throw new ArgumentNullException(nameof(costComparer));
 
-            if (costMonoidPolicy == null)
-                throw new ArgumentNullException(nameof(costMonoidPolicy));
+            if (costMonoid == null)
+                throw new ArgumentNullException(nameof(costMonoid));
 
             _costComparer = costComparer;
-            _costMonoidPolicy = costMonoidPolicy;
+            _costMonoid = costMonoid;
         }
 
         public IEnumerator<TEdge> EnumerateRelaxedEdges<TWeightMap>(
