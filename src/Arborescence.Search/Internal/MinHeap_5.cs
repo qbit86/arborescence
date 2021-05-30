@@ -75,18 +75,21 @@ namespace Arborescence.Internal
             return true;
         }
 
-        internal bool TryTake()
+        internal bool TryTake(out TElement element)
         {
             int count = _count;
 
             if (count == 0)
+            {
+                element = default;
                 return false;
+            }
 
             TElement[] array = _arrayFromPool;
             Debug.Assert(array.Length > 0, "array.Length > 0");
 
-            TElement root = array[0];
-            _indexInHeapByElement[root] = -1;
+            element = array[0];
+            _indexInHeapByElement[element] = -1;
             if (count == 1)
             {
                 _count = 0;
