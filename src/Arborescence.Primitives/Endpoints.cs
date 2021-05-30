@@ -38,7 +38,7 @@
         public override string ToString()
         {
             // Consider using int.TryFormat() for netstandard2.1.
-            return EndpointsHelper.PairToString(Tail.ToString(F), Head.ToString(F));
+            return EndpointsHelpers.PairToString(Tail.ToString(F), Head.ToString(F));
         }
 
         /// <summary>

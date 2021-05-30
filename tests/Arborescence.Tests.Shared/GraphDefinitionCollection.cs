@@ -41,7 +41,7 @@
                 foreach (double densityPower in s_densityPowers)
                 {
                     List<Endpoints> edges = new();
-                    GraphHelper.GenerateEdges(vertexCount, densityPower, edges);
+                    GraphHelpers.GenerateEdges(vertexCount, densityPower, edges);
                     string description =
                         $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
                     GraphDefinitionParameter parameter = new(vertexCount, edges, description);

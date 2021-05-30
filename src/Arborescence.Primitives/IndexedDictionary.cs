@@ -1,59 +1,61 @@
-namespace Arborescence.Traversal
+namespace Arborescence
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
-    /// Represents a map from an index to a color as a byte array.
+    /// Represents a map from an index to a value.
     /// </summary>
-    public readonly struct IndexedColorDictionary :
-        IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorDictionary>
+    public readonly struct IndexedDictionary<TValue> :
+        IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue>>
     {
-        private readonly byte[] _items;
+        private readonly TValue[] _items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IndexedColorDictionary"/> structure.
+        /// Initializes a new instance of the <see cref="IndexedDictionary{TValue}"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the map.</param>
-        public IndexedColorDictionary(byte[] items) => _items = items;
+        /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
+        public IndexedDictionary(TValue[] items)
+        {
+            if (items is null)
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
+
+            _items = items;
+        }
 
         /// <inheritdoc/>
-        public IEnumerator<KeyValuePair<int, Color>> GetEnumerator()
+        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             for (int i = 0; i < _items.Length; ++i)
-                yield return new KeyValuePair<int, Color>(i, (Color)_items[i]);
+                yield return new KeyValuePair<int, TValue>(i, _items[i]);
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <inheritdoc/>
-        public void Add(KeyValuePair<int, Color> item)
+        public void Add(KeyValuePair<int, TValue> item)
         {
             if ((uint)item.Key >= (uint)_items.Length)
                 throw new ArgumentOutOfRangeException(nameof(item));
 
-            _items[item.Key] = (byte)item.Value;
+            _items[item.Key] = item.Value;
         }
 
         /// <inheritdoc/>
         public void Clear() => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public bool Contains(KeyValuePair<int, Color> item)
-        {
-            if (unchecked((uint)item.Key >= (uint)_items.Length))
-                return false;
-
-            return _items[item.Key] == (byte)item.Value;
-        }
+        public bool Contains(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public bool Remove(KeyValuePair<int, Color> item) => throw new NotSupportedException();
+        public bool Remove(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public int Count => _items.Length;
@@ -62,31 +64,32 @@ namespace Arborescence.Traversal
         public bool IsReadOnly => false;
 
         /// <inheritdoc/>
-        public void Add(int key, Color value)
+        public void Add(int key, TValue value)
         {
             if ((uint)key >= (uint)_items.Length)
                 throw new ArgumentOutOfRangeException(nameof(key));
 
-            _items[key] = (byte)value;
+            _items[key] = value;
         }
 
-        bool IDictionary<int, Color>.ContainsKey(int key) => ContainsKey(key);
+        bool IDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
 
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
 
-        bool IDictionary<int, Color>.TryGetValue(int key, out Color value) => TryGetValue(key, out value);
+        bool IDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
+            TryGetValue(key, out value);
 
-        bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => ContainsKey(key);
+        bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
 
-        bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value) =>
+        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
             TryGetValue(key, out value);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public bool TryGetValue(int key, out Color value)
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
         {
             if (unchecked((uint)key >= (uint)_items.Length))
             {
@@ -94,48 +97,50 @@ namespace Arborescence.Traversal
                 return false;
             }
 
-            value = (Color)_items[key];
+            value = _items[key];
             return true;
         }
 
         /// <inheritdoc cref="IDictionary{TKey,TValue}"/>
-        public Color this[int key]
+        public TValue this[int key]
         {
             get
             {
                 if ((uint)key >= (uint)_items.Length)
                     throw new KeyNotFoundException();
 
-                return (Color)_items[key];
+                return _items[key];
             }
             set
             {
                 if ((uint)key >= (uint)_items.Length)
                     throw new ArgumentOutOfRangeException(nameof(key));
 
-                _items[key] = (byte)value;
+                _items[key] = value;
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, Color>.Keys => Keys;
+        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
 
-        ICollection<Color> IDictionary<int, Color>.Values => throw new NotSupportedException();
+        ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
 
-        ICollection<int> IDictionary<int, Color>.Keys => throw new NotSupportedException();
+        ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
 
-        IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => Values;
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
 
-        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public IEnumerable<Color> Values => _items.Cast<Color>();
+        /// <summary>
+        /// Gets a read-only collection that contains the values in the read-only dictionary.
+        /// </summary>
+        public IReadOnlyCollection<TValue> Values => _items;
 
         /// <inheritdoc/>
-        public bool Equals(IndexedColorDictionary other) => Equals(_items, other._items);
+        public bool Equals(IndexedDictionary<TValue> other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedColorDictionary other && Equals(other);
+        public override bool Equals(object obj) => obj is IndexedDictionary<TValue> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
@@ -149,7 +154,8 @@ namespace Arborescence.Traversal
         /// <see langword="true"/> if the underlying arrays are reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(IndexedColorDictionary left, IndexedColorDictionary right) => left.Equals(right);
+        public static bool operator ==(IndexedDictionary<TValue> left, IndexedDictionary<TValue> right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Checks inequality between two instances.
@@ -160,7 +166,7 @@ namespace Arborescence.Traversal
         /// <see langword="true"/> if the underlying arrays are not reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(IndexedColorDictionary left, IndexedColorDictionary right) =>
+        public static bool operator !=(IndexedDictionary<TValue> left, IndexedDictionary<TValue> right) =>
             !left.Equals(right);
     }
 }

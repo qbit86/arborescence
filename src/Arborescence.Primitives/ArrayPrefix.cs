@@ -64,13 +64,13 @@ namespace Arborescence
         /// that delimits all the elements in the specified array.
         /// </summary>
         /// <param name="array">The array to wrap.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
         public ArrayPrefix(T[] array)
         {
             if (array is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
 
             _array = array;
-            Debug.Assert(array != null, nameof(array) + " != null");
             _count = array.Length;
         }
 

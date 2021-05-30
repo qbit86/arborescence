@@ -37,7 +37,7 @@
         /// <inheritdoc/>
         public override string ToString()
         {
-            return EndpointsHelper.PairToString(Tail?.ToString(), Head?.ToString());
+            return EndpointsHelpers.PairToString(Tail?.ToString(), Head?.ToString());
         }
 
         /// <summary>

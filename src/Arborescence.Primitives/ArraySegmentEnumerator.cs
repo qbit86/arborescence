@@ -23,6 +23,7 @@ namespace Arborescence
         /// <param name="array">The array containing the range of elements to enumerate.</param>
         /// <param name="start">The inclusive start index of the range.</param>
         /// <param name="endExclusive">The exclusive end index of the range.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
         public ArraySegmentEnumerator(T[] array, int start, int endExclusive)
         {
             if (array is null || (uint)start > (uint)array.Length || (uint)endExclusive > (uint)array.Length)

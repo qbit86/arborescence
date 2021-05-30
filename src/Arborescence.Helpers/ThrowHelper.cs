@@ -79,6 +79,8 @@
                     return nameof(ExceptionArgument.count);
                 case ExceptionArgument.index:
                     return nameof(ExceptionArgument.index);
+                case ExceptionArgument.items:
+                    return nameof(ExceptionArgument.items);
                 case ExceptionArgument.start:
                     return nameof(ExceptionArgument.start);
                 default:

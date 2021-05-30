@@ -5,7 +5,6 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics;
     using Misnomer;
-    using Models;
     using Traversal;
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;

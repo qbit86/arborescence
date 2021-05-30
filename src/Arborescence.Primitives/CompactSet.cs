@@ -1,44 +1,64 @@
-namespace Arborescence.Models
+namespace Arborescence
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
-    /// Represents a set of values as a byte array.
+    /// Represents a set of values as a bit array.
     /// </summary>
 #if NET5
-    public readonly struct IndexedSet : IReadOnlySet<int>, ISet<int>, IEquatable<IndexedSet>
+    public readonly struct CompactSet : IReadOnlySet<int>, ISet<int>, IEquatable<CompactSet>
 #else
-    public readonly struct IndexedSet : ISet<int>, IEquatable<IndexedSet>
+    public readonly struct CompactSet : ISet<int>, IEquatable<CompactSet>
 #endif
     {
+        private const int BitShiftPerByte = 3;
+
         private readonly byte[] _items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IndexedSet"/> structure.
+        /// Initializes a new instance of the <see cref="CompactSet"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
-        public IndexedSet(byte[] items) => _items = items;
+        /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
+        public CompactSet(byte[] items)
+        {
+            if (items is null)
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
+
+            _items = items;
+        }
+
+        /// <summary>
+        /// Get the number of bytes required to hold <paramref name="count"/> bit values.
+        /// </summary>
+        /// <param name="count">The number of bit values.</param>
+        /// <returns>The number of bytes.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetByteCount(int count)
+        {
+            if (count <= 0)
+                return 0;
+
+            uint temp = (uint)(count - 1 + (1 << BitShiftPerByte));
+            return (int)(temp >> BitShiftPerByte);
+        }
 
         /// <inheritdoc/>
-        public IEnumerator<int> GetEnumerator()
-        {
-            for (int i = 0; i < _items.Length; ++i)
-            {
-                if (_items[i] != 0)
-                    yield return i;
-            }
-        }
+        public IEnumerator<int> GetEnumerator() => throw new NotSupportedException();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         void ICollection<int>.Add(int item)
         {
-            if ((uint)item >= (uint)_items.Length)
-                throw new ArgumentOutOfRangeException(nameof(item));
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (unchecked((uint)byteIndex >= (uint)_items.Length))
+                return;
 
-            _items[item] = 1;
+            byte bitMask = (byte)(1u << bitIndex);
+            _items[byteIndex] |= bitMask;
         }
 
         /// <inheritdoc/>
@@ -71,42 +91,49 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public void UnionWith(IEnumerable<int> other) => throw new NotSupportedException();
 
-        bool ISet<int>.Add(int item)
-        {
-            if ((uint)item >= (uint)_items.Length)
-                throw new ArgumentOutOfRangeException(nameof(item));
+        bool ISet<int>.Add(int item) => Add(item);
 
-            bool result = _items[item] == 0;
-            _items[item] = 1;
+        /// <inheritdoc cref="ISet{T}"/>
+        public bool Add(int item)
+        {
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (unchecked((uint)byteIndex >= (uint)_items.Length))
+                return false;
+
+            byte bitMask = (byte)(1u << bitIndex);
+            bool result = (_items[byteIndex] & bitMask) == 0;
+            _items[byteIndex] |= bitMask;
             return result;
         }
 
         /// <summary>
-        /// Removes all elements from a <see cref="IndexedSet"/> object.
+        /// Removes all elements from a <see cref="CompactSet"/> object.
         /// </summary>
         public void Clear() => Array.Clear(_items, 0, _items.Length);
 
         /// <summary>
-        /// Determines whether a <see cref="IndexedSet"/> object contains the specified element.
+        /// Determines whether a <see cref="CompactSet"/> object contains the specified element.
         /// </summary>
-        /// <param name="item">The element to locate in the <see cref="IndexedSet"/> object.</param>
+        /// <param name="item">The element to locate in the <see cref="CompactSet"/> object.</param>
         /// <returns>
-        /// <see langword="true"/> if the <see cref="IndexedSet"/> object contains the specified element;
+        /// <see langword="true"/> if the <see cref="CompactSet"/> object contains the specified element;
         /// otherwise, <see langword="false"/>.
         /// </returns>
         public bool Contains(int item)
         {
-            if (unchecked((uint)item >= (uint)_items.Length))
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (unchecked((uint)byteIndex >= (uint)_items.Length))
                 return false;
 
-            return _items[item] != 0;
+            byte bitMask = (byte)(1u << bitIndex);
+            return (_items[byteIndex] & bitMask) != 0;
         }
 
         /// <inheritdoc/>
         public void CopyTo(int[] array, int arrayIndex) => throw new NotSupportedException();
 
         /// <summary>
-        /// Removes the specified element from a <see cref="IndexedSet"/> object.
+        /// Removes the specified element from a <see cref="CompactSet"/> object.
         /// </summary>
         /// <param name="item">The element to remove.</param>
         /// <returns>
@@ -114,10 +141,12 @@ namespace Arborescence.Models
         /// </returns>
         public bool Remove(int item)
         {
-            if (unchecked((uint)item >= (uint)_items.Length))
+            int byteIndex = Div8Rem(item, out int bitIndex);
+            if (unchecked((uint)byteIndex >= (uint)_items.Length))
                 return false;
 
-            _items[item] = 0;
+            byte bitMask = unchecked((byte)~(1u << bitIndex));
+            _items[byteIndex] &= bitMask;
             return true;
         }
 
@@ -128,10 +157,10 @@ namespace Arborescence.Models
         public bool IsReadOnly => false;
 
         /// <inheritdoc/>
-        public bool Equals(IndexedSet other) => Equals(_items, other._items);
+        public bool Equals(CompactSet other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedSet other && Equals(other);
+        public override bool Equals(object obj) => obj is CompactSet other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
@@ -145,7 +174,7 @@ namespace Arborescence.Models
         /// <see langword="true"/> if the underlying arrays are reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(IndexedSet left, IndexedSet right) => left.Equals(right);
+        public static bool operator ==(CompactSet left, CompactSet right) => left.Equals(right);
 
         /// <summary>
         /// Checks inequality between two instances.
@@ -156,6 +185,14 @@ namespace Arborescence.Models
         /// <see langword="true"/> if the underlying arrays are not reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(IndexedSet left, IndexedSet right) => !left.Equals(right);
+        public static bool operator !=(CompactSet left, CompactSet right) => !left.Equals(right);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int Div8Rem(int number, out int remainder)
+        {
+            uint quotient = (uint)number >> 3;
+            remainder = number & 0b111;
+            return (int)quotient;
+        }
     }
 }
