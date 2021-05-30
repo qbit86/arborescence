@@ -23,7 +23,13 @@ namespace Arborescence
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
-        public CompactSet(byte[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
+        public CompactSet(byte[] items)
+        {
+            if (items is null)
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
+
+            _items = items;
+        }
 
         /// <summary>
         /// Get the number of bytes required to hold <paramref name="count"/> bit values.

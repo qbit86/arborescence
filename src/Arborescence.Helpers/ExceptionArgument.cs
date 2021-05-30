@@ -5,6 +5,7 @@
         array,
         count,
         index,
+        items,
         start
     }
 }

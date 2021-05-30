@@ -20,7 +20,13 @@ namespace Arborescence
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
-        public IndexedSet(byte[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
+        public IndexedSet(byte[] items)
+        {
+            if (items is null)
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
+
+            _items = items;
+        }
 
         /// <inheritdoc/>
         public IEnumerator<int> GetEnumerator()
