@@ -72,7 +72,7 @@ namespace Arborescence
             _items[key] = value;
         }
 
-        bool IDictionary<int, TValue>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
+        bool IDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
 
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
@@ -80,10 +80,13 @@ namespace Arborescence
         bool IDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
             TryGetValue(key, out value);
 
-        bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
+        bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
 
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
             TryGetValue(key, out value);
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
