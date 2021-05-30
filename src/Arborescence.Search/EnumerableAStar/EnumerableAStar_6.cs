@@ -63,7 +63,7 @@ namespace Arborescence.Search
             var queue = new Queue<int>();
             try
             {
-                MapHelpers.AddOrUpdate(colorMap, source, 1);
+                MapHelpers.AddOrUpdate(colorMap, source, Colors.Gray);
                 queue.Enqueue(source);
                 while (queue.Count > 0)
                 {
@@ -82,11 +82,11 @@ namespace Arborescence.Search
                             continue;
 
                         yield return e;
-                        MapHelpers.AddOrUpdate(colorMap, v, 1);
+                        MapHelpers.AddOrUpdate(colorMap, v, Colors.Gray);
                         queue.Enqueue(v);
                     }
 
-                    MapHelpers.AddOrUpdate(colorMap, u, 2);
+                    MapHelpers.AddOrUpdate(colorMap, u, Colors.Black);
                 }
             }
             finally
