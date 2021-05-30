@@ -18,6 +18,7 @@ namespace Arborescence
         /// </summary>
         /// <param name="array">The array which prefix to enumerate.</param>
         /// <param name="count">The number of elements in the prefix.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
         public ArrayPrefixEnumerator(T[] array, int count)
         {
             if (array is null || (uint)count > (uint)array.Length)

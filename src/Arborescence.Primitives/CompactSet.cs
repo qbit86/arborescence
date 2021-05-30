@@ -22,6 +22,7 @@ namespace Arborescence
         /// Initializes a new instance of the <see cref="CompactSet"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
         public CompactSet(byte[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
 
         /// <summary>

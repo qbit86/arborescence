@@ -18,6 +18,7 @@ namespace Arborescence
         /// Initializes a new instance of the <see cref="IndexedDictionary{TValue}"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the map.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
         public IndexedDictionary(TValue[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
 
         /// <inheritdoc/>
