@@ -57,8 +57,8 @@ namespace Arborescence.Search
             int[] indexInHeapByElementData = ArrayPool<int>.Shared.Rent(vertexCount);
             Fill(indexInHeapByElementData, -1, 0, indexInHeapByElementData.Length);
             var indexInHeapByElement = new IndexedDictionary<int>(indexInHeapByElementData);
-            var queue = new MinHeap<int, TCost, IndexedDictionary<TCost>, IndexedDictionary<int>, Comparer<TCost>>(
-                priorityByElement, indexInHeapByElement, Comparer<TCost>.Default);
+            var queue = new MinHeap<int, TCost, IndexedDictionary<TCost>, IndexedDictionary<int>, TCostComparer>(
+                priorityByElement, indexInHeapByElement, _costComparer);
             byte[] colorMapData = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(colorMapData, 0, colorMapData.Length);
             var colorMap = new IndexedDictionary<byte>(colorMapData);
