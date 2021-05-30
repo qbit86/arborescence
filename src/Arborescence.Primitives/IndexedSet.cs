@@ -19,7 +19,7 @@ namespace Arborescence
         /// Initializes a new instance of the <see cref="IndexedSet"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
-        public IndexedSet(byte[] items) => _items = items;
+        public IndexedSet(byte[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
 
         /// <inheritdoc/>
         public IEnumerator<int> GetEnumerator()

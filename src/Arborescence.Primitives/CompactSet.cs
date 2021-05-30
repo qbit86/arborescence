@@ -22,7 +22,7 @@ namespace Arborescence
         /// Initializes a new instance of the <see cref="CompactSet"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
-        public CompactSet(byte[] items) => _items = items;
+        public CompactSet(byte[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
 
         /// <summary>
         /// Get the number of bytes required to hold <paramref name="count"/> bit values.

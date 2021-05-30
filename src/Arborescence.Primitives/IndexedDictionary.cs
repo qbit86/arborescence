@@ -18,7 +18,7 @@ namespace Arborescence
         /// Initializes a new instance of the <see cref="IndexedDictionary{TValue}"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the map.</param>
-        public IndexedDictionary(TValue[] items) => _items = items;
+        public IndexedDictionary(TValue[] items) => _items = items ?? throw new ArgumentNullException(nameof(items));
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
