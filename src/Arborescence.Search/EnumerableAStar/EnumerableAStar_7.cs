@@ -133,8 +133,8 @@ namespace Arborescence.Search
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color GetColorOrDefault<TColorMap>(TColorMap colorMap, TVertex vertex)
+        private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
             where TColorMap : IDictionary<TVertex, Color> =>
-            colorMap.TryGetValue(vertex, out Color result) ? result : Color.None;
+            colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }
