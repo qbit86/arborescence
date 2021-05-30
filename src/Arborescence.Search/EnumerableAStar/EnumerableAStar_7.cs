@@ -2,6 +2,7 @@ namespace Arborescence.Search
 {
     using System;
     using System.Collections.Generic;
+    using Internal;
     using Traversal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
@@ -40,7 +41,7 @@ namespace Arborescence.Search
             TColorMap colorByVertex,
             TIndexMap indexByVertex)
             where TPredecessorMap : IDictionary<TVertex, TVertex>
-            where TCostMap : IDictionary<TVertex, TCost>
+            where TCostMap : IReadOnlyDictionary<TVertex, TCost>, IDictionary<TVertex, TCost>
             where TDistanceMap : IDictionary<TVertex, TCost>
             where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
             where TColorMap : IDictionary<TVertex, Color>
@@ -70,7 +71,21 @@ namespace Arborescence.Search
             if (indexByVertex == null)
                 throw new ArgumentNullException(nameof(indexByVertex));
 
+            distanceByVertex[source] = _costMonoid.Identity;
+            SetCost(costByVertex, source, heuristic(source));
+
+            var queue = new MinHeap<TVertex, TCost, TCostMap, TIndexMap, TCostComparer>(
+                costByVertex, indexByVertex, _costComparer);
             throw new NotImplementedException();
+        }
+
+        // Ambiguous indexer:
+        // TCost this[TVertex] (in interface IDictionary<TVertex,TCost>)
+        // TCost this[TVertex] (in interface IReadOnlyDictionary<TVertex,TCost>)
+        private static void SetCost<TCostMap>(TCostMap costByVertex, TVertex vertex, TCost cost)
+            where TCostMap : IDictionary<TVertex, TCost>
+        {
+            costByVertex[vertex] = cost;
         }
     }
 }
