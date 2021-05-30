@@ -2,7 +2,7 @@
 {
     using System.Text;
 
-    internal static class EndpointsHelper
+    internal static class EndpointsHelpers
     {
         /// <summary>
         /// Used by <see cref="Endpoints{TVertex}.ToString"/> to reduce generic code.
