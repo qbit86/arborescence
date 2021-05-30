@@ -75,21 +75,15 @@ namespace Arborescence.Traversal
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
 
-        bool IDictionary<int, Color>.TryGetValue(int key, out Color value)
-        {
-            if (unchecked((uint)key >= (uint)_items.Length))
-            {
-                value = default;
-                return false;
-            }
-
-            value = (Color)_items[key];
-            return true;
-        }
+        bool IDictionary<int, Color>.TryGetValue(int key, out Color value) => TryGetValue(key, out value);
 
         bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
 
-        bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value)
+        bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value) =>
+            TryGetValue(key, out value);
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public bool TryGetValue(int key, out Color value)
         {
             if (unchecked((uint)key >= (uint)_items.Length))
             {

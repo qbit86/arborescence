@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
@@ -69,21 +70,16 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
 
-        bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value)
-        {
-            if (unchecked((uint)key >= (uint)_items.Length))
-            {
-                value = default;
-                return false;
-            }
-
-            value = _items[key];
-            return true;
-        }
+        bool IDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
+            TryGetValue(key, out value);
 
         bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
 
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value)
+        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
+            TryGetValue(key, out value);
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
         {
             if (unchecked((uint)key >= (uint)_items.Length))
             {
