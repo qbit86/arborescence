@@ -10,7 +10,7 @@ namespace Arborescence.Search
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
 
     public readonly struct EnumerableAStar<TGraph, TVertex, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
-        where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
+        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
         where TCostMonoid : IMonoid<TCost>
@@ -29,6 +29,8 @@ namespace Arborescence.Search
             _costComparer = costComparer;
             _costMonoid = costMonoid;
         }
+
+        // https://github.com/boostorg/graph/blob/97f51d81800cd5ed7d55e48a02b18e2aad3bb8e0/include/boost/graph/astar_search.hpp#L176..L232
 
         public IEnumerator<TEdge> EnumerateRelaxedEdges<
             TPredecessorMap, TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
@@ -81,7 +83,37 @@ namespace Arborescence.Search
             {
                 colorByVertex[source] = Color.Gray;
                 queue.Add(source);
-                throw new NotImplementedException();
+                while (queue.TryTake(out TVertex u))
+                {
+                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
+                    while (outEdges.MoveNext())
+                    {
+                        TEdge e = outEdges.Current;
+                        if (!graph.TryGetHead(e, out TVertex v))
+                            continue;
+
+                        // examine_edge
+                        Color vColor = GetColorOrDefault(colorByVertex, v);
+                        switch (vColor)
+                        {
+                            case Color.None:
+                            case Color.White:
+                                // tree_edge
+                                yield return e;
+                                colorByVertex[v] = Color.Gray;
+                                queue.Add(v);
+                                break;
+                            case Color.Gray:
+                                // gray_target
+                                break;
+                            case Color.Black:
+                                // black_target
+                                break;
+                        }
+                    }
+
+                    colorByVertex[u] = Color.Black;
+                }
             }
             finally
             {
