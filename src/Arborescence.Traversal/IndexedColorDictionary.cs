@@ -70,17 +70,20 @@ namespace Arborescence.Traversal
             _items[key] = (byte)value;
         }
 
-        bool IDictionary<int, Color>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
+        bool IDictionary<int, Color>.ContainsKey(int key) => ContainsKey(key);
 
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
 
         bool IDictionary<int, Color>.TryGetValue(int key, out Color value) => TryGetValue(key, out value);
 
-        bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
+        bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => ContainsKey(key);
 
         bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value) =>
             TryGetValue(key, out value);
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool TryGetValue(int key, out Color value)
@@ -114,13 +117,19 @@ namespace Arborescence.Traversal
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, Color>.Keys => Enumerable.Range(0, _items.Length);
+        IEnumerable<int> IReadOnlyDictionary<int, Color>.Keys => Keys;
 
         ICollection<Color> IDictionary<int, Color>.Values => throw new NotSupportedException();
 
         ICollection<int> IDictionary<int, Color>.Keys => throw new NotSupportedException();
 
-        IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => _items.Cast<Color>();
+        IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => Values;
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
+
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        public IEnumerable<Color> Values => _items.Cast<Color>();
 
         /// <inheritdoc/>
         public bool Equals(IndexedColorDictionary other) => Equals(_items, other._items);

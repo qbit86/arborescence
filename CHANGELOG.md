@@ -4,6 +4,7 @@
 ### Added
 - Primitives: Moved `IndexedSet` and `IndexedSet` from Models.
 - Primitives: `IndexedDictionary<TValue>`.
+- Traversal: `ContainsKey()` and `TryGetValue()` to `IndexedColorDictionary`.
 
 ### Removed
 - Models: Moved `IndexedSet` and `IndexedSet` to Primitives.
