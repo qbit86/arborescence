@@ -99,7 +99,8 @@ namespace Arborescence.Search
                         if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
                             AStarHelper.ThrowInvalidOperationException_NegativeWeight();
 
-                        bool decreased = Relax(u, v, weight, predecessorByVertex, distanceByVertex);
+                        bool decreased = Relax(u, v, weight, predecessorByVertex, distanceByVertex,
+                            out TCost tailDistance, out TCost relaxedHeadDistance);
 
                         Color vColor = GetColorOrDefault(colorByVertex, v);
                         switch (vColor)
@@ -144,15 +145,32 @@ namespace Arborescence.Search
             }
         }
 
+        // https://github.com/boostorg/graph/blob/97f51d81800cd5ed7d55e48a02b18e2aad3bb8e0/include/boost/graph/relax.hpp#L61..L73
+
         private bool Relax<TPredecessorMap, TDistanceMap>(
             TVertex tail,
             TVertex head,
             TCost weight,
             TPredecessorMap predecessorByVertex,
-            TDistanceMap distanceByVertex)
+            TDistanceMap distanceByVertex,
+            out TCost tailDistance,
+            out TCost relaxedHeadDistance)
             where TPredecessorMap : IDictionary<TVertex, TVertex>
             where TDistanceMap : IDictionary<TVertex, TCost>
         {
+            if (!distanceByVertex.TryGetValue(tail, out tailDistance))
+            {
+                relaxedHeadDistance = default;
+                return false;
+            }
+
+            TCost candidateHeadDistance = _costMonoid.Combine(tailDistance, weight);
+            if (!distanceByVertex.TryGetValue(head, out TCost currentHeadDistance))
+            {
+                relaxedHeadDistance = candidateHeadDistance;
+                return true;
+            }
+
             throw new NotImplementedException();
         }
 
