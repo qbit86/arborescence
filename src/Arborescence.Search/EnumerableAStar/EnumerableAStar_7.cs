@@ -100,7 +100,7 @@ namespace Arborescence.Search
                             AStarHelper.ThrowInvalidOperationException_NegativeWeight();
 
                         bool decreased = Relax(u, v, weight, predecessorByVertex, distanceByVertex,
-                            out TCost tailDistance, out TCost relaxedHeadDistance);
+                            out TCost relaxedHeadDistance);
 
                         Color vColor = GetColorOrDefault(colorByVertex, v);
                         switch (vColor)
@@ -124,7 +124,8 @@ namespace Arborescence.Search
                                 {
                                     TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
                                     SetCost(costByVertex, v, vCost);
-                                    throw new NotImplementedException();
+                                    queue.Update(v);
+                                    yield return e;
                                 }
 
                                 break;
@@ -161,12 +162,11 @@ namespace Arborescence.Search
             TCost weight,
             TPredecessorMap predecessorByVertex,
             TDistanceMap distanceByVertex,
-            out TCost tailDistance,
             out TCost relaxedHeadDistance)
             where TPredecessorMap : IDictionary<TVertex, TVertex>
             where TDistanceMap : IDictionary<TVertex, TCost>
         {
-            if (!distanceByVertex.TryGetValue(tail, out tailDistance))
+            if (!distanceByVertex.TryGetValue(tail, out TCost tailDistance))
             {
                 relaxedHeadDistance = default;
                 return false;
