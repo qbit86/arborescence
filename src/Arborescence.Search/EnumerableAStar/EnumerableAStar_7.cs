@@ -164,14 +164,14 @@ namespace Arborescence.Search
                 return false;
             }
 
-            TCost candidateHeadDistance = _costMonoid.Combine(tailDistance, weight);
-            if (!distanceByVertex.TryGetValue(head, out TCost currentHeadDistance))
-            {
-                relaxedHeadDistance = candidateHeadDistance;
-                return true;
-            }
+            relaxedHeadDistance = _costMonoid.Combine(tailDistance, weight);
+            if (distanceByVertex.TryGetValue(head, out TCost currentHeadDistance) &&
+                _costComparer.Compare(relaxedHeadDistance, currentHeadDistance) >= 0)
+                return false;
 
-            throw new NotImplementedException();
+            distanceByVertex[head] = relaxedHeadDistance;
+            predecessorByVertex[head] = tail;
+            return true;
         }
 
         // Ambiguous indexer:
