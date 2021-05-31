@@ -111,7 +111,8 @@ namespace Arborescence.Search
                                 if (decreased)
                                 {
                                     yield return e;
-                                    throw new NotImplementedException();
+                                    TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
+                                    SetCost(costByVertex, v, vCost);
                                 }
 
                                 colorByVertex[v] = Color.Gray;
@@ -120,7 +121,11 @@ namespace Arborescence.Search
                             case Color.Gray:
                                 // gray_target
                                 if (decreased)
+                                {
+                                    TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
+                                    SetCost(costByVertex, v, vCost);
                                     throw new NotImplementedException();
+                                }
 
                                 break;
                             case Color.Black:
@@ -128,7 +133,10 @@ namespace Arborescence.Search
                                 if (decreased)
                                 {
                                     yield return e;
-                                    throw new NotImplementedException();
+                                    TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
+                                    SetCost(costByVertex, v, vCost);
+                                    queue.Add(v);
+                                    colorByVertex[v] = Color.Gray;
                                 }
 
                                 break;
