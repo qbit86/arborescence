@@ -9,6 +9,16 @@ namespace Arborescence.Search
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
 
+    /// <summary>
+    /// Implements a heuristic search on a weighted graph for the case where all edge weights are non-negative.
+    /// </summary>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    /// <typeparam name="TCost">The type of the weight assigned to each edge.</typeparam>
+    /// <typeparam name="TCostComparer">The type of cost comparer.</typeparam>
+    /// <typeparam name="TCostMonoid">The type of cost monoid.</typeparam>
     public readonly struct EnumerableAStar<TGraph, TVertex, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
