@@ -44,17 +44,15 @@ namespace Arborescence.Search
         // https://github.com/boostorg/graph/issues/233
 
         public IEnumerator<TEdge> EnumerateRelaxedEdges<
-            TPredecessorMap, TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
+            TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
             TGraph graph,
             TVertex source,
             Func<TVertex, TCost> heuristic,
-            TPredecessorMap predecessorByVertex,
             TCostMap costByVertex,
             TDistanceMap distanceByVertex,
             TWeightMap weightByEdge,
             TColorMap colorByVertex,
             TIndexMap indexByVertex)
-            where TPredecessorMap : IDictionary<TVertex, TVertex>
             where TCostMap : IReadOnlyDictionary<TVertex, TCost>, IDictionary<TVertex, TCost>
             where TDistanceMap : IDictionary<TVertex, TCost>
             where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
@@ -66,9 +64,6 @@ namespace Arborescence.Search
 
             if (heuristic is null)
                 throw new ArgumentNullException(nameof(heuristic));
-
-            if (predecessorByVertex == null)
-                throw new ArgumentNullException(nameof(predecessorByVertex));
 
             if (costByVertex == null)
                 throw new ArgumentNullException(nameof(costByVertex));
@@ -110,7 +105,7 @@ namespace Arborescence.Search
                         if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
                             AStarHelper.ThrowInvalidOperationException_NegativeWeight();
 
-                        bool decreased = Relax(u, v, weight, predecessorByVertex, distanceByVertex,
+                        bool decreased = Relax(u, v, weight, distanceByVertex,
                             out TCost relaxedHeadDistance);
                         if (decreased)
                         {
@@ -157,14 +152,12 @@ namespace Arborescence.Search
 
         // https://github.com/boostorg/graph/blob/97f51d81800cd5ed7d55e48a02b18e2aad3bb8e0/include/boost/graph/relax.hpp#L61..L73
 
-        private bool Relax<TPredecessorMap, TDistanceMap>(
+        private bool Relax<TDistanceMap>(
             TVertex tail,
             TVertex head,
             TCost weight,
-            TPredecessorMap predecessorByVertex,
             TDistanceMap distanceByVertex,
             out TCost relaxedHeadDistance)
-            where TPredecessorMap : IDictionary<TVertex, TVertex>
             where TDistanceMap : IDictionary<TVertex, TCost>
         {
             if (!distanceByVertex.TryGetValue(tail, out TCost tailDistance))
@@ -179,7 +172,6 @@ namespace Arborescence.Search
                 return false;
 
             distanceByVertex[head] = relaxedHeadDistance;
-            predecessorByVertex[head] = tail;
             return true;
         }
 
