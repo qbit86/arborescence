@@ -41,6 +41,7 @@ namespace Arborescence.Search
         }
 
         // https://github.com/boostorg/graph/blob/97f51d81800cd5ed7d55e48a02b18e2aad3bb8e0/include/boost/graph/astar_search.hpp#L176..L232
+        // https://github.com/boostorg/graph/issues/233
 
         public IEnumerator<TEdge> EnumerateRelaxedEdges<
             TPredecessorMap, TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
@@ -111,6 +112,12 @@ namespace Arborescence.Search
 
                         bool decreased = Relax(u, v, weight, predecessorByVertex, distanceByVertex,
                             out TCost relaxedHeadDistance);
+                        if (decreased)
+                        {
+                            TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
+                            SetCost(costByVertex, v, vCost);
+                            yield return e;
+                        }
 
                         Color vColor = GetColorOrDefault(colorByVertex, v);
                         switch (vColor)
@@ -118,36 +125,20 @@ namespace Arborescence.Search
                             case Color.None:
                             case Color.White:
                                 // tree_edge
-                                if (decreased)
-                                {
-                                    yield return e;
-                                    TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
-                                    SetCost(costByVertex, v, vCost);
-                                }
-
                                 colorByVertex[v] = Color.Gray;
                                 queue.Add(v);
                                 break;
                             case Color.Gray:
                                 // gray_target
                                 if (decreased)
-                                {
-                                    TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
-                                    SetCost(costByVertex, v, vCost);
                                     queue.Update(v);
-                                    yield return e;
-                                }
-
                                 break;
                             case Color.Black:
                                 // black_target
                                 if (decreased)
                                 {
-                                    yield return e;
-                                    TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
-                                    SetCost(costByVertex, v, vCost);
-                                    queue.Add(v);
                                     colorByVertex[v] = Color.Gray;
+                                    queue.Add(v);
                                 }
 
                                 break;
