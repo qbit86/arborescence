@@ -92,52 +92,59 @@ namespace Arborescence.Search
                 while (queue.TryTake(out TVertex u))
                 {
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
+                    try
                     {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
-                            continue;
-
-                        // examine_edge
-                        if (!weightByEdge.TryGetValue(e, out TCost weight))
-                            continue;
-
-                        if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
-                            AStarHelper.ThrowInvalidOperationException_NegativeWeight();
-
-                        bool decreased = Relax(u, v, weight, distanceByVertex,
-                            out TCost relaxedHeadDistance);
-                        if (decreased)
+                        while (outEdges.MoveNext())
                         {
-                            TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
-                            SetCost(costByVertex, v, vCost);
-                            yield return e;
-                        }
+                            TEdge e = outEdges.Current;
+                            if (!graph.TryGetHead(e, out TVertex v))
+                                continue;
 
-                        Color vColor = GetColorOrDefault(colorByVertex, v);
-                        switch (vColor)
-                        {
-                            case Color.None:
-                            case Color.White:
-                                // tree_edge
-                                colorByVertex[v] = Color.Gray;
-                                queue.Add(v);
-                                break;
-                            case Color.Gray:
-                                // gray_target
-                                if (decreased)
-                                    queue.Update(v);
-                                break;
-                            case Color.Black:
-                                // black_target
-                                if (decreased)
-                                {
+                            // examine_edge
+                            if (!weightByEdge.TryGetValue(e, out TCost weight))
+                                continue;
+
+                            if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
+                                AStarHelper.ThrowInvalidOperationException_NegativeWeight();
+
+                            bool decreased = Relax(u, v, weight, distanceByVertex,
+                                out TCost relaxedHeadDistance);
+                            if (decreased)
+                            {
+                                TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
+                                SetCost(costByVertex, v, vCost);
+                                yield return e;
+                            }
+
+                            Color vColor = GetColorOrDefault(colorByVertex, v);
+                            switch (vColor)
+                            {
+                                case Color.None:
+                                case Color.White:
+                                    // tree_edge
                                     colorByVertex[v] = Color.Gray;
                                     queue.Add(v);
-                                }
+                                    break;
+                                case Color.Gray:
+                                    // gray_target
+                                    if (decreased)
+                                        queue.Update(v);
+                                    break;
+                                case Color.Black:
+                                    // black_target
+                                    if (decreased)
+                                    {
+                                        colorByVertex[v] = Color.Gray;
+                                        queue.Add(v);
+                                    }
 
-                                break;
+                                    break;
+                            }
                         }
+                    }
+                    finally
+                    {
+                        outEdges.Dispose();
                     }
 
                     colorByVertex[u] = Color.Black;
