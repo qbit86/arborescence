@@ -1,11 +1,8 @@
 namespace Arborescence.Search
 {
     using System;
-    using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Runtime.CompilerServices;
-    using Internal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
@@ -32,8 +29,12 @@ namespace Arborescence.Search
         }
 
         public IEnumerator<TEdge> EnumerateRelaxedEdges<TWeightMap>(
-            TGraph graph, int source, Func<int, TCost> heuristic, int vertexCount,
-            TWeightMap weightMap)
+            TGraph graph,
+            int source,
+            Func<int, TCost> heuristic,
+            TWeightMap weightByEdge,
+            int vertexCount,
+            TCost infinity)
             where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
         {
             if (graph == null)
@@ -42,60 +43,16 @@ namespace Arborescence.Search
             if (heuristic is null)
                 throw new ArgumentNullException(nameof(heuristic));
 
+            if (weightByEdge == null)
+                throw new ArgumentNullException(nameof(weightByEdge));
+
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
-
-            if (weightMap == null)
-                throw new ArgumentNullException(nameof(weightMap));
 
             if (unchecked((uint)source >= vertexCount))
                 yield break;
 
-            TCost[] priorityByElementData = ArrayPool<TCost>.Shared.Rent(vertexCount);
-            Array.Clear(priorityByElementData, 0, priorityByElementData.Length);
-            var priorityByElement = new IndexedDictionary<TCost>(priorityByElementData);
-            int[] indexInHeapByElementData = ArrayPool<int>.Shared.Rent(vertexCount);
-            Fill(indexInHeapByElementData, -1, 0, indexInHeapByElementData.Length);
-            var indexInHeapByElement = new IndexedDictionary<int>(indexInHeapByElementData);
-            var queue = new MinHeap<int, TCost, IndexedDictionary<TCost>, IndexedDictionary<int>, TCostComparer>(
-                priorityByElement, indexInHeapByElement, _costComparer);
-            byte[] colorMapData = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(colorMapData, 0, colorMapData.Length);
-            var colorMap = new IndexedDictionary<byte>(colorMapData);
-            try
-            {
-                colorMap[source] = Colors.Gray;
-                queue.Add(source);
-                while (queue.TryTake(out int u))
-                {
-#if DEBUG
-                    Debug.Assert(ContainsKey(colorMap, u));
-#endif
-                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
-                    {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out int v))
-                            continue;
-
-                        if (ContainsKey(colorMap, v))
-                            continue;
-
-                        yield return e;
-                        colorMap[v] = Colors.Gray;
-                        queue.Add(v);
-                    }
-
-                    colorMap[u] = Colors.Black;
-                }
-            }
-            finally
-            {
-                queue.Dispose();
-                ArrayPool<int>.Shared.Return(indexInHeapByElementData);
-                ArrayPool<TCost>.Shared.Return(priorityByElementData);
-                ArrayPool<byte>.Shared.Return(colorMapData);
-            }
+            throw new NotImplementedException();
         }
 
         private static void Fill<T>(T[] array, T value, int startIndex, int count)
@@ -114,9 +71,5 @@ namespace Arborescence.Search
             Array.Fill(array, value, startIndex, count);
 #endif
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool ContainsKey(IndexedDictionary<byte> colorMap, int key) =>
-            colorMap.TryGetValue(key, out byte color) && color != 0;
     }
 }
