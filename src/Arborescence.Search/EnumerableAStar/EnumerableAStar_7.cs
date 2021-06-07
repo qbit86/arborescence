@@ -48,9 +48,9 @@ namespace Arborescence.Search
             TGraph graph,
             TVertex source,
             Func<TVertex, TCost> heuristic,
+            TWeightMap weightByEdge,
             TCostMap costByVertex,
             TDistanceMap distanceByVertex,
-            TWeightMap weightByEdge,
             TColorMap colorByVertex,
             TIndexMap indexByVertex)
             where TCostMap : IReadOnlyDictionary<TVertex, TCost>, IDictionary<TVertex, TCost>
