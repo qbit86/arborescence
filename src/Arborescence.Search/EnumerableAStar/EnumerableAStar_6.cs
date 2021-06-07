@@ -1,8 +1,11 @@
 namespace Arborescence.Search
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
+    using Traversal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
@@ -50,9 +53,36 @@ namespace Arborescence.Search
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
             if (unchecked((uint)source >= vertexCount))
-                yield break;
+                return Enumerable.Empty<TEdge>().GetEnumerator();
 
-            throw new NotImplementedException();
+            var aStar = new EnumerableAStar<TGraph, int, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>(
+                _costComparer, _costMonoid);
+
+            TCost[] costByVertexFromPool = ArrayPool<TCost>.Shared.Rent(vertexCount);
+            Fill(costByVertexFromPool, infinity, 0, vertexCount);
+            TCost[] distanceByVertexFromPool = ArrayPool<TCost>.Shared.Rent(vertexCount);
+            Fill(distanceByVertexFromPool, infinity, 0, vertexCount);
+            byte[] colorByVertexFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+            Array.Clear(colorByVertexFromPool, 0, vertexCount);
+            int[] indexByVertexFromPool = ArrayPool<int>.Shared.Rent(vertexCount);
+            Fill(indexByVertexFromPool, -1, 0, vertexCount);
+            try
+            {
+                // TODO: Replace with special dummy-aware dictionary.
+                var costByVertex = new IndexedDictionary<TCost>(costByVertexFromPool);
+                var distanceByVertex = new IndexedDictionary<TCost>(distanceByVertexFromPool);
+                var colorByVertex = new IndexedColorDictionary(colorByVertexFromPool);
+                var indexByVertex = new IndexedDictionary<int>(indexByVertexFromPool);
+                return aStar.EnumerateRelaxedEdges(graph, source, heuristic, weightByEdge,
+                    costByVertex, distanceByVertex, colorByVertex, indexByVertex);
+            }
+            finally
+            {
+                ArrayPool<int>.Shared.Return(indexByVertexFromPool);
+                ArrayPool<byte>.Shared.Return(colorByVertexFromPool);
+                ArrayPool<TCost>.Shared.Return(distanceByVertexFromPool);
+                ArrayPool<TCost>.Shared.Return(costByVertexFromPool);
+            }
         }
 
         private static void Fill<T>(T[] array, T value, int startIndex, int count)
