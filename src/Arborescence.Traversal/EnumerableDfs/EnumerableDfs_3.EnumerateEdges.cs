@@ -27,6 +27,11 @@ namespace Arborescence.Traversal
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
+            return EnumerateEdgesIterator(graph, source, vertexCount);
+        }
+
+        private static IEnumerator<TEdge> EnumerateEdgesIterator(TGraph graph, int source, int vertexCount)
+        {
             if (unchecked((uint)source >= vertexCount))
                 yield break;
 
