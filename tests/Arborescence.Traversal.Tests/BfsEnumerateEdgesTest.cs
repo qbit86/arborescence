@@ -42,8 +42,7 @@ namespace Arborescence
                 IndexEnumerator sources = new(sourceCount);
 
                 EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-                using IEnumerator<Endpoints> edges =
-                    EnumerableBfs.EnumerateEdges(graph, sources, set);
+                using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, sources, set);
                 while (edges.MoveNext())
                     enumerableSteps.Add(edges.Current);
             }
