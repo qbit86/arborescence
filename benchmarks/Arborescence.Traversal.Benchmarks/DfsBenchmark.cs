@@ -13,7 +13,7 @@ namespace Arborescence
     {
         private readonly DummyHandler<IndexedIncidenceGraph> _handler = new();
 
-        private byte[] _colorMap = Array.Empty<byte>();
+        private byte[] _colorByVertex = Array.Empty<byte>();
 
         protected DfsBenchmark()
         {
@@ -38,38 +38,38 @@ namespace Arborescence
         {
             Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-            _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
+            _colorByVertex = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _handler.Reset();
         }
 
         [GlobalCleanup]
         public void GlobalCleanup()
         {
-            ArrayPool<byte>.Shared.Return(_colorMap, true);
-            _colorMap = Array.Empty<byte>();
+            ArrayPool<byte>.Shared.Return(_colorByVertex, true);
+            _colorByVertex = Array.Empty<byte>();
         }
 
         [Benchmark(Baseline = true)]
         public int EagerDfsSteps()
         {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            EagerDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorMap), _handler);
+            Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
+            EagerDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
             return _handler.Count;
         }
 
         [Benchmark]
         public int RecursiveDfsSteps()
         {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            RecursiveDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorMap), _handler);
+            Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
+            RecursiveDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
             return _handler.Count;
         }
 
         [Benchmark]
         public int EnumerableDfsEdges()
         {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            using IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_colorMap));
+            Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
+            using IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_colorByVertex));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
@@ -80,8 +80,8 @@ namespace Arborescence
         [Benchmark]
         public int EnumerableDfsVertices()
         {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new IndexedSet(_colorMap));
+            Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
+            using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new IndexedSet(_colorByVertex));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
