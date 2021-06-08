@@ -10,7 +10,7 @@ namespace Arborescence.Traversal
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources enumerator.</param>
-        /// <param name="colorMap">The vertex color map.</param>
+        /// <param name="colorByVertex">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IDfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
@@ -21,11 +21,11 @@ namespace Arborescence.Traversal
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>,
-        /// or <paramref name="colorMap"/> is <see langword="null"/>,
+        /// or <paramref name="colorByVertex"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<TVertexEnumerator, TColorMap, THandler>(
-            TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler)
+            TGraph graph, TVertexEnumerator sources, TColorMap colorByVertex, THandler handler)
             where TVertexEnumerator : IEnumerator<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
@@ -36,8 +36,8 @@ namespace Arborescence.Traversal
             if (sources == null)
                 throw new ArgumentNullException(nameof(sources));
 
-            if (colorMap == null)
-                throw new ArgumentNullException(nameof(colorMap));
+            if (colorByVertex == null)
+                throw new ArgumentNullException(nameof(colorByVertex));
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
@@ -45,12 +45,12 @@ namespace Arborescence.Traversal
             while (sources.MoveNext())
             {
                 TVertex u = sources.Current;
-                Color color = GetColorOrDefault(colorMap, u);
+                Color color = GetColorOrDefault(colorByVertex, u);
                 if (color != Color.None && color != Color.White)
                     continue;
 
                 handler.OnStartVertex(graph, u);
-                TraverseCore(graph, u, colorMap, handler, s_false);
+                TraverseCore(graph, u, colorByVertex, handler, s_false);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Arborescence.Traversal
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources enumerator.</param>
-        /// <param name="colorMap">The vertex color map.</param>
+        /// <param name="colorByVertex">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IDfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
@@ -74,7 +74,7 @@ namespace Arborescence.Traversal
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<TVertexEnumerator, TColorMap, THandler>(
-            TGraph graph, TVertexEnumerator sources, TColorMap colorMap, THandler handler, TVertex startVertex)
+            TGraph graph, TVertexEnumerator sources, TColorMap colorByVertex, THandler handler, TVertex startVertex)
             where TVertexEnumerator : IEnumerator<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
@@ -89,17 +89,17 @@ namespace Arborescence.Traversal
                 throw new ArgumentNullException(nameof(handler));
 
             handler.OnStartVertex(graph, startVertex);
-            TraverseCore(graph, startVertex, colorMap, handler, s_false);
+            TraverseCore(graph, startVertex, colorByVertex, handler, s_false);
 
             while (sources.MoveNext())
             {
                 TVertex u = sources.Current;
-                Color color = GetColorOrDefault(colorMap, u);
+                Color color = GetColorOrDefault(colorByVertex, u);
                 if (color != Color.None && color != Color.White)
                     continue;
 
                 handler.OnStartVertex(graph, u);
-                TraverseCore(graph, u, colorMap, handler, s_false);
+                TraverseCore(graph, u, colorByVertex, handler, s_false);
             }
         }
     }

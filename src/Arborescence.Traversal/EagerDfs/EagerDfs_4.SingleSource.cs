@@ -10,7 +10,7 @@ namespace Arborescence.Traversal
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
-        /// <param name="colorMap">The vertex color map.</param>
+        /// <param name="colorByVertex">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IDfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
@@ -19,24 +19,24 @@ namespace Arborescence.Traversal
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
-        /// or <paramref name="colorMap"/> is <see langword="null"/>,
+        /// or <paramref name="colorByVertex"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
-        public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
+        public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
-            if (colorMap == null)
-                throw new ArgumentNullException(nameof(colorMap));
+            if (colorByVertex == null)
+                throw new ArgumentNullException(nameof(colorByVertex));
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
             handler.OnStartVertex(graph, source);
-            TraverseCore(graph, source, colorMap, handler, s_false);
+            TraverseCore(graph, source, colorByVertex, handler, s_false);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Arborescence.Traversal
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
-        /// <param name="colorMap">The vertex color map.</param>
+        /// <param name="colorByVertex">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IDfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
@@ -57,7 +57,7 @@ namespace Arborescence.Traversal
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
-        public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorMap, THandler handler,
+        public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
@@ -69,7 +69,7 @@ namespace Arborescence.Traversal
                 throw new ArgumentNullException(nameof(handler));
 
             handler.OnStartVertex(graph, source);
-            TraverseCore(graph, source, colorMap, handler, terminationCondition ?? s_false);
+            TraverseCore(graph, source, colorByVertex, handler, terminationCondition ?? s_false);
         }
     }
 }
