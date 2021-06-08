@@ -10,7 +10,7 @@ namespace Arborescence.Traversal
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
-        /// <param name="colorMap">The vertex color map.</param>
+        /// <param name="colorByVertex">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
@@ -19,29 +19,29 @@ namespace Arborescence.Traversal
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
-        /// or <paramref name="colorMap"/> is <see langword="null"/>,
+        /// or <paramref name="colorByVertex"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         public void Traverse<TColorMap, THandler>(
-            TGraph graph, TVertex source, TColorMap colorMap, THandler handler)
+            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
 
-            if (colorMap == null)
-                throw new ArgumentNullException(nameof(colorMap));
+            if (colorByVertex == null)
+                throw new ArgumentNullException(nameof(colorByVertex));
 
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
             var queue = new Internal.Queue<TVertex>();
-            colorMap[source] = Color.Gray;
+            colorByVertex[source] = Color.Gray;
             handler.OnDiscoverVertex(graph, source);
             queue.Add(source);
 
-            TraverseCore(graph, queue, colorMap, handler);
+            TraverseCore(graph, queue, colorByVertex, handler);
         }
     }
 }
