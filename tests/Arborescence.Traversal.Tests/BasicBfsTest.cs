@@ -3,7 +3,6 @@ namespace Arborescence
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using Models;
     using Traversal;
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
@@ -60,7 +59,7 @@ namespace Arborescence
         [ClassData(typeof(UndirectedSimpleGraphCollection))]
         internal void EnumerateVertices(GraphParameter<Graph> p)
         {
-            SimpleIncidenceGraph graph = p.Graph;
+            Graph graph = p.Graph;
 
             // Arrange
 

@@ -133,7 +133,7 @@
 
         public MutableIndexedIncidenceGraphBuilder(int initialVertexCount)
         {
-            _graph = new MutableIndexedIncidenceGraph(initialVertexCount);
+            _graph = new(initialVertexCount);
         }
 
         public void Dispose()
@@ -172,7 +172,7 @@
 
         public MutableSimpleIncidenceGraphBuilder(int initialVertexCount)
         {
-            _graph = new MutableSimpleIncidenceGraph(initialVertexCount);
+            _graph = new(initialVertexCount);
         }
 
         public void Dispose()

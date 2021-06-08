@@ -38,7 +38,7 @@
             {
                 int tail = prng.Next(vertexCount);
                 int head = prng.Next(vertexCount);
-                edges.Add(new Endpoints(tail, head));
+                edges.Add(new(tail, head));
             }
         }
     }
