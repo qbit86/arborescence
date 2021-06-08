@@ -43,6 +43,14 @@
             if (exploredSet == null)
                 throw new ArgumentNullException(nameof(exploredSet));
 
+            return EnumerateVerticesIterator(graph, source, fringe, exploredSet);
+        }
+
+        private static IEnumerator<TVertex> EnumerateVerticesIterator<TFringe, TExploredSet>(
+            TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
+            where TFringe : IProducerConsumerCollection<TVertex>
+            where TExploredSet : ISet<TVertex>
+        {
             exploredSet.Add(source);
             yield return source;
             if (!fringe.TryAdd(source))
