@@ -19,15 +19,15 @@ namespace Arborescence
         {
             // Arrange
 
-            byte[] eagerColorMapBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(eagerColorMapBackingStore, 0, eagerColorMapBackingStore.Length);
-            IndexedColorDictionary eagerColorMap = new(eagerColorMapBackingStore);
+            byte[] eagerColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(eagerColorByVertexBackingStore, 0, eagerColorByVertexBackingStore.Length);
+            IndexedColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
             using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
 
-            byte[] recursiveColorMapBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(recursiveColorMapBackingStore, 0, recursiveColorMapBackingStore.Length);
-            IndexedColorDictionary recursiveColorMap = new(recursiveColorMapBackingStore);
+            byte[] recursiveColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(recursiveColorByVertexBackingStore, 0, recursiveColorByVertexBackingStore.Length);
+            IndexedColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
             using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
             DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
@@ -41,14 +41,14 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 IndexEnumerator sources = new(sourceCount);
 
-                EagerDfs.Traverse(graph, sources, eagerColorMap, eagerHandler);
-                RecursiveDfs.Traverse(graph, sources, recursiveColorMap, recursiveHandler);
+                EagerDfs.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
+                RecursiveDfs.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
-                EagerDfs.Traverse(graph, source, eagerColorMap, eagerHandler);
-                RecursiveDfs.Traverse(graph, source, recursiveColorMap, recursiveHandler);
+                EagerDfs.Traverse(graph, source, eagerColorByVertex, eagerHandler);
+                RecursiveDfs.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
             }
 
             // Assert
@@ -71,8 +71,8 @@ namespace Arborescence
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(eagerColorMapBackingStore);
-            ArrayPool<byte>.Shared.Return(recursiveColorMapBackingStore);
+            ArrayPool<byte>.Shared.Return(eagerColorByVertexBackingStore);
+            ArrayPool<byte>.Shared.Return(recursiveColorByVertexBackingStore);
         }
 
         private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)

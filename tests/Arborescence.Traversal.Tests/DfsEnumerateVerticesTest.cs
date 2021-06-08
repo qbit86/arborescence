@@ -23,9 +23,9 @@ namespace Arborescence
             if (graph.VertexCount == 0)
                 return;
 
-            byte[] mapBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(mapBackingStore, 0, mapBackingStore.Length);
-            IndexedColorDictionary eagerColorMap = new(mapBackingStore);
+            byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+            Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
+            IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
             byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(setBackingStore, 0, setBackingStore.Length);
             IndexedSet set = new(setBackingStore);
@@ -43,14 +43,14 @@ namespace Arborescence
 
                 int sourceCount = graph.VertexCount / 3;
                 IndexEnumerator sources = new(sourceCount);
-                EagerDfs.Traverse(graph, sources, eagerColorMap, dfsHandler);
+                EagerDfs.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
                 using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
             else
             {
                 int source = graph.VertexCount - 1;
-                EagerDfs.Traverse(graph, source, eagerColorMap, dfsHandler);
+                EagerDfs.Traverse(graph, source, eagerColorByVertex, dfsHandler);
                 using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
@@ -75,7 +75,7 @@ namespace Arborescence
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(mapBackingStore);
+            ArrayPool<byte>.Shared.Return(colorByVertexBackingStore);
             ArrayPool<byte>.Shared.Return(setBackingStore);
         }
 

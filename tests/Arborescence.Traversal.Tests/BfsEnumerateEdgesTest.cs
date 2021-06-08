@@ -20,9 +20,9 @@ namespace Arborescence
         {
             // Arrange
 
-            byte[] mapBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(mapBackingStore, 0, mapBackingStore.Length);
-            IndexedColorDictionary eagerColorMap = new(mapBackingStore);
+            byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+            Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
+            IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
             byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(setBackingStore, 0, setBackingStore.Length);
             IndexedSet set = new(setBackingStore);
@@ -41,7 +41,7 @@ namespace Arborescence
                 int sourceCount = graph.VertexCount / 3;
                 IndexEnumerator sources = new(sourceCount);
 
-                EagerBfs.Traverse(graph, sources, eagerColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
                 using IEnumerator<Endpoints> edges =
                     EnumerableBfs.EnumerateEdges(graph, sources, set);
                 while (edges.MoveNext())
@@ -50,7 +50,7 @@ namespace Arborescence
             else
             {
                 int source = graph.VertexCount >> 1;
-                EagerBfs.Traverse(graph, source, eagerColorMap, bfsHandler);
+                EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
                 using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, set);
                 while (edges.MoveNext())
                     enumerableSteps.Add(edges.Current);
@@ -76,7 +76,7 @@ namespace Arborescence
 
             // Cleanup
 
-            ArrayPool<byte>.Shared.Return(mapBackingStore);
+            ArrayPool<byte>.Shared.Return(colorByVertexBackingStore);
             ArrayPool<byte>.Shared.Return(setBackingStore);
         }
 
