@@ -37,6 +37,14 @@ namespace Arborescence.Traversal
             if (exploredSet == null)
                 throw new ArgumentNullException(nameof(exploredSet));
 
+            return EnumerateVerticesIterator(graph, sources, exploredSet);
+        }
+
+        private static IEnumerator<TVertex> EnumerateVerticesIterator<TVertexEnumerator, TExploredSet>(
+            TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
+            where TVertexEnumerator : IEnumerator<TVertex>
+            where TExploredSet : ISet<TVertex>
+        {
             var queue = new Internal.Queue<TVertex>();
             try
             {
