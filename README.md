@@ -1,13 +1,13 @@
 # Arborescence
 
-[![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://www.nuget.org/packages/Arborescence.Abstractions/)
-[![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://www.nuget.org/packages/Arborescence.Models/)
-[![Arborescence.Primitives version](https://img.shields.io/nuget/v/Arborescence.Primitives.svg?label=Primitives&logo=nuget)](https://www.nuget.org/packages/Arborescence.Primitives/)
-[![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://www.nuget.org/packages/Arborescence.Traversal/)
+[![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
+[![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://nuget.org/packages/Arborescence.Models/)
+[![Arborescence.Primitives version](https://img.shields.io/nuget/v/Arborescence.Primitives.svg?label=Primitives&logo=nuget)](https://nuget.org/packages/Arborescence.Primitives/)
+[![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://nuget.org/packages/Arborescence.Traversal/)
 
 Arborescence is a generic .NET library for dealing with graphs.
 
-API structure is inspired by [Concept C#] and [Boost Graph Concepts].
+API structure is inspired by [Boost Graph Concepts].
 
 ## Features
 
@@ -63,9 +63,8 @@ For more sophisticated examples examine [samples/](samples) directory.
 The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emoji and icon project.
 License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
-[Abstractions]: https://www.nuget.org/packages/Arborescence.Abstractions/
-[Boost Graph Concepts]: https://www.boost.org/doc/libs/1_75_0/libs/graph/doc/graph_concepts.html
-[Concept C#]: https://github.com/MattWindsor91/roslyn/blob/master/concepts/docs/csconcepts.md
-[Models]: https://www.nuget.org/packages/Arborescence.Models/
-[Primitives]: https://www.nuget.org/packages/Arborescence.Primitives/
-[Traversal]: https://www.nuget.org/packages/Arborescence.Traversal/
+[Abstractions]: https://nuget.org/packages/Arborescence.Abstractions/
+[Boost Graph Concepts]: https://boost.org/doc/libs/1_76_0/libs/graph/doc/graph_concepts.html
+[Models]: https://nuget.org/packages/Arborescence.Models/
+[Primitives]: https://nuget.org/packages/Arborescence.Primitives/
+[Traversal]: https://nuget.org/packages/Arborescence.Traversal/
