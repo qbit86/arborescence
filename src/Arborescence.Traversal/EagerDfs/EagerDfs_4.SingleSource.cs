@@ -22,7 +22,8 @@ namespace Arborescence.Traversal
         /// or <paramref name="colorByVertex"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
-        public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
+        public void Traverse<TColorMap, THandler>(
+            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
@@ -57,7 +58,8 @@ namespace Arborescence.Traversal
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
-        public void Traverse<TColorMap, THandler>(TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
+        public void Traverse<TColorMap, THandler>(
+            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             Func<TGraph, TVertex, bool> terminationCondition)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
