@@ -2,7 +2,7 @@
 
 ## [Unreleased] - 2021-06-09
 ### Changed
-- Traversal: Made public methods of ``GenericSearch`4`` to be non-iterator, so arguments check takes place eagerly.
+- Traversal: Made public methods of ``GenericSearch`4``, ``EnumerableDfs`4`` to be non-iterator, so arguments check takes place eagerly.
 
 ## [0.11.0] - 2021-05-30
 ### Added
