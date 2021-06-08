@@ -33,6 +33,14 @@ namespace Arborescence.Traversal
             if (exploredSet == null)
                 throw new ArgumentNullException(nameof(exploredSet));
 
+            return EnumerateEdgesIterator(graph, sources, exploredSet);
+        }
+
+        private static IEnumerator<TEdge> EnumerateEdgesIterator<TVertexEnumerator, TExploredSet>(
+            TGraph graph, TVertexEnumerator sources, TExploredSet exploredSet)
+            where TVertexEnumerator : IEnumerator<TVertex>
+            where TExploredSet : ISet<TVertex>
+        {
             var stack = new Internal.Stack<TEdgeEnumerator>();
             try
             {
