@@ -31,6 +31,11 @@ namespace Arborescence.Traversal
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
+            return EnumerateVerticesIterator(graph, source, vertexCount);
+        }
+
+        private static IEnumerator<int> EnumerateVerticesIterator(TGraph graph, int source, int vertexCount)
+        {
             if (unchecked((uint)source >= vertexCount))
             {
                 yield return source;
