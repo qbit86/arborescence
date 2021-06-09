@@ -17,8 +17,8 @@ namespace Arborescence.Search.Specialized
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TCost">The type of the weight assigned to each edge.</typeparam>
-    /// <typeparam name="TCostComparer">The type of cost comparer.</typeparam>
-    /// <typeparam name="TCostMonoid">The type of cost monoid.</typeparam>
+    /// <typeparam name="TCostComparer">The type of the cost comparer.</typeparam>
+    /// <typeparam name="TCostMonoid">The type of the cost monoid.</typeparam>
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -29,7 +29,8 @@ namespace Arborescence.Search.Specialized
         private readonly TCostMonoid _costMonoid;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumerableAStar{TGraph,TEdge,TEdgeEnumerator,TCost,TCostComparer,TCostMonoid}"/> structure.
+        /// Initializes a new instance of the
+        /// <see cref="EnumerableAStar{TGraph,TEdge,TEdgeEnumerator,TCost,TCostComparer,TCostMonoid}"/> structure.
         /// </summary>
         /// <param name="costComparer">The <typeparamref name="TCostComparer"/> to use when comparing distances and priorities.</param>
         /// <param name="costMonoid">The <typeparamref name="TCostMonoid"/> to use when updating the distance map and the cost map.</param>
@@ -49,6 +50,25 @@ namespace Arborescence.Search.Specialized
             _costMonoid = costMonoid;
         }
 
+        /// <summary>
+        /// Enumerates the edges of the graph as the algorithm considers them to be a part of a search tree.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="source">The source.</param>
+        /// <param name="heuristic">A heuristic function to estimate the cost from a given vertex to some goal state.</param>
+        /// <param name="weightByEdge">The weight of each edge in the graph.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <param name="infinity">The marker for missing values.</param>
+        /// <typeparam name="TWeightMap">The type of the weight map.</typeparam>
+        /// <returns>An enumerator to enumerate the edges as the algorithm relaxes them.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="heuristic"/> is <see langword="null"/>,
+        /// or <paramref name="weightByEdge"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
+        /// </exception>
         public IEnumerator<TEdge> EnumerateRelaxedEdges<TWeightMap>(
             TGraph graph,
             int source,

@@ -17,8 +17,8 @@ namespace Arborescence.Search
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     /// <typeparam name="TCost">The type of the weight assigned to each edge.</typeparam>
-    /// <typeparam name="TCostComparer">The type of cost comparer.</typeparam>
-    /// <typeparam name="TCostMonoid">The type of cost monoid.</typeparam>
+    /// <typeparam name="TCostComparer">The type of the cost comparer.</typeparam>
+    /// <typeparam name="TCostMonoid">The type of the cost monoid.</typeparam>
     public readonly struct EnumerableAStar<TGraph, TVertex, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -29,7 +29,8 @@ namespace Arborescence.Search
         private readonly TCostMonoid _costMonoid;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumerableAStar{TGraph,TVertex,TEdge,TEdgeEnumerator,TCost,TCostComparer,TCostMonoid}"/> structure.
+        /// Initializes a new instance of the
+        /// <see cref="EnumerableAStar{TGraph,TVertex,TEdge,TEdgeEnumerator,TCost,TCostComparer,TCostMonoid}"/> structure.
         /// </summary>
         /// <param name="costComparer">The <typeparamref name="TCostComparer"/> to use when comparing distances and priorities.</param>
         /// <param name="costMonoid">The <typeparamref name="TCostMonoid"/> to use when updating the distance map and the cost map.</param>
@@ -52,6 +53,34 @@ namespace Arborescence.Search
         // https://github.com/boostorg/graph/blob/97f51d81800cd5ed7d55e48a02b18e2aad3bb8e0/include/boost/graph/astar_search.hpp#L176..L232
         // https://github.com/boostorg/graph/issues/233
 
+        /// <summary>
+        /// Enumerates the edges of the graph as the algorithm considers them to be a part of a search tree.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="source">The source.</param>
+        /// <param name="heuristic">A heuristic function to estimate the cost from a given vertex to some goal state.</param>
+        /// <param name="weightByEdge">The weight of each edge in the graph.</param>
+        /// <param name="costByVertex">The estimated cost to the goal of the path through a given vertex.</param>
+        /// <param name="distanceByVertex">The shortest path weight from the source vertex to a given vertex.</param>
+        /// <param name="colorByVertex">Indicates whether a given vertex is on the OPEN or CLOSED lists.</param>
+        /// <param name="indexByVertex">
+        /// Maps each vertex to an integer in the range [0, vertexCount) to use for fast search in priority queue.
+        /// </param>
+        /// <typeparam name="TCostMap">The type of the cost map.</typeparam>
+        /// <typeparam name="TDistanceMap">The type of the distance map.</typeparam>
+        /// <typeparam name="TWeightMap">The type of the weight map.</typeparam>
+        /// <typeparam name="TColorMap">The type of the color map.</typeparam>
+        /// <typeparam name="TIndexMap">The type of the index map.</typeparam>
+        /// <returns>An enumerator to enumerate the edges as the algorithm relaxes them.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="heuristic"/> is <see langword="null"/>,
+        /// or <paramref name="costByVertex"/> is <see langword="null"/>,
+        /// or <paramref name="distanceByVertex"/> is <see langword="null"/>,
+        /// or <paramref name="weightByEdge"/> is <see langword="null"/>,
+        /// or <paramref name="colorByVertex"/> is <see langword="null"/>,
+        /// or <paramref name="indexByVertex"/> is <see langword="null"/>.
+        /// </exception>
         public IEnumerator<TEdge> EnumerateRelaxedEdges<
             TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
             TGraph graph,
