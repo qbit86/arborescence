@@ -80,6 +80,26 @@ namespace Arborescence.Search
             if (indexByVertex == null)
                 throw new ArgumentNullException(nameof(indexByVertex));
 
+            return EnumerateRelaxedEdgesIterator(
+                graph, source, heuristic, weightByEdge, costByVertex, distanceByVertex, colorByVertex, indexByVertex);
+        }
+
+        private IEnumerator<TEdge> EnumerateRelaxedEdgesIterator<
+            TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
+            TGraph graph,
+            TVertex source,
+            Func<TVertex, TCost> heuristic,
+            TWeightMap weightByEdge,
+            TCostMap costByVertex,
+            TDistanceMap distanceByVertex,
+            TColorMap colorByVertex,
+            TIndexMap indexByVertex)
+            where TCostMap : IReadOnlyDictionary<TVertex, TCost>, IDictionary<TVertex, TCost>
+            where TDistanceMap : IDictionary<TVertex, TCost>
+            where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
+            where TColorMap : IDictionary<TVertex, Color>
+            where TIndexMap : IDictionary<TVertex, int>
+        {
             distanceByVertex[source] = _costMonoid.Identity;
             SetCost(costByVertex, source, heuristic(source));
 
