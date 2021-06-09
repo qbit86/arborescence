@@ -43,6 +43,14 @@
             if (exploredSet == null)
                 throw new ArgumentNullException(nameof(exploredSet));
 
+            return EnumerateVerticesIterator(graph, source, fringe, exploredSet);
+        }
+
+        private static IEnumerator<TVertex> EnumerateVerticesIterator<TFringe, TExploredSet>(
+            TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
+            where TFringe : IProducerConsumerCollection<TVertex>
+            where TExploredSet : ISet<TVertex>
+        {
             exploredSet.Add(source);
             yield return source;
             if (!fringe.TryAdd(source))
@@ -54,19 +62,26 @@
                 Debug.Assert(exploredSet.Contains(u));
 #endif
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                while (outEdges.MoveNext())
+                try
                 {
-                    TEdge e = outEdges.Current;
-                    if (!graph.TryGetHead(e, out TVertex v))
-                        continue;
+                    while (outEdges.MoveNext())
+                    {
+                        TEdge e = outEdges.Current;
+                        if (!graph.TryGetHead(e, out TVertex v))
+                            continue;
 
-                    if (exploredSet.Contains(v))
-                        continue;
+                        if (exploredSet.Contains(v))
+                            continue;
 
-                    exploredSet.Add(v);
-                    yield return v;
-                    if (!fringe.TryAdd(v))
-                        throw new InvalidOperationException(nameof(fringe.TryAdd));
+                        exploredSet.Add(v);
+                        yield return v;
+                        if (!fringe.TryAdd(v))
+                            throw new InvalidOperationException(nameof(fringe.TryAdd));
+                    }
+                }
+                finally
+                {
+                    outEdges.Dispose();
                 }
             }
         }

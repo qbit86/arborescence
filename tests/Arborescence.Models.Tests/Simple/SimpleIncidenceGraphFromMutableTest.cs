@@ -16,7 +16,7 @@
         {
             bool hasTail = graph.TryGetTail(edge, out int tail);
             bool hasHead = graph.TryGetHead(edge, out int head);
-            endpoints = new Endpoints(tail, head);
+            endpoints = new(tail, head);
             return hasTail && hasHead;
         }
 

@@ -12,7 +12,7 @@
 
         internal IndexedIncidenceGraph GetGraph(int vertexCount)
         {
-            _cache ??= new Dictionary<int, IndexedIncidenceGraph>();
+            _cache ??= new();
 
             if (_cache.TryGetValue(vertexCount, out IndexedIncidenceGraph result))
                 return result;

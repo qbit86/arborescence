@@ -47,10 +47,10 @@ namespace Arborescence
             IndexEnumerator sources = new(2);
             byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
             Array.Clear(backingStore, 0, backingStore.Length);
-            IndexedColorDictionary colorMap = new(backingStore);
+            IndexedColorDictionary colorByVertex = new(backingStore);
             HashSet<int> examinedEdges = new(graph.EdgeCount);
             DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
-            dfs.Traverse(graph, sources, colorMap, handler);
+            dfs.Traverse(graph, sources, colorByVertex, handler);
             ArrayPool<byte>.Shared.Return(backingStore);
 
             // Enumerate sources.

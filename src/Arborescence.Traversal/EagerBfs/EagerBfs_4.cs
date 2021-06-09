@@ -16,12 +16,12 @@ namespace Arborescence.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         private static void TraverseCore<TColorMap, THandler>(
-            TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorMap, THandler handler)
+            TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorByVertex, THandler handler)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             Debug.Assert(graph != null, "graph != null");
-            Debug.Assert(colorMap != null, "colorMap != null");
+            Debug.Assert(colorByVertex != null, "colorByVertex != null");
             Debug.Assert(handler != null, "handler != null");
 
             try
@@ -29,37 +29,44 @@ namespace Arborescence.Traversal
                 while (queue.TryTake(out TVertex u))
                 {
 #if DEBUG
-                    Debug.Assert(GetColorOrDefault(colorMap, u) != default);
+                    Debug.Assert(GetColorOrDefault(colorByVertex, u) != default);
 #endif
                     handler.OnExamineVertex(graph, u);
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
+                    try
                     {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
-                            continue;
-
-                        handler.OnExamineEdge(graph, e);
-                        Color vColor = GetColorOrDefault(colorMap, v);
-                        switch (vColor)
+                        while (outEdges.MoveNext())
                         {
-                            case Color.None:
-                            case Color.White:
-                                handler.OnTreeEdge(graph, e);
-                                colorMap[v] = Color.Gray;
-                                handler.OnDiscoverVertex(graph, v);
-                                queue.Add(v);
-                                break;
-                            case Color.Gray:
-                                handler.OnNonTreeGrayHeadEdge(graph, e);
-                                break;
-                            case Color.Black:
-                                handler.OnNonTreeBlackHeadEdge(graph, e);
-                                break;
+                            TEdge e = outEdges.Current;
+                            if (!graph.TryGetHead(e, out TVertex v))
+                                continue;
+
+                            handler.OnExamineEdge(graph, e);
+                            Color vColor = GetColorOrDefault(colorByVertex, v);
+                            switch (vColor)
+                            {
+                                case Color.None:
+                                case Color.White:
+                                    handler.OnTreeEdge(graph, e);
+                                    colorByVertex[v] = Color.Gray;
+                                    handler.OnDiscoverVertex(graph, v);
+                                    queue.Add(v);
+                                    break;
+                                case Color.Gray:
+                                    handler.OnNonTreeGrayHeadEdge(graph, e);
+                                    break;
+                                case Color.Black:
+                                    handler.OnNonTreeBlackHeadEdge(graph, e);
+                                    break;
+                            }
                         }
                     }
+                    finally
+                    {
+                        outEdges.Dispose();
+                    }
 
-                    colorMap[u] = Color.Black;
+                    colorByVertex[u] = Color.Black;
                     handler.OnFinishVertex(graph, u);
                 }
             }
@@ -71,8 +78,8 @@ namespace Arborescence.Traversal
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color GetColorOrDefault<TColorMap>(TColorMap colorMap, TVertex vertex)
+        private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
             where TColorMap : IDictionary<TVertex, Color> =>
-            colorMap.TryGetValue(vertex, out Color result) ? result : Color.None;
+            colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }

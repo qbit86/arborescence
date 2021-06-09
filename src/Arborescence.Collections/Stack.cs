@@ -2,10 +2,13 @@ namespace Arborescence.Internal
 {
     using System;
     using System.Buffers;
+    using System.Collections;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-    internal struct Stack<T> : IDisposable
+    internal struct Stack<T> : IProducerConsumerCollection<T>, IDisposable
     {
         private const int DefaultCapacity = 4;
 
@@ -43,7 +46,17 @@ namespace Arborescence.Internal
             }
         }
 
-        internal bool TryTake(out T result)
+        public void CopyTo(T[] array, int index) => throw new NotSupportedException();
+
+        public T[] ToArray() => throw new NotSupportedException();
+
+        public bool TryAdd(T item)
+        {
+            Add(item);
+            return true;
+        }
+
+        public bool TryTake(out T result)
         {
             int newCount = _count - 1;
             T[] array = _arrayFromPool ?? Array.Empty<T>();
@@ -61,6 +74,18 @@ namespace Arborescence.Internal
 
             return true;
         }
+
+        public IEnumerator<T> GetEnumerator() => throw new NotSupportedException();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void CopyTo(Array array, int index) => throw new NotSupportedException();
+
+        public int Count => _count;
+
+        public bool IsSynchronized => false;
+
+        public object SyncRoot => _arrayFromPool;
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void ResizeThenAdd(T item)

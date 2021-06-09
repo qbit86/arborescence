@@ -3,8 +3,8 @@ namespace Arborescence
     using System;
     using System.Buffers;
     using System.Collections.Generic;
-    using Models;
     using Traversal;
+    using Traversal.Specialized;
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.SimpleIncidenceGraph;
@@ -30,8 +30,8 @@ namespace Arborescence
 
             // Act
 
-            IEnumerator<Endpoints> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount)!;
-            IEnumerator<Endpoints> enumerableSteps = EnumerableBfs.EnumerateEdges(graph, source, exploredSet)!;
+            using IEnumerator<Endpoints> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount)!;
+            using IEnumerator<Endpoints> enumerableSteps = EnumerableBfs.EnumerateEdges(graph, source, exploredSet)!;
 
             // Assert
 
@@ -60,7 +60,7 @@ namespace Arborescence
         [ClassData(typeof(UndirectedSimpleGraphCollection))]
         internal void EnumerateVertices(GraphParameter<Graph> p)
         {
-            SimpleIncidenceGraph graph = p.Graph;
+            Graph graph = p.Graph;
 
             // Arrange
 
@@ -71,8 +71,8 @@ namespace Arborescence
 
             // Act
 
-            IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, source, graph.VertexCount)!;
-            IEnumerator<int> enumerableSteps = EnumerableBfs.EnumerateVertices(graph, source, exploredSet)!;
+            using IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, source, graph.VertexCount)!;
+            using IEnumerator<int> enumerableSteps = EnumerableBfs.EnumerateVertices(graph, source, exploredSet)!;
 
             // Assert
 

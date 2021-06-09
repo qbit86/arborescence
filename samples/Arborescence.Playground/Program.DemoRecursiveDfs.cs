@@ -17,12 +17,12 @@
 
             byte[] backingStore = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(backingStore, 0, backingStore.Length);
-            IndexedColorDictionary colorMap = new(backingStore);
+            IndexedColorDictionary colorByVertex = new(backingStore);
             List<int> steps = new();
             DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
             RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> dfs = default;
 
-            dfs.Traverse(graph, 0, colorMap, dfsHandler);
+            dfs.Traverse(graph, 0, colorByVertex, dfsHandler);
             Console.WriteLine(steps.Count);
 
             ArrayPool<byte>.Shared.Return(backingStore, true);

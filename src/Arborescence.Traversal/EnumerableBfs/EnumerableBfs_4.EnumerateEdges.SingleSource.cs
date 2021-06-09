@@ -30,6 +30,13 @@ namespace Arborescence.Traversal
             if (exploredSet == null)
                 throw new ArgumentNullException(nameof(exploredSet));
 
+            return EnumerateEdgesIterator(graph, source, exploredSet);
+        }
+
+        private static IEnumerator<TEdge> EnumerateEdgesIterator<TExploredSet>(
+            TGraph graph, TVertex source, TExploredSet exploredSet)
+            where TExploredSet : ISet<TVertex>
+        {
             var queue = new Internal.Queue<TVertex>();
             try
             {
@@ -42,18 +49,25 @@ namespace Arborescence.Traversal
                     Debug.Assert(exploredSet.Contains(u));
 #endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
+                    try
                     {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
-                            continue;
+                        while (outEdges.MoveNext())
+                        {
+                            TEdge e = outEdges.Current;
+                            if (!graph.TryGetHead(e, out TVertex v))
+                                continue;
 
-                        if (exploredSet.Contains(v))
-                            continue;
+                            if (exploredSet.Contains(v))
+                                continue;
 
-                        yield return e;
-                        exploredSet.Add(v);
-                        queue.Add(v);
+                            yield return e;
+                            exploredSet.Add(v);
+                            queue.Add(v);
+                        }
+                    }
+                    finally
+                    {
+                        outEdges.Dispose();
                     }
                 }
             }

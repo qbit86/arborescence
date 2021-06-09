@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.0] - 2021-06-10
+### Added
+- Traversal: Calling `Dispose()` for out-edges enumerators.
+- Traversal: Moved ``EnumerableBfs`3`` and ``EnumerableDfs`3`` to `Arborescence.Traversal.Specialized` namespace.
+- Primitives: `IndexedDictionary<TValue, TDummy>` — a map with a marker for missing values.
+
+### Changed
+- Traversal: Made public methods of ``GenericSearch`4``, ``EnumerableBfs`3``, ``EnumerableBfs`4``, ``EnumerableDfs`3``, ``EnumerableDfs`4`` to be non-iterator, so arguments check takes place eagerly.
+
+### Removed
+- Traversal: Moved ``EnumerableBfs`3`` and ``EnumerableDfs`3`` from `Arborescence.Traversal` namespace.
+
 ## [0.11.0] - 2021-05-30
 ### Added
 - Primitives: Moved `IndexedSet` and `IndexedSet` from Models.
@@ -169,8 +181,9 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...HEAD
-[0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...0.11.0
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...HEAD
+[0.12.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...arborescence-0.12.0
+[0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...arborescence-0.11.0
 [0.10.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...arborescence-0.10.0
 [0.9.0]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...arborescence-0.9.0
 [0.8.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.8.0...traversal-0.8.1

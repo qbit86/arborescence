@@ -13,7 +13,7 @@
     {
         private readonly DummyHandler<IndexedIncidenceGraph> _handler = new();
 
-        private byte[] _colorMap = Array.Empty<byte>();
+        private byte[] _colorByVertex = Array.Empty<byte>();
         private byte[] _exploredSet = Array.Empty<byte>();
 
         [Params(10, 100, 1000)]
@@ -33,7 +33,7 @@
             EagerBfs = default;
             EnumerableBfs = default;
 
-            _colorMap = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
+            _colorByVertex = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _exploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
             _handler.Reset();
         }
@@ -41,8 +41,8 @@
         [GlobalCleanup]
         public void GlobalCleanup()
         {
-            ArrayPool<byte>.Shared.Return(_colorMap, true);
-            _colorMap = Array.Empty<byte>();
+            ArrayPool<byte>.Shared.Return(_colorByVertex, true);
+            _colorByVertex = Array.Empty<byte>();
             ArrayPool<byte>.Shared.Return(_exploredSet, true);
             _exploredSet = Array.Empty<byte>();
         }
@@ -50,8 +50,8 @@
         [Benchmark(Baseline = true)]
         public int EagerBfsSteps()
         {
-            Array.Clear(_colorMap, 0, _colorMap.Length);
-            EagerBfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorMap), _handler);
+            Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
+            EagerBfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
             return _handler.Count;
         }
 
@@ -59,12 +59,11 @@
         public int EnumerableBfsEdges()
         {
             Array.Clear(_exploredSet, 0, _exploredSet.Length);
-            IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, new IndexedSet(_exploredSet));
+            using IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, new IndexedSet(_exploredSet));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
 
@@ -72,12 +71,11 @@
         public int EnumerableBfsVertices()
         {
             Array.Clear(_exploredSet, 0, _exploredSet.Length);
-            IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, new IndexedSet(_exploredSet));
+            using IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, new IndexedSet(_exploredSet));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
     }

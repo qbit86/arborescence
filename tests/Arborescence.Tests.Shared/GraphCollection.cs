@@ -131,10 +131,7 @@
     {
         private MutableIndexedIncidenceGraph? _graph;
 
-        public MutableIndexedIncidenceGraphBuilder(int initialVertexCount)
-        {
-            _graph = new MutableIndexedIncidenceGraph(initialVertexCount);
-        }
+        public MutableIndexedIncidenceGraphBuilder(int initialVertexCount) => _graph = new(initialVertexCount);
 
         public void Dispose()
         {
@@ -170,10 +167,7 @@
     {
         private MutableSimpleIncidenceGraph? _graph;
 
-        public MutableSimpleIncidenceGraphBuilder(int initialVertexCount)
-        {
-            _graph = new MutableSimpleIncidenceGraph(initialVertexCount);
-        }
+        public MutableSimpleIncidenceGraphBuilder(int initialVertexCount) => _graph = new(initialVertexCount);
 
         public void Dispose()
         {

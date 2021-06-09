@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Models;
-    using Traversal;
+    using Traversal.Specialized;
 
     internal static class Program
     {
@@ -21,7 +21,7 @@
 
             EnumerableBfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
 
-            IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
+            using IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
             while (edges.MoveNext())
                 Console.WriteLine(edges.Current);
         }
