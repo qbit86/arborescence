@@ -19,8 +19,6 @@
         /// <param name="head">The head of the edge.</param>
         public Endpoints(int tail, int head) => _data = unchecked(((ulong)tail << 32) | (uint)head);
 
-        private static CultureInfo F => CultureInfo.InvariantCulture;
-
         /// <summary>
         /// Gets the tail of the edge.
         /// </summary>
@@ -35,7 +33,8 @@
         public override string ToString()
         {
             // Consider using int.TryFormat() for netstandard2.1.
-            return EndpointsHelpers.PairToString(Tail.ToString(F), Head.ToString(F));
+            CultureInfo f = CultureInfo.InvariantCulture;
+            return EndpointsHelpers.PairToString(Tail.ToString(f), Head.ToString(f));
         }
 
         /// <summary>
