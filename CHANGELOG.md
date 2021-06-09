@@ -1,11 +1,15 @@
 # Changelog
 
 ## [Unreleased] - 2021-06-09
+### Added
+- Traversal: Calling `Dispose()` for out-edges enumerators.
+- Traversal: Moved ``EnumerableBfs`3`` and ``EnumerableDfs`3`` to `Arborescence.Traversal.Specialized` namespace.
+
 ### Changed
 - Traversal: Made public methods of ``GenericSearch`4``, ``EnumerableBfs`3``, ``EnumerableBfs`4``, ``EnumerableDfs`3``, ``EnumerableDfs`4`` to be non-iterator, so arguments check takes place eagerly.
 
-### Added
-- Traversal: Calling `Dispose()` for out-edges enumerators.
+### Removed
+- Traversal: Moved ``EnumerableBfs`3`` and ``EnumerableDfs`3`` from `Arborescence.Traversal` namespace.
 
 ## [0.11.0] - 2021-05-30
 ### Added
