@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Arborescence.Search</RootNamespace>
+    <TargetFrameworks>netcoreapp2.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
+    <ProjectReference Include="..\Arborescence.Traversal\Arborescence.Traversal.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
+  </ItemGroup>
+  <Import Condition="'$(TargetFramework)' == 'netcoreapp2.1' OR '$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Nullable\Arborescence.Nullable.projitems" Label="Shared" />
+</Project>

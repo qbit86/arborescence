@@ -57,6 +57,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.BasicUsage", "samples\Arborescence.BasicUsage\Arborescence.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Nullable", "src\Arborescence.Nullable\Arborescence.Nullable.shproj", "{81A3650F-6933-44B9-B0E8-2FA1BD3F3686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Search", "src\Arborescence.Search\Arborescence.Search.csproj", "{0173C1C6-8139-4670-9310-D08FE6DD5011}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -128,6 +129,10 @@ Global
 		{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +156,7 @@ Global
 		{866FB4B8-0AB1-41FC-9206-13C22EAC625A} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{81A3650F-6933-44B9-B0E8-2FA1BD3F3686} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+		{0173C1C6-8139-4670-9310-D08FE6DD5011} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

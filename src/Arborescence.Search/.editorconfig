@@ -1,0 +1,2 @@
+[*.cs]
+dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types
