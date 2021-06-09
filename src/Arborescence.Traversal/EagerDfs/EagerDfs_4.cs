@@ -51,8 +51,14 @@ namespace Arborescence.Traversal
                         handler.OnFinishEdge(graph, inEdge);
 
                     TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
-                    while (edges.MoveNext())
+                    while (true)
                     {
+                        if (!edges.MoveNext())
+                        {
+                            outEdges.Dispose();
+                            break;
+                        }
+
                         TEdge e = edges.Current;
                         if (!graph.TryGetHead(e, out TVertex v))
                             continue;
