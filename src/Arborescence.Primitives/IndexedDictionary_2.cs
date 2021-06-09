@@ -81,7 +81,7 @@ namespace Arborescence
             _items[key] = value;
         }
 
-        bool IDictionary<int, TValue>.ContainsKey(int key) => throw new NotImplementedException();
+        bool IDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
 
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
