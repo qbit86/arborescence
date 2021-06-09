@@ -8,11 +8,11 @@ Commonly used types:
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.11.1</VersionPrefix>
+    <VersionPrefix>0.12.0</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.11</AssemblyVersion>
+    <AssemblyVersion>0.12</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>netcoreapp2.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
