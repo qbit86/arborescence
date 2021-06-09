@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-06-09
+## [0.12.0] - 2021-06-10
 ### Added
 - Traversal: Calling `Dispose()` for out-edges enumerators.
 - Traversal: Moved ``EnumerableBfs`3`` and ``EnumerableDfs`3`` to `Arborescence.Traversal.Specialized` namespace.
@@ -181,7 +181,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...HEAD
+[0.12.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...arborescence-0.12.0
 [0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...arborescence-0.11.0
 [0.10.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...arborescence-0.10.0
 [0.9.0]: https://github.com/qbit86/arborescence/compare/traversal-0.8.1...arborescence-0.9.0
