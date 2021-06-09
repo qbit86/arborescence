@@ -2,10 +2,13 @@
 {
     using System;
     using System.Buffers;
+    using System.Collections;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-    internal struct Queue<T> : IDisposable
+    internal struct Queue<T> : IProducerConsumerCollection<T>, IDisposable
     {
         private const int DefaultCapacity = 4;
 
@@ -42,6 +45,16 @@
             ++_size;
         }
 
+        public void CopyTo(T[] array, int index) => throw new NotSupportedException();
+
+        public T[] ToArray() => throw new NotSupportedException();
+
+        public bool TryAdd(T item)
+        {
+            Add(item);
+            return true;
+        }
+
         public bool TryTake(out T result)
         {
             if (_size == 0)
@@ -60,6 +73,18 @@
             --_size;
             return true;
         }
+
+        public IEnumerator<T> GetEnumerator() => throw new NotSupportedException();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void CopyTo(Array array, int index) => throw new NotSupportedException();
+
+        public int Count => _size;
+
+        public bool IsSynchronized => false;
+
+        public object SyncRoot => _arrayFromPool;
 
         // Increments the index wrapping it if necessary.
         private void MoveNext(ref int index)
