@@ -116,7 +116,9 @@ namespace Arborescence.Search
                     {
                         while (outEdges.MoveNext())
                         {
-                            TEdge e = outEdges.Current;
+                            if (!(outEdges.Current is TEdge e))
+                                continue;
+
                             if (!graph.TryGetHead(e, out TVertex v))
                                 continue;
 
