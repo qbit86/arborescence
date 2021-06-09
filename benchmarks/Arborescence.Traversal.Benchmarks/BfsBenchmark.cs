@@ -59,12 +59,11 @@
         public int EnumerableBfsEdges()
         {
             Array.Clear(_exploredSet, 0, _exploredSet.Length);
-            IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, new IndexedSet(_exploredSet));
+            using IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, new IndexedSet(_exploredSet));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
 
@@ -72,12 +71,11 @@
         public int EnumerableBfsVertices()
         {
             Array.Clear(_exploredSet, 0, _exploredSet.Length);
-            IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, new IndexedSet(_exploredSet));
+            using IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, new IndexedSet(_exploredSet));
             int count = 0;
             while (steps.MoveNext())
                 ++count;
 
-            steps.Dispose();
             return count;
         }
     }
