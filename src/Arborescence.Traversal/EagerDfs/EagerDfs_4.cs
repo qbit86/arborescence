@@ -95,6 +95,12 @@ namespace Arborescence.Traversal
                     handler.OnFinishVertex(graph, u);
                 }
             }
+            catch
+            {
+                while (stack.TryTake(out StackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
+                    stackFrame.EdgeEnumerator.Dispose();
+                throw;
+            }
             finally
             {
                 stack.Dispose();
