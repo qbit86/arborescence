@@ -28,6 +28,15 @@ namespace Arborescence.Search
         private readonly TCostComparer _costComparer;
         private readonly TCostMonoid _costMonoid;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumerableAStar{TGraph,TVertex,TEdge,TEdgeEnumerator,TCost,TCostComparer,TCostMonoid}"/> structure.
+        /// </summary>
+        /// <param name="costComparer">The <typeparamref name="TCostComparer"/> to use when comparing distances and priorities.</param>
+        /// <param name="costMonoid">The <typeparamref name="TCostMonoid"/> to use when updating the distance map and the cost map.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="costComparer"/> is <see langword="null"/>,
+        /// or <paramref name="costMonoid"/> is <see langword="null"/>.
+        /// </exception>
         public EnumerableAStar(TCostComparer costComparer, TCostMonoid costMonoid)
         {
             if (costComparer == null)
