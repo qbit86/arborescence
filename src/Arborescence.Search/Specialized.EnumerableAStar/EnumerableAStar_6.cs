@@ -4,7 +4,6 @@ namespace Arborescence.Search.Specialized
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
     using Traversal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
@@ -52,8 +51,20 @@ namespace Arborescence.Search.Specialized
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
 
+            return EnumerateRelaxedEdgesIterator(graph, source, heuristic, weightByEdge, vertexCount, infinity);
+        }
+
+        private IEnumerator<TEdge> EnumerateRelaxedEdgesIterator<TWeightMap>(
+            TGraph graph,
+            int source,
+            Func<int, TCost> heuristic,
+            TWeightMap weightByEdge,
+            int vertexCount,
+            TCost infinity)
+            where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
+        {
             if (unchecked((uint)source >= vertexCount))
-                return Enumerable.Empty<TEdge>().GetEnumerator();
+                yield break;
 
             var aStar = new EnumerableAStar<TGraph, int, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>(
                 _costComparer, _costMonoid);
@@ -73,9 +84,13 @@ namespace Arborescence.Search.Specialized
                 var distanceByVertex = new IndexedDictionary<TCost>(distanceByVertexFromPool);
                 var colorByVertex = new IndexedColorDictionary(colorByVertexFromPool);
                 var indexByVertex = new IndexedDictionary<int>(indexByVertexFromPool);
-                // TODO: Replace with iterating!
-                return aStar.EnumerateRelaxedEdges(graph, source, heuristic, weightByEdge,
+                IEnumerator<TEdge> edges = aStar.EnumerateRelaxedEdgesIterator(graph, source, heuristic, weightByEdge,
                     costByVertex, distanceByVertex, colorByVertex, indexByVertex);
+                using (edges)
+                {
+                    while (edges.MoveNext())
+                        yield return edges.Current;
+                }
             }
             finally
             {

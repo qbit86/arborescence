@@ -84,7 +84,7 @@ namespace Arborescence.Search
                 graph, source, heuristic, weightByEdge, costByVertex, distanceByVertex, colorByVertex, indexByVertex);
         }
 
-        private IEnumerator<TEdge> EnumerateRelaxedEdgesIterator<
+        internal IEnumerator<TEdge> EnumerateRelaxedEdgesIterator<
             TCostMap, TDistanceMap, TWeightMap, TColorMap, TIndexMap>(
             TGraph graph,
             TVertex source,
