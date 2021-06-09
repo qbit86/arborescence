@@ -11,3 +11,6 @@ dotnet_diagnostic.CA2225.severity = suggestion # Operator overloads have named a
 
 [Endpoints_1.cs]
 dotnet_diagnostic.CA1508.severity = suggestion # Avoid dead conditional code
+
+[IndexedDictionary_2.cs]
+dotnet_diagnostic.CA1508.severity = suggestion # Avoid dead conditional code
