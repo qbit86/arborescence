@@ -20,7 +20,7 @@ Commonly used types:
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
-  <Import Project="..\Arborescence.Internal\Arborescence.Internal.projitems" Label="Shared" />
+  <Import Project="..\Arborescence.Collections\Arborescence.Collections.projitems" Label="Shared" />
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" Version="4.5.1" />
   </ItemGroup>
