@@ -57,7 +57,10 @@ namespace Arborescence.Traversal
                     while (stack.TryTake(out TEdgeEnumerator outEdges))
                     {
                         if (!outEdges.MoveNext())
+                        {
+                            outEdges.Dispose();
                             continue;
+                        }
 
                         stack.Add(outEdges);
 
