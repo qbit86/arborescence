@@ -53,18 +53,25 @@ namespace Arborescence.Traversal
                     Debug.Assert(SetHelpers.Contains(exploredSet, u));
 #endif
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
+                    try
                     {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out int v))
-                            continue;
+                        while (outEdges.MoveNext())
+                        {
+                            TEdge e = outEdges.Current;
+                            if (!graph.TryGetHead(e, out int v))
+                                continue;
 
-                        if (SetHelpers.Contains(exploredSet, v))
-                            continue;
+                            if (SetHelpers.Contains(exploredSet, v))
+                                continue;
 
-                        yield return e;
-                        SetHelpers.Add(exploredSet, v);
-                        queue.Add(v);
+                            yield return e;
+                            SetHelpers.Add(exploredSet, v);
+                            queue.Add(v);
+                        }
+                    }
+                    finally
+                    {
+                        outEdges.Dispose();
                     }
                 }
             }

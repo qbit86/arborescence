@@ -51,8 +51,14 @@ namespace Arborescence.Traversal
                         handler.OnFinishEdge(graph, inEdge);
 
                     TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
-                    while (edges.MoveNext())
+                    while (true)
                     {
+                        if (!edges.MoveNext())
+                        {
+                            outEdges.Dispose();
+                            break;
+                        }
+
                         TEdge e = edges.Current;
                         if (!graph.TryGetHead(e, out TVertex v))
                             continue;
@@ -88,6 +94,12 @@ namespace Arborescence.Traversal
                     colorByVertex[u] = Color.Black;
                     handler.OnFinishVertex(graph, u);
                 }
+            }
+            catch
+            {
+                while (stack.TryTake(out StackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
+                    stackFrame.EdgeEnumerator.Dispose();
+                throw;
             }
             finally
             {

@@ -40,25 +40,32 @@ namespace Arborescence.Traversal
             }
 
             TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-            while (outEdges.MoveNext())
+            try
             {
-                TEdge e = outEdges.Current;
-                if (!graph.TryGetHead(e, out TVertex v))
-                    continue;
-
-                handler.OnExamineEdge(graph, e);
-                Color color = GetColorOrDefault(colorByVertex, v);
-                if (color == Color.None || color == Color.White)
+                while (outEdges.MoveNext())
                 {
-                    handler.OnTreeEdge(graph, e);
-                    TraverseCore(graph, v, colorByVertex, handler, terminationCondition);
-                }
-                else if (color == Color.Gray)
-                    handler.OnBackEdge(graph, e);
-                else
-                    handler.OnForwardOrCrossEdge(graph, e);
+                    TEdge e = outEdges.Current;
+                    if (!graph.TryGetHead(e, out TVertex v))
+                        continue;
 
-                handler.OnFinishEdge(graph, e);
+                    handler.OnExamineEdge(graph, e);
+                    Color color = GetColorOrDefault(colorByVertex, v);
+                    if (color == Color.None || color == Color.White)
+                    {
+                        handler.OnTreeEdge(graph, e);
+                        TraverseCore(graph, v, colorByVertex, handler, terminationCondition);
+                    }
+                    else if (color == Color.Gray)
+                        handler.OnBackEdge(graph, e);
+                    else
+                        handler.OnForwardOrCrossEdge(graph, e);
+
+                    handler.OnFinishEdge(graph, e);
+                }
+            }
+            finally
+            {
+                outEdges.Dispose();
             }
 
             colorByVertex[u] = Color.Black;

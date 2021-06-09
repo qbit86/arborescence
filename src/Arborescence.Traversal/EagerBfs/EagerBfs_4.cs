@@ -33,30 +33,37 @@ namespace Arborescence.Traversal
 #endif
                     handler.OnExamineVertex(graph, u);
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                    while (outEdges.MoveNext())
+                    try
                     {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
-                            continue;
-
-                        handler.OnExamineEdge(graph, e);
-                        Color vColor = GetColorOrDefault(colorByVertex, v);
-                        switch (vColor)
+                        while (outEdges.MoveNext())
                         {
-                            case Color.None:
-                            case Color.White:
-                                handler.OnTreeEdge(graph, e);
-                                colorByVertex[v] = Color.Gray;
-                                handler.OnDiscoverVertex(graph, v);
-                                queue.Add(v);
-                                break;
-                            case Color.Gray:
-                                handler.OnNonTreeGrayHeadEdge(graph, e);
-                                break;
-                            case Color.Black:
-                                handler.OnNonTreeBlackHeadEdge(graph, e);
-                                break;
+                            TEdge e = outEdges.Current;
+                            if (!graph.TryGetHead(e, out TVertex v))
+                                continue;
+
+                            handler.OnExamineEdge(graph, e);
+                            Color vColor = GetColorOrDefault(colorByVertex, v);
+                            switch (vColor)
+                            {
+                                case Color.None:
+                                case Color.White:
+                                    handler.OnTreeEdge(graph, e);
+                                    colorByVertex[v] = Color.Gray;
+                                    handler.OnDiscoverVertex(graph, v);
+                                    queue.Add(v);
+                                    break;
+                                case Color.Gray:
+                                    handler.OnNonTreeGrayHeadEdge(graph, e);
+                                    break;
+                                case Color.Black:
+                                    handler.OnNonTreeBlackHeadEdge(graph, e);
+                                    break;
+                            }
                         }
+                    }
+                    finally
+                    {
+                        outEdges.Dispose();
                     }
 
                     colorByVertex[u] = Color.Black;
