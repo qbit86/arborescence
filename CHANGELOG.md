@@ -4,6 +4,7 @@
 ### Added
 - Traversal: Calling `Dispose()` for out-edges enumerators.
 - Traversal: Moved ``EnumerableBfs`3`` and ``EnumerableDfs`3`` to `Arborescence.Traversal.Specialized` namespace.
+- Primitives: `IndexedDictionary<TValue, TDummy>` — a map with a marker for missing values.
 
 ### Changed
 - Traversal: Made public methods of ``GenericSearch`4``, ``EnumerableBfs`3``, ``EnumerableBfs`4``, ``EnumerableDfs`3``, ``EnumerableDfs`4`` to be non-iterator, so arguments check takes place eagerly.
