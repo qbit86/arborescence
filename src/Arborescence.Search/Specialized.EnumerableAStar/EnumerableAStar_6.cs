@@ -1,4 +1,4 @@
-namespace Arborescence.Search
+namespace Arborescence.Search.Specialized
 {
     using System;
     using System.Buffers;
@@ -73,6 +73,7 @@ namespace Arborescence.Search
                 var distanceByVertex = new IndexedDictionary<TCost>(distanceByVertexFromPool);
                 var colorByVertex = new IndexedColorDictionary(colorByVertexFromPool);
                 var indexByVertex = new IndexedDictionary<int>(indexByVertexFromPool);
+                // TODO: Replace with iterating!
                 return aStar.EnumerateRelaxedEdges(graph, source, heuristic, weightByEdge,
                     costByVertex, distanceByVertex, colorByVertex, indexByVertex);
             }
