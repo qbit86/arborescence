@@ -4,10 +4,8 @@ namespace Arborescence.Search.Specialized
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using Internal;
     using Traversal;
-
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
 
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
@@ -66,6 +64,7 @@ namespace Arborescence.Search.Specialized
             if (unchecked((uint)source >= vertexCount))
                 yield break;
 
+            var dummy = new DummyEqualityComparer<TCost, TCostComparer>(infinity, _costComparer);
             var aStar = new EnumerableAStar<TGraph, int, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>(
                 _costComparer, _costMonoid);
 
@@ -79,9 +78,10 @@ namespace Arborescence.Search.Specialized
             Fill(indexByVertexFromPool, -1, 0, vertexCount);
             try
             {
-                // TODO: Replace with special dummy-aware dictionary.
-                var costByVertex = new IndexedDictionary<TCost>(costByVertexFromPool);
-                var distanceByVertex = new IndexedDictionary<TCost>(distanceByVertexFromPool);
+                var costByVertex = new IndexedDictionary<TCost, DummyEqualityComparer<TCost, TCostComparer>>(
+                    costByVertexFromPool, dummy);
+                var distanceByVertex = new IndexedDictionary<TCost, DummyEqualityComparer<TCost, TCostComparer>>(
+                    distanceByVertexFromPool, dummy);
                 var colorByVertex = new IndexedColorDictionary(colorByVertexFromPool);
                 var indexByVertex = new IndexedDictionary<int>(indexByVertexFromPool);
                 IEnumerator<TEdge> edges = aStar.EnumerateRelaxedEdgesIterator(graph, source, heuristic, weightByEdge,
