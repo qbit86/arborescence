@@ -1,4 +1,4 @@
-namespace Arborescence.Traversal
+namespace Arborescence.Traversal.Specialized
 {
     using System.Collections.Generic;
 

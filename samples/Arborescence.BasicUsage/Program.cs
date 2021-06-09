@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Models;
-    using Traversal;
+    using Traversal.Specialized;
 
     internal static class Program
     {

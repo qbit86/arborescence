@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Buffers;
     using System.Collections.Generic;
     using Traversal;
+    using Traversal.Specialized;
     using Xunit;
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
     using Graph = Models.SimpleIncidenceGraph;
