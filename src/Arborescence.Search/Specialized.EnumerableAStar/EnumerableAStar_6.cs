@@ -7,6 +7,18 @@ namespace Arborescence.Search.Specialized
     using Internal;
     using Traversal;
 
+    /// <summary>
+    /// Implements a heuristic search on a weighted graph for the case where all edge weights are non-negative.
+    /// </summary>
+    /// <remarks>
+    /// This implementation assumes vertices to be indices in range [0, vertexCount).
+    /// </remarks>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    /// <typeparam name="TCost">The type of the weight assigned to each edge.</typeparam>
+    /// <typeparam name="TCostComparer">The type of cost comparer.</typeparam>
+    /// <typeparam name="TCostMonoid">The type of cost monoid.</typeparam>
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
         where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
