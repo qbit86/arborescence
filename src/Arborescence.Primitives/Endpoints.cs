@@ -17,10 +17,7 @@
         /// </summary>
         /// <param name="tail">The tail of the edge.</param>
         /// <param name="head">The head of the edge.</param>
-        public Endpoints(int tail, int head)
-        {
-            _data = unchecked(((ulong)tail << 32) | (uint)head);
-        }
+        public Endpoints(int tail, int head) => _data = unchecked(((ulong)tail << 32) | (uint)head);
 
         private static CultureInfo F => CultureInfo.InvariantCulture;
 
