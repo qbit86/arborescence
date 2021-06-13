@@ -162,13 +162,12 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public bool Equals(IndexedDictionary<TValue, TDummy> other)
-        {
-            return _dummy is TValue dummy && other._dummy.Equals(dummy) && Equals(_items, other._items);
-        }
+        public bool Equals(IndexedDictionary<TValue, TDummy> other) =>
+            _dummy is TValue dummy && other._dummy.Equals(dummy) && Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedDictionary<TValue> other && Equals(other);
+        public override bool Equals(object obj) =>
+            obj is IndexedDictionary<TValue, TDummy> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() =>
