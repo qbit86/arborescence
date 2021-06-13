@@ -78,10 +78,7 @@ namespace Arborescence
 
         object IEnumerator.Current => Current;
 
-        void IEnumerator.Reset()
-        {
-            _current = _start - 1;
-        }
+        void IEnumerator.Reset() => _current = _start - 1;
 
         /// <inheritdoc/>
         public void Dispose() { }

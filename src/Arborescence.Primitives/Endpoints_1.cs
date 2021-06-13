@@ -35,10 +35,7 @@
         private static EqualityComparer<TVertex> C => EqualityComparer<TVertex>.Default;
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return EndpointsHelpers.PairToString(Tail?.ToString(), Head?.ToString());
-        }
+        public override string ToString() => EndpointsHelpers.PairToString(Tail?.ToString(), Head?.ToString());
 
         /// <summary>
         /// Deconstructs the current <see cref="Endpoints{TVertex}"/> structure.

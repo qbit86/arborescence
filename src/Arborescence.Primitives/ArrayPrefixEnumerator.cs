@@ -78,9 +78,6 @@ namespace Arborescence
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
 
-        void IEnumerator.Reset()
-        {
-            _current = -1;
-        }
+        void IEnumerator.Reset() => _current = -1;
     }
 }
