@@ -247,10 +247,8 @@ namespace Arborescence.Search
         // TCost this[TVertex] (in interface IReadOnlyDictionary<TVertex,TCost>)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetCost<TCostMap>(TCostMap costByVertex, TVertex vertex, TCost cost)
-            where TCostMap : IDictionary<TVertex, TCost>
-        {
+            where TCostMap : IDictionary<TVertex, TCost> =>
             costByVertex[vertex] = cost;
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
