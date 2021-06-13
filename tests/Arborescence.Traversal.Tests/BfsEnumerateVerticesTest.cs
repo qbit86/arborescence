@@ -85,16 +85,10 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(FromMutableSimpleGraphCollection))]
-        internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p)
-        {
-            EnumerateVerticesCore(p.Graph, false);
-        }
+        internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, false);
 
         [Theory]
         [ClassData(typeof(FromMutableSimpleGraphCollection))]
-        internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p)
-        {
-            EnumerateVerticesCore(p.Graph, true);
-        }
+        internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, true);
     }
 }

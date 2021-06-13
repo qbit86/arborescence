@@ -91,16 +91,10 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(MutableIndexedGraphCollection))]
-        internal void Traverse_SingleSource(GraphParameter<Graph> p)
-        {
-            TraverseCore(p.Graph, false);
-        }
+        internal void Traverse_SingleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, false);
 
         [Theory]
         [ClassData(typeof(MutableIndexedGraphCollection))]
-        internal void Traverse_MultipleSource(GraphParameter<Graph> p)
-        {
-            TraverseCore(p.Graph, true);
-        }
+        internal void Traverse_MultipleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, true);
     }
 }
