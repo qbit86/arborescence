@@ -31,10 +31,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Reset()
-        {
-            _current = -1;
-        }
+        public void Reset() => _current = -1;
 
         object IEnumerator.Current => _current;
 
