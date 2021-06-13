@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2021-06-13
+### Changed
+- Primitives: Fixed equality checking for `IndexedDictionary<TValue, TDummy>`.
+
 ## [0.12.0] - 2021-06-10
 ### Added
 - Traversal: Calling `Dispose()` for out-edges enumerators.
