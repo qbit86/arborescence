@@ -133,7 +133,18 @@ namespace Arborescence
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys
+        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
+
+        ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
+
+        ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
+
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
+
+        /// <summary>
+        /// Gets an enumerable collection that contains the keys in the dictionary.
+        /// </summary>
+        public IEnumerable<int> Keys
         {
             get
             {
@@ -145,11 +156,10 @@ namespace Arborescence
             }
         }
 
-        ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
-
-        ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
-
-        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values
+        /// <summary>
+        /// Gets an enumerable collection that contains the values in the dictionary.
+        /// </summary>
+        public IEnumerable<TValue> Values
         {
             get
             {

@@ -128,11 +128,13 @@ namespace Arborescence
 
         IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
 
-        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        /// <summary>
+        /// Gets an enumerable collection that contains the keys in the dictionary.
+        /// </summary>
         public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
 
         /// <summary>
-        /// Gets a read-only collection that contains the values in the read-only dictionary.
+        /// Gets an enumerable collection that contains the values in the dictionary.
         /// </summary>
         public IReadOnlyCollection<TValue> Values => _items;
 
