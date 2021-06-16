@@ -111,14 +111,14 @@ namespace Arborescence
             get
             {
                 if ((uint)index >= (uint)_count)
-                    ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 return _array[index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
-                    ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 _array[index] = value;
             }
@@ -166,7 +166,7 @@ namespace Arborescence
             destination.ThrowInvalidOperationIfDefault();
 
             if (_count > destination._count)
-                ArrayPrefixHelpers.ThrowArgumentException_DestinationTooShort();
+                ArrayPrefixHelper.ThrowArgumentException_DestinationTooShort();
 
             System.Array.Copy(_array, 0, destination._array, 0, _count);
         }
@@ -190,7 +190,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count)
-                ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
             return new ArraySegment<T>(_array, index, _count - index);
         }
@@ -208,7 +208,7 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
-                ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
             return new ArraySegment<T>(_array, index, count);
         }
@@ -265,7 +265,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 return _array[index];
             }
@@ -274,7 +274,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 _array[index] = value;
             }
@@ -293,12 +293,12 @@ namespace Arborescence
 
         void IList<T>.Insert(int index, T item)
         {
-            ArrayPrefixHelpers.ThrowNotSupportedException();
+            ArrayPrefixHelper.ThrowNotSupportedException();
         }
 
         void IList<T>.RemoveAt(int index)
         {
-            ArrayPrefixHelpers.ThrowNotSupportedException();
+            ArrayPrefixHelper.ThrowNotSupportedException();
         }
 
         #endregion
@@ -311,7 +311,7 @@ namespace Arborescence
             {
                 ThrowInvalidOperationIfDefault();
                 if (index < 0 || index >= _count)
-                    ArrayPrefixHelpers.ThrowArgumentOutOfRangeException(nameof(index));
+                    ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
                 return _array[index];
             }
@@ -325,12 +325,12 @@ namespace Arborescence
 
         void ICollection<T>.Add(T item)
         {
-            ArrayPrefixHelpers.ThrowNotSupportedException();
+            ArrayPrefixHelper.ThrowNotSupportedException();
         }
 
         void ICollection<T>.Clear()
         {
-            ArrayPrefixHelpers.ThrowNotSupportedException();
+            ArrayPrefixHelper.ThrowNotSupportedException();
         }
 
         bool ICollection<T>.Contains(T item)
@@ -346,7 +346,7 @@ namespace Arborescence
 
         bool ICollection<T>.Remove(T item)
         {
-            ArrayPrefixHelpers.ThrowNotSupportedException();
+            ArrayPrefixHelper.ThrowNotSupportedException();
             return default;
         }
 
@@ -367,7 +367,7 @@ namespace Arborescence
         private void ThrowInvalidOperationIfDefault()
         {
             if (_array is null)
-                ArrayPrefixHelpers.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
+                ArrayPrefixHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
         }
 
         /// <summary>
@@ -398,9 +398,9 @@ namespace Arborescence
                 get
                 {
                     if (_current < 0)
-                        ArrayPrefixHelpers.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                        ArrayPrefixHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                     if (_current >= _end)
-                        ArrayPrefixHelpers.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                        ArrayPrefixHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
                     return _array[_current];
                 }
             }

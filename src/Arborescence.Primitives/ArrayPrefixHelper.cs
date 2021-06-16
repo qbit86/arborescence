@@ -5,7 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    internal static class ArrayPrefixHelpers
+    internal static class ArrayPrefixHelper
     {
         [DoesNotReturn]
         internal static void ThrowArgumentException_DestinationTooShort()
