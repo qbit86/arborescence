@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using System.Text;
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
@@ -34,7 +35,13 @@
         {
             // Consider using int.TryFormat() for netstandard2.1.
             CultureInfo f = CultureInfo.InvariantCulture;
-            return EndpointsHelpers.PairToString(Tail.ToString(f), Head.ToString(f));
+            var s = new StringBuilder();
+            s.Append('[');
+            s.Append(Tail.ToString(f));
+            s.Append(", ");
+            s.Append(Head.ToString(f));
+            s.Append(']');
+            return s.ToString();
         }
 
         /// <summary>
