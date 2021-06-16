@@ -78,8 +78,6 @@ namespace Arborescence
         /// <inheritdoc/>
         public void UnionWith(IEnumerable<int> other) => throw new NotSupportedException();
 
-        bool ISet<int>.Add(int item) => Add(item);
-
         /// <inheritdoc cref="ISet{T}"/>
         public bool Add(int item)
         {
