@@ -86,7 +86,7 @@ namespace Arborescence
             // Negative values discovered though conversion to high values when converted to unsigned
             // Failure should be rare and location determination and message is delegated to failure functions
             if (array is null || (uint)count > (uint)array.Length)
-                ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
+                ArrayPrefixHelper.ThrowArraySegmentCtorValidationFailedExceptions(array, 0, count);
 
             _array = array;
             _count = count;
