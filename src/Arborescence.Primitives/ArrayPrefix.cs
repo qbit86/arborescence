@@ -166,7 +166,7 @@ namespace Arborescence
             destination.ThrowInvalidOperationIfDefault();
 
             if (_count > destination._count)
-                ThrowHelper.ThrowArgumentException_DestinationTooShort();
+                ArrayPrefixHelpers.ThrowArgumentException_DestinationTooShort();
 
             System.Array.Copy(_array, 0, destination._array, 0, _count);
         }
@@ -293,12 +293,12 @@ namespace Arborescence
 
         void IList<T>.Insert(int index, T item)
         {
-            ThrowHelper.ThrowNotSupportedException();
+            ArrayPrefixHelpers.ThrowNotSupportedException();
         }
 
         void IList<T>.RemoveAt(int index)
         {
-            ThrowHelper.ThrowNotSupportedException();
+            ArrayPrefixHelpers.ThrowNotSupportedException();
         }
 
         #endregion
@@ -325,12 +325,12 @@ namespace Arborescence
 
         void ICollection<T>.Add(T item)
         {
-            ThrowHelper.ThrowNotSupportedException();
+            ArrayPrefixHelpers.ThrowNotSupportedException();
         }
 
         void ICollection<T>.Clear()
         {
-            ThrowHelper.ThrowNotSupportedException();
+            ArrayPrefixHelpers.ThrowNotSupportedException();
         }
 
         bool ICollection<T>.Contains(T item)
@@ -346,7 +346,7 @@ namespace Arborescence
 
         bool ICollection<T>.Remove(T item)
         {
-            ThrowHelper.ThrowNotSupportedException();
+            ArrayPrefixHelpers.ThrowNotSupportedException();
             return default;
         }
 
@@ -367,7 +367,7 @@ namespace Arborescence
         private void ThrowInvalidOperationIfDefault()
         {
             if (_array is null)
-                ThrowHelper.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
+                ArrayPrefixHelpers.ThrowInvalidOperationException(ExceptionResource.InvalidOperation_NullArray);
         }
 
         /// <summary>
@@ -398,9 +398,9 @@ namespace Arborescence
                 get
                 {
                     if (_current < 0)
-                        ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
+                        ArrayPrefixHelpers.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                     if (_current >= _end)
-                        ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
+                        ArrayPrefixHelpers.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
                     return _array[_current];
                 }
             }

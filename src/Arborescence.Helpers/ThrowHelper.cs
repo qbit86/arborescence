@@ -10,12 +10,6 @@
     internal static class ThrowHelper
     {
         [DoesNotReturn]
-        internal static void ThrowArgumentException_DestinationTooShort()
-        {
-            throw new ArgumentException(SR.Argument_DestinationTooShort);
-        }
-
-        [DoesNotReturn]
         internal static void ThrowArgumentNullException(ExceptionArgument argument)
         {
             throw new ArgumentNullException(GetArgumentName(argument));
@@ -25,30 +19,6 @@
         internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
-        }
-
-        [DoesNotReturn]
-        internal static void ThrowInvalidOperationException(ExceptionResource resource)
-        {
-            throw new InvalidOperationException(GetResourceString(resource));
-        }
-
-        [DoesNotReturn]
-        internal static void ThrowInvalidOperationException_InvalidOperation_EnumEnded()
-        {
-            throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
-        }
-
-        [DoesNotReturn]
-        internal static void ThrowInvalidOperationException_InvalidOperation_EnumNotStarted()
-        {
-            throw new InvalidOperationException(SR.InvalidOperation_EnumNotStarted);
-        }
-
-        [DoesNotReturn]
-        internal static void ThrowNotSupportedException()
-        {
-            throw new NotSupportedException();
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -88,23 +58,5 @@
                     return string.Empty;
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static string GetResourceString(ExceptionResource resource)
-        {
-            switch (resource)
-            {
-                case ExceptionResource.InvalidOperation_NullArray:
-                    return SR.InvalidOperation_NullArray;
-                default:
-                    Debug.Assert(false, "The enum value is not defined, please check the ExceptionResource enum.");
-                    return string.Empty;
-            }
-        }
-    }
-
-    internal enum ExceptionResource
-    {
-        InvalidOperation_NullArray
     }
 }
