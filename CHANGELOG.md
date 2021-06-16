@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased] - 2021-06-13
+## [Unreleased] - 2021-06-17
+### Added
+- Primitives: `IndexedDictionary<TKey, TValue, TIndexMap>` — an indirect key-to-value map via an intermediate index map.
+
 ### Changed
 - Primitives: Fixed equality checking for `IndexedDictionary<TValue, TDummy>`.
 
