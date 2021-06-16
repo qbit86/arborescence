@@ -5,6 +5,9 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
+    /// <summary>
+    /// Represents an indirect key-to-value map via an intermediate index map.
+    /// </summary>
     public readonly struct IndexedDictionary<TKey, TValue, TIndexMap> :
         IReadOnlyDictionary<TKey, TValue>,
         IDictionary<TKey, TValue>,
@@ -14,6 +17,15 @@ namespace Arborescence
         private readonly TValue[] _items;
         private readonly TIndexMap _indexMap;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndexedDictionary{TKey,TValue,TIndexMap}"/> structure.
+        /// </summary>
+        /// <param name="items">The backing store for the map.</param>
+        /// <param name="indexMap">The mapping from keys to indices in the backing store.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items"/> is <see langword="null"/>,
+        /// or <paramref name="indexMap"/> is <see langword="null"/>.
+        /// </exception>
         public IndexedDictionary(TValue[] items, TIndexMap indexMap)
         {
             if (items is null)
@@ -26,10 +38,12 @@ namespace Arborescence
             _indexMap = indexMap;
         }
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => throw new NotSupportedException();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        /// <inheritdoc/>
         public void Add(KeyValuePair<TKey, TValue> item)
         {
             if (!_indexMap.TryGetValue(item.Key, out int index))
@@ -41,18 +55,25 @@ namespace Arborescence
             _items[index] = item.Value;
         }
 
+        /// <inheritdoc/>
         public void Clear() => throw new NotSupportedException();
 
+        /// <inheritdoc/>
         public bool Contains(KeyValuePair<TKey, TValue> item) => throw new NotSupportedException();
 
+        /// <inheritdoc/>
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => throw new NotSupportedException();
 
+        /// <inheritdoc/>
         public bool Remove(KeyValuePair<TKey, TValue> item) => throw new NotSupportedException();
 
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public int Count => _items.Length;
 
+        /// <inheritdoc/>
         public bool IsReadOnly => false;
 
+        /// <inheritdoc/>
         public void Add(TKey key, TValue value)
         {
             if (!_indexMap.TryGetValue(key, out int index))
@@ -64,17 +85,8 @@ namespace Arborescence
             _items[index] = value;
         }
 
-        bool IDictionary<TKey, TValue>.ContainsKey(TKey key) => ContainsKey(key);
-
+        /// <inheritdoc/>
         public bool Remove(TKey key) => throw new NotSupportedException();
-
-        bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
-            TryGetValue(key, out value);
-
-        bool IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey key) => ContainsKey(key);
-
-        bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
-            TryGetValue(key, out value);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool ContainsKey(TKey key)
@@ -104,6 +116,7 @@ namespace Arborescence
             return true;
         }
 
+        /// <inheritdoc cref="IDictionary{TKey,TValue}"/>
         public TValue this[TKey key]
         {
             get
@@ -141,21 +154,42 @@ namespace Arborescence
         /// </summary>
         public IReadOnlyCollection<TValue> Values => _items;
 
+        /// <inheritdoc/>
         public bool Equals(IndexedDictionary<TKey, TValue, TIndexMap> other) =>
             Equals(_items, other._items) && EqualityComparer<TIndexMap>.Default.Equals(_indexMap, other._indexMap);
 
+        /// <inheritdoc/>
         public override bool Equals(object obj) =>
             obj is IndexedDictionary<TKey, TValue, TIndexMap> other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return unchecked((_items != null ? _items.GetHashCode() : 0) * 397) ^
                 EqualityComparer<TIndexMap>.Default.GetHashCode(_indexMap);
         }
 
+        /// <summary>
+        /// Checks equality between two instances.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying arrays are reference equal;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
         public static bool operator ==(IndexedDictionary<TKey, TValue, TIndexMap> left,
             IndexedDictionary<TKey, TValue, TIndexMap> right) => left.Equals(right);
 
+        /// <summary>
+        /// Checks inequality between two instances.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying arrays are not reference equal;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
         public static bool operator !=(IndexedDictionary<TKey, TValue, TIndexMap> left,
             IndexedDictionary<TKey, TValue, TIndexMap> right) => !left.Equals(right);
     }
