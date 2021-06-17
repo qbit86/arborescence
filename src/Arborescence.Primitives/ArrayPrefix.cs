@@ -5,6 +5,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
+    using Primitives;
 
     /// <summary>
     /// A set of initialization methods for instances of <see cref="ArrayPrefix{T}"/>.

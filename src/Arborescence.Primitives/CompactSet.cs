@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+    using Primitives;
 
     /// <summary>
     /// Represents a set of values as a bit array.

@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Primitives;
 
     /// <summary>
     /// Represents a set of values as a byte array.

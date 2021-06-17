@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using Primitives;
 
     /// <summary>
     /// Represents a map from an index to a value, with a marker treated as an absent value.

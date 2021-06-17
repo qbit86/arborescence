@@ -1,4 +1,4 @@
-﻿namespace Arborescence
+﻿namespace Arborescence.Primitives
 {
     internal enum ExceptionArgument
     {

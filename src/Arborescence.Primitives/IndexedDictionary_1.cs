@@ -5,6 +5,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Primitives;
 
     /// <summary>
     /// Represents a map from an index to a value.
