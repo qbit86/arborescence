@@ -10,10 +10,11 @@
     internal static class ThrowHelper
     {
         [DoesNotReturn]
-        internal static void ThrowArgumentNullException(ExceptionArgument argument)
-        {
+        internal static void ThrowArgumentNullException(string argument) => throw new ArgumentNullException(argument);
+
+        [DoesNotReturn]
+        internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
             throw new ArgumentNullException(GetArgumentName(argument));
-        }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static string GetArgumentName(ExceptionArgument argument)
