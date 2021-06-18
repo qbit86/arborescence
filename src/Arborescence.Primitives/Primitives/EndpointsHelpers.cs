@@ -1,4 +1,4 @@
-﻿namespace Arborescence
+﻿namespace Arborescence.Primitives
 {
     using System.Text;
 

@@ -1,8 +1,7 @@
-﻿namespace Arborescence
+﻿namespace Arborescence.Primitives
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Primitives;
 
     internal static class ArrayPrefixEnumeratorHelper
     {

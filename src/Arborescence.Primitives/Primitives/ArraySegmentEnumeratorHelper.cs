@@ -1,9 +1,8 @@
-namespace Arborescence
+namespace Arborescence.Primitives
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
-    using Primitives;
 
     internal static class ArraySegmentEnumeratorHelper
     {
