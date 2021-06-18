@@ -38,7 +38,7 @@ namespace Arborescence.Traversal
         }
 
         /// <inheritdoc/>
-        public void Clear() => throw new NotSupportedException();
+        public void Clear() => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, Color> item)
@@ -50,7 +50,8 @@ namespace Arborescence.Traversal
         }
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) =>
+            ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, Color> item) => throw new NotSupportedException();
