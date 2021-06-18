@@ -16,6 +16,9 @@
         internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
             throw new ArgumentNullException(GetArgumentName(argument));
 
+        [DoesNotReturn]
+        internal static void ThrowNotSupportedException() => throw new NotSupportedException();
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static string GetArgumentName(ExceptionArgument argument)
         {

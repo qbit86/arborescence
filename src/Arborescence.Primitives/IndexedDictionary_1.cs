@@ -47,13 +47,14 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Clear() => throw new NotSupportedException();
+        public void Clear() => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) =>
+            ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotSupportedException();

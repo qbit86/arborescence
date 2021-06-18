@@ -50,10 +50,10 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void ExceptWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void ExceptWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
-        public void IntersectWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void IntersectWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool IsProperSubsetOf(IEnumerable<int> other) => throw new NotSupportedException();
@@ -74,10 +74,10 @@ namespace Arborescence
         public bool SetEquals(IEnumerable<int> other) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public void SymmetricExceptWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void SymmetricExceptWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
-        public void UnionWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void UnionWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc cref="ISet{T}"/>
         public bool Add(int item)
@@ -112,7 +112,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void CopyTo(int[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(int[] array, int arrayIndex) => ThrowHelper.ThrowNotSupportedException();
 
         /// <summary>
         /// Removes the specified element from a <see cref="IndexedSet"/> object.
