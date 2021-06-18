@@ -31,10 +31,10 @@ namespace Arborescence.Models.Compatibility
         public MutableUndirectedIndexedIncidenceGraph(int initialVertexCount = 0, int edgeCapacity = 0)
         {
             if (initialVertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(initialVertexCount));
 
             if (edgeCapacity < 0)
-                throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(edgeCapacity));
 
             int effectiveEdgeCapacity = Math.Max(edgeCapacity, DefaultInitialOutDegree);
             _tailByEdge = ArrayPrefixBuilder.Create<int>(effectiveEdgeCapacity);
@@ -189,10 +189,10 @@ namespace Arborescence.Models.Compatibility
         public int Add(int tail, int head)
         {
             if (tail < 0)
-                throw new ArgumentOutOfRangeException(nameof(tail));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(tail));
 
             if (head < 0)
-                throw new ArgumentOutOfRangeException(nameof(head));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(head));
 
             return UncheckedAdd(tail, head);
         }
