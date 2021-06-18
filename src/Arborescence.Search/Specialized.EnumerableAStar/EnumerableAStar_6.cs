@@ -4,7 +4,6 @@ namespace Arborescence.Search.Specialized
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Internal;
     using Traversal;
 
     /// <summary>

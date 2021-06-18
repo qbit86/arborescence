@@ -3,7 +3,6 @@ namespace Arborescence.Search
     using System;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using Internal;
     using Traversal;
 
     // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
