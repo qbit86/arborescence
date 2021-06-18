@@ -1,2 +1,5 @@
 [*.cs]
 dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types
+
+[EnumerableAStar_7.cs]
+dotnet_diagnostic.CA1062.severity = suggestion # Validate arguments of public methods
