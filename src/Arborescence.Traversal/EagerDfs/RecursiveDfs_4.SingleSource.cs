@@ -28,13 +28,13 @@ namespace Arborescence.Traversal
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (colorByVertex == null)
-                throw new ArgumentNullException(nameof(colorByVertex));
+                ThrowHelper.ThrowArgumentNullException(nameof(colorByVertex));
 
             if (handler == null)
-                throw new ArgumentNullException(nameof(handler));
+                ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
             handler.OnStartVertex(graph, source);
             TraverseCore(graph, source, colorByVertex, handler, s_false);
@@ -65,10 +65,10 @@ namespace Arborescence.Traversal
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
             if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (handler == null)
-                throw new ArgumentNullException(nameof(handler));
+                ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
             handler.OnStartVertex(graph, source);
             TraverseCore(graph, source, colorByVertex, handler, terminationCondition ?? s_false);

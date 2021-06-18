@@ -28,13 +28,13 @@ namespace Arborescence.Traversal
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (colorByVertex == null)
-                throw new ArgumentNullException(nameof(colorByVertex));
+                ThrowHelper.ThrowArgumentNullException(nameof(colorByVertex));
 
             if (handler == null)
-                throw new ArgumentNullException(nameof(handler));
+                ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
             var queue = new Internal.Queue<TVertex>();
             colorByVertex[source] = Color.Gray;

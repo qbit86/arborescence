@@ -26,10 +26,10 @@ namespace Arborescence.Traversal
             where TExploredSet : ISet<TVertex>
         {
             if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (exploredSet == null)
-                throw new ArgumentNullException(nameof(exploredSet));
+                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, source, exploredSet);
         }

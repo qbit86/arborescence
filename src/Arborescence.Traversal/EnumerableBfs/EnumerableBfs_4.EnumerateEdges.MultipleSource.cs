@@ -29,13 +29,13 @@ namespace Arborescence.Traversal
             where TExploredSet : ISet<TVertex>
         {
             if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (sources == null)
-                throw new ArgumentNullException(nameof(sources));
+                ThrowHelper.ThrowArgumentNullException(nameof(sources));
 
             if (exploredSet == null)
-                throw new ArgumentNullException(nameof(exploredSet));
+                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
             return EnumerateEdgesIterator(graph, sources, exploredSet);
         }
