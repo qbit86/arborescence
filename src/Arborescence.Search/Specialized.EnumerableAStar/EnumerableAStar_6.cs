@@ -40,10 +40,10 @@ namespace Arborescence.Search.Specialized
         public EnumerableAStar(TCostComparer costComparer, TCostMonoid costMonoid)
         {
             if (costComparer == null)
-                throw new ArgumentNullException(nameof(costComparer));
+                ThrowHelper.ThrowArgumentNullException(nameof(costComparer));
 
             if (costMonoid == null)
-                throw new ArgumentNullException(nameof(costMonoid));
+                ThrowHelper.ThrowArgumentNullException(nameof(costMonoid));
 
             _costComparer = costComparer;
             _costMonoid = costMonoid;
@@ -78,13 +78,13 @@ namespace Arborescence.Search.Specialized
             where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
         {
             if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (heuristic is null)
-                throw new ArgumentNullException(nameof(heuristic));
+                ThrowHelper.ThrowArgumentNullException(nameof(heuristic));
 
             if (weightByEdge == null)
-                throw new ArgumentNullException(nameof(weightByEdge));
+                ThrowHelper.ThrowArgumentNullException(nameof(weightByEdge));
 
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
