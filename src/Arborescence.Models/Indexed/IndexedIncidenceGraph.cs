@@ -3,6 +3,7 @@ namespace Arborescence.Models
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
@@ -88,7 +89,8 @@ namespace Arborescence.Models
         public bool Equals(IndexedIncidenceGraph other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedIncidenceGraph other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is IndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => (_data?.GetHashCode()).GetValueOrDefault();

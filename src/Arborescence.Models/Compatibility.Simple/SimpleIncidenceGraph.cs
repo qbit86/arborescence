@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
@@ -80,7 +81,8 @@
             _data == other._data && _edgesOrderedByTail == other._edgesOrderedByTail;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is SimpleIncidenceGraph other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is SimpleIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => IsDefault
