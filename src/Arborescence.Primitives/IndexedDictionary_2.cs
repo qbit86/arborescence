@@ -69,7 +69,7 @@ namespace Arborescence
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public int Count => _items.Length;
+        public int Count => throw new NotSupportedException();
 
         /// <inheritdoc/>
         public bool IsReadOnly => false;
@@ -82,8 +82,6 @@ namespace Arborescence
 
             _items[key] = value;
         }
-
-        bool IDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
 
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
@@ -165,15 +163,19 @@ namespace Arborescence
 
         /// <inheritdoc/>
         public bool Equals(IndexedDictionary<TValue, TDummy> other) =>
-            _dummy is TValue dummy && other._dummy.Equals(dummy) && Equals(_items, other._items);
+            EqualityComparer<TDummy>.Default.Equals(_dummy, other._dummy) && Equals(_items, other._items);
 
         /// <inheritdoc/>
         public override bool Equals(object obj) =>
             obj is IndexedDictionary<TValue, TDummy> other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() =>
-            _items != null ? _items.GetHashCode() ^ _dummy.GetHashCode() : _dummy.GetHashCode();
+        public override int GetHashCode()
+        {
+            int hashCode = _items != null ? _items.GetHashCode() : 0;
+            hashCode = unchecked(hashCode * 397) ^ EqualityComparer<TDummy>.Default.GetHashCode(_dummy);
+            return hashCode;
+        }
 
         /// <summary>
         /// Checks equality between two instances.
