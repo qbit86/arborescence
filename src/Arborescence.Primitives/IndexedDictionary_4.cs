@@ -112,7 +112,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public bool TryGetValue(TKey key, out TValue value)
+        public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
         {
             if (!_indexMap.TryGetValue(key, out int index))
             {
