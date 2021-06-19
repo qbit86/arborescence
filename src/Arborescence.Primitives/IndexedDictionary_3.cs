@@ -9,6 +9,9 @@ namespace Arborescence
     /// <summary>
     /// Represents an indirect key-to-value map via an intermediate index map.
     /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <typeparam name="TIndexMap">The type of the index map.</typeparam>
     public readonly struct IndexedDictionary<TKey, TValue, TIndexMap> :
         IReadOnlyDictionary<TKey, TValue>,
         IDictionary<TKey, TValue>,

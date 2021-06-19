@@ -5,6 +5,13 @@ namespace Arborescence
     using System.Collections.Generic;
     using Primitives;
 
+    /// <summary>
+    /// Represents an indirect key-to-value map via an intermediate index map, with a marker treated as an absent value.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <typeparam name="TIndexMap">The type of the index map.</typeparam>
+    /// <typeparam name="TDummy">The type of the marker for missing values.</typeparam>
     public readonly struct IndexedDictionary<TKey, TValue, TIndexMap, TDummy> :
         IReadOnlyDictionary<TKey, TValue>,
         IDictionary<TKey, TValue>,
@@ -16,6 +23,17 @@ namespace Arborescence
         private readonly TIndexMap _indexMap;
         private readonly TDummy _dummy;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndexedDictionary{TKey,TValue,TIndexMap,TDummy}"/> structure.
+        /// </summary>
+        /// <param name="items">The backing store for the map.</param>
+        /// <param name="indexMap">The mapping from keys to indices in the backing store.</param>
+        /// <param name="dummy">The marker for missing values.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items"/> is <see langword="null"/>,
+        /// or <paramref name="indexMap"/> is <see langword="null"/>,
+        /// or <paramref name="dummy"/> is <see langword="null"/>.
+        /// </exception>
         public IndexedDictionary(TValue[] items, TIndexMap indexMap, TDummy dummy)
         {
             if (items is null)

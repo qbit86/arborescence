@@ -10,6 +10,7 @@ namespace Arborescence
     /// <summary>
     /// Represents a map from an index to a value.
     /// </summary>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
     public readonly struct IndexedDictionary<TValue> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue>>
     {

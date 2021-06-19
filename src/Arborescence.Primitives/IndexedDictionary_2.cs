@@ -9,6 +9,8 @@ namespace Arborescence
     /// <summary>
     /// Represents a map from an index to a value, with a marker treated as an absent value.
     /// </summary>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <typeparam name="TDummy">The type of the marker for missing values.</typeparam>
     public readonly struct IndexedDictionary<TValue, TDummy> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue, TDummy>>
         where TDummy : IEquatable<TValue>
