@@ -59,7 +59,12 @@
             obj is Endpoints<TVertex> other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => unchecked(C.GetHashCode(Tail) * 397) ^ C.GetHashCode(Head);
+        public override int GetHashCode()
+        {
+            int hashCode = Tail != null ? C.GetHashCode(Tail) : 0;
+            hashCode = unchecked(hashCode * 397) ^ (Head != null ? C.GetHashCode(Head) : 0);
+            return hashCode;
+        }
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints{TVertex}"/> structures are equal.
