@@ -9,6 +9,7 @@
 ### Changed
 - Primitives: Fixed equality checking for `IndexedDictionary<TValue, TDummy>`.
 - Primitives: `IndexedDictionary<TValue, TDummy>.Count` now throws `NotSupportedException`.
+- Primitives: Fixed `GetHashCode()` for `Endpoints<TVertex>`.
 
 ## [0.12.0] - 2021-06-10
 ### Added
