@@ -167,8 +167,9 @@ namespace Arborescence
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return unchecked((_items != null ? _items.GetHashCode() : 0) * 397) ^
-                EqualityComparer<TIndexMap>.Default.GetHashCode(_indexMap);
+            int hashCode = _items != null ? _items.GetHashCode() : 0;
+            hashCode = unchecked(hashCode * 397) ^ EqualityComparer<TIndexMap>.Default.GetHashCode(_indexMap);
+            return hashCode;
         }
 
         /// <summary>
