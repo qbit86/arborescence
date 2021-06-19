@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Text;
 
@@ -60,7 +61,8 @@
         public bool Equals(Endpoints other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is Endpoints other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is Endpoints other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => unchecked(Tail.GetHashCode() * 397) ^ Head.GetHashCode();

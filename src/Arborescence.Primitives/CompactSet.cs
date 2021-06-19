@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
     using Primitives;
 
@@ -161,7 +162,8 @@ namespace Arborescence
         public bool Equals(CompactSet other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is CompactSet other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is CompactSet other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;

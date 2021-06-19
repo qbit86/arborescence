@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Primitives;
 
     /// <summary>
@@ -140,7 +141,8 @@ namespace Arborescence
         public bool Equals(IndexedSet other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedSet other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is IndexedSet other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;

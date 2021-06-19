@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
     using Primitives;
 
@@ -173,7 +174,8 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is ArrayPrefix<T> other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is ArrayPrefix<T> other && Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(ArrayPrefix<T> other) => other._array == _array && other._count == _count;

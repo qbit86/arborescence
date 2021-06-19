@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using Primitives;
 
     /// <summary>
@@ -54,7 +55,8 @@
         public bool Equals(Endpoints<TVertex> other) => C.Equals(Tail, other.Tail) && C.Equals(Head, other.Head);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is Endpoints<TVertex> other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is Endpoints<TVertex> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => unchecked(C.GetHashCode(Tail) * 397) ^ C.GetHashCode(Head);

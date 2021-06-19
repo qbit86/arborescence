@@ -133,7 +133,8 @@ namespace Arborescence
         public bool Equals(IndexedDictionary<TValue> other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedDictionary<TValue> other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is IndexedDictionary<TValue> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;

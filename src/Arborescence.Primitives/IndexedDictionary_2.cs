@@ -168,7 +168,7 @@ namespace Arborescence
             EqualityComparer<TDummy>.Default.Equals(_dummy, other._dummy) && Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) =>
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
             obj is IndexedDictionary<TValue, TDummy> other && Equals(other);
 
         /// <inheritdoc/>
