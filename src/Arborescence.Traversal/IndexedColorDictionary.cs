@@ -3,6 +3,7 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
@@ -123,7 +124,8 @@ namespace Arborescence.Traversal
         public bool Equals(IndexedColorDictionary other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedColorDictionary other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+            obj is IndexedColorDictionary other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
