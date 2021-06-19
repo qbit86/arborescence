@@ -7,6 +7,7 @@
 - Primitives: More nullability annotations.
 
 ### Changed
+- Abstractions: Add and apply nullable attributes.
 - Primitives: Fixed equality checking for `IndexedDictionary<TValue, TDummy>`.
 - Primitives: `IndexedDictionary<TValue, TDummy>.Count` now throws `NotSupportedException`.
 - Primitives: Fixed `GetHashCode()` for `Endpoints<TVertex>`.
