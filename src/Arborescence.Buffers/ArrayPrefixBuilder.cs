@@ -71,8 +71,7 @@ namespace Arborescence
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, size, clearArray);
 
             int oldCount = arrayPrefix.Count;
-            Debug.Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
-            Array.Clear(arrayPrefix.Array, oldCount, size - oldCount);
+            Array.Clear(arrayPrefix.Array!, oldCount, size - oldCount);
             arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, size);
         }
 
@@ -88,8 +87,7 @@ namespace Arborescence
 
         private static void UncheckedAdd<T>(ref ArrayPrefix<T> arrayPrefix, T item)
         {
-            Debug.Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
-            Debug.Assert(arrayPrefix.Count < arrayPrefix.Array.Length, "arrayPrefix.Count < arrayPrefix.Array.Length");
+            Debug.Assert(arrayPrefix.Count < arrayPrefix.Array!.Length, "arrayPrefix.Count < arrayPrefix.Array!.Length");
 
             arrayPrefix.Array[arrayPrefix.Count] = item;
             arrayPrefix = ArrayPrefix.Create(arrayPrefix.Array, arrayPrefix.Count + 1);
@@ -110,7 +108,6 @@ namespace Arborescence
             T[] next = ArrayPool<T>.Shared.Rent(nextCapacity);
             if (arrayPrefix.Count > 0)
             {
-                Debug.Assert(arrayPrefix.Array != null, "arrayPrefix.Array != null");
                 Array.Copy(arrayPrefix.Array, 0, next, 0, arrayPrefix.Count);
                 ArrayPool<T>.Shared.Return(arrayPrefix.Array, clearArray);
             }
