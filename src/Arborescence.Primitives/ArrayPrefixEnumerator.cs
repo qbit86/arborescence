@@ -10,7 +10,7 @@ namespace Arborescence
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
     public struct ArrayPrefixEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
-        private readonly T[] _array;
+        private readonly T[]? _array;
         private readonly int _end;
         private int _current;
 
@@ -44,7 +44,7 @@ namespace Arborescence
                     ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                 if (_current >= _end)
                     ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
-                return _array[_current];
+                return _array![_current];
             }
         }
 
@@ -71,7 +71,7 @@ namespace Arborescence
             return ator;
         }
 
-        object IEnumerator.Current => Current;
+        object? IEnumerator.Current => Current;
 
         void IDisposable.Dispose() { }
 

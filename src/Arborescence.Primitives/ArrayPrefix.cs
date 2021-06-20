@@ -174,7 +174,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is ArrayPrefix<T> other && Equals(other);
 
         /// <inheritdoc/>
@@ -386,7 +386,7 @@ namespace Arborescence
             {
                 Debug.Assert(array != null);
                 Debug.Assert(count >= 0);
-                Debug.Assert(count <= array.Length);
+                Debug.Assert(count <= array!.Length);
 
                 _array = array;
                 _end = count;

@@ -61,7 +61,7 @@
         public bool Equals(Endpoints other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Endpoints other && Equals(other);
 
         /// <inheritdoc/>

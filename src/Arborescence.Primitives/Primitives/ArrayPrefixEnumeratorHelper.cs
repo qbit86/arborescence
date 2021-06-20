@@ -6,7 +6,7 @@
     internal static class ArrayPrefixEnumeratorHelper
     {
         [DoesNotReturn]
-        internal static void ThrowCtorValidationFailedExceptions(Array array, int count)
+        internal static void ThrowCtorValidationFailedExceptions(Array? array, int count)
         {
             throw GetCtorValidationFailedException(array, count);
         }
@@ -23,7 +23,7 @@
             throw new InvalidOperationException(SR.InvalidOperation_EnumEnded);
         }
 
-        private static Exception GetCtorValidationFailedException(Array array, int count)
+        private static Exception GetCtorValidationFailedException(Array? array, int count)
         {
             if (array is null)
                 return new ArgumentNullException(nameof(array));

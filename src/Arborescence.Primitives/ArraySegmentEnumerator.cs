@@ -77,7 +77,7 @@ namespace Arborescence
             return ator;
         }
 
-        object IEnumerator.Current => Current;
+        object? IEnumerator.Current => Current;
 
         void IEnumerator.Reset() => _current = _start - 1;
 

@@ -17,6 +17,7 @@ namespace Arborescence
         IReadOnlyDictionary<TKey, TValue>,
         IDictionary<TKey, TValue>,
         IEquatable<IndexedDictionary<TKey, TValue, TIndexMap, TDummy>>
+        where TKey : notnull
         where TDummy : IEquatable<TValue>
         where TIndexMap : IReadOnlyDictionary<TKey, int>
     {
@@ -189,7 +190,7 @@ namespace Arborescence
             EqualityComparer<TIndexMap>.Default.Equals(_indexMap, other._indexMap);
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is IndexedDictionary<TKey, TValue, TIndexMap, TDummy> other && Equals(other);
 
         /// <inheritdoc/>
