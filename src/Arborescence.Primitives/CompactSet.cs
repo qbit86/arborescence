@@ -162,7 +162,7 @@ namespace Arborescence
         public bool Equals(CompactSet other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is CompactSet other && Equals(other);
 
         /// <inheritdoc/>

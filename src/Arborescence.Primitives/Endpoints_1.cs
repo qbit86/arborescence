@@ -55,7 +55,7 @@
         public bool Equals(Endpoints<TVertex> other) => C.Equals(Tail, other.Tail) && C.Equals(Head, other.Head);
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Endpoints<TVertex> other && Equals(other);
 
         /// <inheritdoc/>

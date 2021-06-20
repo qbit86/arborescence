@@ -141,7 +141,7 @@ namespace Arborescence
         public bool Equals(IndexedSet other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is IndexedSet other && Equals(other);
 
         /// <inheritdoc/>

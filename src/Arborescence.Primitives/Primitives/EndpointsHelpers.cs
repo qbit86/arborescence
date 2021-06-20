@@ -1,6 +1,5 @@
 ﻿namespace Arborescence.Primitives
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
     internal static class EndpointsHelpers
@@ -8,7 +7,7 @@
         /// <summary>
         /// Used by <see cref="Endpoints{TVertex}.ToString"/> to reduce generic code.
         /// </summary>
-        internal static string PairToString([AllowNull] string tail, [AllowNull] string head)
+        internal static string PairToString(string? tail, string? head)
         {
             var s = new StringBuilder();
             s.Append('[');

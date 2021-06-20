@@ -174,7 +174,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is ArrayPrefix<T> other && Equals(other);
 
         /// <inheritdoc/>

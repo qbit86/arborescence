@@ -189,7 +189,7 @@ namespace Arborescence
             EqualityComparer<TIndexMap>.Default.Equals(_indexMap, other._indexMap);
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is IndexedDictionary<TKey, TValue, TIndexMap, TDummy> other && Equals(other);
 
         /// <inheritdoc/>
