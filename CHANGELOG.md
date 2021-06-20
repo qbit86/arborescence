@@ -2,12 +2,12 @@
 
 ## [Unreleased] - 2021-06-19
 ### Added
+- Abstractions: Nullable attributes.
 - Primitives: `IndexedDictionary<TKey, TValue, TIndexMap>` — an indirect key-to-value map via an intermediate index map.
 - Primitives: `IndexedDictionary<TKey, TValue, TIndexMap, TDummy>` — an indirect key-to-value map with a marker for missing values.
 - Primitives: More nullability annotations.
 
 ### Changed
-- Abstractions: Add and apply nullable attributes.
 - Primitives: Fixed equality checking for `IndexedDictionary<TValue, TDummy>`.
 - Primitives: `IndexedDictionary<TValue, TDummy>.Count` now throws `NotSupportedException`.
 - Primitives: Fixed `GetHashCode()` for `Endpoints<TVertex>`.
