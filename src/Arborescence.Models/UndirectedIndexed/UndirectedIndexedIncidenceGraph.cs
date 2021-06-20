@@ -91,7 +91,7 @@ namespace Arborescence.Models
         public bool Equals(UndirectedIndexedIncidenceGraph other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is UndirectedIndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>

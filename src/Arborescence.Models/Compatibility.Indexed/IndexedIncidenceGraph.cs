@@ -91,7 +91,7 @@ namespace Arborescence.Models.Compatibility
         public bool Equals(IndexedIncidenceGraph other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals([NotNullWhen(true)] [AllowNull] object obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is IndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
