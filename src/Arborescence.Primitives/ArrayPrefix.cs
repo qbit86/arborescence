@@ -386,7 +386,7 @@ namespace Arborescence
             {
                 Debug.Assert(array != null);
                 Debug.Assert(count >= 0);
-                Debug.Assert(count <= array.Length);
+                Debug.Assert(count <= array!.Length);
 
                 _array = array;
                 _end = count;
