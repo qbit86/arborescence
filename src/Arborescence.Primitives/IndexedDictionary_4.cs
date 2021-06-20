@@ -17,6 +17,7 @@ namespace Arborescence
         IReadOnlyDictionary<TKey, TValue>,
         IDictionary<TKey, TValue>,
         IEquatable<IndexedDictionary<TKey, TValue, TIndexMap, TDummy>>
+        where TKey : notnull
         where TDummy : IEquatable<TValue>
         where TIndexMap : IReadOnlyDictionary<TKey, int>
     {
