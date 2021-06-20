@@ -8,13 +8,13 @@
     internal static class ArrayPrefixHelper
     {
         [DoesNotReturn]
-        internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array array, int offset, int count)
+        internal static void ThrowArraySegmentCtorValidationFailedExceptions(Array? array, int offset, int count)
         {
             throw GetArraySegmentCtorValidationFailedException(array, offset, count);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static Exception GetArraySegmentCtorValidationFailedException(Array array, int offset, int count)
+        private static Exception GetArraySegmentCtorValidationFailedException(Array? array, int offset, int count)
         {
             if (array is null)
                 return new ArgumentNullException(nameof(array));
