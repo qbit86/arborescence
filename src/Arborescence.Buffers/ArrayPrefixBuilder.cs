@@ -19,7 +19,7 @@ namespace Arborescence
 
         internal static ArrayPrefix<T> Add<T>(ArrayPrefix<T> arrayPrefix, T item, bool clearArray)
         {
-            int capacity = arrayPrefix.Array.Length;
+            int capacity = arrayPrefix.Array is T[] array ? array.Length : 0;
 
             if (arrayPrefix.Count == capacity)
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, arrayPrefix.Count + 1, clearArray);
@@ -66,7 +66,7 @@ namespace Arborescence
         {
             Debug.Assert(arrayPrefix.Count < size, "arrayPrefix.Count < size");
 
-            int capacity = arrayPrefix.Array.Length;
+            int capacity = arrayPrefix.Array is T[] array ? array.Length : 0;
             if (capacity < size)
                 UncheckedEnsureCapacity(ref arrayPrefix, capacity, size, clearArray);
 
