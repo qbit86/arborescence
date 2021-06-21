@@ -1,7 +1,6 @@
 ﻿namespace Arborescence.Models
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
 
     internal sealed class UndirectedIndexedEdgeComparer : IComparer<int>
     {
@@ -10,8 +9,6 @@
 
         internal UndirectedIndexedEdgeComparer(int[] tailByEdge, int[] headByEdge)
         {
-            Debug.Assert(tailByEdge != null, nameof(tailByEdge) + " != null");
-            Debug.Assert(headByEdge != null, nameof(headByEdge) + " != null");
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
         }

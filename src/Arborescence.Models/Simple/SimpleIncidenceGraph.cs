@@ -23,8 +23,6 @@ namespace Arborescence.Models
 
         internal SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
         {
-            Debug.Assert(edgesOrderedByTail != null, nameof(edgesOrderedByTail) + " != null");
-            Debug.Assert(data != null, nameof(data) + " != null");
             Debug.Assert(data.Length >= 2, "data.Length >= 2");
             Debug.Assert(data[0] >= 0, "data[0] >= 0");
             Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
