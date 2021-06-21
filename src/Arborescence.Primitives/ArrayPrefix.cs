@@ -58,7 +58,7 @@ namespace Arborescence
         public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
 #pragma warning restore CA1825 // Avoid zero-length array allocations.
 
-        private readonly T[] _array;
+        private readonly T[]? _array;
         private readonly int _count;
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Arborescence
         /// <summary>
         /// Gets the original array containing the range of elements that the array prefix delimits.
         /// </summary>
-        public T[] Array => _array;
+        public T[]? Array => _array;
 
         /// <summary>
         /// Gets the number of elements in the range delimited by the array prefix.
@@ -115,14 +115,14 @@ namespace Arborescence
                 if ((uint)index >= (uint)_count)
                     ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-                return _array[index];
+                return _array![index];
             }
             set
             {
                 if ((uint)index >= (uint)_count)
                     ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-                _array[index] = value;
+                _array![index] = value;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Arborescence
         public Enumerator GetEnumerator()
         {
             ThrowInvalidOperationIfDefault();
-            return new Enumerator(_array, _count);
+            return new Enumerator(_array!, _count);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Arborescence
         public ArrayPrefixEnumerator<T> Enumerate()
         {
             ThrowInvalidOperationIfDefault();
-            return new ArrayPrefixEnumerator<T>(_array, _count);
+            return new ArrayPrefixEnumerator<T>(_array!, _count);
         }
 
         /// <inheritdoc/>
@@ -154,7 +154,7 @@ namespace Arborescence
         public void CopyTo(T[] array, int arrayIndex = 0)
         {
             ThrowInvalidOperationIfDefault();
-            System.Array.Copy(_array, 0, array, arrayIndex, _count);
+            System.Array.Copy(_array!, 0, array, arrayIndex, _count);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Arborescence
             if (_count > destination._count)
                 ArrayPrefixHelper.ThrowArgumentException_DestinationTooShort();
 
-            System.Array.Copy(_array, 0, destination._array, 0, _count);
+            System.Array.Copy(_array!, 0, destination._array!, 0, _count);
         }
 
         /// <inheritdoc/>
@@ -195,7 +195,7 @@ namespace Arborescence
             if ((uint)index > (uint)_count)
                 ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-            return new ArraySegment<T>(_array, index, _count - index);
+            return new ArraySegment<T>(_array!, index, _count - index);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Arborescence
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
                 ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-            return new ArraySegment<T>(_array, index, count);
+            return new ArraySegment<T>(_array!, index, count);
         }
 
         /// <summary>
@@ -225,10 +225,10 @@ namespace Arborescence
             ThrowInvalidOperationIfDefault();
 
             if (_count == 0)
-                return Empty._array;
+                return Empty._array!;
 
             var array = new T[_count];
-            System.Array.Copy(_array, 0, array, 0, _count);
+            System.Array.Copy(_array!, 0, array, 0, _count);
             return array;
         }
 
@@ -270,7 +270,7 @@ namespace Arborescence
                 if (index < 0 || index >= _count)
                     ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-                return _array[index];
+                return _array![index];
             }
 
             set
@@ -279,7 +279,7 @@ namespace Arborescence
                 if (index < 0 || index >= _count)
                     ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-                _array[index] = value;
+                _array![index] = value;
             }
         }
 
@@ -287,22 +287,16 @@ namespace Arborescence
         {
             ThrowInvalidOperationIfDefault();
 
-            int index = System.Array.IndexOf(_array, item, 0, _count);
+            int index = System.Array.IndexOf(_array!, item, 0, _count);
 
             Debug.Assert(index == -1 || index >= 0 && index < _count);
 
             return index >= 0 ? index : -1;
         }
 
-        void IList<T>.Insert(int index, T item)
-        {
-            ArrayPrefixHelper.ThrowNotSupportedException();
-        }
+        void IList<T>.Insert(int index, T item) => ArrayPrefixHelper.ThrowNotSupportedException();
 
-        void IList<T>.RemoveAt(int index)
-        {
-            ArrayPrefixHelper.ThrowNotSupportedException();
-        }
+        void IList<T>.RemoveAt(int index) => ArrayPrefixHelper.ThrowNotSupportedException();
 
         #endregion
 
@@ -316,7 +310,7 @@ namespace Arborescence
                 if (index < 0 || index >= _count)
                     ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-                return _array[index];
+                return _array![index];
             }
         }
 
@@ -326,21 +320,15 @@ namespace Arborescence
 
         bool ICollection<T>.IsReadOnly => true;
 
-        void ICollection<T>.Add(T item)
-        {
-            ArrayPrefixHelper.ThrowNotSupportedException();
-        }
+        void ICollection<T>.Add(T item) => ArrayPrefixHelper.ThrowNotSupportedException();
 
-        void ICollection<T>.Clear()
-        {
-            ArrayPrefixHelper.ThrowNotSupportedException();
-        }
+        void ICollection<T>.Clear() => ArrayPrefixHelper.ThrowNotSupportedException();
 
         bool ICollection<T>.Contains(T item)
         {
             ThrowInvalidOperationIfDefault();
 
-            int index = System.Array.IndexOf(_array, item, 0, _count);
+            int index = System.Array.IndexOf(_array!, item, 0, _count);
 
             Debug.Assert(index == -1 || index >= 0 && index < _count);
 
@@ -384,9 +372,8 @@ namespace Arborescence
 
             internal Enumerator(T[] array, int count)
             {
-                Debug.Assert(array != null);
                 Debug.Assert(count >= 0);
-                Debug.Assert(count <= array!.Length);
+                Debug.Assert(count <= array.Length);
 
                 _array = array;
                 _end = count;
