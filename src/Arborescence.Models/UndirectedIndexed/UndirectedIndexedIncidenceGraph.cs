@@ -17,7 +17,7 @@ namespace Arborescence.Models
         // 2×m  | edges sorted by tail
         // m    | heads indexed by edges
         // m    | tails indexed by edges
-        private readonly int[] _data;
+        private readonly int[]? _data;
 
         internal UndirectedIndexedIncidenceGraph(int[] data)
         {

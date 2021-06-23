@@ -19,7 +19,7 @@ namespace Arborescence.Models.Compatibility
         // m    | edges sorted by tail
         // m    | heads indexed by edges
         // m    | tails indexed by edges
-        private readonly int[] _data;
+        private readonly int[]? _data;
 
         internal IndexedIncidenceGraph(int[] data)
         {

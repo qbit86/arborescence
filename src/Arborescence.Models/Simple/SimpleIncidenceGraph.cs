@@ -18,7 +18,7 @@ namespace Arborescence.Models
         // 1    | n — the number of vertices
         // 1    | m — the number of edges
         // n    | upper bounds of out-edge enumerators indexed by vertices
-        private readonly int[] _data;
+        private readonly int[]? _data;
         private readonly Endpoints[] _edgesOrderedByTail;
 
         internal SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
