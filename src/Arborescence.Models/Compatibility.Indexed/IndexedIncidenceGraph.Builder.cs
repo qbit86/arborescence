@@ -78,7 +78,7 @@ namespace Arborescence.Models.Compatibility
                     destReorderedEdges[edge] = edge;
 
                 if (NeedsReordering)
-                    Array.Sort(data, 2 + n, m, new IndexedEdgeComparer(_tailByEdge.Array));
+                    Array.Sort(data, 2 + n, m, new IndexedEdgeComparer(_tailByEdge.Array!));
 
                 Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
                 destUpperBoundByVertex.Clear();
