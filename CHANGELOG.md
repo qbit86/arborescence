@@ -1,8 +1,9 @@
 # Changelog
 
-## [Unreleased] - 2021-06-19
+## [Unreleased] - 2021-06-25
 ### Added
 - Abstractions: Nullable attributes.
+- Models: Nullable attributes.
 - Primitives: `IndexedDictionary<TKey, TValue, TIndexMap>` — an indirect key-to-value map via an intermediate index map.
 - Primitives: `IndexedDictionary<TKey, TValue, TIndexMap, TDummy>` — an indirect key-to-value map with a marker for missing values.
 - Primitives: More nullability annotations.
