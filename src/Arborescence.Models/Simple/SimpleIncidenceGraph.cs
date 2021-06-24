@@ -19,7 +19,7 @@ namespace Arborescence.Models
         // 1    | m — the number of edges
         // n    | upper bounds of out-edge enumerators indexed by vertices
         private readonly int[]? _data;
-        private readonly Endpoints[] _edgesOrderedByTail;
+        private readonly Endpoints[]? _edgesOrderedByTail;
 
         internal SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
         {
@@ -43,8 +43,6 @@ namespace Arborescence.Models
         /// </summary>
         public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
-        private bool IsDefault => _data is null || _edgesOrderedByTail is null;
-
         /// <inheritdoc/>
         public bool TryGetHead(Endpoints edge, out int head)
         {
@@ -62,8 +60,11 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(int vertex)
         {
-            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
-            if (IsDefault || unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
+            if (_data is null || _edgesOrderedByTail is null)
+                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+
+            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
+            if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegment<Endpoints>.Empty.GetEnumerator();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
@@ -82,13 +83,12 @@ namespace Arborescence.Models
             obj is SimpleIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => IsDefault
+        public override int GetHashCode() => _data is null || _edgesOrderedByTail is null
             ? 0
             : unchecked(_data.GetHashCode() * 397) ^ _edgesOrderedByTail.GetHashCode();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetUpperBoundByVertex() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
+        private ReadOnlySpan<int> GetUpperBoundByVertex(int[] data) => data.AsSpan(2, VertexCount);
 
         /// <summary>
         /// Indicates whether two <see cref="SimpleIncidenceGraph"/> structures are equal.

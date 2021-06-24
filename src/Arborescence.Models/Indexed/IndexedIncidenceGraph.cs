@@ -73,7 +73,10 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
         {
-            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
+            if (_data is null)
+                return ArraySegment<int>.Empty.GetEnumerator();
+
+            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -95,8 +98,7 @@ namespace Arborescence.Models
         public override int GetHashCode() => (_data?.GetHashCode()).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetUpperBoundByVertex() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
+        private ReadOnlySpan<int> GetUpperBoundByVertex(int[] data) => data.AsSpan(2, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTailByEdge() =>
