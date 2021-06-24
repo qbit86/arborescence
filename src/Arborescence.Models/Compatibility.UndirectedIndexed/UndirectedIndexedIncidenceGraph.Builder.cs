@@ -83,7 +83,7 @@ namespace Arborescence.Models.Compatibility
 
                 int directedEdgeCount = m + invertedEdgeCount;
                 Array.Sort(data, 2 + n, directedEdgeCount,
-                    new UndirectedIndexedEdgeComparer(_tailByEdge.Array, _headByEdge.Array));
+                    new UndirectedIndexedEdgeComparer(_tailByEdge.Array!, _headByEdge.Array!));
 
                 Span<int> destUpperBoundByVertex = data.AsSpan(2, n);
                 destUpperBoundByVertex.Clear();

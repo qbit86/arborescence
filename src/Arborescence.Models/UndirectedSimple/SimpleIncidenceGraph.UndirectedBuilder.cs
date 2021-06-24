@@ -2,7 +2,6 @@
 namespace Arborescence.Models
 {
     using System;
-    using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -58,8 +57,7 @@ namespace Arborescence.Models
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                Endpoints[] array = _edges.Array;
-                Debug.Assert(array != null, nameof(array) + " != null");
+                Endpoints[] array = _edges.Array!;
 
                 Array.Sort(array, 0, _edges.Count, SimpleEdgeComparer.Instance);
 

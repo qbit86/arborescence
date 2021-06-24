@@ -1,7 +1,6 @@
 ﻿namespace Arborescence.Models.Compatibility
 {
     using System;
-    using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -60,8 +59,7 @@
             {
                 int n = _vertexCount;
                 int m = _edges.Count;
-                Endpoints[] array = _edges.Array;
-                Debug.Assert(array != null, nameof(array) + " != null");
+                Endpoints[] array = _edges.Array!;
 
                 if (NeedsReordering)
                     Array.Sort(array, 0, m, SimpleEdgeComparer.Instance);
