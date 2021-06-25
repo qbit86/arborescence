@@ -12,14 +12,14 @@ namespace Arborescence.Internal
     {
         private const int DefaultCapacity = 4;
 
-        private T[] _arrayFromPool;
+        private T[]? _arrayFromPool;
         private int _count;
 
         private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
 
         public void Dispose()
         {
-            T[] arrayFromPool = _arrayFromPool;
+            T[]? arrayFromPool = _arrayFromPool;
             this = default;
             if (arrayFromPool is null)
                 return;
@@ -29,8 +29,7 @@ namespace Arborescence.Internal
 
         internal void Add(T item)
         {
-            if (_arrayFromPool is null)
-                _arrayFromPool = Pool.Rent(DefaultCapacity);
+            _arrayFromPool ??= Pool.Rent(DefaultCapacity);
 
             int count = _count;
             T[] array = _arrayFromPool;
@@ -63,14 +62,14 @@ namespace Arborescence.Internal
 
             if (unchecked((uint)newCount >= (uint)array.Length))
             {
-                result = default;
+                result = default!;
                 return false;
             }
 
             _count = newCount;
             result = array[newCount];
             if (ShouldClear())
-                array[newCount] = default;
+                array[newCount] = default!;
 
             return true;
         }
@@ -85,21 +84,20 @@ namespace Arborescence.Internal
 
         public bool IsSynchronized => false;
 
-        public object SyncRoot => _arrayFromPool;
+        public object SyncRoot => throw new NotSupportedException();
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void ResizeThenAdd(T item)
         {
-            Debug.Assert(_arrayFromPool != null, nameof(_arrayFromPool) + " != null");
-            Debug.Assert(_arrayFromPool.Length > 0, "_arrayFromPool.Length > 0");
+            T[] arrayFromPool = _arrayFromPool!;
+            Debug.Assert(arrayFromPool.Length > 0, "arrayFromPool.Length > 0");
 
             int count = _count;
             int newCapacity = count << 1;
             T[] newArray = Pool.Rent(newCapacity);
-            Array.Copy(_arrayFromPool, newArray, count);
+            Array.Copy(arrayFromPool, newArray, count);
             newArray[count] = item;
 
-            T[] arrayFromPool = _arrayFromPool;
             _arrayFromPool = newArray;
             Pool.Return(arrayFromPool, ShouldClear());
             _count = count + 1;
