@@ -20,10 +20,6 @@ namespace Arborescence.Traversal
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
-            Debug.Assert(graph != null, "graph != null");
-            Debug.Assert(colorByVertex != null, "colorByVertex != null");
-            Debug.Assert(handler != null, "handler != null");
-
             try
             {
                 while (queue.TryTake(out TVertex u))

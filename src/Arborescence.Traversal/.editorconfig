@@ -15,3 +15,6 @@ resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlw
 [Color.cs]
 dotnet_diagnostic.CA1028.severity = suggestion # Enum Storage should be Int32
 dotnet_diagnostic.CS1591.severity = suggestion # Missing XML comment for publicly visible type or member
+
+[{EagerDfs,RecursiveDfs}*.cs]
+resharper_constant_null_coalescing_condition_highlighting = none # ConstantNullCoalescingCondition
