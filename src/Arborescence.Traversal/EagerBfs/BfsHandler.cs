@@ -27,37 +27,37 @@ namespace Arborescence.Traversal
         /// <summary>
         /// Raised when a vertex is encountered for the first time.
         /// </summary>
-        public event VertexHandler<TGraph, TVertex> DiscoverVertex;
+        public event VertexHandler<TGraph, TVertex>? DiscoverVertex;
 
         /// <summary>
         /// Raised when a vertex is taken from the fringe.
         /// </summary>
-        public event VertexHandler<TGraph, TVertex> ExamineVertex;
+        public event VertexHandler<TGraph, TVertex>? ExamineVertex;
 
         /// <summary>
         /// Raised when all of out-edges for a vertex have been added to the search tree
         /// and all of the adjacent vertices have been discovered.
         /// </summary>
-        public event VertexHandler<TGraph, TVertex> FinishVertex;
+        public event VertexHandler<TGraph, TVertex>? FinishVertex;
 
         /// <summary>
         /// Raised for every out-edge of each vertex after it is discovered.
         /// </summary>
-        public event EdgeHandler<TGraph, TEdge> ExamineEdge;
+        public event EdgeHandler<TGraph, TEdge>? ExamineEdge;
 
         /// <summary>
         /// Raised for each edge as it becomes a member of the search tree.
         /// </summary>
-        public event EdgeHandler<TGraph, TEdge> TreeEdge;
+        public event EdgeHandler<TGraph, TEdge>? TreeEdge;
 
         /// <summary>
         /// Raised for a non-tree edge whose head is currently in the queue.
         /// </summary>
-        public event EdgeHandler<TGraph, TEdge> NonTreeGrayHeadEdge;
+        public event EdgeHandler<TGraph, TEdge>? NonTreeGrayHeadEdge;
 
         /// <summary>
         /// Raised for a non-tree edge whose head has been removed from the queue.
         /// </summary>
-        public event EdgeHandler<TGraph, TEdge> NonTreeBlackHeadEdge;
+        public event EdgeHandler<TGraph, TEdge>? NonTreeBlackHeadEdge;
     }
 }
