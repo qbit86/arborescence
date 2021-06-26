@@ -4,6 +4,7 @@ namespace Arborescence.Search
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
     // https://github.com/boostorg/graph/blob/develop/include/boost/graph/detail/d_ary_heap.hpp
@@ -61,7 +62,7 @@ namespace Arborescence.Search
             VerifyHeap();
         }
 
-        internal bool TryPeek(out TElement element)
+        internal bool TryPeek([MaybeNullWhen(false)] out TElement element)
         {
             if (_count == 0)
             {
@@ -75,7 +76,7 @@ namespace Arborescence.Search
             return true;
         }
 
-        internal bool TryTake(out TElement element)
+        internal bool TryTake([MaybeNullWhen(false)] out TElement element)
         {
             int count = _count;
 
@@ -94,7 +95,7 @@ namespace Arborescence.Search
             {
                 _count = 0;
                 if (ShouldClear())
-                    array[0] = default;
+                    array[0] = default!;
 
                 return true;
             }
@@ -104,7 +105,7 @@ namespace Arborescence.Search
             _indexInHeapByElement[array[0]] = 0;
             _count = newCount;
             if (ShouldClear())
-                array[newCount] = default;
+                array[newCount] = default!;
 
             HeapifyDown();
             VerifyHeap();

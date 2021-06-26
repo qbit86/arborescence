@@ -143,7 +143,6 @@ namespace Arborescence.Search.Specialized
 
         private static void Fill<T>(T[] array, T value, int startIndex, int count)
         {
-            Debug.Assert(array != null, "array != null");
             Debug.Assert(startIndex >= 0, "startIndex >= 0");
             Debug.Assert(startIndex <= array.Length, "startIndex <= array.Length");
             Debug.Assert(count >= 0, "count >= 0");

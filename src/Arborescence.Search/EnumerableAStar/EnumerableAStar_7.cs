@@ -2,6 +2,7 @@ namespace Arborescence.Search
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
     using Traversal;
 
@@ -153,7 +154,7 @@ namespace Arborescence.Search
                     {
                         while (outEdges.MoveNext())
                         {
-                            if (!(outEdges.Current is TEdge e))
+                            if (!(outEdges.Current is { } e))
                                 continue;
 
                             if (!graph.TryGetHead(e, out TVertex v))
@@ -166,11 +167,10 @@ namespace Arborescence.Search
                             if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
                                 AStarHelper.ThrowInvalidOperationException_NegativeWeight();
 
-                            bool decreased = Relax(u, v, weight, distanceByVertex,
-                                out TCost relaxedHeadDistance);
+                            bool decreased = Relax(u, v, weight, distanceByVertex, out TCost relaxedHeadDistance);
                             if (decreased)
                             {
-                                TCost vCost = _costMonoid.Combine(relaxedHeadDistance, heuristic(v));
+                                TCost vCost = _costMonoid.Combine(relaxedHeadDistance!, heuristic(v));
                                 SetCost(costByVertex, v, vCost);
                                 yield return e;
                             }
@@ -223,7 +223,7 @@ namespace Arborescence.Search
             TVertex head,
             TCost weight,
             TDistanceMap distanceByVertex,
-            out TCost relaxedHeadDistance)
+            [MaybeNullWhen(false)] out TCost relaxedHeadDistance)
             where TDistanceMap : IDictionary<TVertex, TCost>
         {
             if (!distanceByVertex.TryGetValue(tail, out TCost tailDistance))
