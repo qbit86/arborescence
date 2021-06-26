@@ -10,7 +10,6 @@
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>latest</LangVersion>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <Nullable>enable</Nullable>
     <RootNamespace>Arborescence.Workbench</RootNamespace>
     <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>

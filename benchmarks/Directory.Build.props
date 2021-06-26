@@ -3,6 +3,5 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <LangVersion>9</LangVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
