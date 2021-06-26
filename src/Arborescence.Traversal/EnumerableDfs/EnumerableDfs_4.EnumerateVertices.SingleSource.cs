@@ -21,10 +21,10 @@ namespace Arborescence.Traversal
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TExploredSet : ISet<TVertex>
         {
-            if (graph == null)
+            if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
-            if (exploredSet == null)
+            if (exploredSet is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, source, exploredSet);

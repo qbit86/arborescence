@@ -25,7 +25,7 @@ namespace Arborescence.Traversal.Specialized
         /// </exception>
         public IEnumerator<int> EnumerateVertices(TGraph graph, int source, int vertexCount)
         {
-            if (graph == null)
+            if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (vertexCount < 0)

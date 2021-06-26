@@ -34,13 +34,13 @@
             where TFringe : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            if (graph == null)
+            if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
-            if (fringe == null)
+            if (fringe is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(fringe));
 
-            if (exploredSet == null)
+            if (exploredSet is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, source, fringe, exploredSet);

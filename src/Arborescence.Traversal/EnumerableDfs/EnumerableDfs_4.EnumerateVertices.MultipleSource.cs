@@ -24,13 +24,13 @@ namespace Arborescence.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            if (graph == null)
+            if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
-            if (sources == null)
+            if (sources is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(sources));
 
-            if (exploredSet == null)
+            if (exploredSet is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, sources, exploredSet);
