@@ -9,7 +9,7 @@ namespace Arborescence.Traversal
         internal EdgeInfo(TVertex exploredVertex)
         {
             _exploredVertex = exploredVertex;
-            _inEdge = default;
+            _inEdge = default!;
             _hasInEdge = false;
         }
 

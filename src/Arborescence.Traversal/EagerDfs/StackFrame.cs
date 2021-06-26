@@ -8,7 +8,7 @@
         internal StackFrame(TVertex vertex, TEdgeEnumerator edgeEnumerator)
         {
             _hasEdge = false;
-            _edge = default;
+            _edge = default!;
             Vertex = vertex;
             EdgeEnumerator = edgeEnumerator;
         }

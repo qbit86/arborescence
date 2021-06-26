@@ -128,7 +128,7 @@ namespace Arborescence.Traversal
             obj is IndexedColorDictionary other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
+        public override int GetHashCode() => _items.GetHashCode();
 
         /// <summary>
         /// Checks equality between two instances.
