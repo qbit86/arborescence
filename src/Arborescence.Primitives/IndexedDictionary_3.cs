@@ -36,7 +36,7 @@ namespace Arborescence
             if (items is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
 
-            if (indexMap == null)
+            if (indexMap is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(indexMap));
 
             _items = items;
