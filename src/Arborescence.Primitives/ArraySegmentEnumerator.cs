@@ -82,7 +82,7 @@ namespace Arborescence
         void IEnumerator.Reset() => _current = _start - 1;
 
         /// <inheritdoc/>
-        public void Dispose() { }
+        public readonly void Dispose() { }
 
         readonly IEnumerator IEnumerable.GetEnumerator() => this;
 

@@ -46,6 +46,6 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Dispose() { }
+        public readonly void Dispose() { }
     }
 }

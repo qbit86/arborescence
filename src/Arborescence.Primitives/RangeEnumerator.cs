@@ -53,7 +53,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Dispose() { }
+        public readonly void Dispose() { }
 
         private static void ThrowArgumentOutOfRangeException(string argument) =>
             throw new ArgumentOutOfRangeException(argument);

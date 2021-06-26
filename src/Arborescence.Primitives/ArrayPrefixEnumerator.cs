@@ -73,7 +73,8 @@ namespace Arborescence
 
         readonly object? IEnumerator.Current => Current;
 
-        void IDisposable.Dispose() { }
+        /// <inheritdoc/>
+        public readonly void Dispose() { }
 
         readonly IEnumerator IEnumerable.GetEnumerator() => this;
 
