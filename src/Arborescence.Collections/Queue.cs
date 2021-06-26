@@ -44,9 +44,9 @@
             ++_size;
         }
 
-        public void CopyTo(T[] array, int index) => throw new NotSupportedException();
+        public readonly void CopyTo(T[] array, int index) => throw new NotSupportedException();
 
-        public T[] ToArray() => throw new NotSupportedException();
+        public readonly T[] ToArray() => throw new NotSupportedException();
 
         public bool TryAdd(T item)
         {
@@ -73,17 +73,17 @@
             return true;
         }
 
-        public IEnumerator<T> GetEnumerator() => throw new NotSupportedException();
+        public readonly IEnumerator<T> GetEnumerator() => throw new NotSupportedException();
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        readonly IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void CopyTo(Array array, int index) => throw new NotSupportedException();
+        public readonly void CopyTo(Array array, int index) => throw new NotSupportedException();
 
-        public int Count => _size;
+        public readonly int Count => _size;
 
-        public bool IsSynchronized => false;
+        public readonly bool IsSynchronized => false;
 
-        public object SyncRoot => throw new NotSupportedException();
+        public readonly object SyncRoot => throw new NotSupportedException();
 
         // Increments the index wrapping it if necessary.
         private void MoveNext(ref int index)

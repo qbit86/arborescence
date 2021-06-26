@@ -45,7 +45,7 @@ namespace Arborescence.Search
 
         private static ArrayPool<TElement> Pool => ArrayPool<TElement>.Shared;
 
-        internal int Count => _count;
+        internal readonly int Count => _count;
 
         public void Dispose()
         {
@@ -62,7 +62,7 @@ namespace Arborescence.Search
             VerifyHeap();
         }
 
-        internal bool TryPeek([MaybeNullWhen(false)] out TElement element)
+        internal readonly bool TryPeek([MaybeNullWhen(false)] out TElement element)
         {
             if (_count == 0)
             {
@@ -126,7 +126,7 @@ namespace Arborescence.Search
             return hasIndex;
         }
 
-        internal bool Contains(TElement element) =>
+        internal readonly bool Contains(TElement element) =>
             _indexInHeapByElement.TryGetValue(element, out int index) && index != -1;
 
         internal void AddOrUpdate(TElement element)
@@ -145,7 +145,7 @@ namespace Arborescence.Search
             VerifyHeap();
         }
 
-        private TPriority GetPriorityOrThrow(TElement element)
+        private readonly TPriority GetPriorityOrThrow(TElement element)
         {
             if (_priorityByElement.TryGetValue(element, out TPriority priority))
                 return priority;
@@ -211,7 +211,7 @@ namespace Arborescence.Search
             _indexInHeapByElement[right] = leftIndex;
         }
 
-        private int Compare(TElement left, TElement right)
+        private readonly int Compare(TElement left, TElement right)
         {
             bool hasLeft = _priorityByElement.TryGetValue(left, out TPriority leftPriority);
             bool hasRight = _priorityByElement.TryGetValue(right, out TPriority rightPriority);
@@ -316,7 +316,7 @@ namespace Arborescence.Search
         }
 
         [Conditional("DEBUG")]
-        private void VerifyHeap()
+        private readonly void VerifyHeap()
         {
             TElement[] array = _arrayFromPool;
             int count = _count;
