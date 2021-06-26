@@ -383,7 +383,7 @@ namespace Arborescence
             /// <summary>
             /// Gets the element at the current position of the enumerator.
             /// </summary>
-            public T Current
+            public readonly T Current
             {
                 get
                 {

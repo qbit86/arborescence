@@ -40,7 +40,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public void Reset() => _current = _start - 1;
 
-        object IEnumerator.Current => _current;
+        readonly object IEnumerator.Current => _current;
 
         /// <inheritdoc/>
         public readonly int Current => _current;
