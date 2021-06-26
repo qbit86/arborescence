@@ -3,3 +3,6 @@ dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator eq
 
 [EnumerableAStar_7.cs]
 dotnet_diagnostic.CA1062.severity = suggestion # Validate arguments of public methods
+
+[{DummyEqualityComparer,EnumerableAStar*,MinHeap}.cs]
+resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlwaysTrueOrFalse
