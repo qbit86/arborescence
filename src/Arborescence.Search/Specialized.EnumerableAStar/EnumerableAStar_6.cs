@@ -124,13 +124,10 @@ namespace Arborescence.Search.Specialized
                     distanceByVertexFromPool, dummy);
                 var colorByVertex = new IndexedColorDictionary(colorByVertexFromPool);
                 var indexByVertex = new IndexedDictionary<int>(indexByVertexFromPool);
-                IEnumerator<TEdge> edges = aStar.EnumerateRelaxedEdgesIterator(graph, source, heuristic, weightByEdge,
-                    costByVertex, distanceByVertex, colorByVertex, indexByVertex);
-                using (edges)
-                {
-                    while (edges.MoveNext())
-                        yield return edges.Current;
-                }
+                using IEnumerator<TEdge> edges = aStar.EnumerateRelaxedEdgesIterator(graph, source, heuristic,
+                    weightByEdge, costByVertex, distanceByVertex, colorByVertex, indexByVertex);
+                while (edges.MoveNext())
+                    yield return edges.Current;
             }
             finally
             {
