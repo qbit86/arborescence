@@ -40,10 +40,10 @@ namespace Arborescence.Search
         /// </exception>
         public EnumerableAStar(TCostComparer costComparer, TCostMonoid costMonoid)
         {
-            if (costComparer == null)
+            if (costComparer is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(costComparer));
 
-            if (costMonoid == null)
+            if (costMonoid is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(costMonoid));
 
             _costComparer = costComparer;
@@ -97,25 +97,25 @@ namespace Arborescence.Search
             where TColorMap : IDictionary<TVertex, Color>
             where TIndexMap : IDictionary<TVertex, int>
         {
-            if (graph == null)
+            if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
             if (heuristic is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(heuristic));
 
-            if (costByVertex == null)
+            if (costByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(costByVertex));
 
-            if (distanceByVertex == null)
+            if (distanceByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(distanceByVertex));
 
-            if (weightByEdge == null)
+            if (weightByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(weightByEdge));
 
-            if (colorByVertex == null)
+            if (colorByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(colorByVertex));
 
-            if (indexByVertex == null)
+            if (indexByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(indexByVertex));
 
             return EnumerateRelaxedEdgesIterator(

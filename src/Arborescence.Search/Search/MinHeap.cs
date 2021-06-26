@@ -27,13 +27,13 @@ namespace Arborescence.Search
         internal MinHeap(
             TPriorityMap priorityByElement, TIndexInHeapMap indexInHeapByElement, TPriorityComparer priorityComparer)
         {
-            if (priorityByElement == null)
+            if (priorityByElement is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(priorityByElement));
 
-            if (indexInHeapByElement == null)
+            if (indexInHeapByElement is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(indexInHeapByElement));
 
-            if (priorityComparer == null)
+            if (priorityComparer is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(priorityComparer));
 
             _arrayFromPool = Array.Empty<TElement>();

@@ -12,7 +12,7 @@ namespace Arborescence.Search
 
         public DummyEqualityComparer(TCost dummy, TCostComparer comparer)
         {
-            if (comparer == null)
+            if (comparer is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(comparer));
 
             _dummy = dummy;
