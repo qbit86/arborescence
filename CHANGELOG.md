@@ -7,6 +7,7 @@
 - Primitives: `IndexedDictionary<TKey, TValue, TIndexMap>` — an indirect key-to-value map via an intermediate index map.
 - Primitives: `IndexedDictionary<TKey, TValue, TIndexMap, TDummy>` — an indirect key-to-value map with a marker for missing values.
 - Primitives: More nullability annotations.
+- Primitives: `readonly` modifiers to the members of non-readonly enumerators.
 - Traversal: Nullable attributes.
 
 ### Changed
