@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-06-26
+## [0.13.0] - 2021-06-27
 ### Added
 - Abstractions: Nullable attributes.
 - Models: Nullable attributes.
@@ -196,7 +196,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.13.0...HEAD
+[0.13.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...arborescence-0.13.0
 [0.12.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...arborescence-0.12.0
 [0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...arborescence-0.11.0
 [0.10.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...arborescence-0.10.0
