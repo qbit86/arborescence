@@ -30,17 +30,17 @@ namespace Arborescence.Traversal
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
-            if (sources == null)
-                throw new ArgumentNullException(nameof(sources));
+            if (sources is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(sources));
 
-            if (colorByVertex == null)
-                throw new ArgumentNullException(nameof(colorByVertex));
+            if (colorByVertex is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(colorByVertex));
 
-            if (handler == null)
-                throw new ArgumentNullException(nameof(handler));
+            if (handler is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
             var queue = new Internal.Queue<TVertex>();
             while (sources.MoveNext())

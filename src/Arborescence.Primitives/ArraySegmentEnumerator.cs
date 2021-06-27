@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Primitives;
 
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
@@ -76,18 +77,15 @@ namespace Arborescence
             return ator;
         }
 
-        object IEnumerator.Current => Current;
+        readonly object? IEnumerator.Current => Current;
 
-        void IEnumerator.Reset()
-        {
-            _current = _start - 1;
-        }
+        void IEnumerator.Reset() => _current = _start - 1;
 
         /// <inheritdoc/>
-        public void Dispose() { }
+        public readonly void Dispose() { }
 
-        IEnumerator IEnumerable.GetEnumerator() => this;
+        readonly IEnumerator IEnumerable.GetEnumerator() => this;
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+        readonly IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
     }
 }

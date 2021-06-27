@@ -27,7 +27,7 @@ namespace Arborescence.Models
         public MutableUndirectedSimpleIncidenceGraph(int initialVertexCount = 0)
         {
             if (initialVertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(initialVertexCount));
 
             _outEdgesByVertex = ArrayPrefixBuilder.EnsureSize(_outEdgesByVertex, initialVertexCount, true);
         }
@@ -161,10 +161,10 @@ namespace Arborescence.Models
         public Endpoints Add(int tail, int head)
         {
             if (tail < 0)
-                throw new ArgumentOutOfRangeException(nameof(tail));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(tail));
 
             if (head < 0)
-                throw new ArgumentOutOfRangeException(nameof(head));
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(head));
 
             return UncheckedAdd(tail, head);
         }

@@ -2,7 +2,9 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+    using System.Text;
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
@@ -17,12 +19,7 @@
         /// </summary>
         /// <param name="tail">The tail of the edge.</param>
         /// <param name="head">The head of the edge.</param>
-        public Endpoints(int tail, int head)
-        {
-            _data = unchecked(((ulong)tail << 32) | (uint)head);
-        }
-
-        private static CultureInfo F => CultureInfo.InvariantCulture;
+        public Endpoints(int tail, int head) => _data = unchecked(((ulong)tail << 32) | (uint)head);
 
         /// <summary>
         /// Gets the tail of the edge.
@@ -38,7 +35,14 @@
         public override string ToString()
         {
             // Consider using int.TryFormat() for netstandard2.1.
-            return EndpointsHelpers.PairToString(Tail.ToString(F), Head.ToString(F));
+            CultureInfo f = CultureInfo.InvariantCulture;
+            var s = new StringBuilder();
+            s.Append('[');
+            s.Append(Tail.ToString(f));
+            s.Append(", ");
+            s.Append(Head.ToString(f));
+            s.Append(']');
+            return s.ToString();
         }
 
         /// <summary>
@@ -57,7 +61,8 @@
         public bool Equals(Endpoints other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is Endpoints other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is Endpoints other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => unchecked(Tail.GetHashCode() * 397) ^ Head.GetHashCode();

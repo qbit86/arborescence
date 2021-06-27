@@ -3,6 +3,8 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using Primitives;
 
     /// <summary>
     /// Represents a set of values as a byte array.
@@ -49,10 +51,10 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void ExceptWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void ExceptWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
-        public void IntersectWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void IntersectWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool IsProperSubsetOf(IEnumerable<int> other) => throw new NotSupportedException();
@@ -73,12 +75,10 @@ namespace Arborescence
         public bool SetEquals(IEnumerable<int> other) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public void SymmetricExceptWith(IEnumerable<int> other) => throw new NotSupportedException();
+        public void SymmetricExceptWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
-        public void UnionWith(IEnumerable<int> other) => throw new NotSupportedException();
-
-        bool ISet<int>.Add(int item) => Add(item);
+        public void UnionWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc cref="ISet{T}"/>
         public bool Add(int item)
@@ -113,7 +113,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void CopyTo(int[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(int[] array, int arrayIndex) => ThrowHelper.ThrowNotSupportedException();
 
         /// <summary>
         /// Removes the specified element from a <see cref="IndexedSet"/> object.
@@ -141,7 +141,8 @@ namespace Arborescence
         public bool Equals(IndexedSet other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedSet other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is IndexedSet other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;

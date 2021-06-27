@@ -37,17 +37,17 @@ namespace Arborescence.Traversal
             where TFringe : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph));
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
-            if (sources == null)
-                throw new ArgumentNullException(nameof(sources));
+            if (sources is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(sources));
 
-            if (fringe == null)
-                throw new ArgumentNullException(nameof(fringe));
+            if (fringe is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(fringe));
 
-            if (exploredSet == null)
-                throw new ArgumentNullException(nameof(exploredSet));
+            if (exploredSet is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, sources, fringe, exploredSet);
         }

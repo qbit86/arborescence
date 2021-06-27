@@ -38,12 +38,9 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Reset()
-        {
-            _current = _start - 1;
-        }
+        public void Reset() => _current = _start - 1;
 
-        object IEnumerator.Current => _current;
+        readonly object IEnumerator.Current => _current;
 
         /// <inheritdoc/>
         public readonly int Current => _current;
@@ -56,11 +53,9 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Dispose() { }
+        public readonly void Dispose() { }
 
-        private static void ThrowArgumentOutOfRangeException(string argument)
-        {
+        private static void ThrowArgumentOutOfRangeException(string argument) =>
             throw new ArgumentOutOfRangeException(argument);
-        }
     }
 }

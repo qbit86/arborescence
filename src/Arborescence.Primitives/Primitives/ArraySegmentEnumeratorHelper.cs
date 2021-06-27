@@ -1,4 +1,4 @@
-namespace Arborescence
+namespace Arborescence.Primitives
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -7,7 +7,7 @@ namespace Arborescence
     internal static class ArraySegmentEnumeratorHelper
     {
         [DoesNotReturn]
-        internal static void ThrowCtorValidationFailedExceptions(Array array, int start, int endExclusive)
+        internal static void ThrowCtorValidationFailedExceptions(Array? array, int start, int endExclusive)
         {
             throw GetCtorValidationFailedException(array, start, endExclusive);
         }
@@ -25,7 +25,7 @@ namespace Arborescence
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static Exception GetCtorValidationFailedException(Array array, int start, int endExclusive)
+        private static Exception GetCtorValidationFailedException(Array? array, int start, int endExclusive)
         {
             if (array is null)
                 return new ArgumentNullException(nameof(array));

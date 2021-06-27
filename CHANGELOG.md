@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.13.0] - 2021-06-27
+### Added
+- Abstractions: Nullable attributes.
+- Models: Nullable attributes.
+- Primitives: `IndexedDictionary<TKey, TValue, TIndexMap>` — an indirect key-to-value map via an intermediate index map.
+- Primitives: `IndexedDictionary<TKey, TValue, TIndexMap, TDummy>` — an indirect key-to-value map with a marker for missing values.
+- Primitives: More nullability annotations.
+- Primitives: `readonly` modifiers to the members of non-readonly enumerators.
+- Traversal: Nullable attributes.
+
+### Changed
+- Primitives: Fixed equality checking for `IndexedDictionary<TValue, TDummy>`.
+- Primitives: `IndexedDictionary<TValue, TDummy>.Count` now throws `NotSupportedException`.
+- Primitives: Fixed `GetHashCode()` for `Endpoints<TVertex>`.
+
 ## [0.12.0] - 2021-06-10
 ### Added
 - Traversal: Calling `Dispose()` for out-edges enumerators.
@@ -181,7 +196,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.13.0...HEAD
+[0.13.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...arborescence-0.13.0
 [0.12.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...arborescence-0.12.0
 [0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...arborescence-0.11.0
 [0.10.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.9.0...arborescence-0.10.0

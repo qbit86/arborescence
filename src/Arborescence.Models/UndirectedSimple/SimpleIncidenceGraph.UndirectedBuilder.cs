@@ -2,7 +2,6 @@
 namespace Arborescence.Models
 {
     using System;
-    using System.Diagnostics;
 
     public readonly partial struct SimpleIncidenceGraph
     {
@@ -24,10 +23,10 @@ namespace Arborescence.Models
             public UndirectedBuilder(int initialVertexCount = 0, int edgeCapacity = 0)
             {
                 if (initialVertexCount < 0)
-                    throw new ArgumentOutOfRangeException(nameof(initialVertexCount));
+                    ThrowHelper.ThrowArgumentOutOfRangeException(nameof(initialVertexCount));
 
                 if (edgeCapacity < 0)
-                    throw new ArgumentOutOfRangeException(nameof(edgeCapacity));
+                    ThrowHelper.ThrowArgumentOutOfRangeException(nameof(edgeCapacity));
 
                 _edges = ArrayPrefixBuilder.Create<Endpoints>(edgeCapacity);
                 _vertexCount = initialVertexCount;
@@ -58,8 +57,7 @@ namespace Arborescence.Models
             public SimpleIncidenceGraph ToGraph()
             {
                 int n = _vertexCount;
-                Endpoints[] array = _edges.Array;
-                Debug.Assert(array != null, nameof(array) + " != null");
+                Endpoints[] array = _edges.Array!;
 
                 Array.Sort(array, 0, _edges.Count, SimpleEdgeComparer.Instance);
 
@@ -111,10 +109,10 @@ namespace Arborescence.Models
             public Endpoints Add(int tail, int head)
             {
                 if (tail < 0)
-                    throw new ArgumentOutOfRangeException(nameof(tail));
+                    ThrowHelper.ThrowArgumentOutOfRangeException(nameof(tail));
 
                 if (head < 0)
-                    throw new ArgumentOutOfRangeException(nameof(head));
+                    ThrowHelper.ThrowArgumentOutOfRangeException(nameof(head));
 
                 return UncheckedAdd(tail, head);
             }

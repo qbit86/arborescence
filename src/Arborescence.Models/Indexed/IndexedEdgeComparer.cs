@@ -1,17 +1,12 @@
 ﻿namespace Arborescence.Models
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
 
     internal sealed class IndexedEdgeComparer : IComparer<int>
     {
         private readonly int[] _tailByEdge;
 
-        internal IndexedEdgeComparer(int[] tailByEdge)
-        {
-            Debug.Assert(tailByEdge != null, nameof(tailByEdge) + " != null");
-            _tailByEdge = tailByEdge;
-        }
+        internal IndexedEdgeComparer(int[] tailByEdge) => _tailByEdge = tailByEdge;
 
         public int Compare(int x, int y)
         {

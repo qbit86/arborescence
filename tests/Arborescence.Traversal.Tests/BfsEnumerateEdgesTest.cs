@@ -90,16 +90,10 @@ namespace Arborescence
 
         [Theory]
         [ClassData(typeof(UndirectedSimpleGraphCollection))]
-        internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p)
-        {
-            EnumerateEdgesCore(p.Graph, false);
-        }
+        internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, false);
 
         [Theory]
         [ClassData(typeof(SimpleGraphCollection))]
-        internal void EnumerateEdges_MultipleSource(GraphParameter<Graph> p)
-        {
-            EnumerateEdgesCore(p.Graph, true);
-        }
+        internal void EnumerateEdges_MultipleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, true);
     }
 }

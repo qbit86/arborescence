@@ -9,8 +9,12 @@ dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator eq
 dotnet_diagnostic.CA1819.severity = suggestion # Properties should not return arrays
 dotnet_diagnostic.CA2225.severity = suggestion # Operator overloads have named alternates
 
+[{ArrayPrefix,ArrayPrefixEnumerator,ArraySegmentEnumerator,CompactSet,IndexedSet}.cs]
+resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlwaysTrueOrFalse
+
 [Endpoints_1.cs]
 dotnet_diagnostic.CA1508.severity = suggestion # Avoid dead conditional code
 
-[IndexedDictionary_2.cs]
-dotnet_diagnostic.CA1508.severity = suggestion # Avoid dead conditional code
+[IndexedDictionary_*.cs]
+dotnet_diagnostic.CS8767.severity = suggestion # Nullability of type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
+resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlwaysTrueOrFalse

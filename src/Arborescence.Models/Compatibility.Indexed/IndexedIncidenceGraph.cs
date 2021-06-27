@@ -2,6 +2,7 @@ namespace Arborescence.Models.Compatibility
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
@@ -18,11 +19,10 @@ namespace Arborescence.Models.Compatibility
         // m    | edges sorted by tail
         // m    | heads indexed by edges
         // m    | tails indexed by edges
-        private readonly int[] _data;
+        private readonly int[]? _data;
 
         internal IndexedIncidenceGraph(int[] data)
         {
-            Debug.Assert(data != null, nameof(data) + " != null");
             Debug.Assert(data.Length >= 2, "data.Length >= 2");
             Debug.Assert(data[0] >= 0, "data[0] >= 0");
             Debug.Assert(data[0] <= data.Length - 2, "data[0] <= data.Length - 2");
@@ -75,7 +75,10 @@ namespace Arborescence.Models.Compatibility
         /// <inheritdoc/>
         public ArraySegmentEnumerator<int> EnumerateOutEdges(int vertex)
         {
-            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex();
+            if (_data is null)
+                return ArraySegmentEnumerator<int>.Empty;
+
+            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegmentEnumerator<int>.Empty;
 
@@ -90,14 +93,14 @@ namespace Arborescence.Models.Compatibility
         public bool Equals(IndexedIncidenceGraph other) => _data == other._data;
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedIncidenceGraph other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is IndexedIncidenceGraph other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => (_data?.GetHashCode()).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ReadOnlySpan<int> GetUpperBoundByVertex() =>
-            IsDefault ? ReadOnlySpan<int>.Empty : _data.AsSpan(2, VertexCount);
+        private ReadOnlySpan<int> GetUpperBoundByVertex(int[] data) => data.AsSpan(2, VertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTailByEdge() =>

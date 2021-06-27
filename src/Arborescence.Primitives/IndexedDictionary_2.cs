@@ -4,10 +4,13 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using Primitives;
 
     /// <summary>
     /// Represents a map from an index to a value, with a marker treated as an absent value.
     /// </summary>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <typeparam name="TDummy">The type of the marker for missing values.</typeparam>
     public readonly struct IndexedDictionary<TValue, TDummy> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue, TDummy>>
         where TDummy : IEquatable<TValue>
@@ -29,7 +32,7 @@ namespace Arborescence
             if (items is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
 
-            if (dummy == null)
+            if (dummy is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.dummy);
 
             _items = items;
@@ -55,19 +58,20 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Clear() => throw new NotSupportedException();
+        public void Clear() => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) =>
+            ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
-        public int Count => _items.Length;
+        public int Count => throw new NotSupportedException();
 
         /// <inheritdoc/>
         public bool IsReadOnly => false;
@@ -81,18 +85,8 @@ namespace Arborescence
             _items[key] = value;
         }
 
-        bool IDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
-
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
-
-        bool IDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
-            TryGetValue(key, out value);
-
-        bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
-
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
-            TryGetValue(key, out value);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length) && !_dummy.Equals(_items[key]);
@@ -133,7 +127,16 @@ namespace Arborescence
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys
+        ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
+
+        ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
+
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
+
+        /// <summary>
+        /// Gets an enumerable collection that contains the keys in the dictionary.
+        /// </summary>
+        public IEnumerable<int> Keys
         {
             get
             {
@@ -145,11 +148,10 @@ namespace Arborescence
             }
         }
 
-        ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
-
-        ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
-
-        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values
+        /// <summary>
+        /// Gets an enumerable collection that contains the values in the dictionary.
+        /// </summary>
+        public IEnumerable<TValue> Values
         {
             get
             {
@@ -162,17 +164,20 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public bool Equals(IndexedDictionary<TValue, TDummy> other)
+        public bool Equals(IndexedDictionary<TValue, TDummy> other) =>
+            EqualityComparer<TDummy>.Default.Equals(_dummy, other._dummy) && Equals(_items, other._items);
+
+        /// <inheritdoc/>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is IndexedDictionary<TValue, TDummy> other && Equals(other);
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
         {
-            return _dummy is TValue dummy && other._dummy.Equals(dummy) && Equals(_items, other._items);
+            int hashCode = _items != null ? _items.GetHashCode() : 0;
+            hashCode = unchecked(hashCode * 397) ^ EqualityComparer<TDummy>.Default.GetHashCode(_dummy);
+            return hashCode;
         }
-
-        /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedDictionary<TValue> other && Equals(other);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() =>
-            _items != null ? _items.GetHashCode() ^ _dummy.GetHashCode() : _dummy.GetHashCode();
 
         /// <summary>
         /// Checks equality between two instances.

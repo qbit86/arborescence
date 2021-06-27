@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
+    using Primitives;
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
@@ -35,10 +37,7 @@
         private static EqualityComparer<TVertex> C => EqualityComparer<TVertex>.Default;
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return EndpointsHelpers.PairToString(Tail?.ToString(), Head?.ToString());
-        }
+        public override string ToString() => EndpointsHelpers.PairToString(Tail?.ToString(), Head?.ToString());
 
         /// <summary>
         /// Deconstructs the current <see cref="Endpoints{TVertex}"/> structure.
@@ -56,10 +55,16 @@
         public bool Equals(Endpoints<TVertex> other) => C.Equals(Tail, other.Tail) && C.Equals(Head, other.Head);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is Endpoints<TVertex> other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is Endpoints<TVertex> other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => unchecked(C.GetHashCode(Tail) * 397) ^ C.GetHashCode(Head);
+        public override int GetHashCode()
+        {
+            int hashCode = Tail != null ? C.GetHashCode(Tail) : 0;
+            hashCode = unchecked(hashCode * 397) ^ (Head != null ? C.GetHashCode(Head) : 0);
+            return hashCode;
+        }
 
         /// <summary>
         /// Indicates whether two <see cref="Endpoints{TVertex}"/> structures are equal.

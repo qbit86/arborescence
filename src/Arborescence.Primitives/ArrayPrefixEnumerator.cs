@@ -3,13 +3,14 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Primitives;
 
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ArraySegment.cs
 
     /// <inheritdoc cref="System.Collections.Generic.IEnumerator{T}"/>
     public struct ArrayPrefixEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
-        private readonly T[] _array;
+        private readonly T[]? _array;
         private readonly int _end;
         private int _current;
 
@@ -43,7 +44,7 @@ namespace Arborescence
                     ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted();
                 if (_current >= _end)
                     ArrayPrefixEnumeratorHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded();
-                return _array[_current];
+                return _array![_current];
             }
         }
 
@@ -70,17 +71,15 @@ namespace Arborescence
             return ator;
         }
 
-        object IEnumerator.Current => Current;
+        readonly object? IEnumerator.Current => Current;
 
-        void IDisposable.Dispose() { }
+        /// <inheritdoc/>
+        public readonly void Dispose() { }
 
-        IEnumerator IEnumerable.GetEnumerator() => this;
+        readonly IEnumerator IEnumerable.GetEnumerator() => this;
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+        readonly IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
 
-        void IEnumerator.Reset()
-        {
-            _current = -1;
-        }
+        void IEnumerator.Reset() => _current = -1;
     }
 }

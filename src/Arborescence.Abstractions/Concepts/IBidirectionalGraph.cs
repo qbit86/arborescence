@@ -1,6 +1,6 @@
 namespace Arborescence
 {
-    // https://www.boost.org/doc/libs/1_75_0/libs/graph/doc/BidirectionalGraph.html
+    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/BidirectionalGraph.html
 
     /// <summary>
     /// Represents a bidirectional graph — an incidence graph with efficient access to the in-edges of each vertex.

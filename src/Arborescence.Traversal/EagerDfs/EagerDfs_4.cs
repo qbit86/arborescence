@@ -2,7 +2,6 @@ namespace Arborescence.Traversal
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
     /// <summary>
@@ -23,11 +22,6 @@ namespace Arborescence.Traversal
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
-            Debug.Assert(graph != null, "graph != null");
-            Debug.Assert(colorByVertex != null, "colorByVertex != null");
-            Debug.Assert(handler != null, "handler != null");
-            Debug.Assert(terminationCondition != null, "terminationCondition != null");
-
             colorByVertex[u] = Color.Gray;
             handler.OnDiscoverVertex(graph, u);
 

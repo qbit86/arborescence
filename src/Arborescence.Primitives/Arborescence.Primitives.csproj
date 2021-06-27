@@ -9,12 +9,11 @@ Commonly used types:
 • IndexedSet</Description>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionPrefix>0.12.0</VersionPrefix>
+    <VersionPrefix>0.13.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.11</AssemblyVersion>
+    <AssemblyVersion>0.13</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <LangVersion>8</LangVersion>
     <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net461;net5.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
@@ -24,6 +23,5 @@ Commonly used types:
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
-  <Import Project="..\Arborescence.Helpers\Arborescence.Helpers.projitems" Label="Shared" />
   <Import Condition="'$(TargetFramework)' == 'netcoreapp2.1' OR '$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Nullable\Arborescence.Nullable.projitems" Label="Shared" />
 </Project>

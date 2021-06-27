@@ -31,12 +31,9 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Reset()
-        {
-            _current = -1;
-        }
+        public void Reset() => _current = -1;
 
-        object IEnumerator.Current => _current;
+        readonly object IEnumerator.Current => _current;
 
         /// <inheritdoc/>
         public readonly int Current => _current;
@@ -49,6 +46,6 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Dispose() { }
+        public readonly void Dispose() { }
     }
 }

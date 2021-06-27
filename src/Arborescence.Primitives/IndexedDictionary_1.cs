@@ -5,10 +5,12 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Primitives;
 
     /// <summary>
     /// Represents a map from an index to a value.
     /// </summary>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
     public readonly struct IndexedDictionary<TValue> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>, IEquatable<IndexedDictionary<TValue>>
     {
@@ -46,13 +48,14 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public void Clear() => throw new NotSupportedException();
+        public void Clear() => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) =>
+            ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotSupportedException();
@@ -72,18 +75,8 @@ namespace Arborescence
             _items[key] = value;
         }
 
-        bool IDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
-
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
-
-        bool IDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
-            TryGetValue(key, out value);
-
-        bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => ContainsKey(key);
-
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
-            TryGetValue(key, out value);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
@@ -120,19 +113,19 @@ namespace Arborescence
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
-
         ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotSupportedException();
 
         ICollection<int> IDictionary<int, TValue>.Keys => throw new NotSupportedException();
 
         IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
 
-        /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
+        /// <summary>
+        /// Gets an enumerable collection that contains the keys in the dictionary.
+        /// </summary>
         public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
 
         /// <summary>
-        /// Gets a read-only collection that contains the values in the read-only dictionary.
+        /// Gets an enumerable collection that contains the values in the dictionary.
         /// </summary>
         public IReadOnlyCollection<TValue> Values => _items;
 
@@ -140,7 +133,8 @@ namespace Arborescence
         public bool Equals(IndexedDictionary<TValue> other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedDictionary<TValue> other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is IndexedDictionary<TValue> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;

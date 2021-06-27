@@ -3,6 +3,7 @@ namespace Arborescence.Traversal
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
@@ -38,7 +39,7 @@ namespace Arborescence.Traversal
         }
 
         /// <inheritdoc/>
-        public void Clear() => throw new NotSupportedException();
+        public void Clear() => ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, Color> item)
@@ -50,7 +51,8 @@ namespace Arborescence.Traversal
         }
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) => throw new NotSupportedException();
+        public void CopyTo(KeyValuePair<int, Color>[] array, int arrayIndex) =>
+            ThrowHelper.ThrowNotSupportedException();
 
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, Color> item) => throw new NotSupportedException();
@@ -70,17 +72,8 @@ namespace Arborescence.Traversal
             _items[key] = (byte)value;
         }
 
-        bool IDictionary<int, Color>.ContainsKey(int key) => ContainsKey(key);
-
         /// <inheritdoc/>
         public bool Remove(int key) => throw new NotSupportedException();
-
-        bool IDictionary<int, Color>.TryGetValue(int key, out Color value) => TryGetValue(key, out value);
-
-        bool IReadOnlyDictionary<int, Color>.ContainsKey(int key) => ContainsKey(key);
-
-        bool IReadOnlyDictionary<int, Color>.TryGetValue(int key, out Color value) =>
-            TryGetValue(key, out value);
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Length);
@@ -117,13 +110,9 @@ namespace Arborescence.Traversal
             }
         }
 
-        IEnumerable<int> IReadOnlyDictionary<int, Color>.Keys => Keys;
-
         ICollection<Color> IDictionary<int, Color>.Values => throw new NotSupportedException();
 
         ICollection<int> IDictionary<int, Color>.Keys => throw new NotSupportedException();
-
-        IEnumerable<Color> IReadOnlyDictionary<int, Color>.Values => Values;
 
         /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}"/>
         public IEnumerable<int> Keys => Enumerable.Range(0, _items.Length);
@@ -135,10 +124,11 @@ namespace Arborescence.Traversal
         public bool Equals(IndexedColorDictionary other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is IndexedColorDictionary other && Equals(other);
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is IndexedColorDictionary other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
+        public override int GetHashCode() => _items.GetHashCode();
 
         /// <summary>
         /// Checks equality between two instances.

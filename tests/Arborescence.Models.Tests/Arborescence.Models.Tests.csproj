@@ -15,6 +15,5 @@
     <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Workbench\Arborescence.Workbench.csproj" />
   </ItemGroup>
-  <Import Project="..\..\src\Arborescence.Buffers\Arborescence.Buffers.projitems" Label="Shared" />
   <Import Project="..\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems" Label="Shared" />
 </Project>
