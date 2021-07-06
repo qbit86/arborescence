@@ -69,22 +69,22 @@ namespace Arborescence
         /// <inheritdoc/>
         public void IntersectWith(IEnumerable<int> other) => ThrowHelper.ThrowNotSupportedException();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ISet{T}.IsProperSubsetOf"/>
         public bool IsProperSubsetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ISet{T}.IsProperSupersetOf"/>
         public bool IsProperSupersetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ISet{T}.IsSubsetOf"/>
         public bool IsSubsetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ISet{T}.IsSupersetOf"/>
         public bool IsSupersetOf(IEnumerable<int> other) => throw new NotSupportedException();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ISet{T}.Overlaps"/>
         public bool Overlaps(IEnumerable<int> other) => throw new NotSupportedException();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ISet{T}.SetEquals"/>
         public bool SetEquals(IEnumerable<int> other) => throw new NotSupportedException();
 
         /// <inheritdoc/>
@@ -152,7 +152,7 @@ namespace Arborescence
             return true;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ICollection{T}.Count"/>
         public int Count => throw new NotSupportedException();
 
         /// <inheritdoc/>
