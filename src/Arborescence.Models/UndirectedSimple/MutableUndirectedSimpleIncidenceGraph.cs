@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1 || NETCOREAPP2_1
+﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
 namespace Arborescence.Models
 {
     using System;
@@ -88,7 +88,7 @@ namespace Arborescence.Models
             int n = VertexCount;
 
             int dataLength = 2 + n;
-#if NET5
+#if NET5_0_OR_GREATER
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
             Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(EdgeCount + _invertedEdgeCount);
 #else
