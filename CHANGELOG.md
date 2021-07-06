@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2021-07-07
+## [0.13.1] - 2021-07-07
 ### Added
 - Models: Missing types for .NET 5 target framework.
 
@@ -203,7 +203,8 @@
 ### Added
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.13.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-arborescence-0.13.1...HEAD
+[0.13.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.13.0...arborescence-0.13.1
 [0.13.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.12.0...arborescence-0.13.0
 [0.12.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.11.0...arborescence-0.12.0
 [0.11.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.10.0...arborescence-0.11.0
