@@ -9,7 +9,7 @@ namespace Arborescence
     /// <summary>
     /// Represents a set of values as a byte array.
     /// </summary>
-#if NET5
+#if NET5_0_OR_GREATER
     public readonly struct IndexedSet : IReadOnlySet<int>, ISet<int>, IEquatable<IndexedSet>
 #else
     public readonly struct IndexedSet : ISet<int>, IEquatable<IndexedSet>
