@@ -146,11 +146,11 @@ namespace Arborescence.Search.Specialized
             int end = startIndex + count;
             Debug.Assert(end <= array.Length, "end <= array.Length");
 
-#if NETSTANDARD1_3 || NETSTANDARD2_0 || NET461
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+            Array.Fill(array, value, startIndex, count);
+#else
             for (int i = startIndex; i < end; ++i)
                 array[i] = value;
-#else
-            Array.Fill(array, value, startIndex, count);
 #endif
         }
     }
