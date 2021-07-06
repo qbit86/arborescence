@@ -62,7 +62,7 @@ namespace Arborescence.Models.Compatibility
                 Debug.Assert(_tailByEdge.Count == _headByEdge.Count, "_tailByEdge.Count == _headByEdge.Count");
 
                 int dataLength = 2 + n + m + m + m + m;
-#if NET5
+#if NET5_0_OR_GREATER
                 int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
                 int[] data = new int[dataLength];

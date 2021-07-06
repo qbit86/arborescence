@@ -9,7 +9,7 @@
     /// <remarks>
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
-#if NETSTANDARD2_1 || NETCOREAPP2_1
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
     [Obsolete("Please use Arborescence.Models.SimpleIncidenceGraph instead.")]
 #endif
     public readonly partial struct SimpleIncidenceGraph :

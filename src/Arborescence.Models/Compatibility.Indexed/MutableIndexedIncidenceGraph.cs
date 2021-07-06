@@ -4,7 +4,7 @@
     using System.Diagnostics;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-#if NETSTANDARD2_1 || NETCOREAPP2_1
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
     [Obsolete("Please use Arborescence.Models.MutableIndexedIncidenceGraph instead.")]
 #endif
     public sealed class MutableIndexedIncidenceGraph :
@@ -98,7 +98,7 @@
             int m = EdgeCount;
 
             int dataLength = 2 + n + m + m + m;
-#if NET5
+#if NET5_0_OR_GREATER
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
 #else
             int[] data = new int[dataLength];
