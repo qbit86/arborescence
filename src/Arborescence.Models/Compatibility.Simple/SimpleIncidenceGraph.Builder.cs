@@ -72,7 +72,7 @@
                 }
                 else
                 {
-#if NET5
+#if NET5_0_OR_GREATER
                     edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
 #else
                     edgesOrderedByTail = new Endpoints[m];
