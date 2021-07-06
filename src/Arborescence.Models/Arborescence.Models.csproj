@@ -8,7 +8,8 @@ Commonly used types:
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.13.0</VersionPrefix>
+    <VersionPrefix>0.13.1</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.13</AssemblyVersion>

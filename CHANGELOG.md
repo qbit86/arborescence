@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased] - 2021-07-07
+### Added
+- Models: Missing types for .NET 5 target framework.
+
+### Changed
+- Primitives: `IndexedSet` and `CompactSet` now implement `IReadOnlySet<int>` when targeting .NET 5.
+
 ## [0.13.0] - 2021-06-27
 ### Added
 - Abstractions: Nullable attributes.
