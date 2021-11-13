@@ -24,6 +24,8 @@ namespace Arborescence.Search
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
         where TCostMonoid : IMonoid<TCost>
+        where TVertex : notnull
+        where TEdge : notnull
     {
         private readonly TCostComparer _costComparer;
         private readonly TCostMonoid _costMonoid;

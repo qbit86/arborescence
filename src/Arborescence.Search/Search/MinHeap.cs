@@ -14,6 +14,7 @@ namespace Arborescence.Search
         where TPriorityMap : IReadOnlyDictionary<TElement, TPriority>
         where TIndexInHeapMap : IDictionary<TElement, int>
         where TPriorityComparer : IComparer<TPriority>
+        where TElement : notnull
     {
         private const int Arity = 4;
         private const int Log2Arity = 2;

@@ -23,6 +23,7 @@ namespace Arborescence.Search.Specialized
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
         where TCostMonoid : IMonoid<TCost>
+        where TEdge : notnull
     {
         private readonly TCostComparer _costComparer;
         private readonly TCostMonoid _costMonoid;
