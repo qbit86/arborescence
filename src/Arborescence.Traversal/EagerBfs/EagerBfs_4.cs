@@ -14,6 +14,7 @@ namespace Arborescence.Traversal
     public readonly partial struct EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
+        where TVertex : notnull
     {
         private static void TraverseCore<TColorMap, THandler>(
             TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorByVertex, THandler handler)

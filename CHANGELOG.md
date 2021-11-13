@@ -3,6 +3,7 @@
 ## [Unreleased] - 2021-11-13
 ### Changed
 - Dropped support of `netcoreapp2.1` in favor of `netcoreapp3.1`.
+- Traversal: Added `notnull` constraint for `TVertex` where appropriate.
 
 ## [0.13.1] - 2021-07-07
 ### Added

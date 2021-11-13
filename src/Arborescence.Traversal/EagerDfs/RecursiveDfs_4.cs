@@ -14,6 +14,7 @@ namespace Arborescence.Traversal
     public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
         where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
+        where TVertex : notnull
     {
         private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
 
