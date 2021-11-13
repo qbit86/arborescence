@@ -6,10 +6,11 @@ Commonly used types:
 • IMonoid&lt;T&gt;</Description>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionPrefix>0.13.0</VersionPrefix>
+    <VersionPrefix>0.14.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.13</AssemblyVersion>
+    <AssemblyVersion>0.14</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
