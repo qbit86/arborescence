@@ -73,7 +73,7 @@
 
 ### Changed
 - Traversal: Renamed `Bfs<>` and `Dfs<>` to `EnumerableBfs<>` and `EnumerableDfs<>` for consistency with existing generic types.
-  
+
 ### Removed
 - Abstractions: `netcoreapp3.1` from target frameworks.
 
@@ -85,7 +85,7 @@
 ## [0.8.0] - 2021-01-06
 ### Added
 - Models: `net5.0` as another target framework.
-- Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store. 
+- Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store.
 - Traversal: Another `GenericSearch<>` struct with less type parameters.
 - Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without policy for the vertex set.
 
@@ -97,7 +97,7 @@
 - Marked assemblies as CLS-compliant.
 - Abstractions: Added nullability annotations.
 - Primitives: Replaced throwing of `IndexOutOfRangeException` with `ArgumentOutOfRangeException`.
-- Traversal: Renamed edge and vertex handlers to `EdgeHandler<>` and `VertexHandler<>`. 
+- Traversal: Renamed edge and vertex handlers to `EdgeHandler<>` and `VertexHandler<>`.
 
 ## [0.7.0] - 2020-12-26
 ### Added
@@ -112,7 +112,7 @@
 
 ### Removed
 - Abstractions: `IHeadConcept<>`, `ITailConcept<>`, `IOutEdgesConcept<>`, `IInEdgesConcept<>`.
-- Traversal: `ReverseDfs<>` since its worst-case space complexity is O(_m_). 
+- Traversal: `ReverseDfs<>` since its worst-case space complexity is O(_m_).
 
 ## [0.6.0] - 2020-11-10
 ### Added
@@ -137,7 +137,7 @@
 - Models: Fixed documentation comments.
 
 ### Changed
-- Models: Made `initialVertexCount` optional. 
+- Models: Made `initialVertexCount` optional.
 
 ## [0.4.1] - 2020-10-15
 ### Added
@@ -200,7 +200,7 @@
 ## [0.1.1] - 2020-07-13
 ### Added
 - Generating XML documentation files.
-- Primitives: Basic blocks for building algorithms and data structures. 
+- Primitives: Basic blocks for building algorithms and data structures.
 - Models: Data structures for graphs and policy models to manipulate them.
 - Traversal: Graph traversal algorithms.
 
