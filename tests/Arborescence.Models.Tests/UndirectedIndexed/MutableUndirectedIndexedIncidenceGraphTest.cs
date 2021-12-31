@@ -45,7 +45,7 @@ namespace Arborescence
             foreach (Endpoints endpoints in p.Edges)
                 graph.Add(endpoints.Tail, endpoints.Head);
 
-            HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
+            var expectedEdgeSet = p.Edges.ToHashSet();
             foreach (Endpoints edge in p.Edges)
             {
                 if (edge.Tail == edge.Head)

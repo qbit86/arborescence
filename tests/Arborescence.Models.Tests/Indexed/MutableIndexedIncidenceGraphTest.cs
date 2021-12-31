@@ -42,7 +42,7 @@
             foreach (Endpoints endpoints in p.Edges)
                 graph.Add(endpoints.Tail, endpoints.Head);
 
-            HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
+            var expectedEdgeSet = p.Edges.ToHashSet();
 
             // Act
             HashSet<Endpoints> actualEdgeSet = new();

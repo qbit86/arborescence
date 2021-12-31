@@ -47,7 +47,7 @@
                 builder.Add(endpoints.Tail, endpoints.Head);
 
             Graph graph = builder.ToGraph();
-            HashSet<Endpoints> expectedEdgeSet = p.Edges.ToHashSet();
+            var expectedEdgeSet = p.Edges.ToHashSet();
 
             // Act
             HashSet<Endpoints> actualEdgeSet = new();
