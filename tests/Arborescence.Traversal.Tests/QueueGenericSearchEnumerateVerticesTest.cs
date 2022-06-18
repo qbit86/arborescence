@@ -26,7 +26,7 @@ namespace Arborescence
             byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
             IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
-            ConcurrentQueue<int> fringe = new();
+            ConcurrentQueue<int> frontier = new();
             byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
             Array.Clear(setBackingStore, 0, setBackingStore.Length);
             IndexedSet set = new(setBackingStore);
@@ -46,14 +46,14 @@ namespace Arborescence
                 IndexEnumerator sources = new(sourceCount);
 
                 EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, sources, fringe, set);
+                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, sources, frontier, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
             else
             {
                 int source = graph.VertexCount >> 1;
                 EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, source, fringe, set);
+                using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, source, frontier, set);
                 enumerableSteps.AddEnumerator(vertices);
             }
 
