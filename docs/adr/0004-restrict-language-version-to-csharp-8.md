@@ -47,14 +47,18 @@ Unity 2020.3 partially supports C# 8.
 
 ## See also
 
-- C# language versioning
-    - https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version
-- What's new in C# 8.0
-    - https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8
-- .NET Standard
-    - https://docs.microsoft.com/en-us/dotnet/standard/net-standard
-- Nullable reference types
-    - https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references
-    - https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/attributes/nullable-analysis
-    - https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/nullable-reference-types
-    - https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/upgrade-to-nullable-references
+- C# language versioning  
+    https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version
+- What's new in C# 8.0  
+    https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8
+- .NET Standard  
+    https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+- Nullable reference types  
+    https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references  
+    https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/attributes/nullable-analysis  
+    https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/nullable-reference-types  
+    https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/upgrade-to-nullable-references
+- Languages Versions  
+    https://codingame.com/playgrounds/40701/help-center/languages-versions  
+    https://support.leetcode.com/hc/en-us/articles/360011833974-What-are-the-environments-for-the-programming-languages-  
+    https://support.hackerrank.com/hc/en-us/articles/1500002392722--Execution-Environment-and-Samples
