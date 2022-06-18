@@ -1,5 +1,4 @@
 #if NET7_0_OR_GREATER
-
 namespace Arborescence.Models
 {
     using System.Numerics;
@@ -17,5 +16,4 @@ namespace Arborescence.Models
         public T Combine(T left, T right) => left + right;
     }
 }
-
 #endif
