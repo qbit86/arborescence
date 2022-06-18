@@ -30,7 +30,7 @@ namespace Arborescence.Traversal
         public event VertexHandler<TGraph, TVertex>? DiscoverVertex;
 
         /// <summary>
-        /// Raised when a vertex is taken from the fringe.
+        /// Raised when a vertex is taken from the frontier.
         /// </summary>
         public event VertexHandler<TGraph, TVertex>? ExamineVertex;
 

@@ -11,52 +11,52 @@
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>
     {
         /// <summary>
-        /// Enumerates vertices of the graph in an order specified by the fringe starting from the single source.
+        /// Enumerates vertices of the graph in an order specified by the frontier starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
-        /// <param name="fringe">The collection of discovered vertices which are not finished yet.</param>
+        /// <param name="frontier">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
-        /// <typeparam name="TFringe">The type of the generic queue.</typeparam>
+        /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
-        /// or <paramref name="fringe"/> is <see langword="null"/>,
+        /// or <paramref name="frontier"/> is <see langword="null"/>,
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="fringe"/>
+        /// <see cref="IProducerConsumerCollection{TVertex}.TryAdd"/> for <paramref name="frontier"/>
         /// returns <see langword="false"/>.
         /// </exception>
-        public IEnumerator<TVertex> EnumerateVertices<TFringe, TExploredSet>(
-            TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
-            where TFringe : IProducerConsumerCollection<TVertex>
+        public IEnumerator<TVertex> EnumerateVertices<TFrontier, TExploredSet>(
+            TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
+            where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
 
-            if (fringe is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(fringe));
+            if (frontier is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
 
             if (exploredSet is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, source, fringe, exploredSet);
+            return EnumerateVerticesIterator(graph, source, frontier, exploredSet);
         }
 
-        private static IEnumerator<TVertex> EnumerateVerticesIterator<TFringe, TExploredSet>(
-            TGraph graph, TVertex source, TFringe fringe, TExploredSet exploredSet)
-            where TFringe : IProducerConsumerCollection<TVertex>
+        private static IEnumerator<TVertex> EnumerateVerticesIterator<TFrontier, TExploredSet>(
+            TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
+            where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
             exploredSet.Add(source);
             yield return source;
-            if (!fringe.TryAdd(source))
-                throw new InvalidOperationException(nameof(fringe.TryAdd));
+            if (!frontier.TryAdd(source))
+                throw new InvalidOperationException(nameof(frontier.TryAdd));
 
-            while (fringe.TryTake(out TVertex u))
+            while (frontier.TryTake(out TVertex u))
             {
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(u));
@@ -75,8 +75,8 @@
 
                         exploredSet.Add(v);
                         yield return v;
-                        if (!fringe.TryAdd(v))
-                            throw new InvalidOperationException(nameof(fringe.TryAdd));
+                        if (!frontier.TryAdd(v))
+                            throw new InvalidOperationException(nameof(frontier.TryAdd));
                     }
                 }
                 finally
