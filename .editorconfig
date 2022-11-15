@@ -15,9 +15,11 @@ indent_size = 2
 indent_style = tab
 
 [*.md]
-ij_formatter_enabled = false
 max_line_length = 2147483647
 trim_trailing_whitespace = false
+
+[*.{md,DotSettings}]
+ij_formatter_enabled = false
 
 [*.{cs,vb}]
 dotnet_code_quality_unused_parameters = non_public:suggestion
