@@ -1,2 +1,5 @@
 [Arborescence.Abstractions.csproj]
 ij_formatter_enabled = false
+
+[*.cs]
+resharper_condition_is_always_true_or_false_according_to_nullable_api_contract_highlighting = false:suggestion
