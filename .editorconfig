@@ -21,6 +21,9 @@ trim_trailing_whitespace = false
 [*.{md,DotSettings}]
 ij_formatter_enabled = false
 
+[*.{csproj,html,props,resx,shproj,targets,xml}]
+resharper_space_before_self_closing = true
+
 [*.{cs,vb}]
 dotnet_code_quality_unused_parameters = non_public:suggestion
 dotnet_remove_unnecessary_suppression_exclusions = none
