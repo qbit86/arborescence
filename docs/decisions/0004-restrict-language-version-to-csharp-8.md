@@ -1,7 +1,8 @@
+---
+status: superseded by [ADR-0005](0005-restrict-language-version-to-csharp-9)
+date: 2022-11-16
+---
 # Restrict language version to C# 8
-
-* Status: accepted
-* Date: 2021-06-19
 
 ## Context and Problem Statement
 
