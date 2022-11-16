@@ -124,7 +124,7 @@ namespace Arborescence.Models.Compatibility
             Span<int> destTailByEdge = data.AsSpan(2 + n + m + m + m, m);
             _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-            return new UndirectedIndexedIncidenceGraph(data);
+            return new(data);
         }
 
         /// <inheritdoc/>
@@ -164,7 +164,7 @@ namespace Arborescence.Models.Compatibility
                 return ArrayPrefixEnumerator<int>.Empty;
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
-            return new ArrayPrefixEnumerator<int>(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
+            return new(outEdges.Array ?? Array.Empty<int>(), outEdges.Count);
         }
 
         /// <summary>

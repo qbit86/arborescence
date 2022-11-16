@@ -121,7 +121,7 @@ namespace Arborescence.Models
             Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
             _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-            return new IndexedIncidenceGraph(data);
+            return new(data);
         }
 
         /// <inheritdoc/>

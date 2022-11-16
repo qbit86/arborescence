@@ -107,7 +107,7 @@ namespace Arborescence.Models.Compatibility
                 _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
                 _vertexCount = 0;
 
-                return new UndirectedIndexedIncidenceGraph(data);
+                return new(data);
             }
 
             /// <summary>

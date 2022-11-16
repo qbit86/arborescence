@@ -108,7 +108,7 @@ namespace Arborescence.Models
                 destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
             }
 
-            return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+            return new(data, edgesOrderedByTail);
         }
 
         /// <inheritdoc/>

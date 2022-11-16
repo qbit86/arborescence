@@ -148,7 +148,7 @@ namespace Arborescence.Search
 
         private readonly TPriority GetPriorityOrThrow(TElement element)
         {
-            if (_priorityByElement.TryGetValue(element, out TPriority priority))
+            if (_priorityByElement.TryGetValue(element, out TPriority? priority))
                 return priority;
 
             throw new InvalidOperationException("Priority was not found for the given element.");
@@ -214,8 +214,8 @@ namespace Arborescence.Search
 
         private readonly int Compare(TElement left, TElement right)
         {
-            bool hasLeft = _priorityByElement.TryGetValue(left, out TPriority leftPriority);
-            bool hasRight = _priorityByElement.TryGetValue(right, out TPriority rightPriority);
+            bool hasLeft = _priorityByElement.TryGetValue(left, out TPriority? leftPriority);
+            bool hasRight = _priorityByElement.TryGetValue(right, out TPriority? rightPriority);
             if (!hasLeft)
                 return hasRight ? 1 : 0;
 

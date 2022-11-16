@@ -33,7 +33,7 @@ namespace Arborescence
         /// <summary>
         /// Gets an empty <see cref="ArrayPrefixEnumerator{T}"/> struct.
         /// </summary>
-        public static ArrayPrefixEnumerator<T> Empty { get; } = new ArrayPrefixEnumerator<T>(Array.Empty<T>(), 0);
+        public static ArrayPrefixEnumerator<T> Empty { get; } = new(Array.Empty<T>(), 0);
 
         /// <inheritdoc/>
         public readonly T Current

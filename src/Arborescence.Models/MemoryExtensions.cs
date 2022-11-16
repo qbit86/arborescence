@@ -13,7 +13,7 @@ namespace Arborescence.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static Span<T> AsSpan<T>(this ArrayPrefix<T> arrayPrefix)
         {
-            return new Span<T>(arrayPrefix.Array, 0, arrayPrefix.Count);
+            return new(arrayPrefix.Array, 0, arrayPrefix.Count);
         }
     }
 }

@@ -99,7 +99,7 @@ namespace Arborescence.Models
                 _currentMaxTail = 0;
                 _vertexCount = 0;
 
-                return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+                return new(data, edgesOrderedByTail);
             }
 
             /// <summary>

@@ -16,7 +16,7 @@ namespace Arborescence.Traversal
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TVertex : notnull
     {
-        private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
+        private static readonly Func<TGraph, TVertex, bool> s_false = (_, _) => false;
 
         private static void TraverseCore<TColorMap, THandler>(TGraph graph, TVertex u, TColorMap colorByVertex,
             THandler handler, Func<TGraph, TVertex, bool> terminationCondition)
@@ -37,7 +37,7 @@ namespace Arborescence.Traversal
             try
             {
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                stack.Add(new StackFrame<TVertex, TEdge, TEdgeEnumerator>(u, outEdges));
+                stack.Add(new(u, outEdges));
 
                 while (stack.TryTake(out StackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                 {
@@ -55,7 +55,7 @@ namespace Arborescence.Traversal
                         }
 
                         TEdge e = edges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
+                        if (!graph.TryGetHead(e, out TVertex? v))
                             continue;
 
                         handler.OnExamineEdge(graph, e);
@@ -63,7 +63,7 @@ namespace Arborescence.Traversal
                         if (color == Color.None || color == Color.White)
                         {
                             handler.OnTreeEdge(graph, e);
-                            stack.Add(new StackFrame<TVertex, TEdge, TEdgeEnumerator>(u, e, edges));
+                            stack.Add(new(u, e, edges));
                             u = v;
                             colorByVertex[u] = Color.Gray;
                             handler.OnDiscoverVertex(graph, u);
