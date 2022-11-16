@@ -103,7 +103,7 @@ namespace Arborescence.Models
                 _tailByEdge = ArrayPrefixBuilder.Release(_tailByEdge, false);
                 _vertexCount = 0;
 
-                return new IndexedIncidenceGraph(data);
+                return new(data);
             }
 
             /// <summary>

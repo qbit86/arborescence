@@ -24,7 +24,7 @@ namespace Arborescence.Traversal
         public IEnumerator<KeyValuePair<int, Color>> GetEnumerator()
         {
             for (int i = 0; i < _items.Length; ++i)
-                yield return new KeyValuePair<int, Color>(i, (Color)_items[i]);
+                yield return new(i, (Color)_items[i]);
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

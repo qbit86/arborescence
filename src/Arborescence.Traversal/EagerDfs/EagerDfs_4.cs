@@ -37,7 +37,7 @@ namespace Arborescence.Traversal
             try
             {
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
-                stack.Add(new StackFrame<TVertex, TEdge, TEdgeEnumerator>(u, outEdges));
+                stack.Add(new(u, outEdges));
 
                 while (stack.TryTake(out StackFrame<TVertex, TEdge, TEdgeEnumerator> stackFrame))
                 {
@@ -63,7 +63,7 @@ namespace Arborescence.Traversal
                         if (color == Color.None || color == Color.White)
                         {
                             handler.OnTreeEdge(graph, e);
-                            stack.Add(new StackFrame<TVertex, TEdge, TEdgeEnumerator>(u, e, edges));
+                            stack.Add(new(u, e, edges));
                             u = v;
                             colorByVertex[u] = Color.Gray;
                             handler.OnDiscoverVertex(graph, u);

@@ -72,7 +72,7 @@
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
-            return new ArraySegmentEnumerator<Endpoints>(_edgesOrderedByTail, lowerBound, upperBound);
+            return new(_edgesOrderedByTail, lowerBound, upperBound);
         }
 
         /// <inheritdoc/>

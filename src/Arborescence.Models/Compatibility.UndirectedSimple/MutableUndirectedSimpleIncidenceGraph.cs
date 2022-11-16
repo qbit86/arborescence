@@ -111,7 +111,7 @@
                 destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
             }
 
-            return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+            return new(data, edgesOrderedByTail);
         }
 
         /// <inheritdoc/>
@@ -135,7 +135,7 @@
                 return ArrayPrefixEnumerator<Endpoints>.Empty;
 
             ArrayPrefix<Endpoints> outEdges = _outEdgesByVertex[vertex];
-            return new ArrayPrefixEnumerator<Endpoints>(outEdges.Array ?? Array.Empty<Endpoints>(), outEdges.Count);
+            return new(outEdges.Array ?? Array.Empty<Endpoints>(), outEdges.Count);
         }
 
         /// <summary>

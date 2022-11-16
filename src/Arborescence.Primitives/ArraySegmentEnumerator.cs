@@ -39,7 +39,7 @@ namespace Arborescence
         /// <summary>
         /// Gets an empty <see cref="ArraySegmentEnumerator{T}"/> struct.
         /// </summary>
-        public static ArraySegmentEnumerator<T> Empty { get; } = new ArraySegmentEnumerator<T>(Array.Empty<T>(), 0, 0);
+        public static ArraySegmentEnumerator<T> Empty { get; } = new(Array.Empty<T>(), 0, 0);
 
         /// <inheritdoc/>
         public readonly T Current

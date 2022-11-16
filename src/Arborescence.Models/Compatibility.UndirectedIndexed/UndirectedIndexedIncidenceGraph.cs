@@ -88,7 +88,7 @@ namespace Arborescence.Models.Compatibility
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + VertexCount;
-            return new ArraySegmentEnumerator<int>(_data, offset + lowerBound, offset + upperBound);
+            return new(_data, offset + lowerBound, offset + upperBound);
         }
 
         /// <inheritdoc/>

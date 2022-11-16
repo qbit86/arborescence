@@ -23,7 +23,7 @@ namespace Arborescence
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array)
         {
-            return new ArrayPrefix<T>(array);
+            return new(array);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Arborescence
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayPrefix<T> Create<T>(T[] array, int count)
         {
-            return new ArrayPrefix<T>(array, count);
+            return new(array, count);
         }
     }
 
@@ -55,7 +55,7 @@ namespace Arborescence
         /// <summary>
         /// Represents the empty array prefix.
         /// </summary>
-        public static ArrayPrefix<T> Empty { get; } = new ArrayPrefix<T>(new T[0]);
+        public static ArrayPrefix<T> Empty { get; } = new(new T[0]);
 #pragma warning restore CA1825 // Avoid zero-length array allocations.
 
         private readonly T[]? _array;
@@ -133,7 +133,7 @@ namespace Arborescence
         public Enumerator GetEnumerator()
         {
             ThrowInvalidOperationIfDefault();
-            return new Enumerator(_array!, _count);
+            return new(_array!, _count);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Arborescence
         public ArrayPrefixEnumerator<T> Enumerate()
         {
             ThrowInvalidOperationIfDefault();
-            return new ArrayPrefixEnumerator<T>(_array!, _count);
+            return new(_array!, _count);
         }
 
         /// <inheritdoc/>
@@ -195,7 +195,7 @@ namespace Arborescence
             if ((uint)index > (uint)_count)
                 ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-            return new ArraySegment<T>(_array!, index, _count - index);
+            return new(_array!, index, _count - index);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Arborescence
             if ((uint)index > (uint)_count || (uint)count > (uint)(_count - index))
                 ArrayPrefixHelper.ThrowArgumentOutOfRangeException(nameof(index));
 
-            return new ArraySegment<T>(_array!, index, count);
+            return new(_array!, index, count);
         }
 
         /// <summary>
