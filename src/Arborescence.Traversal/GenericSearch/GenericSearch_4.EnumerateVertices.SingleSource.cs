@@ -56,7 +56,7 @@
             if (!frontier.TryAdd(source))
                 throw new InvalidOperationException(nameof(frontier.TryAdd));
 
-            while (frontier.TryTake(out TVertex u))
+            while (frontier.TryTake(out TVertex? u))
             {
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(u));
@@ -67,7 +67,7 @@
                     while (outEdges.MoveNext())
                     {
                         TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex v))
+                        if (!graph.TryGetHead(e, out TVertex? v))
                             continue;
 
                         if (exploredSet.Contains(v))
