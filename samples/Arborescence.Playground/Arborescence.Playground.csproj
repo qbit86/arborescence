@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Misnomer.Rist" Version="0.4.1" />
+    <PackageReference Include="Misnomer.Rist" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />

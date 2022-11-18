@@ -8,7 +8,7 @@ insert_final_newline = true
 max_line_length = 120
 trim_trailing_whitespace = true
 
-[*.{csproj,gv,props,resx,shproj,targets,xml}]
+[*.{config,csproj,gv,props,resx,shproj,targets,xml}]
 indent_size = 2
 
 [*.{sln,sln.DotSettings}]
@@ -21,7 +21,7 @@ trim_trailing_whitespace = false
 [*.{md,DotSettings}]
 ij_formatter_enabled = false
 
-[*.{csproj,html,props,resx,shproj,targets,xml}]
+[*.{config,csproj,html,props,resx,shproj,targets,xml}]
 resharper_space_before_self_closing = true
 
 [*.{cs,vb}]
