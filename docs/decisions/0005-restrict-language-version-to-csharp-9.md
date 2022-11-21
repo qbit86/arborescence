@@ -37,7 +37,7 @@ This is specified in one of the _Directory.Build.props_ files:
 
 ### Consequences
 
-* Good, because C# 9 is supported with the most popular online coding platforms.
+* Good, because C# 9 is supported by the most popular online coding platforms.
 * Good, because C# 9 is both binary (via .NET Standard 2.1) and source code compatible with Unity 2021.3.
 
 ## Pros and Cons of the Options
@@ -48,6 +48,7 @@ This is specified in one of the _Directory.Build.props_ files:
 
 ### C# 10
 
+* Good, because is supported by the most popular online coding platforms.
 * Bad, because is not supported by Unity 2021.3.
 
 ### C# 11
