@@ -123,13 +123,6 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(Endpoints edge, out int tail)
-        {
-            tail = edge.Tail;
-            return unchecked((uint)tail < (uint)VertexCount);
-        }
-
-        /// <inheritdoc/>
         public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
@@ -140,6 +133,13 @@ namespace Arborescence.Models
                 return ArraySegment<Endpoints>.Empty.GetEnumerator();
 
             return new ArraySegment<Endpoints>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(Endpoints edge, out int tail)
+        {
+            tail = edge.Tail;
+            return unchecked((uint)tail < (uint)VertexCount);
         }
 
         /// <summary>

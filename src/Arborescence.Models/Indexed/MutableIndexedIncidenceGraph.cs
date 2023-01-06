@@ -142,19 +142,6 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(int edge, out int tail)
-        {
-            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = _tailByEdge[edge];
-            return true;
-        }
-
-        /// <inheritdoc/>
         public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
@@ -165,6 +152,19 @@ namespace Arborescence.Models
                 return ArraySegment<int>.Empty.GetEnumerator();
 
             return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(int edge, out int tail)
+        {
+            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
+            {
+                tail = default;
+                return false;
+            }
+
+            tail = _tailByEdge[edge];
+            return true;
         }
 
         /// <summary>
