@@ -5,6 +5,8 @@ namespace Arborescence
     /// <summary>
     /// Represents an incidence concept — an access to the head of each edge.
     /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
     public interface IHeadIncidence<TVertex, in TEdge>
     {
         /// <summary>

@@ -5,6 +5,8 @@ namespace Arborescence
     /// <summary>
     /// Represents an incidence concept — an access to the tail of each edge.
     /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
     public interface ITailIncidence<TVertex, in TEdge>
     {
         /// <summary>
