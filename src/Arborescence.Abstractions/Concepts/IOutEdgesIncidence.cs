@@ -1,14 +1,11 @@
 namespace Arborescence
 {
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/IncidenceGraph.html
-
     /// <summary>
-    /// Represents an incidence graph — a graph with efficient access to the out-edges of each vertex.
+    /// Represents an incidence concept — an efficient access to the out-edges of each vertex.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
-    public interface IIncidenceGraph<TVertex, in TEdge, out TEdges> : IGraph<TVertex, TEdge>
+    public interface IOutEdgesIncidence<in TVertex, out TEdges>
     {
         /// <summary>
         /// Enumerates the out-edges of the vertex.

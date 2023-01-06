@@ -4,9 +4,13 @@ namespace Arborescence.Models
     using System;
     using System.Diagnostics;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public sealed class MutableUndirectedIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IHeadIncidence<int, int>,
+        ITailIncidence<int, int>,
+        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<UndirectedIndexedIncidenceGraph, int, int>,
         IDisposable
     {
@@ -141,6 +145,19 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
+        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
+        {
+            if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
+                return ArraySegment<int>.Empty.GetEnumerator();
+
+            ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
+            if (outEdges.Array is null)
+                return ArraySegment<int>.Empty.GetEnumerator();
+
+            return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             int edgeIndex = edge < 0 ? ~edge : edge;
@@ -153,19 +170,6 @@ namespace Arborescence.Models
 
             tail = endpointByEdge[edgeIndex];
             return true;
-        }
-
-        /// <inheritdoc/>
-        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
-        {
-            if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
-                return ArraySegment<int>.Empty.GetEnumerator();
-
-            ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
-            if (outEdges.Array is null)
-                return ArraySegment<int>.Empty.GetEnumerator();
-
-            return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
         }
 
         /// <summary>

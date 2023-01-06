@@ -12,7 +12,7 @@ namespace Arborescence.Traversal
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     public readonly partial struct EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
-        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
+        where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TVertex : notnull
     {

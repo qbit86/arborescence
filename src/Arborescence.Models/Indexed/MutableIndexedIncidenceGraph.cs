@@ -4,9 +4,13 @@ namespace Arborescence.Models
     using System;
     using System.Diagnostics;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public sealed class MutableIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IHeadIncidence<int, int>,
+        ITailIncidence<int, int>,
+        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
         IDisposable
     {
@@ -138,19 +142,6 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(int edge, out int tail)
-        {
-            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = _tailByEdge[edge];
-            return true;
-        }
-
-        /// <inheritdoc/>
         public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
@@ -161,6 +152,19 @@ namespace Arborescence.Models
                 return ArraySegment<int>.Empty.GetEnumerator();
 
             return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(int edge, out int tail)
+        {
+            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
+            {
+                tail = default;
+                return false;
+            }
+
+            tail = _tailByEdge[edge];
+            return true;
         }
 
         /// <summary>

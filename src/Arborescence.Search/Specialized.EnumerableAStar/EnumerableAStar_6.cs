@@ -19,7 +19,7 @@ namespace Arborescence.Search.Specialized
     /// <typeparam name="TCostComparer">The type of the cost comparer.</typeparam>
     /// <typeparam name="TCostMonoid">The type of the cost monoid.</typeparam>
     public readonly struct EnumerableAStar<TGraph, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
-        where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
+        where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
         where TCostMonoid : IMonoid<TCost>
