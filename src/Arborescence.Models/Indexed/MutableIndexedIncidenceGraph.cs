@@ -4,7 +4,9 @@ namespace Arborescence.Models
     using System;
     using System.Diagnostics;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public sealed class MutableIndexedIncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,

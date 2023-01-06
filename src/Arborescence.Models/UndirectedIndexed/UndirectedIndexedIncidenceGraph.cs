@@ -6,7 +6,9 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public readonly partial struct UndirectedIndexedIncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,

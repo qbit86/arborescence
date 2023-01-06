@@ -6,7 +6,9 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     /// <remarks>
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
