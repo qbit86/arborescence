@@ -10,7 +10,7 @@ internal static class GraphHelpers
 
     internal static void PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
         TGraphBuilder builder, int vertexCount, double densityPower)
-        where TGraph : IIncidenceGraph<int, TEdge, TEdges>
+        where TGraph : IEdgeIncidence<int, TEdge>, IVertexIncidence<int, TEdges>
         where TGraphBuilder : IGraphBuilder<TGraph, int, TEdge>
     {
         int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
