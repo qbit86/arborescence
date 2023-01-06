@@ -3,6 +3,7 @@ namespace Arborescence.Models
 {
     using System;
     using System.Diagnostics;
+    using static TryHelpers;
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -129,17 +130,8 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool TryGetHead(int edge, out int head)
-        {
-            if (unchecked((uint)edge >= (uint)_headByEdge.Count))
-            {
-                head = default;
-                return false;
-            }
-
-            head = _headByEdge[edge];
-            return true;
-        }
+        public bool TryGetHead(int edge, out int head) =>
+            unchecked((uint)edge < (uint)_headByEdge.Count) ? Some(_headByEdge[edge], out head) : None(out head);
 
         /// <inheritdoc/>
         public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
@@ -155,17 +147,8 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(int edge, out int tail)
-        {
-            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = _tailByEdge[edge];
-            return true;
-        }
+        public bool TryGetTail(int edge, out int tail) =>
+            unchecked((uint)edge < (uint)_tailByEdge.Count) ? Some(_tailByEdge[edge], out tail) : None(out tail);
 
         /// <summary>
         /// Ensures that the graph can hold the specified number of vertices without growing.

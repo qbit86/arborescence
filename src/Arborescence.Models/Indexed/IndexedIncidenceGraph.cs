@@ -5,6 +5,7 @@ namespace Arborescence.Models
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
+    using static TryHelpers;
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -51,28 +52,14 @@ namespace Arborescence.Models
         public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> tailByEdge = GetTailByEdge();
-            if (unchecked((uint)edge >= (uint)tailByEdge.Length))
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = tailByEdge[edge];
-            return true;
+            return unchecked((uint)edge < (uint)tailByEdge.Length) ? Some(tailByEdge[edge], out tail) : None(out tail);
         }
 
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> headByEdge = GetHeadByEdge();
-            if (unchecked((uint)edge >= (uint)headByEdge.Length))
-            {
-                head = default;
-                return false;
-            }
-
-            head = headByEdge[edge];
-            return true;
+            return unchecked((uint)edge < (uint)headByEdge.Length) ? Some(headByEdge[edge], out head) : None(out head);
         }
 
         /// <inheritdoc/>
