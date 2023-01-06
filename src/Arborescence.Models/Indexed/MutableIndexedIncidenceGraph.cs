@@ -6,9 +6,9 @@ namespace Arborescence.Models
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableIndexedIncidenceGraph :
-        IEdgeIncidence<int, int>,
-        IBackwardEdgeIncidence<int, int>,
-        IVertexIncidence<int, ArraySegment<int>.Enumerator>,
+        IHeadIncidence<int, int>,
+        ITailIncidence<int, int>,
+        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
         IDisposable
     {

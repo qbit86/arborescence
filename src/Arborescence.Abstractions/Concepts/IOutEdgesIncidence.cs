@@ -5,7 +5,7 @@ namespace Arborescence
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
-    public interface IVertexIncidence<in TVertex, out TEdges>
+    public interface IOutEdgesIncidence<in TVertex, out TEdges>
     {
         /// <summary>
         /// Enumerates the out-edges of the vertex.

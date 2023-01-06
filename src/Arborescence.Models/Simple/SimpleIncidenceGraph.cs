@@ -11,9 +11,9 @@ namespace Arborescence.Models
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
     public readonly partial struct SimpleIncidenceGraph :
-        IEdgeIncidence<int, Endpoints>,
-        IBackwardEdgeIncidence<int, Endpoints>,
-        IVertexIncidence<int, ArraySegment<Endpoints>.Enumerator>,
+        IHeadIncidence<int, Endpoints>,
+        ITailIncidence<int, Endpoints>,
+        IOutEdgesIncidence<int, ArraySegment<Endpoints>.Enumerator>,
         IEquatable<SimpleIncidenceGraph>
     {
         // Layout:

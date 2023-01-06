@@ -9,7 +9,7 @@ using Models;
 using Workbench;
 
 internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : IEnumerable<object[]>
-    where TGraph : IEdgeIncidence<int, TEdge>, IVertexIncidence<int, TEdges>
+    where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdges>
     where TGraphBuilder : IGraphBuilder<TGraph, int, TEdge>
 {
     private const int LowerBound = 1;

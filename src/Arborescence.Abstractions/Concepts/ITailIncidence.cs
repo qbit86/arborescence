@@ -5,7 +5,7 @@ namespace Arborescence
     /// <summary>
     /// Represents an incidence concept — an access to the tail of each edge.
     /// </summary>
-    public interface IBackwardEdgeIncidence<TVertex, in TEdge>
+    public interface ITailIncidence<TVertex, in TEdge>
     {
         /// <summary>
         /// Gets the vertex associated with the specified edge as its tail.
