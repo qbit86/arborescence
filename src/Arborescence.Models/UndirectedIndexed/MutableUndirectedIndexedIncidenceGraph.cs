@@ -3,6 +3,7 @@ namespace Arborescence.Models
 {
     using System;
     using System.Diagnostics;
+    using static TryHelpers;
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -134,14 +135,7 @@ namespace Arborescence.Models
         {
             int edgeIndex = edge < 0 ? ~edge : edge;
             ArrayPrefix<int> endpointByEdge = edge < 0 ? _tailByEdge : _headByEdge;
-            if (edgeIndex >= endpointByEdge.Count)
-            {
-                head = default;
-                return false;
-            }
-
-            head = endpointByEdge[edgeIndex];
-            return true;
+            return edgeIndex < endpointByEdge.Count ? Some(endpointByEdge[edgeIndex], out head) : None(out head);
         }
 
         /// <inheritdoc/>
@@ -162,14 +156,7 @@ namespace Arborescence.Models
         {
             int edgeIndex = edge < 0 ? ~edge : edge;
             ArrayPrefix<int> endpointByEdge = edge < 0 ? _headByEdge : _tailByEdge;
-            if (edgeIndex >= endpointByEdge.Count)
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = endpointByEdge[edgeIndex];
-            return true;
+            return edgeIndex < endpointByEdge.Count ? Some(endpointByEdge[edgeIndex], out tail) : None(out tail);
         }
 
         /// <summary>
