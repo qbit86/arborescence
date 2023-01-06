@@ -7,6 +7,8 @@ namespace Arborescence.Models
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public sealed class MutableIndexedIncidenceGraph :
         IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IEdgeIncidence<int, int>,
+        IVertexIncidence<int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
         IDisposable
     {

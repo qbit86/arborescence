@@ -8,7 +8,10 @@ namespace Arborescence.Models
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
     public readonly partial struct UndirectedIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>, IEquatable<UndirectedIndexedIncidenceGraph>
+        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IEdgeIncidence<int, int>,
+        IVertexIncidence<int, ArraySegment<int>.Enumerator>,
+        IEquatable<UndirectedIndexedIncidenceGraph>
     {
         // Layout:
         // 1    | n — the number of vertices

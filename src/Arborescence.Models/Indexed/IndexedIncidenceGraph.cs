@@ -7,7 +7,10 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
 
     /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
-    public readonly partial struct IndexedIncidenceGraph : IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+    public readonly partial struct IndexedIncidenceGraph :
+        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IEdgeIncidence<int, int>,
+        IVertexIncidence<int, ArraySegment<int>.Enumerator>,
         IEquatable<IndexedIncidenceGraph>
     {
         // Layout:

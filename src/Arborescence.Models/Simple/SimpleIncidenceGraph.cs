@@ -12,6 +12,8 @@ namespace Arborescence.Models
     /// </remarks>
     public readonly partial struct SimpleIncidenceGraph :
         IIncidenceGraph<int, Endpoints, ArraySegment<Endpoints>.Enumerator>,
+        IEdgeIncidence<int, Endpoints>,
+        IVertexIncidence<int, ArraySegment<Endpoints>.Enumerator>,
         IEquatable<SimpleIncidenceGraph>
     {
         // Layout:
