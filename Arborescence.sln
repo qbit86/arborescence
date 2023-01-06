@@ -60,6 +60,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Nullable", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Search", "src\Arborescence.Search\Arborescence.Search.csproj", "{0173C1C6-8139-4670-9310-D08FE6DD5011}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arborescence.Shared", "Arborescence.Shared", "{0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.TryHelpers", "src\Arborescence.Shared\Arborescence.TryHelpers\Arborescence.TryHelpers.shproj", "{C4022A90-DF68-4909-BC8F-DED645E16098}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
@@ -155,6 +159,8 @@ Global
 		{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{81A3650F-6933-44B9-B0E8-2FA1BD3F3686} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{0173C1C6-8139-4670-9310-D08FE6DD5011} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+		{0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+		{C4022A90-DF68-4909-BC8F-DED645E16098} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
