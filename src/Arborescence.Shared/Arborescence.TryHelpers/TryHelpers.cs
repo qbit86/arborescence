@@ -1,8 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-
-namespace Arborescence
+﻿namespace Arborescence
 {
+    using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
+
     internal static class TryHelpers
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
