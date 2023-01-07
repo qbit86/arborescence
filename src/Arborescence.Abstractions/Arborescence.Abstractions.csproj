@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>The interface for graphs to be examined and manipulated in a data-structure agnostic fashion.
 Commonly used types:
-• IHeadIncidence&lt;TVertex, in TEdge&gt;
-• IOutEdgesIncidence&lt;in TVertex, out TEdges&gt;
-• IAdjacency&lt;in TVertex, out TVertices&gt;
+• IHeadIncidence&lt;TVertex, TEdge&gt;
+• IOutEdgesIncidence&lt;TVertex, TEdges&gt;
+• IAdjacency&lt;TVertex, TVertices&gt;
 • IMonoid&lt;T&gt;</Description>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
