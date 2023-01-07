@@ -288,7 +288,7 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-arborescence-0.14.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.14.0...HEAD
 
 [0.14.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.13.1...arborescence-0.14.0
 
