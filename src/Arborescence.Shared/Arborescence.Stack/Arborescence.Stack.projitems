@@ -6,7 +6,7 @@
     <SharedGUID>63F46A48-B91B-4AA8-AB6F-A5FC6FD74B5B</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Arborescence.Stack</Import_RootNamespace>
+    <Import_RootNamespace>Arborescence</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Stack.cs" />
