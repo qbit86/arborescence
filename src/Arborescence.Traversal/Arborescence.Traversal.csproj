@@ -12,6 +12,7 @@ Commonly used types:
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.14</AssemblyVersion>
+    <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>netcoreapp3.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -25,7 +26,7 @@ Commonly used types:
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All"/>
   </ItemGroup>
   <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
 </Project>
