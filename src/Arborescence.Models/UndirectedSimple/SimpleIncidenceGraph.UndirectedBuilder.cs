@@ -94,7 +94,7 @@ namespace Arborescence.Models
 
                 _vertexCount = 0;
 
-                return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+                return new(data, edgesOrderedByTail);
             }
 
             /// <summary>

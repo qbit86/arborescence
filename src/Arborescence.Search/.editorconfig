@@ -1,6 +1,9 @@
 [*.cs]
 dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types
 
+[EnumerableAStar_6.cs]
+resharper_assign_null_to_not_null_attribute_highlighting = none # AssignNullToNotNullAttribute
+
 [EnumerableAStar_7.cs]
 dotnet_diagnostic.CA1062.severity = suggestion # Validate arguments of public methods
 

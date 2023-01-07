@@ -1,6 +1,6 @@
 # Arborescence Graph Library
 
-Undirected graphs are basically “duplicated” directed graphs, but storage is more efficient than in case of naive edge duplication.
+Undirected graphs are basically “duplicated” directed graphs, but storage is more efficient than in the case of naive edge duplication.
 
 ## Storage Layout
 

@@ -1,74 +1,73 @@
-﻿namespace Arborescence
+﻿namespace Arborescence;
+
+using System;
+using System.Buffers;
+using System.Collections.Generic;
+using BenchmarkDotNet.Attributes;
+using Models;
+using Traversal;
+using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+
+[MemoryDiagnoser]
+public abstract class CompactSetBenchmark
 {
-    using System;
-    using System.Buffers;
-    using System.Collections.Generic;
-    using BenchmarkDotNet.Attributes;
-    using Models;
-    using Traversal;
-    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+    private byte[] _compactExploredSet = Array.Empty<byte>();
+    private byte[] _fastExploredSet = Array.Empty<byte>();
 
-    [MemoryDiagnoser]
-    public abstract class CompactSetBenchmark
+    protected CompactSetBenchmark()
     {
-        private byte[] _compactExploredSet = Array.Empty<byte>();
-        private byte[] _fastExploredSet = Array.Empty<byte>();
+        CompactDfs = default;
+        FastDfs = default;
+    }
 
-        protected CompactSetBenchmark()
-        {
-            CompactDfs = default;
-            FastDfs = default;
-        }
+    [Params(10, 100, 1000, 10000)]
+    public int VertexCount { get; set; }
 
-        [Params(10, 100, 1000, 10000)]
-        public int VertexCount { get; set; }
+    private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> CompactDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> CompactDfs { get; }
+    private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> FastDfs { get; }
 
-        private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> FastDfs { get; }
+    private IndexedIncidenceGraph Graph { get; set; }
 
-        private IndexedIncidenceGraph Graph { get; set; }
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        Graph = GraphHelper.Default.GetGraph(VertexCount);
 
-        [GlobalSetup]
-        public void GlobalSetup()
-        {
-            Graph = GraphHelper.Default.GetGraph(VertexCount);
+        _compactExploredSet = ArrayPool<byte>.Shared.Rent(CompactSet.GetByteCount(Graph.VertexCount));
+        _fastExploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
+    }
 
-            _compactExploredSet = ArrayPool<byte>.Shared.Rent(CompactSet.GetByteCount(Graph.VertexCount));
-            _fastExploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
-        }
+    [GlobalCleanup]
+    public void GlobalCleanup()
+    {
+        ArrayPool<byte>.Shared.Return(_compactExploredSet, true);
+        _compactExploredSet = Array.Empty<byte>();
+        ArrayPool<byte>.Shared.Return(_fastExploredSet, true);
+        _fastExploredSet = Array.Empty<byte>();
+    }
 
-        [GlobalCleanup]
-        public void GlobalCleanup()
-        {
-            ArrayPool<byte>.Shared.Return(_compactExploredSet, true);
-            _compactExploredSet = Array.Empty<byte>();
-            ArrayPool<byte>.Shared.Return(_fastExploredSet, true);
-            _fastExploredSet = Array.Empty<byte>();
-        }
+    [Benchmark(Baseline = true)]
+    public int Fast()
+    {
+        Array.Clear(_fastExploredSet, 0, _fastExploredSet.Length);
+        using IEnumerator<int> steps = FastDfs.EnumerateEdges(Graph, 0, new IndexedSet(_fastExploredSet));
+        int count = 0;
+        while (steps.MoveNext())
+            ++count;
 
-        [Benchmark(Baseline = true)]
-        public int Fast()
-        {
-            Array.Clear(_fastExploredSet, 0, _fastExploredSet.Length);
-            using IEnumerator<int> steps = FastDfs.EnumerateEdges(Graph, 0, new IndexedSet(_fastExploredSet));
-            int count = 0;
-            while (steps.MoveNext())
-                ++count;
+        return count;
+    }
 
-            return count;
-        }
+    [Benchmark]
+    public int Compact()
+    {
+        Array.Clear(_compactExploredSet, 0, _compactExploredSet.Length);
+        using IEnumerator<int> steps = CompactDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
+        int count = 0;
+        while (steps.MoveNext())
+            ++count;
 
-        [Benchmark]
-        public int Compact()
-        {
-            Array.Clear(_compactExploredSet, 0, _compactExploredSet.Length);
-            using IEnumerator<int> steps = CompactDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
-            int count = 0;
-            while (steps.MoveNext())
-                ++count;
-
-            return count;
-        }
+        return count;
     }
 }

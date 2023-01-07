@@ -4,9 +4,13 @@ namespace Arborescence.Models
     using System;
     using System.Diagnostics;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public sealed class MutableSimpleIncidenceGraph :
-        IIncidenceGraph<int, Endpoints, ArraySegment<Endpoints>.Enumerator>,
+        IHeadIncidence<int, Endpoints>,
+        ITailIncidence<int, Endpoints>,
+        IOutEdgesIncidence<int, ArraySegment<Endpoints>.Enumerator>,
         IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
         IDisposable
     {
@@ -108,7 +112,7 @@ namespace Arborescence.Models
                 destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
             }
 
-            return new SimpleIncidenceGraph(data, edgesOrderedByTail);
+            return new(data, edgesOrderedByTail);
         }
 
         /// <inheritdoc/>
@@ -116,13 +120,6 @@ namespace Arborescence.Models
         {
             head = edge.Head;
             return unchecked((uint)head < (uint)VertexCount);
-        }
-
-        /// <inheritdoc/>
-        public bool TryGetTail(Endpoints edge, out int tail)
-        {
-            tail = edge.Tail;
-            return unchecked((uint)tail < (uint)VertexCount);
         }
 
         /// <inheritdoc/>
@@ -136,6 +133,13 @@ namespace Arborescence.Models
                 return ArraySegment<Endpoints>.Empty.GetEnumerator();
 
             return new ArraySegment<Endpoints>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(Endpoints edge, out int tail)
+        {
+            tail = edge.Tail;
+            return unchecked((uint)tail < (uint)VertexCount);
         }
 
         /// <summary>

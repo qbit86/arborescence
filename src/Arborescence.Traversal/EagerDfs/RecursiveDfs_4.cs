@@ -12,10 +12,11 @@ namespace Arborescence.Traversal
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     public readonly partial struct RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
-        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
+        where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
+        where TVertex : notnull
     {
-        private static readonly Func<TGraph, TVertex, bool> s_false = (g, v) => false;
+        private static readonly Func<TGraph, TVertex, bool> s_false = (_, _) => false;
 
         private static void TraverseCore<TColorMap, THandler>(
             TGraph graph, TVertex u, TColorMap colorByVertex, THandler handler,
@@ -39,7 +40,7 @@ namespace Arborescence.Traversal
                 while (outEdges.MoveNext())
                 {
                     TEdge e = outEdges.Current;
-                    if (!graph.TryGetHead(e, out TVertex v))
+                    if (!graph.TryGetHead(e, out TVertex? v))
                         continue;
 
                     handler.OnExamineEdge(graph, e);

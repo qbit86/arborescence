@@ -2,6 +2,7 @@
 .idea/**/contentModel.xml
 .idea/**/modules.xml
 .idea/**/projectSettingsUpdater.xml
+.idea/**/riderMarkupCache.xml
 .idea/**/workspace.xml
 .vs/
 .vscode/

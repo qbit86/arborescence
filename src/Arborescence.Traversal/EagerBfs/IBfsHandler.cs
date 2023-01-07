@@ -18,7 +18,7 @@
         void OnDiscoverVertex(TGraph g, TVertex v);
 
         /// <summary>
-        /// This is invoked on a vertex as it is taken from the fringe.
+        /// This is invoked on a vertex as it is taken from the frontier.
         /// This happens immediately before <see cref="OnExamineEdge"/> is invoked
         /// on each of the out-edges of vertex <paramref name="v"/>.
         /// </summary>

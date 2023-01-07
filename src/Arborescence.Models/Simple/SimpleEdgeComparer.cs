@@ -4,7 +4,7 @@
 
     internal sealed class SimpleEdgeComparer : IComparer<Endpoints>
     {
-        internal static SimpleEdgeComparer Instance { get; } = new SimpleEdgeComparer();
+        internal static SimpleEdgeComparer Instance { get; } = new();
 
         public int Compare(Endpoints x, Endpoints y)
         {

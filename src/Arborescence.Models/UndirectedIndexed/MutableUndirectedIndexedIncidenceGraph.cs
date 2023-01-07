@@ -3,10 +3,15 @@ namespace Arborescence.Models
 {
     using System;
     using System.Diagnostics;
+    using static TryHelpers;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public sealed class MutableUndirectedIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IHeadIncidence<int, int>,
+        ITailIncidence<int, int>,
+        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<UndirectedIndexedIncidenceGraph, int, int>,
         IDisposable
     {
@@ -122,7 +127,7 @@ namespace Arborescence.Models
             Span<int> destTailByEdge = data.AsSpan(2 + n + m + m + m, m);
             _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-            return new UndirectedIndexedIncidenceGraph(data);
+            return new(data);
         }
 
         /// <inheritdoc/>
@@ -130,29 +135,7 @@ namespace Arborescence.Models
         {
             int edgeIndex = edge < 0 ? ~edge : edge;
             ArrayPrefix<int> endpointByEdge = edge < 0 ? _tailByEdge : _headByEdge;
-            if (edgeIndex >= endpointByEdge.Count)
-            {
-                head = default;
-                return false;
-            }
-
-            head = endpointByEdge[edgeIndex];
-            return true;
-        }
-
-        /// <inheritdoc/>
-        public bool TryGetTail(int edge, out int tail)
-        {
-            int edgeIndex = edge < 0 ? ~edge : edge;
-            ArrayPrefix<int> endpointByEdge = edge < 0 ? _headByEdge : _tailByEdge;
-            if (edgeIndex >= endpointByEdge.Count)
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = endpointByEdge[edgeIndex];
-            return true;
+            return edgeIndex < endpointByEdge.Count ? Some(endpointByEdge[edgeIndex], out head) : None(out head);
         }
 
         /// <inheritdoc/>
@@ -166,6 +149,14 @@ namespace Arborescence.Models
                 return ArraySegment<int>.Empty.GetEnumerator();
 
             return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(int edge, out int tail)
+        {
+            int edgeIndex = edge < 0 ? ~edge : edge;
+            ArrayPrefix<int> endpointByEdge = edge < 0 ? _headByEdge : _tailByEdge;
+            return edgeIndex < endpointByEdge.Count ? Some(endpointByEdge[edgeIndex], out tail) : None(out tail);
         }
 
         /// <summary>

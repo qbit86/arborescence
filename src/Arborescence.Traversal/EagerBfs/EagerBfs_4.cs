@@ -1,8 +1,10 @@
 namespace Arborescence.Traversal
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Runtime.CompilerServices;
+#if DEBUG
+    using Debug = System.Diagnostics.Debug;
+#endif
 
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph.
@@ -12,8 +14,9 @@ namespace Arborescence.Traversal
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     public readonly partial struct EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
-        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
+        where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
+        where TVertex : notnull
     {
         private static void TraverseCore<TColorMap, THandler>(
             TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorByVertex, THandler handler)
@@ -34,7 +37,7 @@ namespace Arborescence.Traversal
                         while (outEdges.MoveNext())
                         {
                             TEdge e = outEdges.Current;
-                            if (!graph.TryGetHead(e, out TVertex v))
+                            if (!graph.TryGetHead(e, out TVertex? v))
                                 continue;
 
                             handler.OnExamineEdge(graph, e);

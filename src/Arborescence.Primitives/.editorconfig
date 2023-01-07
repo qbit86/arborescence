@@ -1,3 +1,6 @@
+[Arborescence.Primitives.csproj]
+ij_formatter_enabled = false
+
 [*Enumerator.cs]
 dotnet_diagnostic.CA1000.severity = suggestion # Do not declare static members on generic types
 

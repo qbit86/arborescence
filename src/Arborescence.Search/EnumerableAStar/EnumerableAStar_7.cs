@@ -20,10 +20,12 @@ namespace Arborescence.Search
     /// <typeparam name="TCostComparer">The type of the cost comparer.</typeparam>
     /// <typeparam name="TCostMonoid">The type of the cost monoid.</typeparam>
     public readonly struct EnumerableAStar<TGraph, TVertex, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>
-        where TGraph : IIncidenceGraph<TVertex, TEdge, TEdgeEnumerator>
+        where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TCostComparer : IComparer<TCost>
         where TCostMonoid : IMonoid<TCost>
+        where TVertex : notnull
+        where TEdge : notnull
     {
         private readonly TCostComparer _costComparer;
         private readonly TCostMonoid _costMonoid;
@@ -147,7 +149,7 @@ namespace Arborescence.Search
             {
                 colorByVertex[source] = Color.Gray;
                 queue.Add(source);
-                while (queue.TryTake(out TVertex u))
+                while (queue.TryTake(out TVertex? u))
                 {
                     TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
                     try
@@ -157,17 +159,17 @@ namespace Arborescence.Search
                             if (!(outEdges.Current is { } e))
                                 continue;
 
-                            if (!graph.TryGetHead(e, out TVertex v))
+                            if (!graph.TryGetHead(e, out TVertex? v))
                                 continue;
 
                             // examine_edge
-                            if (!weightByEdge.TryGetValue(e, out TCost weight))
+                            if (!weightByEdge.TryGetValue(e, out TCost? weight))
                                 continue;
 
                             if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
                                 AStarHelper.ThrowInvalidOperationException_NegativeWeight();
 
-                            bool decreased = Relax(u, v, weight, distanceByVertex, out TCost relaxedHeadDistance);
+                            bool decreased = Relax(u, v, weight, distanceByVertex, out TCost? relaxedHeadDistance);
                             if (decreased)
                             {
                                 TCost vCost = _costMonoid.Combine(relaxedHeadDistance!, heuristic(v));
@@ -226,14 +228,14 @@ namespace Arborescence.Search
             [MaybeNullWhen(false)] out TCost relaxedHeadDistance)
             where TDistanceMap : IDictionary<TVertex, TCost>
         {
-            if (!distanceByVertex.TryGetValue(tail, out TCost tailDistance))
+            if (!distanceByVertex.TryGetValue(tail, out TCost? tailDistance))
             {
                 relaxedHeadDistance = default;
                 return false;
             }
 
             relaxedHeadDistance = _costMonoid.Combine(tailDistance, weight);
-            if (distanceByVertex.TryGetValue(head, out TCost currentHeadDistance) &&
+            if (distanceByVertex.TryGetValue(head, out TCost? currentHeadDistance) &&
                 _costComparer.Compare(relaxedHeadDistance, currentHeadDistance) >= 0)
                 return false;
 

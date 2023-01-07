@@ -52,7 +52,7 @@ namespace Arborescence.Traversal
                     stack.Add(outEdges);
 
                     TEdge e = outEdges.Current;
-                    if (!graph.TryGetHead(e, out TVertex v))
+                    if (!graph.TryGetHead(e, out TVertex? v))
                         continue;
 
                     if (exploredSet.Contains(v))

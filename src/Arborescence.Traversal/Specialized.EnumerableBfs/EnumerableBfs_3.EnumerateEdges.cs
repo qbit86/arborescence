@@ -5,7 +5,6 @@ namespace Arborescence.Traversal.Specialized
     using System.Collections.Generic;
 #if DEBUG
     using System.Diagnostics;
-
 #endif
 
     public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>

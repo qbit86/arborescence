@@ -12,6 +12,6 @@ namespace Arborescence.Traversal.Specialized
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
-        where TGraph : IIncidenceGraph<int, TEdge, TEdgeEnumerator>
+        where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
 }

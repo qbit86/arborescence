@@ -43,7 +43,7 @@ namespace Arborescence
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             for (int i = 0; i < _items.Length; ++i)
-                yield return new KeyValuePair<int, TValue>(i, _items[i]);
+                yield return new(i, _items[i]);
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

@@ -1,107 +1,106 @@
-namespace Arborescence
+namespace Arborescence;
+
+using System;
+using System.Buffers;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using Models;
+using Traversal;
+using Workbench;
+
+internal static class Program
 {
-    using System;
-    using System.Buffers;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using Models;
-    using Traversal;
-    using Workbench;
+    private static CultureInfo F => CultureInfo.InvariantCulture;
 
-    internal static class Program
+    private static void Main()
     {
-        private static CultureInfo F => CultureInfo.InvariantCulture;
+        IndexedIncidenceGraph.Builder builder = new(0, 31);
 
-        private static void Main()
+        using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
         {
-            IndexedIncidenceGraph.Builder builder = new(0, 31);
-
-            using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
-            {
-                IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (Endpoints edge in edges)
-                    builder.Add(edge.Tail, edge.Head);
-            }
-
-            IndexedIncidenceGraph graph = builder.ToGraph();
-            Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
-            Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
-
-            TextWriter w = Console.Out;
-
-            EagerDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator> dfs = default;
-
-            w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
-            w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
-
-            // Enumerate vertices.
-            for (int v = 0; v < graph.VertexCount; ++v)
-            {
-                w.Write(v == 0 ? "  " : " ");
-                w.Write(V(v));
-            }
-
-            w.WriteLine();
-
-            IndexEnumerator sources = new(2);
-            byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-            Array.Clear(backingStore, 0, backingStore.Length);
-            IndexedColorDictionary colorByVertex = new(backingStore);
-            HashSet<int> examinedEdges = new(graph.EdgeCount);
-            DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
-            dfs.Traverse(graph, sources, colorByVertex, handler);
-            ArrayPool<byte>.Shared.Return(backingStore);
-
-            // Enumerate sources.
-            w.WriteLine();
-            sources.Reset();
-            while (sources.MoveNext())
-            {
-                int v = sources.Current;
-                w.WriteLine($"  {V(v)} [style=filled]");
-            }
-
-            // Enumerate rest of edges.
-            w.WriteLine();
-            for (int v = 0; v < graph.VertexCount; ++v)
-            {
-                ArraySegment<int>.Enumerator outEdges = graph.EnumerateOutEdges(v);
-                while (outEdges.MoveNext())
-                {
-                    int e = outEdges.Current;
-                    if (examinedEdges.Contains(e))
-                        continue;
-
-                    w.WriteLine($"  {E(graph, e)} [label={e} style=dotted]");
-                }
-            }
-
-            w.WriteLine("}");
+            IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
+            foreach (Endpoints edge in edges)
+                builder.Add(edge.Tail, edge.Head);
         }
 
-        private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
-            TextWriter w, HashSet<int> examinedEdges)
+        IndexedIncidenceGraph graph = builder.ToGraph();
+        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
+        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
+
+        TextWriter w = Console.Out;
+
+        EagerDfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator> dfs = default;
+
+        w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
+        w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
+
+        // Enumerate vertices.
+        for (int v = 0; v < graph.VertexCount; ++v)
         {
-            DfsHandler<IndexedIncidenceGraph, int, int> result = new();
-            result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
-            result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
-            result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
-            result.ExamineEdge += (_, e) => examinedEdges.Add(e);
-            result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
-            result.ForwardOrCrossEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=solid]");
-            result.BackEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
-            result.FinishEdge += (g, e) => w.WriteLine($"  // {nameof(result.FinishEdge)} {E(g, e)}");
-            return result;
+            w.Write(v == 0 ? "  " : " ");
+            w.Write(V(v));
         }
 
-        private static string V(int v) => Base32.ToString(v);
+        w.WriteLine();
 
-        private static string E(IndexedIncidenceGraph g, int e)
+        IndexEnumerator sources = new(2);
+        byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
+        Array.Clear(backingStore, 0, backingStore.Length);
+        IndexedColorDictionary colorByVertex = new(backingStore);
+        HashSet<int> examinedEdges = new(graph.EdgeCount);
+        DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
+        dfs.Traverse(graph, sources, colorByVertex, handler);
+        ArrayPool<byte>.Shared.Return(backingStore);
+
+        // Enumerate sources.
+        w.WriteLine();
+        sources.Reset();
+        while (sources.MoveNext())
         {
-            string head = g.TryGetHead(e, out int h) ? V(h) : "?";
-            string tail = g.TryGetTail(e, out int t) ? V(t) : "?";
-            return string.Concat(tail, " -> ", head);
+            int v = sources.Current;
+            w.WriteLine($"  {V(v)} [style=filled]");
         }
+
+        // Enumerate rest of edges.
+        w.WriteLine();
+        for (int v = 0; v < graph.VertexCount; ++v)
+        {
+            ArraySegment<int>.Enumerator outEdges = graph.EnumerateOutEdges(v);
+            while (outEdges.MoveNext())
+            {
+                int e = outEdges.Current;
+                if (examinedEdges.Contains(e))
+                    continue;
+
+                w.WriteLine($"  {E(graph, e)} [label={e} style=dotted]");
+            }
+        }
+
+        w.WriteLine("}");
+    }
+
+    private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
+        TextWriter w, HashSet<int> examinedEdges)
+    {
+        DfsHandler<IndexedIncidenceGraph, int, int> result = new();
+        result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
+        result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
+        result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
+        result.ExamineEdge += (_, e) => examinedEdges.Add(e);
+        result.TreeEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=bold]");
+        result.ForwardOrCrossEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=solid]");
+        result.BackEdge += (g, e) => w.WriteLine($"  {E(g, e)} [label={e} style=dashed]");
+        result.FinishEdge += (g, e) => w.WriteLine($"  // {nameof(result.FinishEdge)} {E(g, e)}");
+        return result;
+    }
+
+    private static string V(int v) => Base32.ToString(v);
+
+    private static string E(IndexedIncidenceGraph g, int e)
+    {
+        string head = g.TryGetHead(e, out int h) ? V(h) : "?";
+        string tail = g.TryGetTail(e, out int t) ? V(t) : "?";
+        return string.Concat(tail, " -> ", head);
     }
 }

@@ -5,10 +5,16 @@ namespace Arborescence.Models
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
+    using static TryHelpers;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public readonly partial struct UndirectedIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>, IEquatable<UndirectedIndexedIncidenceGraph>
+        IHeadIncidence<int, int>,
+        ITailIncidence<int, int>,
+        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
+        IEquatable<UndirectedIndexedIncidenceGraph>
     {
         // Layout:
         // 1    | n — the number of vertices
@@ -47,14 +53,7 @@ namespace Arborescence.Models
         {
             int edgeIndex = edge < 0 ? ~edge : edge;
             ReadOnlySpan<int> endpointByEdge = edge < 0 ? GetHeadByEdge() : GetTailByEdge();
-            if (edgeIndex >= endpointByEdge.Length)
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = endpointByEdge[edgeIndex];
-            return true;
+            return edgeIndex < endpointByEdge.Length ? Some(endpointByEdge[edgeIndex], out tail) : None(out tail);
         }
 
         /// <inheritdoc/>
@@ -62,14 +61,7 @@ namespace Arborescence.Models
         {
             int edgeIndex = edge < 0 ? ~edge : edge;
             ReadOnlySpan<int> endpointByEdge = edge < 0 ? GetTailByEdge() : GetHeadByEdge();
-            if (edgeIndex >= endpointByEdge.Length)
-            {
-                head = default;
-                return false;
-            }
-
-            head = endpointByEdge[edgeIndex];
-            return true;
+            return edgeIndex < endpointByEdge.Length ? Some(endpointByEdge[edgeIndex], out head) : None(out head);
         }
 
         /// <inheritdoc/>

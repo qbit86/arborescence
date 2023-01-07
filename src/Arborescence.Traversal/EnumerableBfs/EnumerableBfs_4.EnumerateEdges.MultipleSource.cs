@@ -4,7 +4,6 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 #if DEBUG
     using Debug = System.Diagnostics.Debug;
-
 #endif
 
     public readonly partial struct EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
@@ -66,7 +65,7 @@ namespace Arborescence.Traversal
                         while (outEdges.MoveNext())
                         {
                             TEdge e = outEdges.Current;
-                            if (!graph.TryGetHead(e, out TVertex v))
+                            if (!graph.TryGetHead(e, out TVertex? v))
                                 continue;
 
                             if (exploredSet.Contains(v))

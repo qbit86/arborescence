@@ -3,10 +3,15 @@ namespace Arborescence.Models
 {
     using System;
     using System.Diagnostics;
+    using static TryHelpers;
 
-    /// <inheritdoc cref="Arborescence.IIncidenceGraph{TVertex, TEdge, TEdges}"/>
+    /// <summary>
+    /// Represents a forward-traversable graph.
+    /// </summary>
     public sealed class MutableIndexedIncidenceGraph :
-        IIncidenceGraph<int, int, ArraySegment<int>.Enumerator>,
+        IHeadIncidence<int, int>,
+        ITailIncidence<int, int>,
+        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
         IDisposable
     {
@@ -121,34 +126,12 @@ namespace Arborescence.Models
             Span<int> destTailByEdge = data.AsSpan(2 + n + m + m, m);
             _tailByEdge.AsSpan().CopyTo(destTailByEdge);
 
-            return new IndexedIncidenceGraph(data);
+            return new(data);
         }
 
         /// <inheritdoc/>
-        public bool TryGetHead(int edge, out int head)
-        {
-            if (unchecked((uint)edge >= (uint)_headByEdge.Count))
-            {
-                head = default;
-                return false;
-            }
-
-            head = _headByEdge[edge];
-            return true;
-        }
-
-        /// <inheritdoc/>
-        public bool TryGetTail(int edge, out int tail)
-        {
-            if (unchecked((uint)edge >= (uint)_tailByEdge.Count))
-            {
-                tail = default;
-                return false;
-            }
-
-            tail = _tailByEdge[edge];
-            return true;
-        }
+        public bool TryGetHead(int edge, out int head) =>
+            unchecked((uint)edge < (uint)_headByEdge.Count) ? Some(_headByEdge[edge], out head) : None(out head);
 
         /// <inheritdoc/>
         public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
@@ -162,6 +145,10 @@ namespace Arborescence.Models
 
             return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
         }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(int edge, out int tail) =>
+            unchecked((uint)edge < (uint)_tailByEdge.Count) ? Some(_tailByEdge[edge], out tail) : None(out tail);
 
         /// <summary>
         /// Ensures that the graph can hold the specified number of vertices without growing.

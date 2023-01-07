@@ -1,3 +1,6 @@
+[Arborescence.Traversal.csproj]
+ij_formatter_enabled = false
+
 [*.cs]
 dotnet_diagnostic.CA1000.severity = silent # Do not declare static members on generic types
 dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types

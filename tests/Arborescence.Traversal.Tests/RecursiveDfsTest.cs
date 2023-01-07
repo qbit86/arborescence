@@ -1,100 +1,99 @@
-namespace Arborescence
+namespace Arborescence;
+
+using System;
+using System.Buffers;
+using System.Collections.Generic;
+using Misnomer;
+using Traversal;
+using Xunit;
+using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+using Graph = Models.MutableIndexedIncidenceGraph;
+
+public sealed class RecursiveDfsTest
 {
-    using System;
-    using System.Buffers;
-    using System.Collections.Generic;
-    using Misnomer;
-    using Traversal;
-    using Xunit;
-    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
-    using Graph = Models.MutableIndexedIncidenceGraph;
+    private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
 
-    public sealed class RecursiveDfsTest
+    private RecursiveDfs<Graph, int, int, EdgeEnumerator> RecursiveDfs { get; }
+
+    private void TraverseCore(Graph graph, bool multipleSource)
     {
-        private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
+        // Arrange
 
-        private RecursiveDfs<Graph, int, int, EdgeEnumerator> RecursiveDfs { get; }
+        byte[] eagerColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+        Array.Clear(eagerColorByVertexBackingStore, 0, eagerColorByVertexBackingStore.Length);
+        IndexedColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
+        using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
+        DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
 
-        private void TraverseCore(Graph graph, bool multipleSource)
+        byte[] recursiveColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+        Array.Clear(recursiveColorByVertexBackingStore, 0, recursiveColorByVertexBackingStore.Length);
+        IndexedColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
+        using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
+        DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
+
+        // Act
+
+        if (multipleSource)
         {
-            // Arrange
+            if (graph.VertexCount < 3)
+                return;
 
-            byte[] eagerColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(eagerColorByVertexBackingStore, 0, eagerColorByVertexBackingStore.Length);
-            IndexedColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
-            using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
-            DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
+            int sourceCount = graph.VertexCount / 3;
+            IndexEnumerator sources = new(sourceCount);
 
-            byte[] recursiveColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-            Array.Clear(recursiveColorByVertexBackingStore, 0, recursiveColorByVertexBackingStore.Length);
-            IndexedColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
-            using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
-            DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
-
-            // Act
-
-            if (multipleSource)
-            {
-                if (graph.VertexCount < 3)
-                    return;
-
-                int sourceCount = graph.VertexCount / 3;
-                IndexEnumerator sources = new(sourceCount);
-
-                EagerDfs.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
-                RecursiveDfs.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
-            }
-            else
-            {
-                int source = graph.VertexCount >> 1;
-                EagerDfs.Traverse(graph, source, eagerColorByVertex, eagerHandler);
-                RecursiveDfs.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
-            }
-
-            // Assert
-
-            int eagerStepCount = eagerSteps.Count;
-            int recursiveStepCount = recursiveSteps.Count;
-            Assert.Equal(eagerStepCount, recursiveStepCount);
-
-            int count = eagerStepCount;
-            for (int i = 0; i < count; ++i)
-            {
-                (string, int) eagerStep = eagerSteps[i];
-                (string, int) recursiveStep = recursiveSteps[i];
-
-                if (eagerStep == recursiveStep)
-                    continue;
-
-                Assert.Equal(eagerStep, recursiveStep);
-            }
-
-            // Cleanup
-
-            ArrayPool<byte>.Shared.Return(eagerColorByVertexBackingStore);
-            ArrayPool<byte>.Shared.Return(recursiveColorByVertexBackingStore);
+            EagerDfs.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
+            RecursiveDfs.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
+        }
+        else
+        {
+            int source = graph.VertexCount >> 1;
+            EagerDfs.Traverse(graph, source, eagerColorByVertex, eagerHandler);
+            RecursiveDfs.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
         }
 
-        private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)
+        // Assert
+
+        int eagerStepCount = eagerSteps.Count;
+        int recursiveStepCount = recursiveSteps.Count;
+        Assert.Equal(eagerStepCount, recursiveStepCount);
+
+        int count = eagerStepCount;
+        for (int i = 0; i < count; ++i)
         {
-            DfsHandler<Graph, int, int> result = new();
-            result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
-            result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
-            result.FinishVertex += (_, v) => steps.Add((nameof(result.FinishVertex), v));
-            result.TreeEdge += (_, e) => steps.Add((nameof(result.TreeEdge), e));
-            result.BackEdge += (_, e) => steps.Add((nameof(result.BackEdge), e));
-            result.ExamineEdge += (_, e) => steps.Add((nameof(result.ExamineEdge), e));
-            result.ForwardOrCrossEdge += (_, e) => steps.Add((nameof(result.ForwardOrCrossEdge), e));
-            result.FinishEdge += (_, e) => steps.Add((nameof(result.FinishEdge), e));
-            return result;
+            (string, int) eagerStep = eagerSteps[i];
+            (string, int) recursiveStep = recursiveSteps[i];
+
+            if (eagerStep == recursiveStep)
+                continue;
+
+            Assert.Equal(eagerStep, recursiveStep);
         }
 
-        [Theory]
-        [ClassData(typeof(MutableIndexedGraphCollection))]
-        internal void Traverse_SingleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, false);
+        // Cleanup
 
-        [Theory]
-        [ClassData(typeof(MutableIndexedGraphCollection))]
-        internal void Traverse_MultipleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, true);
+        ArrayPool<byte>.Shared.Return(eagerColorByVertexBackingStore);
+        ArrayPool<byte>.Shared.Return(recursiveColorByVertexBackingStore);
     }
+
+    private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)
+    {
+        DfsHandler<Graph, int, int> result = new();
+        result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
+        result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
+        result.FinishVertex += (_, v) => steps.Add((nameof(result.FinishVertex), v));
+        result.TreeEdge += (_, e) => steps.Add((nameof(result.TreeEdge), e));
+        result.BackEdge += (_, e) => steps.Add((nameof(result.BackEdge), e));
+        result.ExamineEdge += (_, e) => steps.Add((nameof(result.ExamineEdge), e));
+        result.ForwardOrCrossEdge += (_, e) => steps.Add((nameof(result.ForwardOrCrossEdge), e));
+        result.FinishEdge += (_, e) => steps.Add((nameof(result.FinishEdge), e));
+        return result;
+    }
+
+    [Theory]
+    [ClassData(typeof(MutableIndexedGraphCollection))]
+    internal void Traverse_SingleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, false);
+
+    [Theory]
+    [ClassData(typeof(MutableIndexedGraphCollection))]
+    internal void Traverse_MultipleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, true);
 }

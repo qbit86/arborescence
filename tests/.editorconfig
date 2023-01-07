@@ -1,4 +1,5 @@
 [*.cs]
+csharp_style_namespace_declarations = file_scoped:warning
 dotnet_diagnostic.CA5394.severity = suggestion # Do not use insecure randomness
 
 [*Collection.cs]
