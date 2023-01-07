@@ -1,11 +1,23 @@
 # Changelog
 
-## [Unreleased] - 2021-11-13
+## [Unreleased] - 2022-01-07
+
+### Added
+
+- Abstractions: `IHeadIncidence<TVertex, TEdge>`, `ITailIncidence<TVertex, TEdge>`, `IOutEdgesIncidence<TVertex, TEdges>`, `ITraversable<TVertex, TEdge, TEdges>`.
+- Models: `AdditiveMonoid<T>`.
 
 ### Changed
 
 - Dropped support of `netcoreapp2.1` in favor of `netcoreapp3.1`.
 - Traversal: Added `notnull` constraint for `TVertex` where appropriate.
+
+### Removed
+
+- Abstractions: `IIncidenceGraph<TVertex, TEdge, TEdges>`, `IBidirectionalGraph<TVertex, TEdge, TEdges>`.
+- Models: `Int32AdditiveMonoid`.
+- Models: types in `Arborescence.Models.Compatibility` namespace.
+- Primitives: `ArraySegmentEnumerator<T>`.
 
 ## [0.13.1] - 2021-07-07
 
