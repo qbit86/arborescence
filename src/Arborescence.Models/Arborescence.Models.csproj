@@ -9,7 +9,6 @@ Commonly used types:
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
     <VersionPrefix>0.14.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.14</AssemblyVersion>
