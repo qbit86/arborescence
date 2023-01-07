@@ -8,10 +8,12 @@ Commonly used types:
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.14.0</VersionPrefix>
+    <VersionPrefix>0.14.1</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.14</AssemblyVersion>
+    <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <TargetFrameworks>net461;net6.0;net7.0;netcoreapp3.1;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
