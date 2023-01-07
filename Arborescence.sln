@@ -38,8 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Benchmarks", "benchmarks\Arborescence.Traversal.Benchmarks\Arborescence.Traversal.Benchmarks.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Collections", "src\Arborescence.Collections\Arborescence.Collections.shproj", "{625CAE8B-4025-45E6-A282-693D067FEBF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives", "src\Arborescence.Primitives\Arborescence.Primitives.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.ArrayPrefixBuilder", "src\Arborescence.Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.shproj", "{1FE04D46-B1CA-4801-A399-D3D351BEA8DD}"
@@ -63,6 +61,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arborescence.Shared", "Arborescence.Shared", "{0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.TryHelpers", "src\Arborescence.Shared\Arborescence.TryHelpers\Arborescence.TryHelpers.shproj", "{C4022A90-DF68-4909-BC8F-DED645E16098}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Stack", "src\Arborescence.Shared\Arborescence.Stack\Arborescence.Stack.shproj", "{5B838373-EDD6-498F-AD3F-9BCAB52794E8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Queue", "src\Arborescence.Shared\Arborescence.Queue\Arborescence.Queue.shproj", "{6E8C5A91-B687-481D-97BC-B778A30A72A6}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -148,7 +150,6 @@ Global
 		{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{68408E95-6D55-47EF-97D7-C766613C8CA2} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9} = {4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}
-		{625CAE8B-4025-45E6-A282-693D067FEBF8} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{B2ACC725-7026-4D5D-A17F-F4FFA9E26871} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{4383A396-67D9-4AC8-B1EF-1603F9D181A0} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{096764F1-8EF8-4961-9AE9-D419FD6B4D29} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
@@ -161,6 +162,8 @@ Global
 		{C4022A90-DF68-4909-BC8F-DED645E16098} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{1FE04D46-B1CA-4801-A399-D3D351BEA8DD} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{81A3650F-6933-44B9-B0E8-2FA1BD3F3686} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
+		{5B838373-EDD6-498F-AD3F-9BCAB52794E8} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
+		{6E8C5A91-B687-481D-97BC-B778A30A72A6} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
