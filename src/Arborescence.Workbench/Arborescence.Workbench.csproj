@@ -8,6 +8,7 @@
   <PropertyGroup>
     <AssemblyVersion>0.14</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
+    <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <RootNamespace>Arborescence.Workbench</RootNamespace>
