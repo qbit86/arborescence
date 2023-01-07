@@ -5,7 +5,6 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 #if DEBUG
     using Debug = System.Diagnostics.Debug;
-
 #endif
 
     public readonly partial struct GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>

@@ -4,7 +4,6 @@ namespace Arborescence.Traversal
     using System.Collections.Generic;
 #if DEBUG
     using Debug = System.Diagnostics.Debug;
-
 #endif
 
     public readonly partial struct EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
