@@ -1,4 +1,3 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
 namespace Arborescence.Models
 {
     using System;
@@ -6,6 +5,13 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
     using static TryHelpers;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+#else
+    using System.Collections.Generic;
+    using System.Linq;
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
+#endif
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -13,7 +19,7 @@ namespace Arborescence.Models
     public readonly partial struct IndexedIncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
-        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
+        IOutEdgesIncidence<int, EdgeEnumerator>,
         IEquatable<IndexedIncidenceGraph>
     {
         // Layout:
@@ -63,20 +69,20 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
+        public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (_data is null)
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return EmptyEnumerator();
 
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return EmptyEnumerator();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + VertexCount;
-            return new ArraySegment<int>(_data, offset + lowerBound, upperBound - lowerBound).GetEnumerator();
+            return GetEnumerator(new(_data, offset + lowerBound, upperBound - lowerBound));
         }
 
         /// <inheritdoc/>
@@ -119,6 +125,20 @@ namespace Arborescence.Models
         /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => !left.Equals(right);
+
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static EdgeEnumerator EmptyEnumerator() => ArraySegment<int>.Empty.GetEnumerator();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static EdgeEnumerator GetEnumerator(ArraySegment<int> arraySegment) => arraySegment.GetEnumerator();
+#else
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static EdgeEnumerator EmptyEnumerator() => Enumerable.Empty<int>().GetEnumerator();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static EdgeEnumerator GetEnumerator(ArraySegment<int> arraySegment) =>
+            ((IEnumerable<int>)arraySegment).GetEnumerator();
+#endif
     }
 }
-#endif
