@@ -6,6 +6,7 @@ Commonly used types:
 • SimpleIncidenceGraph
 • IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
     <VersionSuffix>preview</VersionSuffix>
@@ -20,6 +21,9 @@ Commonly used types:
   <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0'">
     <LangVersion>11</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
