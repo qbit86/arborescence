@@ -11,7 +11,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <Authors>Viktor T.</Authors>
+    <Authors>Viktor Tselov</Authors>
+    <Copyright>Copyright (c) Viktor Tselov 2023</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
