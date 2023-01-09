@@ -2,7 +2,7 @@
 
 [![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://nuget.org/packages/Arborescence.Models/)
 
-This package provides a basic implementation for graph and traversable concepts.
+This package provides a basic implementation for _Graph_ and _Traversable_ concepts.
 
 ```
         ┌   tail : E → V
@@ -11,6 +11,13 @@ Graph   ┤
                                 ├   Traversable
             out-edges : V → [E] ┘
 ```
+
+`SimpleIncidenceGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
+`IndexedIncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].  
+`UndirectedSimpleIncidenceGraph` and `UndirectedIndexedIncidenceGraph` provide their undirected counterparts.
+
+Vertices are represented as integers and must fill the range [0.._VertexCount_).  
+Edges are stored as incidence lists in contiguous spans.
 
 ## Basic usage
 
@@ -35,3 +42,7 @@ while (edgesEnumerator.MoveNext())
         Console.WriteLine(head); // 2
 }
 ```
+
+[1] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+
+[2] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
