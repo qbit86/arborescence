@@ -1,6 +1,6 @@
 namespace Arborescence.Models
 {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 #else
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +10,7 @@ namespace Arborescence.Models
 
     internal static class ArraySegmentHelpers
     {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static ArraySegment<T>.Enumerator EmptyEnumerator<T>() => ArraySegment<T>.Empty.GetEnumerator();
 

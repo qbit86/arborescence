@@ -2,7 +2,7 @@
 {
     using System;
     using System.Diagnostics;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 #else
     using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
