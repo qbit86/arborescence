@@ -7,8 +7,12 @@ using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 using Graph = Models.SimpleIncidenceGraph;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#else
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+#endif
 
 public sealed class BfsEnumerateEdgesTest
 {
@@ -84,7 +88,7 @@ public sealed class BfsEnumerateEdgesTest
         Debug.Assert(treeEdges != null, "treeEdges != null");
 
         BfsHandler<Graph, int, Endpoints> result = new();
-        result.TreeEdge += (_, e) => treeEdges.Add(e);
+        result.TreeEdge += (_, e) => treeEdges!.Add(e);
         return result;
     }
 

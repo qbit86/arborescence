@@ -7,8 +7,12 @@ using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
-using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 using Graph = Models.IndexedIncidenceGraph;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+#else
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
+#endif
 
 public sealed class DfsEnumerateVerticesTest
 {
@@ -84,7 +88,7 @@ public sealed class DfsEnumerateVerticesTest
         Debug.Assert(steps != null, "steps != null");
 
         DfsHandler<Graph, int, int> result = new();
-        result.DiscoverVertex += (_, v) => steps.Add(v);
+        result.DiscoverVertex += (_, v) => steps!.Add(v);
         return result;
     }
 

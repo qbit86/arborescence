@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Graph = Models.SimpleIncidenceGraph;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#else
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+#endif
 
 public sealed class UndirectedSimpleIncidenceGraphTest
 {
