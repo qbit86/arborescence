@@ -334,7 +334,7 @@ namespace Arborescence.Search
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool ShouldClear()
         {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             return RuntimeHelpers.IsReferenceOrContainsReferences<TElement>();
 #else
             return true;
