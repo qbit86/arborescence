@@ -68,14 +68,6 @@
         }
 
         /// <inheritdoc/>
-        public bool TryGetHead(int edge, out int head) =>
-            unchecked((uint)edge < (uint)_headByEdge.Count) ? Some(_headByEdge[edge], out head) : None(out head);
-
-        /// <inheritdoc/>
-        public bool TryGetTail(int edge, out int tail) =>
-            unchecked((uint)edge < (uint)_tailByEdge.Count) ? Some(_tailByEdge[edge], out tail) : None(out tail);
-
-        /// <inheritdoc/>
         public void Dispose()
         {
             for (int vertex = 0; vertex < _outEdgesByVertex.Count; ++vertex)
@@ -141,6 +133,10 @@
             return new(data);
         }
 
+        /// <inheritdoc/>
+        public bool TryGetHead(int edge, out int head) =>
+            unchecked((uint)edge < (uint)_headByEdge.Count) ? Some(_headByEdge[edge], out head) : None(out head);
+
         /// <inheritdoc cref="IOutEdgesIncidence{TVertex, TEdges}"/>
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
@@ -153,6 +149,10 @@
 
             return ArraySegmentHelpers.GetEnumerator<int>(new(outEdges.Array, 0, outEdges.Count));
         }
+
+        /// <inheritdoc/>
+        public bool TryGetTail(int edge, out int tail) =>
+            unchecked((uint)edge < (uint)_tailByEdge.Count) ? Some(_tailByEdge[edge], out tail) : None(out tail);
 
         /// <summary>
         /// Ensures that the graph can hold the specified number of vertices without growing.
