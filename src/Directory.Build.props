@@ -21,6 +21,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <VersionPrefix>0.14.1</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />
