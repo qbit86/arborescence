@@ -1,65 +1,27 @@
-# Arborescence Graph Library
+# Models — Arborescence Graph Library
 
-Undirected graphs are basically “duplicated” directed graphs, but storage is more efficient than in the case of naive edge duplication.
+[![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://nuget.org/packages/Arborescence.Models/)
 
-## Storage Layout
-
-### Examples
-
-#### Unordered directed graph
-
-```plantuml
-digraph Unordered {
-  node [shape=circle fontname="Times-Italic"]
-  a -> b [xlabel=0]
-  c -> c [xlabel=1]
-  a -> b [xlabel=2]
-  {
-    rank=same
-    b d
-  }
-}
-```
-
-#### Sorted directed graph
-
-```plantuml
-digraph Sorted {
-  node [shape=circle fontname="Times-Italic"]
-  a -> b [xlabel=0]
-  a -> b [xlabel=1]
-  c -> c [xlabel=2]
-  {
-    rank=same
-    b d
-  }
-}
-```
-
-### IndexedIncidenceGraph
-
-Used in general case where graph is permitted to have parallel edges.
-
-|         Length | Content             |
-|---------------:|:--------------------|
-|              1 | _vertexCount_ (_n_) |
-|        2 × _n_ | _edgeBoundByVertex_ |
-|            _m_ | _reorderedEdges_    |
-|            _m_ | _heads_             |
-|            _m_ | _tails_             |
+This package provides a basic implementation for graph and traversable concepts.
 
 ```
-vertexCount    reorderedEdges     tails
-        ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
-        [4][_^|_^|_^|_^][021][bcb][aca]
-           ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-              edgeBounds     heads
+        ┌   tail : E → V
+Graph   ┤
+        └   head : E → V        ┐
+                                ├   Traversable
+            out-edges : V → [E] ┘
 ```
 
-### SimpleIncidenceGraph
+## Basic usage
 
-|         Length | Content              |
-|---------------:|:---------------------|
-|              1 | _vertexCount_ (_n_)  |
-|            _n_ | _UpperBoundByVertex_ |
-|            _m_ | _edges_              |
+```cs
+SimpleIncidenceGraph.Builder builder = new();
+builder.Add(2, 0);
+builder.Add(4, 3);
+builder.Add(0, 4);
+builder.Add(3, 2);
+builder.Add(4, 4);
+builder.Add(0, 2);
+builder.Add(2, 4);
+SimpleIncidenceGraph graph = builder.ToGraph();
+```
