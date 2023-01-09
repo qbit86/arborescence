@@ -8,8 +8,6 @@ namespace Arborescence.Models
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 #else
-    using System.Collections.Generic;
-    using System.Linq;
     using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 #endif
 
@@ -72,17 +70,17 @@ namespace Arborescence.Models
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (_data is null)
-                return EmptyEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
 
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return EmptyEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + VertexCount;
-            return GetEnumerator(new(_data, offset + lowerBound, upperBound - lowerBound));
+            return ArraySegmentHelpers.GetEnumerator<int>(new(_data, offset + lowerBound, upperBound - lowerBound));
         }
 
         /// <inheritdoc/>
@@ -125,20 +123,5 @@ namespace Arborescence.Models
         /// <c>true</c> if the two <see cref="IndexedIncidenceGraph"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator !=(IndexedIncidenceGraph left, IndexedIncidenceGraph right) => !left.Equals(right);
-
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static EdgeEnumerator EmptyEnumerator() => ArraySegment<int>.Empty.GetEnumerator();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static EdgeEnumerator GetEnumerator(ArraySegment<int> arraySegment) => arraySegment.GetEnumerator();
-#else
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static EdgeEnumerator EmptyEnumerator() => Enumerable.Empty<int>().GetEnumerator();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static EdgeEnumerator GetEnumerator(ArraySegment<int> arraySegment) =>
-            ((IEnumerable<int>)arraySegment).GetEnumerator();
-#endif
     }
 }
