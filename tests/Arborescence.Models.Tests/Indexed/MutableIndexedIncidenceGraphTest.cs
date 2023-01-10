@@ -3,10 +3,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Graph = Models.MutableIndexedIncidenceGraph;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using Graph = Models.MutableIndexedIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 #else
+using Graph = Models.Compatibility.MutableIndexedIncidenceGraph;
 using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 #endif
 

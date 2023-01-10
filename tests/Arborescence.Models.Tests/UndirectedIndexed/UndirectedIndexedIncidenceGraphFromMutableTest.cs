@@ -2,12 +2,14 @@ namespace Arborescence;
 
 using System.Collections.Generic;
 using System.Linq;
-using Models;
 using Xunit;
-using Graph = Models.UndirectedIndexedIncidenceGraph;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using Models;
+using Graph = Models.UndirectedIndexedIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 #else
+using Models.Compatibility;
+using Graph = Models.Compatibility.UndirectedIndexedIncidenceGraph;
 using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 #endif
 

@@ -2,12 +2,14 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Models;
 using Xunit;
-using Graph = Models.SimpleIncidenceGraph;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using Models;
+using Graph = Models.SimpleIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 #else
+using Models.Compatibility;
+using Graph = Models.Compatibility.SimpleIncidenceGraph;
 using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
 #endif
 

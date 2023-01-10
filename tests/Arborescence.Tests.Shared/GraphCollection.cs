@@ -11,6 +11,7 @@ using Workbench;
 using IndexedEnumerator = System.ArraySegment<int>.Enumerator;
 using SimpleEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 #else
+using Models.Compatibility;
 using IndexedEnumerator = System.Collections.Generic.IEnumerator<int>;
 using SimpleEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
 #endif

@@ -8,10 +8,11 @@ using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
-using Graph = Models.MutableSimpleIncidenceGraph;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using Graph = Models.MutableSimpleIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 #else
+using Graph = Models.Compatibility.MutableSimpleIncidenceGraph;
 using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
 #endif
 

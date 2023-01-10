@@ -1,4 +1,8 @@
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
+#else
+namespace Arborescence.Models.Compatibility
+#endif
 {
     using System;
     using System.Diagnostics;
