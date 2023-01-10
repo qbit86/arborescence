@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased] - 2022-01-10
+
+### Added
+
+- Models: `Arborescence.Models.Compatibility` namespace with graph implementations for legacy TFMs.
+
 ## [0.14.0] - 2022-01-07
 
 ### Added
