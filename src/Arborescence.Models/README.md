@@ -14,7 +14,7 @@ Graph   ┤
 
 `SimpleIncidenceGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
 `IndexedIncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].  
-`UndirectedSimpleIncidenceGraph` and `UndirectedIndexedIncidenceGraph` provide their undirected counterparts.
+`MutableUndirectedSimpleIncidenceGraph` and `MutableUndirectedIndexedIncidenceGraph` provide their mutable undirected counterparts.
 
 Vertices are represented as integers and must fill the range [0.._VertexCount_).  
 Edges are stored as incidence lists in contiguous spans.
@@ -33,7 +33,7 @@ builder.Add(2, 4);
 SimpleIncidenceGraph graph = builder.ToGraph();
 
 const int vertex = 3;
-ArraySegment<Endpoints>.Enumerator edgesEnumerator = graph.EnumerateOutEdges(vertex);
+var edgesEnumerator = graph.EnumerateOutEdges(vertex);
 while (edgesEnumerator.MoveNext())
 {
     Endpoints edge = edgesEnumerator.Current;
