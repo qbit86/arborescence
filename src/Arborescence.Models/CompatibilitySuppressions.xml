@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.IndexedIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.MutableIndexedIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.MutableSimpleIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.MutableUndirectedIndexedIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.MutableUndirectedSimpleIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.SimpleIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Arborescence.Models.Compatibility.UndirectedIndexedIncidenceGraph</Target>
+    <Left>lib/netstandard2.0/Arborescence.Models.dll</Left>
+    <Right>lib/netstandard2.1/Arborescence.Models.dll</Right>
+  </Suppression>
+</Suppressions>

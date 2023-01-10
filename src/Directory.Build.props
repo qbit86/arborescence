@@ -1,17 +1,8 @@
 <Project>
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
-    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
-    <Deterministic>true</Deterministic>
-    <EnablePackageValidation>true</EnablePackageValidation>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <InformationalVersion>$(Version)</InformationalVersion>
-    <LangVersion>9</LangVersion>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Authors>Viktor T.</Authors>
+    <Authors>Viktor Tselov</Authors>
+    <Copyright>Copyright (c) Viktor Tselov 2023</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -20,6 +11,17 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <VersionPrefix>0.14.1</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
+    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <InformationalVersion>$(Version)</InformationalVersion>
+    <LangVersion>9</LangVersion>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(RepoRoot)/assets/icon.png" Pack="true" PackagePath="" />

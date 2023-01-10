@@ -6,13 +6,16 @@ Commonly used types:
 • SimpleIncidenceGraph
 • IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.14.0</VersionPrefix>
+    <VersionPrefix>0.14.1</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.14</AssemblyVersion>
+    <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
+    <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <TargetFrameworks>net461;net6.0;net7.0;netcoreapp3.1;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
@@ -20,7 +23,10 @@ Commonly used types:
     <LangVersion>11</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All"/>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />

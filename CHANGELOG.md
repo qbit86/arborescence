@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.14.1] - 2022-01-10
+
+### Added
+
+- Models: `Arborescence.Models.Compatibility` namespace with graph implementations for legacy TFMs.
+
 ## [0.14.0] - 2022-01-07
 
 ### Added
@@ -288,7 +294,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-arborescence-0.14.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.14.1...HEAD
+
+[0.14.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.14.0...models-0.14.1
 
 [0.14.0]: https://github.com/qbit86/arborescence/compare/arborescence-0.13.1...arborescence-0.14.0
 

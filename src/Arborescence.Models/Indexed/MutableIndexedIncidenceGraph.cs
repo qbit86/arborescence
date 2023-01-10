@@ -1,9 +1,17 @@
-﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
+#else
+namespace Arborescence.Models.Compatibility
+#endif
 {
     using System;
     using System.Diagnostics;
     using static TryHelpers;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+#else
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
+#endif
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -11,7 +19,7 @@ namespace Arborescence.Models
     public sealed class MutableIndexedIncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
-        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
+        IOutEdgesIncidence<int, EdgeEnumerator>,
         IGraphBuilder<IndexedIncidenceGraph, int, int>,
         IDisposable
     {
@@ -133,17 +141,17 @@ namespace Arborescence.Models
         public bool TryGetHead(int edge, out int head) =>
             unchecked((uint)edge < (uint)_headByEdge.Count) ? Some(_headByEdge[edge], out head) : None(out head);
 
-        /// <inheritdoc/>
-        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
+        /// <inheritdoc cref="IOutEdgesIncidence{TVertex, TEdges}"/>
+        public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
 
             ArrayPrefix<int> outEdges = _outEdgesByVertex[vertex];
             if (outEdges.Array is null)
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
 
-            return new ArraySegment<int>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+            return ArraySegmentHelpers.GetEnumerator<int>(new(outEdges.Array, 0, outEdges.Count));
         }
 
         /// <inheritdoc/>
@@ -200,4 +208,3 @@ namespace Arborescence.Models
         }
     }
 }
-#endif

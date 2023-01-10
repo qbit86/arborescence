@@ -1,5 +1,8 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
+#else
+namespace Arborescence.Models.Compatibility
+#endif
 {
     using System;
     using System.Diagnostics;
@@ -144,4 +147,3 @@ namespace Arborescence.Models
         }
     }
 }
-#endif

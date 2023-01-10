@@ -1,11 +1,19 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
+#else
+namespace Arborescence.Models.Compatibility
+#endif
 {
     using System;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
     using static TryHelpers;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+#else
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
+#endif
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -13,7 +21,7 @@ namespace Arborescence.Models
     public readonly partial struct UndirectedIndexedIncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
-        IOutEdgesIncidence<int, ArraySegment<int>.Enumerator>,
+        IOutEdgesIncidence<int, EdgeEnumerator>,
         IEquatable<UndirectedIndexedIncidenceGraph>
     {
         // Layout:
@@ -65,20 +73,20 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArraySegment<int>.Enumerator EnumerateOutEdges(int vertex)
+        public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (_data is null)
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
 
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegment<int>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + VertexCount;
-            return new ArraySegment<int>(_data, offset + lowerBound, upperBound - lowerBound).GetEnumerator();
+            return ArraySegmentHelpers.GetEnumerator<int>(new(_data, offset + lowerBound, upperBound - lowerBound));
         }
 
         /// <inheritdoc/>
@@ -128,4 +136,3 @@ namespace Arborescence.Models
             UndirectedIndexedIncidenceGraph right) => !left.Equals(right);
     }
 }
-#endif

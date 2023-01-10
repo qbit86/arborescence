@@ -8,8 +8,13 @@ using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableSimpleIncidenceGraph;
+using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#else
+using Graph = Models.Compatibility.MutableSimpleIncidenceGraph;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+#endif
 
 public class QueueGenericSearchEnumerateVerticesTest
 {
@@ -23,7 +28,7 @@ public class QueueGenericSearchEnumerateVerticesTest
 
         // Arrange
 
-        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
+        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph!.VertexCount, 1));
         Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
         IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
         ConcurrentQueue<int> frontier = new();
@@ -86,7 +91,7 @@ public class QueueGenericSearchEnumerateVerticesTest
         Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
 
         BfsHandler<Graph, int, Endpoints> result = new();
-        result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
+        result.DiscoverVertex += (_, v) => discoveredVertices!.Add(v);
         return result;
     }
 

@@ -147,7 +147,7 @@ namespace Arborescence.Search.Specialized
             int end = startIndex + count;
             Debug.Assert(end <= array.Length, "end <= array.Length");
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             Array.Fill(array, value, startIndex, count);
 #else
             for (int i = startIndex; i < end; ++i)

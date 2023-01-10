@@ -7,6 +7,14 @@ using System.Globalization;
 using System.IO;
 using Models;
 using Workbench;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+using IndexedEnumerator = System.ArraySegment<int>.Enumerator;
+using SimpleEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#else
+using Models.Compatibility;
+using IndexedEnumerator = System.Collections.Generic.IEnumerator<int>;
+using SimpleEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+#endif
 
 internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : IEnumerable<object[]>
     where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdges>
@@ -77,49 +85,49 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
 }
 
 internal sealed class IndexedGraphCollection :
-    GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, IndexedIncidenceGraph.Builder>
+    GraphCollection<IndexedIncidenceGraph, int, IndexedEnumerator, IndexedIncidenceGraph.Builder>
 {
     protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class FromMutableIndexedGraphCollection :
-    GraphCollection<IndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, MutableIndexedIncidenceGraph>
+    GraphCollection<IndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraph>
 {
     protected override MutableIndexedIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class MutableIndexedGraphCollection : GraphCollection<
-    MutableIndexedIncidenceGraph, int, ArraySegment<int>.Enumerator, MutableIndexedIncidenceGraphBuilder>
+    MutableIndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraphBuilder>
 {
     protected override MutableIndexedIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class SimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, SimpleIncidenceGraph.Builder>
+    SimpleIncidenceGraph, Endpoints, SimpleEnumerator, SimpleIncidenceGraph.Builder>
 {
     protected override SimpleIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, MutableSimpleIncidenceGraph>
+    SimpleIncidenceGraph, Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraph>
 {
     protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class MutableSimpleGraphCollection : GraphCollection<
-    MutableSimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, MutableSimpleIncidenceGraphBuilder>
+    MutableSimpleIncidenceGraph, Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraphBuilder>
 {
     protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class UndirectedSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator, SimpleIncidenceGraph.UndirectedBuilder>
+    SimpleIncidenceGraph, Endpoints, SimpleEnumerator, SimpleIncidenceGraph.UndirectedBuilder>
 {
     protected override SimpleIncidenceGraph.UndirectedBuilder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);

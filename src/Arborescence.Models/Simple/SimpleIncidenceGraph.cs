@@ -1,10 +1,18 @@
-﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
+#else
+namespace Arborescence.Models.Compatibility
+#endif
 {
     using System;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#else
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+#endif
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -15,7 +23,7 @@ namespace Arborescence.Models
     public readonly partial struct SimpleIncidenceGraph :
         IHeadIncidence<int, Endpoints>,
         ITailIncidence<int, Endpoints>,
-        IOutEdgesIncidence<int, ArraySegment<Endpoints>.Enumerator>,
+        IOutEdgesIncidence<int, EdgeEnumerator>,
         IEquatable<SimpleIncidenceGraph>
     {
         // Layout:
@@ -62,20 +70,20 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(int vertex)
+        public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (_data is null || _edgesOrderedByTail is null)
-                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
 
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
-            return new ArraySegment<Endpoints>(
-                _edgesOrderedByTail, lowerBound, upperBound - lowerBound).GetEnumerator();
+            return ArraySegmentHelpers.GetEnumerator<Endpoints>(
+                new(_edgesOrderedByTail, lowerBound, upperBound - lowerBound));
         }
 
         /// <inheritdoc/>
@@ -115,4 +123,3 @@ namespace Arborescence.Models
         public static bool operator !=(SimpleIncidenceGraph left, SimpleIncidenceGraph right) => !left.Equals(right);
     }
 }
-#endif

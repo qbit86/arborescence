@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Xunit;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableUndirectedIndexedIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+#else
+using Graph = Models.Compatibility.MutableUndirectedIndexedIncidenceGraph;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
+#endif
 
 public sealed class MutableUndirectedIndexedIncidenceGraphTest
 {

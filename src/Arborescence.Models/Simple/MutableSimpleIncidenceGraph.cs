@@ -1,8 +1,16 @@
-﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER || NET5_0_OR_GREATER
+﻿#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
+#else
+namespace Arborescence.Models.Compatibility
+#endif
 {
     using System;
     using System.Diagnostics;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+#else
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+#endif
 
     /// <summary>
     /// Represents a forward-traversable graph.
@@ -10,7 +18,7 @@ namespace Arborescence.Models
     public sealed class MutableSimpleIncidenceGraph :
         IHeadIncidence<int, Endpoints>,
         ITailIncidence<int, Endpoints>,
-        IOutEdgesIncidence<int, ArraySegment<Endpoints>.Enumerator>,
+        IOutEdgesIncidence<int, EdgeEnumerator>,
         IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
         IDisposable
     {
@@ -123,16 +131,16 @@ namespace Arborescence.Models
         }
 
         /// <inheritdoc/>
-        public ArraySegment<Endpoints>.Enumerator EnumerateOutEdges(int vertex)
+        public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
-                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
 
             ArrayPrefix<Endpoints> outEdges = _outEdgesByVertex[vertex];
             if (outEdges.Array is null)
-                return ArraySegment<Endpoints>.Empty.GetEnumerator();
+                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
 
-            return new ArraySegment<Endpoints>(outEdges.Array, 0, outEdges.Count).GetEnumerator();
+            return ArraySegmentHelpers.GetEnumerator<Endpoints>(new(outEdges.Array, 0, outEdges.Count));
         }
 
         /// <inheritdoc/>
@@ -190,4 +198,3 @@ namespace Arborescence.Models
         }
     }
 }
-#endif
