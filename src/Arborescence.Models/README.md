@@ -2,13 +2,13 @@
 
 [![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://nuget.org/packages/Arborescence.Models/)
 
-This package provides a basic implementation for _Graph_ and _Traversable_ concepts.
+This package provides a basic implementation for _Graph_ and _Forward Incidence_ concepts.
 
 ```
-        ┌   tail : E → V
+        ┌   tail : E → V?
 Graph   ┤
-        └   head : E → V        ┐
-                                ├   Traversable
+        └   head : E → V?       ┐
+                                ├   Forward Incidence
             out-edges : V → [E] ┘
 ```
 
