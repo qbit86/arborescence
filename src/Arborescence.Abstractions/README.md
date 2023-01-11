@@ -24,10 +24,20 @@ Here common restrictions of _simple directed graphs_ are relaxed:
 - nothing special about loops like edge 4,
 - isolated vertices like _a_ are allowed too.
 
+The edges are _not_ treated as a set of ordered pairs of vertices.
+Instead, they are described in terms of two incidence functions _tail_ and _head_ mapping the edges to their endpoints.
+
+There are two distinct notions of multiple edges:
+- Without their own identity [3]: the identity of an edge is defined solely by the two vertices it connects.
+    Let's ignore for now the numbers in the figure above.
+    Then outgoing edges of vertex _b_ would be two entries of the same endpoints pair: (_b_, _c_) and (_b_, _c_) again.
+- With their own identity [4]: edges are primitive entities just like vertices.
+In this case, the outgoing edges of vertex _b_ are two different independent edges 0 and 1, which just occasionally happen to have the same endpoints.
+
 # Basic usage
 
 ```cs
-public sealed class MyGraph :
+public sealed class MyNetwork :
     IGraph<MyNode, MyLink>,
     IForwardIncidence<MyNode, MyLink, IEnumerator<MyLink>>
 {
@@ -46,3 +56,9 @@ public sealed class MyGraph :
 
 [2] Directed graph  
     https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
+
+[3] Edges without own identity  
+    https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+
+[4] Edges with own identity  
+    https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
