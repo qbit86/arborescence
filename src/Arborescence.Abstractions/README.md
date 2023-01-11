@@ -2,6 +2,8 @@
 
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
 
+This package provides abstractions for graph-related concepts.
+
 ```
           0
        ┌──>──┐

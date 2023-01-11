@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>The interface for graphs to be examined and manipulated in a data-structure agnostic fashion.
+    <Description>Abstractions of graphs to be examined and manipulated in a data-structure agnostic fashion.
 Commonly used types:
 • IHeadIncidence&lt;TVertex, TEdge&gt;
 • IOutEdgesIncidence&lt;TVertex, TEdges&gt;
