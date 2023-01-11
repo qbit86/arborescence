@@ -25,12 +25,13 @@ Here common restrictions of _simple directed graphs_ are relaxed:
 - isolated vertices like _a_ are allowed too.
 
 The edges are _not_ treated as a set of ordered pairs of vertices.
-Instead, they are described in terms of two incidence functions _tail_ and _head_ mapping the edges to their endpoints.
+Instead, they are described in terms of two _incidence_ functions _tail_ and _head_ mapping the edges to their endpoints.
+In the example above, the _tail_ function is defined as { 0 ↦ _b_, 1 ↦ _b_, 2 ↦ _c_, 3 ↦ c, 4 ↦ d }.
 
 There are two distinct notions of multiple edges:
 - Without their own identity [3]: the identity of an edge is defined solely by the two vertices it connects.
     Let's ignore for now the numbers in the figure above.
-    Then outgoing edges of vertex _b_ would be two entries of the same endpoints pair: (_b_, _c_) and (_b_, _c_) again.
+    Then outgoing edges of vertex _b_ would be two entries of the same endpoints pair: ⟨_b_, _c_⟩ and ⟨_b_, _c_⟩ again.
 - With their own identity [4]: edges are primitive entities just like vertices.
 In this case, the outgoing edges of vertex _b_ are two different independent edges 0 and 1, which just occasionally happen to have the same endpoints.
 
