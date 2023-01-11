@@ -43,6 +43,8 @@ while (edgesEnumerator.MoveNext())
 }
 ```
 
+---
+
 [1] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
 
 [2] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
