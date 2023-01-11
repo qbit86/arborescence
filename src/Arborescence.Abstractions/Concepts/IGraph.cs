@@ -10,5 +10,5 @@ namespace Arborescence
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     public interface IGraph<TVertex, in TEdge> :
-        IHeadIncidence<TVertex, TEdge>, ITailIncidence<TVertex, TEdge> { }
+        ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge> { }
 }
