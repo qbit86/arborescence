@@ -26,7 +26,7 @@ Commonly used types:
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All"/>
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
   <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
 </Project>
