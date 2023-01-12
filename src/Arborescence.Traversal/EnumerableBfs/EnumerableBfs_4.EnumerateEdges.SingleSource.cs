@@ -36,7 +36,7 @@ namespace Arborescence.Traversal
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TExploredSet : ISet<TVertex>
         {
-            var queue = new Internal.Queue<TVertex>();
+            var queue = new ValueQueue<TVertex>();
             try
             {
                 exploredSet.Add(source);

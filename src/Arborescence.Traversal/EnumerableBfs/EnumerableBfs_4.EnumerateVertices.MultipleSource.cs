@@ -44,7 +44,7 @@ namespace Arborescence.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            var queue = new Internal.Queue<TVertex>();
+            var queue = new ValueQueue<TVertex>();
             try
             {
                 while (sources.MoveNext())

@@ -42,7 +42,7 @@ namespace Arborescence.Traversal
             if (handler is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
-            var queue = new Internal.Queue<TVertex>();
+            var queue = new ValueQueue<TVertex>();
             while (sources.MoveNext())
             {
                 TVertex s = sources.Current;

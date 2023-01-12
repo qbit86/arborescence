@@ -36,7 +36,7 @@ namespace Arborescence.Traversal
             if (handler is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
-            var queue = new Internal.Queue<TVertex>();
+            var queue = new ValueQueue<TVertex>();
             colorByVertex[source] = Color.Gray;
             handler.OnDiscoverVertex(graph, source);
             queue.Add(source);
