@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Benc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives", "src\Arborescence.Primitives\Arborescence.Primitives.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.ArrayPrefixBuilder", "src\Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.shproj", "{1FE04D46-B1CA-4801-A399-D3D351BEA8DD}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ArrayPrefixBuilder", "src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.shproj", "{1FE04D46-B1CA-4801-A399-D3D351BEA8DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Workbench", "src\Arborescence.Workbench\Arborescence.Workbench.csproj", "{4383A396-67D9-4AC8-B1EF-1603F9D181A0}"
 EndProject
@@ -74,9 +74,9 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
-		src\Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
-		src\Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
-		src\Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.projitems*{cb3deaad-9869-45c9-82d5-7d5ee7ad5cee}*SharedItemsImports = 5
+		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
+		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
+		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{cb3deaad-9869-45c9-82d5-7d5ee7ad5cee}*SharedItemsImports = 5
 		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
 		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
 		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{fcc994d6-1fae-469f-9c1e-9712d46b9ea8}*SharedItemsImports = 5
