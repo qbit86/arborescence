@@ -60,7 +60,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Search", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.TryHelpers", "src\Shared\Arborescence.TryHelpers\Arborescence.TryHelpers.shproj", "{C4022A90-DF68-4909-BC8F-DED645E16098}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TryHelpers", "src\Shared\TryHelpers\TryHelpers.shproj", "{C4022A90-DF68-4909-BC8F-DED645E16098}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Stack", "src\Shared\Stack\Stack.shproj", "{5B838373-EDD6-498F-AD3F-9BCAB52794E8}"
 EndProject
