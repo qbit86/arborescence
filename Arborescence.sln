@@ -54,7 +54,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EnumerableDfsD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.BasicUsage", "samples\Arborescence.BasicUsage\Arborescence.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.NullableAttributes", "src\Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.shproj", "{81A3650F-6933-44B9-B0E8-2FA1BD3F3686}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NullableAttributes", "src\Shared\NullableAttributes\NullableAttributes.shproj", "{81A3650F-6933-44B9-B0E8-2FA1BD3F3686}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Search", "src\Arborescence.Search\Arborescence.Search.csproj", "{0173C1C6-8139-4670-9310-D08FE6DD5011}"
 EndProject
