@@ -1,4 +1,4 @@
-﻿namespace Arborescence.Internal
+﻿namespace Arborescence
 {
     using System;
     using System.Buffers;
