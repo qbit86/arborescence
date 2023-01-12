@@ -48,6 +48,9 @@ Graph   ┤
             out-edges : V → [E] ┘
 ```
 
+The _adjacency_ concept provides an interface for access of the adjacent vertices (neighbors) to a vertex in a graph.
+In some contexts there is only concern for the vertices, while the edges are not important.
+
 ## Basic usage
 
 ```cs
