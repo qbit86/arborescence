@@ -21,7 +21,7 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
   <Import Project="..\Shared\Arborescence.ValueQueue\Arborescence.ValueQueue.projitems" Label="Shared" />
-  <Import Project="..\Shared\Arborescence.Stack\Arborescence.Stack.projitems" Label="Shared" />
+  <Import Project="..\Shared\Arborescence.ValueStack\Arborescence.ValueStack.projitems" Label="Shared" />
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>

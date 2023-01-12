@@ -33,7 +33,7 @@ namespace Arborescence.Traversal
                 return;
             }
 
-            var stack = new Internal.Stack<StackFrame<TVertex, TEdge, TEdgeEnumerator>>();
+            var stack = new ValueStack<StackFrame<TVertex, TEdge, TEdgeEnumerator>>();
             try
             {
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);

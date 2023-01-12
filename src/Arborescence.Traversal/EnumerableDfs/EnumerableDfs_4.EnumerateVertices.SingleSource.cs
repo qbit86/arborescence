@@ -34,7 +34,7 @@ namespace Arborescence.Traversal
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TExploredSet : ISet<TVertex>
         {
-            var stack = new Internal.Stack<TEdgeEnumerator>();
+            var stack = new ValueStack<TEdgeEnumerator>();
             try
             {
                 exploredSet.Add(source);
