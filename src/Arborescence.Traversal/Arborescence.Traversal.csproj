@@ -20,13 +20,13 @@ Commonly used types:
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
-  <Import Project="..\Shared\Arborescence.ValueQueue\Arborescence.ValueQueue.projitems" Label="Shared" />
-  <Import Project="..\Shared\Arborescence.ValueStack\Arborescence.ValueStack.projitems" Label="Shared" />
+  <Import Project="..\Shared\ValueQueue\ValueQueue.projitems" Label="Shared" />
+  <Import Project="..\Shared\ValueStack\ValueStack.projitems" Label="Shared" />
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 </Project>

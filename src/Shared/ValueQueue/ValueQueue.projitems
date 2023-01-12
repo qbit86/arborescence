@@ -3,12 +3,12 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>FD949C19-1FF1-41ED-97F0-184C7C0EA9CF</SharedGUID>
+    <SharedGUID>C1BFA47C-DE51-4DF5-BA63-7673351AA0B3</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Arborescence.ValueStack</Import_RootNamespace>
+    <Import_RootNamespace>Arborescence</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)ValueStack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueQueue.cs" />
   </ItemGroup>
 </Project>
