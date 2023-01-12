@@ -54,7 +54,7 @@ In some contexts there is only concern for the vertices, while the edges are not
 ## Basic usage
 
 ```cs
-public sealed class MyNetwork :
+public sealed class MyIncidenceNetwork :
     IGraph<MyNode, MyLink>,
     IForwardIncidence<MyNode, MyLink, IEnumerator<MyLink>>
 {
@@ -63,6 +63,15 @@ public sealed class MyNetwork :
     public bool TryGetHead(MyLink edge, out MyNode head) => ...
 
     public IEnumerator<MyLink> EnumerateOutEdges(MyNode vertex) => ...
+}
+```
+
+```cs
+public sealed class MyAdjacencyNetwork :
+    IAdjacency<MyNode, IEnumerator<MyNode>>
+{
+    public IEnumerator<MyNode> EnumerateAdjacentVertices(
+        MyNode vertex) => ...
 }
 ```
 
