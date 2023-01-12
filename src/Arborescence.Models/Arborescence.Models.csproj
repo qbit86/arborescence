@@ -36,7 +36,7 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
-  <Import Project="..\Arborescence.Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.projitems" Label="Shared" />
-  <Import Project="..\Arborescence.Shared\Arborescence.TryHelpers\Arborescence.TryHelpers.projitems" Label="Shared" />
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
+  <Import Project="..\Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.projitems" Label="Shared" />
+  <Import Project="..\Shared\Arborescence.TryHelpers\Arborescence.TryHelpers.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
 </Project>
