@@ -44,7 +44,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ArrayPrefixBuilder", "src\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Workbench", "src\Arborescence.Workbench\Arborescence.Workbench.csproj", "{4383A396-67D9-4AC8-B1EF-1603F9D181A0}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Arborescence.Tests.Shared", "tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.shproj", "{096764F1-8EF8-4961-9AE9-D419FD6B4D29}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Tests.Shared", "tests\Tests.Shared\Tests.Shared.shproj", "{096764F1-8EF8-4961-9AE9-D419FD6B4D29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Playground", "samples\Arborescence.Playground\Arborescence.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
@@ -77,9 +77,9 @@ Global
 		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
 		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
 		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{cb3deaad-9869-45c9-82d5-7d5ee7ad5cee}*SharedItemsImports = 5
-		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
-		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
-		tests\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems*{fcc994d6-1fae-469f-9c1e-9712d46b9ea8}*SharedItemsImports = 5
+		tests\Tests.Shared\Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
+		tests\Tests.Shared\Tests.Shared.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
+		tests\Tests.Shared\Tests.Shared.projitems*{fcc994d6-1fae-469f-9c1e-9712d46b9ea8}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
