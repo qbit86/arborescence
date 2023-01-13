@@ -1,9 +1,11 @@
 namespace Arborescence.Traversal.Adjacency
 {
-    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+#if DEBUG
+    using Debug = System.Diagnostics.Debug;
+#endif
 
     public static partial class EnumerableGenericSearch
     {
@@ -52,7 +54,40 @@ namespace Arborescence.Traversal.Adjacency
             where TGraph : IAdjacency<TVertex, TVertexEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex>
-            where TExploredSet : ISet<TVertex> =>
-            throw new NotImplementedException();
+            where TExploredSet : ISet<TVertex>
+        {
+            while (sources.MoveNext())
+            {
+                TVertex source = sources.Current;
+                exploredSet.Add(source);
+                yield return source;
+                frontier.AddOrThrow(source);
+            }
+
+            while (frontier.TryTake(out TVertex? current))
+            {
+#if DEBUG
+                Debug.Assert(exploredSet.Contains(current));
+#endif
+                TVertexEnumerator neighbors = graph.EnumerateAdjacentVertices(current);
+                try
+                {
+                    while (neighbors.MoveNext())
+                    {
+                        TVertex neighbor = neighbors.Current;
+                        if (exploredSet.Contains(neighbor))
+                            continue;
+
+                        exploredSet.Add(neighbor);
+                        yield return neighbor;
+                        frontier.AddOrThrow(neighbor);
+                    }
+                }
+                finally
+                {
+                    neighbors.Dispose();
+                }
+            }
+        }
     }
 }
