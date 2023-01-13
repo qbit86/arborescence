@@ -1,4 +1,4 @@
-namespace Arborescence
+namespace Arborescence.Models
 {
     using System;
     using System.Buffers;
