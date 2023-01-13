@@ -3,10 +3,10 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>337C6D0A-7E4D-4C25-AAF5-AFB41F3230DC</SharedGUID>
+    <SharedGUID>F627A4B0-596F-4110-914F-4C8DD3ED30ED</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Arborescence</Import_RootNamespace>
+    <Import_RootNamespace>TestHelpers</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GraphCollection.cs" />
