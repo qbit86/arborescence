@@ -1,4 +1,4 @@
-﻿namespace Arborescence
+﻿namespace Arborescence.Traversal
 {
     using System;
     using System.Buffers;
