@@ -50,8 +50,7 @@ namespace Arborescence.Traversal.Adjacency
         {
             exploredSet.Add(source);
             yield return source;
-            if (!frontier.TryAdd(source))
-                throw new InvalidOperationException(nameof(frontier.TryAdd));
+            frontier.AddOrThrow(source);
 
             while (frontier.TryTake(out TVertex? current))
             {
@@ -69,8 +68,7 @@ namespace Arborescence.Traversal.Adjacency
 
                         exploredSet.Add(neighbor);
                         yield return neighbor;
-                        if (!frontier.TryAdd(neighbor))
-                            throw new InvalidOperationException(nameof(frontier.TryAdd));
+                        frontier.AddOrThrow(neighbor);
                     }
                 }
                 finally
