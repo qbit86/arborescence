@@ -1,12 +1,11 @@
 namespace Arborescence.Traversal.Adjacency
 {
-    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-    public static class EnumerableGenericSearch
+    public static partial class EnumerableGenericSearch
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<TVertex> EnumerateVertices<
