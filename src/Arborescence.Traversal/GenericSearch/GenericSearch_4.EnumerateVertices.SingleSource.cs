@@ -52,30 +52,27 @@
         {
             exploredSet.Add(source);
             yield return source;
-            if (!frontier.TryAdd(source))
-                throw new InvalidOperationException(nameof(frontier.TryAdd));
+            frontier.AddOrThrow(source);
 
-            while (frontier.TryTake(out TVertex? u))
+            while (frontier.TryTake(out TVertex? current))
             {
 #if DEBUG
-                Debug.Assert(exploredSet.Contains(u));
+                Debug.Assert(exploredSet.Contains(current));
 #endif
-                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
+                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(current);
                 try
                 {
                     while (outEdges.MoveNext())
                     {
-                        TEdge e = outEdges.Current;
-                        if (!graph.TryGetHead(e, out TVertex? v))
+                        if (!graph.TryGetHead(outEdges.Current, out TVertex? neighbor))
                             continue;
 
-                        if (exploredSet.Contains(v))
+                        if (exploredSet.Contains(neighbor))
                             continue;
 
-                        exploredSet.Add(v);
-                        yield return v;
-                        if (!frontier.TryAdd(v))
-                            throw new InvalidOperationException(nameof(frontier.TryAdd));
+                        exploredSet.Add(neighbor);
+                        yield return neighbor;
+                        frontier.AddOrThrow(neighbor);
                     }
                 }
                 finally
