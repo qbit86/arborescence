@@ -1,4 +1,4 @@
-﻿namespace Arborescence
+﻿namespace Arborescence.Traversal
 {
     using System;
     using System.Buffers;
@@ -8,12 +8,14 @@
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
-    internal struct ValueStack<T> : IProducerConsumerCollection<T>, IDisposable
+    internal struct ValueQueue<T> : IProducerConsumerCollection<T>, IDisposable
     {
         private const int DefaultCapacity = 4;
 
         private T[]? _arrayFromPool;
-        private int _count;
+        private int _head;
+        private int _tail;
+        private int _size;
 
         private static ArrayPool<T> Pool => ArrayPool<T>.Shared;
 
@@ -27,22 +29,19 @@
             Pool.Return(arrayFromPool, ShouldClear());
         }
 
-        internal void Add(T item)
+        public void Add(T item)
         {
             _arrayFromPool ??= Pool.Rent(DefaultCapacity);
 
-            int count = _count;
-            T[] array = _arrayFromPool;
+            if (_size == _arrayFromPool.Length)
+            {
+                int newCapacity = _size << 1;
+                SetCapacity(newCapacity);
+            }
 
-            if (unchecked((uint)count < (uint)array.Length))
-            {
-                array[count] = item;
-                _count = count + 1;
-            }
-            else
-            {
-                ResizeThenAdd(item);
-            }
+            _arrayFromPool[_tail] = item;
+            MoveNext(ref _tail);
+            ++_size;
         }
 
         public readonly void CopyTo(T[] array, int index) => throw new NotSupportedException();
@@ -57,20 +56,20 @@
 
         public bool TryTake(out T result)
         {
-            int newCount = _count - 1;
-            T[] array = _arrayFromPool ?? Array.Empty<T>();
-
-            if (unchecked((uint)newCount >= (uint)array.Length))
+            if (_size == 0)
             {
                 result = default!;
                 return false;
             }
 
-            _count = newCount;
-            result = array[newCount];
+            int head = _head;
+            T[] array = _arrayFromPool ?? Array.Empty<T>();
+            result = array[head];
             if (ShouldClear())
-                array[newCount] = default!;
+                array[head] = default!;
 
+            MoveNext(ref _head);
+            --_size;
             return true;
         }
 
@@ -80,27 +79,45 @@
 
         public readonly void CopyTo(Array array, int index) => throw new NotSupportedException();
 
-        public readonly int Count => _count;
+        public readonly int Count => _size;
 
         public readonly bool IsSynchronized => false;
 
         public readonly object SyncRoot => throw new NotSupportedException();
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ResizeThenAdd(T item)
+        // Increments the index wrapping it if necessary.
+        private void MoveNext(ref int index)
         {
-            T[] arrayFromPool = _arrayFromPool!;
-            Debug.Assert(arrayFromPool.Length > 0, "arrayFromPool.Length > 0");
+            int temp = index + 1;
+            if (temp == _arrayFromPool!.Length)
+                temp = 0;
 
-            int count = _count;
-            int newCapacity = count << 1;
-            T[] newArray = Pool.Rent(newCapacity);
-            Array.Copy(arrayFromPool, newArray, count);
-            newArray[count] = item;
+            index = temp;
+        }
+
+        private void SetCapacity(int capacity)
+        {
+            Debug.Assert(capacity > 0, nameof(capacity) + " > 0");
+
+            T[] arrayFromPool = _arrayFromPool!;
+            T[] newArray = Pool.Rent(capacity);
+            if (_size > 0)
+            {
+                if (_head < _tail)
+                {
+                    Array.Copy(arrayFromPool, _head, newArray, 0, _size);
+                }
+                else
+                {
+                    Array.Copy(arrayFromPool, _head, newArray, 0, arrayFromPool.Length - _head);
+                    Array.Copy(arrayFromPool, 0, newArray, arrayFromPool.Length - _head, _tail);
+                }
+            }
 
             _arrayFromPool = newArray;
             Pool.Return(arrayFromPool, ShouldClear());
-            _count = count + 1;
+            _head = 0;
+            _tail = _size == capacity ? 0 : _size;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
