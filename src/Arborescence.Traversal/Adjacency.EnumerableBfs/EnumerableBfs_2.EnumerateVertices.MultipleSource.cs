@@ -26,9 +26,20 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
-            Traversal.Queue<TVertex> frontier = new();
-            return EnumerableGenericSearch<TVertex, TNeighborEnumerator>.EnumerateVerticesIterator(
-                graph, sources, frontier, exploredSet);
+            return EnumerateVerticesIterator(graph, sources, exploredSet);
+        }
+
+        private static IEnumerator<TVertex> EnumerateVerticesIterator<TGraph, TSourceEnumerator, TExploredSet>(
+            TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TSourceEnumerator : IEnumerator<TVertex>
+            where TExploredSet : ISet<TVertex>
+        {
+            using Traversal.Queue<TVertex> frontier = new();
+            IEnumerator<TVertex> enumerator = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
+            while (enumerator.MoveNext())
+                yield return enumerator.Current;
         }
     }
 }
