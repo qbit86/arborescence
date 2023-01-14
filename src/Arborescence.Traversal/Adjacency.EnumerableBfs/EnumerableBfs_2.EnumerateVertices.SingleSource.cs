@@ -8,7 +8,22 @@ namespace Arborescence.Traversal.Adjacency
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex> =>
-            EnumerableBfs.EnumerateVerticesChecked<TVertex, TNeighborEnumerator, TGraph, TExploredSet>(
-                graph, source, exploredSet);
+            EnumerateVerticesChecked(graph, source, exploredSet);
+
+        internal static IEnumerator<TVertex> EnumerateVerticesChecked<TGraph, TExploredSet>(
+            TGraph graph, TVertex source, TExploredSet exploredSet)
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TExploredSet : ISet<TVertex>
+        {
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+
+            if (exploredSet is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
+
+            Traversal.Queue<TVertex> frontier = new();
+            return EnumerableGenericSearch<TVertex, TNeighborEnumerator>.EnumerateVerticesIterator(
+                graph, source, frontier, exploredSet);
+        }
     }
 }
