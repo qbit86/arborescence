@@ -11,5 +11,13 @@ namespace Arborescence.Traversal.Adjacency
             where TExploredSet : ISet<TVertex> =>
             EnumerableBfs.EnumerateVerticesChecked<TVertex, TVertexEnumerator, TGraph, TExploredSet>(
                 graph, source, exploredSet);
+
+        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TExploredSet>(
+            TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
+            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TSourceEnumerator : IEnumerator<TVertex>
+            where TExploredSet : ISet<TVertex> =>
+            EnumerableBfs.EnumerateVerticesChecked<TVertex, TVertexEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
+                graph, sources, exploredSet);
     }
 }

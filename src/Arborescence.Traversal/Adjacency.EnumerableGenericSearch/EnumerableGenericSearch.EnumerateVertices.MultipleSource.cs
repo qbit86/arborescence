@@ -47,7 +47,7 @@ namespace Arborescence.Traversal.Adjacency
                 graph, sources, frontier, exploredSet);
         }
 
-        private static IEnumerator<TVertex> EnumerateVerticesIterator<
+        internal static IEnumerator<TVertex> EnumerateVerticesIterator<
             TVertex, TVertexEnumerator, TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>

@@ -3,7 +3,7 @@ namespace Arborescence.Traversal.Adjacency
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-    public static class EnumerableBfs
+    public static partial class EnumerableBfs
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<TVertex> EnumerateVertices<TVertex, TVertexEnumerator, TGraph, TExploredSet>(
