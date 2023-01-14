@@ -1,3 +1,4 @@
+#if NETSTANDARD2_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER || NET47_OR_GREATER
 namespace Arborescence.Traversal.Adjacency
 {
     using System.Collections.Concurrent;
@@ -8,31 +9,33 @@ namespace Arborescence.Traversal.Adjacency
     public static partial class EnumerableGenericSearch<TVertex, TNeighborEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier>(
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
-            EnumerateVerticesChecked(graph, sources, frontier);
+            EnumerateEdgesChecked(graph, sources, frontier);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier>(
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
-            EnumerateVerticesChecked(graph, sources, frontier, comparer);
+            EnumerateEdgesChecked(graph, sources, frontier, comparer);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<
+            TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex> =>
-            EnumerateVerticesChecked(graph, sources, frontier, exploredSet);
+            EnumerateEdgesChecked(graph, sources, frontier, exploredSet);
 
-        internal static IEnumerator<TVertex> EnumerateVerticesChecked<TGraph, TSourceEnumerator, TFrontier>(
+        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesChecked<
+            TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -48,10 +51,11 @@ namespace Arborescence.Traversal.Adjacency
                 ThrowHelper.ThrowArgumentNullException(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
+            return EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
         }
 
-        internal static IEnumerator<TVertex> EnumerateVerticesChecked<TGraph, TSourceEnumerator, TFrontier>(
+        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesChecked<
+            TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -67,10 +71,10 @@ namespace Arborescence.Traversal.Adjacency
                 ThrowHelper.ThrowArgumentNullException(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
+            return EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
         }
 
-        internal static IEnumerator<TVertex> EnumerateVerticesChecked<
+        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesChecked<
             TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -90,10 +94,10 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
+            return EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
         }
 
-        internal static IEnumerator<TVertex> EnumerateVerticesIterator<
+        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesIterator<
             TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -105,7 +109,6 @@ namespace Arborescence.Traversal.Adjacency
             {
                 TVertex source = sources.Current;
                 exploredSet.Add(source);
-                yield return source;
                 frontier.AddOrThrow(source);
             }
 
@@ -123,8 +126,8 @@ namespace Arborescence.Traversal.Adjacency
                         if (exploredSet.Contains(neighbor))
                             continue;
 
+                        yield return (current, neighbor);
                         exploredSet.Add(neighbor);
-                        yield return neighbor;
                         frontier.AddOrThrow(neighbor);
                     }
                 }
@@ -136,3 +139,4 @@ namespace Arborescence.Traversal.Adjacency
         }
     }
 }
+#endif
