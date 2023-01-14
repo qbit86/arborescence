@@ -11,8 +11,7 @@ namespace Arborescence.Traversal.Adjacency
             TGraph graph, TVertex source, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
-            EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(
-                graph, source, frontier);
+            EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(graph, source, frontier);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<TVertex> EnumerateVertices<TGraph, TFrontier>(

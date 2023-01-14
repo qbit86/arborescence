@@ -7,21 +7,19 @@ namespace Arborescence.Traversal.Adjacency
     public static partial class EnumerableGenericSearch<TVertex>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
+        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex>
-            where TFrontier : IProducerConsumerCollection<TVertex>
-            where TExploredSet : ISet<TVertex> =>
+            where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(graph, sources, frontier);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
+        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex>
-            where TFrontier : IProducerConsumerCollection<TVertex>
-            where TExploredSet : ISet<TVertex> =>
+            where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(
                 graph, sources, frontier, comparer);
 

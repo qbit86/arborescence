@@ -8,28 +8,34 @@ namespace Arborescence.Traversal.Adjacency
     public static partial class EnumerableGenericSearch<TVertex>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier>(
-            TGraph graph, TVertex source, TFrontier frontier)
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<
+            TGraph, TSourceEnumerator, TFrontier>(
+            TGraph graph, TSourceEnumerator sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
-            EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, frontier);
+            EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, sources, frontier);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier>(
-            TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<
+            TGraph, TSourceEnumerator, TFrontier>(
+            TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(
-                graph, source, frontier, comparer);
+                graph, sources, frontier, comparer);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
-            TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<
+            TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
+            TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TSourceEnumerator : IEnumerator<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(
-                graph, source, frontier, exploredSet);
+                graph, sources, frontier, exploredSet);
     }
 }
 #endif
