@@ -67,6 +67,9 @@ namespace Arborescence.Traversal.Adjacency
             if (frontier is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(frontier));
 
+            if (comparer is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+
             HashSet<TVertex> exploredSet = new(comparer);
             return EnumerateVerticesIterator<TVertex, TVertexEnumerator, TGraph, TFrontier, HashSet<TVertex>>(
                 graph, source, frontier, exploredSet);
