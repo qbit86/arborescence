@@ -6,12 +6,25 @@ namespace Arborescence.Traversal.Adjacency
     public static partial class EnumerableBfs
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerator<TVertex> EnumerateVertices<TVertex, TNeighborEnumerator, TGraph>(
+            TGraph graph, TVertex source)
+            where TNeighborEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator> =>
+            EnumerableBfs<TVertex, TNeighborEnumerator>.EnumerateVerticesChecked(graph, source);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerator<TVertex> EnumerateVertices<TVertex, TNeighborEnumerator, TGraph>(
+            TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer)
+            where TNeighborEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator> =>
+            EnumerableBfs<TVertex, TNeighborEnumerator>.EnumerateVerticesChecked(graph, source, comparer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<TVertex> EnumerateVertices<
             TVertex, TNeighborEnumerator, TGraph, TExploredSet>(TGraph graph, TVertex source, TExploredSet exploredSet)
             where TNeighborEnumerator : IEnumerator<TVertex>
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex> =>
-            EnumerableBfs<TVertex, TNeighborEnumerator>.EnumerateVerticesChecked(
-                graph, source, exploredSet);
+            EnumerableBfs<TVertex, TNeighborEnumerator>.EnumerateVerticesChecked(graph, source, exploredSet);
     }
 }
