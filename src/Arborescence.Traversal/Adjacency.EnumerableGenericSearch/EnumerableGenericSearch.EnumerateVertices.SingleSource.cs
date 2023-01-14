@@ -9,6 +9,24 @@ namespace Arborescence.Traversal.Adjacency
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<TVertex> EnumerateVertices<
+            TVertex, TVertexEnumerator, TGraph, TFrontier>(
+            TGraph graph, TVertex source, TFrontier frontier)
+            where TVertexEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TFrontier : IProducerConsumerCollection<TVertex> =>
+            EnumerateVerticesChecked<TVertex, TVertexEnumerator, TGraph, TFrontier>(graph, source, frontier);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerator<TVertex> EnumerateVertices<
+            TVertex, TVertexEnumerator, TGraph, TFrontier>(
+            TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
+            where TVertexEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TFrontier : IProducerConsumerCollection<TVertex> =>
+            EnumerateVerticesChecked<TVertex, TVertexEnumerator, TGraph, TFrontier>(graph, source, frontier, comparer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerator<TVertex> EnumerateVertices<
             TVertex, TVertexEnumerator, TGraph, TFrontier, TExploredSet>(
             TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TVertexEnumerator : IEnumerator<TVertex>
@@ -17,6 +35,42 @@ namespace Arborescence.Traversal.Adjacency
             where TExploredSet : ISet<TVertex> =>
             EnumerateVerticesChecked<TVertex, TVertexEnumerator, TGraph, TFrontier, TExploredSet>(
                 graph, source, frontier, exploredSet);
+
+        internal static IEnumerator<TVertex> EnumerateVerticesChecked<
+            TVertex, TVertexEnumerator, TGraph, TFrontier>(
+            TGraph graph, TVertex source, TFrontier frontier)
+            where TVertexEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TFrontier : IProducerConsumerCollection<TVertex>
+        {
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+
+            if (frontier is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+
+            HashSet<TVertex> exploredSet = new();
+            return EnumerateVerticesIterator<TVertex, TVertexEnumerator, TGraph, TFrontier, HashSet<TVertex>>(
+                graph, source, frontier, exploredSet);
+        }
+
+        internal static IEnumerator<TVertex> EnumerateVerticesChecked<
+            TVertex, TVertexEnumerator, TGraph, TFrontier>(
+            TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
+            where TVertexEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TFrontier : IProducerConsumerCollection<TVertex>
+        {
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+
+            if (frontier is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+
+            HashSet<TVertex> exploredSet = new(comparer);
+            return EnumerateVerticesIterator<TVertex, TVertexEnumerator, TGraph, TFrontier, HashSet<TVertex>>(
+                graph, source, frontier, exploredSet);
+        }
 
         internal static IEnumerator<TVertex> EnumerateVerticesChecked<
             TVertex, TVertexEnumerator, TGraph, TFrontier, TExploredSet>(
