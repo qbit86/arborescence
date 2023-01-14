@@ -4,12 +4,38 @@ namespace Arborescence.Traversal.Adjacency
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
     public static partial class EnumerableGenericSearch<TVertex, TNeighborEnumerator>
     {
-        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesIterator<
-            TGraph, TFrontier, TExploredSet>(
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
             TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TFrontier : IProducerConsumerCollection<TVertex>
+            where TExploredSet : ISet<TVertex> =>
+            EnumerateEdgesChecked(graph, source, frontier, exploredSet);
+
+        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesChecked<
+            TGraph, TFrontier, TExploredSet>(TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TFrontier : IProducerConsumerCollection<TVertex>
+            where TExploredSet : ISet<TVertex>
+        {
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+
+            if (frontier is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+
+            if (exploredSet is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
+
+            return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
+        }
+
+        internal static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdgesIterator<
+            TGraph, TFrontier, TExploredSet>(TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
