@@ -7,20 +7,20 @@ namespace Arborescence.Traversal.Adjacency
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<TVertex> EnumerateVertices<
-            TVertex, TVertexEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
+            TVertex, TNeighborEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
-            where TVertexEnumerator : IEnumerator<TVertex>
-            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TNeighborEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex> =>
-            EnumerateVerticesChecked<TVertex, TVertexEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
+            EnumerateVerticesChecked<TVertex, TNeighborEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
                 graph, sources, exploredSet);
 
         internal static IEnumerator<TVertex> EnumerateVerticesChecked<
-            TVertex, TVertexEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
+            TVertex, TNeighborEnumerator, TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
-            where TVertexEnumerator : IEnumerator<TVertex>
-            where TGraph : IAdjacency<TVertex, TVertexEnumerator>
+            where TNeighborEnumerator : IEnumerator<TVertex>
+            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex>
         {
@@ -35,7 +35,7 @@ namespace Arborescence.Traversal.Adjacency
 
             Traversal.Queue<TVertex> frontier = new();
             return EnumerableGenericSearch.EnumerateVerticesIterator<
-                TVertex, TVertexEnumerator, TGraph, TSourceEnumerator, Traversal.Queue<TVertex>, TExploredSet>(
+                TVertex, TNeighborEnumerator, TGraph, TSourceEnumerator, Traversal.Queue<TVertex>, TExploredSet>(
                 graph, sources, frontier, exploredSet);
         }
     }
