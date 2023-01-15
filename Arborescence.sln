@@ -62,6 +62,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3BACC5
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TestHelpers", "tests\Shared\TestHelpers\TestHelpers.shproj", "{40766C58-C5EC-40DD-9A51-7A8D7F82F85E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IncidenceAdjacencyAdapter", "src\Shared\IncidenceAdjacencyAdapter\IncidenceAdjacencyAdapter.shproj", "{2E38A3D8-3AC0-45BE-BAD3-FF17EC92DD82}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
@@ -158,6 +160,7 @@ Global
 		{81A3650F-6933-44B9-B0E8-2FA1BD3F3686} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{3BACC594-26D7-4402-B198-5965AF8D6D59} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{40766C58-C5EC-40DD-9A51-7A8D7F82F85E} = {3BACC594-26D7-4402-B198-5965AF8D6D59}
+		{2E38A3D8-3AC0-45BE-BAD3-FF17EC92DD82} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
