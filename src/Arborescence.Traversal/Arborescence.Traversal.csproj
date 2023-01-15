@@ -11,7 +11,7 @@ Commonly used types:
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.14</AssemblyVersion>
+    <AssemblyVersion>0.15</AssemblyVersion>
     <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
