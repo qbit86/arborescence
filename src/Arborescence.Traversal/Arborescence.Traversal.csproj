@@ -6,6 +6,7 @@ Commonly used types:
 • EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EnumerableDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
 • EagerBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
     <VersionSuffix>preview</VersionSuffix>
@@ -17,6 +18,9 @@ Commonly used types:
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>netcoreapp3.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
