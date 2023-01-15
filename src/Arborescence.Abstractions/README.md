@@ -70,7 +70,7 @@ public sealed class MyIncidenceNetwork :
 public sealed class MyAdjacencyNetwork :
     IAdjacency<MyNode, IEnumerator<MyNode>>
 {
-    public IEnumerator<MyNode> EnumerateAdjacentVertices(
+    public IEnumerator<MyNode> EnumerateNeighbors(
         MyNode vertex) => ...
 }
 ```
