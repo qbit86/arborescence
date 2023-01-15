@@ -3,7 +3,6 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
@@ -86,10 +85,11 @@ public sealed class BfsEnumerateEdgesTest
 
     private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<Endpoints> treeEdges)
     {
-        Debug.Assert(treeEdges != null, "treeEdges != null");
+        if (treeEdges is null)
+            throw new ArgumentNullException(nameof(treeEdges));
 
         BfsHandler<Graph, int, Endpoints> result = new();
-        result.TreeEdge += (_, e) => treeEdges!.Add(e);
+        result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }
 

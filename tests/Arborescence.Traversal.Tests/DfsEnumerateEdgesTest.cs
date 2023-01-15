@@ -3,7 +3,6 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
@@ -84,10 +83,11 @@ public sealed class DfsEnumerateEdgesTest
 
     private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> treeEdges)
     {
-        Debug.Assert(treeEdges != null, "treeEdges != null");
+        if (treeEdges is null)
+            throw new ArgumentNullException(nameof(treeEdges));
 
         DfsHandler<Graph, int, int> result = new();
-        result.TreeEdge += (_, e) => treeEdges!.Add(e);
+        result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }
 

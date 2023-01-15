@@ -3,7 +3,6 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
@@ -81,10 +80,11 @@ public sealed class BfsEnumerateVerticesTest
 
     private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
     {
-        Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
+        if (discoveredVertices is null)
+            throw new ArgumentNullException(nameof(discoveredVertices));
 
         BfsHandler<Graph, int, Endpoints> result = new();
-        result.DiscoverVertex += (_, v) => discoveredVertices!.Add(v);
+        result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
         return result;
     }
 

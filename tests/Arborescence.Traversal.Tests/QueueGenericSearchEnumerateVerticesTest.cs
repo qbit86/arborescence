@@ -4,7 +4,6 @@ using System;
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
@@ -24,11 +23,12 @@ public class QueueGenericSearchEnumerateVerticesTest
 
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
-        Debug.Assert(graph != null, "graph != null");
+        if (graph is null)
+            throw new ArgumentNullException(nameof(graph));
 
         // Arrange
 
-        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph!.VertexCount, 1));
+        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
         IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
         ConcurrentQueue<int> frontier = new();
@@ -88,10 +88,11 @@ public class QueueGenericSearchEnumerateVerticesTest
 
     private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
     {
-        Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
+        if (discoveredVertices is null)
+            throw new ArgumentNullException(nameof(discoveredVertices));
 
         BfsHandler<Graph, int, Endpoints> result = new();
-        result.DiscoverVertex += (_, v) => discoveredVertices!.Add(v);
+        result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
         return result;
     }
 

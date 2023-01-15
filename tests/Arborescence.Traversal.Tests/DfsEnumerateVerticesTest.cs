@@ -3,7 +3,6 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
@@ -86,10 +85,11 @@ public sealed class DfsEnumerateVerticesTest
 
     private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> steps)
     {
-        Debug.Assert(steps != null, "steps != null");
+        if (steps is null)
+            throw new ArgumentNullException(nameof(steps));
 
         DfsHandler<Graph, int, int> result = new();
-        result.DiscoverVertex += (_, v) => steps!.Add(v);
+        result.DiscoverVertex += (_, v) => steps.Add(v);
         return result;
     }
 
