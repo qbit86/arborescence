@@ -175,7 +175,7 @@ namespace Arborescence.Traversal.Adjacency
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(current));
 #endif
-                TNeighborEnumerator neighbors = graph.EnumerateAdjacentVertices(current);
+                TNeighborEnumerator neighbors = graph.EnumerateNeighbors(current);
                 try
                 {
                     while (neighbors.MoveNext())

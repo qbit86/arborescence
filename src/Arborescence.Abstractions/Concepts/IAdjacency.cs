@@ -11,10 +11,10 @@ namespace Arborescence
     public interface IAdjacency<in TVertex, out TVertices>
     {
         /// <summary>
-        /// Enumerates the adjacent vertices of the vertex.
+        /// Enumerates the neighbors (adjacent vertices) of the vertex.
         /// </summary>
         /// <param name="vertex">The vertex which neighbours to enumerate.</param>
-        /// <returns>An enumeration of adjacent vertices of the specified vertex.</returns>
-        TVertices EnumerateAdjacentVertices(TVertex vertex);
+        /// <returns>An enumeration of neighbors (adjacent vertices) of the specified vertex.</returns>
+        TVertices EnumerateNeighbors(TVertex vertex);
     }
 }
