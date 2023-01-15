@@ -9,7 +9,7 @@
     {
         internal static IncidenceAdjacencyAdapter<TVertex, TEdge, TEdgeEnumerator, TGraph> Create<TGraph>(TGraph graph)
             where TGraph : ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge>,
-            IForwardIncidence<TVertex, TEdge, TEdgeEnumerator> =>
+            IOutEdgesIncidence<TVertex, TEdgeEnumerator> =>
             new(graph);
     }
 
@@ -18,7 +18,7 @@
         IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraph : ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge>,
-        IForwardIncidence<TVertex, TEdge, TEdgeEnumerator>
+        IOutEdgesIncidence<TVertex, TEdgeEnumerator>
     {
         private readonly TGraph _graph;
 
