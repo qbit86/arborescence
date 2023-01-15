@@ -6,6 +6,18 @@ namespace Arborescence.Traversal.Adjacency
 
     public static partial class EnumerableBfs<TVertex>
     {
+        /// <summary>
+        /// Enumerates edges of the graph in a breadth-first order starting from the multiple sources.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="sources">The sources enumerator.</param>
+        /// <typeparam name="TGraph">The type of the graph.</typeparam>
+        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <returns>An enumerator to enumerate the endpoints of a breadth-first search tree edges.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources)
@@ -13,6 +25,19 @@ namespace Arborescence.Traversal.Adjacency
             where TSourceEnumerator : IEnumerator<TVertex> =>
             EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, sources);
 
+        /// <summary>
+        /// Enumerates edges of the graph in a breadth-first order starting from the multiple sources.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
+        /// <typeparam name="TGraph">The type of the graph.</typeparam>
+        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <returns>An enumerator to enumerate the endpoints of a breadth-first search tree edges.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
@@ -20,6 +45,21 @@ namespace Arborescence.Traversal.Adjacency
             where TSourceEnumerator : IEnumerator<TVertex> =>
             EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, sources, comparer);
 
+        /// <summary>
+        /// Enumerates edges of the graph in a breadth-first order starting from the multiple sources.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="exploredSet">The set of explored vertices.</param>
+        /// <typeparam name="TGraph">The type of the graph.</typeparam>
+        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
+        /// <returns>An enumerator to enumerate the endpoints of a breadth-first search tree edges.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// <paramref name="graph"/> is <see langword="null"/>,
+        /// or <paramref name="sources"/> is <see langword="null"/>,
+        /// or <paramref name="exploredSet"/> is <see langword="null"/>.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
