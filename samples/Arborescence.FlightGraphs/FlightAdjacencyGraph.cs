@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 
-public sealed class FlightAdjacencyGraph : IAdjacency<string, NeighborEnumerator>
+public sealed class FlightAdjacencyGraph :
+    IAdjacency<string, NeighborEnumerator>
 {
     private readonly Dictionary<string, string[]> _neighborsByAirport;
 
-    private FlightAdjacencyGraph(Dictionary<string, string[]> neighborsByAirport) =>
+    private FlightAdjacencyGraph(
+        Dictionary<string, string[]> neighborsByAirport) =>
         _neighborsByAirport = neighborsByAirport;
 
     public NeighborEnumerator EnumerateNeighbors(string vertex) =>
