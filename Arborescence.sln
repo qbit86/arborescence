@@ -66,6 +66,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IncidenceAdjacencyAdapter",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Traversal.Adjacency.Tests", "tests\Arborescence.Traversal.Adjacency.Tests\Arborescence.Traversal.Adjacency.Tests.csproj", "{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.FlightGraphs", "samples\Arborescence.FlightGraphs\Arborescence.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
@@ -142,6 +144,10 @@ Global
 		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3466CE43-A92D-405B-B1AD-C144C704583B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3466CE43-A92D-405B-B1AD-C144C704583B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3466CE43-A92D-405B-B1AD-C144C704583B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3466CE43-A92D-405B-B1AD-C144C704583B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +174,7 @@ Global
 		{40766C58-C5EC-40DD-9A51-7A8D7F82F85E} = {3BACC594-26D7-4402-B198-5965AF8D6D59}
 		{2E38A3D8-3AC0-45BE-BAD3-FF17EC92DD82} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
+		{3466CE43-A92D-405B-B1AD-C144C704583B} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

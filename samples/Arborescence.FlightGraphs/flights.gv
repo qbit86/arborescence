@@ -1,0 +1,13 @@
+digraph Flights {
+  rankdir=LR
+  node [shape=box]
+  OMS // Omsk
+  LHR // London
+  IST // Istanbul
+  TPE // Taipei
+  LHR -> IST [label="BA676"]
+  LHR -> IST [label="TK1980"]
+  IST -> LHR [label="BA677"]
+  IST -> TPE [label="TK24"]
+  TPE -> TPE [label="EVA5288"]
+}
