@@ -26,7 +26,7 @@ Let's consider a simple directed graph and a breadth-first tree on it:
 
 This is how you create a graph, instantiate an algorithm, and run it against the graph:
 
-```cs
+```csharp
 SimpleIncidenceGraph.Builder builder = new();
 builder.Add(2, 0);
 builder.Add(4, 3);

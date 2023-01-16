@@ -40,6 +40,7 @@ digraph Flights {
 ```
 
 Here common restrictions of _simple directed graphs_ are relaxed:
+
 - parallel edges like `BA676` and `TK1980` are permitted,
 - antiparallel edges like `TK1980` and `BA677` are also fine,
 - nothing special about loops like edge `EVA5288` [3],
@@ -51,16 +52,17 @@ In the example above, the _tail_ function is defined as { `BA676` ↦ _LHR_, `TK
 
 There are two distinct notions of multiple edges:
 - Without their own identity [4]: the identity of an edge is defined solely by the two vertices it connects.
-    Let's ignore for now the flight ids in the figure above.
-    Then outgoing edges of vertex _LHR_ would be two entries of the same endpoints pair: ⟨_LHR_, _IST_⟩ and ⟨_LHR_, _IST_⟩ again.
+  Let's ignore for now the flight ids in the figure above.
+  Then outgoing edges of vertex _LHR_ would be two entries of the same endpoints pair: ⟨_LHR_, _IST_⟩ and ⟨_LHR_, _IST_⟩ again.
 - With their own identity [5]: edges are primitive entities just like vertices.
-In this case, the outgoing edges of vertex _LHR_ are two different independent edges `BA676` and `TK1980`, which just occasionally happen to have the same endpoints.
+  In this case, the outgoing edges of vertex _LHR_ are two different independent edges `BA676` and `TK1980`, which just occasionally happen to have the same endpoints.
 
 Another useful function maps the vertex to its _outgoing edges_, making a graph traversable.
 It must be consistent with the incidence function:    
 ∀_v_ ∀_e_   _e_ ∈ _out-edges_(_v_) ⇔ _v_ = _tail_(_e_)   
 
 Together these functions form a scheme:
+
 ```
         ┌   tail : E → V?
 Graph   ┤
@@ -214,17 +216,17 @@ IST
 ---
 
 [1] Quiver  
-    https://en.wikipedia.org/wiki/Quiver_(mathematics)
+https://en.wikipedia.org/wiki/Quiver_(mathematics)
 
 [2] Directed graph  
-    https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
+https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
 
 [3] EVA Air introduces special flight to nowhere  
-    https://edition.cnn.com/travel/article/eva-air-hello-kitty-fathers-day-flight/index.html  
-    https://flightaware.com/live/flight/EVA5288
+https://edition.cnn.com/travel/article/eva-air-hello-kitty-fathers-day-flight/index.html  
+https://flightaware.com/live/flight/EVA5288
 
 [4] Edges without own identity  
-    https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
 
 [5] Edges with own identity  
-    https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)

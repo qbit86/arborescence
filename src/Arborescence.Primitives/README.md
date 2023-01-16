@@ -4,6 +4,7 @@
 
 This package provides basic building blocks for algorithms and data structures.
 Commonly used types:
+
 - `ArrayPrefix<T>`
 - `IndexedDictionary<TValue>`
 - `IndexedSet`

@@ -43,7 +43,7 @@ while (vertexEnumerator.MoveNext())
 ```
 
 [1] Stack-based graph traversal ≠ depth first search  
-    https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html
+https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html
 
 [2] Implicit graph  
-    https://en.wikipedia.org/wiki/Implicit_graph
+https://en.wikipedia.org/wiki/Implicit_graph

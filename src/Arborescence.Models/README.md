@@ -22,6 +22,7 @@ Edges are stored as incidence lists in contiguous spans.
 ## Basic usage
 
 Let's consider this simple graph:
+
 ```
        ┌──>──┐
 (0)   (1)─>─(2)─>─(3)┐
@@ -29,7 +30,8 @@ Let's consider this simple graph:
 ```
 
 This is how to recreate it in the code:
-```cs
+
+```csharp
 SimpleIncidenceGraph.Builder builder = new();
 builder.Add(1, 2);
 builder.Add(1, 2);
@@ -44,7 +46,8 @@ The expected output is `4` — including vertex 0 even if it was not mentioned 
 Vertex count is determined as one plus the max id of the vertices, so they fill the range [0.._VertexCount_).
 
 Now let's explore the edges incident to vertex 2:
-```cs
+
+```csharp
 const int vertex = 2;
 var edgeEnumerator = graph.EnumerateOutEdges(vertex);
 while (edgeEnumerator.MoveNext())
@@ -58,6 +61,7 @@ while (edgeEnumerator.MoveNext())
 ```
 
 The expected output — all the neighbors of vertex 2:
+
 ```
 1
 3
