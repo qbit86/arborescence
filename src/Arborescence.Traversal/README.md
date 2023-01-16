@@ -3,13 +3,15 @@
 [![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://nuget.org/packages/Arborescence.Traversal/)
 
 This package provides basic traversal algorithms for incidence and adjacency graphs:
+
 - generic search taking a frontier as a parameter,
 - breadth-first search (BFS), which is a special case of generic search with FIFO-queue as the frontier,
 - depth-first search (DFS), which is _not_ a special case of generic search with LIFO-stack as the frontier [1].
 
-## Basic usage 
+## Basic usage
 
 Let's consider this implicit adjacency graph [2]:
+
 ```csharp
 public readonly record struct Node(int Value);
 
@@ -30,6 +32,7 @@ public sealed class AdjacencyGraph : IAdjacency<Node, IEnumerator<Node>>
 ```
 
 This is how to traverse it in a breadth-first manner with an adjacency version of the algorithm:
+
 ```csharp
 AdjacencyGraph adjacencyGraph = new();
 Node source = new(3);
