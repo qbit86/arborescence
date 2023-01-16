@@ -1,0 +1,10 @@
+digraph Readme {
+  rankdir=LR
+  node [shape=circle fontname="Times-Italic"]
+  a b c d
+  b -> c [label="0"]
+  b -> c [label="1"]
+  c -> b [label="2"]
+  c -> d [label="3"]
+  d -> d [label="4"]
+}
