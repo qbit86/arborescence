@@ -74,26 +74,141 @@ In some contexts there is only concern for the vertices, while the edges are not
 
 ## Basic usage
 
-```cs
-public sealed class MyIncidenceNetwork :
-    IGraph<MyNode, MyLink>,
-    IForwardIncidence<MyNode, MyLink, IEnumerator<MyLink>>
+We start with the simpler concept of an adjacency graph, where edges (flights) are of no interest, only connected vertices (airports).
+
+```csharp
+using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
+
+public sealed class FlightAdjacencyGraph :
+    IAdjacency<string, NeighborEnumerator>
 {
-    public bool TryGetTail(MyLink edge, out MyNode tail) => ...
+    private readonly Dictionary<string, string[]> _neighborsByAirport;
 
-    public bool TryGetHead(MyLink edge, out MyNode head) => ...
+    private FlightAdjacencyGraph(
+        Dictionary<string, string[]> neighborsByAirport) =>
+        _neighborsByAirport = neighborsByAirport;
 
-    public IEnumerator<MyLink> EnumerateOutEdges(MyNode vertex) => ...
+    public NeighborEnumerator EnumerateNeighbors(string vertex) =>
+        _neighborsByAirport.TryGetValue(vertex, out string[]? neighbors)
+            ? new ArraySegment<string>(neighbors).GetEnumerator()
+            : ArraySegment<string>.Empty.GetEnumerator();
+
+    public static FlightAdjacencyGraph Create()
+    {
+        Dictionary<string, string[]> neighborsByAirport = new(3)
+        {
+            { "LHR", new[] { "IST", "IST" } },
+            { "IST", new[] { "LHR", "TPE" } },
+            { "TPE", new[] { "TPE" } }
+        };
+        return new(neighborsByAirport);
+    }
 }
 ```
 
-```cs
-public sealed class MyAdjacencyNetwork :
-    IAdjacency<MyNode, IEnumerator<MyNode>>
+Where can we fly from Istanbul?
+
+```csharp
+var adjacencyGraph = FlightAdjacencyGraph.Create();
+NeighborEnumerator istanbulNeighborEnumerator =
+    adjacencyGraph.EnumerateNeighbors("IST");
+while (istanbulNeighborEnumerator.MoveNext())
+    Console.WriteLine(istanbulNeighborEnumerator.Current);
+```
+
+Expected output is:
+
+```
+LHR
+TPE
+```
+
+The second example demonstrates an incidence graph.
+Let's consider only the digits of the flight ids for simplicity, so we could encode them as `int`s: `676` instead of `BA676`, `1980` instead of `TK1980`, and so on.
+
+```csharp
+using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+
+public sealed class FlightIncidenceGraph :
+    IGraph<string, int>, IForwardIncidence<string, int, EdgeEnumerator>
 {
-    public IEnumerator<MyNode> EnumerateNeighbors(
-        MyNode vertex) => ...
+    private readonly Dictionary<int, string> _destinationByFlight;
+    private readonly Dictionary<string, int[]> _flightsByOrigin;
+    private readonly Dictionary<int, string> _originByFlight;
+
+    private FlightIncidenceGraph(
+        Dictionary<int, string> originByFlight,
+        Dictionary<int, string> destinationByFlight,
+        Dictionary<string, int[]> flightsByOrigin)
+    {
+        _originByFlight = originByFlight;
+        _destinationByFlight = destinationByFlight;
+        _flightsByOrigin = flightsByOrigin;
+    }
+
+    public EdgeEnumerator EnumerateOutEdges(string vertex) =>
+        _flightsByOrigin.TryGetValue(vertex, out int[]? flights)
+            ? new ArraySegment<int>(flights).GetEnumerator()
+            : ArraySegment<int>.Empty.GetEnumerator();
+
+    public bool TryGetTail(int edge, [MaybeNullWhen(false)] out string tail) =>
+        _originByFlight.TryGetValue(edge, out tail);
+
+    public bool TryGetHead(int edge, [MaybeNullWhen(false)] out string head) =>
+        _destinationByFlight.TryGetValue(edge, out head);
+
+    public static FlightIncidenceGraph Create()
+    {
+        Dictionary<int, string> originByFlight = new(5)
+        {
+            { 676, "LHR" }, { 1980, "LHR" }, { 677, "IST" }, { 24, "IST" }, { 5288, "TPE" }
+        };
+        Dictionary<int, string> destinationByFlight = new(5)
+        {
+            { 676, "IST" }, { 1980, "IST" }, { 677, "LHR" }, { 24, "TPE" }, { 5288, "TPE" }
+        };
+        Dictionary<string, int[]> flightsByOrigin = new(3)
+        {
+            { "LHR", new[] { 676, 1980 } },
+            { "IST", new[] { 677, 24 } },
+            { "TPE", new[] { 5288 } }
+        };
+        return new(originByFlight, destinationByFlight, flightsByOrigin);
+    }
 }
+```
+
+Which flights are available from Istanbul?
+
+```csharp
+var incidenceGraph = FlightIncidenceGraph.Create();
+EdgeEnumerator istanbulFlightEnumerator =
+    incidenceGraph.EnumerateOutEdges("IST");
+while (istanbulFlightEnumerator.MoveNext())
+    Console.WriteLine(istanbulFlightEnumerator.Current);
+```
+
+Expected output is:
+
+```
+677
+24
+```
+
+Which airports are connected by the flight `676`?
+
+```csharp
+if (incidenceGraph.TryGetTail(676, out string? flight676Origin))
+    Console.WriteLine(flight676Origin);
+if (incidenceGraph.TryGetHead(676, out string? flight676Destination))
+    Console.WriteLine(flight676Destination);
+```
+
+Expected output is:
+
+```
+LHR
+IST
 ```
 
 ---
