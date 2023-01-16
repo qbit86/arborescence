@@ -5,18 +5,18 @@ using System.Linq;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Graph = Models.Compatibility.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 public sealed class MutableSimpleIncidenceGraphTest
 {
-    private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
-        HashSet<Endpoints>.CreateSetComparer();
+    private static IEqualityComparer<HashSet<Int32Endpoints>> HashSetEqualityComparer { get; } =
+        HashSet<Int32Endpoints>.CreateSetComparer();
 
-    private static bool TryGetEndpoints(Graph graph, Endpoints edge, out Endpoints endpoints)
+    private static bool TryGetEndpoints(Graph graph, Int32Endpoints edge, out Int32Endpoints endpoints)
     {
         bool hasTail = graph.TryGetTail(edge, out int tail);
         bool hasHead = graph.TryGetHead(edge, out int head);
@@ -30,7 +30,7 @@ public sealed class MutableSimpleIncidenceGraphTest
     {
         // Arrange
         using Graph graph = new(p.VertexCount);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             graph.Add(endpoints.Tail, endpoints.Head);
 
         // Assert
@@ -44,20 +44,20 @@ public sealed class MutableSimpleIncidenceGraphTest
     {
         // Arrange
         using Graph graph = new(p.VertexCount);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             graph.Add(endpoints.Tail, endpoints.Head);
 
         var expectedEdgeSet = p.Edges.ToHashSet();
 
         // Act
-        HashSet<Endpoints> actualEdgeSet = new();
+        HashSet<Int32Endpoints> actualEdgeSet = new();
         for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
         {
             EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
             while (outEdges.MoveNext())
             {
-                Endpoints edge = outEdges.Current;
-                bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
+                Int32Endpoints edge = outEdges.Current;
+                bool hasEndpoints = TryGetEndpoints(graph, edge, out Int32Endpoints endpoints);
                 if (!hasEndpoints)
                     Assert.True(hasEndpoints);
 
@@ -75,7 +75,7 @@ public sealed class MutableSimpleIncidenceGraphTest
     {
         // Arrange
         using Graph graph = new(p.VertexCount);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             graph.Add(endpoints.Tail, endpoints.Head);
 
         // Act
@@ -84,7 +84,7 @@ public sealed class MutableSimpleIncidenceGraphTest
             EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
             while (outEdges.MoveNext())
             {
-                Endpoints edge = outEdges.Current;
+                Int32Endpoints edge = outEdges.Current;
                 bool hasTail = graph.TryGetTail(edge, out int tail);
                 if (!hasTail)
                     Assert.True(hasTail);

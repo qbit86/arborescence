@@ -9,11 +9,11 @@ using Models;
 using Workbench;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using IndexedEnumerator = System.ArraySegment<int>.Enumerator;
-using SimpleEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using SimpleEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Models.Compatibility;
 using IndexedEnumerator = System.Collections.Generic.IEnumerator<int>;
-using SimpleEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using SimpleEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : IEnumerable<object[]>
@@ -37,8 +37,8 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
                 if (textReader == TextReader.Null)
                     continue;
 
-                IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (Endpoints edge in edges)
+                IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
+                foreach (Int32Endpoints edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
@@ -106,28 +106,28 @@ internal sealed class MutableIndexedGraphCollection : GraphCollection<
 }
 
 internal sealed class SimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Endpoints, SimpleEnumerator, SimpleIncidenceGraph.Builder>
+    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, SimpleIncidenceGraph.Builder>
 {
     protected override SimpleIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraph>
+    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraph>
 {
     protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class MutableSimpleGraphCollection : GraphCollection<
-    MutableSimpleIncidenceGraph, Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraphBuilder>
+    MutableSimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraphBuilder>
 {
     protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
 }
 
 internal sealed class UndirectedSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Endpoints, SimpleEnumerator, SimpleIncidenceGraph.UndirectedBuilder>
+    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, SimpleIncidenceGraph.UndirectedBuilder>
 {
     protected override SimpleIncidenceGraph.UndirectedBuilder CreateGraphBuilder(int initialVertexCount) =>
         new(initialVertexCount);
@@ -170,7 +170,7 @@ internal sealed class MutableIndexedIncidenceGraphBuilder :
 }
 
 internal sealed class MutableSimpleIncidenceGraphBuilder :
-    IGraphBuilder<MutableSimpleIncidenceGraph, int, Endpoints>,
+    IGraphBuilder<MutableSimpleIncidenceGraph, int, Int32Endpoints>,
     IDisposable
 {
     private MutableSimpleIncidenceGraph? _graph;
@@ -186,7 +186,7 @@ internal sealed class MutableSimpleIncidenceGraphBuilder :
         _graph = null;
     }
 
-    public bool TryAdd(int tail, int head, out Endpoints edge)
+    public bool TryAdd(int tail, int head, out Int32Endpoints edge)
     {
         if (_graph is null)
             throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));

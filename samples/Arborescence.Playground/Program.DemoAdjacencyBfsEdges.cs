@@ -7,7 +7,7 @@ using System.Linq;
 using Models;
 using Traversal.Adjacency;
 using Workbench;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 
 internal static partial class Program
 {
@@ -16,13 +16,13 @@ internal static partial class Program
         SimpleIncidenceGraph.Builder builder = new(18);
         using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
         {
-            IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Endpoints edge in edges)
+            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
+            foreach (Int32Endpoints edge in edges)
                 builder.Add(edge.Tail, edge.Head);
         }
 
         SimpleIncidenceGraph incidenceGraph = builder.ToGraph();
-        var adjacencyGraph = IncidenceAdjacencyAdapter<int, Endpoints, EdgeEnumerator>.Create(incidenceGraph);
+        var adjacencyGraph = IncidenceAdjacencyAdapter<int, Int32Endpoints, EdgeEnumerator>.Create(incidenceGraph);
         IEnumerable<int> sources = "abcd".Select(it => Base32.Parse(it.ToString()));
         IEnumerator<(int Tail, int Head)> edgeEnumerator =
             EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, sources.GetEnumerator());

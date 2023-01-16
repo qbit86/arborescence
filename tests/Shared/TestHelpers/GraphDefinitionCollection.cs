@@ -40,7 +40,7 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
             int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
             foreach (double densityPower in s_densityPowers)
             {
-                List<Endpoints> edges = new();
+                List<Int32Endpoints> edges = new();
                 GraphHelpers.GenerateEdges(vertexCount, densityPower, edges);
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";

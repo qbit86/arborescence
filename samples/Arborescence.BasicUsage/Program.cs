@@ -19,9 +19,9 @@ internal static class Program
         builder.Add(2, 4);
         SimpleIncidenceGraph graph = builder.ToGraph();
 
-        EnumerableBfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
+        EnumerableBfs<SimpleIncidenceGraph, Int32Endpoints, ArraySegment<Int32Endpoints>.Enumerator> bfs;
 
-        using IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
+        using IEnumerator<Int32Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
         while (edges.MoveNext())
             Console.WriteLine(edges.Current);
     }

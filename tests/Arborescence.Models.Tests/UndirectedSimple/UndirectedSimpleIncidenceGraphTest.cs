@@ -5,18 +5,18 @@ using System.Linq;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 public sealed class UndirectedSimpleIncidenceGraphTest
 {
-    private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
-        HashSet<Endpoints>.CreateSetComparer();
+    private static IEqualityComparer<HashSet<Int32Endpoints>> HashSetEqualityComparer { get; } =
+        HashSet<Int32Endpoints>.CreateSetComparer();
 
-    private static bool TryGetEndpoints(Graph graph, Endpoints edge, out Endpoints endpoints)
+    private static bool TryGetEndpoints(Graph graph, Int32Endpoints edge, out Int32Endpoints endpoints)
     {
         bool hasTail = graph.TryGetTail(edge, out int tail);
         bool hasHead = graph.TryGetHead(edge, out int head);
@@ -30,7 +30,7 @@ public sealed class UndirectedSimpleIncidenceGraphTest
     {
         // Arrange
         Graph.UndirectedBuilder builder = new(p.VertexCount, p.Edges.Count);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             builder.Add(endpoints.Tail, endpoints.Head);
 
         // Act
@@ -47,28 +47,28 @@ public sealed class UndirectedSimpleIncidenceGraphTest
     {
         // Arrange
         Graph.UndirectedBuilder builder = new(p.VertexCount, p.Edges.Count);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             builder.Add(endpoints.Tail, endpoints.Head);
 
         Graph graph = builder.ToGraph();
         var expectedEdgeSet = p.Edges.ToHashSet();
-        foreach (Endpoints edge in p.Edges)
+        foreach (Int32Endpoints edge in p.Edges)
         {
             if (edge.Tail == edge.Head)
                 continue;
-            Endpoints invertedEdge = new(edge.Head, edge.Tail);
+            Int32Endpoints invertedEdge = new(edge.Head, edge.Tail);
             expectedEdgeSet.Add(invertedEdge);
         }
 
         // Act
-        HashSet<Endpoints> actualEdgeSet = new();
+        HashSet<Int32Endpoints> actualEdgeSet = new();
         for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
         {
             EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
             while (outEdges.MoveNext())
             {
-                Endpoints edge = outEdges.Current;
-                bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
+                Int32Endpoints edge = outEdges.Current;
+                bool hasEndpoints = TryGetEndpoints(graph, edge, out Int32Endpoints endpoints);
                 if (!hasEndpoints)
                     Assert.True(hasEndpoints);
 
@@ -86,7 +86,7 @@ public sealed class UndirectedSimpleIncidenceGraphTest
     {
         // Arrange
         Graph.UndirectedBuilder builder = new(p.VertexCount, p.Edges.Count);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             builder.Add(endpoints.Tail, endpoints.Head);
 
         Graph graph = builder.ToGraph();
@@ -97,7 +97,7 @@ public sealed class UndirectedSimpleIncidenceGraphTest
             EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
             while (outEdges.MoveNext())
             {
-                Endpoints edge = outEdges.Current;
+                Int32Endpoints edge = outEdges.Current;
                 bool hasTail = graph.TryGetTail(edge, out int tail);
                 if (!hasTail)
                     Assert.True(hasTail);

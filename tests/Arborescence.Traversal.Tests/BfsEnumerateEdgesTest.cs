@@ -8,17 +8,17 @@ using Traversal;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 public sealed class BfsEnumerateEdgesTest
 {
-    private EagerBfs<Graph, int, Endpoints, EdgeEnumerator> EagerBfs { get; }
+    private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
 
-    private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableBfs { get; }
+    private EnumerableBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
     private void EnumerateEdgesCore(Graph graph, bool multipleSource)
     {
@@ -31,9 +31,9 @@ public sealed class BfsEnumerateEdgesTest
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         IndexedSet set = new(setBackingStore);
 
-        using Rist<Endpoints> eagerSteps = new(graph.VertexCount);
-        using Rist<Endpoints> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
+        using Rist<Int32Endpoints> eagerSteps = new(graph.VertexCount);
+        using Rist<Int32Endpoints> enumerableSteps = new(graph.VertexCount);
+        BfsHandler<Graph, int, Int32Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -46,7 +46,7 @@ public sealed class BfsEnumerateEdgesTest
             IndexEnumerator sources = new(sourceCount);
 
             EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-            using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, sources, set);
+            using IEnumerator<Int32Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, sources, set);
             while (edges.MoveNext())
                 enumerableSteps.Add(edges.Current);
         }
@@ -54,7 +54,7 @@ public sealed class BfsEnumerateEdgesTest
         {
             int source = graph.VertexCount >> 1;
             EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-            using IEnumerator<Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, set);
+            using IEnumerator<Int32Endpoints> edges = EnumerableBfs.EnumerateEdges(graph, source, set);
             while (edges.MoveNext())
                 enumerableSteps.Add(edges.Current);
         }
@@ -68,8 +68,8 @@ public sealed class BfsEnumerateEdgesTest
         int count = eagerStepCount;
         for (int i = 0; i < count; ++i)
         {
-            Endpoints eagerStep = eagerSteps[i];
-            Endpoints enumerableStep = enumerableSteps[i];
+            Int32Endpoints eagerStep = eagerSteps[i];
+            Int32Endpoints enumerableStep = enumerableSteps[i];
 
             if (eagerStep == enumerableStep)
                 continue;
@@ -83,12 +83,12 @@ public sealed class BfsEnumerateEdgesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<Endpoints> treeEdges)
+    private static BfsHandler<Graph, int, Int32Endpoints> CreateBfsHandler(IList<Int32Endpoints> treeEdges)
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));
 
-        BfsHandler<Graph, int, Endpoints> result = new();
+        BfsHandler<Graph, int, Int32Endpoints> result = new();
         result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }

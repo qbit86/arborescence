@@ -7,7 +7,7 @@ internal sealed class GraphDefinitionParameter
 {
     private readonly string _description;
 
-    internal GraphDefinitionParameter(int vertexCount, IReadOnlyList<Endpoints> edges, string description)
+    internal GraphDefinitionParameter(int vertexCount, IReadOnlyList<Int32Endpoints> edges, string description)
     {
         if (vertexCount < 0)
             throw new ArgumentOutOfRangeException(nameof(vertexCount));
@@ -18,7 +18,7 @@ internal sealed class GraphDefinitionParameter
     }
 
     internal int VertexCount { get; }
-    internal IReadOnlyList<Endpoints> Edges { get; }
+    internal IReadOnlyList<Int32Endpoints> Edges { get; }
 
     public override string ToString() => _description;
 }

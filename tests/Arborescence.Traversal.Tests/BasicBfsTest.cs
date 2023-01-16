@@ -8,17 +8,17 @@ using Traversal.Specialized;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 public sealed class BasicBfsTest
 {
-    private EnumerableBfs<Graph, Endpoints, EdgeEnumerator> Bfs { get; }
+    private EnumerableBfs<Graph, Int32Endpoints, EdgeEnumerator> Bfs { get; }
 
-    private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableBfs { get; }
+    private EnumerableBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
     [Theory]
     [ClassData(typeof(UndirectedSimpleGraphCollection))]
@@ -35,8 +35,8 @@ public sealed class BasicBfsTest
 
         // Act
 
-        using IEnumerator<Endpoints> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount);
-        using IEnumerator<Endpoints> enumerableSteps = EnumerableBfs.EnumerateEdges(graph, source, exploredSet);
+        using IEnumerator<Int32Endpoints> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount);
+        using IEnumerator<Int32Endpoints> enumerableSteps = EnumerableBfs.EnumerateEdges(graph, source, exploredSet);
 
         // Assert
 
@@ -50,8 +50,8 @@ public sealed class BasicBfsTest
             if (!expectedHasCurrent || !actualHasCurrent)
                 break;
 
-            Endpoints expected = enumerableSteps.Current;
-            Endpoints actual = basicSteps.Current;
+            Int32Endpoints expected = enumerableSteps.Current;
+            Int32Endpoints actual = basicSteps.Current;
 
             if (expected != actual)
             {

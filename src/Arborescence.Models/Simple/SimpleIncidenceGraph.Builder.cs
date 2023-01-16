@@ -9,10 +9,10 @@ namespace Arborescence.Models.Compatibility
     public readonly partial struct SimpleIncidenceGraph
     {
         /// <inheritdoc/>
-        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>
+        public sealed class Builder : IGraphBuilder<SimpleIncidenceGraph, int, Int32Endpoints>
         {
             private int _currentMaxTail;
-            private ArrayPrefix<Endpoints> _edges;
+            private ArrayPrefix<Int32Endpoints> _edges;
             private int _vertexCount;
 
             /// <summary>
@@ -31,7 +31,7 @@ namespace Arborescence.Models.Compatibility
                 if (edgeCapacity < 0)
                     ThrowHelper.ThrowArgumentOutOfRangeException(nameof(edgeCapacity));
 
-                _edges = ArrayPrefixBuilder.Create<Endpoints>(edgeCapacity);
+                _edges = ArrayPrefixBuilder.Create<Int32Endpoints>(edgeCapacity);
                 _vertexCount = initialVertexCount;
             }
 
@@ -51,7 +51,7 @@ namespace Arborescence.Models.Compatibility
             /// <c>true</c> if both <paramref name="tail"/> and <paramref name="head"/> are non-negative;
             /// otherwise, <c>false</c>.
             /// </returns>
-            public bool TryAdd(int tail, int head, out Endpoints edge)
+            public bool TryAdd(int tail, int head, out Int32Endpoints edge)
             {
                 bool result = tail >= 0 && head >= 0;
                 edge = result ? UncheckedAdd(tail, head) : default;
@@ -63,23 +63,23 @@ namespace Arborescence.Models.Compatibility
             {
                 int n = _vertexCount;
                 int m = _edges.Count;
-                Endpoints[] array = _edges.Array!;
+                Int32Endpoints[] array = _edges.Array!;
 
                 if (NeedsReordering)
                     Array.Sort(array, 0, m, SimpleEdgeComparer.Instance);
 
-                Endpoints[] edgesOrderedByTail;
+                Int32Endpoints[] edgesOrderedByTail;
                 if (array.Length == _edges.Count)
                 {
                     edgesOrderedByTail = array;
-                    _edges = ArrayPrefix<Endpoints>.Empty;
+                    _edges = ArrayPrefix<Int32Endpoints>.Empty;
                 }
                 else
                 {
 #if NET5_0_OR_GREATER
-                    edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(m);
+                    edgesOrderedByTail = GC.AllocateUninitializedArray<Int32Endpoints>(m);
 #else
-                    edgesOrderedByTail = new Endpoints[m];
+                    edgesOrderedByTail = new Int32Endpoints[m];
 #endif
                     _edges.CopyTo(edgesOrderedByTail);
                     _edges = ArrayPrefixBuilder.Release(_edges, false);
@@ -90,7 +90,7 @@ namespace Arborescence.Models.Compatibility
                 data[1] = m;
 
                 Span<int> destUpperBoundByVertex = data.AsSpan(2);
-                foreach (Endpoints edge in edgesOrderedByTail)
+                foreach (Int32Endpoints edge in edgesOrderedByTail)
                 {
                     int tail = edge.Tail;
                     ++destUpperBoundByVertex[tail];
@@ -114,7 +114,7 @@ namespace Arborescence.Models.Compatibility
             /// <exception cref="ArgumentOutOfRangeException">
             /// <paramref name="tail"/> is less than zero, or <paramref name="head"/> is less than zero.
             /// </exception>
-            public Endpoints Add(int tail, int head)
+            public Int32Endpoints Add(int tail, int head)
             {
                 if (tail < 0)
                     ThrowHelper.ThrowArgumentOutOfRangeException(nameof(tail));
@@ -125,14 +125,14 @@ namespace Arborescence.Models.Compatibility
                 return UncheckedAdd(tail, head);
             }
 
-            private Endpoints UncheckedAdd(int tail, int head)
+            private Int32Endpoints UncheckedAdd(int tail, int head)
             {
                 _currentMaxTail = tail < _currentMaxTail ? int.MaxValue : tail;
                 int newVertexCountCandidate = Math.Max(tail, head) + 1;
                 if (newVertexCountCandidate > _vertexCount)
                     _vertexCount = newVertexCountCandidate;
 
-                var edge = new Endpoints(tail, head);
+                var edge = new Int32Endpoints(tail, head);
                 _edges = ArrayPrefixBuilder.Add(_edges, edge, false);
 
                 return edge;

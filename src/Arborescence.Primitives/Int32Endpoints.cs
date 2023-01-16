@@ -9,17 +9,17 @@
     /// <summary>
     /// Holds endpoints of an oriented edge.
     /// </summary>
-    public readonly struct Endpoints : IEquatable<Endpoints>
+    public readonly struct Int32Endpoints : IEquatable<Int32Endpoints>
     {
         private readonly ulong _data;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Endpoints"/> structure
+        /// Initializes a new instance of the <see cref="Int32Endpoints"/> structure
         /// with the specified tail and head.
         /// </summary>
         /// <param name="tail">The tail of the edge.</param>
         /// <param name="head">The head of the edge.</param>
-        public Endpoints(int tail, int head) => _data = unchecked(((ulong)tail << 32) | (uint)head);
+        public Int32Endpoints(int tail, int head) => _data = unchecked(((ulong)tail << 32) | (uint)head);
 
         /// <summary>
         /// Gets the tail of the edge.
@@ -46,7 +46,7 @@
         }
 
         /// <summary>
-        /// Deconstructs the current <see cref="Endpoints"/> structure.
+        /// Deconstructs the current <see cref="Int32Endpoints"/> structure.
         /// </summary>
         /// <param name="tail">The tail of the edge.</param>
         /// <param name="head">The head of the edge.</param>
@@ -58,33 +58,33 @@
         }
 
         /// <inheritdoc/>
-        public bool Equals(Endpoints other) => _data == other._data;
+        public bool Equals(Int32Endpoints other) => _data == other._data;
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Endpoints other && Equals(other);
+            obj is Int32Endpoints other && Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => unchecked(Tail.GetHashCode() * 397) ^ Head.GetHashCode();
+        public override int GetHashCode() => _data.GetHashCode();
 
         /// <summary>
-        /// Indicates whether two <see cref="Endpoints"/> structures are equal.
+        /// Indicates whether two <see cref="Int32Endpoints"/> structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="Endpoints"/> structures are equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="Int32Endpoints"/> structures are equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(Endpoints left, Endpoints right) => left.Equals(right);
+        public static bool operator ==(Int32Endpoints left, Int32Endpoints right) => left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="Endpoints"/> structures are not equal.
+        /// Indicates whether two <see cref="Int32Endpoints"/> structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="Endpoints"/> structures are not equal; otherwise, <c>false</c>.
+        /// <c>true</c> if the two <see cref="Int32Endpoints"/> structures are not equal; otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator !=(Endpoints left, Endpoints right) => !left.Equals(right);
+        public static bool operator !=(Int32Endpoints left, Int32Endpoints right) => !left.Equals(right);
     }
 }
