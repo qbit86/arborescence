@@ -15,7 +15,7 @@ For example:
        │  1  │  3
 (a)   (b)─>─(c)─>─(d)┐
        └──<──┘     └<┘
-          2         4
+          2        4
 ```
 
 Here common restrictions of _simple directed graphs_ are relaxed:
