@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Channels;
 using Arborescence;
 
 var adjacencyGraph = FlightAdjacencyGraph.Create();

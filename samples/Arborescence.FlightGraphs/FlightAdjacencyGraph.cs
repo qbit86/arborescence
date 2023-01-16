@@ -2,15 +2,16 @@ namespace Arborescence;
 
 using System;
 using System.Collections.Generic;
+using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 
-public sealed class FlightAdjacencyGraph : IAdjacency<string, ArraySegment<string>.Enumerator>
+public sealed class FlightAdjacencyGraph : IAdjacency<string, NeighborEnumerator>
 {
     private readonly Dictionary<string, string[]> _neighborsByAirport;
 
     private FlightAdjacencyGraph(Dictionary<string, string[]> neighborsByAirport) =>
         _neighborsByAirport = neighborsByAirport;
 
-    public ArraySegment<string>.Enumerator EnumerateNeighbors(string vertex) =>
+    public NeighborEnumerator EnumerateNeighbors(string vertex) =>
         _neighborsByAirport.TryGetValue(vertex, out string[]? neighbors)
             ? new ArraySegment<string>(neighbors).GetEnumerator()
             : ArraySegment<string>.Empty.GetEnumerator();
