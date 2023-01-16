@@ -4,7 +4,38 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
-    using Primitives;
+    using System.Text;
+
+    /// <summary>
+    /// Provides the Create factory method for <see cref="Endpoints{TVertex}"/>.
+    /// </summary>
+    public static class Endpoints
+    {
+        /// <summary>
+        /// Creates a new <see cref="Endpoints{TVertex}"/> from the specified tail and head.
+        /// </summary>
+        /// <param name="tail">The tail of the edge.</param>
+        /// <param name="head">The head of the edge.</param>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <returns>A <see cref="Endpoints{TVertex}"/> containing the provided tail and head as endpoints.</returns>
+        public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head) => new(tail, head);
+
+        /// <summary>
+        /// Used by <see cref="Endpoints{TVertex}.ToString"/> to reduce generic code.
+        /// </summary>
+        internal static string ToString(string? tail, string? head)
+        {
+            var s = new StringBuilder();
+            s.Append('[');
+            if (tail != null)
+                s.Append(tail);
+            s.Append(", ");
+            if (head != null)
+                s.Append(head);
+            s.Append(']');
+            return s.ToString();
+        }
+    }
 
     /// <summary>
     /// Holds endpoints of an oriented edge.
@@ -37,7 +68,7 @@
         private static EqualityComparer<TVertex> C => EqualityComparer<TVertex>.Default;
 
         /// <inheritdoc/>
-        public override string ToString() => EndpointsHelpers.PairToString(Tail?.ToString(), Head?.ToString());
+        public override string ToString() => Endpoints.ToString(Tail?.ToString(), Head?.ToString());
 
         /// <summary>
         /// Deconstructs the current <see cref="Endpoints{TVertex}"/> structure.
@@ -61,8 +92,8 @@
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            int hashCode = Tail != null ? C.GetHashCode(Tail) : 0;
-            hashCode = unchecked(hashCode * 397) ^ (Head != null ? C.GetHashCode(Head) : 0);
+            int hashCode = (Tail?.GetHashCode()).GetValueOrDefault();
+            hashCode = unchecked(hashCode * 397) ^ (Head?.GetHashCode()).GetValueOrDefault();
             return hashCode;
         }
 
