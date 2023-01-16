@@ -1,6 +1,7 @@
 digraph Flights {
   rankdir=LR
-  node [shape=box]
+  node [shape=box fontname="Times-Italic"]
+  edge [fontname="Monospace"]
   OMS // Omsk
   LHR // London
   IST // Istanbul
