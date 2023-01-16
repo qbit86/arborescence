@@ -11,7 +11,7 @@ using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
 
 internal static partial class Program
 {
-    private static void DemoAdjacency()
+    private static void DemoAdjacencyBfsEdges()
     {
         SimpleIncidenceGraph.Builder builder = new(18);
         using (TextReader textReader = IndexedGraphs.GetTextReader("09"))

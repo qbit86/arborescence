@@ -21,8 +21,8 @@ internal static partial class Program
         }
 
         IndexedIncidenceGraph graph = builder.ToGraph();
-        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
-        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
+        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
+        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 
         TextWriter w = Console.Out;
 
@@ -46,7 +46,7 @@ internal static partial class Program
             int e = permutation[i];
             w.Write("  ");
             w.Write(E(graph, e));
-            w.WriteLine($" [label={i.ToString(F)}]");
+            w.WriteLine($" [label={i.ToString(P)}]");
         }
 
         w.WriteLine("}");
