@@ -20,6 +20,7 @@
     <EnablePackageValidation>true</EnablePackageValidation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <InformationalVersion>$(Version)</InformationalVersion>
+    <IsPackable>true</IsPackable>
     <LangVersion>9</LangVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
