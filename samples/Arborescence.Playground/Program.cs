@@ -5,9 +5,9 @@ using Workbench;
 
 internal static partial class Program
 {
-    private static CultureInfo F => CultureInfo.InvariantCulture;
+    private static CultureInfo P => CultureInfo.InvariantCulture;
 
-    private static void Main() => DemoShuffle();
+    private static void Main() => DemoAdjacencyBfsVertices();
 
     private static string V(int v) => Base32.ToString(v);
 

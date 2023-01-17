@@ -2,17 +2,17 @@
   <PropertyGroup>
     <Description>Basic blocks for building algorithms and data structures.
 Commonly used types:
-• Endpoints
 • ArrayPrefix&lt;T&gt;
 • ArrayPrefixEnumerator&lt;T&gt;
 • IndexedDictionary&lt;TValue&gt;
 • IndexedSet</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionPrefix>0.14.0</VersionPrefix>
+    <VersionPrefix>0.15</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.14</AssemblyVersion>
+    <AssemblyVersion>0.15</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>netcoreapp3.1;net461;net6.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
@@ -21,7 +21,10 @@ Commonly used types:
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 </Project>

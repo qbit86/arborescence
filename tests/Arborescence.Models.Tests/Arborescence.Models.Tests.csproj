@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
     <TargetFrameworks>net481;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
@@ -16,5 +15,5 @@
     <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Workbench\Arborescence.Workbench.csproj" />
   </ItemGroup>
-  <Import Project="..\Arborescence.Tests.Shared\Arborescence.Tests.Shared.projitems" Label="Shared" />
+  <Import Project="..\Shared\TestHelpers\TestHelpers.projitems" Label="Shared" />
 </Project>

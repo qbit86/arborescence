@@ -9,9 +9,9 @@ namespace Arborescence.Models.Compatibility
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+    using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
-    using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
     /// <summary>
@@ -21,8 +21,8 @@ namespace Arborescence.Models.Compatibility
     /// An adjacency-list representation of a graph stores an out-edge sequence for each vertex.
     /// </remarks>
     public readonly partial struct SimpleIncidenceGraph :
-        IHeadIncidence<int, Endpoints>,
-        ITailIncidence<int, Endpoints>,
+        IHeadIncidence<int, Int32Endpoints>,
+        ITailIncidence<int, Int32Endpoints>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
         IEquatable<SimpleIncidenceGraph>
     {
@@ -31,9 +31,9 @@ namespace Arborescence.Models.Compatibility
         // 1    | m — the number of edges
         // n    | upper bounds of out-edge enumerators indexed by vertices
         private readonly int[]? _data;
-        private readonly Endpoints[]? _edgesOrderedByTail;
+        private readonly Int32Endpoints[]? _edgesOrderedByTail;
 
-        internal SimpleIncidenceGraph(int[] data, Endpoints[] edgesOrderedByTail)
+        internal SimpleIncidenceGraph(int[] data, Int32Endpoints[] edgesOrderedByTail)
         {
             Debug.Assert(data.Length >= 2, "data.Length >= 2");
             Debug.Assert(data[0] >= 0, "data[0] >= 0");
@@ -56,14 +56,14 @@ namespace Arborescence.Models.Compatibility
         public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
         /// <inheritdoc/>
-        public bool TryGetHead(Endpoints edge, out int head)
+        public bool TryGetHead(Int32Endpoints edge, out int head)
         {
             head = edge.Head;
             return unchecked((uint)head < (uint)VertexCount);
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(Endpoints edge, out int tail)
+        public bool TryGetTail(Int32Endpoints edge, out int tail)
         {
             tail = edge.Tail;
             return unchecked((uint)tail < (uint)VertexCount);
@@ -73,16 +73,16 @@ namespace Arborescence.Models.Compatibility
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (_data is null || _edgesOrderedByTail is null)
-                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
+                return ArraySegmentHelpers.EmptyEnumerator<Int32Endpoints>();
 
             ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertex(_data);
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
+                return ArraySegmentHelpers.EmptyEnumerator<Int32Endpoints>();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
-            return ArraySegmentHelpers.GetEnumerator<Endpoints>(
+            return ArraySegmentHelpers.GetEnumerator<Int32Endpoints>(
                 new(_edgesOrderedByTail, lowerBound, upperBound - lowerBound));
         }
 

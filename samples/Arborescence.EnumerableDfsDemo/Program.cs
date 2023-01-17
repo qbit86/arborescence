@@ -19,8 +19,8 @@ internal static class Program
 
         using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
         {
-            IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Endpoints edge in edges)
+            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
+            foreach (Int32Endpoints edge in edges)
                 builder.Add(edge.Tail, edge.Head);
         }
 
@@ -30,7 +30,7 @@ internal static class Program
 
         TextWriter w = Console.Out;
 
-        EnumerableDfs<SimpleIncidenceGraph, int, Endpoints, ArraySegment<Endpoints>.Enumerator> dfs = default;
+        EnumerableDfs<SimpleIncidenceGraph, int, Int32Endpoints, ArraySegment<Int32Endpoints>.Enumerator> dfs = default;
 
         w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
         w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -49,11 +49,11 @@ internal static class Program
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         IndexedSet enumerableExploredSet = new(setBackingStore);
-        HashSet<Endpoints> treeEdges = new(graph.EdgeCount);
-        using IEnumerator<Endpoints> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+        HashSet<Int32Endpoints> treeEdges = new(graph.EdgeCount);
+        using IEnumerator<Int32Endpoints> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
         while (steps.MoveNext())
         {
-            Endpoints e = steps.Current;
+            Int32Endpoints e = steps.Current;
             w.WriteLine($"  {E(graph, e)} [style=bold]");
             treeEdges.Add(e);
 
@@ -76,10 +76,10 @@ internal static class Program
         w.WriteLine();
         for (int v = 0; v < graph.VertexCount; ++v)
         {
-            ArraySegment<Endpoints>.Enumerator outEdges = graph.EnumerateOutEdges(v);
+            ArraySegment<Int32Endpoints>.Enumerator outEdges = graph.EnumerateOutEdges(v);
             while (outEdges.MoveNext())
             {
-                Endpoints e = outEdges.Current;
+                Int32Endpoints e = outEdges.Current;
                 if (treeEdges.Contains(e))
                     continue;
 
@@ -92,7 +92,7 @@ internal static class Program
 
     private static string V(int v) => Base32.ToString(v);
 
-    private static string E(SimpleIncidenceGraph g, Endpoints e)
+    private static string E(SimpleIncidenceGraph g, Int32Endpoints e)
     {
         string head = g.TryGetHead(e, out int h) ? V(h) : "?";
         string tail = g.TryGetTail(e, out int t) ? V(t) : "?";

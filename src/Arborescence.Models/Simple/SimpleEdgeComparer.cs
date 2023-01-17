@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
 
-    internal sealed class SimpleEdgeComparer : IComparer<Endpoints>
+    internal sealed class SimpleEdgeComparer : IComparer<Int32Endpoints>
     {
         internal static SimpleEdgeComparer Instance { get; } = new();
 
-        public int Compare(Endpoints x, Endpoints y)
+        public int Compare(Int32Endpoints x, Int32Endpoints y)
         {
             int left = x.Tail;
             int right = y.Tail;

@@ -19,8 +19,8 @@ internal static class Program
 
         using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
         {
-            IEnumerable<Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Endpoints edge in edges)
+            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
+            foreach (Int32Endpoints edge in edges)
                 builder.Add(edge.Tail, edge.Head);
         }
 

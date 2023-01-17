@@ -7,8 +7,6 @@
 
 Arborescence is a generic .NET library for dealing with graphs.
 
-API structure is inspired by [Boost Graph Concepts].
-
 ## Features
 
 * [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
@@ -28,7 +26,7 @@ Let's consider a simple directed graph and a breadth-first tree on it:
 
 This is how you create a graph, instantiate an algorithm, and run it against the graph:
 
-```cs
+```csharp
 SimpleIncidenceGraph.Builder builder = new();
 builder.Add(2, 0);
 builder.Add(4, 3);
@@ -66,8 +64,6 @@ The icon is designed by [OpenMoji](https://openmoji.org) — the open-source emo
 License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 [Abstractions]: https://nuget.org/packages/Arborescence.Abstractions/
-
-[Boost Graph Concepts]: https://boost.org/doc/libs/1_76_0/libs/graph/doc/graph_concepts.html
 
 [Models]: https://nuget.org/packages/Arborescence.Models/
 

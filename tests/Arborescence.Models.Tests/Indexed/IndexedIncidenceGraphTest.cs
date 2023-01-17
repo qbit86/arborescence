@@ -13,10 +13,10 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 
 public sealed class IndexedIncidenceGraphTest
 {
-    private static IEqualityComparer<HashSet<Endpoints>> HashSetEqualityComparer { get; } =
-        HashSet<Endpoints>.CreateSetComparer();
+    private static IEqualityComparer<HashSet<Int32Endpoints>> HashSetEqualityComparer { get; } =
+        HashSet<Int32Endpoints>.CreateSetComparer();
 
-    private static bool TryGetEndpoints(Graph graph, int edge, out Endpoints endpoints)
+    private static bool TryGetEndpoints(Graph graph, int edge, out Int32Endpoints endpoints)
     {
         bool hasTail = graph.TryGetTail(edge, out int tail);
         bool hasHead = graph.TryGetHead(edge, out int head);
@@ -30,7 +30,7 @@ public sealed class IndexedIncidenceGraphTest
     {
         // Arrange
         Graph.Builder builder = new(p.VertexCount, p.Edges.Count);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             builder.Add(endpoints.Tail, endpoints.Head);
 
         // Act
@@ -47,21 +47,21 @@ public sealed class IndexedIncidenceGraphTest
     {
         // Arrange
         Graph.Builder builder = new(p.VertexCount, p.Edges.Count);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             builder.Add(endpoints.Tail, endpoints.Head);
 
         Graph graph = builder.ToGraph();
         var expectedEdgeSet = p.Edges.ToHashSet();
 
         // Act
-        HashSet<Endpoints> actualEdgeSet = new();
+        HashSet<Int32Endpoints> actualEdgeSet = new();
         for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
         {
             EdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
             while (outEdges.MoveNext())
             {
                 int edge = outEdges.Current;
-                bool hasEndpoints = TryGetEndpoints(graph, edge, out Endpoints endpoints);
+                bool hasEndpoints = TryGetEndpoints(graph, edge, out Int32Endpoints endpoints);
                 if (!hasEndpoints)
                     Assert.True(hasEndpoints);
 
@@ -79,7 +79,7 @@ public sealed class IndexedIncidenceGraphTest
     {
         // Arrange
         Graph.Builder builder = new(p.VertexCount, p.Edges.Count);
-        foreach (Endpoints endpoints in p.Edges)
+        foreach (Int32Endpoints endpoints in p.Edges)
             builder.Add(endpoints.Tail, endpoints.Head);
 
         Graph graph = builder.ToGraph();

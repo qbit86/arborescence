@@ -4,31 +4,31 @@ using System;
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Graph = Models.Compatibility.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 public class QueueGenericSearchEnumerateVerticesTest
 {
-    private EagerBfs<Graph, int, Endpoints, EdgeEnumerator> EagerBfs { get; }
+    private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
 
-    private GenericSearch<Graph, int, Endpoints, EdgeEnumerator> GenericSearch { get; }
+    private GenericSearch<Graph, int, Int32Endpoints, EdgeEnumerator> GenericSearch { get; }
 
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
-        Debug.Assert(graph != null, "graph != null");
+        if (graph is null)
+            throw new ArgumentNullException(nameof(graph));
 
         // Arrange
 
-        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph!.VertexCount, 1));
+        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
         IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
         ConcurrentQueue<int> frontier = new();
@@ -38,7 +38,7 @@ public class QueueGenericSearchEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
+        BfsHandler<Graph, int, Int32Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -86,12 +86,13 @@ public class QueueGenericSearchEnumerateVerticesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
+    private static BfsHandler<Graph, int, Int32Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
     {
-        Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
+        if (discoveredVertices is null)
+            throw new ArgumentNullException(nameof(discoveredVertices));
 
-        BfsHandler<Graph, int, Endpoints> result = new();
-        result.DiscoverVertex += (_, v) => discoveredVertices!.Add(v);
+        BfsHandler<Graph, int, Int32Endpoints> result = new();
+        result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
         return result;
     }
 

@@ -41,7 +41,7 @@ namespace Arborescence.Traversal
             where TVertexEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            var stack = new Internal.Stack<TEdgeEnumerator>();
+            var stack = new ValueStack<TEdgeEnumerator>();
             try
             {
                 while (sources.MoveNext())

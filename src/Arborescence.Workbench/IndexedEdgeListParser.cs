@@ -10,7 +10,7 @@ namespace Arborescence.Workbench
 
         // Treats nodes as Base32 numbers: https://en.wikipedia.org/wiki/Base32#RFC_4648_Base32_alphabet
 
-        public static IEnumerable<Endpoints> ParseEdges(TextReader textReader)
+        public static IEnumerable<Int32Endpoints> ParseEdges(TextReader textReader)
         {
             if (textReader is null)
                 throw new ArgumentNullException(nameof(textReader));
@@ -18,7 +18,7 @@ namespace Arborescence.Workbench
             return ParseEdgesCore(textReader);
         }
 
-        private static IEnumerable<Endpoints> ParseEdgesCore(TextReader textReader)
+        private static IEnumerable<Int32Endpoints> ParseEdgesCore(TextReader textReader)
         {
             for (string? line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
             {

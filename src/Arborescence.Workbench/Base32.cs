@@ -34,6 +34,9 @@
             return span.ToString();
         }
 
+        public static int Parse(ReadOnlySpan<char> value) =>
+            TryParse(value, out int result) ? result : throw new ArgumentException(null, nameof(value));
+
         public static bool TryParse(ReadOnlySpan<char> value, out int result)
         {
             ReadOnlySpan<char> input = value.Length > MaxLength

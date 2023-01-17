@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
@@ -14,4 +13,5 @@
     <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Workbench\Arborescence.Workbench.csproj" />
   </ItemGroup>
+  <Import Project="..\..\src\Shared\IncidenceAdjacencyAdapter\IncidenceAdjacencyAdapter.projitems" Label="Shared" />
 </Project>

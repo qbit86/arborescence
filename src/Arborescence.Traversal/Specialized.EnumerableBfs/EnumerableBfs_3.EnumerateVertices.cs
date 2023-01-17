@@ -43,7 +43,7 @@ namespace Arborescence.Traversal.Specialized
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(exploredSet, 0, exploredSet.Length);
-            var queue = new Internal.Queue<int>();
+            var queue = new ValueQueue<int>();
             try
             {
                 SetHelpers.Add(exploredSet, source);

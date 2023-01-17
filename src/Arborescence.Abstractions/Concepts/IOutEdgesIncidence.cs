@@ -3,6 +3,7 @@ namespace Arborescence
     /// <summary>
     /// Represents an incidence concept — an efficient access to the out-edges of each vertex.
     /// </summary>
+    /// <seealso href="https://en.wikipedia.org/wiki/Incidence_(graph)"/>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
     public interface IOutEdgesIncidence<in TVertex, out TEdges>

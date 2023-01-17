@@ -19,7 +19,7 @@ namespace Arborescence.Traversal
         where TVertex : notnull
     {
         private static void TraverseCore<TColorMap, THandler>(
-            TGraph graph, Internal.Queue<TVertex> queue, TColorMap colorByVertex, THandler handler)
+            TGraph graph, ValueQueue<TVertex> queue, TColorMap colorByVertex, THandler handler)
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {

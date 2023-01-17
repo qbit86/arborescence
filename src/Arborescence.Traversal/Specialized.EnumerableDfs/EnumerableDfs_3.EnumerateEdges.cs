@@ -37,7 +37,7 @@ namespace Arborescence.Traversal.Specialized
 
             byte[] exploredSet = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(exploredSet, 0, exploredSet.Length);
-            var stack = new Internal.Stack<TEdgeEnumerator>();
+            var stack = new ValueStack<TEdgeEnumerator>();
             try
             {
                 SetHelpers.Add(exploredSet, source);

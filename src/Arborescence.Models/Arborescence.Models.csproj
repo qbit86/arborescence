@@ -9,10 +9,10 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency</PackageTags>
     <Title>Graph models</Title>
-    <VersionPrefix>0.14.1</VersionPrefix>
+    <VersionPrefix>0.15</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.14</AssemblyVersion>
+    <AssemblyVersion>0.15</AssemblyVersion>
     <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
@@ -36,7 +36,6 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
-  <Import Project="..\Arborescence.Shared\Arborescence.ArrayPrefixBuilder\Arborescence.ArrayPrefixBuilder.projitems" Label="Shared" />
-  <Import Project="..\Arborescence.Shared\Arborescence.TryHelpers\Arborescence.TryHelpers.projitems" Label="Shared" />
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
+  <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 </Project>

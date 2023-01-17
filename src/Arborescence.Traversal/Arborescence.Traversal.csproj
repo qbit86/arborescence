@@ -6,27 +6,29 @@ Commonly used types:
 • EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EnumerableDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
 • EagerBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.14.0</VersionPrefix>
+    <VersionPrefix>0.15</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.14</AssemblyVersion>
+    <AssemblyVersion>0.15</AssemblyVersion>
     <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>netcoreapp3.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
   </ItemGroup>
-  <Import Project="..\Arborescence.Shared\Arborescence.Queue\Arborescence.Queue.projitems" Label="Shared" />
-  <Import Project="..\Arborescence.Shared\Arborescence.Stack\Arborescence.Stack.projitems" Label="Shared" />
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All"/>
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Arborescence.Shared\Arborescence.NullableAttributes\Arborescence.NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 </Project>

@@ -27,7 +27,7 @@ This decision is enforced with a setting in an EditorConfig file:
 
 ### Place using directives outside a namespace
 
-```cs
+```csharp
 using System;
 
 namespace Foo
@@ -40,7 +40,7 @@ namespace Foo
 
 ### Place using directives inside a namespace
 
-```cs
+```csharp
 namespace Foo
 {
     using System;

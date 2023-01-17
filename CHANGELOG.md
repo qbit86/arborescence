@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.15.0] - 2022-01-17
+
+### Added
+
+- Abstractions: `IForwardIncidence<TVertex, TEdge, TEdges>`.
+- Traversal: `Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableGenericSearch<TVertex>`.
+- Traversal: `Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableBfs<TVertex>`.
+- Samples: Project Arborescence.FlightGraphs.
+
+### Changed
+
+- Abstractions: Renamed `EnumerateAdjacentVertices(TVertex)` to `EnumerateNeighbors(TVertex vertex)`.
+- Abstractions: Elaborate Readme file.
+- Models: Renamed non-generic type `Endpoints` to `Int32Endpoints`.
+- Primitives: Move `Endpoints<TVertex>` to Traversal project.
+
+### Removed
+
+- Abstractions: `ITraversable<TVertex, TEdge, TEdges>`.
+
 ## [0.14.1] - 2022-01-10
 
 ### Added
@@ -294,7 +314,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models-0.14.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.15.0...HEAD
+
+[0.15.0]: https://github.com/qbit86/arborescence/compare/models-0.14.1...arborescence-0.15.0
 
 [0.14.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.14.0...models-0.14.1
 

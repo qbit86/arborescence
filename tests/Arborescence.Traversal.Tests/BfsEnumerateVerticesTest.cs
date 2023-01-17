@@ -3,23 +3,22 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Misnomer;
 using Traversal;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
 using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
 public sealed class BfsEnumerateVerticesTest
 {
-    private EagerBfs<Graph, int, Endpoints, EdgeEnumerator> EagerBfs { get; }
+    private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
 
-    private EnumerableBfs<Graph, int, Endpoints, EdgeEnumerator> EnumerableBfs { get; }
+    private EnumerableBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
@@ -34,7 +33,7 @@ public sealed class BfsEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<Graph, int, Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
+        BfsHandler<Graph, int, Int32Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -79,12 +78,13 @@ public sealed class BfsEnumerateVerticesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<Graph, int, Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
+    private static BfsHandler<Graph, int, Int32Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
     {
-        Debug.Assert(discoveredVertices != null, "discoveredVertices != null");
+        if (discoveredVertices is null)
+            throw new ArgumentNullException(nameof(discoveredVertices));
 
-        BfsHandler<Graph, int, Endpoints> result = new();
-        result.DiscoverVertex += (_, v) => discoveredVertices!.Add(v);
+        BfsHandler<Graph, int, Int32Endpoints> result = new();
+        result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
         return result;
     }
 

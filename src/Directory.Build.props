@@ -11,7 +11,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <VersionPrefix>0.14.1</VersionPrefix>
+    <VersionPrefix>0.15</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
@@ -20,6 +20,7 @@
     <EnablePackageValidation>true</EnablePackageValidation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <InformationalVersion>$(Version)</InformationalVersion>
+    <IsPackable>true</IsPackable>
     <LangVersion>9</LangVersion>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>

@@ -7,19 +7,19 @@ namespace Arborescence.Models.Compatibility
     using System;
     using System.Diagnostics;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-    using EdgeEnumerator = System.ArraySegment<Endpoints>.Enumerator;
+    using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 #else
-    using EdgeEnumerator = System.Collections.Generic.IEnumerator<Endpoints>;
+    using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 #endif
 
     /// <summary>
     /// Represents a forward-traversable graph.
     /// </summary>
     public sealed class MutableUndirectedSimpleIncidenceGraph :
-        IHeadIncidence<int, Endpoints>,
-        ITailIncidence<int, Endpoints>,
+        IHeadIncidence<int, Int32Endpoints>,
+        ITailIncidence<int, Int32Endpoints>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
-        IGraphBuilder<SimpleIncidenceGraph, int, Endpoints>,
+        IGraphBuilder<SimpleIncidenceGraph, int, Int32Endpoints>,
         IDisposable
     {
         private const int DefaultInitialOutDegree = 8;
@@ -27,7 +27,7 @@ namespace Arborescence.Models.Compatibility
         private int _edgeCount;
         private int _initialOutDegree = DefaultInitialOutDegree;
         private int _invertedEdgeCount;
-        private ArrayPrefix<ArrayPrefix<Endpoints>> _outEdgesByVertex;
+        private ArrayPrefix<ArrayPrefix<Int32Endpoints>> _outEdgesByVertex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MutableUndirectedSimpleIncidenceGraph"/> class.
@@ -87,7 +87,7 @@ namespace Arborescence.Models.Compatibility
         /// <c>true</c> if both <paramref name="tail"/> and <paramref name="head"/> are non-negative;
         /// otherwise, <c>false</c>.
         /// </returns>
-        public bool TryAdd(int tail, int head, out Endpoints edge)
+        public bool TryAdd(int tail, int head, out Int32Endpoints edge)
         {
             bool result = tail >= 0 && head >= 0;
             edge = result ? UncheckedAdd(tail, head) : default;
@@ -102,10 +102,10 @@ namespace Arborescence.Models.Compatibility
             int dataLength = 2 + n;
 #if NET5_0_OR_GREATER
             int[] data = GC.AllocateUninitializedArray<int>(dataLength);
-            Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Endpoints>(EdgeCount + _invertedEdgeCount);
+            Int32Endpoints[] edgesOrderedByTail = GC.AllocateUninitializedArray<Int32Endpoints>(EdgeCount + _invertedEdgeCount);
 #else
             int[] data = new int[dataLength];
-            var edgesOrderedByTail = new Endpoints[EdgeCount + _invertedEdgeCount];
+            var edgesOrderedByTail = new Int32Endpoints[EdgeCount + _invertedEdgeCount];
 #endif
             data[0] = n;
             data[1] = EdgeCount;
@@ -113,9 +113,9 @@ namespace Arborescence.Models.Compatibility
             Span<int> destUpperBoundByVertex = data.AsSpan(2);
             for (int vertex = 0; vertex < n; ++vertex)
             {
-                ReadOnlySpan<Endpoints> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
+                ReadOnlySpan<Int32Endpoints> currentOutEdges = _outEdgesByVertex[vertex].AsSpan();
                 int currentLowerBound = vertex > 0 ? destUpperBoundByVertex[vertex - 1] : 0;
-                Span<Endpoints> destCurrentOutEdges =
+                Span<Int32Endpoints> destCurrentOutEdges =
                     edgesOrderedByTail.AsSpan(currentLowerBound, currentOutEdges.Length);
                 currentOutEdges.CopyTo(destCurrentOutEdges);
                 destUpperBoundByVertex[vertex] = currentLowerBound + currentOutEdges.Length;
@@ -125,7 +125,7 @@ namespace Arborescence.Models.Compatibility
         }
 
         /// <inheritdoc/>
-        public bool TryGetHead(Endpoints edge, out int head)
+        public bool TryGetHead(Int32Endpoints edge, out int head)
         {
             head = edge.Head;
             return unchecked((uint)head < (uint)VertexCount);
@@ -135,17 +135,17 @@ namespace Arborescence.Models.Compatibility
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             if (unchecked((uint)vertex >= (uint)_outEdgesByVertex.Count))
-                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
+                return ArraySegmentHelpers.EmptyEnumerator<Int32Endpoints>();
 
-            ArrayPrefix<Endpoints> outEdges = _outEdgesByVertex[vertex];
+            ArrayPrefix<Int32Endpoints> outEdges = _outEdgesByVertex[vertex];
             if (outEdges.Array is null)
-                return ArraySegmentHelpers.EmptyEnumerator<Endpoints>();
+                return ArraySegmentHelpers.EmptyEnumerator<Int32Endpoints>();
 
-            return ArraySegmentHelpers.GetEnumerator<Endpoints>(new(outEdges.Array, 0, outEdges.Count));
+            return ArraySegmentHelpers.GetEnumerator<Int32Endpoints>(new(outEdges.Array, 0, outEdges.Count));
         }
 
         /// <inheritdoc/>
-        public bool TryGetTail(Endpoints edge, out int tail)
+        public bool TryGetTail(Int32Endpoints edge, out int tail)
         {
             tail = edge.Tail;
             return unchecked((uint)tail < (uint)VertexCount);
@@ -170,7 +170,7 @@ namespace Arborescence.Models.Compatibility
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="tail"/> is less than zero, or <paramref name="head"/> is less than zero.
         /// </exception>
-        public Endpoints Add(int tail, int head)
+        public Int32Endpoints Add(int tail, int head)
         {
             if (tail < 0)
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(tail));
@@ -181,7 +181,7 @@ namespace Arborescence.Models.Compatibility
             return UncheckedAdd(tail, head);
         }
 
-        private Endpoints UncheckedAdd(int tail, int head)
+        private Int32Endpoints UncheckedAdd(int tail, int head)
         {
             Debug.Assert(tail >= 0, "tail >= 0");
             Debug.Assert(head >= 0, "head >= 0");
@@ -190,18 +190,18 @@ namespace Arborescence.Models.Compatibility
             EnsureVertexCount(newVertexCountCandidate);
 
             if (_outEdgesByVertex[tail].Array is null)
-                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
+                _outEdgesByVertex[tail] = ArrayPrefixBuilder.Create<Int32Endpoints>(InitialOutDegree);
 
-            var edge = new Endpoints(tail, head);
+            var edge = new Int32Endpoints(tail, head);
             _outEdgesByVertex[tail] = ArrayPrefixBuilder.Add(_outEdgesByVertex[tail], edge, false);
             ++_edgeCount;
 
             if (tail != head)
             {
                 if (_outEdgesByVertex[head].Array is null)
-                    _outEdgesByVertex[head] = ArrayPrefixBuilder.Create<Endpoints>(InitialOutDegree);
+                    _outEdgesByVertex[head] = ArrayPrefixBuilder.Create<Int32Endpoints>(InitialOutDegree);
 
-                var invertedEdge = new Endpoints(head, tail);
+                var invertedEdge = new Int32Endpoints(head, tail);
                 _outEdgesByVertex[head] = ArrayPrefixBuilder.Add(_outEdgesByVertex[head], invertedEdge, false);
                 ++_invertedEdgeCount;
             }
