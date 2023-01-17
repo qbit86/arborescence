@@ -9,7 +9,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.15</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.15</AssemblyVersion>
