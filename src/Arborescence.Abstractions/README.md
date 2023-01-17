@@ -58,8 +58,8 @@ There are two distinct notions of multiple edges:
   In this case, the outgoing edges of vertex _LHR_ are two different independent edges `BA676` and `TK1980`, which just occasionally happen to have the same endpoints.
 
 Another useful function maps the vertex to its _outgoing edges_, making a graph traversable.
-It must be consistent with the incidence function:    
-∀_v_ ∀_e_   _e_ ∈ _out-edges_(_v_) ⇔ _v_ = _tail_(_e_)   
+It must be consistent with the incidence function:  
+∀ _v_ ∀ _e_   _e_ ∈ _out-edges_(_v_) ⇔ _v_ = _tail_(_e_)
 
 Together these functions form a scheme:
 
