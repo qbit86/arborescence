@@ -1,4 +1,3 @@
-#if NETSTANDARD2_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER || NET47_OR_GREATER
 namespace Arborescence.Traversal.Adjacency
 {
     using System.Collections.Generic;
@@ -19,7 +18,7 @@ namespace Arborescence.Traversal.Adjacency
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator>(
+        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex> =>
@@ -39,7 +38,7 @@ namespace Arborescence.Traversal.Adjacency
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator>(
+        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex> =>
@@ -61,7 +60,7 @@ namespace Arborescence.Traversal.Adjacency
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
+        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -69,4 +68,3 @@ namespace Arborescence.Traversal.Adjacency
             EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, sources, exploredSet);
     }
 }
-#endif

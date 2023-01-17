@@ -1,4 +1,3 @@
-#if NETSTANDARD2_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER || NET47_OR_GREATER
 namespace Arborescence.Traversal.Adjacency
 {
     using System.Collections.Concurrent;
@@ -25,7 +24,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier>(
+        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
@@ -50,7 +49,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier>(
+        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
@@ -78,7 +77,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<(TVertex Tail, TVertex Head)> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
+        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
             TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex>
@@ -87,4 +86,3 @@ namespace Arborescence.Traversal.Adjacency
                 graph, source, frontier, exploredSet);
     }
 }
-#endif

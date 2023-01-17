@@ -46,11 +46,12 @@ public sealed class EnumerableBfs_Tests
             ("r", "e"),
             ("m", "i")
         };
-        var expected = expectedBase32.Select(it => (V(it.Tail), V(it.Head))).ToList();
+        var expected = expectedBase32
+            .Select(it => Endpoints.Create(V(it.Tail), V(it.Head))).ToList();
 
         // Act
-        List<(int Tail, int Head)> actual = new(expected.Count);
-        IEnumerator<(int Tail, int Head)> edgeEnumerator = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, V("d"));
+        List<Endpoints<int>> actual = new(expected.Count);
+        IEnumerator<Endpoints<int>> edgeEnumerator = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, V("d"));
         while (edgeEnumerator.MoveNext())
             actual.Add(edgeEnumerator.Current);
 
