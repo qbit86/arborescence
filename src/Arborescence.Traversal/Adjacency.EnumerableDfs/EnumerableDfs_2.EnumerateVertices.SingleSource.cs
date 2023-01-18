@@ -92,7 +92,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
-        internal static IEnumerator<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
+        private static IEnumerator<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex>
