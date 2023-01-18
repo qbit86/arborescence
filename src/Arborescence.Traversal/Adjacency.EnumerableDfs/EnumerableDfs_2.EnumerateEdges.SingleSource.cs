@@ -3,10 +3,10 @@ namespace Arborescence.Traversal.Adjacency
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-    public static partial class EnumerableBfs<TVertex, TNeighborEnumerator>
+    public static partial class EnumerableDfs<TVertex, TNeighborEnumerator>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -22,7 +22,7 @@ namespace Arborescence.Traversal.Adjacency
             EnumerateEdgesChecked(graph, source);
 
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -39,7 +39,7 @@ namespace Arborescence.Traversal.Adjacency
             EnumerateEdgesChecked(graph, source, comparer);
 
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -99,11 +99,38 @@ namespace Arborescence.Traversal.Adjacency
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex>
         {
-            using Traversal.Queue<TVertex> frontier = new();
-            IEnumerator<Endpoints<TVertex>> enumerator = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
-                .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-            while (enumerator.MoveNext())
-                yield return enumerator.Current;
+            if (!exploredSet.Add(source))
+                yield break;
+            var frontier = new ValueStack<StackFrame>();
+            try
+            {
+                frontier.Add(new(source, graph.EnumerateNeighbors(source)));
+
+                while (frontier.TryTake(out StackFrame stackFrame))
+                {
+                    (TVertex current, TNeighborEnumerator neighborEnumerator) = stackFrame;
+                    if (!neighborEnumerator.MoveNext())
+                    {
+                        neighborEnumerator.Dispose();
+                        continue;
+                    }
+
+                    TVertex neighbor = neighborEnumerator.Current;
+                    frontier.Add(stackFrame with { NeighborEnumerator = neighborEnumerator });
+                    if (exploredSet.Contains(neighbor))
+                        continue;
+
+                    yield return new(current, neighbor);
+                    exploredSet.Add(neighbor);
+                    frontier.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
+                }
+            }
+            finally
+            {
+                while (frontier.TryTake(out StackFrame stackFrame))
+                    stackFrame.Dispose();
+                frontier.Dispose();
+            }
         }
     }
 }

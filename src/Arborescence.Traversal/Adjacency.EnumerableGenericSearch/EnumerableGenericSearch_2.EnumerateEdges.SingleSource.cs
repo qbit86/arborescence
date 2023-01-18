@@ -2,8 +2,10 @@ namespace Arborescence.Traversal.Adjacency
 {
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Runtime.CompilerServices;
+#if DEBUG
+    using System.Diagnostics;
+#endif
 
     public static partial class EnumerableGenericSearch<TVertex, TNeighborEnumerator>
     {
@@ -138,7 +140,8 @@ namespace Arborescence.Traversal.Adjacency
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            exploredSet.Add(source);
+            if (!exploredSet.Add(source))
+                yield break;
             frontier.AddOrThrow(source);
 
             while (frontier.TryTake(out TVertex? current))

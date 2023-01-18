@@ -9,12 +9,13 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.15</VersionPrefix>
+    <VersionPrefix>0.15.1</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.15</AssemblyVersion>
     <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
+    <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>netcoreapp3.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>

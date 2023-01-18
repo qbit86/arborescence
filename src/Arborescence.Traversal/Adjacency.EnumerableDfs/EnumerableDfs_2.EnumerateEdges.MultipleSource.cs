@@ -3,10 +3,10 @@ namespace Arborescence.Traversal.Adjacency
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-    public static partial class EnumerableBfs<TVertex, TNeighborEnumerator>
+    public static partial class EnumerableDfs<TVertex, TNeighborEnumerator>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the multiple sources.
+        /// Enumerates edges of the graph in a depth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources enumerator.</param>
@@ -25,7 +25,7 @@ namespace Arborescence.Traversal.Adjacency
             EnumerateEdgesChecked(graph, sources);
 
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the multiple sources.
+        /// Enumerates edges of the graph in a depth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources enumerator.</param>
@@ -45,7 +45,7 @@ namespace Arborescence.Traversal.Adjacency
             EnumerateEdgesChecked(graph, sources, comparer);
 
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the multiple sources.
+        /// Enumerates edges of the graph in a depth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources enumerator.</param>
@@ -116,18 +116,48 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
-        private static IEnumerator<Endpoints<TVertex>> EnumerateEdgesIterator<
-            TGraph, TSourceEnumerator, TExploredSet>(
+        private static IEnumerator<Endpoints<TVertex>> EnumerateEdgesIterator<TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            using Traversal.Queue<TVertex> frontier = new();
-            IEnumerator<Endpoints<TVertex>> enumerator = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
-                .EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
-            while (enumerator.MoveNext())
-                yield return enumerator.Current;
+            var frontier = new ValueStack<StackFrame>();
+            try
+            {
+                while (sources.MoveNext())
+                {
+                    TVertex source = sources.Current;
+                    if (!exploredSet.Add(source))
+                        continue;
+                    frontier.Add(new(source, graph.EnumerateNeighbors(source)));
+
+                    while (frontier.TryTake(out StackFrame stackFrame))
+                    {
+                        (TVertex current, TNeighborEnumerator neighborEnumerator) = stackFrame;
+                        if (!neighborEnumerator.MoveNext())
+                        {
+                            neighborEnumerator.Dispose();
+                            continue;
+                        }
+
+                        TVertex neighbor = neighborEnumerator.Current;
+                        frontier.Add(stackFrame with { NeighborEnumerator = neighborEnumerator });
+                        if (exploredSet.Contains(neighbor))
+                            continue;
+
+                        yield return new(current, neighbor);
+                        exploredSet.Add(neighbor);
+                        frontier.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
+                    }
+                }
+            }
+            finally
+            {
+                while (frontier.TryTake(out StackFrame stackFrame))
+                    stackFrame.Dispose();
+                frontier.Dispose();
+            }
         }
     }
 }

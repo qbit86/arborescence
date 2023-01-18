@@ -3,10 +3,10 @@ namespace Arborescence.Traversal.Adjacency
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-    public static partial class EnumerableBfs<TVertex>
+    public static partial class EnumerableDfs<TVertex>
     {
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -19,10 +19,10 @@ namespace Arborescence.Traversal.Adjacency
         public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph>(
             TGraph graph, TVertex source)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>> =>
-            EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source);
+            EnumerableDfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source);
 
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -36,10 +36,10 @@ namespace Arborescence.Traversal.Adjacency
         public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph>(
             TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>> =>
-            EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, comparer);
+            EnumerableDfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, comparer);
 
         /// <summary>
-        /// Enumerates edges of the graph in a breadth-first order starting from the single source.
+        /// Enumerates edges of the graph in a depth-first order starting from the single source.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -56,6 +56,6 @@ namespace Arborescence.Traversal.Adjacency
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TExploredSet : ISet<TVertex> =>
-            EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, exploredSet);
+            EnumerableDfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, exploredSet);
     }
 }
