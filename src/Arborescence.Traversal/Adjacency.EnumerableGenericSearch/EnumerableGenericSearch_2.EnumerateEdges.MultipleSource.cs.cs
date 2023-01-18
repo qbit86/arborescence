@@ -170,7 +170,8 @@ namespace Arborescence.Traversal.Adjacency
             while (sources.MoveNext())
             {
                 TVertex source = sources.Current;
-                exploredSet.Add(source);
+                if (!exploredSet.Add(source))
+                    continue;
                 frontier.AddOrThrow(source);
             }
 
