@@ -140,7 +140,8 @@ namespace Arborescence.Traversal.Adjacency
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            exploredSet.Add(source);
+            if (!exploredSet.Add(source))
+                yield break;
             frontier.AddOrThrow(source);
 
             while (frontier.TryTake(out TVertex? current))
