@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.15.0] - 2022-01-17
+## [Unreleased] - 2023-01-19
+
+### Added
+
+- Traversal: `Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableDfs<TVertex>`.
+
+## [0.15.0] - 2023-01-17
 
 ### Added
 
