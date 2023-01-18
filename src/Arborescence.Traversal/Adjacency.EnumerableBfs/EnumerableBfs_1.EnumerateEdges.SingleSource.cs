@@ -11,7 +11,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a breadth-first search tree edges.</returns>
+        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
@@ -28,7 +28,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="source">The source.</param>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a breadth-first search tree edges.</returns>
+        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
@@ -46,7 +46,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a breadth-first search tree edges.</returns>
+        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
