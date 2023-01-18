@@ -7,6 +7,6 @@ namespace Arborescence.Traversal.Adjacency
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
-    public static class EnumerableDfs<TVertex, TNeighborEnumerator>
+    public static partial class EnumerableDfs<TVertex, TNeighborEnumerator>
         where TNeighborEnumerator : IEnumerator<TVertex> { }
 }
