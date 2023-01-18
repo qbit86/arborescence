@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2023-01-19
+## [0.15.1] - 2023-01-19
 
 ### Added
 
@@ -320,7 +320,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.15.0...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.15.1...HEAD
+
+[0.15.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.15.0...traversal-0.15.1
 
 [0.15.0]: https://github.com/qbit86/arborescence/compare/models-0.14.1...arborescence-0.15.0
 
