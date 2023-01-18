@@ -115,10 +115,8 @@ namespace Arborescence.Traversal.Adjacency
 
                     TVertex neighbor = neighborEnumerator.Current;
                     frontier.Add(neighborEnumerator);
-                    if (exploredSet.Contains(neighbor))
+                    if (!exploredSet.Add(neighbor))
                         continue;
-
-                    exploredSet.Add(neighbor);
                     yield return neighbor;
                     frontier.Add(graph.EnumerateNeighbors(neighbor));
                 }
