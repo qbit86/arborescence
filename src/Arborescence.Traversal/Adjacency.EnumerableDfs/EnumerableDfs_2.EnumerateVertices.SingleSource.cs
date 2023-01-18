@@ -97,7 +97,8 @@ namespace Arborescence.Traversal.Adjacency
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex>
         {
-            exploredSet.Add(source);
+            if (!exploredSet.Add(source))
+                yield break;
             yield return source;
             var frontier = new ValueStack<TNeighborEnumerator>();
             try
