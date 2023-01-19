@@ -157,7 +157,6 @@ namespace Arborescence.Traversal.Incidence
                     {
                         if (!graph.TryGetHead(outEdges.Current, out TVertex? neighbor))
                             continue;
-
                         if (!exploredSet.Add(neighbor))
                             continue;
                         yield return neighbor;
