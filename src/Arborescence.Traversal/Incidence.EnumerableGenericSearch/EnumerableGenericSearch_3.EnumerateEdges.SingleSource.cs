@@ -27,7 +27,7 @@ namespace Arborescence.Traversal.Incidence
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier>(
+        public static IEnumerable<TEdge> EnumerateEdges<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
@@ -52,7 +52,7 @@ namespace Arborescence.Traversal.Incidence
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier>(
+        public static IEnumerable<TEdge> EnumerateEdges<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
@@ -79,14 +79,14 @@ namespace Arborescence.Traversal.Incidence
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
+        public static IEnumerable<TEdge> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
             TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerateEdgesChecked(graph, source, frontier, exploredSet);
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TFrontier>(
+        internal static IEnumerable<TEdge> EnumerateEdgesChecked<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex>
@@ -101,7 +101,7 @@ namespace Arborescence.Traversal.Incidence
             return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TFrontier>(
+        internal static IEnumerable<TEdge> EnumerateEdgesChecked<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex>
@@ -116,7 +116,7 @@ namespace Arborescence.Traversal.Incidence
             return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<TEdge> EnumerateEdgesChecked<
             TGraph, TFrontier, TExploredSet>(TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex>
@@ -134,7 +134,7 @@ namespace Arborescence.Traversal.Incidence
             return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesIterator<
+        internal static IEnumerable<TEdge> EnumerateEdgesIterator<
             TGraph, TFrontier, TExploredSet>(TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TFrontier : IProducerConsumerCollection<TVertex>
@@ -160,7 +160,7 @@ namespace Arborescence.Traversal.Incidence
                         if (exploredSet.Contains(neighbor))
                             continue;
 
-                        yield return new(current, neighbor);
+                        yield return edge;
                         exploredSet.Add(neighbor);
                         frontier.AddOrThrow(neighbor);
                     }
