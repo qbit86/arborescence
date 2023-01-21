@@ -54,12 +54,10 @@ public sealed class EnumerableDfs_Tests
             .Select(it => Endpoints.Create(V(it.Tail), V(it.Head))).ToList();
 
         // Act
-        List<Endpoints<int>> actual = new(expected.Count);
         List<int> sources = new(3) { V("a"), V("d"), V("b") };
-        IEnumerator<Endpoints<int>> edgeEnumerator = EnumerableDfs<int>.EnumerateEdges(
+        IEnumerable<Endpoints<int>> arrows = EnumerableDfs<int>.EnumerateEdges(
             adjacencyGraph, sources.GetEnumerator());
-        while (edgeEnumerator.MoveNext())
-            actual.Add(edgeEnumerator.Current);
+        var actual = arrows.ToList();
 
         // Assert
         Assert.Equal(expected, actual);
