@@ -29,7 +29,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TFrontier>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -57,7 +57,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TFrontier>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -87,7 +87,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
             TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -96,7 +96,7 @@ namespace Arborescence.Traversal.Adjacency
             where TExploredSet : ISet<TVertex> =>
             EnumerateEdgesChecked(graph, sources, frontier, exploredSet);
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -116,7 +116,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TSourceEnumerator, TFrontier>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -136,7 +136,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -159,7 +159,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesIterator<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<
             TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>

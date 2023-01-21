@@ -16,7 +16,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph>(
             TGraph graph, TVertex source)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>> =>
             EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source);
@@ -33,7 +33,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph>(
             TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>> =>
             EnumerableBfs<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, comparer);
@@ -52,7 +52,7 @@ namespace Arborescence.Traversal.Adjacency
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TExploredSet>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TExploredSet : ISet<TVertex> =>

@@ -50,10 +50,8 @@ public sealed class EnumerableBfs_Tests
             .Select(it => Endpoints.Create(V(it.Tail), V(it.Head))).ToList();
 
         // Act
-        List<Endpoints<int>> actual = new(expected.Count);
-        IEnumerator<Endpoints<int>> edgeEnumerator = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, V("d"));
-        while (edgeEnumerator.MoveNext())
-            actual.Add(edgeEnumerator.Current);
+        IEnumerable<Endpoints<int>> arrows = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, V("d"));
+        var actual = arrows.ToList();
 
         // Assert
         Assert.Equal(expected, actual);
