@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Misnomer;
 using Traversal;
+using Traversal.Incidence;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableSimpleIncidenceGraph;
@@ -18,8 +19,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 public class QueueGenericSearchEnumerateVerticesTest
 {
     private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
-
-    private GenericSearch<Graph, int, Int32Endpoints, EdgeEnumerator> GenericSearch { get; }
 
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
@@ -51,15 +50,17 @@ public class QueueGenericSearchEnumerateVerticesTest
             IndexEnumerator sources = new(sourceCount);
 
             EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-            using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, sources, frontier, set);
-            enumerableSteps.AddEnumerator(vertices);
+            IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
+                graph, sources, frontier, set);
+            enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount >> 1;
             EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-            using IEnumerator<int> vertices = GenericSearch.EnumerateVertices(graph, source, frontier, set);
-            enumerableSteps.AddEnumerator(vertices);
+            IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
+                graph, source, frontier, set);
+            enumerableSteps.AddRange(vertices);
         }
 
         // Assert
