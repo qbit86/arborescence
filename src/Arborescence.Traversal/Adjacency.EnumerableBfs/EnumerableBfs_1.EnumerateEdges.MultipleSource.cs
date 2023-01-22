@@ -12,13 +12,13 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="sources">The sources enumerator.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex> =>
@@ -32,13 +32,13 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex> =>
@@ -53,14 +53,14 @@ namespace Arborescence.Traversal.Adjacency
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>,
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceEnumerator : IEnumerator<TVertex>

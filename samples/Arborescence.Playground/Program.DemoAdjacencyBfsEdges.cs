@@ -24,11 +24,11 @@ internal static partial class Program
         SimpleIncidenceGraph incidenceGraph = builder.ToGraph();
         var adjacencyGraph = IncidenceAdjacencyAdapter<int, Int32Endpoints, EdgeEnumerator>.Create(incidenceGraph);
         IEnumerable<int> sources = "abcd".Select(it => Base32.Parse(it.ToString()));
-        IEnumerator<Endpoints<int>> edgeEnumerator =
+        IEnumerable<Endpoints<int>> arrows =
             EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, sources.GetEnumerator());
-        while (edgeEnumerator.MoveNext())
+        foreach (Endpoints<int> arrow in arrows)
         {
-            (int tail, int head) = edgeEnumerator.Current;
+            (int tail, int head) = arrow;
             Console.WriteLine($"{V(tail)} -> {V(head)}");
         }
     }

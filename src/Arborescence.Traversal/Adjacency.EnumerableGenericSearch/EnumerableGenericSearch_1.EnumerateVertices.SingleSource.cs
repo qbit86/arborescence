@@ -14,7 +14,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="frontier">The collection of discovered vertices which are not finished yet.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
+        /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="frontier"/> is <see langword="null"/>.
@@ -24,7 +24,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TFrontier>(
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
@@ -39,7 +39,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
+        /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="frontier"/> is <see langword="null"/>.
@@ -49,7 +49,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TFrontier>(
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
@@ -66,7 +66,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
+        /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="frontier"/> is <see langword="null"/>,
@@ -77,7 +77,7 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<TVertex> EnumerateVertices<TGraph, TFrontier, TExploredSet>(
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TFrontier, TExploredSet>(
             TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex>
