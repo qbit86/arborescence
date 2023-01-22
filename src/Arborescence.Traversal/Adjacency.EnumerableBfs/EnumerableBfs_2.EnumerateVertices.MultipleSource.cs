@@ -12,7 +12,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="sources">The sources enumerator.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
+        /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
@@ -32,7 +32,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
+        /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
@@ -53,7 +53,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-        /// <returns>An enumerator to enumerate the vertices of a search tree.</returns>
+        /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>,

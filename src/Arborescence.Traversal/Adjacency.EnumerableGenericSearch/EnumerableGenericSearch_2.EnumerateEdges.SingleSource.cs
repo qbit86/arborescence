@@ -17,7 +17,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="frontier">The collection of discovered vertices which are not finished yet.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="frontier"/> is <see langword="null"/>.
@@ -42,7 +42,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="frontier"/> is <see langword="null"/>.
@@ -68,7 +68,7 @@ namespace Arborescence.Traversal.Adjacency
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="frontier"/> is <see langword="null"/>,
