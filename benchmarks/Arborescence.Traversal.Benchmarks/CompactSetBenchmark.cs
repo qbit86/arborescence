@@ -5,8 +5,8 @@ using System.Buffers;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models;
-using Traversal;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
 [MemoryDiagnoser]
 public abstract class CompactSetBenchmark
@@ -14,18 +14,8 @@ public abstract class CompactSetBenchmark
     private byte[] _compactExploredSet = Array.Empty<byte>();
     private byte[] _fastExploredSet = Array.Empty<byte>();
 
-    protected CompactSetBenchmark()
-    {
-        CompactDfs = default;
-        FastDfs = default;
-    }
-
     [Params(10, 100, 1000, 10000)]
     public int VertexCount { get; set; }
-
-    private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> CompactDfs { get; }
-
-    private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> FastDfs { get; }
 
     private IndexedIncidenceGraph Graph { get; set; }
 
@@ -51,9 +41,9 @@ public abstract class CompactSetBenchmark
     public int Fast()
     {
         Array.Clear(_fastExploredSet, 0, _fastExploredSet.Length);
-        using IEnumerator<int> steps = FastDfs.EnumerateEdges(Graph, 0, new IndexedSet(_fastExploredSet));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_fastExploredSet));
         int count = 0;
-        while (steps.MoveNext())
+        foreach (int _ in steps)
             ++count;
 
         return count;
@@ -63,9 +53,9 @@ public abstract class CompactSetBenchmark
     public int Compact()
     {
         Array.Clear(_compactExploredSet, 0, _compactExploredSet.Length);
-        using IEnumerator<int> steps = CompactDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
         int count = 0;
-        while (steps.MoveNext())
+        foreach (int _ in steps)
             ++count;
 
         return count;

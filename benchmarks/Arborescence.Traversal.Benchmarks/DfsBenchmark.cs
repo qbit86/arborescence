@@ -7,6 +7,7 @@ using BenchmarkDotNet.Attributes;
 using Models;
 using Traversal;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
 [MemoryDiagnoser]
 public abstract class DfsBenchmark
@@ -19,7 +20,6 @@ public abstract class DfsBenchmark
     {
         EagerDfs = default;
         RecursiveDfs = default;
-        EnumerableDfs = default;
     }
 
     [Params(10, 100, 1000, 10000)]
@@ -28,8 +28,6 @@ public abstract class DfsBenchmark
     private EagerDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EagerDfs { get; }
 
     private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> RecursiveDfs { get; }
-
-    private EnumerableDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EnumerableDfs { get; }
 
     private IndexedIncidenceGraph Graph { get; set; }
 
@@ -69,9 +67,9 @@ public abstract class DfsBenchmark
     public int EnumerableDfsEdges()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        using IEnumerator<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_colorByVertex));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_colorByVertex));
         int count = 0;
-        while (steps.MoveNext())
+        foreach (int _ in steps)
             ++count;
 
         return count;
@@ -81,9 +79,9 @@ public abstract class DfsBenchmark
     public int EnumerableDfsVertices()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        using IEnumerator<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new IndexedSet(_colorByVertex));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new IndexedSet(_colorByVertex));
         int count = 0;
-        while (steps.MoveNext())
+        foreach (int _ in steps)
             ++count;
 
         return count;
