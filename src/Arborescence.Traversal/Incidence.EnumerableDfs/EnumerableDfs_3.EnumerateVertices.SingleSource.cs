@@ -100,12 +100,12 @@ namespace Arborescence.Traversal.Incidence
             if (!exploredSet.Add(source))
                 yield break;
             yield return source;
-            var frontier = new ValueStack<TEdgeEnumerator>();
+            var stack = new ValueStack<TEdgeEnumerator>();
             try
             {
-                frontier.Add(graph.EnumerateOutEdges(source));
+                stack.Add(graph.EnumerateOutEdges(source));
 
-                while (frontier.TryTake(out TEdgeEnumerator edgeEnumerator))
+                while (stack.TryTake(out TEdgeEnumerator edgeEnumerator))
                 {
                     if (!edgeEnumerator.MoveNext())
                     {
@@ -114,7 +114,7 @@ namespace Arborescence.Traversal.Incidence
                     }
 
                     TEdge edge = edgeEnumerator.Current;
-                    frontier.Add(edgeEnumerator);
+                    stack.Add(edgeEnumerator);
 
                     if (!graph.TryGetHead(edge, out TVertex? neighbor))
                         continue;
@@ -122,14 +122,14 @@ namespace Arborescence.Traversal.Incidence
                     if (!exploredSet.Add(neighbor))
                         continue;
                     yield return neighbor;
-                    frontier.Add(graph.EnumerateOutEdges(neighbor));
+                    stack.Add(graph.EnumerateOutEdges(neighbor));
                 }
             }
             finally
             {
-                while (frontier.TryTake(out TEdgeEnumerator edgeEnumerator))
-                    edgeEnumerator.Dispose();
-                frontier.Dispose();
+                while (stack.TryTake(out TEdgeEnumerator stackFrame))
+                    stackFrame.Dispose();
+                stack.Dispose();
             }
         }
     }
