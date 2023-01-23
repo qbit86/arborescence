@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Misnomer;
 using Traversal;
+using Traversal.Incidence;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.SimpleIncidenceGraph;
@@ -17,8 +18,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 public sealed class BfsEnumerateVerticesTest
 {
     private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
-
-    private EnumerableBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
@@ -46,16 +45,17 @@ public sealed class BfsEnumerateVerticesTest
             IndexEnumerator sources = new(sourceCount);
 
             EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-            using IEnumerator<int> vertices =
-                EnumerableBfs.EnumerateVertices(graph, sources, set);
-            enumerableSteps.AddEnumerator(vertices);
+            IEnumerable<int> vertices =
+                EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(graph, sources, set);
+            enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount >> 1;
             EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-            using IEnumerator<int> vertices = EnumerableBfs.EnumerateVertices(graph, source, set);
-            enumerableSteps.AddEnumerator(vertices);
+            IEnumerable<int> vertices =
+                EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(graph, source, set);
+            enumerableSteps.AddRange(vertices);
         }
 
         // Assert
