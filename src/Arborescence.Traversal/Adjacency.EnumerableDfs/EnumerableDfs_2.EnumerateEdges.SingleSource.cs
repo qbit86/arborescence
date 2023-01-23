@@ -101,12 +101,12 @@ namespace Arborescence.Traversal.Adjacency
         {
             if (!exploredSet.Add(source))
                 yield break;
-            var frontier = new ValueStack<StackFrame>();
+            var stack = new ValueStack<StackFrame>();
             try
             {
-                frontier.Add(new(source, graph.EnumerateNeighbors(source)));
+                stack.Add(new(source, graph.EnumerateNeighbors(source)));
 
-                while (frontier.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out StackFrame stackFrame))
                 {
                     (TVertex current, TNeighborEnumerator neighborEnumerator) = stackFrame;
                     if (!neighborEnumerator.MoveNext())
@@ -116,20 +116,20 @@ namespace Arborescence.Traversal.Adjacency
                     }
 
                     TVertex neighbor = neighborEnumerator.Current;
-                    frontier.Add(stackFrame with { NeighborEnumerator = neighborEnumerator });
+                    stack.Add(stackFrame with { NeighborEnumerator = neighborEnumerator });
                     if (exploredSet.Contains(neighbor))
                         continue;
 
                     yield return new(current, neighbor);
                     exploredSet.Add(neighbor);
-                    frontier.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
+                    stack.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
                 }
             }
             finally
             {
-                while (frontier.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out StackFrame stackFrame))
                     stackFrame.Dispose();
-                frontier.Dispose();
+                stack.Dispose();
             }
         }
     }
