@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased] - 2023-01-25
+
+### Added
+
+- Traversal: `Incidence.EnumerableGenericSearch<TVertex, TEdge>`, `Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `Incidence.EnumerableBfs<TVertex, TEdge>`, `Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `Incidence.EnumerableDfs<TVertex, TEdge>`, `Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>`.
+
+### Changed
+
+- Traversal: Changed return type of the adjacency algorithms from `IEnumerator<T>` to `IEnumerable<T>`.
+
+### Removed
+
+- Traversal: `GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+
 ## [0.15.1] - 2023-01-19
 
 ### Added
