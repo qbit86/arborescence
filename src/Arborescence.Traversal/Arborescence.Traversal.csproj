@@ -2,17 +2,18 @@
   <PropertyGroup>
     <Description>Graph traversal algorithms: BFS, DFS.
 Commonly used types:
-• GenericSearch&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
-• EnumerableBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EnumerableDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;
+• EnumerableGenericSearch&lt;TVertex, TNeighborEnumerator&gt;, EnumerableGenericSearch&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• EnumerableBfs&lt;TVertex, TNeighborEnumerator&gt;, EnumerableBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• EnumerableDfs&lt;TVertex, TNeighborEnumerator&gt;, EnumerableDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
 • EagerBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.15.1</VersionPrefix>
+    <VersionPrefix>0.15.2</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.15</AssemblyVersion>
+    <AssemblyVersion>0.15.2</AssemblyVersion>
     <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>10</LangVersion>

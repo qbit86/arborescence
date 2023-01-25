@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Models;
-using Traversal;
 using Workbench;
+using EnumerableDfs =
+    Traversal.Incidence.EnumerableDfs<int, Int32Endpoints, System.ArraySegment<Int32Endpoints>.Enumerator>;
 
 internal static class Program
 {
-    private static CultureInfo F => CultureInfo.InvariantCulture;
+    private static CultureInfo P => CultureInfo.InvariantCulture;
 
     private static void Main()
     {
@@ -25,14 +26,12 @@ internal static class Program
         }
 
         SimpleIncidenceGraph graph = builder.ToGraph();
-        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
-        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
+        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
+        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 
         TextWriter w = Console.Out;
 
-        EnumerableDfs<SimpleIncidenceGraph, int, Int32Endpoints, ArraySegment<Int32Endpoints>.Enumerator> dfs = default;
-
-        w.WriteLine($"digraph \"{dfs.GetType().Name}\" {{");
+        w.WriteLine($"digraph \"{nameof(EnumerableDfs)}\" {{");
         w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
         // Enumerate vertices.
@@ -50,10 +49,9 @@ internal static class Program
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         IndexedSet enumerableExploredSet = new(setBackingStore);
         HashSet<Int32Endpoints> treeEdges = new(graph.EdgeCount);
-        using IEnumerator<Int32Endpoints> steps = dfs.EnumerateEdges(graph, sources, enumerableExploredSet);
-        while (steps.MoveNext())
+        IEnumerable<Int32Endpoints> steps = EnumerableDfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+        foreach (Int32Endpoints e in steps)
         {
-            Int32Endpoints e = steps.Current;
             w.WriteLine($"  {E(graph, e)} [style=bold]");
             treeEdges.Add(e);
 

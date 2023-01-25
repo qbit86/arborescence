@@ -3,7 +3,6 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using Traversal;
 using Traversal.Specialized;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
@@ -17,8 +16,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 public sealed class BasicBfsTest
 {
     private EnumerableBfs<Graph, Int32Endpoints, EdgeEnumerator> Bfs { get; }
-
-    private EnumerableBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EnumerableBfs { get; }
 
     [Theory]
     [ClassData(typeof(UndirectedSimpleGraphCollection))]
@@ -36,7 +33,9 @@ public sealed class BasicBfsTest
         // Act
 
         using IEnumerator<Int32Endpoints> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount);
-        using IEnumerator<Int32Endpoints> enumerableSteps = EnumerableBfs.EnumerateEdges(graph, source, exploredSet);
+        using IEnumerator<Int32Endpoints> enumerableSteps =
+            Traversal.Incidence.EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateEdges(
+                graph, source, exploredSet).GetEnumerator();
 
         // Assert
 
@@ -77,7 +76,8 @@ public sealed class BasicBfsTest
         // Act
 
         using IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, source, graph.VertexCount);
-        using IEnumerator<int> enumerableSteps = EnumerableBfs.EnumerateVertices(graph, source, exploredSet);
+        using IEnumerator<int> enumerableSteps = Traversal.Incidence.EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>
+            .EnumerateVertices(graph, source, exploredSet).GetEnumerator();
 
         // Assert
 

@@ -9,16 +9,16 @@ using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.IndexedIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 #else
 using Graph = Models.Compatibility.IndexedIncidenceGraph;
 using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
+using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.Collections.Generic.IEnumerator<int>>;
 #endif
 
 public sealed class DfsEnumerateVerticesTest
 {
     private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
-
-    private EnumerableDfs<Graph, int, int, EdgeEnumerator> EnumerableDfs { get; }
 
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
@@ -48,15 +48,15 @@ public sealed class DfsEnumerateVerticesTest
             int sourceCount = graph.VertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
             EagerDfs.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
-            using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, set);
-            enumerableSteps.AddEnumerator(vertices);
+            IEnumerable<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, set);
+            enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount - 1;
             EagerDfs.Traverse(graph, source, eagerColorByVertex, dfsHandler);
-            using IEnumerator<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, set);
-            enumerableSteps.AddEnumerator(vertices);
+            IEnumerable<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, set);
+            enumerableSteps.AddRange(vertices);
         }
 
         // Assert

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models;
 using Traversal;
+using Traversal.Incidence;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
 [MemoryDiagnoser]
@@ -21,8 +22,6 @@ public abstract class BfsBenchmark
 
     private EagerBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EagerBfs { get; set; }
 
-    private EnumerableBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EnumerableBfs { get; set; }
-
     private IndexedIncidenceGraph Graph { get; set; }
 
     [GlobalSetup]
@@ -31,7 +30,6 @@ public abstract class BfsBenchmark
         Graph = GraphHelper.Default.GetGraph(VertexCount);
 
         EagerBfs = default;
-        EnumerableBfs = default;
 
         _colorByVertex = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
         _exploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
@@ -59,7 +57,8 @@ public abstract class BfsBenchmark
     public int EnumerableBfsEdges()
     {
         Array.Clear(_exploredSet, 0, _exploredSet.Length);
-        using IEnumerator<int> steps = EnumerableBfs.EnumerateEdges(Graph, 0, new IndexedSet(_exploredSet));
+        using IEnumerator<int> steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateEdges(
+            Graph, 0, new IndexedSet(_exploredSet)).GetEnumerator();
         int count = 0;
         while (steps.MoveNext())
             ++count;
@@ -71,7 +70,8 @@ public abstract class BfsBenchmark
     public int EnumerableBfsVertices()
     {
         Array.Clear(_exploredSet, 0, _exploredSet.Length);
-        using IEnumerator<int> steps = EnumerableBfs.EnumerateVertices(Graph, 0, new IndexedSet(_exploredSet));
+        using IEnumerator<int> steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateVertices(
+            Graph, 0, new IndexedSet(_exploredSet)).GetEnumerator();
         int count = 0;
         while (steps.MoveNext())
             ++count;

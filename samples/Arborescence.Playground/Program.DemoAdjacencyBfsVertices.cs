@@ -11,10 +11,10 @@ internal static partial class Program
     {
         AdjacencyGraph adjacencyGraph = new();
         Node source = new(3);
-        IEnumerator<Node> vertexEnumerator =
+        IEnumerable<Node> nodes =
             EnumerableBfs<Node>.EnumerateVertices(adjacencyGraph, source);
-        while (vertexEnumerator.MoveNext())
-            Console.WriteLine(vertexEnumerator.Current);
+        foreach (Node node in nodes)
+            Console.WriteLine(node);
     }
 }
 

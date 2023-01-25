@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.15.2] - 2023-01-25
+
+### Added
+
+- Traversal: `Incidence.EnumerableGenericSearch<TVertex, TEdge>`, `Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `Incidence.EnumerableBfs<TVertex, TEdge>`, `Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `Incidence.EnumerableDfs<TVertex, TEdge>`, `Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>`.
+
+### Changed
+
+- Traversal: Changed return type of the adjacency algorithms from `IEnumerator<T>` to `IEnumerable<T>`.
+
+### Removed
+
+- Traversal: `GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+
 ## [0.15.1] - 2023-01-19
 
 ### Added
@@ -320,7 +336,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.15.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.15.2...HEAD
+
+[0.15.2]: https://github.com/qbit86/arborescence/compare/traversal-0.15.1...traversal-0.15.2
 
 [0.15.1]: https://github.com/qbit86/arborescence/compare/arborescence-0.15.0...traversal-0.15.1
 

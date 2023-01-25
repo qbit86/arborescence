@@ -12,13 +12,13 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="sources">The sources enumerator.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex> =>
@@ -32,13 +32,13 @@ namespace Arborescence.Traversal.Adjacency
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex> =>
@@ -53,21 +53,21 @@ namespace Arborescence.Traversal.Adjacency
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
-        /// <returns>An enumerator to enumerate the endpoints of a search tree edges.</returns>
+        /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>,
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerator<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerateEdgesChecked(graph, sources, exploredSet);
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceEnumerator>(
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -82,7 +82,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceEnumerator>(
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceEnumerator>(
             TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
@@ -97,7 +97,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
-        internal static IEnumerator<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
@@ -116,13 +116,13 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
-        private static IEnumerator<Endpoints<TVertex>> EnumerateEdgesIterator<TGraph, TSourceEnumerator, TExploredSet>(
+        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<TGraph, TSourceEnumerator, TExploredSet>(
             TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
             where TSourceEnumerator : IEnumerator<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            var frontier = new ValueStack<StackFrame>();
+            var stack = new ValueStack<StackFrame>();
             try
             {
                 while (sources.MoveNext())
@@ -130,9 +130,9 @@ namespace Arborescence.Traversal.Adjacency
                     TVertex source = sources.Current;
                     if (!exploredSet.Add(source))
                         continue;
-                    frontier.Add(new(source, graph.EnumerateNeighbors(source)));
+                    stack.Add(new(source, graph.EnumerateNeighbors(source)));
 
-                    while (frontier.TryTake(out StackFrame stackFrame))
+                    while (stack.TryTake(out StackFrame stackFrame))
                     {
                         (TVertex current, TNeighborEnumerator neighborEnumerator) = stackFrame;
                         if (!neighborEnumerator.MoveNext())
@@ -142,21 +142,21 @@ namespace Arborescence.Traversal.Adjacency
                         }
 
                         TVertex neighbor = neighborEnumerator.Current;
-                        frontier.Add(stackFrame with { NeighborEnumerator = neighborEnumerator });
+                        stack.Add(stackFrame with { NeighborEnumerator = neighborEnumerator });
                         if (exploredSet.Contains(neighbor))
                             continue;
 
                         yield return new(current, neighbor);
                         exploredSet.Add(neighbor);
-                        frontier.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
+                        stack.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
                     }
                 }
             }
             finally
             {
-                while (frontier.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out StackFrame stackFrame))
                     stackFrame.Dispose();
-                frontier.Dispose();
+                stack.Dispose();
             }
         }
     }
