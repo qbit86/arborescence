@@ -1,5 +1,6 @@
 namespace Arborescence.Traversal
 {
+    using System;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 #if DEBUG
@@ -13,6 +14,8 @@ namespace Arborescence.Traversal
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    [Obsolete(
+        "EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator> has been deprecated. Use EagerBfs<TVertex, TEdge, TEdgeEnumerator> instead.")]
     public readonly partial struct EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
         where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
