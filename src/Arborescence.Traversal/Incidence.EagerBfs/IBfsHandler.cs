@@ -1,6 +1,7 @@
-﻿namespace Arborescence.Traversal
+﻿// TODO: Move to Arborescence.Traversal.Incidence.
+namespace Arborescence.Traversal
 {
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/BFSVisitor.html
+    // https://www.boost.org/doc/libs/1_81_0/libs/graph/doc/BFSVisitor.html
 
     /// <summary>
     /// Defines callbacks to be invoked while traversing a graph in a BFS manner.
