@@ -1,4 +1,4 @@
 namespace Arborescence.Traversal.Incidence
 {
-    public static partial class EagerBfs<TVertex, TEdge> { }
+    public static partial class EagerBfs<TVertex, TEdge, TEdgeEnumerator> { }
 }
