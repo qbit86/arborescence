@@ -20,16 +20,12 @@ public abstract class BfsBenchmark
     [Params(10, 100, 1000)]
     public int VertexCount { get; set; }
 
-    private EagerBfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EagerBfs { get; set; }
-
     private IndexedIncidenceGraph Graph { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
         Graph = GraphHelper.Default.GetGraph(VertexCount);
-
-        EagerBfs = default;
 
         _colorByVertex = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
         _exploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
@@ -49,7 +45,7 @@ public abstract class BfsBenchmark
     public int EagerBfsSteps()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        EagerBfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
+        EagerBfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
         return _handler.Count;
     }
 
