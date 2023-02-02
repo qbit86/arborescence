@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using Models;
 using Traversal;
+using Traversal.Incidence;
 using Workbench;
 
 internal static class Program
@@ -30,9 +31,7 @@ internal static class Program
 
         TextWriter w = Console.Out;
 
-        EagerBfs<IndexedIncidenceGraph, int, int, ArraySegment<int>.Enumerator> bfs = default;
-
-        w.WriteLine($"digraph \"{bfs.GetType().Name}\" {{");
+        w.WriteLine($"digraph \"{nameof(EagerBfs<int, int, ArraySegment<int>.Enumerator>)}\" {{");
         w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
 
         // Enumerate vertices.
@@ -44,23 +43,19 @@ internal static class Program
 
         w.WriteLine();
 
-        IndexEnumerator sources = new(2);
+        int[] sources = { 0, 1 };
         byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(backingStore, 0, backingStore.Length);
         IndexedColorDictionary colorByVertex = new(backingStore);
         HashSet<int> examinedEdges = new(graph.EdgeCount);
         BfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
-        bfs.Traverse(graph, sources, colorByVertex, handler);
+        EagerBfs<int, int, ArraySegment<int>.Enumerator>.Traverse(graph, sources, colorByVertex, handler);
         ArrayPool<byte>.Shared.Return(backingStore);
 
         // Enumerate sources.
         w.WriteLine();
-        sources.Reset();
-        while (sources.MoveNext())
-        {
-            int v = sources.Current;
+        foreach (int v in sources)
             w.WriteLine($"  {V(v)} [style=filled]");
-        }
 
         // Enumerate rest of edges.
         w.WriteLine();
