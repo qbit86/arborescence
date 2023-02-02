@@ -1,5 +1,4 @@
-﻿// TODO: Move to Arborescence.Traversal.Incidence.
-namespace Arborescence.Traversal
+﻿namespace Arborescence.Traversal
 {
     // https://www.boost.org/doc/libs/1_81_0/libs/graph/doc/BFSVisitor.html
 

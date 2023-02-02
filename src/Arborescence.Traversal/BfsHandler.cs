@@ -1,4 +1,3 @@
-// TODO: Move to Arborescence.Traversal.Incidence.
 namespace Arborescence.Traversal
 {
     /// <inheritdoc/>
