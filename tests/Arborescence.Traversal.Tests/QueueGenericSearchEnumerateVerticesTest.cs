@@ -4,6 +4,7 @@ using System;
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using Misnomer;
 using Traversal;
 using Traversal.Incidence;
@@ -18,8 +19,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 
 public class QueueGenericSearchEnumerateVerticesTest
 {
-    private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
-
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
         if (graph is null)
@@ -47,17 +46,19 @@ public class QueueGenericSearchEnumerateVerticesTest
                 return;
 
             int sourceCount = graph.VertexCount / 3;
-            IndexEnumerator sources = new(sourceCount);
+            IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
-            EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
+            // ReSharper disable PossibleMultipleEnumeration
+            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
             IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
-                graph, sources, frontier, set);
+                graph, sources.GetEnumerator(), frontier, set);
+            // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
+            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
             IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
                 graph, source, frontier, set);
             enumerableSteps.AddRange(vertices);

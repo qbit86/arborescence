@@ -3,6 +3,7 @@ namespace Arborescence;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Linq;
 using Misnomer;
 using Traversal;
 using Traversal.Incidence;
@@ -17,8 +18,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 
 public sealed class BfsEnumerateEdgesTest
 {
-    private EagerBfs<Graph, int, Int32Endpoints, EdgeEnumerator> EagerBfs { get; }
-
     private void EnumerateEdgesCore(Graph graph, bool multipleSource)
     {
         // Arrange
@@ -42,17 +41,19 @@ public sealed class BfsEnumerateEdgesTest
                 return;
 
             int sourceCount = graph.VertexCount / 3;
-            IndexEnumerator sources = new(sourceCount);
+            IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
-            EagerBfs.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
+            // ReSharper disable PossibleMultipleEnumeration
+            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
             IEnumerable<Int32Endpoints> edges = EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateEdges(
-                graph, sources, set);
+                graph, sources.GetEnumerator(), set);
+            // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(edges);
         }
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerBfs.Traverse(graph, source, eagerColorByVertex, bfsHandler);
+            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
             IEnumerable<Int32Endpoints> edges = EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateEdges(
                 graph, source, set);
             enumerableSteps.AddRange(edges);
