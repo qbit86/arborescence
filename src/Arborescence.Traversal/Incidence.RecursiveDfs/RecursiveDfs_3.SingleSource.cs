@@ -160,6 +160,9 @@ namespace Arborescence.Traversal.Incidence
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
         {
+            Color color = GetColorOrDefault(colorByVertex, source);
+            if (color is not (Color.None or Color.White))
+                return;
             handler.OnStartVertex(graph, source);
             TraverseCore(graph, source, colorByVertex, handler, cancellationToken);
         }
