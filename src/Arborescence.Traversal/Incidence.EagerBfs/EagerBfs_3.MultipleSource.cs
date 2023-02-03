@@ -9,7 +9,7 @@ namespace Arborescence.Traversal.Incidence
         /// Traverses the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="handler">
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
@@ -36,7 +36,7 @@ namespace Arborescence.Traversal.Incidence
         /// Traverses the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <param name="handler">
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
@@ -64,7 +64,7 @@ namespace Arborescence.Traversal.Incidence
         /// Traverses the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="colorByVertex">The vertex color map.</param>
         /// <param name="handler">
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
