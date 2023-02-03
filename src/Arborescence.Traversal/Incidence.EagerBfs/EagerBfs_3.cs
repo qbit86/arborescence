@@ -48,7 +48,7 @@ namespace Arborescence.Traversal.Incidence
                             case Color.Gray:
                                 handler.OnNonTreeGrayHeadEdge(graph, edge);
                                 break;
-                            case Color.Black:
+                            default:
                                 handler.OnNonTreeBlackHeadEdge(graph, edge);
                                 break;
                         }
