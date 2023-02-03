@@ -16,7 +16,7 @@ namespace Arborescence.Traversal.Incidence
     {
         private static void TraverseCore<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex vertex, TColorMap colorByVertex, THandler handler,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TGraph, TVertex, TEdge>
