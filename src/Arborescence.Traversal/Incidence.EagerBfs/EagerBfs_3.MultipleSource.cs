@@ -162,8 +162,7 @@ namespace Arborescence.Traversal.Incidence
                 using IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
                 while (sourceEnumerator.MoveNext())
                 {
-                    if (sourceEnumerator.Current is not { } source)
-                        continue;
+                    TVertex source = sourceEnumerator.Current;
                     colorByVertex[source] = Color.Gray;
                     handler.OnDiscoverVertex(graph, source);
                     queue.Add(source);
