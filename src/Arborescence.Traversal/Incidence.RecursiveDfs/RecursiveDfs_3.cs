@@ -11,6 +11,7 @@ namespace Arborescence.Traversal.Incidence
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
     public static partial class RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>
+        where TVertex : notnull
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         private static void TraverseCore<TGraph, TColorMap, THandler>(
