@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Models;
 using Traversal;
+using Traversal.Incidence;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
 internal static partial class Program
@@ -20,9 +21,8 @@ internal static partial class Program
         IndexedColorDictionary colorByVertex = new(backingStore);
         List<int> steps = new();
         DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
-        RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> dfs = default;
 
-        dfs.Traverse(graph, 0, colorByVertex, dfsHandler);
+        RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, 0, colorByVertex, dfsHandler);
         Console.WriteLine(steps.Count);
 
         ArrayPool<byte>.Shared.Return(backingStore, true);
