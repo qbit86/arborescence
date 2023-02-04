@@ -15,6 +15,7 @@ namespace Arborescence.Traversal.Incidence
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
@@ -44,6 +45,7 @@ namespace Arborescence.Traversal.Incidence
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
@@ -73,6 +75,7 @@ namespace Arborescence.Traversal.Incidence
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
