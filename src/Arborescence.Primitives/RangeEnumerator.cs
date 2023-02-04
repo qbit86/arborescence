@@ -4,8 +4,10 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
 
-    /// <inheritdoc/>
-    public struct RangeEnumerator : IEnumerator<int>
+    /// <summary>
+    /// An enumerable and enumerator for the range of integers.
+    /// </summary>
+    public struct RangeEnumerator : IEnumerable<int>, IEnumerator<int>
     {
         private readonly int _start;
         private readonly int _end;
@@ -54,6 +56,10 @@ namespace Arborescence
 
         /// <inheritdoc/>
         public readonly void Dispose() { }
+
+        IEnumerator<int> IEnumerable<int>.GetEnumerator() => GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private static void ThrowArgumentOutOfRangeException(string argument) =>
             throw new ArgumentOutOfRangeException(argument);
