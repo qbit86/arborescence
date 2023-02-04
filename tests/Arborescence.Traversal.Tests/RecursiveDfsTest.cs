@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Misnomer;
 using Traversal;
+using Traversal.Incidence;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableIndexedIncidenceGraph;
@@ -17,8 +18,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 public sealed class RecursiveDfsTest
 {
     private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
-
-    private RecursiveDfs<Graph, int, int, EdgeEnumerator> RecursiveDfs { get; }
 
     private void TraverseCore(Graph graph, bool multipleSource)
     {
@@ -47,13 +46,13 @@ public sealed class RecursiveDfsTest
             IndexEnumerator sources = new(sourceCount);
 
             EagerDfs.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
-            RecursiveDfs.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
+            RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
         }
         else
         {
             int source = graph.VertexCount >> 1;
             EagerDfs.Traverse(graph, source, eagerColorByVertex, eagerHandler);
-            RecursiveDfs.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
+            RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
         }
 
         // Assert
