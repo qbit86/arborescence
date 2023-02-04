@@ -2,6 +2,7 @@ namespace Arborescence.Traversal.Incidence
 {
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+    using System.Threading;
 
     public static partial class EagerBfs<TVertex, TEdge, TEdgeEnumerator>
     {
@@ -14,6 +15,7 @@ namespace Arborescence.Traversal.Incidence
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="System.ArgumentNullException">
@@ -23,10 +25,11 @@ namespace Arborescence.Traversal.Incidence
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, THandler>(
-            TGraph graph, TVertex source, THandler handler)
+            TGraph graph, TVertex source, THandler handler,
+            CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
-            TraverseChecked(graph, source, handler);
+            TraverseChecked(graph, source, handler, cancellationToken);
 
         /// <summary>
         /// Traverses the graph in a breadth-first order starting from the single source.
@@ -38,6 +41,7 @@ namespace Arborescence.Traversal.Incidence
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="System.ArgumentNullException">
@@ -47,10 +51,11 @@ namespace Arborescence.Traversal.Incidence
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, THandler>(
-            TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer, THandler handler)
+            TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer, THandler handler,
+            CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
-            TraverseChecked(graph, source, comparer, handler);
+            TraverseChecked(graph, source, comparer, handler, cancellationToken);
 
         /// <summary>
         /// Traverses the graph in a breadth-first order starting from the single source.
@@ -62,6 +67,7 @@ namespace Arborescence.Traversal.Incidence
         /// The <see cref="IBfsHandler{TGraph,TVertex,TEdge}"/> implementation to use
         /// for the actions taken during the graph traversal.
         /// </param>
+        /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
@@ -73,14 +79,16 @@ namespace Arborescence.Traversal.Incidence
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, TColorMap, THandler>(
-            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
+            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
+            CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
-            TraverseChecked(graph, source, colorByVertex, handler);
+            TraverseChecked(graph, source, colorByVertex, handler, cancellationToken);
 
         internal static void TraverseChecked<TGraph, THandler>(
-            TGraph graph, TVertex source, THandler handler)
+            TGraph graph, TVertex source, THandler handler,
+            CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
@@ -94,11 +102,12 @@ namespace Arborescence.Traversal.Incidence
                 ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new();
-            TraverseUnchecked(graph, source, colorByVertex, handler);
+            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, THandler>(
-            TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer, THandler handler)
+            TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer, THandler handler,
+            CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
@@ -112,11 +121,12 @@ namespace Arborescence.Traversal.Incidence
                 ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new(comparer);
-            TraverseUnchecked(graph, source, colorByVertex, handler);
+            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TColorMap, THandler>(
-            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
+            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
+            CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
@@ -133,22 +143,30 @@ namespace Arborescence.Traversal.Incidence
             if (handler is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(handler));
 
-            TraverseUnchecked(graph, source, colorByVertex, handler);
+            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
         }
 
         private static void TraverseUnchecked<TGraph, TColorMap, THandler>(
-            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler)
+            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
+            CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
         {
             colorByVertex[source] = Color.Gray;
             handler.OnDiscoverVertex(graph, source);
+            if (cancellationToken.IsCancellationRequested)
+            {
+                colorByVertex[source] = Color.Black;
+                handler.OnFinishVertex(graph, source);
+                return;
+            }
+
             var queue = new ValueQueue<TVertex>();
             try
             {
                 queue.Add(source);
-                Traverse(graph, ref queue, colorByVertex, handler);
+                Traverse(graph, ref queue, colorByVertex, handler, cancellationToken);
             }
             finally
             {
