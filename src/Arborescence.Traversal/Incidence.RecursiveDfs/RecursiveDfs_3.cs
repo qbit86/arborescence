@@ -14,7 +14,7 @@ namespace Arborescence.Traversal.Incidence
         where TVertex : notnull
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-        private static void TraverseCore<TGraph, TColorMap, THandler>(
+        private static void Visit<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex vertex, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
@@ -46,7 +46,7 @@ namespace Arborescence.Traversal.Incidence
                     {
                         case Color.None or Color.White:
                             handler.OnTreeEdge(graph, edge);
-                            TraverseCore(graph, neighbor, colorByVertex, handler, cancellationToken);
+                            Visit(graph, neighbor, colorByVertex, handler, cancellationToken);
                             break;
                         case Color.Gray:
                             handler.OnBackEdge(graph, edge);

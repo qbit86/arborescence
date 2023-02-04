@@ -174,7 +174,7 @@ namespace Arborescence.Traversal.Incidence
                 if (color is not (Color.None or Color.White))
                     continue;
                 handler.OnStartVertex(graph, source);
-                TraverseCore(graph, source, colorByVertex, handler, cancellationToken);
+                Visit(graph, source, colorByVertex, handler, cancellationToken);
             }
         }
     }
