@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models;
 using Traversal;
+using Traversal.Incidence;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
@@ -16,18 +17,12 @@ public abstract class DfsBenchmark
 
     private byte[] _colorByVertex = Array.Empty<byte>();
 
-    protected DfsBenchmark()
-    {
-        EagerDfs = default;
-        RecursiveDfs = default;
-    }
+    protected DfsBenchmark() => EagerDfs = default;
 
     [Params(10, 100, 1000, 10000)]
     public int VertexCount { get; set; }
 
     private EagerDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> EagerDfs { get; }
-
-    private RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> RecursiveDfs { get; }
 
     private IndexedIncidenceGraph Graph { get; set; }
 
@@ -59,7 +54,7 @@ public abstract class DfsBenchmark
     public int RecursiveDfsSteps()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        RecursiveDfs.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
+        RecursiveDfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
         return _handler.Count;
     }
 
