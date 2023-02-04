@@ -3,6 +3,7 @@ namespace Arborescence.Traversal.Incidence
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
+    using System.Threading;
 
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph.
@@ -15,7 +16,8 @@ namespace Arborescence.Traversal.Incidence
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         private static void Traverse<TGraph, TColorMap, THandler>(
-            TGraph graph, ref ValueQueue<TVertex> queue, TColorMap colorByVertex, THandler handler)
+            TGraph graph, ref ValueQueue<TVertex> queue, TColorMap colorByVertex, THandler handler,
+            CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge>
@@ -43,6 +45,13 @@ namespace Arborescence.Traversal.Incidence
                                 handler.OnTreeEdge(graph, edge);
                                 colorByVertex[neighbor] = Color.Gray;
                                 handler.OnDiscoverVertex(graph, neighbor);
+                                if (cancellationToken.IsCancellationRequested)
+                                {
+                                    colorByVertex[current] = Color.Black;
+                                    handler.OnFinishVertex(graph, current);
+                                    return;
+                                }
+
                                 queue.Add(neighbor);
                                 break;
                             case Color.Gray:

@@ -2,6 +2,7 @@ namespace Arborescence.Traversal.Incidence
 {
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+    using System.Threading;
 
     public static partial class EagerBfs<TVertex, TEdge>
     {
@@ -24,11 +25,12 @@ namespace Arborescence.Traversal.Incidence
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, TSourceCollection, THandler>(
-            TGraph graph, TSourceCollection sources, THandler handler)
+            TGraph graph, TSourceCollection sources, THandler handler,
+            CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, IEnumerator<TEdge>>
             where TSourceCollection : IEnumerable<TVertex>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
-            EagerBfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(graph, sources, handler);
+            EagerBfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(graph, sources, handler, cancellationToken);
 
         /// <summary>
         /// Traverses the graph in a breadth-first order starting from the multiple sources.
@@ -50,11 +52,13 @@ namespace Arborescence.Traversal.Incidence
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, TSourceCollection, THandler>(
-            TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer, THandler handler)
+            TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer, THandler handler,
+            CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, IEnumerator<TEdge>>
             where TSourceCollection : IEnumerable<TVertex>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
-            EagerBfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(graph, sources, comparer, handler);
+            EagerBfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(
+                graph, sources, comparer, handler, cancellationToken);
 
         /// <summary>
         /// Traverses the graph in a breadth-first order starting from the multiple sources.
@@ -78,11 +82,13 @@ namespace Arborescence.Traversal.Incidence
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, TSourceCollection, TColorMap, THandler>(
-            TGraph graph, TSourceCollection sources, TColorMap colorByVertex, THandler handler)
+            TGraph graph, TSourceCollection sources, TColorMap colorByVertex, THandler handler,
+            CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, IEnumerator<TEdge>>
             where TSourceCollection : IEnumerable<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
-            EagerBfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(graph, sources, colorByVertex, handler);
+            EagerBfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
     }
 }
