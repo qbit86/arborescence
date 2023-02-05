@@ -18,7 +18,6 @@ namespace Arborescence.Traversal.Incidence
         /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
-        /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
@@ -47,7 +46,6 @@ namespace Arborescence.Traversal.Incidence
         /// <param name="cancellationToken">Optional token used to stop the traversal.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
-        /// <typeparam name="TColorMap">The type of the vertex color map.</typeparam>
         /// <typeparam name="THandler">The type of the events handler.</typeparam>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
