@@ -17,8 +17,6 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 
 public sealed class RecursiveDfsTest
 {
-    private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
-
     private void TraverseCore(Graph graph, bool multipleSource)
     {
         // Arrange
@@ -45,13 +43,13 @@ public sealed class RecursiveDfsTest
             int sourceCount = graph.VertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
 
-            EagerDfs.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
+            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
             RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
         }
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerDfs.Traverse(graph, source, eagerColorByVertex, eagerHandler);
+            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, eagerHandler);
             RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
         }
 
