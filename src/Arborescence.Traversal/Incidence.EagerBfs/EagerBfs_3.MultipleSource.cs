@@ -7,7 +7,8 @@ namespace Arborescence.Traversal.Incidence
     public static partial class EagerBfs<TVertex, TEdge, TEdgeEnumerator>
     {
         /// <summary>
-        /// Traverses the graph in a breadth-first order starting from the multiple sources.
+        /// Traverses the graph in a breadth-first order starting from the multiple sources
+        /// until the search tree is built or until the search is canceled.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources.</param>
@@ -34,7 +35,8 @@ namespace Arborescence.Traversal.Incidence
             TraverseChecked(graph, sources, handler, cancellationToken);
 
         /// <summary>
-        /// Traverses the graph in a breadth-first order starting from the multiple sources.
+        /// Traverses the graph in a breadth-first order starting from the multiple sources
+        /// until the search tree is built or until the search is canceled.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources.</param>
@@ -62,7 +64,8 @@ namespace Arborescence.Traversal.Incidence
             TraverseChecked(graph, sources, comparer, handler, cancellationToken);
 
         /// <summary>
-        /// Traverses the graph in a breadth-first order starting from the multiple sources.
+        /// Traverses the graph in a breadth-first order starting from the multiple sources
+        /// until the search tree is built or until the search is canceled.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources.</param>

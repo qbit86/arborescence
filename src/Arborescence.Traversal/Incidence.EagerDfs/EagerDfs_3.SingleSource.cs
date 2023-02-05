@@ -7,7 +7,8 @@ namespace Arborescence.Traversal.Incidence
     public static partial class EagerDfs<TVertex, TEdge, TEdgeEnumerator>
     {
         /// <summary>
-        /// Traverses the graph in a depth-first order starting from the single source.
+        /// Traverses the graph in a depth-first order starting from the single source
+        /// until the search tree is built or until the search is canceled.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -32,7 +33,8 @@ namespace Arborescence.Traversal.Incidence
             TraverseChecked(graph, source, handler, cancellationToken);
 
         /// <summary>
-        /// Traverses the graph in a depth-first order starting from the single source.
+        /// Traverses the graph in a depth-first order starting from the single source
+        /// until the search tree is built or until the search is canceled.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
@@ -58,7 +60,8 @@ namespace Arborescence.Traversal.Incidence
             TraverseChecked(graph, source, comparer, handler, cancellationToken);
 
         /// <summary>
-        /// Traverses the graph in a depth-first order starting from the single source.
+        /// Traverses the graph in a depth-first order starting from the single source
+        /// until the search tree is built or until the search is canceled.
         /// </summary>
         /// <param name="graph">The graph.</param>
         /// <param name="source">The source.</param>
