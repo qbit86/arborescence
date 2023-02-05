@@ -171,7 +171,7 @@ namespace Arborescence.Traversal.Incidence
             {
                 TVertex source = sourceEnumerator.Current;
                 Color color = GetColorOrDefault(colorByVertex, source);
-                if (color is Color.None or Color.White)
+                if (color is not (Color.None or Color.White))
                     continue;
                 handler.OnStartVertex(graph, source);
                 TraverseCore(graph, source, colorByVertex, handler, cancellationToken);
