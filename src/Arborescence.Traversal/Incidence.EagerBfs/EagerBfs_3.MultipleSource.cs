@@ -26,12 +26,11 @@ namespace Arborescence.Traversal.Incidence
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Traverse<TGraph, TSourceCollection, TColorMap, THandler>(
+        public static void Traverse<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, THandler handler,
             CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
-            where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
             TraverseChecked(graph, sources, handler, cancellationToken);
 
@@ -56,12 +55,11 @@ namespace Arborescence.Traversal.Incidence
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Traverse<TGraph, TSourceCollection, TColorMap, THandler>(
+        public static void Traverse<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer, THandler handler,
             CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
-            where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TGraph, TVertex, TEdge> =>
             TraverseChecked(graph, sources, comparer, handler, cancellationToken);
 
