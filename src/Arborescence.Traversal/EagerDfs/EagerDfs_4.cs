@@ -11,6 +11,8 @@ namespace Arborescence.Traversal
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    [Obsolete(
+        "EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator> has been deprecated. Use EagerDfs<TVertex, TEdge, TEdgeEnumerator> instead.")]
     public readonly partial struct EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>
         where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
