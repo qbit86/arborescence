@@ -43,8 +43,7 @@ internal static class Program
 
         w.WriteLine();
 
-        static IEnumerator<int> EnumerateSources() { yield return 3; }
-        IEnumerator<int> sources = EnumerateSources();
+        int[] sources = { 3 };
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         IndexedSet enumerableExploredSet = new(setBackingStore);
@@ -63,12 +62,8 @@ internal static class Program
 
         // Enumerate sources.
         w.WriteLine();
-        sources = EnumerateSources();
-        while (sources.MoveNext())
-        {
-            int v = sources.Current;
+        foreach (int v in sources)
             w.WriteLine($"  {V(v)} [style=filled]");
-        }
 
         // Enumerate rest of edges.
         w.WriteLine();
