@@ -9,7 +9,7 @@ namespace Arborescence.Traversal.Incidence
         /// Enumerates vertices of the graph in a depth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
@@ -28,7 +28,7 @@ namespace Arborescence.Traversal.Incidence
         /// Enumerates vertices of the graph in a depth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
@@ -48,7 +48,7 @@ namespace Arborescence.Traversal.Incidence
         /// Enumerates vertices of the graph in a depth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
