@@ -11,7 +11,7 @@ namespace Arborescence.Traversal.Incidence
         /// <param name="graph">The graph.</param>
         /// <param name="sources">The sources.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceCollection">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
@@ -31,7 +31,7 @@ namespace Arborescence.Traversal.Incidence
         /// <param name="sources">The sources.</param>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceCollection">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
@@ -51,7 +51,7 @@ namespace Arborescence.Traversal.Incidence
         /// <param name="sources">The sources.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceCollection">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerable collection of the endpoints of a search tree edges.</returns>
         /// <exception cref="System.ArgumentNullException">
