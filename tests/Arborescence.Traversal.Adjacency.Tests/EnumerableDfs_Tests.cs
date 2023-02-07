@@ -55,8 +55,7 @@ public sealed class EnumerableDfs_Tests
 
         // Act
         List<int> sources = new(3) { V("a"), V("d"), V("b") };
-        IEnumerable<Endpoints<int>> arrows = EnumerableDfs<int>.EnumerateEdges(
-            adjacencyGraph, sources.GetEnumerator());
+        IEnumerable<Endpoints<int>> arrows = EnumerableDfs<int>.EnumerateEdges(adjacencyGraph, sources);
         var actual = arrows.ToList();
 
         // Assert
