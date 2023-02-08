@@ -31,7 +31,7 @@ public sealed class BfsEnumerateEdgesTest
 
         using Rist<Int32Endpoints> eagerSteps = new(graph.VertexCount);
         using Rist<Int32Endpoints> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<Graph, int, Int32Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
+        BfsHandler<int, Int32Endpoints, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -83,12 +83,12 @@ public sealed class BfsEnumerateEdgesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<Graph, int, Int32Endpoints> CreateBfsHandler(IList<Int32Endpoints> treeEdges)
+    private static BfsHandler<int, Int32Endpoints, Graph> CreateBfsHandler(IList<Int32Endpoints> treeEdges)
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));
 
-        BfsHandler<Graph, int, Int32Endpoints> result = new();
+        BfsHandler<int, Int32Endpoints, Graph> result = new();
         result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }

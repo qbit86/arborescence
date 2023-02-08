@@ -5,10 +5,10 @@
     /// <summary>
     /// Defines callbacks to be invoked while traversing a graph in a BFS manner.
     /// </summary>
-    /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public interface IBfsHandler<in TGraph, in TVertex, in TEdge>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    public interface IBfsHandler<in TVertex, in TEdge, in TGraph>
     {
         /// <summary>
         /// This is invoked when a vertex is encountered for the first time.

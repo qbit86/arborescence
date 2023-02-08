@@ -36,7 +36,7 @@ public class QueueGenericSearchEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<Graph, int, Int32Endpoints> bfsHandler = CreateBfsHandler(eagerSteps);
+        BfsHandler<int, Int32Endpoints, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -88,12 +88,12 @@ public class QueueGenericSearchEnumerateVerticesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<Graph, int, Int32Endpoints> CreateBfsHandler(IList<int> discoveredVertices)
+    private static BfsHandler<int, Int32Endpoints, Graph> CreateBfsHandler(IList<int> discoveredVertices)
     {
         if (discoveredVertices is null)
             throw new ArgumentNullException(nameof(discoveredVertices));
 
-        BfsHandler<Graph, int, Int32Endpoints> result = new();
+        BfsHandler<int, Int32Endpoints, Graph> result = new();
         result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
         return result;
     }

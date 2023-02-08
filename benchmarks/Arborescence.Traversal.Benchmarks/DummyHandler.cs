@@ -2,7 +2,7 @@ namespace Arborescence;
 
 using Traversal;
 
-internal sealed class DummyHandler<TGraph> : IDfsHandler<TGraph, int, int>, IBfsHandler<TGraph, int, int>
+internal sealed class DummyHandler<TGraph> : IDfsHandler<TGraph, int, int>, IBfsHandler<int, int, TGraph>
 {
     internal int Count { get; private set; }
 
