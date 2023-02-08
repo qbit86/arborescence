@@ -24,8 +24,7 @@ internal static partial class Program
         SimpleIncidenceGraph incidenceGraph = builder.ToGraph();
         var adjacencyGraph = IncidenceAdjacencyAdapter<int, Int32Endpoints, EdgeEnumerator>.Create(incidenceGraph);
         IEnumerable<int> sources = "abcd".Select(it => Base32.Parse(it.ToString()));
-        IEnumerable<Endpoints<int>> arrows =
-            EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, sources.GetEnumerator());
+        IEnumerable<Endpoints<int>> arrows = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, sources);
         foreach (Endpoints<int> arrow in arrows)
         {
             (int tail, int head) = arrow;

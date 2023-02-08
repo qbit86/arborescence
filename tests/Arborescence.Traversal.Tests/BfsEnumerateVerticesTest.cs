@@ -46,7 +46,7 @@ public sealed class BfsEnumerateVerticesTest
             // ReSharper disable PossibleMultipleEnumeration
             EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
             IEnumerable<int> vertices = EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
-                graph, sources.GetEnumerator(), set);
+                graph, sources, set);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
         }

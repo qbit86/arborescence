@@ -51,7 +51,7 @@ public class QueueGenericSearchEnumerateVerticesTest
             // ReSharper disable PossibleMultipleEnumeration
             EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
             IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
-                graph, sources.GetEnumerator(), frontier, set);
+                graph, sources, frontier, set);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
         }
