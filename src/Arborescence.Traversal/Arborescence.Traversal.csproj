@@ -15,7 +15,6 @@ Commonly used types:
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.15.3</AssemblyVersion>
-    <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>

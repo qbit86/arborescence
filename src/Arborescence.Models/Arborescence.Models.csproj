@@ -13,7 +13,6 @@ Commonly used types:
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.15</AssemblyVersion>
-    <DebugType>portable</DebugType>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
     <RootNamespace>Arborescence.Models</RootNamespace>
