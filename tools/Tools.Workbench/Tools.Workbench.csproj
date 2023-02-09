@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <RootNamespace>Arborescence.Workbench</RootNamespace>
+    <TargetFrameworks>net461;netcoreapp3.1;net7.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="IndexedGraphs\*.gv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="IndexedGraphs\*.gv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Arborescence.Primitives\Arborescence.Primitives.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="System.Memory" />
+  </ItemGroup>
+
+</Project>

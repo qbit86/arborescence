@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.FlightGraphs",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.Workbench", "tools\Tools.Workbench\Tools.Workbench.csproj", "{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
@@ -150,6 +152,10 @@ Global
 		{3466CE43-A92D-405B-B1AD-C144C704583B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3466CE43-A92D-405B-B1AD-C144C704583B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3466CE43-A92D-405B-B1AD-C144C704583B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +183,7 @@ Global
 		{2E38A3D8-3AC0-45BE-BAD3-FF17EC92DD82} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{3466CE43-A92D-405B-B1AD-C144C704583B} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
+		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8} = {5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

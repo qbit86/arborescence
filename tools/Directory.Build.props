@@ -1,0 +1,8 @@
+<Project>
+  <Import Project="../Directory.Build.props" />
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);CA1014</NoWarn>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+</Project>
