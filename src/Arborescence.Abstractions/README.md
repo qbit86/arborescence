@@ -3,6 +3,42 @@
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
 
 This package provides abstractions for graph-related concepts.
+These concepts can be divided into two groups, primary and secondary.
+
+Primary concepts are direct contracts for algorithms.
+The most important ones are:
+
+```csharp
+IAdjacency<TVertex, TVertices>
+{
+    TVertices EnumerateNeighbors(TVertex vertex);
+}
+
+IHeadIncidence<TVertex, TEdge>
+{
+    bool TryGetHead(TEdge edge, out TVertex head);
+}
+
+IOutEdgesIncidence<TVertex, TEdges>
+{
+    TEdges EnumerateOutEdges(TVertex vertex);
+}
+```
+
+Worth noticing that `IGraph<TVertex, TEdge>` is not such a primary concept.
+
+Secondary concepts are not used directly in algorithms.
+They just group primary concepts together and may be convenient for users to implement.
+
+```csharp
+IGraph<TVertex, TEdge> :
+    ITailIncidence<TVertex, TEdge>,
+    IHeadIncidence<TVertex, TEdge> { }
+
+IForwardIncidence<TVertex, TEdge, TEdges> :
+    IHeadIncidence<TVertex, TEdge>,
+    IOutEdgesIncidence<TVertex, TEdges> { }
+```
 
 The library treats the term _graph_ in a specific sense.
 The closest analog in mathematics is the notion of a _quiver_ [1] — a directed graph [2] where loops and multiple edges between two vertices are allowed.
