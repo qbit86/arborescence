@@ -5,7 +5,8 @@ Commonly used types:
 • EnumerableGenericSearch&lt;TVertex, TNeighborEnumerator&gt;, EnumerableGenericSearch&lt;TVertex, TEdge, TEdgeEnumerator&gt;
 • EnumerableBfs&lt;TVertex, TNeighborEnumerator&gt;, EnumerableBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
 • EnumerableDfs&lt;TVertex, TNeighborEnumerator&gt;, EnumerableDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
-• EagerBfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;, EagerDfs&lt;TGraph, TVertex, TEdge, TEdgeEnumerator&gt;</Description>
+• EagerBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• EagerDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
