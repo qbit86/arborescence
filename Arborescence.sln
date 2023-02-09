@@ -68,6 +68,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Traversal.Adja
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.FlightGraphs", "samples\Arborescence.FlightGraphs\Arborescence.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
