@@ -11,7 +11,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.15.3</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyVersion>0.15.3</AssemblyVersion>
@@ -19,7 +19,7 @@ Commonly used types:
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
-    <TargetFrameworks>netcoreapp3.1;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
