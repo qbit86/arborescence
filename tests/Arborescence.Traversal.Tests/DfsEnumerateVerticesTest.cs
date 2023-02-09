@@ -35,7 +35,7 @@ public sealed class DfsEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(eagerSteps);
+        DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
@@ -82,12 +82,12 @@ public sealed class DfsEnumerateVerticesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> steps)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> steps)
     {
         if (steps is null)
             throw new ArgumentNullException(nameof(steps));
 
-        DfsHandler<Graph, int, int> result = new();
+        DfsHandler<int, int, Graph> result = new();
         result.DiscoverVertex += (_, v) => steps.Add(v);
         return result;
     }

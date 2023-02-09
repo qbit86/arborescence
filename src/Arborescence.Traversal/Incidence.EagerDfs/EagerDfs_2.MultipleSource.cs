@@ -31,7 +31,7 @@ namespace Arborescence.Traversal.Incidence
             CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, IEnumerator<TEdge>>
             where TSourceCollection : IEnumerable<TVertex>
-            where THandler : IDfsHandler<TGraph, TVertex, TEdge> =>
+            where THandler : IDfsHandler<TVertex, TEdge, TGraph> =>
             EagerDfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(
                 graph, sources, handler, cancellationToken);
 
@@ -61,7 +61,7 @@ namespace Arborescence.Traversal.Incidence
             CancellationToken cancellationToken = default)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, IEnumerator<TEdge>>
             where TSourceCollection : IEnumerable<TVertex>
-            where THandler : IDfsHandler<TGraph, TVertex, TEdge> =>
+            where THandler : IDfsHandler<TVertex, TEdge, TGraph> =>
             EagerDfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(
                 graph, sources, comparer, handler, cancellationToken);
 
@@ -94,7 +94,7 @@ namespace Arborescence.Traversal.Incidence
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, IEnumerator<TEdge>>
             where TSourceCollection : IEnumerable<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IDfsHandler<TGraph, TVertex, TEdge> =>
+            where THandler : IDfsHandler<TVertex, TEdge, TGraph> =>
             EagerDfs<TVertex, TEdge, IEnumerator<TEdge>>.TraverseChecked(
                 graph, sources, colorByVertex, handler, cancellationToken);
     }

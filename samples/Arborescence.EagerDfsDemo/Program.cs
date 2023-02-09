@@ -48,7 +48,7 @@ internal static class Program
         Array.Clear(backingStore, 0, backingStore.Length);
         IndexedColorDictionary colorByVertex = new(backingStore);
         HashSet<int> examinedEdges = new(graph.EdgeCount);
-        DfsHandler<IndexedIncidenceGraph, int, int> handler = CreateHandler(w, examinedEdges);
+        DfsHandler<int, int, IndexedIncidenceGraph> handler = CreateHandler(w, examinedEdges);
         EagerDfs<int, int, ArraySegment<int>.Enumerator>.Traverse(graph, sources, colorByVertex, handler);
         ArrayPool<byte>.Shared.Return(backingStore);
 
@@ -79,10 +79,10 @@ internal static class Program
         w.WriteLine("}");
     }
 
-    private static DfsHandler<IndexedIncidenceGraph, int, int> CreateHandler(
+    private static DfsHandler<int, int, IndexedIncidenceGraph> CreateHandler(
         TextWriter w, HashSet<int> examinedEdges)
     {
-        DfsHandler<IndexedIncidenceGraph, int, int> result = new();
+        DfsHandler<int, int, IndexedIncidenceGraph> result = new();
         result.StartVertex += (_, v) => w.WriteLine($"  // {nameof(result.StartVertex)} {V(v)}");
         result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
         result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");

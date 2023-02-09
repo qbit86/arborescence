@@ -19,7 +19,7 @@ namespace Arborescence.Traversal.Incidence
             CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IDfsHandler<TGraph, TVertex, TEdge>
+            where THandler : IDfsHandler<TVertex, TEdge, TGraph>
         {
             colorByVertex[vertex] = Color.Gray;
             handler.OnDiscoverVertex(graph, vertex);

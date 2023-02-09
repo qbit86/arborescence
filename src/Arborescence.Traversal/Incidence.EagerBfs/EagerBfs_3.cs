@@ -20,7 +20,7 @@ namespace Arborescence.Traversal.Incidence
             CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IBfsHandler<TGraph, TVertex, TEdge>
+            where THandler : IBfsHandler<TVertex, TEdge, TGraph>
         {
             while (queue.TryTake(out TVertex current))
             {

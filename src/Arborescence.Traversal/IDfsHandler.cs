@@ -5,10 +5,10 @@ namespace Arborescence.Traversal
     /// <summary>
     /// Defines callbacks to be invoked while traversing a graph in a DFS manner.
     /// </summary>
-    /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public interface IDfsHandler<in TGraph, in TVertex, in TEdge>
+    /// <typeparam name="TGraph">The type of the graph.</typeparam>
+    public interface IDfsHandler<in TVertex, in TEdge, in TGraph>
     {
         /// <summary>
         /// This is invoked on the source vertex once before the start of the search.
