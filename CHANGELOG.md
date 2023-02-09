@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased] - 23-02-09
+
+### Added
+
+- Traversal: `EagerBfs<TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: Added a cancellation token to the eager versions of the algorithms.
+
+### Changed
+
+- Changed the type for the sources from `TSourceEnumerator : IEnumerator<TVertex>` to `TSourceCollection : IEnumerable<TVertex>`.
+
+### Removed
+
+- Traversal: `EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+
 ## [0.15.2] - 2023-01-25
 
 ### Added
