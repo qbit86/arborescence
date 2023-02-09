@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Models;
 using Traversal;
+using Traversal.Incidence;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
 internal static partial class Program
@@ -19,18 +20,17 @@ internal static partial class Program
         Array.Clear(backingStore, 0, backingStore.Length);
         IndexedColorDictionary colorByVertex = new(backingStore);
         List<int> steps = new();
-        DfsHandler<IndexedIncidenceGraph, int, int> dfsHandler = CreateDfsHandler(steps);
-        RecursiveDfs<IndexedIncidenceGraph, int, int, EdgeEnumerator> dfs = default;
+        DfsHandler<int, int, IndexedIncidenceGraph> dfsHandler = CreateDfsHandler(steps);
 
-        dfs.Traverse(graph, 0, colorByVertex, dfsHandler);
+        RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, 0, colorByVertex, dfsHandler);
         Console.WriteLine(steps.Count);
 
         ArrayPool<byte>.Shared.Return(backingStore, true);
     }
 
-    private static DfsHandler<IndexedIncidenceGraph, int, int> CreateDfsHandler(ICollection<int> steps)
+    private static DfsHandler<int, int, IndexedIncidenceGraph> CreateDfsHandler(ICollection<int> steps)
     {
-        DfsHandler<IndexedIncidenceGraph, int, int> result = new();
+        DfsHandler<int, int, IndexedIncidenceGraph> result = new();
         result.TreeEdge += (_, e) => steps.Add(e);
         return result;
     }

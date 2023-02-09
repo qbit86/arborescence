@@ -10,10 +10,10 @@ namespace Arborescence.Traversal.Adjacency
         /// Enumerates vertices of the graph in an order specified by the frontier starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="frontier">The collection of discovered vertices which are not finished yet.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
@@ -26,10 +26,10 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier>(
-            TGraph graph, TSourceEnumerator sources, TFrontier frontier)
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TFrontier>(
+            TGraph graph, TSourceCollection sources, TFrontier frontier)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(graph, sources, frontier);
 
@@ -37,11 +37,11 @@ namespace Arborescence.Traversal.Adjacency
         /// Enumerates vertices of the graph in an order specified by the frontier starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="frontier">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
@@ -54,10 +54,10 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier>(
-            TGraph graph, TSourceEnumerator sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TFrontier>(
+            TGraph graph, TSourceCollection sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(
                 graph, sources, frontier, comparer);
@@ -66,11 +66,11 @@ namespace Arborescence.Traversal.Adjacency
         /// Enumerates vertices of the graph in an order specified by the frontier starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="frontier">The collection of discovered vertices which are not finished yet.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TFrontier">The type of the generic queue.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
@@ -85,10 +85,10 @@ namespace Arborescence.Traversal.Adjacency
         /// returns <see langword="false"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TFrontier, TExploredSet>(
-            TGraph graph, TSourceEnumerator sources, TFrontier frontier, TExploredSet exploredSet)
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TFrontier, TExploredSet>(
+            TGraph graph, TSourceCollection sources, TFrontier frontier, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(

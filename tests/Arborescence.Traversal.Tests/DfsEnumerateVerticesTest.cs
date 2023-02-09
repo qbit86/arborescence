@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Misnomer;
 using Traversal;
+using Traversal.Incidence;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.IndexedIncidenceGraph;
@@ -18,8 +19,6 @@ using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.Collect
 
 public sealed class DfsEnumerateVerticesTest
 {
-    private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
-
     private void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
         // Arrange
@@ -36,7 +35,7 @@ public sealed class DfsEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(eagerSteps);
+        DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
@@ -47,14 +46,14 @@ public sealed class DfsEnumerateVerticesTest
 
             int sourceCount = graph.VertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
-            EagerDfs.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
+            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
             IEnumerable<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, set);
             enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount - 1;
-            EagerDfs.Traverse(graph, source, eagerColorByVertex, dfsHandler);
+            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, dfsHandler);
             IEnumerable<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, set);
             enumerableSteps.AddRange(vertices);
         }
@@ -83,12 +82,12 @@ public sealed class DfsEnumerateVerticesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> steps)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> steps)
     {
         if (steps is null)
             throw new ArgumentNullException(nameof(steps));
 
-        DfsHandler<Graph, int, int> result = new();
+        DfsHandler<int, int, Graph> result = new();
         result.DiscoverVertex += (_, v) => steps.Add(v);
         return result;
     }

@@ -19,6 +19,7 @@ max_line_length = 2147483647
 trim_trailing_whitespace = false
 
 [*.{sln.DotSettings}]
+generated_code = true
 ij_formatter_enabled = false
 
 [*.{config,csproj,html,props,resx,shproj,targets,xml}]

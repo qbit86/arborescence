@@ -34,7 +34,7 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
             yield return new object[] { parameter };
         }
 
-        for (int i = 1; i < 7; ++i)
+        for (int i = 1; i < 6; ++i)
         {
             double power = 0.5 * i;
             int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));

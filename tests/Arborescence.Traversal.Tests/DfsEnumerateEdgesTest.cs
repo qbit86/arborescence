@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Misnomer;
 using Traversal;
+using Traversal.Incidence;
 using Xunit;
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.IndexedIncidenceGraph;
@@ -18,8 +19,6 @@ using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.Collect
 
 public sealed class DfsEnumerateEdgesTest
 {
-    private EagerDfs<Graph, int, int, EdgeEnumerator> EagerDfs { get; }
-
     private void EnumerateEdgesCore(Graph graph, bool multipleSource)
     {
         // Arrange
@@ -33,7 +32,7 @@ public sealed class DfsEnumerateEdgesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(eagerSteps);
+        DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
@@ -45,14 +44,14 @@ public sealed class DfsEnumerateEdgesTest
             int sourceCount = graph.VertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
 
-            EagerDfs.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
+            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
             IEnumerable<int> edges = EnumerableDfs.EnumerateEdges(graph, sources, set);
             enumerableSteps.AddRange(edges);
         }
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerDfs.Traverse(graph, source, eagerColorByVertex, dfsHandler);
+            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, dfsHandler);
             IEnumerable<int> edges = EnumerableDfs.EnumerateEdges(graph, source, set);
             enumerableSteps.AddRange(edges);
         }
@@ -81,12 +80,12 @@ public sealed class DfsEnumerateEdgesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> treeEdges)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> treeEdges)
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));
 
-        DfsHandler<Graph, int, int> result = new();
+        DfsHandler<int, int, Graph> result = new();
         result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }

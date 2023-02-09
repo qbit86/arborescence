@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.15.3] - 2023-02-09
+
+### Added
+
+- Traversal: `EagerBfs<TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: Added a cancellation token to the eager versions of the algorithms.
+
+### Changed
+
+- Changed the type for the sources from `TSourceEnumerator : IEnumerator<TVertex>` to `TSourceCollection : IEnumerable<TVertex>`.
+
+### Removed
+
+- Traversal: `EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+
 ## [0.15.2] - 2023-01-25
 
 ### Added
@@ -336,7 +351,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.15.2...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.15.3...HEAD
+
+[0.15.3]: https://github.com/qbit86/arborescence/compare/traversal-0.15.2...traversal-0.15.3
 
 [0.15.2]: https://github.com/qbit86/arborescence/compare/traversal-0.15.1...traversal-0.15.2
 

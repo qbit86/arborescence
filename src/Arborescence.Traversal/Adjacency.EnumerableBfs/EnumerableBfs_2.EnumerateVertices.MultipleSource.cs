@@ -9,49 +9,49 @@ namespace Arborescence.Traversal.Adjacency
         /// Enumerates vertices of the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceEnumerator>(
-            TGraph graph, TSourceEnumerator sources)
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection>(
+            TGraph graph, TSourceCollection sources)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex> =>
+            where TSourceCollection : IEnumerable<TVertex> =>
             EnumerateVerticesChecked(graph, sources);
 
         /// <summary>
         /// Enumerates vertices of the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="comparer">The <see cref="IEqualityComparer{T}"/> implementation to use when comparing vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceEnumerator>(
-            TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection>(
+            TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex> =>
+            where TSourceCollection : IEnumerable<TVertex> =>
             EnumerateVerticesChecked(graph, sources, comparer);
 
         /// <summary>
         /// Enumerates vertices of the graph in a breadth-first order starting from the multiple sources.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="sources">The sources enumerator.</param>
+        /// <param name="sources">The sources.</param>
         /// <param name="exploredSet">The set of explored vertices.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TSourceEnumerator">The type of the source enumerator.</typeparam>
+        /// <typeparam name="TSourceCollection">The type of the source collection.</typeparam>
         /// <typeparam name="TExploredSet">The type of the set of explored vertices.</typeparam>
         /// <returns>An enumerable collection of the vertices of a search tree.</returns>
         /// <exception cref="System.ArgumentNullException">
@@ -60,17 +60,17 @@ namespace Arborescence.Traversal.Adjacency
         /// or <paramref name="exploredSet"/> is <see langword="null"/>.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceEnumerator, TExploredSet>(
-            TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
+        public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TExploredSet>(
+            TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerateVerticesChecked(graph, sources, exploredSet);
 
-        internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceEnumerator>(
-            TGraph graph, TSourceEnumerator sources)
+        internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceCollection>(
+            TGraph graph, TSourceCollection sources)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
         {
             if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
@@ -82,10 +82,10 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateVerticesIterator(graph, sources, exploredSet);
         }
 
-        internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceEnumerator>(
-            TGraph graph, TSourceEnumerator sources, IEqualityComparer<TVertex> comparer)
+        internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceCollection>(
+            TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
         {
             if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
@@ -97,10 +97,10 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateVerticesIterator(graph, sources, exploredSet);
         }
 
-        internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceEnumerator, TExploredSet>(
-            TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
+        internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceCollection, TExploredSet>(
+            TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
@@ -115,10 +115,10 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateVerticesIterator(graph, sources, exploredSet);
         }
 
-        private static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TSourceEnumerator, TExploredSet>(
-            TGraph graph, TSourceEnumerator sources, TExploredSet exploredSet)
+        private static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TSourceCollection, TExploredSet>(
+            TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
             where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceEnumerator : IEnumerator<TVertex>
+            where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex>
         {
             using Traversal.Queue<TVertex> frontier = new();

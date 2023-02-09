@@ -3,8 +3,10 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
 
-    /// <inheritdoc/>
-    public struct IndexEnumerator : IEnumerator<int>
+    /// <summary>
+    /// An enumerable and enumerator for the range of integers starting from zero.
+    /// </summary>
+    public struct IndexEnumerator : IEnumerable<int>, IEnumerator<int>
     {
         private readonly int _count;
         private int _current;
@@ -47,5 +49,9 @@ namespace Arborescence
 
         /// <inheritdoc/>
         public readonly void Dispose() { }
+
+        IEnumerator<int> IEnumerable<int>.GetEnumerator() => GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

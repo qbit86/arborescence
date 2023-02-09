@@ -1,7 +1,7 @@
 namespace Arborescence.Traversal
 {
     /// <inheritdoc/>
-    public sealed class BfsHandler<TGraph, TVertex, TEdge> : IBfsHandler<TGraph, TVertex, TEdge>
+    public sealed class BfsHandler<TVertex, TEdge, TGraph> : IBfsHandler<TVertex, TEdge, TGraph>
     {
         /// <inheritdoc/>
         public void OnDiscoverVertex(TGraph g, TVertex v) => DiscoverVertex?.Invoke(g, v);
