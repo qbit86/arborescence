@@ -32,7 +32,7 @@ public sealed class DfsEnumerateEdgesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        DfsHandler<Graph, int, int> dfsHandler = CreateDfsHandler(eagerSteps);
+        DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
@@ -80,12 +80,12 @@ public sealed class DfsEnumerateEdgesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static DfsHandler<Graph, int, int> CreateDfsHandler(IList<int> treeEdges)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> treeEdges)
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));
 
-        DfsHandler<Graph, int, int> result = new();
+        DfsHandler<int, int, Graph> result = new();
         result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }

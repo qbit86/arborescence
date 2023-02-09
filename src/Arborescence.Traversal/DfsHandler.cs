@@ -1,7 +1,7 @@
 ﻿namespace Arborescence.Traversal
 {
     /// <inheritdoc/>
-    public sealed class DfsHandler<TGraph, TVertex, TEdge> : IDfsHandler<TGraph, TVertex, TEdge>
+    public sealed class DfsHandler<TVertex, TEdge, TGraph> : IDfsHandler<TVertex, TEdge, TGraph>
     {
         /// <inheritdoc/>
         public void OnStartVertex(TGraph g, TVertex v) => StartVertex?.Invoke(g, v);

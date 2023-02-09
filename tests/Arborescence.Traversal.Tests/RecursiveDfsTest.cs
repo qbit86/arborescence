@@ -25,13 +25,13 @@ public sealed class RecursiveDfsTest
         Array.Clear(eagerColorByVertexBackingStore, 0, eagerColorByVertexBackingStore.Length);
         IndexedColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
         using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
-        DfsHandler<Graph, int, int> eagerHandler = CreateDfsHandler(eagerSteps);
+        DfsHandler<int, int, Graph> eagerHandler = CreateDfsHandler(eagerSteps);
 
         byte[] recursiveColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(recursiveColorByVertexBackingStore, 0, recursiveColorByVertexBackingStore.Length);
         IndexedColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
         using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
-        DfsHandler<Graph, int, int> recursiveHandler = CreateDfsHandler(recursiveSteps);
+        DfsHandler<int, int, Graph> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
         // Act
 
@@ -77,9 +77,9 @@ public sealed class RecursiveDfsTest
         ArrayPool<byte>.Shared.Return(recursiveColorByVertexBackingStore);
     }
 
-    private static DfsHandler<Graph, int, int> CreateDfsHandler(ICollection<(string, int)> steps)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler(ICollection<(string, int)> steps)
     {
-        DfsHandler<Graph, int, int> result = new();
+        DfsHandler<int, int, Graph> result = new();
         result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));
         result.DiscoverVertex += (_, v) => steps.Add((nameof(result.DiscoverVertex), v));
         result.FinishVertex += (_, v) => steps.Add((nameof(result.FinishVertex), v));
