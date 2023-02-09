@@ -13,7 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
-    <ProjectReference Include="..\..\src\Arborescence.Workbench\Arborescence.Workbench.csproj" />
+    <ProjectReference Include="..\..\tools\Tools.Workbench\Tools.Workbench.csproj" />
   </ItemGroup>
   <Import Project="..\Shared\TestHelpers\TestHelpers.projitems" Label="Shared" />
 </Project>
