@@ -1,4 +1,4 @@
-namespace Arborescence.Traversal
+namespace Arborescence
 {
     /// <summary>
     /// Specifies labels used to mark vertices while traversing a graph.
