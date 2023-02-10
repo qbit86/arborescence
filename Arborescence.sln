@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Benchmarks", "benchmarks\Arborescence.Traversal.Benchmarks\Arborescence.Traversal.Benchmarks.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives", "src\Arborescence.Primitives\Arborescence.Primitives.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives.Specialized", "src\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Playground", "samples\Arborescence.Playground\Arborescence.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
@@ -71,6 +71,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.Workbench", "tools\Tools.Workbench\Tools.Workbench.csproj", "{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Traversal.Specialized", "src\Arborescence.Traversal.Specialized\Arborescence.Traversal.Specialized.csproj", "{923DACC1-3452-4188-BEFA-7DD898FA16CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Primitives", "src\Arborescence.Primitives\Arborescence.Primitives.csproj", "{1AEA02A1-D748-4C85-B101-3158DCD344CA}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -156,6 +158,10 @@ Global
 		{923DACC1-3452-4188-BEFA-7DD898FA16CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{923DACC1-3452-4188-BEFA-7DD898FA16CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{923DACC1-3452-4188-BEFA-7DD898FA16CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +190,7 @@ Global
 		{3466CE43-A92D-405B-B1AD-C144C704583B} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8} = {5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}
 		{923DACC1-3452-4188-BEFA-7DD898FA16CF} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
+		{1AEA02A1-D748-4C85-B101-3158DCD344CA} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

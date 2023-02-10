@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Arborescence.Primitives\Arborescence.Primitives.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
