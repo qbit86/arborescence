@@ -1,20 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Basic blocks for building algorithms and data structures.
-      Commonly used types:
-      • Endpoints&lt;TVertex&gt;
-      • Color</Description>
+Commonly used types:
+• ArrayPrefix&lt;T&gt;
+• ArrayPrefixEnumerator&lt;T&gt;
+• IndexedDictionary&lt;TValue&gt;
+• IndexedSet</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
-  
+
   <PropertyGroup>
-    <AssemblyVersion>0.16</AssemblyVersion>
+    <AssemblyVersion>0.15.3</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;net6.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
@@ -30,6 +32,10 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
 
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
+  </ItemGroup>
+
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 
 </Project>
