@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Models", "tests\Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Benchmarks", "benchmarks\Arborescence.Traversal.Benchmarks\Arborescence.Traversal.Benchmarks.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Traversal", "benchmarks\Benchmarks.Traversal\Benchmarks.Traversal.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives.Specialized", "src\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
