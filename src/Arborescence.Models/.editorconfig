@@ -1,8 +1,2 @@
 [Arborescence.Models.csproj]
 ij_formatter_enabled = false
-
-[*Builder.cs]
-dotnet_diagnostic.CA1034.severity = silent # Nested types should not be visible
-
-[Int32AdditiveMonoid.cs]
-dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types

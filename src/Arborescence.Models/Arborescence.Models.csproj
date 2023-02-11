@@ -1,40 +1,38 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Description>Data structures for graphs and some specialized collections.
-Commonly used types:
-• IndexedIncidenceGraph
-• SimpleIncidenceGraph
-• IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
+    <Description>Data structures for the concepts of graphs and implementation of the policies.
+      Commonly used types:
+      • AdditiveMonoid&lt;T&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>graph;model;adjacency</PackageTags>
-    <Title>Graph models</Title>
+    <PackageTags>graph;model;adjacency;incidence</PackageTags>
+    <Title>Generic graph models</Title>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
+
   <PropertyGroup>
-    <AssemblyVersion>0.15</AssemblyVersion>
+    <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
+    <LangVersion Condition="'$(TargetFramework)' == 'net7.0'">11</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
-    <TargetFrameworks>net461;net6.0;net7.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;net7.0;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0'">
-    <LangVersion>11</LangVersion>
-  </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Buffers" />
-    <PackageReference Include="System.Memory" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
-    <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
+
   <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+
 </Project>

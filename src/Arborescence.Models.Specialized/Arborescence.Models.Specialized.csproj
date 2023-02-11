@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Data structures for graphs and some specialized collections.
+Commonly used types:
+• IndexedIncidenceGraph
+• SimpleIncidenceGraph
+• IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>graph;model;adjacency;incidence</PackageTags>
+    <Title>Specialized graph models</Title>
+    <VersionSuffix>preview</VersionSuffix>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyVersion>0.16</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
+    <RootNamespace>Arborescence.Models</RootNamespace>
+    <TargetFrameworks>net461;net6.0;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Buffers" />
+    <PackageReference Include="System.Memory" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+
+</Project>

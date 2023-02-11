@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Abstractions", "src\Arborescence.Abstractions\Arborescence.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Models", "src\Arborescence.Models\Arborescence.Models.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Models.Specialized", "src\Arborescence.Models.Specialized\Arborescence.Models.Specialized.csproj", "{CB3DEAAD-9869-45C9-82D5-7D5EE7AD5CEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB074B2E-C4E5-49C4-AA6C-9F1EBC5ED673}"
 	ProjectSection(SolutionItems) = preProject
@@ -77,6 +77,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ValueStack", "src\Shared\ValueStack\ValueStack.shproj", "{BC717D2A-3DF6-47C1-A6F0-9F50E0B7A3FD}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ValueQueue", "src\Shared\ValueQueue\ValueQueue.shproj", "{62295764-8938-468F-BAC1-BB57604E6124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Models", "src\Arborescence.Models\Arborescence.Models.csproj", "{2E33B2C9-0912-493C-A702-3F7AB61DA44C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -166,6 +168,10 @@ Global
 		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AEA02A1-D748-4C85-B101-3158DCD344CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E33B2C9-0912-493C-A702-3F7AB61DA44C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E33B2C9-0912-493C-A702-3F7AB61DA44C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E33B2C9-0912-493C-A702-3F7AB61DA44C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E33B2C9-0912-493C-A702-3F7AB61DA44C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,6 +203,7 @@ Global
 		{1AEA02A1-D748-4C85-B101-3158DCD344CA} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{BC717D2A-3DF6-47C1-A6F0-9F50E0B7A3FD} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{62295764-8938-468F-BAC1-BB57604E6124} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
+		{2E33B2C9-0912-493C-A702-3F7AB61DA44C} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

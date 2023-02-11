@@ -12,7 +12,7 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Models.Specialized\Arborescence.Models.Specialized.csproj" />
     <ProjectReference Include="..\..\tools\Tools.Workbench\Tools.Workbench.csproj" />
   </ItemGroup>
   <Import Project="..\Shared\TestHelpers\TestHelpers.projitems" Label="Shared" />

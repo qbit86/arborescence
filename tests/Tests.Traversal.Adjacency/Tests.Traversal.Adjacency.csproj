@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Models.Specialized\Arborescence.Models.Specialized.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
     <ProjectReference Include="..\..\tools\Tools.Workbench\Tools.Workbench.csproj" />
   </ItemGroup>
