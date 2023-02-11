@@ -38,10 +38,17 @@
         private IEnumerator<TVertex> EnumerateNeighborsIterator(TVertex vertex)
         {
             TEdgeEnumerator edgeEnumerator = _graph.EnumerateOutEdges(vertex);
-            while (edgeEnumerator.MoveNext())
+            try
             {
-                if (_graph.TryGetHead(edgeEnumerator.Current, out TVertex? neighbor))
-                    yield return neighbor;
+                while (edgeEnumerator.MoveNext())
+                {
+                    if (_graph.TryGetHead(edgeEnumerator.Current, out TVertex? neighbor))
+                        yield return neighbor;
+                }
+            }
+            finally
+            {
+                edgeEnumerator.Dispose();
             }
         }
     }
