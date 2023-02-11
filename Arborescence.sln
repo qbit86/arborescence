@@ -30,9 +30,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EagerDfsDemo", "samples\Arborescence.EagerDfsDemo\Arborescence.EagerDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal.Tests", "tests\Arborescence.Traversal.Tests\Arborescence.Traversal.Tests.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Traversal", "tests\Tests.Traversal\Tests.Traversal.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Models.Tests", "tests\Arborescence.Models.Tests\Arborescence.Models.Tests.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Models", "tests\Tests.Models\Tests.Models.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}"
 EndProject
@@ -62,7 +62,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TestHelpers", "tests\Shared
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IncidenceAdjacencyAdapter", "src\Shared\IncidenceAdjacencyAdapter\IncidenceAdjacencyAdapter.shproj", "{2E38A3D8-3AC0-45BE-BAD3-FF17EC92DD82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.Traversal.Adjacency.Tests", "tests\Arborescence.Traversal.Adjacency.Tests\Arborescence.Traversal.Adjacency.Tests.csproj", "{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Traversal.Adjacency", "tests\Tests.Traversal.Adjacency\Tests.Traversal.Adjacency.csproj", "{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.FlightGraphs", "samples\Arborescence.FlightGraphs\Arborescence.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
 EndProject
