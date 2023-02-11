@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6561325C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EagerDfsDemo", "samples\Arborescence.EagerDfsDemo\Arborescence.EagerDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.EagerDfsDemo", "samples\Samples.EagerDfsDemo\Samples.EagerDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Traversal", "tests\Tests.Traversal\Tests.Traversal.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
@@ -40,13 +40,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Traversal", "ben
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives.Specialized", "src\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Playground", "samples\Arborescence.Playground\Arborescence.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Playground", "samples\Samples.Playground\Samples.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EagerBfsDemo", "samples\Arborescence.EagerBfsDemo\Arborescence.EagerBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.EagerBfsDemo", "samples\Samples.EagerBfsDemo\Samples.EagerBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.EnumerableDfsDemo", "samples\Arborescence.EnumerableDfsDemo\Arborescence.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.EnumerableDfsDemo", "samples\Samples.EnumerableDfsDemo\Samples.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.BasicUsage", "samples\Arborescence.BasicUsage\Arborescence.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.BasicUsage", "samples\Samples.BasicUsage\Samples.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NullableAttributes", "src\Shared\NullableAttributes\NullableAttributes.shproj", "{81A3650F-6933-44B9-B0E8-2FA1BD3F3686}"
 EndProject
@@ -64,7 +64,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IncidenceAdjacencyAdapter",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Traversal.Adjacency", "tests\Tests.Traversal.Adjacency\Tests.Traversal.Adjacency.csproj", "{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arborescence.FlightGraphs", "samples\Arborescence.FlightGraphs\Arborescence.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.FlightGraphs", "samples\Samples.FlightGraphs\Samples.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}"
 EndProject
