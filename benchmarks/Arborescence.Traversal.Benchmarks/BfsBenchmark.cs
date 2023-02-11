@@ -5,7 +5,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models;
-using Traversal;
 using Traversal.Incidence;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 

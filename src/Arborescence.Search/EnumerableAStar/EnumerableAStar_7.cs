@@ -4,10 +4,9 @@ namespace Arborescence.Search
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
-    using Traversal;
 
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/astar_search.html
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AStarHeuristic.html
+    // https://boost.org/doc/libs/1_81_0/libs/graph/doc/astar_search.html
+    // https://boost.org/doc/libs/1_81_0/libs/graph/doc/AStarHeuristic.html
 
     /// <summary>
     /// Implements a heuristic search on a weighted graph for the case where all edge weights are non-negative.
