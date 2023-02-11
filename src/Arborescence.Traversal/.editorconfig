@@ -3,7 +3,6 @@ ij_formatter_enabled = false
 
 [*.cs]
 dotnet_diagnostic.CA1000.severity = silent # Do not declare static members on generic types
-dotnet_diagnostic.CA1815.severity = suggestion # Override equals and operator equals on value types
 resharper_unused_type_parameter_highlighting = hint
 
 [*.MultipleSource.cs]
@@ -12,7 +11,7 @@ resharper_assign_null_to_not_null_attribute_highlighting = hint
 [*fsHandler.cs]
 dotnet_diagnostic.CA1003.severity = suggestion # Use generic event handler instances
 
-[{EagerBfs,EagerDfs,EnumerableBfs,EnumerableDfs,GenericSearch,RecursiveDfs}*.cs]
+[{EagerBfs,EagerDfs,EnumerableBfs,EnumerableDfs,EnumerableGenericSearch,RecursiveDfs}*.cs]
 resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlwaysTrueOrFalse
 
 [{EagerDfs,RecursiveDfs}*.cs]
