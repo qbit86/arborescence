@@ -1,6 +1,3 @@
-[Arborescence.Primitives.csproj]
-ij_formatter_enabled = false
-
 [Color.cs]
 dotnet_diagnostic.CA1028.severity = suggestion # Enum Storage should be Int32
 dotnet_diagnostic.CS1591.severity = suggestion # Missing XML comment for publicly visible type or member

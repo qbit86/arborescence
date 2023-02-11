@@ -1,5 +1,2 @@
-[Arborescence.Models.Specialized.csproj]
-ij_formatter_enabled = false
-
 [*Builder.cs]
 dotnet_diagnostic.CA1034.severity = silent # Nested types should not be visible
