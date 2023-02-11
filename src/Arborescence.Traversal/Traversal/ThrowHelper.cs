@@ -7,8 +7,5 @@ namespace Arborescence.Traversal
     {
         [DoesNotReturn]
         internal static void ThrowArgumentNullException(string argument) => throw new ArgumentNullException(argument);
-
-        [DoesNotReturn]
-        internal static void ThrowNotSupportedException() => throw new NotSupportedException();
     }
 }
