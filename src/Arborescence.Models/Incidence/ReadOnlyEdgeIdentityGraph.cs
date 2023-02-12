@@ -19,6 +19,34 @@ namespace Arborescence.Models.Incidence
         private readonly TEdgesMap _outEdgesByVertex;
         private readonly TEdgeCollectionPolicy _edgeCollectionPolicy;
 
+        private ReadOnlyEdgeIdentityGraph(
+            TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,
+            TEdgeCollectionPolicy edgeCollectionPolicy)
+        {
+            _tailByEdge = tailByEdge;
+            _headByEdge = headByEdge;
+            _outEdgesByVertex = outEdgesByVertex;
+            _edgeCollectionPolicy = edgeCollectionPolicy;
+        }
+
+        public static ReadOnlyEdgeIdentityGraph<
+                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>
+            CreateUnchecked(
+                TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,
+                TEdgeCollectionPolicy edgeCollectionPolicy)
+        {
+            if (tailByEdge is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
+            if (headByEdge is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
+            if (outEdgesByVertex is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
+            if (edgeCollectionPolicy is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(edgeCollectionPolicy));
+
+            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeCollectionPolicy);
+        }
+
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
 
