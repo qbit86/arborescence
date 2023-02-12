@@ -1,9 +1,9 @@
-namespace Arborescence.Models
+namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
-    public readonly struct EdgeIdentityIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
+    public readonly struct EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, List<TEdge>.Enumerator>,
@@ -16,14 +16,14 @@ namespace Arborescence.Models
         private readonly TEndpointMap _headByEdge;
         private readonly TEdgesMap _outEdgesByVertex;
 
-        private EdgeIdentityIncidenceGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
+        private EdgeIdentityGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
         {
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
             _outEdgesByVertex = outEdgesByVertex;
         }
 
-        public static EdgeIdentityIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> CreateUnchecked(
+        public static EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> CreateUnchecked(
             TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
         {
             if (tailByEdge is null)
