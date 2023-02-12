@@ -11,7 +11,6 @@ namespace Arborescence.Models.Incidence
         where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
         where TEdgesMap : IReadOnlyDictionary<TVertex, List<TEdge>>
     {
-        private static readonly List<TEdge> s_empty = new();
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;
         private readonly TEdgesMap _outEdgesByVertex;
@@ -43,9 +42,8 @@ namespace Arborescence.Models.Incidence
             _headByEdge.TryGetValue(edge, out head);
 
         public List<TEdge>.Enumerator EnumerateOutEdges(TVertex vertex) =>
-            _outEdgesByVertex.TryGetValue(vertex, out List<TEdge>? outEdges)
-                ? outEdges.GetEnumerator()
-                : s_empty.GetEnumerator();
+            EdgesMapHelpers<List<TEdge>, List<TEdge>.Enumerator>.EnumerateOutEdges(
+                _outEdgesByVertex, vertex, new ListEnumerablePolicy<TEdge>());
 
         public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)
         {
