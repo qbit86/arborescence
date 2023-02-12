@@ -2,11 +2,14 @@
 namespace Arborescence.Models
 {
     using System;
+    using System.Runtime.CompilerServices;
 
     public struct ArraySegmentEnumerablePolicy<T> : IEnumerablePolicy<ArraySegment<T>, ArraySegment<T>.Enumerator>
     {
-        public ArraySegment<T>.Enumerator GetEnumerator(ArraySegment<T> collection) => collection.GetEnumerator();
+        public ArraySegment<T>.Enumerator GetEnumerator(ArraySegment<T> collection) =>
+            collection.Array is not null ? collection.GetEnumerator() : GetEmptyEnumerator();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ArraySegment<T>.Enumerator GetEmptyEnumerator() => ArraySegment<T>.Empty.GetEnumerator();
     }
 }
