@@ -4,12 +4,12 @@ namespace Arborescence.Models
 
     internal static class EdgesMapHelpers<TEdgeCollection, TEdgeEnumerator>
     {
-        internal static TEdgeEnumerator EnumerateOutEdges<TVertex, TEdgesMap, TEnumerablePolicy>(
-            TEdgesMap outEdgesByVertex, TVertex vertex, TEnumerablePolicy enumerablePolicy = default!)
+        internal static TEdgeEnumerator EnumerateOutEdges<TVertex, TEdgesMap, TEdgeCollectionPolicy>(
+            TEdgesMap outEdgesByVertex, TVertex vertex, TEdgeCollectionPolicy policy = default!)
             where TEdgesMap : IReadOnlyDictionary<TVertex, TEdgeCollection>
-            where TEnumerablePolicy : IEnumerablePolicy<TEdgeCollection, TEdgeEnumerator>
+            where TEdgeCollectionPolicy : IEnumerablePolicy<TEdgeCollection, TEdgeEnumerator>
             => outEdgesByVertex.TryGetValue(vertex, out TEdgeCollection? outEdges)
-                ? enumerablePolicy.GetEnumerator(outEdges)
-                : enumerablePolicy.GetEmptyEnumerator();
+                ? policy.GetEnumerator(outEdges)
+                : policy.GetEmptyEnumerator();
     }
 }
