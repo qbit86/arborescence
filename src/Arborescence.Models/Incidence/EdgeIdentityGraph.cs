@@ -43,7 +43,7 @@ namespace Arborescence.Models.Incidence
 
         public List<TEdge>.Enumerator EnumerateOutEdges(TVertex vertex) =>
             EdgesMapHelpers<List<TEdge>, List<TEdge>.Enumerator>.EnumerateOutEdges(
-                _outEdgesByVertex, vertex, new ListEnumerablePolicy<TEdge>());
+                _outEdgesByVertex, vertex, default(ListEnumerablePolicy<TEdge>));
 
         public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)
         {
