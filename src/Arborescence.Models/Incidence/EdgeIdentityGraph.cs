@@ -2,14 +2,15 @@ namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using Models;
 
     public readonly struct EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, List<TEdge>.Enumerator>,
         IAdjacency<TVertex, IEnumerator<TVertex>>
-        where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-        where TEdgesMap : IReadOnlyDictionary<TVertex, List<TEdge>>
+        where TEndpointMap : IDictionary<TEdge, TVertex>
+        where TEdgesMap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
     {
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;
@@ -54,5 +55,30 @@ namespace Arborescence.Models.Incidence
                     yield return neighbor;
             }
         }
+
+        public bool TryAdd(TEdge edge, TVertex tail, TVertex head)
+        {
+            if (!_tailByEdge.TryAdd(edge, tail))
+                return false;
+
+            if (TryGetValue(_outEdgesByVertex, tail, out List<TEdge>? outEdges))
+            {
+                outEdges.Add(edge);
+            }
+            else
+            {
+                outEdges = new(1) { edge };
+                _outEdgesByVertex.Add(tail, outEdges);
+            }
+
+            // ReSharper disable once PossibleStructMemberModificationOfNonVariableStruct
+            _headByEdge[edge] = head;
+            return true;
+        }
+
+        private static bool TryGetValue<TDictionary>(
+            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TEdge>? value)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> =>
+            dictionary.TryGetValue(vertex, out value);
     }
 }
