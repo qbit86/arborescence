@@ -8,7 +8,7 @@ namespace Arborescence.Models.Adjacency
         TVertex, TVerticesMap, TVertexCollection, TVertexEnumerator, TVertexCollectionPolicy> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
-        IOutEdgesIncidence<TVertex, IEnumerator<Endpoints<TVertex>>>,
+        IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, TVertexEnumerator>>,
         IAdjacency<TVertex, TVertexEnumerator>
         where TVerticesMap : IReadOnlyDictionary<TVertex, TVertexCollection>
         where TVertexEnumerator : IEnumerator<TVertex>
@@ -29,11 +29,10 @@ namespace Arborescence.Models.Adjacency
         public bool TryGetHead(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex head) =>
             Some(edge.Head, out head);
 
-        public IEnumerator<Endpoints<TVertex>> EnumerateOutEdges(TVertex vertex)
+        public IncidenceEnumerator<TVertex, TVertexEnumerator> EnumerateOutEdges(TVertex vertex)
         {
-            TVertexEnumerator vertexEnumerator = EnumerateNeighbors(vertex);
-            while (vertexEnumerator.MoveNext())
-                yield return new(vertex, vertexEnumerator.Current);
+            TVertexEnumerator neighborEnumerator = EnumerateNeighbors(vertex);
+            return new(vertex, neighborEnumerator);
         }
 
         public TVertexEnumerator EnumerateNeighbors(TVertex vertex) =>
