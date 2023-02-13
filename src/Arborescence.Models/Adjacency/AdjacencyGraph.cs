@@ -30,5 +30,23 @@ namespace Arborescence.Models.Adjacency
         public List<TVertex>.Enumerator EnumerateNeighbors(TVertex vertex) =>
             MultimapHelpers<List<TVertex>, List<TVertex>.Enumerator>.Enumerate(
                 _neighborsByVertex, vertex, default(ListEnumerablePolicy<TVertex>));
+
+        public void Add(TVertex tail, TVertex head)
+        {
+            if (TryGetValue(_neighborsByVertex, tail, out List<TVertex>? neighbors))
+            {
+                neighbors.Add(head);
+            }
+            else
+            {
+                neighbors = new(1) { head };
+                _neighborsByVertex.Add(tail, neighbors);
+            }
+        }
+
+        private static bool TryGetValue<TDictionary>(
+            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TVertex>? value)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
+            dictionary.TryGetValue(vertex, out value);
     }
 }
