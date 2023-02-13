@@ -19,7 +19,7 @@ namespace Arborescence.Models.Incidence
         private readonly TEdgesMap _outEdgesByVertex;
         private readonly TEdgeCollectionPolicy _edgeCollectionPolicy;
 
-        private ReadOnlyEdgeIdentityGraph(
+        internal ReadOnlyEdgeIdentityGraph(
             TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,
             TEdgeCollectionPolicy edgeCollectionPolicy)
         {
