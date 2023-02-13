@@ -29,24 +29,6 @@ namespace Arborescence.Models.Incidence
             _edgeCollectionPolicy = edgeCollectionPolicy;
         }
 
-        public static ReadOnlyEdgeIdentityGraph<
-                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>
-            CreateUnchecked(
-                TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,
-                TEdgeCollectionPolicy edgeCollectionPolicy)
-        {
-            if (tailByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
-            if (headByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
-            if (outEdgesByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
-            if (edgeCollectionPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeCollectionPolicy));
-
-            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeCollectionPolicy);
-        }
-
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
 
