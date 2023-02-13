@@ -32,5 +32,24 @@ namespace Arborescence.Models.Incidence
             while (edgeEnumerator.MoveNext())
                 yield return edgeEnumerator.Current.Head;
         }
+
+        public void Add(TVertex tail, TVertex head)
+        {
+            Endpoints<TVertex> edge = new(tail, head);
+            if (TryGetValue(_outEdgesByVertex, tail, out List<Endpoints<TVertex>>? outEdges))
+            {
+                outEdges.Add(edge);
+            }
+            else
+            {
+                outEdges = new(1) { edge };
+                _outEdgesByVertex.Add(tail, outEdges);
+            }
+        }
+
+        private static bool TryGetValue<TDictionary>(
+            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<Endpoints<TVertex>>? value)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<Endpoints<TVertex>>> =>
+            dictionary.TryGetValue(vertex, out value);
     }
 }
