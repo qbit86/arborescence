@@ -36,8 +36,7 @@ namespace Arborescence.Models.Adjacency
         }
 
         public TVertexEnumerator EnumerateNeighbors(TVertex vertex) =>
-            _neighborsByVertex.TryGetValue(vertex, out TVertexCollection? neighbors)
-                ? _vertexCollectionPolicy.GetEnumerator(neighbors)
-                : _vertexCollectionPolicy.GetEmptyEnumerator();
+            MultimapHelpers<TVertexCollection, TVertexEnumerator>.Enumerate(
+                _neighborsByVertex, vertex, _vertexCollectionPolicy);
     }
 }
