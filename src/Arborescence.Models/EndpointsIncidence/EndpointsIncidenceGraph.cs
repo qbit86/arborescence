@@ -23,7 +23,7 @@ namespace Arborescence.Models.Incidence
             Some(edge.Head, out head);
 
         public List<Endpoints<TVertex>>.Enumerator EnumerateOutEdges(TVertex vertex) =>
-            EdgesMapHelpers<List<Endpoints<TVertex>>, List<Endpoints<TVertex>>.Enumerator>.EnumerateOutEdges(
+            MultimapHelpers<List<Endpoints<TVertex>>, List<Endpoints<TVertex>>.Enumerator>.Enumerate(
                 _outEdgesByVertex, vertex, default(ListEnumerablePolicy<Endpoints<TVertex>>));
 
         public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)

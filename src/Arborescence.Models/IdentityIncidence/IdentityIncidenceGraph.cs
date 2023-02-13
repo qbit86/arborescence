@@ -29,7 +29,7 @@ namespace Arborescence.Models.Incidence
             _headByEdge.TryGetValue(edge, out head);
 
         public List<TEdge>.Enumerator EnumerateOutEdges(TVertex vertex) =>
-            EdgesMapHelpers<List<TEdge>, List<TEdge>.Enumerator>.EnumerateOutEdges(
+            MultimapHelpers<List<TEdge>, List<TEdge>.Enumerator>.Enumerate(
                 _outEdgesByVertex, vertex, default(ListEnumerablePolicy<TEdge>));
 
         public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)
