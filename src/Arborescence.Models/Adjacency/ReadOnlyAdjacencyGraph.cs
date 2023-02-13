@@ -32,7 +32,7 @@ namespace Arborescence.Models
         public IncidenceEnumerator<TVertex, TVertexEnumerator> EnumerateOutEdges(TVertex vertex)
         {
             TVertexEnumerator neighborEnumerator = EnumerateNeighbors(vertex);
-            return new(vertex, neighborEnumerator);
+            return IncidenceEnumerator.Create(vertex, neighborEnumerator);
         }
 
         public TVertexEnumerator EnumerateNeighbors(TVertex vertex) =>
