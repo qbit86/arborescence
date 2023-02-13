@@ -3,6 +3,22 @@ namespace Arborescence.Models
     using System.Collections;
     using System.Collections.Generic;
 
+    public static class AdjacencyEnumerator<TVertex, TEdge>
+    {
+        public static AdjacencyEnumerator<TVertex, TEdge, TGraph, TEdgeEnumerator> Create<TGraph, TEdgeEnumerator>(
+            TGraph graph, TEdgeEnumerator edgeEnumerator)
+            where TGraph : IHeadIncidence<TVertex, TEdge>
+            where TEdgeEnumerator : IEnumerator<TEdge>
+        {
+            if (graph is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+            if (edgeEnumerator is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(edgeEnumerator));
+
+            return new(graph, edgeEnumerator);
+        }
+    }
+
     public struct AdjacencyEnumerator<TVertex, TEdge, TGraph, TEdgeEnumerator> :
         IEnumerable<TVertex>, IEnumerator<TVertex>
         where TGraph : IHeadIncidence<TVertex, TEdge>
