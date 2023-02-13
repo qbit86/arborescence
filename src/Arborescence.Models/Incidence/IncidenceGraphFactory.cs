@@ -2,11 +2,11 @@ namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
 
-    public static class IdentityIncidenceGraphFactory<TVertex, TEdge>
+    public static class IncidenceGraphFactory<TVertex, TEdge>
         where TVertex : notnull
         where TEdge : notnull
     {
-        public static IdentityIncidenceGraph<
+        public static IncidenceGraph<
                 TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create()
         {
@@ -16,7 +16,7 @@ namespace Arborescence.Models.Incidence
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IdentityIncidenceGraph<
+        public static IncidenceGraph<
                 TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create(IEqualityComparer<TVertex>? vertexComparer, IEqualityComparer<TEdge>? edgeComparer)
         {
@@ -26,7 +26,7 @@ namespace Arborescence.Models.Incidence
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IdentityIncidenceGraph<
+        public static IncidenceGraph<
                 TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             CreateUnchecked(
                 Dictionary<TEdge, TVertex> tailByEdge, Dictionary<TEdge, TVertex> headByEdge,

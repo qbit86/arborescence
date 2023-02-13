@@ -3,7 +3,7 @@ namespace Arborescence.Models.Incidence
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
-    public readonly struct IdentityIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
+    public readonly struct IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, List<TEdge>.Enumerator>,
@@ -15,7 +15,7 @@ namespace Arborescence.Models.Incidence
         private readonly TEndpointMap _headByEdge;
         private readonly TEdgesMap _outEdgesByVertex;
 
-        internal IdentityIncidenceGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
+        internal IncidenceGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
         {
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
