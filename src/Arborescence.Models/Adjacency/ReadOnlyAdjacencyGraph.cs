@@ -1,4 +1,4 @@
-namespace Arborescence.Models.Adjacency
+namespace Arborescence.Models
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;

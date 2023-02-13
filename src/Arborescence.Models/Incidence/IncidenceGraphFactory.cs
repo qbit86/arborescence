@@ -1,4 +1,4 @@
-namespace Arborescence.Models.Incidence
+namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
