@@ -30,9 +30,9 @@ namespace Arborescence
             _neighborEnumerator = neighborEnumerator;
         }
 
-        Endpoints<TVertex> IEnumerator<Endpoints<TVertex>>.Current => new(_vertex, _neighborEnumerator.Current);
+        public Endpoints<TVertex> Current => new(_vertex, _neighborEnumerator.Current);
 
-        public object Current => Endpoints.Create(_vertex, _neighborEnumerator.Current);
+        object IEnumerator.Current => Endpoints.Create(_vertex, _neighborEnumerator.Current);
 
         public void Dispose() => _neighborEnumerator.Dispose();
 
