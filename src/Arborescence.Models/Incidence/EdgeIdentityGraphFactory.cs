@@ -35,6 +35,7 @@ namespace Arborescence.Models.Incidence
                 ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
             if (outEdgesByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
+
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
     }
