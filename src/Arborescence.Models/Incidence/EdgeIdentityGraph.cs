@@ -2,7 +2,6 @@ namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Models;
 
     public readonly struct EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
         ITailIncidence<TVertex, TEdge>,
@@ -16,7 +15,7 @@ namespace Arborescence.Models.Incidence
         private readonly TEndpointMap _headByEdge;
         private readonly TEdgesMap _outEdgesByVertex;
 
-        private EdgeIdentityGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
+        internal EdgeIdentityGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
         {
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
@@ -58,7 +57,7 @@ namespace Arborescence.Models.Incidence
 
         public bool TryAdd(TEdge edge, TVertex tail, TVertex head)
         {
-            if (!_tailByEdge.TryAdd(edge, tail))
+            if (!DictionaryExtensions.TryAdd(_tailByEdge, edge, tail))
                 return false;
 
             if (TryGetValue(_outEdgesByVertex, tail, out List<TEdge>? outEdges))
