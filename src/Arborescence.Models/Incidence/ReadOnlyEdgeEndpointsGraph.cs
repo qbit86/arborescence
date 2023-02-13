@@ -2,6 +2,7 @@ namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using static TryHelpers;
 
     public readonly struct ReadOnlyEdgeEndpointsGraph<
         TVertex, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy> :
@@ -16,20 +17,27 @@ namespace Arborescence.Models.Incidence
         private readonly TEdgesMap _outEdgesByVertex;
         private readonly TEdgeCollectionPolicy _edgeCollectionPolicy;
 
-        private ReadOnlyEdgeEndpointsGraph(TEdgesMap outEdgesByVertex, TEdgeCollectionPolicy edgeCollectionPolicy)
+        internal ReadOnlyEdgeEndpointsGraph(TEdgesMap outEdgesByVertex, TEdgeCollectionPolicy edgeCollectionPolicy)
         {
             _outEdgesByVertex = outEdgesByVertex;
             _edgeCollectionPolicy = edgeCollectionPolicy;
         }
 
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
-            throw new System.NotImplementedException();
+            Some(edge.Tail, out tail);
 
         public bool TryGetHead(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex head) =>
-            throw new System.NotImplementedException();
+            Some(edge.Head, out head);
 
-        public TEdgeEnumerator EnumerateOutEdges(TVertex vertex) => throw new System.NotImplementedException();
+        public TEdgeEnumerator EnumerateOutEdges(TVertex vertex) =>
+            EdgesMapHelpers<TEdgeCollection, TEdgeEnumerator>.EnumerateOutEdges(
+                _outEdgesByVertex, vertex, _edgeCollectionPolicy);
 
-        public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex) => throw new System.NotImplementedException();
+        public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)
+        {
+            TEdgeEnumerator edgeEnumerator = EnumerateOutEdges(vertex);
+            while (edgeEnumerator.MoveNext())
+                yield return edgeEnumerator.Current.Head;
+        }
     }
 }
