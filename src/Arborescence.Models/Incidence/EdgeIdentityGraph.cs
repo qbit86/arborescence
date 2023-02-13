@@ -1,6 +1,7 @@
 namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
 
     public readonly struct EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
@@ -17,22 +18,13 @@ namespace Arborescence.Models.Incidence
 
         internal EdgeIdentityGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
         {
+            Debug.Assert(tailByEdge is not null);
+            Debug.Assert(headByEdge is not null);
+            Debug.Assert(outEdgesByVertex is not null);
+
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
             _outEdgesByVertex = outEdgesByVertex;
-        }
-
-        public static EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> CreateUnchecked(
-            TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
-        {
-            if (tailByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
-            if (headByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
-            if (outEdgesByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
-
-            return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>

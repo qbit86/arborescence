@@ -23,5 +23,19 @@ namespace Arborescence.Models.Incidence
             Dictionary<TVertex, List<TEdge>> outEdgesByVertex = new(vertexComparer);
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
+
+        public static EdgeIdentityGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+            CreateUnchecked(
+                Dictionary<TEdge, TVertex> tailByEdge, Dictionary<TEdge, TVertex> headByEdge,
+                Dictionary<TVertex, List<TEdge>> outEdgesByVertex)
+        {
+            if (tailByEdge is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
+            if (headByEdge is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
+            if (outEdgesByVertex is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
+            return new(tailByEdge, headByEdge, outEdgesByVertex);
+        }
     }
 }
