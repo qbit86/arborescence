@@ -21,8 +21,11 @@ namespace Arborescence.Models.Adjacency
         public bool TryGetHead(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex head) =>
             Some(edge.Head, out head);
 
-        public IncidenceEnumerator<TVertex, List<TVertex>.Enumerator> EnumerateOutEdges(TVertex vertex) =>
-            throw new System.NotImplementedException();
+        public IncidenceEnumerator<TVertex, List<TVertex>.Enumerator> EnumerateOutEdges(TVertex vertex)
+        {
+            List<TVertex>.Enumerator neighborEnumerator = EnumerateNeighbors(vertex);
+            return new(vertex, neighborEnumerator);
+        }
 
         public List<TVertex>.Enumerator EnumerateNeighbors(TVertex vertex) =>
             MultimapHelpers<List<TVertex>, List<TVertex>.Enumerator>.Enumerate(
