@@ -7,7 +7,7 @@ namespace Arborescence.Models.Adjacency
     {
         public static ReadOnlyAdjacencyGraph<
                 TVertex, TVerticesMap, TVertexCollection, TVertexEnumerator, TVertexCollectionPolicy>
-            CreateUnchecked<TVerticesMap, TVertexCollectionPolicy>(
+            Create<TVerticesMap, TVertexCollectionPolicy>(
                 TVerticesMap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
             where TVerticesMap : IReadOnlyDictionary<TVertex, TVertexCollection>
             where TVertexCollectionPolicy : IEnumerablePolicy<TVertexCollection, TVertexEnumerator>
