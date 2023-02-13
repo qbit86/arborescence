@@ -14,5 +14,14 @@ namespace Arborescence.Models.Incidence
             Dictionary<TVertex, List<TEdge>> outEdgesByVertex = new();
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
+
+        public static EdgeIdentityGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+            Create(IEqualityComparer<TVertex>? vertexComparer, IEqualityComparer<TEdge>? edgeComparer)
+        {
+            Dictionary<TEdge, TVertex> tailByEdge = new(edgeComparer);
+            Dictionary<TEdge, TVertex> headByEdge = new(edgeComparer);
+            Dictionary<TVertex, List<TEdge>> outEdgesByVertex = new(vertexComparer);
+            return new(tailByEdge, headByEdge, outEdgesByVertex);
+        }
     }
 }
