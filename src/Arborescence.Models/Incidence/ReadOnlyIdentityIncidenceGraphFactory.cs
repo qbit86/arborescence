@@ -2,10 +2,10 @@ namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
 
-    public static class ReadOnlyEdgeIdentityGraphFactory<TVertex, TEdge, TEdgeCollection, TEdgeEnumerator>
+    public static class ReadOnlyIdentityIncidenceGraphFactory<TVertex, TEdge, TEdgeCollection, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-        public static ReadOnlyEdgeIdentityGraph<
+        public static ReadOnlyIdentityIncidenceGraph<
                 TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>
             CreateUnchecked<TEndpointMap, TEdgesMap, TEdgeCollectionPolicy>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,

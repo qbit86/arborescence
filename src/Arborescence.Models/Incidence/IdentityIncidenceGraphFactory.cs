@@ -2,11 +2,12 @@ namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
 
-    public static class EdgeIdentityGraphFactory<TVertex, TEdge>
+    public static class IdentityIncidenceGraphFactory<TVertex, TEdge>
         where TVertex : notnull
         where TEdge : notnull
     {
-        public static EdgeIdentityGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static IdentityIncidenceGraph<
+                TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create()
         {
             Dictionary<TEdge, TVertex> tailByEdge = new();
@@ -15,7 +16,8 @@ namespace Arborescence.Models.Incidence
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static EdgeIdentityGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static IdentityIncidenceGraph<
+                TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create(IEqualityComparer<TVertex>? vertexComparer, IEqualityComparer<TEdge>? edgeComparer)
         {
             Dictionary<TEdge, TVertex> tailByEdge = new(edgeComparer);
@@ -24,7 +26,8 @@ namespace Arborescence.Models.Incidence
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static EdgeIdentityGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static IdentityIncidenceGraph<
+                TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             CreateUnchecked(
                 Dictionary<TEdge, TVertex> tailByEdge, Dictionary<TEdge, TVertex> headByEdge,
                 Dictionary<TVertex, List<TEdge>> outEdgesByVertex)

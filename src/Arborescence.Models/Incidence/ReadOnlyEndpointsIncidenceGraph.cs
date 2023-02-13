@@ -4,7 +4,7 @@ namespace Arborescence.Models.Incidence
     using System.Diagnostics.CodeAnalysis;
     using static TryHelpers;
 
-    public readonly struct ReadOnlyEdgeEndpointsGraph<
+    public readonly struct ReadOnlyEndpointsIncidenceGraph<
         TVertex, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
@@ -17,7 +17,7 @@ namespace Arborescence.Models.Incidence
         private readonly TEdgesMap _outEdgesByVertex;
         private readonly TEdgeCollectionPolicy _edgeCollectionPolicy;
 
-        internal ReadOnlyEdgeEndpointsGraph(TEdgesMap outEdgesByVertex, TEdgeCollectionPolicy edgeCollectionPolicy)
+        internal ReadOnlyEndpointsIncidenceGraph(TEdgesMap outEdgesByVertex, TEdgeCollectionPolicy edgeCollectionPolicy)
         {
             _outEdgesByVertex = outEdgesByVertex;
             _edgeCollectionPolicy = edgeCollectionPolicy;
