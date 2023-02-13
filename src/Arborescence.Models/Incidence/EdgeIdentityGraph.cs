@@ -1,7 +1,6 @@
 namespace Arborescence.Models.Incidence
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
 
     public readonly struct EdgeIdentityGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> :
@@ -18,10 +17,6 @@ namespace Arborescence.Models.Incidence
 
         internal EdgeIdentityGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
         {
-            Debug.Assert(tailByEdge is not null);
-            Debug.Assert(headByEdge is not null);
-            Debug.Assert(outEdgesByVertex is not null);
-
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
             _outEdgesByVertex = outEdgesByVertex;
