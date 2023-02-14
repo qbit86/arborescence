@@ -6,8 +6,7 @@ namespace Arborescence.Models
         where TVertex : notnull
         where TEdge : notnull
     {
-        public static IncidenceGraph<
-                TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static IncidenceGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create()
         {
             Dictionary<TEdge, TVertex> tailByEdge = new();
@@ -16,8 +15,7 @@ namespace Arborescence.Models
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IncidenceGraph<
-                TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static IncidenceGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create(IEqualityComparer<TVertex>? vertexComparer, IEqualityComparer<TEdge>? edgeComparer)
         {
             Dictionary<TEdge, TVertex> tailByEdge = new(edgeComparer);
@@ -26,11 +24,10 @@ namespace Arborescence.Models
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IncidenceGraph<
-                TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
-            CreateUnchecked(
-                Dictionary<TEdge, TVertex> tailByEdge, Dictionary<TEdge, TVertex> headByEdge,
-                Dictionary<TVertex, List<TEdge>> outEdgesByVertex)
+        public static IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> CreateUnchecked<TEndpointMap, TEdgesMap>(
+            TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
+            where TEndpointMap : IDictionary<TEdge, TVertex>, IReadOnlyDictionary<TEdge, TVertex>
+            where TEdgesMap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
