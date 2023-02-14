@@ -7,7 +7,9 @@ namespace Arborescence.Models
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, List<TEdge>.Enumerator>,
-        IAdjacency<TVertex, IEnumerator<TVertex>>
+        IAdjacency<TVertex,
+            AdjacencyEnumerator<TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap>,
+                List<TEdge>.Enumerator>>
         where TEndpointMap : IDictionary<TEdge, TVertex>
         where TEdgesMap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
     {
@@ -32,19 +34,17 @@ namespace Arborescence.Models
             MultimapHelpers<List<TEdge>, List<TEdge>.Enumerator>.Enumerate(
                 _outEdgesByVertex, vertex, default(ListEnumerablePolicy<TEdge>));
 
-        public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)
+        public AdjacencyEnumerator<
+                TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap>, List<TEdge>.Enumerator>
+            EnumerateNeighbors(TVertex vertex)
         {
             List<TEdge>.Enumerator edgeEnumerator = EnumerateOutEdges(vertex);
-            while (edgeEnumerator.MoveNext())
-            {
-                if (TryGetHead(edgeEnumerator.Current, out TVertex? neighbor))
-                    yield return neighbor;
-            }
+            return AdjacencyEnumerator<TVertex, TEdge>.Create(this, edgeEnumerator);
         }
 
         public bool TryAdd(TEdge edge, TVertex tail, TVertex head)
         {
-            if (!DictionaryExtensions.TryAdd(_tailByEdge, edge, tail))
+            if (!_tailByEdge.TryAdd(edge, tail))
                 return false;
 
             if (TryGetValue(_outEdgesByVertex, tail, out List<TEdge>? outEdges))
