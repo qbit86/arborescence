@@ -149,7 +149,7 @@ namespace Arborescence.Traversal.Adjacency
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(current));
 #endif
-                TNeighborEnumerator neighbors = graph.EnumerateNeighbors(current);
+                TNeighborEnumerator neighbors = graph.EnumerateOutNeighbors(current);
                 try
                 {
                     while (neighbors.MoveNext())

@@ -104,7 +104,7 @@ namespace Arborescence.Traversal.Adjacency
             var stack = new ValueStack<StackFrame>();
             try
             {
-                stack.Add(new(source, graph.EnumerateNeighbors(source)));
+                stack.Add(new(source, graph.EnumerateOutNeighbors(source)));
 
                 while (stack.TryTake(out StackFrame stackFrame))
                 {
@@ -122,7 +122,7 @@ namespace Arborescence.Traversal.Adjacency
 
                     yield return new(current, neighbor);
                     exploredSet.Add(neighbor);
-                    stack.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
+                    stack.Add(new(neighbor, graph.EnumerateOutNeighbors(neighbor)));
                 }
             }
             finally

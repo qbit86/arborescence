@@ -5,7 +5,7 @@ using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
 var adjacencyGraph = FlightAdjacencyGraph.Create();
 NeighborEnumerator istanbulNeighborEnumerator =
-    adjacencyGraph.EnumerateNeighbors("IST");
+    adjacencyGraph.EnumerateOutNeighbors("IST");
 while (istanbulNeighborEnumerator.MoveNext())
     Console.WriteLine(istanbulNeighborEnumerator.Current);
 

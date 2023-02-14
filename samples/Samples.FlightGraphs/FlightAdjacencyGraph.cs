@@ -13,7 +13,7 @@ public sealed class FlightAdjacencyGraph :
         Dictionary<string, string[]> neighborsByAirport) =>
         _neighborsByAirport = neighborsByAirport;
 
-    public NeighborEnumerator EnumerateNeighbors(string vertex) =>
+    public NeighborEnumerator EnumerateOutNeighbors(string vertex) =>
         _neighborsByAirport.TryGetValue(vertex, out string[]? neighbors)
             ? new ArraySegment<string>(neighbors).GetEnumerator()
             : ArraySegment<string>.Empty.GetEnumerator();

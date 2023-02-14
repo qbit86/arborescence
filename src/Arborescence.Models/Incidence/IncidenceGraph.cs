@@ -36,7 +36,7 @@ namespace Arborescence.Models
 
         public AdjacencyEnumerator<
                 TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap>, List<TEdge>.Enumerator>
-            EnumerateNeighbors(TVertex vertex)
+            EnumerateOutNeighbors(TVertex vertex)
         {
             List<TEdge>.Enumerator edgeEnumerator = EnumerateOutEdges(vertex);
             return AdjacencyEnumerator<TVertex, TEdge>.Create(this, edgeEnumerator);

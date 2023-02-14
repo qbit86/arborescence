@@ -11,7 +11,7 @@ The most important ones are:
 ```csharp
 IAdjacency<TVertex, TVertices>
 {
-    TVertices EnumerateNeighbors(TVertex vertex);
+    TVertices EnumerateOutNeighbors(TVertex vertex);
 }
 
 IHeadIncidence<TVertex, TEdge>
@@ -126,7 +126,7 @@ public sealed class FlightAdjacencyGraph :
         Dictionary<string, string[]> neighborsByAirport) =>
         _neighborsByAirport = neighborsByAirport;
 
-    public NeighborEnumerator EnumerateNeighbors(string vertex) =>
+    public NeighborEnumerator EnumerateOutNeighbors(string vertex) =>
         _neighborsByAirport.TryGetValue(vertex, out string[]? neighbors)
             ? new ArraySegment<string>(neighbors).GetEnumerator()
             : ArraySegment<string>.Empty.GetEnumerator();
@@ -149,7 +149,7 @@ Where can we fly from Istanbul?
 ```csharp
 var adjacencyGraph = FlightAdjacencyGraph.Create();
 NeighborEnumerator istanbulNeighborEnumerator =
-    adjacencyGraph.EnumerateNeighbors("IST");
+    adjacencyGraph.EnumerateOutNeighbors("IST");
 while (istanbulNeighborEnumerator.MoveNext())
     Console.WriteLine(istanbulNeighborEnumerator.Current);
 ```

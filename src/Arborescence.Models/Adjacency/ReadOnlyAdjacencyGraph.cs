@@ -31,11 +31,11 @@ namespace Arborescence.Models
 
         public IncidenceEnumerator<TVertex, TVertexEnumerator> EnumerateOutEdges(TVertex vertex)
         {
-            TVertexEnumerator neighborEnumerator = EnumerateNeighbors(vertex);
+            TVertexEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
             return IncidenceEnumerator.Create(vertex, neighborEnumerator);
         }
 
-        public TVertexEnumerator EnumerateNeighbors(TVertex vertex) =>
+        public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex) =>
             MultimapHelpers<TVertexCollection, TVertexEnumerator>.Enumerate(
                 _neighborsByVertex, vertex, _vertexCollectionPolicy);
     }

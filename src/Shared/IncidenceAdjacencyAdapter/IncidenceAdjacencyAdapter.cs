@@ -25,7 +25,7 @@
         public IncidenceAdjacencyAdapter(TGraph graph) =>
             _graph = graph ?? throw new ArgumentNullException(nameof(graph));
 
-        public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex) => EnumerateNeighborsIterator(vertex);
+        public IEnumerator<TVertex> EnumerateOutNeighbors(TVertex vertex) => EnumerateNeighborsIterator(vertex);
 
         public bool TryGetHead(TEdge edge, [MaybeNullWhen(false)] out TVertex head) =>
             _graph.TryGetHead(edge, out head);
