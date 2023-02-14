@@ -8,7 +8,11 @@ namespace Arborescence.Models
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, TEdgeEnumerator>,
-        IAdjacency<TVertex, IEnumerator<TVertex>>
+        IAdjacency<TVertex, AdjacencyEnumerator<
+            TVertex, TEdge,
+            ReadOnlyIncidenceGraph<
+                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>,
+            TEdgeEnumerator>>
         where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
         where TEdgesMap : IReadOnlyDictionary<TVertex, TEdgeCollection>
         where TEdgeEnumerator : IEnumerator<TEdge>
@@ -39,14 +43,13 @@ namespace Arborescence.Models
             MultimapHelpers<TEdgeCollection, TEdgeEnumerator>.Enumerate(
                 _outEdgesByVertex, vertex, _edgeCollectionPolicy);
 
-        public IEnumerator<TVertex> EnumerateNeighbors(TVertex vertex)
+        public AdjacencyEnumerator<TVertex, TEdge,
+            ReadOnlyIncidenceGraph<
+                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>,
+            TEdgeEnumerator> EnumerateNeighbors(TVertex vertex)
         {
             TEdgeEnumerator edgeEnumerator = EnumerateOutEdges(vertex);
-            while (edgeEnumerator.MoveNext())
-            {
-                if (TryGetHead(edgeEnumerator.Current, out TVertex? neighbor))
-                    yield return neighbor;
-            }
+            return AdjacencyEnumerator<TVertex, TEdge>.Create(this, edgeEnumerator);
         }
     }
 }
