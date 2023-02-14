@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.EagerDfsDemo", "sam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Traversal", "tests\Tests.Traversal\Tests.Traversal.csproj", "{FCC994D6-1FAE-469F-9C1E-9712D46B9EA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Models", "tests\Tests.Models\Tests.Models.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Models.Specialized", "tests\Tests.Models.Specialized\Tests.Models.Specialized.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}"
 EndProject
