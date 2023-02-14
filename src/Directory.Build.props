@@ -24,6 +24,7 @@
     <IsPackable>true</IsPackable>
     <IsTrimmable>true</IsTrimmable>
     <LangVersion>9</LangVersion>
+    <NoWarn Condition="'$(Configuration)' == 'Debug'">$(NoWarn);CS1591</NoWarn>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
