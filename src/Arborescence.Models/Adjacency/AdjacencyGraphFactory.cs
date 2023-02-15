@@ -18,8 +18,9 @@ namespace Arborescence.Models
             return new(neighborsByVertex);
         }
 
-        public static AdjacencyGraph<TVertex, TVerticesMap> Create<TVerticesMap>(TVerticesMap neighborsByVertex)
-            where TVerticesMap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
+        public static AdjacencyGraph<TVertex, TVertexMultimap> Create<TVertexMultimap>(
+            TVertexMultimap neighborsByVertex)
+            where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
         {
             if (neighborsByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));

@@ -4,16 +4,16 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using static TryHelpers;
 
-    public readonly struct AdjacencyGraph<TVertex, TVerticesMap> :
+    public readonly struct AdjacencyGraph<TVertex, TVertexMultimap> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, List<TVertex>.Enumerator>>,
         IAdjacency<TVertex, List<TVertex>.Enumerator>
-        where TVerticesMap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
+        where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
-        private readonly TVerticesMap _neighborsByVertex;
+        private readonly TVertexMultimap _neighborsByVertex;
 
-        internal AdjacencyGraph(TVerticesMap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
+        internal AdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
 
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);
