@@ -2,13 +2,13 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    internal static class MultimapHelpers<TCollection, TEnumerator>
+    internal static class MultimapHelpers<TValueCollection, TValueEnumerator>
     {
-        internal static TEnumerator Enumerate<TItem, TMultimap, TCollectionPolicy>(
-            TMultimap multimap, TItem key, TCollectionPolicy policy)
-            where TMultimap : IReadOnlyDictionary<TItem, TCollection>
-            where TCollectionPolicy : IEnumerablePolicy<TCollection, TEnumerator> =>
-            multimap.TryGetValue(key, out TCollection? values)
+        internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TCollectionPolicy>(
+            TMultimap multimap, TKey key, TCollectionPolicy policy)
+            where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
+            where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator> =>
+            multimap.TryGetValue(key, out TValueCollection? values)
                 ? policy.GetEnumerator(values)
                 : policy.GetEmptyEnumerator();
     }

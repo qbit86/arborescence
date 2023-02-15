@@ -2,17 +2,16 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public static class ReadOnlyIncidenceGraphFactory<TVertex, TEdge, TEdgeCollection, TEdgeEnumerator>
+    public static class ReadOnlyIncidenceGraphFactory<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         public static ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>
-            CreateUnchecked<TEndpointMap, TEdgesMap, TEdgeCollectionPolicy>(
-                TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,
-                TEdgeCollectionPolicy edgeCollectionPolicy)
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>
+            CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>(
+                TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
+                TEdgeMultimapPolicy edgeMultimapPolicy)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgesMap : IReadOnlyDictionary<TVertex, TEdgeCollection>
-            where TEdgeCollectionPolicy : IEnumerablePolicy<TEdgeCollection, TEdgeEnumerator>
+            where TEdgeMultimapPolicy : IMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
@@ -20,10 +19,10 @@ namespace Arborescence.Models
                 ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
             if (outEdgesByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
-            if (edgeCollectionPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeCollectionPolicy));
+            if (edgeMultimapPolicy is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(edgeMultimapPolicy));
 
-            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeCollectionPolicy);
+            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapPolicy);
         }
     }
 }
