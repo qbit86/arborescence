@@ -24,10 +24,11 @@ namespace Arborescence.Models
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgesMap> CreateUnchecked<TEndpointMap, TEdgesMap>(
-            TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex)
+        public static IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>
+            CreateUnchecked<TEndpointMap, TEdgeMultimap>(
+                TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
             where TEndpointMap : IDictionary<TEdge, TVertex>, IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgesMap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
+            where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
