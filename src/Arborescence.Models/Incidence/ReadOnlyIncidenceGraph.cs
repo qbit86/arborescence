@@ -4,33 +4,31 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
 
     public readonly struct ReadOnlyIncidenceGraph<
-        TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy> :
+        TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, TEdgeEnumerator>,
         IAdjacency<TVertex, AdjacencyEnumerator<
             TVertex, TEdge,
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>,
+            ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>,
             TEdgeEnumerator>>
         where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-        where TEdgesMap : IReadOnlyDictionary<TVertex, TEdgeCollection>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TEdgeCollectionPolicy : IEnumerablePolicy<TEdgeCollection, TEdgeEnumerator>
+        where TEdgeMultimapPolicy : IMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
     {
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;
-        private readonly TEdgesMap _outEdgesByVertex;
-        private readonly TEdgeCollectionPolicy _edgeCollectionPolicy;
+        private readonly TEdgeMultimap _outEdgesByVertex;
+        private readonly TEdgeMultimapPolicy _edgeMultimapPolicy;
 
         internal ReadOnlyIncidenceGraph(
-            TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgesMap outEdgesByVertex,
-            TEdgeCollectionPolicy edgeCollectionPolicy)
+            TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
+            TEdgeMultimapPolicy edgeMultimapPolicy)
         {
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
             _outEdgesByVertex = outEdgesByVertex;
-            _edgeCollectionPolicy = edgeCollectionPolicy;
+            _edgeMultimapPolicy = edgeMultimapPolicy;
         }
 
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
@@ -40,12 +38,10 @@ namespace Arborescence.Models
             _headByEdge.TryGetValue(edge, out head);
 
         public TEdgeEnumerator EnumerateOutEdges(TVertex vertex) =>
-            MultimapHelpers<TEdgeCollection, TEdgeEnumerator>.Enumerate(
-                _outEdgesByVertex, vertex, _edgeCollectionPolicy);
+            _edgeMultimapPolicy.GetEnumerator(_outEdgesByVertex, vertex);
 
         public AdjacencyEnumerator<TVertex, TEdge,
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEndpointMap, TEdgesMap, TEdgeCollection, TEdgeEnumerator, TEdgeCollectionPolicy>,
+            ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>,
             TEdgeEnumerator> EnumerateOutNeighbors(TVertex vertex)
         {
             TEdgeEnumerator edgeEnumerator = EnumerateOutEdges(vertex);
