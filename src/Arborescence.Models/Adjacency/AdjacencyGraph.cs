@@ -11,7 +11,7 @@ namespace Arborescence.Models
         IAdjacency<TVertex, List<TVertex>.Enumerator>
         where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
-        private static readonly ReadOnlyDictionaryMultimapPolicy<
+        private static readonly DictionaryMultimapPolicy<
                 TVertex, List<TVertex>, List<TVertex>.Enumerator, TVertexMultimap, ListEnumerablePolicy<TVertex>>
             s_multimapPolicy = default;
 
