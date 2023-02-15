@@ -4,23 +4,21 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using static TryHelpers;
 
-    public readonly struct ReadOnlyAdjacencyGraph<
-        TVertex, TVerticesMap, TVertexCollection, TVertexEnumerator, TVertexCollectionPolicy> :
+    public readonly struct ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, TVertexEnumerator>>,
         IAdjacency<TVertex, TVertexEnumerator>
-        where TVerticesMap : IReadOnlyDictionary<TVertex, TVertexCollection>
         where TVertexEnumerator : IEnumerator<TVertex>
-        where TVertexCollectionPolicy : IEnumerablePolicy<TVertexCollection, TVertexEnumerator>
+        where TVertexMultimapPolicy : IMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
     {
-        private readonly TVerticesMap _neighborsByVertex;
-        private readonly TVertexCollectionPolicy _vertexCollectionPolicy;
+        private readonly TVertexMultimap _neighborsByVertex;
+        private readonly TVertexMultimapPolicy _vertexMultimapPolicy;
 
-        internal ReadOnlyAdjacencyGraph(TVerticesMap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
+        internal ReadOnlyAdjacencyGraph(TVertexMultimap neighborsByVertex, TVertexMultimapPolicy vertexMultimapPolicy)
         {
             _neighborsByVertex = neighborsByVertex;
-            _vertexCollectionPolicy = vertexCollectionPolicy;
+            _vertexMultimapPolicy = vertexMultimapPolicy;
         }
 
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
@@ -36,7 +34,6 @@ namespace Arborescence.Models
         }
 
         public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex) =>
-            MultimapHelpers<TVertexCollection, TVertexEnumerator>.Enumerate(
-                _neighborsByVertex, vertex, _vertexCollectionPolicy);
+            _vertexMultimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
     }
 }
