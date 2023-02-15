@@ -13,9 +13,7 @@ namespace Arborescence.Models
         where TEndpointMap : IDictionary<TEdge, TVertex>
         where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
     {
-        private static readonly DictionaryMultimapPolicy<
-                TVertex, List<TEdge>, List<TEdge>.Enumerator, TEdgeMultimap, ListEnumerablePolicy<TEdge>>
-            s_multimapPolicy = default;
+        private static readonly ListDictionaryMultimapPolicy<TVertex, TEdge, TEdgeMultimap> s_multimapPolicy = default;
 
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;
