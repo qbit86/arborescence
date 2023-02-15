@@ -11,6 +11,10 @@ namespace Arborescence.Models
         IAdjacency<TVertex, List<TVertex>.Enumerator>
         where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
+        private static readonly ReadOnlyDictionaryMultimapPolicy<
+                TVertex, List<TVertex>, List<TVertex>.Enumerator, TVertexMultimap, ListEnumerablePolicy<TVertex>>
+            s_multimapPolicy = default;
+
         private readonly TVertexMultimap _neighborsByVertex;
 
         internal AdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
@@ -28,8 +32,7 @@ namespace Arborescence.Models
         }
 
         public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
-            MultimapHelpers<List<TVertex>, List<TVertex>.Enumerator>.Enumerate(
-                _neighborsByVertex, vertex, default(ListEnumerablePolicy<TVertex>));
+            s_multimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
 
         public void Add(TVertex tail, TVertex head)
         {
