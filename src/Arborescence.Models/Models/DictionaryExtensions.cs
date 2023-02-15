@@ -4,7 +4,8 @@ namespace Arborescence.Models
 
     internal static class DictionaryExtensions
     {
-        internal static bool TryAdd<TKey, TValue, TDictionary>(this TDictionary dictionary, TKey key, TValue value)
+        internal static bool TryAddStrict<TKey, TValue, TDictionary>(
+            this TDictionary dictionary, TKey key, TValue value)
             where TDictionary : IDictionary<TKey, TValue>
         {
             if (dictionary.ContainsKey(key))

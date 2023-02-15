@@ -45,7 +45,7 @@ namespace Arborescence.Models
 
         public bool TryAdd(TEdge edge, TVertex tail, TVertex head)
         {
-            if (!_tailByEdge.TryAdd(edge, tail))
+            if (!_tailByEdge.TryAddStrict(edge, tail))
                 return false;
 
             if (TryGetValue(_outEdgesByVertex, tail, out List<TEdge>? outEdges))
