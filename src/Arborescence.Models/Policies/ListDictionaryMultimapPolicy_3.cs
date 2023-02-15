@@ -9,8 +9,6 @@ namespace Arborescence.Models
         private static readonly ListEnumerablePolicy<TValue> s_collectionPolicy = default;
 
         public List<TValue>.Enumerator GetEnumerator(TMultimap multimap, TKey key) =>
-            multimap.TryGetValue(key, out List<TValue>? values)
-                ? s_collectionPolicy.GetEnumerator(values)
-                : s_collectionPolicy.GetEmptyEnumerator();
+            MultimapHelpers<List<TValue>, List<TValue>.Enumerator>.GetEnumerator(multimap, key, s_collectionPolicy);
     }
 }

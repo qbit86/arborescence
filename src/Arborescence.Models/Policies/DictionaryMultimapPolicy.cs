@@ -29,8 +29,6 @@ namespace Arborescence.Models
             _collectionPolicy = collectionPolicy;
 
         public TValueEnumerator GetEnumerator(TMultimap multimap, TKey key) =>
-            multimap.TryGetValue(key, out TValueCollection? values)
-                ? _collectionPolicy.GetEnumerator(values)
-                : _collectionPolicy.GetEmptyEnumerator();
+            MultimapHelpers<TValueCollection, TValueEnumerator>.GetEnumerator(multimap, key, _collectionPolicy);
     }
 }
