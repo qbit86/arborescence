@@ -1,4 +1,4 @@
-namespace Arborescence.Models
+namespace Arborescence
 {
     public interface IMultimapPolicy<in TKey, in TMultimap, out TValueEnumerator>
     {
