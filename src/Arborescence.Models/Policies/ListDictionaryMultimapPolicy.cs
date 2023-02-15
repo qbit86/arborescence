@@ -2,13 +2,15 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public readonly struct ListDictionaryMultimapPolicy<T> :
-        IMultimapPolicy<T, Dictionary<T, List<T>>, List<T>.Enumerator>
-        where T : notnull
+    public readonly struct ListDictionaryMultimapPolicy<T, TMultimap> :
+        IMultimapPolicy<T, TMultimap, List<T>.Enumerator>
+        where TMultimap : IReadOnlyDictionary<T, List<T>>
     {
-        public List<T>.Enumerator GetEnumerator(Dictionary<T, List<T>> multimap, T key) =>
+        private static readonly ListEnumerablePolicy<T> s_collectionPolicy = default;
+
+        public List<T>.Enumerator GetEnumerator(TMultimap multimap, T key) =>
             multimap.TryGetValue(key, out List<T>? values)
-                ? values.GetEnumerator()
-                : default(ListEnumerablePolicy<T>).GetEmptyEnumerator();
+                ? s_collectionPolicy.GetEnumerator(values)
+                : s_collectionPolicy.GetEmptyEnumerator();
     }
 }
