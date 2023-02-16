@@ -36,6 +36,7 @@ Commonly used types:
 
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
+    <ProjectReference Include="..\Arborescence.Models\Arborescence.Models.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
   </ItemGroup>
 
