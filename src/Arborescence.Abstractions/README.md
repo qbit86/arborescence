@@ -2,10 +2,10 @@
 
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
 
-This package provides abstractions for graph-related concepts.
-These concepts can be divided into two groups, primary and secondary.
+This package provides graph-related abstractions.
+These interfaces can be divided into three groups: concepts, policies, and utilities.
 
-Primary concepts are direct contracts for algorithms.
+Concepts are direct contracts for algorithms, constraints on their type parameters.
 The most important ones are:
 
 ```csharp
@@ -25,10 +25,9 @@ IOutEdgesIncidence<TVertex, TEdges>
 }
 ```
 
-Worth noticing that `IGraph<TVertex, TEdge>` is not such a primary concept.
-
-Secondary concepts are not used directly in algorithms.
-They just group primary concepts together and may be convenient for users to implement.
+Worth noting that `IGraph<TVertex, TEdge>` is not such a primary abstraction.
+Utility interfaces are not directly used as type constraints in algorithms.
+They just group primary concepts together, and may be convenient for users to implement.
 
 ```csharp
 IGraph<TVertex, TEdge> :
