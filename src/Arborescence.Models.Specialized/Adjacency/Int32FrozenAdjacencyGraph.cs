@@ -2,6 +2,7 @@
 namespace Arborescence.Models.Specialized
 {
     using System;
+    using System.Diagnostics;
     using Edge = Endpoints<int>;
     using VertexEnumerator = System.ArraySegment<int>.Enumerator;
     using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
@@ -13,6 +14,14 @@ namespace Arborescence.Models.Specialized
         IAdjacency<int, VertexEnumerator>,
         IEquatable<Int32FrozenAdjacencyGraph>
     {
+        private readonly int[] _data;
+
+        internal Int32FrozenAdjacencyGraph(int[] data)
+        {
+            Debug.Assert(data is not null, "data is not null");
+            _data = data;
+        }
+
         public bool TryGetHead(Edge edge, out int head) => throw new NotImplementedException();
 
         public bool TryGetTail(Edge edge, out int tail) => throw new NotImplementedException();
