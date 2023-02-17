@@ -8,7 +8,7 @@ namespace Arborescence.Models.Specialized
     using VertexEnumerator = System.ArraySegment<int>.Enumerator;
     using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
 
-    internal readonly partial struct Int32FrozenAdjacencyGraph :
+    public readonly partial struct Int32FrozenAdjacencyGraph :
         IHeadIncidence<int, Edge>,
         ITailIncidence<int, Edge>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
@@ -22,6 +22,18 @@ namespace Arborescence.Models.Specialized
             Debug.Assert(data is not null, "data is not null");
             _data = data;
         }
+
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
+        public int VertexCount => _data is null ? 0 : VertexCountUnchecked;
+
+        private int VertexCountUnchecked => _data[0];
+
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
+        public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
         public bool TryGetHead(Edge edge, out int head) => Some(edge.Head, out head);
 
@@ -38,14 +50,12 @@ namespace Arborescence.Models.Specialized
             if (_data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            Debug.Assert(_data.Length >= 2, "_data.Length >= 2");
-            int vertexCount = _data[0];
+            int vertexCount = VertexCountUnchecked;
             Debug.Assert(vertexCount >= 0, "vertexCount >= 0");
             if (unchecked((uint)vertex >= (uint)vertexCount))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            int edgeCount = _data[1];
-            Debug.Assert(edgeCount >= 0, "edgeCount >= 0");
+            Debug.Assert(_data.Length >= 2, "_data.Length >= 2");
             ReadOnlySpan<int> upperBoundByVertex = _data.AsSpan(2, vertexCount);
             int upperBound = upperBoundByVertex[vertex];
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];

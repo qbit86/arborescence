@@ -3,7 +3,7 @@ namespace Arborescence.Models.Specialized
 {
     using System.Diagnostics.CodeAnalysis;
 
-    internal readonly partial struct Int32FrozenAdjacencyGraph
+    partial struct Int32FrozenAdjacencyGraph
     {
         public bool Equals(Int32FrozenAdjacencyGraph other) => _data == other._data;
 
