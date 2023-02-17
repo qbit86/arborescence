@@ -10,5 +10,7 @@ namespace Arborescence.Models
 
         public List<TValue>.Enumerator GetEnumerator(TMultimap multimap, TKey key) =>
             MultimapHelpers<List<TValue>, List<TValue>.Enumerator>.GetEnumerator(multimap, key, s_collectionPolicy);
+
+        public int GetCount(TMultimap multimap) => multimap.Count;
     }
 }
