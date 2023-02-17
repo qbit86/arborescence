@@ -2,6 +2,7 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
     using static TryHelpers;
 
     public readonly struct ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> :
@@ -21,6 +22,8 @@ namespace Arborescence.Models
             _vertexMultimapPolicy = vertexMultimapPolicy;
         }
 
+        public int VertexCount => _neighborsByVertex is null || _vertexMultimapPolicy is null ? 0 : GetCountUnchecked();
+
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);
 
@@ -35,5 +38,8 @@ namespace Arborescence.Models
 
         public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex) =>
             _vertexMultimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private int GetCountUnchecked() => _vertexMultimapPolicy.GetCount(_neighborsByVertex);
     }
 }
