@@ -2,7 +2,7 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public readonly struct ListDictionaryMultimapPolicy<T, TMultimap> :
+    internal readonly struct ListDictionaryMultimapPolicy<T, TMultimap> :
         IMultimapPolicy<T, TMultimap, List<T>.Enumerator>
         where TMultimap : IReadOnlyDictionary<T, List<T>>
     {
