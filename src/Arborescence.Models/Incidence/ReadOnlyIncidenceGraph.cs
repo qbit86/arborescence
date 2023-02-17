@@ -31,6 +31,8 @@ namespace Arborescence.Models
             _edgeMultimapPolicy = edgeMultimapPolicy;
         }
 
+        public int EdgeCount => _headByEdge is null ? 0 : _headByEdge.Count;
+
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
 
