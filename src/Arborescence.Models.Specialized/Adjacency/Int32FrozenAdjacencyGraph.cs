@@ -3,7 +3,6 @@ namespace Arborescence.Models.Specialized
 {
     using System;
     using System.Diagnostics;
-    using static TryHelpers;
     using Edge = Endpoints<int>;
     using VertexEnumerator = System.ArraySegment<int>.Enumerator;
     using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
@@ -35,9 +34,17 @@ namespace Arborescence.Models.Specialized
         /// </summary>
         public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
-        public bool TryGetHead(Edge edge, out int head) => Some(edge.Head, out head);
+        public bool TryGetHead(Edge edge, out int head)
+        {
+            head = edge.Head;
+            return unchecked((uint)head < (uint)VertexCount);
+        }
 
-        public bool TryGetTail(Edge edge, out int tail) => Some(edge.Tail, out tail);
+        public bool TryGetTail(Edge edge, out int tail)
+        {
+            tail = edge.Tail;
+            return unchecked((uint)tail < (uint)VertexCount);
+        }
 
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
