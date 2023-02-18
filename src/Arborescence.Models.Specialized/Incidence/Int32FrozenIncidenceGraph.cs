@@ -4,6 +4,7 @@ namespace Arborescence.Models.Incidence
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
+    using static TryHelpers;
     using VertexEnumerator =
         AdjacencyEnumerator<int, int, Int32FrozenIncidenceGraph, System.ArraySegment<int>.Enumerator>;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
@@ -59,9 +60,17 @@ namespace Arborescence.Models.Incidence
 
         private int EdgeCountUnchecked => _data[1];
 
-        public bool TryGetHead(int edge, out int head) => throw new NotImplementedException();
+        public bool TryGetHead(int edge, out int head)
+        {
+            ReadOnlySpan<int> headByEdge = GetHeadByEdge();
+            return unchecked((uint)edge < (uint)headByEdge.Length) ? Some(headByEdge[edge], out head) : None(out head);
+        }
 
-        public bool TryGetTail(int edge, out int tail) => throw new NotImplementedException();
+        public bool TryGetTail(int edge, out int tail)
+        {
+            ReadOnlySpan<int> tailByEdge = GetTailByEdge();
+            return unchecked((uint)edge < (uint)tailByEdge.Length) ? Some(tailByEdge[edge], out tail) : None(out tail);
+        }
 
         public EdgeEnumerator EnumerateOutEdges(int vertex) => throw new NotImplementedException();
 
