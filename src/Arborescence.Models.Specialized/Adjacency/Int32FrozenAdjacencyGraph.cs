@@ -14,6 +14,10 @@ namespace Arborescence.Models.Specialized
         IAdjacency<int, VertexEnumerator>,
         IEquatable<Int32FrozenAdjacencyGraph>
     {
+        // Layout (offset, length):
+        // 0    | 1 | n = vertexCount
+        // 1    | 1 | m = edgeCount
+        // 2    | n | upperBoundByVertex
         private readonly int[] _data;
 
         internal Int32FrozenAdjacencyGraph(int[] data)
@@ -25,7 +29,14 @@ namespace Arborescence.Models.Specialized
         /// <summary>
         /// Gets the number of vertices.
         /// </summary>
-        public int VertexCount => _data is null ? 0 : VertexCountUnchecked;
+        public int VertexCount
+        {
+            get
+            {
+                Int32FrozenAdjacencyGraph self = this;
+                return self._data is null ? 0 : self.VertexCountUnchecked;
+            }
+        }
 
         private int VertexCountUnchecked => _data[0];
 
@@ -54,21 +65,22 @@ namespace Arborescence.Models.Specialized
 
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
         {
-            if (_data is null)
+            Int32FrozenAdjacencyGraph self = this;
+            if (self._data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            int vertexCount = VertexCountUnchecked;
+            int vertexCount = self.VertexCountUnchecked;
             Debug.Assert(vertexCount >= 0, "vertexCount >= 0");
             if (unchecked((uint)vertex >= (uint)vertexCount))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            Debug.Assert(_data.Length >= 2, "_data.Length >= 2");
-            ReadOnlySpan<int> upperBoundByVertex = _data.AsSpan(2, vertexCount);
+            Debug.Assert(self._data.Length >= 2, "_data.Length >= 2");
+            ReadOnlySpan<int> upperBoundByVertex = self._data.AsSpan(2, vertexCount);
             int upperBound = upperBoundByVertex[vertex];
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int offset = 2 + vertexCount + lowerBound;
             int count = upperBound - lowerBound;
-            ArraySegment<int> segment = new(_data, offset, count);
+            ArraySegment<int> segment = new(self._data, offset, count);
             return segment.GetEnumerator();
         }
     }
