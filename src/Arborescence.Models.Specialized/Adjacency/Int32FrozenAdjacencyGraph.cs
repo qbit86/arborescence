@@ -3,6 +3,7 @@ namespace Arborescence.Models.Specialized
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Edge = Endpoints<int>;
     using VertexEnumerator = System.ArraySegment<int>.Enumerator;
     using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
@@ -76,14 +77,25 @@ namespace Arborescence.Models.Specialized
             if (unchecked((uint)vertex >= (uint)vertexCount))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            Debug.Assert(self._data.Length >= 2, "_data.Length >= 2");
-            ReadOnlySpan<int> upperBoundByVertex = self._data.AsSpan(2, vertexCount);
-            int upperBound = upperBoundByVertex[vertex];
+            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertexUnchecked();
+            if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
+
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
+            int upperBound = upperBoundByVertex[vertex];
+            Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int offset = 2 + vertexCount + lowerBound;
             int count = upperBound - lowerBound;
             ArraySegment<int> segment = new(self._data, offset, count);
             return segment.GetEnumerator();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetUpperBoundByVertexUnchecked()
+        {
+            Int32FrozenAdjacencyGraph self = this;
+            Debug.Assert(self._data.Length >= 2, "_data.Length >= 2");
+            return self._data.AsSpan(2, self.VertexCountUnchecked);
         }
     }
 }

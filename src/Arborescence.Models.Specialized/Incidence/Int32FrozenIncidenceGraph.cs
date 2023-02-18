@@ -78,7 +78,22 @@ namespace Arborescence.Models.Incidence
             if (self._data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            throw new NotImplementedException();
+            int vertexCount = self.VertexCountUnchecked;
+            Debug.Assert(vertexCount >= 0, "vertexCount >= 0");
+            if (unchecked((uint)vertex >= (uint)vertexCount))
+                return ArraySegment<int>.Empty.GetEnumerator();
+
+            ReadOnlySpan<int> upperBoundByVertex = self.GetUpperBoundByVertexUnchecked();
+            if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
+                return ArraySegmentHelpers.EmptyEnumerator<int>();
+
+            int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
+            int upperBound = upperBoundByVertex[vertex];
+            Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
+            int offset = 2 + vertexCount + lowerBound;
+            int count = upperBound - lowerBound;
+            ArraySegment<int> segment = new(self._data, offset, count);
+            return segment.GetEnumerator();
         }
 
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
