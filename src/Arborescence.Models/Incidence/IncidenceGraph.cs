@@ -8,7 +8,7 @@ namespace Arborescence.Models
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, List<TEdge>.Enumerator>,
-        IAdjacency<TVertex,
+        IOutNeighborsAdjacency<TVertex,
             AdjacencyEnumerator<TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>,
                 List<TEdge>.Enumerator>>
         where TEndpointMap : IDictionary<TEdge, TVertex>

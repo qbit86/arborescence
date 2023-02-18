@@ -15,7 +15,7 @@ Let's consider this implicit adjacency graph [2]:
 ```csharp
 public readonly record struct Node(int Value);
 
-public sealed class AdjacencyGraph : IAdjacency<Node, IEnumerator<Node>>
+public sealed class AdjacencyGraph : IOutNeighborsAdjacency<Node, IEnumerator<Node>>
 {
     public IEnumerator<Node> EnumerateOutNeighbors(Node vertex) =>
         vertex.Value is < 0 or >= 10

@@ -26,7 +26,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier)
-            where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TGraph : IOutNeighborsAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(graph, source, frontier);
 
@@ -51,7 +51,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier>(
             TGraph graph, TVertex source, TFrontier frontier, IEqualityComparer<TVertex> comparer)
-            where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TGraph : IOutNeighborsAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(
                 graph, source, frontier, comparer);
@@ -79,7 +79,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TFrontier, TExploredSet>(
             TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TGraph : IOutNeighborsAdjacency<TVertex, IEnumerator<TVertex>>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateEdgesChecked(

@@ -9,7 +9,7 @@ Concepts are direct contracts for algorithms, constraints on their type paramete
 The most important ones are:
 
 ```csharp
-IAdjacency<TVertex, TVertices>
+IOutNeighborsAdjacency<TVertex, TVertices>
 {
     TVertices EnumerateOutNeighbors(TVertex vertex);
 }
@@ -117,7 +117,7 @@ We start with the simpler concept of an adjacency graph, where edges (flights) a
 using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 
 public sealed class FlightAdjacencyGraph :
-    IAdjacency<string, NeighborEnumerator>
+    IOutNeighborsAdjacency<string, NeighborEnumerator>
 {
     private readonly Dictionary<string, string[]> _neighborsByAirport;
 

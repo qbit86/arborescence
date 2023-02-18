@@ -9,7 +9,7 @@ namespace Arborescence.Models
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, TVertexEnumerator>>,
-        IAdjacency<TVertex, TVertexEnumerator>
+        IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TVertexMultimapPolicy : IMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
     {

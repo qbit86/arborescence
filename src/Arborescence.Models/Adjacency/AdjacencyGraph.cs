@@ -9,7 +9,7 @@ namespace Arborescence.Models
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, List<TVertex>.Enumerator>>,
-        IAdjacency<TVertex, List<TVertex>.Enumerator>
+        IOutNeighborsAdjacency<TVertex, List<TVertex>.Enumerator>
         where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
         private static readonly ListDictionaryMultimapPolicy<TVertex, TVertexMultimap> s_multimapPolicy = default;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 
 public sealed class FlightAdjacencyGraph :
-    IAdjacency<string, NeighborEnumerator>
+    IOutNeighborsAdjacency<string, NeighborEnumerator>
 {
     private readonly Dictionary<string, string[]> _neighborsByAirport;
 

@@ -8,7 +8,7 @@ namespace Arborescence
     /// <seealso href="https://en.wikipedia.org/wiki/Glossary_of_graph_theory#adjacent"/>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TVertices">The type of the vertices enumerator.</typeparam>
-    public interface IAdjacency<in TVertex, out TVertices>
+    public interface IOutNeighborsAdjacency<in TVertex, out TVertices>
     {
         /// <summary>
         /// Enumerates the out-neighbors of the vertex.

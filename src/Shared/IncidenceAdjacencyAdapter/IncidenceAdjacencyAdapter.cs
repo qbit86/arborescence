@@ -14,7 +14,8 @@
     }
 
     internal sealed class IncidenceAdjacencyAdapter<TVertex, TEdge, TEdgeEnumerator, TGraph> :
-        IAdjacency<TVertex, IEnumerator<TVertex>>, ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge>,
+        IOutNeighborsAdjacency<
+            TVertex, IEnumerator<TVertex>>, ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TGraph : ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge>,

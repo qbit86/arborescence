@@ -4,7 +4,7 @@
 Commonly used types:
 • IHeadIncidence&lt;TVertex, TEdge&gt;
 • IOutEdgesIncidence&lt;TVertex, TEdges&gt;
-• IAdjacency&lt;TVertex, TVertices&gt;
+• IOutNeighborsAdjacency&lt;TVertex, TVertices&gt;
 • IMonoid&lt;T&gt;</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;abstraction</PackageTags>

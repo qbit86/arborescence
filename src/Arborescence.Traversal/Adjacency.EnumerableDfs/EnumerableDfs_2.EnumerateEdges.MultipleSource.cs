@@ -20,7 +20,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceCollection>(
             TGraph graph, TSourceCollection sources)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex> =>
             EnumerateEdgesChecked(graph, sources);
 
@@ -40,7 +40,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceCollection>(
             TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex> =>
             EnumerateEdgesChecked(graph, sources, comparer);
 
@@ -62,14 +62,14 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TSourceCollection, TExploredSet>(
             TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex> =>
             EnumerateEdgesChecked(graph, sources, exploredSet);
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceCollection>(
             TGraph graph, TSourceCollection sources)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
         {
             if (graph is null)
@@ -84,7 +84,7 @@ namespace Arborescence.Traversal.Adjacency
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceCollection>(
             TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
         {
             if (graph is null)
@@ -100,7 +100,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TSourceCollection, TExploredSet>(
             TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex>
         {
@@ -118,7 +118,7 @@ namespace Arborescence.Traversal.Adjacency
 
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<TGraph, TSourceCollection, TExploredSet>(
             TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex>
         {

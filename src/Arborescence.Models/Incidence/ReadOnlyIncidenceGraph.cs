@@ -9,7 +9,7 @@ namespace Arborescence.Models
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, TEdgeEnumerator>,
-        IAdjacency<TVertex, AdjacencyEnumerator<
+        IOutNeighborsAdjacency<TVertex, AdjacencyEnumerator<
             TVertex, TEdge,
             ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>,
             TEdgeEnumerator>>

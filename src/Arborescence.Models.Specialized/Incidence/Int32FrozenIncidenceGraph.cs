@@ -13,7 +13,7 @@ namespace Arborescence.Models.Incidence
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
-        IAdjacency<int, VertexEnumerator>,
+        IOutNeighborsAdjacency<int, VertexEnumerator>,
         IEquatable<Int32FrozenIncidenceGraph>
     {
         // Offset       | Length    | Content
