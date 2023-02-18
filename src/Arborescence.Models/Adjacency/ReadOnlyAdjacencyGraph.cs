@@ -1,15 +1,18 @@
 namespace Arborescence.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
     using static TryHelpers;
 
-    public readonly struct ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> :
+    public readonly partial struct ReadOnlyAdjacencyGraph<
+        TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, TVertexEnumerator>>,
-        IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+        IOutNeighborsAdjacency<TVertex, TVertexEnumerator>,
+        IEquatable<ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy>>
         where TVertexEnumerator : IEnumerator<TVertex>
         where TVertexMultimapPolicy : IMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
     {
@@ -22,7 +25,16 @@ namespace Arborescence.Models
             _vertexMultimapPolicy = vertexMultimapPolicy;
         }
 
-        public int VertexCount => _neighborsByVertex is null || _vertexMultimapPolicy is null ? 0 : GetCountUnchecked();
+        public int VertexCount
+        {
+            get
+            {
+                ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
+                return self.IsDefault ? 0 : self.GetCountUnchecked();
+            }
+        }
+
+        private bool IsDefault => _neighborsByVertex is null;
 
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);
@@ -36,10 +48,17 @@ namespace Arborescence.Models
             return IncidenceEnumerator.Create(vertex, neighborEnumerator);
         }
 
-        public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex) =>
-            _vertexMultimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
+        public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex)
+        {
+            ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
+            return self._vertexMultimapPolicy.GetEnumerator(self._neighborsByVertex, vertex);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetCountUnchecked() => _vertexMultimapPolicy.GetCount(_neighborsByVertex);
+        private int GetCountUnchecked()
+        {
+            ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
+            return self._vertexMultimapPolicy.GetCount(self._neighborsByVertex);
+        }
     }
 }
