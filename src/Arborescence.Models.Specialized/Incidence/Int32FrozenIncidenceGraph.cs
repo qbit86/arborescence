@@ -14,6 +14,14 @@ namespace Arborescence.Models.Incidence
         IAdjacency<int, VertexEnumerator>,
         IEquatable<Int32FrozenIncidenceGraph>
     {
+        // Offset       | Length    | Content
+        // -------------|-----------|--------
+        // 0            | 1         | n = vertexCount
+        // 1            | 1         | m = edgeCount
+        // 2            | n         | upperBoundByVertex
+        // 2 + n        | m         | edgesOrderedByTail
+        // 2 + n + m    | m         | headByEdge
+        // 2 + n + 2m   | m         | tailByEdge
         private readonly int[] _data;
 
         internal Int32FrozenIncidenceGraph(int[] data)

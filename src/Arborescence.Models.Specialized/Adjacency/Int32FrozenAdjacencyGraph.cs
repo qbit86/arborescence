@@ -14,10 +14,12 @@ namespace Arborescence.Models.Specialized
         IAdjacency<int, VertexEnumerator>,
         IEquatable<Int32FrozenAdjacencyGraph>
     {
-        // Layout (offset, length):
-        // 0    | 1 | n = vertexCount
-        // 1    | 1 | m = edgeCount
-        // 2    | n | upperBoundByVertex
+        // Offset       | Length    | Content
+        // -------------|-----------|--------
+        // 0            | 1         | n = vertexCount
+        // 1            | 1         | m = edgeCount
+        // 2            | n         | upperBoundByVertex
+        // 2 + n        | m         | neighborsOrderedByTail
         private readonly int[] _data;
 
         internal Int32FrozenAdjacencyGraph(int[] data)
