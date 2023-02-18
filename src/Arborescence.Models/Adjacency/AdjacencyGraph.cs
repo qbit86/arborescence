@@ -2,6 +2,7 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
     using static TryHelpers;
 
     public readonly struct AdjacencyGraph<TVertex, TVertexMultimap> :
@@ -16,6 +17,8 @@ namespace Arborescence.Models
         private readonly TVertexMultimap _neighborsByVertex;
 
         internal AdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
+
+        public int VertexCount => _neighborsByVertex is null ? 0 : GetCountUnchecked(_neighborsByVertex);
 
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);
@@ -45,9 +48,14 @@ namespace Arborescence.Models
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValue<TDictionary>(
             TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TVertex>? value)
             where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
             dictionary.TryGetValue(vertex, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> => dictionary.Count;
     }
 }

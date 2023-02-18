@@ -2,6 +2,7 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
 
     public readonly struct ReadOnlyIncidenceGraph<
         TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> :
@@ -31,6 +32,10 @@ namespace Arborescence.Models
             _edgeMultimapPolicy = edgeMultimapPolicy;
         }
 
+        public int VertexCount => _outEdgesByVertex is null || _edgeMultimapPolicy is null ? 0 : GetCountUnchecked();
+
+        public int EdgeCount => _headByEdge is null ? 0 : _headByEdge.Count;
+
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
 
@@ -47,5 +52,8 @@ namespace Arborescence.Models
             TEdgeEnumerator edgeEnumerator = EnumerateOutEdges(vertex);
             return AdjacencyEnumerator<TVertex, TEdge>.Create(this, edgeEnumerator);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private int GetCountUnchecked() => _edgeMultimapPolicy.GetCount(_outEdgesByVertex);
     }
 }

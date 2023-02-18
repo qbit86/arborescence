@@ -2,6 +2,7 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
 
     public readonly struct IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> :
         ITailIncidence<TVertex, TEdge>,
@@ -25,6 +26,10 @@ namespace Arborescence.Models
             _headByEdge = headByEdge;
             _outEdgesByVertex = outEdgesByVertex;
         }
+
+        public int VertexCount => _outEdgesByVertex is null ? 0 : GetCountUnchecked(_outEdgesByVertex);
+
+        public int EdgeCount => _headByEdge is null ? 0 : _headByEdge.Count;
 
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
@@ -63,9 +68,14 @@ namespace Arborescence.Models
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValue<TDictionary>(
             TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TEdge>? value)
             where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> =>
             dictionary.TryGetValue(vertex, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> => dictionary.Count;
     }
 }
