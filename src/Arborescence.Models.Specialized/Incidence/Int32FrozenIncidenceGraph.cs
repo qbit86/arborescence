@@ -72,9 +72,21 @@ namespace Arborescence.Models.Incidence
             return unchecked((uint)edge < (uint)tailByEdge.Length) ? Some(tailByEdge[edge], out tail) : None(out tail);
         }
 
-        public EdgeEnumerator EnumerateOutEdges(int vertex) => throw new NotImplementedException();
+        public EdgeEnumerator EnumerateOutEdges(int vertex)
+        {
+            Int32FrozenIncidenceGraph self = this;
+            if (self._data is null)
+                return ArraySegment<int>.Empty.GetEnumerator();
 
-        public VertexEnumerator EnumerateOutNeighbors(int vertex) => throw new NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public VertexEnumerator EnumerateOutNeighbors(int vertex)
+        {
+            Int32FrozenIncidenceGraph self = this;
+            EdgeEnumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
+            return AdjacencyEnumerator<int, int>.Create(self, edgeEnumerator);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetHeadByEdge()
