@@ -3,6 +3,7 @@ namespace Arborescence.Models.Incidence
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using VertexEnumerator =
         AdjacencyEnumerator<int, int, Int32FrozenIncidenceGraph, System.ArraySegment<int>.Enumerator>;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
@@ -65,6 +66,35 @@ namespace Arborescence.Models.Incidence
         public EdgeEnumerator EnumerateOutEdges(int vertex) => throw new NotImplementedException();
 
         public VertexEnumerator EnumerateOutNeighbors(int vertex) => throw new NotImplementedException();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetHeadByEdge()
+        {
+            Int32FrozenIncidenceGraph self = this;
+            if (self._data is null)
+                return ReadOnlySpan<int>.Empty;
+            int n = self.VertexCountUnchecked;
+            int m = self.EdgeCountUnchecked;
+            return self._data.AsSpan(2 + n + m, m);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetTailByEdge()
+        {
+            Int32FrozenIncidenceGraph self = this;
+            if (self._data is null)
+                return ReadOnlySpan<int>.Empty;
+            int n = self.VertexCountUnchecked;
+            int m = self.EdgeCountUnchecked;
+            return self._data.AsSpan(2 + n + m + m, m);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ReadOnlySpan<int> GetUpperBoundByVertexUnchecked()
+        {
+            Int32FrozenIncidenceGraph self = this;
+            return self._data.AsSpan(2, self.VertexCountUnchecked);
+        }
     }
 }
 #endif
