@@ -33,14 +33,28 @@ namespace Arborescence.Models.Incidence
         /// <summary>
         /// Gets the number of vertices.
         /// </summary>
-        public int VertexCount => _data is null ? 0 : VertexCountUnchecked;
+        public int VertexCount
+        {
+            get
+            {
+                Int32FrozenIncidenceGraph self = this;
+                return self._data is null ? 0 : self.VertexCountUnchecked;
+            }
+        }
 
         private int VertexCountUnchecked => _data[0];
 
         /// <summary>
         /// Gets the number of edges.
         /// </summary>
-        public int EdgeCount => _data is null ? 0 : EdgeCountUnchecked;
+        public int EdgeCount
+        {
+            get
+            {
+                Int32FrozenIncidenceGraph self = this;
+                return self._data is null ? 0 : self.EdgeCountUnchecked;
+            }
+        }
 
         private int EdgeCountUnchecked => _data[1];
 

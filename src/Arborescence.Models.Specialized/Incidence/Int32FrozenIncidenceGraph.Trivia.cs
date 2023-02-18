@@ -10,7 +10,11 @@ namespace Arborescence.Models.Incidence
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32FrozenIncidenceGraph other && Equals(other);
 
-        public override int GetHashCode() => _data is null ? 0 : _data.GetHashCode();
+        public override int GetHashCode()
+        {
+            int[]? data = _data;
+            return data is null ? 0 : data.GetHashCode();
+        }
 
         public static bool operator ==(Int32FrozenIncidenceGraph left, Int32FrozenIncidenceGraph right) =>
             left.Equals(right);
