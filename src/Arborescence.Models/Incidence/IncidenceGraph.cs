@@ -40,8 +40,8 @@ namespace Arborescence.Models
         {
             get
             {
-                IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
-                return self._headByEdge is null ? 0 : self._headByEdge.Count;
+                TEndpointMap? headByEdge = _headByEdge;
+                return headByEdge is null ? 0 : headByEdge.Count;
             }
         }
 

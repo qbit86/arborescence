@@ -24,8 +24,8 @@ namespace Arborescence.Models
         {
             get
             {
-                AdjacencyGraph<TVertex, TVertexMultimap> self = this;
-                return self._neighborsByVertex is null ? 0 : GetCountUnchecked(self._neighborsByVertex);
+                TVertexMultimap? neighborsByVertex = _neighborsByVertex;
+                return neighborsByVertex is null ? 0 : GetCountUnchecked(neighborsByVertex);
             }
         }
 
