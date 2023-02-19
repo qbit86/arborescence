@@ -147,8 +147,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode() =>
-            _array is null ? 0 : unchecked(_array.GetHashCode() * 397) ^ _count.GetHashCode();
+        public override int GetHashCode() => _array is null ? 0 : HashCode.Combine(_count, _array.GetHashCode());
 
         /// <inheritdoc/>
         public void CopyTo(T[] array, int arrayIndex = 0)

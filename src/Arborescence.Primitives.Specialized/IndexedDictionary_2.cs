@@ -174,9 +174,9 @@ namespace Arborescence
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            int hashCode = _items != null ? _items.GetHashCode() : 0;
-            hashCode = unchecked(hashCode * 397) ^ EqualityComparer<TDummy>.Default.GetHashCode(_dummy);
-            return hashCode;
+            if (_items is null)
+                return 0;
+            return HashCode.Combine(EqualityComparer<TDummy>.Default.GetHashCode(_dummy), _items.GetHashCode());
         }
 
         /// <summary>

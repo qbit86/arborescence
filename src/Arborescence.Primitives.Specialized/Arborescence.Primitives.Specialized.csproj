@@ -32,6 +32,10 @@ Commonly used types:
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Bcl.HashCode" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
