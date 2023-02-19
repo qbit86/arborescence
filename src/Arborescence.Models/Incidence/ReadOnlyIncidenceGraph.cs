@@ -1,10 +1,11 @@
 namespace Arborescence.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    public readonly struct ReadOnlyIncidenceGraph<
+    public readonly partial struct ReadOnlyIncidenceGraph<
         TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
@@ -12,7 +13,9 @@ namespace Arborescence.Models
         IOutNeighborsAdjacency<TVertex, AdjacencyEnumerator<
             TVertex, TEdge,
             ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>,
-            TEdgeEnumerator>>
+            TEdgeEnumerator>>,
+        IEquatable<ReadOnlyIncidenceGraph<
+            TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>>
         where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
         where TEdgeMultimapPolicy : IMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
