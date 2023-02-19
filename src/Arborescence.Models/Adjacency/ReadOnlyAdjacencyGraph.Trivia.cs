@@ -24,8 +24,8 @@ namespace Arborescence.Models
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
             if (self.IsDefault)
                 return 0;
-            return unchecked((EqualityComparer<TVertexMultimap>.Default.GetHashCode(_neighborsByVertex!) * 397) ^
-                EqualityComparer<TVertexMultimapPolicy>.Default.GetHashCode(_vertexMultimapPolicy));
+            return unchecked((EqualityComparer<TVertexMultimap>.Default.GetHashCode(self._neighborsByVertex!) * 397) ^
+                EqualityComparer<TVertexMultimapPolicy>.Default.GetHashCode(self._vertexMultimapPolicy));
         }
 
         public static bool operator ==(
