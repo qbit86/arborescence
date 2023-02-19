@@ -21,6 +21,8 @@ namespace Arborescence
 
         public int Count => throw new NotImplementedException();
 
+        private int CountUnchecked => _items.Count;
+
         public bool ContainsKey(int key) => throw new NotImplementedException();
 
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>

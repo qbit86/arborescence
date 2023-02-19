@@ -39,8 +39,8 @@ namespace Arborescence
         {
             Int32ReadOnlyDictionary<TValue, TValueList> self = this;
             int count = self.CountUnchecked;
-            for (int i = 0; i < count; ++i)
-                yield return new(i, self._items[i]);
+            for (int key = 0; key < count; ++key)
+                yield return new(key, self._items[key]);
         }
 
         public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList> other) =>
