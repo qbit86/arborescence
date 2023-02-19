@@ -10,10 +10,10 @@ namespace Arborescence
         where TValueList : IReadOnlyList<TValue>
         where TAbsencePolicy : IEquatable<TValue>
     {
-        private readonly TValue[] _items;
+        private readonly TValueList _items;
         private readonly TAbsencePolicy _absencePolicy;
 
-        internal Int32ReadOnlyDictionary(TValue[] items, TAbsencePolicy absencePolicy)
+        internal Int32ReadOnlyDictionary(TValueList items, TAbsencePolicy absencePolicy)
         {
             _items = items;
             _absencePolicy = absencePolicy;
