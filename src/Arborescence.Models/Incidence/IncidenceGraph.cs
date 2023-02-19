@@ -27,9 +27,23 @@ namespace Arborescence.Models
             _outEdgesByVertex = outEdgesByVertex;
         }
 
-        public int VertexCount => _outEdgesByVertex is null ? 0 : GetCountUnchecked(_outEdgesByVertex);
+        public int VertexCount
+        {
+            get
+            {
+                IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+                return self._outEdgesByVertex is null ? 0 : GetCountUnchecked(self._outEdgesByVertex);
+            }
+        }
 
-        public int EdgeCount => _headByEdge is null ? 0 : _headByEdge.Count;
+        public int EdgeCount
+        {
+            get
+            {
+                IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+                return self._headByEdge is null ? 0 : self._headByEdge.Count;
+            }
+        }
 
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
@@ -44,27 +58,29 @@ namespace Arborescence.Models
                 TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>
             EnumerateOutNeighbors(TVertex vertex)
         {
-            List<TEdge>.Enumerator edgeEnumerator = EnumerateOutEdges(vertex);
-            return AdjacencyEnumerator<TVertex, TEdge>.Create(this, edgeEnumerator);
+            IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+            List<TEdge>.Enumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
+            return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
         }
 
         public bool TryAdd(TEdge edge, TVertex tail, TVertex head)
         {
-            if (!_tailByEdge.TryAddStrict(edge, tail))
+            IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+            if (!self._tailByEdge.TryAddStrict(edge, tail))
                 return false;
 
-            if (TryGetValue(_outEdgesByVertex, tail, out List<TEdge>? outEdges))
+            if (TryGetValue(self._outEdgesByVertex, tail, out List<TEdge>? outEdges))
             {
                 outEdges.Add(edge);
             }
             else
             {
                 outEdges = new(1) { edge };
-                _outEdgesByVertex.Add(tail, outEdges);
+                self._outEdgesByVertex.Add(tail, outEdges);
             }
 
             // ReSharper disable once PossibleStructMemberModificationOfNonVariableStruct
-            _headByEdge[edge] = head;
+            self._headByEdge[edge] = head;
             return true;
         }
 
