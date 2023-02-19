@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using static TryHelpers;
 
     public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> :
         IReadOnlyDictionary<int, TValue>,
@@ -19,19 +20,47 @@ namespace Arborescence
             _absencePolicy = absencePolicy;
         }
 
-        public int Count => throw new NotImplementedException();
+        public int Count
+        {
+            get
+            {
+                Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
+                return self._items is null ? 0 : self.CountUnchecked;
+            }
+        }
 
         private int CountUnchecked => _items.Count;
 
-        public bool ContainsKey(int key) => throw new NotImplementedException();
+        public bool ContainsKey(int key)
+        {
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
+            return unchecked((uint)key < (uint)self._items.Count) && !_absencePolicy.Equals(self._items[key]);
+        }
 
-        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
-            throw new NotImplementedException();
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
+        {
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
+            if (self._items is null)
+                return None(out value);
+            if (unchecked((uint)key >= (uint)self._items.Count))
+                return None(out value);
+
+            value = self._items[key];
+            return !_absencePolicy.Equals(value);
+        }
 
 #if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) => TryGetValue(key, out value!);
 #endif
 
-        public TValue this[int key] => throw new NotImplementedException();
+        public TValue this[int key]
+        {
+            get
+            {
+                if (TryGetValue(key, out TValue? value))
+                    return value;
+                throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+            }
+        }
     }
 }
