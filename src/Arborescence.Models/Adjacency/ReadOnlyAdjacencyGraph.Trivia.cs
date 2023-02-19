@@ -1,5 +1,6 @@
 namespace Arborescence.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
@@ -24,7 +25,7 @@ namespace Arborescence.Models
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
             if (self.IsDefault)
                 return 0;
-            return unchecked((EqualityComparer<TVertexMultimap>.Default.GetHashCode(self._neighborsByVertex!) * 397) ^
+            return HashCode.Combine(EqualityComparer<TVertexMultimap>.Default.GetHashCode(self._neighborsByVertex!),
                 EqualityComparer<TVertexMultimapPolicy>.Default.GetHashCode(self._vertexMultimapPolicy));
         }
 
