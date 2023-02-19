@@ -1,6 +1,5 @@
 namespace Arborescence
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -26,9 +25,23 @@ namespace Arborescence
             }
         }
 
-        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator() => throw new NotImplementedException();
+        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
+        {
+            Int32ReadOnlyDictionary<TValue, TValueList> self = this;
+            return self._items is null
+                ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
+                : self.GetEnumeratorIterator();
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
+        {
+            Int32ReadOnlyDictionary<TValue, TValueList> self = this;
+            int count = self.CountUnchecked;
+            for (int i = 0; i < count; ++i)
+                yield return new(i, self._items[i]);
+        }
 
         public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList> other) =>
             EqualityComparer<TValueList>.Default.Equals(_items, other._items);
