@@ -97,7 +97,7 @@ namespace Arborescence.Models.Compatibility
         /// <inheritdoc/>
         public override int GetHashCode() => _data is null || _edgesOrderedByTail is null
             ? 0
-            : unchecked(_data.GetHashCode() * 397) ^ _edgesOrderedByTail.GetHashCode();
+            : HashCode.Combine(_data.GetHashCode(), _edgesOrderedByTail.GetHashCode());
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetUpperBoundByVertex(int[] data) => data.AsSpan(2, VertexCount);
