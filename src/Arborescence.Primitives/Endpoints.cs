@@ -83,7 +83,11 @@
         }
 
         /// <inheritdoc/>
-        public bool Equals(Endpoints<TVertex> other) => C.Equals(Tail, other.Tail) && C.Equals(Head, other.Head);
+        public bool Equals(Endpoints<TVertex> other)
+        {
+            Endpoints<TVertex> self = this;
+            return C.Equals(self.Tail, other.Tail) && C.Equals(self.Head, other.Head);
+        }
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
@@ -92,9 +96,8 @@
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            int hashCode = (Tail?.GetHashCode()).GetValueOrDefault();
-            hashCode = unchecked(hashCode * 397) ^ (Head?.GetHashCode()).GetValueOrDefault();
-            return hashCode;
+            Endpoints<TVertex> self = this;
+            return unchecked(C.GetHashCode(self.Tail) * 397) ^ C.GetHashCode(self.Head);
         }
 
         /// <summary>
