@@ -2,6 +2,8 @@ namespace Arborescence
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using static TryHelpers;
 
     public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList> :
         IReadOnlyDictionary<int, TValue>,
@@ -23,10 +25,30 @@ namespace Arborescence
 
         private int CountUnchecked => _items.Count;
 
-        public bool ContainsKey(int key) => throw new NotImplementedException();
+        public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Count);
 
-        public bool TryGetValue(int key, out TValue value) => throw new NotImplementedException();
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
+        {
+            Int32ReadOnlyDictionary<TValue, TValueList> self = this;
+            if (self._items is null)
+                return None(out value);
+            return unchecked((uint)key >= (uint)self._items.Count)
+                ? None(out value)
+                : Some(self._items[key], out value);
+        }
 
-        public TValue this[int key] => throw new NotImplementedException();
+#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1
+        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) => TryGetValue(key, out value!);
+#endif
+
+        public TValue this[int key]
+        {
+            get
+            {
+                if (TryGetValue(key, out TValue? value))
+                    return value;
+                throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+            }
+        }
     }
 }
