@@ -17,14 +17,9 @@ namespace Arborescence
             }
         }
 
-        public IEnumerable<TValue> Values
-        {
-            get
-            {
-                TValueList? items = _items;
-                return items is null ? Enumerable.Empty<TValue>() : items;
-            }
-        }
+        public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
+
+        private int CountUnchecked => _items.Count;
 
 #if NETCOREAPP3_0_OR_GREATER
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>

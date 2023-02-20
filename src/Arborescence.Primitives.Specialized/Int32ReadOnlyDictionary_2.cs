@@ -16,16 +16,7 @@ namespace Arborescence
 
         internal Int32ReadOnlyDictionary(TValueList items) => _items = items;
 
-        public int Count
-        {
-            get
-            {
-                Int32ReadOnlyDictionary<TValue, TValueList> self = this;
-                return self._items is null ? 0 : self.CountUnchecked;
-            }
-        }
-
-        private int CountUnchecked => _items.Count;
+        public int Count => (_items?.Count).GetValueOrDefault();
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Count);
 

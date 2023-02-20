@@ -22,16 +22,7 @@ namespace Arborescence
             _absencePolicy = absencePolicy;
         }
 
-        public int Count
-        {
-            get
-            {
-                Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-                return self._items is null ? 0 : self.CountUnchecked;
-            }
-        }
-
-        private int CountUnchecked => _items.Count;
+        public int Count => (_items?.Count).GetValueOrDefault();
 
         public bool ContainsKey(int key)
         {
