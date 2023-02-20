@@ -65,7 +65,7 @@ namespace Arborescence.Models
             return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
         }
 
-        public bool TryAdd(TEdge edge, TVertex tail, TVertex head)
+        public bool TryAddEdge(TEdge edge, TVertex tail, TVertex head)
         {
             IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
             if (!self._tailByEdge.TryAddStrict(edge, tail))

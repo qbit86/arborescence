@@ -44,7 +44,7 @@ namespace Arborescence.Models
         public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
             s_multimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
 
-        public void Add(TVertex tail, TVertex head)
+        public void AddEdge(TVertex tail, TVertex head)
         {
             AdjacencyGraph<TVertex, TVertexMultimap> self = this;
             if (TryGetValue(self._neighborsByVertex, tail, out List<TVertex>? neighbors))
