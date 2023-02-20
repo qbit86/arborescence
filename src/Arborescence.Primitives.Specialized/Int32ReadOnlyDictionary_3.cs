@@ -27,7 +27,9 @@ namespace Arborescence
         public bool ContainsKey(int key)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            return unchecked((uint)key < (uint)self._items.Count) && !_absencePolicy.Equals(self._items[key]);
+            if (self._items is not { } items)
+                return false;
+            return unchecked((uint)key < (uint)items.Count) && !self._absencePolicy.Equals(items[key]);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -36,13 +38,13 @@ namespace Arborescence
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            if (self._items is null)
+            if (self._items is not { } items)
                 return None(out value);
-            if (unchecked((uint)key >= (uint)self._items.Count))
+            if (unchecked((uint)key >= (uint)items.Count))
                 return None(out value);
 
-            value = self._items[key];
-            return !_absencePolicy.Equals(value);
+            value = items[key];
+            return !self._absencePolicy.Equals(value);
         }
 
         public TValue this[int key]

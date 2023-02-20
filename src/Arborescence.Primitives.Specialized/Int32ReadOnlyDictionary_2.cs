@@ -18,19 +18,18 @@ namespace Arborescence
 
         public int Count => (_items?.Count).GetValueOrDefault();
 
-        public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Count);
+        public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList> self = this;
-            if (self._items is null)
+            if (_items is not { } items)
                 return None(out value);
-            return unchecked((uint)key >= (uint)self._items.Count)
+            return unchecked((uint)key >= (uint)items.Count)
                 ? None(out value)
-                : Some(self._items[key], out value);
+                : Some(items[key], out value);
         }
 
         public TValue this[int key]
