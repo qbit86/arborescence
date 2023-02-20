@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy>
@@ -24,6 +25,14 @@ namespace Arborescence
                 return items is null ? Enumerable.Empty<TValue>() : items;
             }
         }
+
+#if NETCOREAPP3_0_OR_GREATER
+        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
+            TryGetValueCore(key, out value);
+#else
+        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
+            TryGetValueCore(key, out value!);
+#endif
 
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
@@ -54,7 +63,7 @@ namespace Arborescence
                 EqualityComparer<TAbsencePolicy>.Default.Equals(self._absencePolicy, other._absencePolicy);
         }
 
-        public override bool Equals(object? obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> other && Equals(other);
 
         public override int GetHashCode()

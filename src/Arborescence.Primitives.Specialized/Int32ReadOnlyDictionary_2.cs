@@ -27,11 +27,7 @@ namespace Arborescence
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Count);
 
-#if NETCOREAPP3_0_OR_GREATER
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
-#else
-        public bool TryGetValue(int key, out TValue value) => TryGetValueCore(key, out value!);
-#endif
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {

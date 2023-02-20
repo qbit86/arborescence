@@ -37,11 +37,7 @@ namespace Arborescence
             return unchecked((uint)key < (uint)self._items.Count) && !_absencePolicy.Equals(self._items[key]);
         }
 
-#if NETCOREAPP3_0_OR_GREATER
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
-#else
-        public bool TryGetValue(int key, out TValue value) => TryGetValueCore(key, out value!);
-#endif
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
