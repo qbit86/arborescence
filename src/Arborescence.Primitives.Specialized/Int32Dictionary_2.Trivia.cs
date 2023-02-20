@@ -11,11 +11,13 @@ namespace Arborescence
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public bool IsReadOnly => throw new NotImplementedException();
+
+        public void Clear() => _items?.Clear();
+
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
 
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
-
-        public bool IsReadOnly => throw new NotImplementedException();
 
         public bool Remove(int key) => throw new NotImplementedException();
 

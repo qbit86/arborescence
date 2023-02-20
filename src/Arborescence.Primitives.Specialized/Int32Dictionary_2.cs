@@ -6,17 +6,15 @@ namespace Arborescence
     public readonly partial struct Int32Dictionary<TValue, TValueList> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>,
         IEquatable<Int32Dictionary<TValue, TValueList>>
-        where TValueList : IReadOnlyList<TValue>
+        where TValueList : IList<TValue>
     {
         private readonly TValueList _items;
 
         internal Int32Dictionary(TValueList items) => _items = items;
 
+        public int Count => (_items?.Count).GetValueOrDefault();
+
         public void Add(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
-
-        public void Clear() => throw new NotImplementedException();
-
-        public int Count => throw new NotImplementedException();
 
         public void Add(int key, TValue value) => throw new NotImplementedException();
 
