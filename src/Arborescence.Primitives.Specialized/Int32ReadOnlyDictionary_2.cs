@@ -27,7 +27,13 @@ namespace Arborescence
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Count);
 
-        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
+#if NETCOREAPP3_0_OR_GREATER
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
+#else
+        public bool TryGetValue(int key, out TValue value) => TryGetValueCore(key, out value!);
+#endif
+
+        private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
             Int32ReadOnlyDictionary<TValue, TValueList> self = this;
             if (self._items is null)
@@ -36,10 +42,6 @@ namespace Arborescence
                 ? None(out value)
                 : Some(self._items[key], out value);
         }
-
-#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) => TryGetValue(key, out value!);
-#endif
 
         public TValue this[int key]
         {
