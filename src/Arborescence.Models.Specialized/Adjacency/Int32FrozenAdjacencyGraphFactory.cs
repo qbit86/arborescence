@@ -8,20 +8,20 @@ namespace Arborescence.Models.Specialized
         where TVertexCollection : ICollection<int>
     {
         public static Int32FrozenAdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
-            where TMultimap : IReadOnlyList<TVertexCollection>
-        {
-            if (neighborsByVertex is null)
-                return default;
-
-            Int32ReadOnlyDictionary<TVertexCollection, TMultimap> dictionary =
-                Int32ReadOnlyDictionaryFactory<TVertexCollection>.Create(neighborsByVertex);
-
-            return FromDictionaryUnchecked(dictionary);
-        }
+            where TMultimap : IReadOnlyList<TVertexCollection> =>
+            neighborsByVertex is null ? default : FromListUnchecked(neighborsByVertex);
 
         public static Int32FrozenAdjacencyGraph FromDictionary<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyDictionary<int, TVertexCollection> =>
             neighborsByVertex is null ? default : FromDictionaryUnchecked(neighborsByVertex);
+
+        private static Int32FrozenAdjacencyGraph FromListUnchecked<TMultimap>(TMultimap neighborsByVertex)
+            where TMultimap : IReadOnlyList<TVertexCollection>
+        {
+            Int32ReadOnlyDictionary<TVertexCollection, TMultimap> dictionary =
+                Int32ReadOnlyDictionaryFactory<TVertexCollection>.Create(neighborsByVertex);
+            return FromDictionaryUnchecked(dictionary);
+        }
 
         private static Int32FrozenAdjacencyGraph FromDictionaryUnchecked<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyDictionary<int, TVertexCollection>
