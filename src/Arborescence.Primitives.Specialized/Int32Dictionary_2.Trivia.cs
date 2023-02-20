@@ -7,11 +7,11 @@ namespace Arborescence
 
     partial struct Int32Dictionary<TValue, TValueList>
     {
+        public bool IsReadOnly => false;
+
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator() => throw new NotImplementedException();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public bool IsReadOnly => throw new NotImplementedException();
 
         public void Clear() => _items?.Clear();
 
@@ -45,11 +45,7 @@ namespace Arborescence
 
         public bool Contains(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
 
-        bool IReadOnlyDictionary<int, TValue>.ContainsKey(int key) => throw new NotImplementedException();
-
         bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value) => throw new NotImplementedException();
-
-        bool IDictionary<int, TValue>.ContainsKey(int key) => throw new NotImplementedException();
 
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             throw new NotImplementedException();

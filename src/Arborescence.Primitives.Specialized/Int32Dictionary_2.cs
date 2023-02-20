@@ -18,6 +18,8 @@ namespace Arborescence
 
         public void Add(int key, TValue value) => throw new NotImplementedException();
 
+        public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
+
         public TValue this[int key]
         {
             get => throw new NotImplementedException();
