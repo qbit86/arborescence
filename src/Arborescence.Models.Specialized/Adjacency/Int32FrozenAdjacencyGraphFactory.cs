@@ -4,13 +4,11 @@ namespace Arborescence.Models.Specialized
     using System;
     using System.Collections.Generic;
 
-    public static class Int32FrozenAdjacencyGraphFactory<TVertexCollection, TVertexEnumerator>
+    public static class Int32FrozenAdjacencyGraphFactory<TVertexCollection>
         where TVertexCollection : ICollection<int>
     {
-        public static Int32FrozenAdjacencyGraph Create<TMultimap, TVertexCollectionPolicy>(
-            TMultimap neighborsByVertex, TVertexCollectionPolicy collectionPolicy)
+        public static Int32FrozenAdjacencyGraph Create<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyDictionary<int, TVertexCollection>
-            where TVertexCollectionPolicy : IEnumerablePolicy<TVertexCollection, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
                 return default;
