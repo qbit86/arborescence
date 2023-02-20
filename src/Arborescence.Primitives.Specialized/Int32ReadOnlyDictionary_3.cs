@@ -37,7 +37,13 @@ namespace Arborescence
             return unchecked((uint)key < (uint)self._items.Count) && !_absencePolicy.Equals(self._items[key]);
         }
 
-        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value)
+#if NETCOREAPP3_0_OR_GREATER
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
+#else
+        public bool TryGetValue(int key, out TValue value) => TryGetValueCore(key, out value!);
+#endif
+
+        private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
             if (self._items is null)
@@ -48,10 +54,6 @@ namespace Arborescence
             value = self._items[key];
             return !_absencePolicy.Equals(value);
         }
-
-#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) => TryGetValue(key, out value!);
-#endif
 
         public TValue this[int key]
         {
