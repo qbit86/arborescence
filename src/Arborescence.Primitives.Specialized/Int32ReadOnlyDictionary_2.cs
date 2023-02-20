@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
     using Primitives;
     using static TryHelpers;
 
@@ -28,6 +29,7 @@ namespace Arborescence
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)_items.Count);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
