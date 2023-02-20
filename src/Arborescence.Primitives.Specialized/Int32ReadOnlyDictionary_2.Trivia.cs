@@ -18,8 +18,6 @@ namespace Arborescence
 
         public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
 
-        private int CountUnchecked => _items.Count;
-
 #if NETCOREAPP3_0_OR_GREATER
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
             TryGetValueCore(key, out value);
@@ -41,7 +39,7 @@ namespace Arborescence
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
             Int32ReadOnlyDictionary<TValue, TValueList> self = this;
-            int count = self.CountUnchecked;
+            int count = self._items.Count;
             for (int key = 0; key < count; ++key)
                 yield return new(key, self._items[key]);
         }
