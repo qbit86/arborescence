@@ -1,6 +1,7 @@
 ﻿namespace Arborescence.Primitives
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
@@ -15,6 +16,10 @@
         [DoesNotReturn]
         internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
             throw new ArgumentNullException(GetArgumentName(argument));
+
+        [DoesNotReturn]
+        internal static void ThrowKeyNotFoundException(int key) =>
+            throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
 
         [DoesNotReturn]
         internal static void ThrowNotSupportedException() => throw new NotSupportedException();

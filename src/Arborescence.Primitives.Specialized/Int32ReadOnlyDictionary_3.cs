@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using Primitives;
     using static TryHelpers;
 
     public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> :
@@ -55,9 +56,9 @@ namespace Arborescence
         {
             get
             {
-                if (TryGetValueCore(key, out TValue? value))
-                    return value;
-                throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+                if (!TryGetValueCore(key, out TValue? value))
+                    ThrowHelper.ThrowKeyNotFoundException(key);
+                return value;
             }
         }
     }
