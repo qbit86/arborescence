@@ -47,7 +47,7 @@ namespace Arborescence
         {
             get
             {
-                if (TryGetValue(key, out TValue? value))
+                if (TryGetValueCore(key, out TValue? value))
                     return value;
                 throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
             }
