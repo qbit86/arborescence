@@ -11,8 +11,8 @@ namespace Arborescence
         {
             get
             {
-                Int32ReadOnlyDictionary<TValue, TValueList> self = this;
-                return self._items is null ? Enumerable.Empty<int>() : Enumerable.Range(0, self.CountUnchecked);
+                int count = (_items?.Count).GetValueOrDefault();
+                return count is 0 ? Enumerable.Empty<int>() : Enumerable.Range(0, count);
             }
         }
 
