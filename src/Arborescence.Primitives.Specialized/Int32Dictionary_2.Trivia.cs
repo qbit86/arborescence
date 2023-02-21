@@ -22,10 +22,6 @@ namespace Arborescence
 
         public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
-
-        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
-
         ICollection<int> IDictionary<int, TValue>.Keys => ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
 
         ICollection<TValue> IDictionary<int, TValue>.Values => _items ?? (ICollection<TValue>)Array.Empty<TValue>();
@@ -45,10 +41,10 @@ namespace Arborescence
 
         public bool Remove(int key) => throw new NotImplementedException();
 
-        bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value) => throw new NotImplementedException();
+        bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value) => TryGetValueCore(key, out value!);
 
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
-            throw new NotImplementedException();
+            TryGetValueCore(key, out value!);
 
         public bool Equals(Int32Dictionary<TValue, TValueList> other) =>
             EqualityComparer<TValueList>.Default.Equals(_items, other._items);
