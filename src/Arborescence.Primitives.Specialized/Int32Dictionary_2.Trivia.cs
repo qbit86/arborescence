@@ -108,7 +108,8 @@ namespace Arborescence
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32Dictionary<TValue, TValueList> other && Equals(other);
 
-        public override int GetHashCode() => EqualityComparer<TValueList>.Default.GetHashCode(_items);
+        public override int GetHashCode() =>
+            _items is { } items ? EqualityComparer<TValueList>.Default.GetHashCode(items) : 0;
 
         public static bool operator ==(
             Int32Dictionary<TValue, TValueList> left, Int32Dictionary<TValue, TValueList> right) => left.Equals(right);
