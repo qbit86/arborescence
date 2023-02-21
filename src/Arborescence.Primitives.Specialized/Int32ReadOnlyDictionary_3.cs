@@ -47,14 +47,8 @@ namespace Arborescence
             return !self._absencePolicy.Equals(value);
         }
 
-        public TValue this[int key]
-        {
-            get
-            {
-                if (!TryGetValueCore(key, out TValue? value))
-                    ThrowHelper.ThrowKeyNotFoundException(key);
-                return value;
-            }
-        }
+        public TValue this[int key] => TryGetValueCore(key, out TValue? value)
+            ? value
+            : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
     }
 }

@@ -22,6 +22,10 @@
             throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
 
         [DoesNotReturn]
+        internal static TResult ThrowKeyNotFoundException<TResult>(int key) =>
+            throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+
+        [DoesNotReturn]
         internal static void ThrowNotSupportedException() => throw new NotSupportedException();
 
         [DoesNotReturn]

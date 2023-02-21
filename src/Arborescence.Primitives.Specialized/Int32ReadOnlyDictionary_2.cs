@@ -32,14 +32,8 @@ namespace Arborescence
                 : Some(items[key], out value);
         }
 
-        public TValue this[int key]
-        {
-            get
-            {
-                if (!TryGetValueCore(key, out TValue? value))
-                    ThrowHelper.ThrowKeyNotFoundException(key);
-                return value;
-            }
-        }
+        public TValue this[int key] => TryGetValueCore(key, out TValue? value)
+            ? value
+            : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
     }
 }
