@@ -39,8 +39,13 @@ namespace Arborescence
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
-        public bool Equals(Int32Dictionary<TValue, TValueList, TAbsenceComparer> other) =>
-            throw new NotImplementedException();
+        public bool Equals(Int32Dictionary<TValue, TValueList, TAbsenceComparer> other)
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            return EqualityComparer<TValueList>.Default.Equals(self._items, other._items) &&
+                EqualityComparer<TAbsenceComparer>.Default.Equals(self._absenceComparer, other._absenceComparer) &&
+                EqualityComparer<TValue>.Default.Equals(self._absenceMarker, other._absenceMarker);
+        }
 
         public override bool Equals(object? obj) =>
             obj is Int32Dictionary<TValue, TValueList, TAbsenceComparer> other && Equals(other);
