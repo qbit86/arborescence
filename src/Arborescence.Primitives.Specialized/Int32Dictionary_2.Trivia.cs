@@ -36,6 +36,9 @@ namespace Arborescence
 
         public void Clear() => _items?.Clear();
 
+        public bool Contains(KeyValuePair<int, TValue> item) =>
+            TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
+
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
 
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
@@ -60,7 +63,5 @@ namespace Arborescence
 
         public static bool operator !=(
             Int32Dictionary<TValue, TValueList> left, Int32Dictionary<TValue, TValueList> right) => !left.Equals(right);
-
-        public bool Contains(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
     }
 }
