@@ -45,7 +45,18 @@ namespace Arborescence
         public override bool Equals(object? obj) =>
             obj is Int32Dictionary<TValue, TValueList, TAbsenceComparer> other && Equals(other);
 
-        public override int GetHashCode() => throw new NotImplementedException();
+        public override int GetHashCode()
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            if (self._items is not { } items)
+                return 0;
+            HashCode hashCode = new();
+            if (self._absenceMarker is { } absenceMarker)
+                hashCode.Add(EqualityComparer<TValue>.Default.GetHashCode(absenceMarker));
+            hashCode.Add(EqualityComparer<TValueList>.Default.GetHashCode(items));
+            hashCode.Add(EqualityComparer<TAbsenceComparer>.Default.GetHashCode(self._absenceComparer));
+            return hashCode.ToHashCode();
+        }
 
         public static bool operator ==(
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
