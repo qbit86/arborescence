@@ -7,8 +7,8 @@
     node [width=1.8]
     a [label=Abstractions]
     b [label=Primitives]
-    c [label=Models group=mt]
-    d [label=Traversal group=mt]
+    c [label=Models]
+    d [label=Traversal]
   }
   subgraph Specialized {
     cluster=true
