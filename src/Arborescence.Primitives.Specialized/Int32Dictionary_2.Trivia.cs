@@ -30,6 +30,8 @@ namespace Arborescence
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public void Add(KeyValuePair<int, TValue> item) => Add(item.Key, item.Value);
+
         public void Clear() => _items?.Clear();
 
         public bool Contains(KeyValuePair<int, TValue> item) =>

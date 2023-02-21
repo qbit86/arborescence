@@ -11,6 +11,10 @@
     internal static class ThrowHelper
     {
         [DoesNotReturn]
+        internal static void ThrowAddingDuplicateWithKeyArgumentException(int key) =>
+            throw new ArgumentException($"An item with the same key has already been added. Key: {key}", nameof(key));
+
+        [DoesNotReturn]
         internal static void ThrowArgumentNullException(string paramName) => throw new ArgumentNullException(paramName);
 
         [DoesNotReturn]

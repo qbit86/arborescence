@@ -18,9 +18,17 @@ namespace Arborescence
 
         public int Count => (_items?.Count).GetValueOrDefault();
 
-        public void Add(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
-
-        public void Add(int key, TValue value) => throw new NotImplementedException();
+        public void Add(int key, TValue value)
+        {
+            TValueList items = _items;
+            int count = items.Count;
+            if (unchecked((uint)key > (uint)count))
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+            else if (key == count)
+                items.Add(value);
+            else
+                ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
+        }
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
 
@@ -40,9 +48,9 @@ namespace Arborescence
         {
             TValueList items = _items;
             int count = items.Count;
-            if (unchecked((uint)key >= (uint)count))
+            if (unchecked((uint)key > (uint)count))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
-            if (key == count)
+            else if (key == count)
                 items.Add(value);
             else
                 items[key] = value;
