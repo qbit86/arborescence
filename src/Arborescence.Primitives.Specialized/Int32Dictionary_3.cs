@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
+    using Primitives;
 
     public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>,
@@ -12,14 +13,14 @@ namespace Arborescence
         where TAbsenceComparer : IEqualityComparer<TValue>
     {
         private readonly TValueList _items;
-        private readonly TValue _absenceMarker;
         private readonly TAbsenceComparer _absenceComparer;
+        private readonly TValue? _absenceMarker;
 
-        internal Int32Dictionary(TValueList items, TValue absenceMarker, TAbsenceComparer absenceComparer)
+        internal Int32Dictionary(TValueList items, TAbsenceComparer absenceComparer, TValue? absenceMarker)
         {
             _items = items;
-            _absenceMarker = absenceMarker;
             _absenceComparer = absenceComparer;
+            _absenceMarker = absenceMarker;
         }
 
         public int Count => (_items?.Count).GetValueOrDefault();
@@ -36,7 +37,9 @@ namespace Arborescence
 
         public TValue this[int key]
         {
-            get => throw new NotImplementedException();
+            get => TryGetValueCore(key, out TValue? value)
+                ? value
+                : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
             set => throw new NotImplementedException();
         }
     }
