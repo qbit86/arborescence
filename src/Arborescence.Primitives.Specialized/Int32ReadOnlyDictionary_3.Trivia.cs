@@ -19,13 +19,8 @@ namespace Arborescence
 
         public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
 
-#if NETCOREAPP3_0_OR_GREATER
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) =>
-            TryGetValueCore(key, out value);
-#else
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
-#endif
 
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
