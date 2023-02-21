@@ -5,7 +5,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using Primitives;
 
-    public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsencePolicy>
+    public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer>
     {
         public bool IsReadOnly => false;
 
@@ -39,20 +39,20 @@ namespace Arborescence
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
-        public bool Equals(Int32Dictionary<TValue, TValueList, TAbsencePolicy> other) =>
+        public bool Equals(Int32Dictionary<TValue, TValueList, TAbsenceComparer> other) =>
             throw new NotImplementedException();
 
         public override bool Equals(object? obj) =>
-            obj is Int32Dictionary<TValue, TValueList, TAbsencePolicy> other && Equals(other);
+            obj is Int32Dictionary<TValue, TValueList, TAbsenceComparer> other && Equals(other);
 
         public override int GetHashCode() => throw new NotImplementedException();
 
         public static bool operator ==(
-            Int32Dictionary<TValue, TValueList, TAbsencePolicy> left,
-            Int32Dictionary<TValue, TValueList, TAbsencePolicy> right) => left.Equals(right);
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> right) => left.Equals(right);
 
         public static bool operator !=(
-            Int32Dictionary<TValue, TValueList, TAbsencePolicy> left,
-            Int32Dictionary<TValue, TValueList, TAbsencePolicy> right) => !left.Equals(right);
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> right) => !left.Equals(right);
     }
 }

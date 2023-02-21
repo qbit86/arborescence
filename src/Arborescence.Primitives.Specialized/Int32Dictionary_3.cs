@@ -5,19 +5,21 @@ namespace Arborescence
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsencePolicy> :
+    public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>,
-        IEquatable<Int32Dictionary<TValue, TValueList, TAbsencePolicy>>
+        IEquatable<Int32Dictionary<TValue, TValueList, TAbsenceComparer>>
         where TValueList : IList<TValue>
-        where TAbsencePolicy : IEquatable<TValue>
+        where TAbsenceComparer : IEqualityComparer<TValue>
     {
         private readonly TValueList _items;
-        private readonly TAbsencePolicy _absencePolicy;
+        private readonly TValue _absenceMarker;
+        private readonly TAbsenceComparer _absenceComparer;
 
-        internal Int32Dictionary(TValueList items, TAbsencePolicy absencePolicy)
+        internal Int32Dictionary(TValueList items, TValue absenceMarker, TAbsenceComparer absenceComparer)
         {
             _items = items;
-            _absencePolicy = absencePolicy;
+            _absenceMarker = absenceMarker;
+            _absenceComparer = absenceComparer;
         }
 
         public int Count => (_items?.Count).GetValueOrDefault();
