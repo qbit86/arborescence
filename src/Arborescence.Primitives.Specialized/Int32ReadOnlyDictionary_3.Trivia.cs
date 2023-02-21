@@ -34,11 +34,11 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            int count = self._items.Count;
+            TValueList items = _items;
+            int count = items.Count;
             for (int key = 0; key < count; ++key)
             {
-                TValue value = self._items[key];
+                TValue value = items[key];
                 if (!_absencePolicy.Equals(value))
                     yield return new(key, value);
             }

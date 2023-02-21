@@ -33,10 +33,10 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList> self = this;
-            int count = self._items.Count;
+            TValueList items = _items;
+            int count = items.Count;
             for (int key = 0; key < count; ++key)
-                yield return new(key, self._items[key]);
+                yield return new(key, items[key]);
         }
 
         public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList> other) =>
