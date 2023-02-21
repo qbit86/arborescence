@@ -11,11 +11,15 @@
     internal static class ThrowHelper
     {
         [DoesNotReturn]
-        internal static void ThrowArgumentNullException(string argument) => throw new ArgumentNullException(argument);
+        internal static void ThrowArgumentNullException(string paramName) => throw new ArgumentNullException(paramName);
 
         [DoesNotReturn]
         internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
             throw new ArgumentNullException(GetArgumentName(argument));
+
+        [DoesNotReturn]
+        internal static void ThrowArgumentOutOfRangeException(string paramName) =>
+            throw new ArgumentOutOfRangeException(paramName);
 
         [DoesNotReturn]
         internal static void ThrowKeyNotFoundException(int key) =>

@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
+    using Primitives;
     using static TryHelpers;
 
     public readonly partial struct Int32Dictionary<TValue, TValueList> :
@@ -35,10 +36,24 @@ namespace Arborescence
                 : Some(items[key], out value);
         }
 
+        private void Put(int key, TValue value)
+        {
+            TValueList items = _items;
+            int count = items.Count;
+            if (unchecked((uint)key >= (uint)count))
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+            if (key == count)
+                items.Add(value);
+            else
+                items[key] = value;
+        }
+
         public TValue this[int key]
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => TryGetValueCore(key, out TValue? value)
+                ? value
+                : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
+            set => Put(key, value);
         }
     }
 }
