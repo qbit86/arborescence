@@ -34,6 +34,8 @@ Commonly used types:
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.HashCode" />
+    <PackageReference Include="System.Buffers" />
+    <PackageReference Include="System.Memory" />
   </ItemGroup>
 
   <ItemGroup>

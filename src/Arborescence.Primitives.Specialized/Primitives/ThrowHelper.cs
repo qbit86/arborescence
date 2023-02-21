@@ -15,6 +15,10 @@
             throw new ArgumentException($"An item with the same key has already been added. Key: {key}", nameof(key));
 
         [DoesNotReturn]
+        internal static void ThrowDestinationArrayTooSmallException() => throw new ArgumentException(
+            "Destination array is not long enough to copy all the items in the collection. Check array index and length.");
+
+        [DoesNotReturn]
         internal static void ThrowArgumentNullException(string paramName) => throw new ArgumentNullException(paramName);
 
         [DoesNotReturn]
