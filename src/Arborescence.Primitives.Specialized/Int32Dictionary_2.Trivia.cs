@@ -4,10 +4,31 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using Primitives;
 
     partial struct Int32Dictionary<TValue, TValueList>
     {
         public bool IsReadOnly => false;
+
+        public IEnumerable<int> Keys
+        {
+            get
+            {
+                int count = (_items?.Count).GetValueOrDefault();
+                return count is 0 ? Enumerable.Empty<int>() : Enumerable.Range(0, count);
+            }
+        }
+
+        public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
+
+        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => Keys;
+
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => Values;
+
+        ICollection<int> IDictionary<int, TValue>.Keys => ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
+
+        ICollection<TValue> IDictionary<int, TValue>.Values => _items ?? (ICollection<TValue>)Array.Empty<TValue>();
 
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator() => throw new NotImplementedException();
 
@@ -21,13 +42,10 @@ namespace Arborescence
 
         public bool Remove(int key) => throw new NotImplementedException();
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => throw new NotImplementedException();
+        bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value) => throw new NotImplementedException();
 
-        ICollection<TValue> IDictionary<int, TValue>.Values => throw new NotImplementedException();
-
-        ICollection<int> IDictionary<int, TValue>.Keys => throw new NotImplementedException();
-
-        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => throw new NotImplementedException();
+        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
+            throw new NotImplementedException();
 
         public bool Equals(Int32Dictionary<TValue, TValueList> other) =>
             EqualityComparer<TValueList>.Default.Equals(_items, other._items);
@@ -44,10 +62,5 @@ namespace Arborescence
             Int32Dictionary<TValue, TValueList> left, Int32Dictionary<TValue, TValueList> right) => !left.Equals(right);
 
         public bool Contains(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
-
-        bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value) => throw new NotImplementedException();
-
-        bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
-            throw new NotImplementedException();
     }
 }

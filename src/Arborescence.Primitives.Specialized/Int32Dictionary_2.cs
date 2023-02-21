@@ -2,6 +2,9 @@ namespace Arborescence
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
+    using static TryHelpers;
 
     public readonly partial struct Int32Dictionary<TValue, TValueList> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>,
@@ -19,6 +22,18 @@ namespace Arborescence
         public void Add(int key, TValue value) => throw new NotImplementedException();
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
+
+        private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
+        {
+            if (_items is not { } items)
+                return None(out value);
+            return unchecked((uint)key >= (uint)items.Count)
+                ? None(out value)
+                : Some(items[key], out value);
+        }
 
         public TValue this[int key]
         {

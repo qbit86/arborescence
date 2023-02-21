@@ -6,7 +6,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/ThrowHelper.cs
 
     internal static class ThrowHelper
     {
@@ -23,6 +23,9 @@
 
         [DoesNotReturn]
         internal static void ThrowNotSupportedException() => throw new NotSupportedException();
+
+        [DoesNotReturn]
+        internal static TResult ThrowNotSupportedException<TResult>() => throw new NotSupportedException();
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static string GetArgumentName(ExceptionArgument argument)
