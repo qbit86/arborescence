@@ -3,6 +3,7 @@ namespace Arborescence
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Primitives;
 
     public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer>
@@ -44,10 +45,10 @@ namespace Arborescence
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
             return EqualityComparer<TValueList>.Default.Equals(self._items, other._items) &&
                 EqualityComparer<TAbsenceComparer>.Default.Equals(self._absenceComparer, other._absenceComparer) &&
-                EqualityComparer<TValue>.Default.Equals(self._absenceMarker, other._absenceMarker);
+                EqualityComparer<TValue>.Default.Equals(self._absenceMarker!, other._absenceMarker!);
         }
 
-        public override bool Equals(object? obj) =>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32Dictionary<TValue, TValueList, TAbsenceComparer> other && Equals(other);
 
         public override int GetHashCode()
