@@ -28,7 +28,12 @@ namespace Arborescence
 
         public void Add(int key, TValue value) => throw new NotImplementedException();
 
-        public bool ContainsKey(int key) => throw new NotImplementedException();
+        public bool ContainsKey(int key)
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            return unchecked((uint)key < (uint)self.Count) &&
+                !self._absenceComparer.Equals(self._items[key], self._absenceMarker!);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
