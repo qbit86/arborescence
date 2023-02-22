@@ -26,13 +26,27 @@ namespace Arborescence
 
         public int Count => (_items?.Count).GetValueOrDefault();
 
-        public void Add(int key, TValue value) => throw new NotImplementedException();
+        public void Add(int key, TValue value)
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            TValueList items = self._items;
+            int count = items.Count;
+            if (unchecked((uint)key > (uint)count))
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+            else if (key == count)
+                items.Add(value);
+            else if (self.IsAbsence(items[key]))
+                items[key] = value;
+            else
+                ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
+        }
 
         public bool ContainsKey(int key)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            return unchecked((uint)key < (uint)self.Count) &&
-                !self._absenceComparer.Equals(self._items[key], self._absenceMarker!);
+            if (self._items is not { } items)
+                return false;
+            return unchecked((uint)key < (uint)items.Count) && !self.IsAbsence(items[key]);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,7 +61,7 @@ namespace Arborescence
                 return None(out value);
 
             value = items[key];
-            return !self._absenceComparer.Equals(value, _absenceMarker!);
+            return !self.IsAbsence(value);
         }
 
         private void Put(int key, TValue value)
@@ -79,6 +93,12 @@ namespace Arborescence
                 ? value
                 : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
             set => Put(key, value);
+        }
+
+        private bool IsAbsence(TValue value)
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            return self._absenceComparer.Equals(value, self._absenceMarker!);
         }
     }
 }
