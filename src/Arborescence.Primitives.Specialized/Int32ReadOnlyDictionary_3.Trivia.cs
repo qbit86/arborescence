@@ -25,7 +25,7 @@ namespace Arborescence
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            return self._items is null
+            return self._items is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
         }
