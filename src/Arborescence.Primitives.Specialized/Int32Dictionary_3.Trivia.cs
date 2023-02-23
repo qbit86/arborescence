@@ -9,6 +9,10 @@ namespace Arborescence
 
     public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer>
     {
+        int IReadOnlyCollection<KeyValuePair<int, TValue>>.Count => GetCount();
+
+        int ICollection<KeyValuePair<int, TValue>>.Count => GetCount();
+
         public bool IsReadOnly => false;
 
         IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys

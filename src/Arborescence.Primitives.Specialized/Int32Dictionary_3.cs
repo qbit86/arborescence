@@ -24,7 +24,23 @@ namespace Arborescence
             _absenceMarker = absenceMarker;
         }
 
-        public int Count => (_items?.Count).GetValueOrDefault();
+        public int MaxCount => (_items?.Count).GetValueOrDefault();
+
+        public int GetCount()
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            if (self._items is not { } items)
+                return 0;
+            int count = items.Count;
+            int result = 0;
+            for (int i = 0; i < count; ++i)
+            {
+                if (!self.IsAbsence(items[i]))
+                    ++result;
+            }
+
+            return result;
+        }
 
         public void Add(int key, TValue value)
         {
