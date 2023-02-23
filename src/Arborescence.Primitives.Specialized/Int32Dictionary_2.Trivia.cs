@@ -66,8 +66,7 @@ namespace Arborescence
             if (unchecked((uint)arrayIndex > (uint)array.Length))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
 
-            TValueList items = _items;
-            if (items is null)
+            if (_items is not { } items)
                 return;
             int count = items.Count;
             Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
