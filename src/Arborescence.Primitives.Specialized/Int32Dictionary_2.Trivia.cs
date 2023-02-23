@@ -22,7 +22,14 @@ namespace Arborescence
 
         public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
 
-        ICollection<int> IDictionary<int, TValue>.Keys => ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
+        ICollection<int> IDictionary<int, TValue>.Keys
+        {
+            get
+            {
+                int count = (_items?.Count).GetValueOrDefault();
+                return count is 0 ? Array.Empty<int>() : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
+            }
+        }
 
         ICollection<TValue> IDictionary<int, TValue>.Values => _items ?? (ICollection<TValue>)Array.Empty<TValue>();
 

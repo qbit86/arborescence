@@ -34,7 +34,14 @@ namespace Arborescence
             }
         }
 
-        ICollection<int> IDictionary<int, TValue>.Keys => ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
+        ICollection<int> IDictionary<int, TValue>.Keys
+        {
+            get
+            {
+                int count = (_items?.Count).GetValueOrDefault();
+                return count is 0 ? Array.Empty<int>() : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
+            }
+        }
 
         ICollection<TValue> IDictionary<int, TValue>.Values =>
             ThrowHelper.ThrowNotSupportedException<ICollection<TValue>>();
