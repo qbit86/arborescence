@@ -68,8 +68,8 @@ namespace Arborescence
 
             if (_items is not { } items)
                 return;
-            int count = items.Count;
             Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
+            int count = items.Count;
             if (destination.Length < count)
                 ThrowHelper.ThrowDestinationArrayTooSmallException();
             for (int i = 0; i < count; ++i)

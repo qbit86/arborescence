@@ -67,7 +67,7 @@ namespace Arborescence
             int count = items.Count;
             for (int key = 0; key < count; ++key)
             {
-                TValue? value = items[key];
+                TValue value = items[key];
                 if (!self.IsAbsence(value))
                     yield return new(key, items[key]);
             }
@@ -91,7 +91,19 @@ namespace Arborescence
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
             if (self._items is not { } items)
                 return;
-            throw new NotImplementedException();
+            Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
+            int sourceCount = items.Count;
+            int destinationLength = destination.Length;
+            for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceCount; ++sourceIndex)
+            {
+                TValue value = items[sourceIndex];
+                if (IsAbsence(value))
+                    continue;
+                if (destinationIndex < destinationLength)
+                    destination[destinationIndex++] = new(sourceIndex, value);
+                else
+                    ThrowHelper.ThrowDestinationArrayTooSmallException();
+            }
         }
 
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
