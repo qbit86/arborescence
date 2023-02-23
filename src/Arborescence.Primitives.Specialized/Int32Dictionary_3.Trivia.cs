@@ -46,9 +46,28 @@ namespace Arborescence
         ICollection<TValue> IDictionary<int, TValue>.Values =>
             ThrowHelper.ThrowNotSupportedException<ICollection<TValue>>();
 
-        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator() => throw new NotImplementedException();
+        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            return self._items is null
+                ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
+                : self.GetEnumeratorIterator();
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            TValueList items = self._items;
+            int count = items.Count;
+            for (int key = 0; key < count; ++key)
+            {
+                TValue? value = items[key];
+                if (!self.IsAbsence(value))
+                    yield return new(key, items[key]);
+            }
+        }
 
         public void Add(KeyValuePair<int, TValue> item) => Add(item.Key, item.Value);
 
