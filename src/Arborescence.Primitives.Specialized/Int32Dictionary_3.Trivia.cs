@@ -4,15 +4,35 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Primitives;
 
     public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer>
     {
         public bool IsReadOnly => false;
 
-        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys => throw new NotImplementedException();
+        IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys
+        {
+            get
+            {
+                Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+                if (self._items is not { } items)
+                    return Enumerable.Empty<int>();
+                return items.Select((value, index) => new KeyValuePair<int, TValue>(index, value))
+                    .Where(it => !self.IsAbsence(it.Value)).Select(it => it.Key);
+            }
+        }
 
-        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values => throw new NotImplementedException();
+        IEnumerable<TValue> IReadOnlyDictionary<int, TValue>.Values
+        {
+            get
+            {
+                Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+                return self._items is not { } items
+                    ? Enumerable.Empty<TValue>()
+                    : items.Where(value => !self.IsAbsence(value));
+            }
+        }
 
         ICollection<int> IDictionary<int, TValue>.Keys => ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
 
