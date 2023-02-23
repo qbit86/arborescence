@@ -54,7 +54,8 @@ namespace Arborescence
 
         public void Clear() => _items?.Clear();
 
-        public bool Contains(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
+        public bool Contains(KeyValuePair<int, TValue> item) =>
+            TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
 
