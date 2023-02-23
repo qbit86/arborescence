@@ -76,7 +76,19 @@ namespace Arborescence
         public bool Contains(KeyValuePair<int, TValue> item) =>
             TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
-        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
+        public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
+        {
+            if (array is null)
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
+
+            if (unchecked((uint)arrayIndex > (uint)array.Length))
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
+
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            if (self._items is not { } items)
+                return;
+            throw new NotImplementedException();
+        }
 
         public bool Remove(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
 
