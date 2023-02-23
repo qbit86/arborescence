@@ -22,21 +22,16 @@ namespace Arborescence
 
         public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
 
-        ICollection<int> IDictionary<int, TValue>.Keys
-        {
-            get
-            {
-                int count = (_items?.Count).GetValueOrDefault();
-                return count is 0 ? Array.Empty<int>() : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
-            }
-        }
+        ICollection<int> IDictionary<int, TValue>.Keys => _items is not { Count: > 0 }
+            ? Array.Empty<int>()
+            : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
 
         ICollection<TValue> IDictionary<int, TValue>.Values => _items ?? (ICollection<TValue>)Array.Empty<TValue>();
 
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32Dictionary<TValue, TValueList> self = this;
-            return self._items is null
+            return self._items is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
         }

@@ -20,7 +20,7 @@ namespace Arborescence
             get
             {
                 Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-                if (self._items is not { } items)
+                if (self._items is not { Count: > 0 } items)
                     return Enumerable.Empty<int>();
                 return items.Select((value, index) => new KeyValuePair<int, TValue>(index, value))
                     .Where(it => !self.IsAbsence(it.Value)).Select(it => it.Key);
@@ -32,20 +32,15 @@ namespace Arborescence
             get
             {
                 Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-                return self._items is not { } items
+                return self._items is not { Count: > 0 } items
                     ? Enumerable.Empty<TValue>()
                     : items.Where(value => !self.IsAbsence(value));
             }
         }
 
-        ICollection<int> IDictionary<int, TValue>.Keys
-        {
-            get
-            {
-                int count = (_items?.Count).GetValueOrDefault();
-                return count is 0 ? Array.Empty<int>() : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
-            }
-        }
+        ICollection<int> IDictionary<int, TValue>.Keys => _items is not { Count: > 0 }
+            ? Array.Empty<int>()
+            : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
 
         ICollection<TValue> IDictionary<int, TValue>.Values =>
             ThrowHelper.ThrowNotSupportedException<ICollection<TValue>>();
@@ -53,7 +48,7 @@ namespace Arborescence
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            return self._items is null
+            return self._items is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
         }
@@ -129,13 +124,12 @@ namespace Arborescence
         public override int GetHashCode()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (self._items is not { } items)
-                return 0;
             HashCode hashCode = new();
+            if (self._items is { Count: > 0 } items)
+                hashCode.Add(EqualityComparer<TValueList>.Default.GetHashCode(items));
+            hashCode.Add(EqualityComparer<TAbsenceComparer>.Default.GetHashCode(self._absenceComparer));
             if (self._absenceMarker is { } absenceMarker)
                 hashCode.Add(EqualityComparer<TValue>.Default.GetHashCode(absenceMarker));
-            hashCode.Add(EqualityComparer<TValueList>.Default.GetHashCode(items));
-            hashCode.Add(EqualityComparer<TAbsenceComparer>.Default.GetHashCode(self._absenceComparer));
             return hashCode.ToHashCode();
         }
 
