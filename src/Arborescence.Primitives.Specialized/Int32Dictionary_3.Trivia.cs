@@ -101,9 +101,34 @@ namespace Arborescence
             }
         }
 
-        public bool Remove(KeyValuePair<int, TValue> item) => throw new NotImplementedException();
+        public bool Remove(KeyValuePair<int, TValue> item)
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            if (_items is not { } items)
+                return false;
+            int key = item.Key;
+            int count = items.Count;
+            if (unchecked((uint)key >= (uint)count))
+                return false;
+            TValue existingValue = items[key];
+            if (self._absenceComparer.Equals(existingValue, self._absenceMarker) ||
+                !EqualityComparer<TValue>.Default.Equals(existingValue, item.Value))
+                return false;
+            items[key] = self._absenceMarker!;
+            return true;
+        }
 
-        public bool Remove(int key) => throw new NotImplementedException();
+        public bool Remove(int key)
+        {
+            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            if (self._items is not { } items)
+                return false;
+            int count = items.Count;
+            if (unchecked((uint)key >= (uint)count))
+                return false;
+            items[key] = self._absenceMarker!;
+            return true;
+        }
 
         bool IDictionary<int, TValue>.TryGetValue(int key, out TValue value) => TryGetValueCore(key, out value!);
 

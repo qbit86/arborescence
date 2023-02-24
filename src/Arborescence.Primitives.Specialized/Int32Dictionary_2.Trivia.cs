@@ -73,12 +73,13 @@ namespace Arborescence
 
         public bool Remove(KeyValuePair<int, TValue> item)
         {
+            if (_items is not { } items)
+                return false;
             int key = item.Key;
-            TValueList items = _items;
             int count = items.Count;
             if (unchecked((uint)key >= (uint)count))
                 return false;
-            if (!EqualityComparer<TValue>.Default.Equals(item.Value, items[key]))
+            if (!EqualityComparer<TValue>.Default.Equals(items[key], item.Value))
                 return false;
             if (key != count - 1)
                 return ThrowHelper.ThrowNotSupportedException<bool>();
@@ -88,7 +89,8 @@ namespace Arborescence
 
         public bool Remove(int key)
         {
-            TValueList items = _items;
+            if (_items is not { } items)
+                return false;
             int count = items.Count;
             if (unchecked((uint)key >= (uint)count))
                 return false;
