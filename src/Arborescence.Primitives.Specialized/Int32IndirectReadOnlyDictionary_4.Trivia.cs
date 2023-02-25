@@ -14,8 +14,17 @@ namespace Arborescence
         bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => throw new System.NotImplementedException();
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            return self._indexByKey is null
+                ? Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator()
+                : self.GetEnumeratorIterator();
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator() =>
+            throw new System.NotImplementedException();
     }
 }
