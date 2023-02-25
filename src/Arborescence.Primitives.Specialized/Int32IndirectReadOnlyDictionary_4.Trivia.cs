@@ -6,7 +6,17 @@ namespace Arborescence
 
     partial struct Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>
     {
-        public IEnumerable<TKey> Keys => throw new System.NotImplementedException();
+        public IEnumerable<TKey> Keys
+        {
+            get
+            {
+                Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+                if (self._indexByKey is not { } indexByKey)
+                    return Enumerable.Empty<TKey>();
+                return indexByKey.Keys
+                    .Where(key => indexByKey.TryGetValue(key, out int index) && self._valueByIndex.ContainsKey(index));
+            }
+        }
 
         public IEnumerable<TValue> Values =>
             _valueByIndex is { } valueByIndex ? valueByIndex.Values : Enumerable.Empty<TValue>();
@@ -24,7 +34,15 @@ namespace Arborescence
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator() =>
-            throw new System.NotImplementedException();
+        private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator()
+        {
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            foreach (KeyValuePair<TKey, int> keyIndexPair in self._indexByKey)
+            {
+                int index = keyIndexPair.Value;
+                if (self._valueByIndex.TryGetValue(index, out TValue? value))
+                    yield return new(keyIndexPair.Key, value);
+            }
+        }
     }
 }
