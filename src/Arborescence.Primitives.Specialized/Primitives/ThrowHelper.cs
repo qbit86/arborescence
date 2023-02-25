@@ -42,8 +42,8 @@
             throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
 
         [DoesNotReturn]
-        internal static TResult ThrowKeyNotFoundException<TResult>(string key) =>
-            throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+        internal static TResult ThrowKeyNotFoundException<TResult>() =>
+            throw new KeyNotFoundException("The given key was not present in the dictionary.");
 
         [DoesNotReturn]
         internal static void ThrowNotSupportedException() => throw new NotSupportedException();

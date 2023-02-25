@@ -53,7 +53,7 @@ namespace Arborescence
                     return ThrowHelper.ThrowArgumentNullException<TValue>(nameof(key));
                 return TryGetValueCore(key, out TValue? value)
                     ? value
-                    : ThrowHelper.ThrowKeyNotFoundException<TValue>(key.ToString());
+                    : ThrowHelper.ThrowKeyNotFoundException<TValue>();
             }
         }
     }
