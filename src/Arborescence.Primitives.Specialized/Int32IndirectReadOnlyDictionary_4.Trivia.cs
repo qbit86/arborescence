@@ -9,6 +9,9 @@ namespace Arborescence
 
         public IEnumerable<TValue> Values => throw new System.NotImplementedException();
 
+        bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
+            TryGetValueCore(key, out value!);
+
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => throw new System.NotImplementedException();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

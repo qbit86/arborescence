@@ -22,6 +22,10 @@
         internal static void ThrowArgumentNullException(string paramName) => throw new ArgumentNullException(paramName);
 
         [DoesNotReturn]
+        internal static TResult ThrowArgumentNullException<TResult>(string paramName) =>
+            throw new ArgumentNullException(paramName);
+
+        [DoesNotReturn]
         internal static void ThrowArgumentNullException(ExceptionArgument argument) =>
             throw new ArgumentNullException(GetArgumentName(argument));
 
@@ -35,6 +39,10 @@
 
         [DoesNotReturn]
         internal static TResult ThrowKeyNotFoundException<TResult>(int key) =>
+            throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+
+        [DoesNotReturn]
+        internal static TResult ThrowKeyNotFoundException<TResult>(string key) =>
             throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
 
         [DoesNotReturn]
