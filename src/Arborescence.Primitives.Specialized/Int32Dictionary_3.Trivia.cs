@@ -114,7 +114,7 @@ namespace Arborescence
             if (unchecked((uint)key >= (uint)count))
                 return false;
             TValue existingValue = items[key];
-            if (self._absenceComparer.Equals(existingValue, self._absenceMarker) ||
+            if (self._absenceComparer.Equals(existingValue, self._absenceMarker!) ||
                 !EqualityComparer<TValue>.Default.Equals(existingValue, item.Value))
                 return false;
             items[key] = self._absenceMarker!;
