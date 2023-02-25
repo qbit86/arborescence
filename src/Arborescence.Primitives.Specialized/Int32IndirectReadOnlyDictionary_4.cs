@@ -1,5 +1,6 @@
 namespace Arborescence
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
@@ -7,7 +8,8 @@ namespace Arborescence
     using static TryHelpers;
 
     public readonly partial struct Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> :
-        IReadOnlyDictionary<TKey, TValue>
+        IReadOnlyDictionary<TKey, TValue>,
+        IEquatable<Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>>
         where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
         where TIndexToValueMap : IReadOnlyDictionary<int, TValue>
     {

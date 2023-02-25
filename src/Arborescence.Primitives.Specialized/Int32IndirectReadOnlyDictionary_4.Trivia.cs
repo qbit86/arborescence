@@ -1,7 +1,9 @@
 namespace Arborescence
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     partial struct Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>
@@ -44,5 +46,34 @@ namespace Arborescence
                     yield return new(keyIndexPair.Key, value);
             }
         }
+
+        public bool Equals(Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> other)
+        {
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            return EqualityComparer<TKeyToIndexMap>.Default.Equals(self._indexByKey, other._indexByKey) &&
+                EqualityComparer<TIndexToValueMap>.Default.Equals(self._valueByIndex, other._valueByIndex);
+        }
+
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> other &&
+            Equals(other);
+
+        public override int GetHashCode()
+        {
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            return HashCode.Combine(
+                EqualityComparer<TKeyToIndexMap>.Default.GetHashCode(self._indexByKey),
+                EqualityComparer<TIndexToValueMap>.Default.GetHashCode(self._valueByIndex));
+        }
+
+        public static bool operator ==(
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> left,
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> right) =>
+            left.Equals(right);
+
+        public static bool operator !=(
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> left,
+            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> right) =>
+            !left.Equals(right);
     }
 }
