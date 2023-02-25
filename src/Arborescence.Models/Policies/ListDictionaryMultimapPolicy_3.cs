@@ -6,10 +6,10 @@ namespace Arborescence.Models
         IMultimapPolicy<TKey, TMultimap, List<TValue>.Enumerator>
         where TMultimap : IReadOnlyDictionary<TKey, List<TValue>>
     {
-        private static readonly ListEnumerablePolicy<TValue> s_collectionPolicy = default;
+        private static ListEnumerablePolicy<TValue> CollectionPolicy => default;
 
         public List<TValue>.Enumerator GetEnumerator(TMultimap multimap, TKey key) =>
-            MultimapHelpers<List<TValue>, List<TValue>.Enumerator>.GetEnumerator(multimap, key, s_collectionPolicy);
+            MultimapHelpers<List<TValue>, List<TValue>.Enumerator>.GetEnumerator(multimap, key, CollectionPolicy);
 
         public int GetCount(TMultimap multimap) => multimap.Count;
     }

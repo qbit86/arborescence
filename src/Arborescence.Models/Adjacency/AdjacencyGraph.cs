@@ -14,7 +14,7 @@ namespace Arborescence.Models
         IEquatable<AdjacencyGraph<TVertex, TVertexMultimap>>
         where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
-        private static readonly ListDictionaryMultimapPolicy<TVertex, TVertexMultimap> s_multimapPolicy = default;
+        private static ListDictionaryMultimapPolicy<TVertex, TVertexMultimap> MultimapPolicy => default;
 
         private readonly TVertexMultimap _neighborsByVertex;
 
@@ -42,7 +42,7 @@ namespace Arborescence.Models
         }
 
         public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
-            s_multimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
+            MultimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
 
         public void AddEdge(TVertex tail, TVertex head)
         {
