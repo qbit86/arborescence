@@ -56,7 +56,10 @@ namespace Arborescence
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
         {
             if (array is null)
+            {
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
+                return;
+            }
 
             if (unchecked((uint)arrayIndex > (uint)array.Length))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
