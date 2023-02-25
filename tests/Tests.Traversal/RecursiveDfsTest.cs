@@ -17,7 +17,7 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
 
 public sealed class RecursiveDfsTest
 {
-    private void TraverseCore(Graph graph, bool multipleSource)
+    private static void TraverseCore(Graph graph, bool multipleSource)
     {
         // Arrange
 

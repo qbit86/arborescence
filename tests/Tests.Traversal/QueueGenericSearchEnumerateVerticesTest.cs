@@ -19,7 +19,7 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 
 public class QueueGenericSearchEnumerateVerticesTest
 {
-    private void EnumerateVerticesCore(Graph graph, bool multipleSource)
+    private static void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
         if (graph is null)
             throw new ArgumentNullException(nameof(graph));

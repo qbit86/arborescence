@@ -18,7 +18,7 @@ using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
 
 public sealed class BfsEnumerateEdgesTest
 {
-    private void EnumerateEdgesCore(Graph graph, bool multipleSource)
+    private static void EnumerateEdgesCore(Graph graph, bool multipleSource)
     {
         // Arrange
 

@@ -19,7 +19,7 @@ using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.Collect
 
 public sealed class DfsEnumerateVerticesTest
 {
-    private void EnumerateVerticesCore(Graph graph, bool multipleSource)
+    private static void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
         // Arrange
 
