@@ -2,6 +2,7 @@ namespace Arborescence.Traversal.Specialized
 {
     using System.Collections.Generic;
 
+#pragma warning disable CA1815
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph — implemented as enumerator.
     /// </summary>
@@ -14,4 +15,5 @@ namespace Arborescence.Traversal.Specialized
     public readonly partial struct EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
+#pragma warning restore CA1815
 }

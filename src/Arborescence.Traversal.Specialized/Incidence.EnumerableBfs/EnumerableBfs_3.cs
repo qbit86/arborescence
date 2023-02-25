@@ -2,6 +2,7 @@ namespace Arborescence.Traversal.Specialized
 {
     using System.Collections.Generic;
 
+#pragma warning disable CA1815
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph — implemented as enumerator.
     /// </summary>
@@ -14,4 +15,5 @@ namespace Arborescence.Traversal.Specialized
     public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
+#pragma warning restore CA1815
 }
