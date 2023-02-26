@@ -19,9 +19,26 @@ namespace Arborescence
         }
 
         public static Int32IndirectDictionary<
+                TKey, TValue, TKeyToIndexMap, Int32Dictionary<TValue, TValueList, EqualityComparer<TValue>>>
+            CreateFromListWithAbsence<TKeyToIndexMap, TValueList>(
+                TKeyToIndexMap indexByKey, TValueList values, TValue? absenceMarker = default)
+            where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
+            where TValueList : IList<TValue>
+        {
+            if (indexByKey is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+            if (values is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(values));
+            Int32Dictionary<TValue, TValueList, EqualityComparer<TValue>> valueByIndex =
+                new(values, EqualityComparer<TValue>.Default, absenceMarker);
+            return new(indexByKey, valueByIndex);
+        }
+
+        public static Int32IndirectDictionary<
                 TKey, TValue, TKeyToIndexMap, Int32Dictionary<TValue, TValueList, TAbsenceComparer>>
             CreateFromListWithAbsence<TKeyToIndexMap, TValueList, TAbsenceComparer>(
-                TKeyToIndexMap indexByKey, TValueList values, TAbsenceComparer absenceComparer, TValue? absenceMarker)
+                TKeyToIndexMap indexByKey, TValueList values, TAbsenceComparer absenceComparer,
+                TValue? absenceMarker = default)
             where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
             where TValueList : IList<TValue>
             where TAbsenceComparer : IEqualityComparer<TValue>
