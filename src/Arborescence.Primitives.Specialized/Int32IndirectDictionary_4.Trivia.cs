@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Primitives;
 
     partial struct Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>
@@ -18,11 +19,27 @@ namespace Arborescence
 
         ICollection<TKey> IDictionary<TKey, TValue>.Keys => throw new NotImplementedException();
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => throw new NotImplementedException();
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            return self._indexByKey is null || self._valueByIndex is null
+                ? Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator()
+                : self.GetEnumeratorIterator();
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void Add(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
+        private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator()
+        {
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            foreach (KeyValuePair<TKey, int> keyIndexPair in self._indexByKey)
+            {
+                if (self._valueByIndex.TryGetValue(keyIndexPair.Value, out TValue? value))
+                    yield return new(keyIndexPair.Key, value);
+            }
+        }
+
+        public void Add(KeyValuePair<TKey, TValue> item) => Add(item.Key, item.Value);
 
         public void Clear() => _valueByIndex?.Clear();
 
