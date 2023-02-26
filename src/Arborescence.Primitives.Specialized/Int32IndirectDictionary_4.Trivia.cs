@@ -29,9 +29,18 @@ namespace Arborescence
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
 
-        public bool Remove(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+        {
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            return self._indexByKey.TryGetValue(item.Key, out int index) &&
+                self._valueByIndex.Remove(new KeyValuePair<int, TValue>(index, item.Value));
+        }
 
-        public bool Remove(TKey key) => throw new NotImplementedException();
+        public bool Remove(TKey key)
+        {
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            return self._indexByKey.TryGetValue(key, out int index) && self._valueByIndex.Remove(index);
+        }
 
         bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) => TryGetValueCore(key, out value!);
 
