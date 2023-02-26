@@ -20,9 +20,9 @@ namespace Arborescence
             get
             {
                 Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-                if (self._items is not { Count: > 0 } items)
+                if (self._values is not { Count: > 0 } values)
                     return Enumerable.Empty<int>();
-                return items.Select((value, index) => new KeyValuePair<int, TValue>(index, value))
+                return values.Select((value, index) => new KeyValuePair<int, TValue>(index, value))
                     .Where(it => !self.IsAbsence(it.Value)).Select(it => it.Key);
             }
         }
@@ -32,13 +32,13 @@ namespace Arborescence
             get
             {
                 Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-                return self._items is not { Count: > 0 } items
+                return self._values is not { Count: > 0 } values
                     ? Enumerable.Empty<TValue>()
-                    : items.Where(value => !self.IsAbsence(value));
+                    : values.Where(value => !self.IsAbsence(value));
             }
         }
 
-        ICollection<int> IDictionary<int, TValue>.Keys => _items is not { Count: > 0 }
+        ICollection<int> IDictionary<int, TValue>.Keys => _values is not { Count: > 0 }
             ? Array.Empty<int>()
             : ThrowHelper.ThrowNotSupportedException<ICollection<int>>();
 
@@ -48,7 +48,7 @@ namespace Arborescence
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            return self._items is not { Count: > 0 }
+            return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
         }
@@ -58,19 +58,19 @@ namespace Arborescence
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            TValueList items = self._items;
-            int count = items.Count;
+            TValueList values = self._values;
+            int count = values.Count;
             for (int key = 0; key < count; ++key)
             {
-                TValue value = items[key];
+                TValue value = values[key];
                 if (!self.IsAbsence(value))
-                    yield return new(key, items[key]);
+                    yield return new(key, values[key]);
             }
         }
 
         public void Add(KeyValuePair<int, TValue> item) => Add(item.Key, item.Value);
 
-        public void Clear() => _items?.Clear();
+        public void Clear() => _values?.Clear();
 
         public bool Contains(KeyValuePair<int, TValue> item) =>
             TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
@@ -87,14 +87,14 @@ namespace Arborescence
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
 
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return;
             Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
-            int sourceCount = items.Count;
+            int sourceCount = values.Count;
             int destinationLength = destination.Length;
             for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceCount; ++sourceIndex)
             {
-                TValue value = items[sourceIndex];
+                TValue value = values[sourceIndex];
                 if (IsAbsence(value))
                     continue;
                 if (destinationIndex < destinationLength)
@@ -107,29 +107,29 @@ namespace Arborescence
         public bool Remove(KeyValuePair<int, TValue> item)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (_items is not { } items)
+            if (_values is not { } values)
                 return false;
             int key = item.Key;
-            int count = items.Count;
+            int count = values.Count;
             if (unchecked((uint)key >= (uint)count))
                 return false;
-            TValue existingValue = items[key];
+            TValue existingValue = values[key];
             if (self._absenceComparer.Equals(existingValue, self._absenceMarker!) ||
                 !EqualityComparer<TValue>.Default.Equals(existingValue, item.Value))
                 return false;
-            items[key] = self._absenceMarker!;
+            values[key] = self._absenceMarker!;
             return true;
         }
 
         public bool Remove(int key)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return false;
-            int count = items.Count;
+            int count = values.Count;
             if (unchecked((uint)key >= (uint)count))
                 return false;
-            items[key] = self._absenceMarker!;
+            values[key] = self._absenceMarker!;
             return true;
         }
 
@@ -141,7 +141,7 @@ namespace Arborescence
         public bool Equals(Int32Dictionary<TValue, TValueList, TAbsenceComparer> other)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            return EqualityComparer<TValueList>.Default.Equals(self._items, other._items) &&
+            return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
                 EqualityComparer<TAbsenceComparer>.Default.Equals(self._absenceComparer, other._absenceComparer) &&
                 EqualityComparer<TValue>.Default.Equals(self._absenceMarker!, other._absenceMarker!);
         }
@@ -152,13 +152,9 @@ namespace Arborescence
         public override int GetHashCode()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            HashCode hashCode = new();
-            if (self._items is { Count: > 0 } items)
-                hashCode.Add(EqualityComparer<TValueList>.Default.GetHashCode(items));
-            hashCode.Add(EqualityComparer<TAbsenceComparer>.Default.GetHashCode(self._absenceComparer));
-            if (self._absenceMarker is { } absenceMarker)
-                hashCode.Add(EqualityComparer<TValue>.Default.GetHashCode(absenceMarker));
-            return hashCode.ToHashCode();
+            return HashCode.Combine(EqualityComparer<TValueList>.Default.GetHashCode(self._values),
+                EqualityComparer<TAbsenceComparer>.Default.GetHashCode(self._absenceComparer),
+                EqualityComparer<TValue>.Default.GetHashCode(self._absenceMarker!));
         }
 
         public static bool operator ==(

@@ -12,20 +12,20 @@ namespace Arborescence
         IEquatable<Int32Dictionary<TValue, TValueList>>
         where TValueList : IList<TValue>
     {
-        private readonly TValueList _items;
+        private readonly TValueList _values;
 
-        internal Int32Dictionary(TValueList items) => _items = items;
+        internal Int32Dictionary(TValueList values) => _values = values;
 
-        public int Count => (_items?.Count).GetValueOrDefault();
+        public int Count => (_values?.Count).GetValueOrDefault();
 
         public void Add(int key, TValue value)
         {
-            TValueList items = _items;
-            int count = items.Count;
+            TValueList values = _values;
+            int count = values.Count;
             if (unchecked((uint)key > (uint)count))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
             else if (key == count)
-                items.Add(value);
+                values.Add(value);
             else
                 ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
         }
@@ -37,23 +37,23 @@ namespace Arborescence
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            if (_items is not { } items)
+            if (_values is not { } values)
                 return None(out value);
-            return unchecked((uint)key >= (uint)items.Count)
+            return unchecked((uint)key >= (uint)values.Count)
                 ? None(out value)
-                : Some(items[key], out value);
+                : Some(values[key], out value);
         }
 
         private void Put(int key, TValue value)
         {
-            TValueList items = _items;
-            int count = items.Count;
+            TValueList values = _values;
+            int count = values.Count;
             if (unchecked((uint)key > (uint)count))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
             else if (key == count)
-                items.Add(value);
+                values.Add(value);
             else
-                items[key] = value;
+                values[key] = value;
         }
 
         public TValue this[int key]

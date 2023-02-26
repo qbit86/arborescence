@@ -13,29 +13,29 @@ namespace Arborescence
         where TValueList : IList<TValue>
         where TAbsenceComparer : IEqualityComparer<TValue>
     {
-        private readonly TValueList _items;
+        private readonly TValueList _values;
         private readonly TAbsenceComparer _absenceComparer;
         private readonly TValue? _absenceMarker;
 
-        internal Int32Dictionary(TValueList items, TAbsenceComparer absenceComparer, TValue? absenceMarker)
+        internal Int32Dictionary(TValueList values, TAbsenceComparer absenceComparer, TValue? absenceMarker)
         {
-            _items = items;
+            _values = values;
             _absenceComparer = absenceComparer;
             _absenceMarker = absenceMarker;
         }
 
-        public int MaxCount => (_items?.Count).GetValueOrDefault();
+        public int MaxCount => (_values?.Count).GetValueOrDefault();
 
         public int GetCount()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return 0;
-            int count = items.Count;
+            int count = values.Count;
             int result = 0;
             for (int i = 0; i < count; ++i)
             {
-                if (!self.IsAbsence(items[i]))
+                if (!self.IsAbsence(values[i]))
                     ++result;
             }
 
@@ -45,14 +45,14 @@ namespace Arborescence
         public void Add(int key, TValue value)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            TValueList items = self._items;
-            int count = items.Count;
+            TValueList values = self._values;
+            int count = values.Count;
             if (unchecked((uint)key > (uint)count))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
             else if (key == count)
-                items.Add(value);
-            else if (self.IsAbsence(items[key]))
-                items[key] = value;
+                values.Add(value);
+            else if (self.IsAbsence(values[key]))
+                values[key] = value;
             else
                 ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
         }
@@ -60,9 +60,9 @@ namespace Arborescence
         public bool ContainsKey(int key)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return false;
-            return unchecked((uint)key < (uint)items.Count) && !self.IsAbsence(items[key]);
+            return unchecked((uint)key < (uint)values.Count) && !self.IsAbsence(values[key]);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -71,20 +71,20 @@ namespace Arborescence
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return None(out value);
-            if (unchecked((uint)key >= (uint)items.Count))
+            if (unchecked((uint)key >= (uint)values.Count))
                 return None(out value);
 
-            value = items[key];
+            value = values[key];
             return !self.IsAbsence(value);
         }
 
         private void Put(int key, TValue value)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            TValueList items = _items;
-            int count = items.Count;
+            TValueList values = _values;
+            int count = values.Count;
             if (key < 0)
             {
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
@@ -93,14 +93,14 @@ namespace Arborescence
 
             if (key < count)
             {
-                items[key] = value;
+                values[key] = value;
                 return;
             }
 
             int absentCount = key - count;
             for (int i = 0; i < absentCount; ++i)
-                items.Add(self._absenceMarker!);
-            items.Add(value);
+                values.Add(self._absenceMarker!);
+            values.Add(value);
         }
 
         public TValue this[int key]
