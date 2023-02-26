@@ -34,12 +34,12 @@
             throw new ArgumentOutOfRangeException(paramName);
 
         [DoesNotReturn]
-        internal static void ThrowKeyNotFoundException(int key) =>
+        internal static TResult ThrowKeyNotFoundException<TResult>(int key) =>
             throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
 
         [DoesNotReturn]
-        internal static TResult ThrowKeyNotFoundException<TResult>(int key) =>
-            throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+        internal static void ThrowKeyNotFoundException() =>
+            throw new KeyNotFoundException($"The given key was not present in the dictionary.");
 
         [DoesNotReturn]
         internal static TResult ThrowKeyNotFoundException<TResult>() =>
