@@ -12,12 +12,12 @@ namespace Arborescence
         {
             get
             {
-                int count = (_items?.Count).GetValueOrDefault();
+                int count = (_values?.Count).GetValueOrDefault();
                 return count is 0 ? Enumerable.Empty<int>() : Enumerable.Range(0, count);
             }
         }
 
-        public IEnumerable<TValue> Values => _items ?? Enumerable.Empty<TValue>();
+        public IEnumerable<TValue> Values => _values ?? Enumerable.Empty<TValue>();
 
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
@@ -25,7 +25,7 @@ namespace Arborescence
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            return self._items is not { Count: > 0 }
+            return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
         }
@@ -34,11 +34,11 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            TValueList items = _items;
-            int count = items.Count;
+            TValueList values = _values;
+            int count = values.Count;
             for (int key = 0; key < count; ++key)
             {
-                TValue value = items[key];
+                TValue value = values[key];
                 if (!_absencePolicy.Equals(value))
                     yield return new(key, value);
             }
@@ -47,7 +47,7 @@ namespace Arborescence
         public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> other)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            return EqualityComparer<TValueList>.Default.Equals(self._items, other._items) &&
+            return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
                 EqualityComparer<TAbsencePolicy>.Default.Equals(self._absencePolicy, other._absencePolicy);
         }
 
@@ -58,7 +58,7 @@ namespace Arborescence
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
             return HashCode.Combine(
-                EqualityComparer<TValueList>.Default.GetHashCode(self._items),
+                EqualityComparer<TValueList>.Default.GetHashCode(self._values),
                 EqualityComparer<TAbsencePolicy>.Default.GetHashCode(self._absencePolicy));
         }
 

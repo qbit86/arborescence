@@ -13,23 +13,23 @@ namespace Arborescence
         where TValueList : IReadOnlyList<TValue>
         where TAbsencePolicy : IEquatable<TValue>
     {
-        private readonly TValueList _items;
+        private readonly TValueList _values;
         private readonly TAbsencePolicy _absencePolicy;
 
-        internal Int32ReadOnlyDictionary(TValueList items, TAbsencePolicy absencePolicy)
+        internal Int32ReadOnlyDictionary(TValueList values, TAbsencePolicy absencePolicy)
         {
-            _items = items;
+            _values = values;
             _absencePolicy = absencePolicy;
         }
 
-        public int Count => (_items?.Count).GetValueOrDefault();
+        public int Count => (_values?.Count).GetValueOrDefault();
 
         public bool ContainsKey(int key)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return false;
-            return unchecked((uint)key < (uint)items.Count) && !self._absencePolicy.Equals(items[key]);
+            return unchecked((uint)key < (uint)values.Count) && !self._absencePolicy.Equals(values[key]);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,12 +38,12 @@ namespace Arborescence
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
-            if (self._items is not { } items)
+            if (self._values is not { } values)
                 return None(out value);
-            if (unchecked((uint)key >= (uint)items.Count))
+            if (unchecked((uint)key >= (uint)values.Count))
                 return None(out value);
 
-            value = items[key];
+            value = values[key];
             return !self._absencePolicy.Equals(value);
         }
 

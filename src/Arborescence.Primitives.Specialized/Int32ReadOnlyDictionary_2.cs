@@ -12,11 +12,11 @@ namespace Arborescence
         IEquatable<Int32ReadOnlyDictionary<TValue, TValueList>>
         where TValueList : IReadOnlyList<TValue>
     {
-        private readonly TValueList _items;
+        private readonly TValueList _values;
 
-        internal Int32ReadOnlyDictionary(TValueList items) => _items = items;
+        internal Int32ReadOnlyDictionary(TValueList values) => _values = values;
 
-        public int Count => (_items?.Count).GetValueOrDefault();
+        public int Count => (_values?.Count).GetValueOrDefault();
 
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
 
@@ -25,11 +25,11 @@ namespace Arborescence
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            if (_items is not { } items)
+            if (_values is not { } values)
                 return None(out value);
-            return unchecked((uint)key >= (uint)items.Count)
+            return unchecked((uint)key >= (uint)values.Count)
                 ? None(out value)
-                : Some(items[key], out value);
+                : Some(values[key], out value);
         }
 
         public TValue this[int key] => TryGetValueCore(key, out TValue? value)
