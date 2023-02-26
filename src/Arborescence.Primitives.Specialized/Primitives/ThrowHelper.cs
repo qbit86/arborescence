@@ -39,7 +39,7 @@
 
         [DoesNotReturn]
         internal static void ThrowKeyNotFoundException() =>
-            throw new KeyNotFoundException($"The given key was not present in the dictionary.");
+            throw new KeyNotFoundException("The given key was not present in the dictionary.");
 
         [DoesNotReturn]
         internal static TResult ThrowKeyNotFoundException<TResult>() =>
