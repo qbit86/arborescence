@@ -11,13 +11,21 @@ namespace Arborescence
     {
         public bool IsReadOnly => false;
 
-        public IEnumerable<TKey> Keys => throw new NotImplementedException();
+        public IEnumerable<TKey> Keys => _indexByKey?.Keys ?? Enumerable.Empty<TKey>();
 
-        public IEnumerable<TValue> Values => throw new NotImplementedException();
+        public IEnumerable<TValue> Values => _valueByIndex?.Values ?? Enumerable.Empty<TValue>();
 
-        ICollection<TValue> IDictionary<TKey, TValue>.Values => throw new NotImplementedException();
+        ICollection<TKey> IDictionary<TKey, TValue>.Keys
+        {
+            get
+            {
+                if (_indexByKey?.Keys is not { } keys)
+                    return Array.Empty<TKey>();
+                return keys as ICollection<TKey> ?? ThrowHelper.ThrowNotSupportedException<ICollection<TKey>>();
+            }
+        }
 
-        ICollection<TKey> IDictionary<TKey, TValue>.Keys => throw new NotImplementedException();
+        ICollection<TValue> IDictionary<TKey, TValue>.Values => _valueByIndex?.Values ?? Array.Empty<TValue>();
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
