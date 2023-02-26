@@ -40,7 +40,21 @@ namespace Arborescence
             if (unchecked((uint)arrayIndex > (uint)array.Length))
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
 
-            throw new NotImplementedException();
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            if (self._indexByKey is not { } indexByKey || self._valueByIndex is not { } valueByIndex)
+                return;
+            Span<KeyValuePair<TKey, TValue>> destination = array.AsSpan(arrayIndex);
+            int destinationLength = destination.Length;
+            int destinationIndex = 0;
+            foreach (TKey key in indexByKey.Keys)
+            {
+                if (!indexByKey.TryGetValue(key, out int index) || !valueByIndex.TryGetValue(index, out TValue? value))
+                    continue;
+                if (destinationIndex < destinationLength)
+                    destination[destinationIndex++] = new(key, value);
+                else
+                    ThrowHelper.ThrowDestinationArrayTooSmallException();
+            }
         }
 
         public bool Remove(KeyValuePair<TKey, TValue> item)
