@@ -1,11 +1,43 @@
 namespace Arborescence
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
     partial struct Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>
     {
+        public bool IsReadOnly => false;
+
+        public IEnumerable<TKey> Keys => throw new NotImplementedException();
+
+        public IEnumerable<TValue> Values => throw new NotImplementedException();
+
+        ICollection<TValue> IDictionary<TKey, TValue>.Values => throw new NotImplementedException();
+
+        ICollection<TKey> IDictionary<TKey, TValue>.Keys => throw new NotImplementedException();
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => throw new NotImplementedException();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void Add(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
+
+        public void Clear() => throw new NotImplementedException();
+
+        public bool Contains(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
+
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
+
+        public bool Remove(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
+
+        public bool Remove(TKey key) => throw new NotImplementedException();
+
+        bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) => TryGetValueCore(key, out value!);
+
+        bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
+            TryGetValueCore(key, out value!);
+
         public bool Equals(Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> other)
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;

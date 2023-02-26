@@ -8,6 +8,7 @@ namespace Arborescence
     using static TryHelpers;
 
     public readonly partial struct Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> :
+        IReadOnlyDictionary<TKey, TValue>, IDictionary<TKey, TValue>,
         IEquatable<Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>>
         where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
         where TIndexToValueMap : IDictionary<int, TValue>
@@ -20,6 +21,8 @@ namespace Arborescence
             _indexByKey = indexByKey;
             _valueByIndex = valueByIndex;
         }
+
+        public void Add(TKey key, TValue value) => throw new NotImplementedException();
 
         public int Count => (_valueByIndex?.Count).GetValueOrDefault();
 
@@ -54,6 +57,7 @@ namespace Arborescence
                     ? value
                     : ThrowHelper.ThrowKeyNotFoundException<TValue>();
             }
+            set => throw new NotImplementedException();
         }
     }
 }
