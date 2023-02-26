@@ -22,7 +22,13 @@ namespace Arborescence
             _valueByIndex = valueByIndex;
         }
 
-        public void Add(TKey key, TValue value) => throw new NotImplementedException();
+        public void Add(TKey key, TValue value)
+        {
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            if (!self._indexByKey.TryGetValue(key, out int index))
+                ThrowHelper.ThrowKeyNotFoundException();
+            self._valueByIndex.Add(index, value);
+        }
 
         public int Count => (_valueByIndex?.Count).GetValueOrDefault();
 
@@ -47,6 +53,15 @@ namespace Arborescence
                 : None(out value);
         }
 
+        private void Put(TKey key, TValue value)
+        {
+            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            if (!self._indexByKey.TryGetValue(key, out int index))
+                ThrowHelper.ThrowKeyNotFoundException();
+            TIndexToValueMap valueByIndex = self._valueByIndex;
+            valueByIndex[index] = value;
+        }
+
         public TValue this[TKey key]
         {
             get
@@ -57,7 +72,7 @@ namespace Arborescence
                     ? value
                     : ThrowHelper.ThrowKeyNotFoundException<TValue>();
             }
-            set => throw new NotImplementedException();
+            set => Put(key, value);
         }
     }
 }
