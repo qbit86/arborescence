@@ -14,16 +14,7 @@ namespace Arborescence
         }
 
         public static Int32Dictionary<TValue, TValueList, EqualityComparer<TValue>> CreateWithAbsence<TValueList>(
-            TValueList items)
-            where TValueList : IList<TValue>
-        {
-            if (items is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(items));
-            return new(items, EqualityComparer<TValue>.Default, default);
-        }
-
-        public static Int32Dictionary<TValue, TValueList, EqualityComparer<TValue>> CreateWithAbsence<TValueList>(
-            TValueList items, TValue? absenceMarker)
+            TValueList items, TValue? absenceMarker = default)
             where TValueList : IList<TValue>
         {
             if (items is null)
@@ -32,20 +23,8 @@ namespace Arborescence
         }
 
         public static Int32Dictionary<TValue, TValueList, TAbsenceComparer>
-            CreateWithAbsence<TValueList, TAbsenceComparer>(TValueList items, TAbsenceComparer absenceComparer)
-            where TValueList : IList<TValue>
-            where TAbsenceComparer : IEqualityComparer<TValue>
-        {
-            if (items is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(items));
-            if (absenceComparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(absenceComparer));
-            return new(items, absenceComparer, default);
-        }
-
-        public static Int32Dictionary<TValue, TValueList, TAbsenceComparer>
             CreateWithAbsence<TValueList, TAbsenceComparer>(
-                TValueList items, TAbsenceComparer absenceComparer, TValue? absenceMarker)
+                TValueList items, TAbsenceComparer absenceComparer, TValue? absenceMarker = default)
             where TValueList : IList<TValue>
             where TAbsenceComparer : IEqualityComparer<TValue>
         {
