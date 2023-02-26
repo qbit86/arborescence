@@ -4,6 +4,7 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using Primitives;
 
     partial struct Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>
     {
@@ -23,11 +24,24 @@ namespace Arborescence
 
         public void Add(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
 
-        public void Clear() => throw new NotImplementedException();
+        public void Clear() => _valueByIndex?.Clear();
 
-        public bool Contains(KeyValuePair<TKey, TValue> item) => throw new NotImplementedException();
+        public bool Contains(KeyValuePair<TKey, TValue> item) =>
+            TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => throw new NotImplementedException();
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        {
+            if (array is null)
+            {
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
+                return;
+            }
+
+            if (unchecked((uint)arrayIndex > (uint)array.Length))
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
+
+            throw new NotImplementedException();
+        }
 
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
