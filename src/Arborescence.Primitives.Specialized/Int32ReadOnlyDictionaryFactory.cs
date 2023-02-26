@@ -15,7 +15,7 @@ namespace Arborescence
         }
 
         public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsencePolicy<TValue>>
-            CreateWithAbsencePolicy<TValueList>(TValueList items)
+            CreateWithAbsence<TValueList>(TValueList items)
             where TValueList : IReadOnlyList<TValue>
         {
             if (items is null)
@@ -24,7 +24,7 @@ namespace Arborescence
         }
 
         public static Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy>
-            CreateWithAbsencePolicy<TValueList, TAbsencePolicy>(TValueList items, TAbsencePolicy absencePolicy)
+            CreateWithAbsence<TValueList, TAbsencePolicy>(TValueList items, TAbsencePolicy absencePolicy)
             where TValueList : IReadOnlyList<TValue>
             where TAbsencePolicy : IEquatable<TValue>
         {
