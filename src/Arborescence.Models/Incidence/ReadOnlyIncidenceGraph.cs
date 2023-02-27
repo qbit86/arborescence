@@ -41,20 +41,11 @@ namespace Arborescence.Models
             {
                 ReadOnlyIncidenceGraph<
                     TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> self = this;
-                return self.IsDefault ? 0 : self.GetCountUnchecked();
+                return self._outEdgesByVertex is null ? 0 : self.GetCountUnchecked();
             }
         }
 
-        public int EdgeCount
-        {
-            get
-            {
-                TEndpointMap? headByEdge = _headByEdge;
-                return headByEdge is null ? 0 : headByEdge.Count;
-            }
-        }
-
-        private bool IsDefault => _outEdgesByVertex is null;
+        public int EdgeCount => _headByEdge is { } headByEdge ? headByEdge.Count : 0;
 
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);

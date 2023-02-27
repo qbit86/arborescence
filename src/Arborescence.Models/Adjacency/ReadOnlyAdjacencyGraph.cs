@@ -30,11 +30,9 @@ namespace Arborescence.Models
             get
             {
                 ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
-                return self.IsDefault ? 0 : self.GetCountUnchecked();
+                return self._neighborsByVertex is null ? 0 : self.GetCountUnchecked();
             }
         }
-
-        private bool IsDefault => _neighborsByVertex is null;
 
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);

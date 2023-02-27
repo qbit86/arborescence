@@ -28,8 +28,6 @@ namespace Arborescence.Models
         {
             ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> self = this;
-            if (self.IsDefault)
-                return 0;
             return HashCode.Combine(
                 EqualityComparer<TEndpointMap>.Default.GetHashCode(self._tailByEdge),
                 EqualityComparer<TEndpointMap>.Default.GetHashCode(self._headByEdge),

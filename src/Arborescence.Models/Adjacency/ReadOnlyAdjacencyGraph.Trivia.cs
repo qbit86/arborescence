@@ -23,8 +23,6 @@ namespace Arborescence.Models
         public override int GetHashCode()
         {
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
-            if (self.IsDefault)
-                return 0;
             return HashCode.Combine(EqualityComparer<TVertexMultimap>.Default.GetHashCode(self._neighborsByVertex!),
                 EqualityComparer<TVertexMultimapPolicy>.Default.GetHashCode(self._vertexMultimapPolicy));
         }
