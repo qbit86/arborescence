@@ -10,11 +10,11 @@ namespace Arborescence
     /// <summary>
     /// Represents a set of values as a bit array.
     /// </summary>
+    public readonly struct CompactSet : ISet<int>,
 #if NET5_0_OR_GREATER
-    public readonly struct CompactSet : IReadOnlySet<int>, ISet<int>, IEquatable<CompactSet>
-#else
-    public readonly struct CompactSet : ISet<int>, IEquatable<CompactSet>
+        IReadOnlySet<int>,
 #endif
+        IEquatable<CompactSet>
     {
         private const int BitShiftPerByte = 3;
 
