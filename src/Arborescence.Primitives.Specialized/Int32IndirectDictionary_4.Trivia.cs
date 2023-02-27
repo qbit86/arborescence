@@ -40,10 +40,10 @@ namespace Arborescence
         private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator()
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
-            foreach (KeyValuePair<TKey, int> keyIndexPair in self._indexByKey)
+            foreach ((TKey key, int index) in self._indexByKey)
             {
-                if (self._valueByIndex.TryGetValue(keyIndexPair.Value, out TValue? value))
-                    yield return new(keyIndexPair.Key, value);
+                if (self._valueByIndex.TryGetValue(index, out TValue? value))
+                    yield return new(key, value);
             }
         }
 

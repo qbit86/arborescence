@@ -39,11 +39,10 @@ namespace Arborescence
         private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator()
         {
             Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
-            foreach (KeyValuePair<TKey, int> keyIndexPair in self._indexByKey)
+            foreach ((TKey key, int index) in self._indexByKey)
             {
-                int index = keyIndexPair.Value;
                 if (self._valueByIndex.TryGetValue(index, out TValue? value))
-                    yield return new(keyIndexPair.Key, value);
+                    yield return new(key, value);
             }
         }
 
