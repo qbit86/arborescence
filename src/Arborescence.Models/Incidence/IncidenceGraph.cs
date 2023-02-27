@@ -54,7 +54,7 @@ namespace Arborescence.Models
             _headByEdge.TryGetValue(edge, out head);
 
         public List<TEdge>.Enumerator EnumerateOutEdges(TVertex vertex) =>
-            MultimapPolicy.GetEnumerator(_outEdgesByVertex, vertex);
+            MultimapPolicy.EnumerateValues(_outEdgesByVertex, vertex);
 
         public AdjacencyEnumerator<
                 TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>

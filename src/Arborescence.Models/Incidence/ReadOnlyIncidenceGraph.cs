@@ -18,7 +18,7 @@ namespace Arborescence.Models
             TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>>
         where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TEdgeMultimapPolicy : IMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
+        where TEdgeMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
     {
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;
@@ -66,7 +66,7 @@ namespace Arborescence.Models
         {
             ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> self = this;
-            return self._edgeMultimapPolicy.GetEnumerator(self._outEdgesByVertex, vertex);
+            return self._edgeMultimapPolicy.EnumerateValues(self._outEdgesByVertex, vertex);
         }
 
         public AdjacencyEnumerator<TVertex, TEdge,

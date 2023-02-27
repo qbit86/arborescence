@@ -11,7 +11,7 @@ namespace Arborescence.Models
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
                 TEdgeMultimapPolicy edgeMultimapPolicy)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgeMultimapPolicy : IMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
+            where TEdgeMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));

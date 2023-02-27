@@ -19,7 +19,7 @@ namespace Arborescence.Models
 
     internal readonly struct DictionaryMultimapPolicy<
         TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> :
-        IMultimapPolicy<TKey, TMultimap, TValueEnumerator>
+        IReadOnlyMultimapPolicy<TKey, TMultimap, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
         where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator>
     {
@@ -28,7 +28,7 @@ namespace Arborescence.Models
         internal DictionaryMultimapPolicy(TCollectionPolicy collectionPolicy) =>
             _collectionPolicy = collectionPolicy;
 
-        public TValueEnumerator GetEnumerator(TMultimap multimap, TKey key) =>
+        public TValueEnumerator EnumerateValues(TMultimap multimap, TKey key) =>
             MultimapHelpers<TValueCollection, TValueEnumerator>.GetEnumerator(multimap, key, _collectionPolicy);
 
         public int GetCount(TMultimap multimap) => multimap.Count;

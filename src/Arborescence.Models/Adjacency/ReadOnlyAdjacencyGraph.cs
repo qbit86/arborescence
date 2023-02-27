@@ -14,7 +14,7 @@ namespace Arborescence.Models
         IOutNeighborsAdjacency<TVertex, TVertexEnumerator>,
         IEquatable<ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy>>
         where TVertexEnumerator : IEnumerator<TVertex>
-        where TVertexMultimapPolicy : IMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
+        where TVertexMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
     {
         private readonly TVertexMultimap _neighborsByVertex;
         private readonly TVertexMultimapPolicy _vertexMultimapPolicy;
@@ -51,7 +51,7 @@ namespace Arborescence.Models
         public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex)
         {
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
-            return self._vertexMultimapPolicy.GetEnumerator(self._neighborsByVertex, vertex);
+            return self._vertexMultimapPolicy.EnumerateValues(self._neighborsByVertex, vertex);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

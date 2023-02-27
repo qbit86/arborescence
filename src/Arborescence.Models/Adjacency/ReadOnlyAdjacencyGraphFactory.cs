@@ -8,7 +8,7 @@ namespace Arborescence.Models
         public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy>
             Create<TVertexMultimap, TVertexMultimapPolicy>(
                 TVertexMultimap neighborsByVertex, TVertexMultimapPolicy vertexMultimapPolicy)
-            where TVertexMultimapPolicy : IMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
+            where TVertexMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));

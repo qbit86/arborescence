@@ -42,7 +42,7 @@ namespace Arborescence.Models
         }
 
         public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
-            MultimapPolicy.GetEnumerator(_neighborsByVertex, vertex);
+            MultimapPolicy.EnumerateValues(_neighborsByVertex, vertex);
 
         public void AddEdge(TVertex tail, TVertex head)
         {
