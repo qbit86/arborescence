@@ -14,7 +14,7 @@ namespace Arborescence.Models
         IEquatable<AdjacencyGraph<TVertex, TVertexMultimap>>
         where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
-        private static ListDictionaryMultimapPolicy<TVertex, TVertexMultimap> MultimapPolicy => default;
+        private static ListMultimapPolicy<TVertex, TVertexMultimap> MultimapPolicy => default;
 
         private readonly TVertexMultimap _neighborsByVertex;
 
