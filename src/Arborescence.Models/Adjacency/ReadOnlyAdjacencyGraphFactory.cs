@@ -18,4 +18,26 @@ namespace Arborescence.Models
             return new(neighborsByVertex, vertexMultimapPolicy);
         }
     }
+
+    public static class ReadOnlyAdjacencyGraphFactory<TVertex, TVertexCollection, TVertexEnumerator>
+        where TVertexEnumerator : IEnumerator<TVertex>
+    {
+        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, ReadOnlyMultimapPolicy<
+                TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexCollectionPolicy>>
+            Create<TVertexMultimap, TVertexCollectionPolicy>(
+                TVertexMultimap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
+            where TVertexMultimap : IReadOnlyDictionary<TVertex, TVertexCollection>
+            where TVertexCollectionPolicy : IEnumerablePolicy<TVertexCollection, TVertexEnumerator>
+        {
+            if (neighborsByVertex is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
+            if (vertexCollectionPolicy is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(vertexCollectionPolicy));
+
+            ReadOnlyMultimapPolicy<
+                    TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexCollectionPolicy>
+                vertexMultimapPolicy = new(vertexCollectionPolicy);
+            return new(neighborsByVertex, vertexMultimapPolicy);
+        }
+    }
 }
