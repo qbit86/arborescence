@@ -2,10 +2,10 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    internal static class DictionaryMultimapPolicy<TKey, TValueCollection, TValueEnumerator, TMultimap>
+    public static class ReadOnlyMultimapPolicyFactory<TKey, TValueCollection, TValueEnumerator, TMultimap>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
     {
-        public static DictionaryMultimapPolicy<
+        public static ReadOnlyMultimapPolicy<
             TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> Create<TCollectionPolicy>(
             TCollectionPolicy collectionPolicy)
             where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator>
@@ -17,7 +17,7 @@ namespace Arborescence.Models
         }
     }
 
-    internal readonly struct DictionaryMultimapPolicy<
+    public readonly struct ReadOnlyMultimapPolicy<
         TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> :
         IReadOnlyMultimapPolicy<TKey, TMultimap, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
@@ -25,7 +25,7 @@ namespace Arborescence.Models
     {
         private readonly TCollectionPolicy _collectionPolicy;
 
-        internal DictionaryMultimapPolicy(TCollectionPolicy collectionPolicy) =>
+        internal ReadOnlyMultimapPolicy(TCollectionPolicy collectionPolicy) =>
             _collectionPolicy = collectionPolicy;
 
         public TValueEnumerator EnumerateValues(TMultimap multimap, TKey key) =>
