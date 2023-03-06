@@ -2,7 +2,7 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public static class AdjacencyGraphFactory<TVertex>
+    public static class ListAdjacencyGraphFactory<TVertex>
         where TVertex : notnull
     {
         public static ListAdjacencyGraph<TVertex, Dictionary<TVertex, List<TVertex>>> Create()
