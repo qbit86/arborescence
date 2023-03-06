@@ -5,20 +5,20 @@ namespace Arborescence.Models
     public static class AdjacencyGraphFactory<TVertex>
         where TVertex : notnull
     {
-        public static AdjacencyGraph<TVertex, Dictionary<TVertex, List<TVertex>>> Create()
+        public static ListAdjacencyGraph<TVertex, Dictionary<TVertex, List<TVertex>>> Create()
         {
             Dictionary<TVertex, List<TVertex>> neighborsByVertex = new();
             return new(neighborsByVertex);
         }
 
-        public static AdjacencyGraph<TVertex, Dictionary<TVertex, List<TVertex>>> Create(
+        public static ListAdjacencyGraph<TVertex, Dictionary<TVertex, List<TVertex>>> Create(
             IEqualityComparer<TVertex>? vertexComparer)
         {
             Dictionary<TVertex, List<TVertex>> neighborsByVertex = new(vertexComparer);
             return new(neighborsByVertex);
         }
 
-        public static AdjacencyGraph<TVertex, TVertexMultimap> Create<TVertexMultimap>(
+        public static ListAdjacencyGraph<TVertex, TVertexMultimap> Create<TVertexMultimap>(
             TVertexMultimap neighborsByVertex)
             where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
         {

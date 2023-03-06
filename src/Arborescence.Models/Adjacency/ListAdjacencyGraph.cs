@@ -6,19 +6,19 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
     using static TryHelpers;
 
-    public readonly partial struct AdjacencyGraph<TVertex, TVertexMultimap> :
+    public readonly partial struct ListAdjacencyGraph<TVertex, TVertexMultimap> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, List<TVertex>.Enumerator>>,
         IOutNeighborsAdjacency<TVertex, List<TVertex>.Enumerator>,
-        IEquatable<AdjacencyGraph<TVertex, TVertexMultimap>>
+        IEquatable<ListAdjacencyGraph<TVertex, TVertexMultimap>>
         where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
     {
         private static ListMultimapPolicy<TVertex, TVertexMultimap> MultimapPolicy => default;
 
         private readonly TVertexMultimap _neighborsByVertex;
 
-        internal AdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
+        internal ListAdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
 
         public int VertexCount
         {
@@ -46,7 +46,7 @@ namespace Arborescence.Models
 
         public void AddEdge(TVertex tail, TVertex head)
         {
-            AdjacencyGraph<TVertex, TVertexMultimap> self = this;
+            ListAdjacencyGraph<TVertex, TVertexMultimap> self = this;
             if (TryGetValue(self._neighborsByVertex, tail, out List<TVertex>? neighbors))
             {
                 neighbors.Add(head);
