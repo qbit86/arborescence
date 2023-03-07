@@ -6,19 +6,27 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
     using static TryHelpers;
 
-    public readonly partial struct AdjacencyGraph<TVertex, TVertexMultimap> :
+    public readonly partial struct AdjacencyGraph<
+        TVertex, TVertexMultimap, TVertexCollection, TVertexEnumerator, TVertexCollectionPolicy> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
-        IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, List<TVertex>.Enumerator>>,
-        IOutNeighborsAdjacency<TVertex, List<TVertex>.Enumerator>,
-        IEquatable<AdjacencyGraph<TVertex, TVertexMultimap>>
-        where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
+        IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, TVertexEnumerator>>,
+        IOutNeighborsAdjacency<TVertex, TVertexEnumerator>,
+        IEquatable<AdjacencyGraph<
+            TVertex, TVertexMultimap, TVertexCollection, TVertexEnumerator, TVertexCollectionPolicy>>
+        where TVertexMultimap : IDictionary<TVertex, TVertexCollection>, IReadOnlyDictionary<TVertex, TVertexCollection>
+        where TVertexCollection : ICollection<TVertex>, new()
+        where TVertexEnumerator : IEnumerator<TVertex>
+        where TVertexCollectionPolicy : IEnumerablePolicy<TVertexCollection, TVertexEnumerator>
     {
-        private static ListMultimapPolicy<TVertex, TVertexMultimap> MultimapPolicy => default;
-
         private readonly TVertexMultimap _neighborsByVertex;
+        private readonly TVertexCollectionPolicy _vertexCollectionPolicy;
 
-        internal AdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
+        internal AdjacencyGraph(TVertexMultimap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
+        {
+            _neighborsByVertex = neighborsByVertex;
+            _vertexCollectionPolicy = vertexCollectionPolicy;
+        }
 
         public int VertexCount
         {
@@ -35,37 +43,40 @@ namespace Arborescence.Models
         public bool TryGetHead(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex head) =>
             Some(edge.Head, out head);
 
-        public IncidenceEnumerator<TVertex, List<TVertex>.Enumerator> EnumerateOutEdges(TVertex vertex)
+        public IncidenceEnumerator<TVertex, TVertexEnumerator> EnumerateOutEdges(TVertex vertex)
         {
-            List<TVertex>.Enumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
+            TVertexEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
             return new(vertex, neighborEnumerator);
         }
 
-        public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
-            MultimapPolicy.EnumerateValues(_neighborsByVertex, vertex);
-
         public void AddEdge(TVertex tail, TVertex head)
         {
-            AdjacencyGraph<TVertex, TVertexMultimap> self = this;
-            if (TryGetValue(self._neighborsByVertex, tail, out List<TVertex>? neighbors))
+            AdjacencyGraph<TVertex, TVertexMultimap, TVertexCollection, TVertexEnumerator, TVertexCollectionPolicy>
+                self = this;
+            if (TryGetValue(self._neighborsByVertex, tail, out TVertexCollection? neighbors))
             {
                 neighbors.Add(head);
             }
             else
             {
-                neighbors = new(1) { head };
+                neighbors = new() { head };
                 self._neighborsByVertex.Add(tail, neighbors);
             }
         }
 
+        public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex) =>
+            TryGetValue(_neighborsByVertex, vertex, out TVertexCollection? values)
+                ? _vertexCollectionPolicy.GetEnumerator(values)
+                : _vertexCollectionPolicy.GetEmptyEnumerator();
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValue<TDictionary>(
-            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TVertex>? value)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
+            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out TVertexCollection? value)
+            where TDictionary : IReadOnlyDictionary<TVertex, TVertexCollection> =>
             dictionary.TryGetValue(vertex, out value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> => dictionary.Count;
+            where TDictionary : IReadOnlyDictionary<TVertex, TVertexCollection> => dictionary.Count;
     }
 }
