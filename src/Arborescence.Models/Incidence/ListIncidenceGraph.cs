@@ -5,14 +5,14 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
-    public readonly partial struct IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> :
+    public readonly partial struct ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
         IOutEdgesIncidence<TVertex, List<TEdge>.Enumerator>,
         IOutNeighborsAdjacency<TVertex,
-            AdjacencyEnumerator<TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>,
+            AdjacencyEnumerator<TVertex, TEdge, ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>,
                 List<TEdge>.Enumerator>>,
-        IEquatable<IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>>
+        IEquatable<ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>>
         where TEndpointMap : IDictionary<TEdge, TVertex>
         where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
     {
@@ -22,7 +22,7 @@ namespace Arborescence.Models
         private readonly TEndpointMap _headByEdge;
         private readonly TEdgeMultimap _outEdgesByVertex;
 
-        internal IncidenceGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
+        internal ListIncidenceGraph(TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
         {
             _tailByEdge = tailByEdge;
             _headByEdge = headByEdge;
@@ -33,7 +33,7 @@ namespace Arborescence.Models
         {
             get
             {
-                IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+                ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
                 return self._outEdgesByVertex is null ? 0 : GetCountUnchecked(self._outEdgesByVertex);
             }
         }
@@ -57,17 +57,17 @@ namespace Arborescence.Models
             MultimapPolicy.EnumerateValues(_outEdgesByVertex, vertex);
 
         public AdjacencyEnumerator<
-                TVertex, TEdge, IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>
+                TVertex, TEdge, ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>
             EnumerateOutNeighbors(TVertex vertex)
         {
-            IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+            ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
             List<TEdge>.Enumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
             return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
         }
 
         public bool TryAddEdge(TEdge edge, TVertex tail, TVertex head)
         {
-            IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+            ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
             if (!self._tailByEdge.TryAddStrict(edge, tail))
                 return false;
 

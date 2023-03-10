@@ -2,11 +2,11 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public static class IncidenceGraphFactory<TVertex, TEdge>
+    public static class ListIncidenceGraphFactory<TVertex, TEdge>
         where TVertex : notnull
         where TEdge : notnull
     {
-        public static IncidenceGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static ListIncidenceGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create()
         {
             Dictionary<TEdge, TVertex> tailByEdge = new();
@@ -15,7 +15,7 @@ namespace Arborescence.Models
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IncidenceGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
+        public static ListIncidenceGraph<TVertex, TEdge, Dictionary<TEdge, TVertex>, Dictionary<TVertex, List<TEdge>>>
             Create(IEqualityComparer<TVertex>? vertexComparer, IEqualityComparer<TEdge>? edgeComparer)
         {
             Dictionary<TEdge, TVertex> tailByEdge = new(edgeComparer);
@@ -24,7 +24,7 @@ namespace Arborescence.Models
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
-        public static IncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>
+        public static ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>
             CreateUnchecked<TEndpointMap, TEdgeMultimap>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
             where TEndpointMap : IDictionary<TEdge, TVertex>, IReadOnlyDictionary<TEdge, TVertex>
