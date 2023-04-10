@@ -77,9 +77,9 @@ namespace Arborescence.Models.Specialized
             if (unchecked((uint)vertex >= (uint)vertexCount))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            ReadOnlySpan<int> upperBoundByVertex = GetUpperBoundByVertexUnchecked();
+            ReadOnlySpan<int> upperBoundByVertex = self.GetUpperBoundByVertexUnchecked();
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
-                return ArraySegmentHelpers.EmptyEnumerator<int>();
+                return ArraySegment<int>.Empty.GetEnumerator();
 
             int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
