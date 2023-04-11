@@ -5,17 +5,8 @@ namespace Arborescence.Models.Specialized
     using System.Collections.Generic;
     using Edge = Endpoints<int>;
 
-    public static class Int32FrozenAdjacencyGraphFactory<TVertexCollection>
-        where TVertexCollection : ICollection<int>
+    public static class Int32FrozenAdjacencyGraphFactory
     {
-        public static Int32FrozenAdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
-            where TMultimap : IReadOnlyList<TVertexCollection> =>
-            neighborsByVertex is null ? default : FromListUnchecked(neighborsByVertex);
-
-        public static Int32FrozenAdjacencyGraph FromDictionary<TMultimap>(TMultimap neighborsByVertex)
-            where TMultimap : IReadOnlyDictionary<int, TVertexCollection> =>
-            neighborsByVertex is null ? default : FromDictionaryUnchecked(neighborsByVertex);
-
 #if NET5_0_OR_GREATER
         public static Int32FrozenAdjacencyGraph FromEdgeList(Span<Edge> edges, int vertexCount)
         {
@@ -41,6 +32,28 @@ namespace Arborescence.Models.Specialized
             Array.Sort(edges, EdgeComparer.Instance);
             return FromSortedEdgeList(edges, vertexCount);
         }
+
+        private static Int32FrozenAdjacencyGraph FromSortedEdgeList(
+            ReadOnlySpan<Edge> edgesSortedByTail, int vertexCount) => throw new NotImplementedException();
+
+        private sealed class EdgeComparer : IComparer<Edge>
+        {
+            internal static EdgeComparer Instance { get; } = new();
+
+            public int Compare(Edge x, Edge y) => x.Tail.CompareTo(y.Tail);
+        }
+    }
+
+    public static class Int32FrozenAdjacencyGraphFactory<TVertexCollection>
+        where TVertexCollection : ICollection<int>
+    {
+        public static Int32FrozenAdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
+            where TMultimap : IReadOnlyList<TVertexCollection> =>
+            neighborsByVertex is null ? default : FromListUnchecked(neighborsByVertex);
+
+        public static Int32FrozenAdjacencyGraph FromDictionary<TMultimap>(TMultimap neighborsByVertex)
+            where TMultimap : IReadOnlyDictionary<int, TVertexCollection> =>
+            neighborsByVertex is null ? default : FromDictionaryUnchecked(neighborsByVertex);
 
         private static Int32FrozenAdjacencyGraph FromListUnchecked<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyList<TVertexCollection>
@@ -82,16 +95,6 @@ namespace Arborescence.Models.Specialized
             }
 
             return new(data.Array!);
-        }
-
-        private static Int32FrozenAdjacencyGraph FromSortedEdgeList(
-            ReadOnlySpan<Edge> edgesSortedByTail, int vertexCount) => throw new NotImplementedException();
-
-        private sealed class EdgeComparer : IComparer<Edge>
-        {
-            internal static EdgeComparer Instance { get; } = new();
-
-            public int Compare(Edge x, Edge y) => x.Tail.CompareTo(y.Tail);
         }
     }
 }
