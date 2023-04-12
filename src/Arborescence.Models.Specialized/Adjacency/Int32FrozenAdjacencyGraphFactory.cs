@@ -24,7 +24,28 @@ namespace Arborescence.Models.Specialized
         }
 
         private static Int32FrozenAdjacencyGraph FromSortedEdges(
-            ReadOnlySpan<Edge> edgesSortedByTail, int vertexCount) => throw new NotImplementedException();
+            ReadOnlySpan<Edge> edgesSortedByTail, int vertexCount)
+        {
+            int edgeCount = edgesSortedByTail.Length;
+            if (edgeCount is 0)
+                return CreateTrivial(vertexCount);
+
+            throw new NotImplementedException();
+        }
+
+        private static Int32FrozenAdjacencyGraph CreateTrivial(int vertexCount)
+        {
+            int dataLength = 2 + vertexCount;
+#if NET5_0_OR_GREATER
+            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
+#else
+            int[] data = new int[dataLength];
+#endif
+            data[0] = vertexCount;
+            data[1] = 0;
+            Array.Fill(data, dataLength, 2, vertexCount);
+            return new(data);
+        }
 
         private sealed class EdgeComparer : IComparer<Edge>
         {
