@@ -2,10 +2,10 @@
 namespace Arborescence.Models.Specialized
 {
 #if NET5_0_OR_GREATER
+    using System.Collections.Generic;
     using System.Runtime.InteropServices;
 #endif
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using Edge = Endpoints<int>;
 
@@ -88,13 +88,6 @@ namespace Arborescence.Models.Specialized
             data[1] = 0;
             Array.Fill(data, dataLength, 2, vertexCount);
             return new(data);
-        }
-
-        private sealed class EdgeComparer : IComparer<Edge>
-        {
-            internal static EdgeComparer Instance { get; } = new();
-
-            public int Compare(Edge x, Edge y) => x.Tail.CompareTo(y.Tail);
         }
 
 #if NET5_0_OR_GREATER
