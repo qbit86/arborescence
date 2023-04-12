@@ -11,7 +11,7 @@ namespace Arborescence.Models.Specialized
 
     public static class Int32FrozenAdjacencyGraphFactory
     {
-        public static Int32FrozenAdjacencyGraph FromEdges(Edge[] edges, int vertexCount)
+        public static Int32FrozenAdjacencyGraph FromEdges(int vertexCount, Edge[] edges)
         {
             if (edges is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(edges));
@@ -21,11 +21,11 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             Array.Sort(edges, EdgeComparer.Instance);
-            return FromOrderedEdges(edges, vertexCount);
+            return FromOrderedEdges(vertexCount, edges);
         }
 
         private static Int32FrozenAdjacencyGraph FromOrderedEdges(
-            ReadOnlySpan<Edge> edgesOrderedByTail, int vertexCount)
+            int vertexCount, ReadOnlySpan<Edge> edgesOrderedByTail)
         {
             int edgeCount = edgesOrderedByTail.Length;
             if (edgeCount is 0)
@@ -98,7 +98,7 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
-        public static Int32FrozenAdjacencyGraph FromEdges(Span<Edge> edges, int vertexCount)
+        public static Int32FrozenAdjacencyGraph FromEdges(int vertexCount, Span<Edge> edges)
         {
             if (vertexCount is 0)
                 return default;
@@ -106,10 +106,10 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             edges.Sort(EdgeComparer.Instance);
-            return FromOrderedEdges(edges, vertexCount);
+            return FromOrderedEdges(vertexCount, edges);
         }
 
-        public static Int32FrozenAdjacencyGraph FromEdges(List<Edge> edges, int vertexCount)
+        public static Int32FrozenAdjacencyGraph FromEdges(int vertexCount, List<Edge> edges)
         {
             if (edges is null)
                 throw new ArgumentNullException(nameof(edges));
@@ -119,7 +119,7 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             edges.Sort(EdgeComparer.Instance);
-            return FromOrderedEdges(CollectionsMarshal.AsSpan(edges), vertexCount);
+            return FromOrderedEdges(vertexCount, CollectionsMarshal.AsSpan(edges));
         }
 #endif
     }
