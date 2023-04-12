@@ -45,22 +45,32 @@ namespace Arborescence.Models.Specialized
 
             Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
             int offset = 2 + vertexCount;
-            for (int lower = 0; lower < edgeCount;)
+            for (int lower = 0, expectedTail = 0; lower < edgeCount;)
             {
-                int tail = edgesOrderedByTail[lower].Tail;
+                int actualTail = edgesOrderedByTail[lower].Tail;
+                if (actualTail >= vertexCount)
+                    break;
+
+                if (expectedTail < actualTail)
+                {
+                    int filler = expectedTail is 0 ? 0 : upperBoundByVertex[expectedTail - 1];
+                    int length = Math.Clamp(actualTail - expectedTail, 0, vertexCount);
+                    upperBoundByVertex.Slice(expectedTail, length).Fill(filler);
+                }
+
                 int upper = lower + 1;
-                // TODO: Check previous tail.
                 for (; upper < edgeCount; ++upper)
                 {
-                    if (edgesOrderedByTail[upper].Tail != tail)
+                    if (edgesOrderedByTail[upper].Tail != actualTail)
                     {
-                        Debug.Assert(edgesOrderedByTail[upper].Tail > tail);
+                        Debug.Assert(edgesOrderedByTail[upper].Tail > actualTail);
                         break;
                     }
                 }
 
-                upperBoundByVertex[tail] = offset + upper;
+                upperBoundByVertex[actualTail] = offset + upper;
                 lower = upper;
+                expectedTail = actualTail + 1;
             }
 
             return new(data);
