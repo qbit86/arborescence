@@ -6,6 +6,7 @@ namespace Arborescence.Models.Specialized
 #endif
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Edge = Endpoints<int>;
 
     public static class Int32FrozenAdjacencyGraphFactory
@@ -38,12 +39,31 @@ namespace Arborescence.Models.Specialized
 #endif
             data[0] = vertexCount;
             data[1] = edgeCount;
-            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
             Span<int> neighborsOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
             for (int i = 0; i < edgeCount; ++i)
                 neighborsOrderedByTail[i] = edgesOrderedByTail[i].Head;
 
-            throw new NotImplementedException();
+            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            int offset = 2 + vertexCount;
+            for (int lower = 0; lower < edgeCount;)
+            {
+                int tail = edgesOrderedByTail[lower].Tail;
+                int upper = lower + 1;
+                // TODO: Check previous tail.
+                for (; upper < edgeCount; ++upper)
+                {
+                    if (edgesOrderedByTail[upper].Tail != tail)
+                    {
+                        Debug.Assert(edgesOrderedByTail[upper].Tail > tail);
+                        break;
+                    }
+                }
+
+                upperBoundByVertex[tail] = offset + upper;
+                lower = upper;
+            }
+
+            return new(data);
         }
 
         private static Int32FrozenAdjacencyGraph CreateTrivial(int vertexCount)
