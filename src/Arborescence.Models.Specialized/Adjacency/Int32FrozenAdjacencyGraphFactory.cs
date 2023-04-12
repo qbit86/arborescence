@@ -20,15 +20,28 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             Array.Sort(edges, EdgeComparer.Instance);
-            return FromSortedEdges(edges, vertexCount);
+            return FromOrderedEdges(edges, vertexCount);
         }
 
-        private static Int32FrozenAdjacencyGraph FromSortedEdges(
-            ReadOnlySpan<Edge> edgesSortedByTail, int vertexCount)
+        private static Int32FrozenAdjacencyGraph FromOrderedEdges(
+            ReadOnlySpan<Edge> edgesOrderedByTail, int vertexCount)
         {
-            int edgeCount = edgesSortedByTail.Length;
+            int edgeCount = edgesOrderedByTail.Length;
             if (edgeCount is 0)
                 return CreateTrivial(vertexCount);
+
+            int dataLength = 2 + vertexCount + edgeCount;
+#if NET5_0_OR_GREATER
+            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
+#else
+            int[] data = new int[dataLength];
+#endif
+            data[0] = vertexCount;
+            data[1] = edgeCount;
+            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            Span<int> neighborsOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
+            for (int i = 0; i < edgeCount; ++i)
+                neighborsOrderedByTail[i] = edgesOrderedByTail[i].Head;
 
             throw new NotImplementedException();
         }
@@ -63,7 +76,7 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             edges.Sort(EdgeComparer.Instance);
-            return FromSortedEdges(edges, vertexCount);
+            return FromOrderedEdges(edges, vertexCount);
         }
 
         public static Int32FrozenAdjacencyGraph FromEdges(List<Edge> edges, int vertexCount)
@@ -76,7 +89,7 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             edges.Sort(EdgeComparer.Instance);
-            return FromSortedEdges(CollectionsMarshal.AsSpan(edges), vertexCount);
+            return FromOrderedEdges(CollectionsMarshal.AsSpan(edges), vertexCount);
         }
 #endif
     }
