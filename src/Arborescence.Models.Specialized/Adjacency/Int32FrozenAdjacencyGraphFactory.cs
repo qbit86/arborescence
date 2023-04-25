@@ -32,11 +32,7 @@ namespace Arborescence.Models.Specialized
                 return CreateTrivial(vertexCount);
 
             int dataLength = 2 + vertexCount + edgeCount;
-#if NET5_0_OR_GREATER
-            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
-#else
-            int[] data = new int[dataLength];
-#endif
+            int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
             data[0] = vertexCount;
             data[1] = edgeCount;
             Span<int> neighborsOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
@@ -79,11 +75,7 @@ namespace Arborescence.Models.Specialized
         private static Int32FrozenAdjacencyGraph CreateTrivial(int vertexCount)
         {
             int dataLength = 2 + vertexCount;
-#if NET5_0_OR_GREATER
-            int[] data = GC.AllocateUninitializedArray<int>(dataLength);
-#else
-            int[] data = new int[dataLength];
-#endif
+            int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
             data[0] = vertexCount;
             data[1] = 0;
             Array.Fill(data, dataLength, 2, vertexCount);
