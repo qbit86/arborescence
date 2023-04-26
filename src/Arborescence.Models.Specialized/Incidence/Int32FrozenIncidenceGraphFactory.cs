@@ -33,9 +33,15 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
-        private static Int32FrozenIncidenceGraph FromEdgesUnchecked(
-            int vertexCount, Endpoints<int>[] endpointsByEdge) =>
-            throw new NotImplementedException();
+        private static Int32FrozenIncidenceGraph CreateTrivial(int vertexCount)
+        {
+            int dataLength = 2 + vertexCount;
+            int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
+            data[0] = vertexCount;
+            data[1] = 0;
+            Array.Fill(data, dataLength, 2, vertexCount);
+            return new(data);
+        }
 
 #if NET5_0_OR_GREATER
         public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, Span<Endpoints<int>> endpointsByEdge)
@@ -61,8 +67,23 @@ namespace Arborescence.Models.Specialized
         }
 
         private static Int32FrozenIncidenceGraph FromEdgesUnchecked(
-            int vertexCount, Span<Endpoints<int>> endpointsByEdge) =>
+            int vertexCount, Span<Endpoints<int>> endpointsByEdge)
+        {
+            int edgeCount = endpointsByEdge.Length;
+            if (edgeCount is 0)
+                return CreateTrivial(vertexCount);
+
             throw new NotImplementedException();
+        }
+#else
+        private static Int32FrozenIncidenceGraph FromEdgesUnchecked(int vertexCount, Endpoints<int>[] endpointsByEdge)
+        {
+            int edgeCount = endpointsByEdge.Length;
+            if (edgeCount is 0)
+                return CreateTrivial(vertexCount);
+
+            throw new NotImplementedException();
+        }
 #endif
     }
 }

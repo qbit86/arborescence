@@ -6,3 +6,6 @@ dotnet_diagnostic.CA1034.severity = silent # Nested types should not be visible
 
 [Int32Frozen*GraphFactory.cs]
 dotnet_diagnostic.CA1002.severity = none # Do not expose generic lists
+
+[Int32FrozenIncidenceGraphFactory.cs]
+dotnet_diagnostic.CA1062.severity = none # Validate arguments of public methods
