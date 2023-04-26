@@ -133,7 +133,30 @@ namespace Arborescence.Models.Specialized
             if (edgeCount is 0)
                 return CreateTrivial(vertexCount);
 
-            throw new NotImplementedException();
+            int dataLength = 2 + vertexCount + edgeCount * 3;
+            int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
+            data[0] = vertexCount;
+            data[1] = edgeCount;
+            int[] edgesOrderedByTailBuffer = System.Buffers.ArrayPool<int>.Shared.Rent(edgeCount);
+            Span<int> headByEdge = data.AsSpan(2 + vertexCount + edgeCount, edgeCount);
+            Span<int> tailByEdge = data.AsSpan(2 + vertexCount + edgeCount + edgeCount, edgeCount);
+            for (int i = 0; i < edgeCount; ++i)
+            {
+                edgesOrderedByTailBuffer[i] = i;
+                Endpoints<int> endpoints = endpointsByEdge[i];
+                headByEdge[i] = endpoints.Head;
+                tailByEdge[i] = endpoints.Tail;
+            }
+
+            Array.Sort(endpointsByEdge, edgesOrderedByTailBuffer, EdgeComparer.Instance);
+            Span<int> edgesOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
+            edgesOrderedByTailBuffer.AsSpan(0, edgeCount).CopyTo(edgesOrderedByTail);
+            System.Buffers.ArrayPool<int>.Shared.Return(edgesOrderedByTailBuffer);
+
+            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            PopulateUpperBoundByVertex(vertexCount, edgeCount, edgesOrderedByTail, tailByEdge, upperBoundByVertex);
+
+            return new(data);
         }
 #endif
     }
