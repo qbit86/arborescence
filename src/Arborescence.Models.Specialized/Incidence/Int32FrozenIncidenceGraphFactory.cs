@@ -43,6 +43,37 @@ namespace Arborescence.Models.Specialized
             return new(data);
         }
 
+        private static void PopulateUpperBoundByVertex(
+            int vertexCount, int edgeCount, ReadOnlySpan<int> edgesOrderedByTail, ReadOnlySpan<int> tailByEdge,
+            Span<int> upperBoundByVertex)
+        {
+            int offset = 2 + vertexCount;
+            for (int lower = 0, expectedTail = 0; lower < edgeCount;)
+            {
+                int actualTail = tailByEdge[edgesOrderedByTail[lower]];
+                if (actualTail >= vertexCount)
+                    break;
+
+                if (expectedTail < actualTail)
+                {
+                    int filler = expectedTail is 0 ? 0 : upperBoundByVertex[expectedTail - 1];
+                    int length = Math.Clamp(actualTail - expectedTail, 0, vertexCount);
+                    upperBoundByVertex.Slice(expectedTail, length).Fill(filler);
+                }
+
+                int upper = lower + 1;
+                for (; upper < edgeCount; ++upper)
+                {
+                    if (tailByEdge[edgesOrderedByTail[upper]] > actualTail)
+                        break;
+                }
+
+                upperBoundByVertex[actualTail] = offset + upper;
+                lower = upper;
+                expectedTail = actualTail + 1;
+            }
+        }
+
 #if NET5_0_OR_GREATER
         public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, Span<Endpoints<int>> endpointsByEdge)
         {
@@ -89,7 +120,11 @@ namespace Arborescence.Models.Specialized
             }
 
             endpointsByEdge.Sort(edgesOrderedByTail, EdgeComparer.Instance);
-            throw new NotImplementedException();
+
+            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            PopulateUpperBoundByVertex(vertexCount, edgeCount, edgesOrderedByTail, tailByEdge, upperBoundByVertex);
+
+            return new(data);
         }
 #else
         private static Int32FrozenIncidenceGraph FromEdgesUnchecked(int vertexCount, Endpoints<int>[] endpointsByEdge)
