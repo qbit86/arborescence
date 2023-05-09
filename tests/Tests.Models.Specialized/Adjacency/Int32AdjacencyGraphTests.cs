@@ -29,10 +29,10 @@ public sealed class Int32AdjacencyGraphTests
 
         // Act
         Int32FrozenAdjacencyGraph graph = Int32FrozenAdjacencyGraphFactory.FromEdges(edges);
-        ArraySegment<int>.Enumerator neighborEnumerators = graph.EnumerateOutNeighbors(vertex);
+        ArraySegment<int>.Enumerator neighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         HashSet<int> actualNeighbors = new(4);
-        while (neighborEnumerators.MoveNext())
-            actualNeighbors.Add(neighborEnumerators.Current);
+        while (neighborEnumerator.MoveNext())
+            actualNeighbors.Add(neighborEnumerator.Current);
 
         // Assert
         Assert.Equal(expectedNeighbors, actualNeighbors);
