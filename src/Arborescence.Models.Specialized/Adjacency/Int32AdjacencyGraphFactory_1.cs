@@ -4,7 +4,7 @@ namespace Arborescence.Models.Specialized
     using System;
     using System.Collections.Generic;
 
-    public static class Int32FrozenAdjacencyGraphFactory<TVertexCollection>
+    public static class Int32AdjacencyGraphFactory<TVertexCollection>
         where TVertexCollection : ICollection<int>
     {
         public static Int32AdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
