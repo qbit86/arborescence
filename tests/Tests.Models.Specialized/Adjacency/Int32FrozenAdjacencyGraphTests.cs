@@ -16,7 +16,11 @@ public sealed class Int32FrozenAdjacencyGraphTests
         // Arrange
         using TextReader textReader = IndexedGraphs.GetTextReader("09");
         IEnumerable<Int32Endpoints> rawEdges = IndexedEdgeListParser.ParseEdges(textReader);
+#if NET5_0_OR_GREATER
+        var edges = rawEdges.Select(Transform).ToList();
+#else
         Endpoints<int>[] edges = rawEdges.Select(Transform).ToArray();
+#endif
         int vertexCount = 1 + edges.Select(it => Math.Max(it.Head, it.Tail)).Max();
         int vertex = Base32.Parse("p");
         var expectedNeighbors = new HashSet<int>
