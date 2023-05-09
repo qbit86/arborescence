@@ -8,9 +8,9 @@ namespace Arborescence.Models.Specialized
     using System.Runtime.InteropServices;
 #endif
 
-    public static class Int32FrozenIncidenceGraphFactory
+    public static class Int32IncidenceGraphFactory
     {
-        public static Int32FrozenIncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge)
+        public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge)
         {
             if (endpointsByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
@@ -23,7 +23,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge, int vertexCount)
+        public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
@@ -33,13 +33,13 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             // We cannot reuse this overload taking span:
-            // Int32FrozenIncidenceGraphFactory.FromEdgesUnchecked(int, Span<Endpoints<int>>)
+            // Int32IncidenceGraphFactory.FromEdgesUnchecked(int, Span<Endpoints<int>>)
             // Because the sorting algorithm that takes spans is only available in .NET 5 and later:
             // MemoryExtensions.Sort<TKey,TValue,TComparer>(Span<TKey>, Span<TValue>, TComparer)
             // https://learn.microsoft.com/en-us/dotnet/api/system.memoryextensions.sort?view=net-6.0
 
             // We need to implement sorting independently with another overload that takes arrays:
-            // Int32FrozenIncidenceGraphFactory.FromEdgesUnchecked(int, Endpoints<int>[])
+            // Int32IncidenceGraphFactory.FromEdgesUnchecked(int, Endpoints<int>[])
             // Because the sorting algorithm that takes arrays is available on older versions of .NET:
             // Array.Sort<TKey,TValue>(TKey[], TValue[], IComparer<TKey>)
             // https://learn.microsoft.com/en-us/dotnet/api/system.array.sort?view=net-6.0
@@ -59,7 +59,7 @@ namespace Arborescence.Models.Specialized
             return maxVertex + 1;
         }
 
-        private static Int32FrozenIncidenceGraph CreateTrivial(int vertexCount)
+        private static Int32IncidenceGraph CreateTrivial(int vertexCount)
         {
             int dataLength = 2 + vertexCount;
             int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
@@ -101,7 +101,7 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
-        public static Int32FrozenIncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge)
+        public static Int32IncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge)
         {
             int vertexCount = DeduceVertexCount(endpointsByEdge);
             if (vertexCount is 0)
@@ -111,7 +111,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge, int vertexCount)
+        public static Int32IncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (vertexCount is 0)
                 return default;
@@ -121,7 +121,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge)
+        public static Int32IncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge)
         {
             if (endpointsByEdge is null)
                 throw new ArgumentNullException(nameof(endpointsByEdge));
@@ -135,7 +135,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdgeSpan);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge, int vertexCount)
+        public static Int32IncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
                 throw new ArgumentNullException(nameof(endpointsByEdge));
@@ -147,7 +147,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, CollectionsMarshal.AsSpan(endpointsByEdge));
         }
 
-        private static Int32FrozenIncidenceGraph FromEdgesUnchecked(
+        private static Int32IncidenceGraph FromEdgesUnchecked(
             int vertexCount, Span<Endpoints<int>> endpointsByEdge)
         {
             int edgeCount = endpointsByEdge.Length;
@@ -177,7 +177,7 @@ namespace Arborescence.Models.Specialized
             return new(data);
         }
 #else
-        private static Int32FrozenIncidenceGraph FromEdgesUnchecked(int vertexCount, Endpoints<int>[] endpointsByEdge)
+        private static Int32IncidenceGraph FromEdgesUnchecked(int vertexCount, Endpoints<int>[] endpointsByEdge)
         {
             int edgeCount = endpointsByEdge.Length;
             if (edgeCount is 0)

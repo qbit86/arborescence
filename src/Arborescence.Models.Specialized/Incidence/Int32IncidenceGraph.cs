@@ -6,15 +6,15 @@ namespace Arborescence.Models.Specialized
     using System.Runtime.CompilerServices;
     using static TryHelpers;
     using VertexEnumerator =
-        AdjacencyEnumerator<int, int, Int32FrozenIncidenceGraph, System.ArraySegment<int>.Enumerator>;
+        AdjacencyEnumerator<int, int, Int32IncidenceGraph, System.ArraySegment<int>.Enumerator>;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
-    public readonly partial struct Int32FrozenIncidenceGraph :
+    public readonly partial struct Int32IncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
         IOutNeighborsAdjacency<int, VertexEnumerator>,
-        IEquatable<Int32FrozenIncidenceGraph>
+        IEquatable<Int32IncidenceGraph>
     {
         // Offset       | Length    | Content
         // -------------|-----------|--------
@@ -26,7 +26,7 @@ namespace Arborescence.Models.Specialized
         // 2 + n + 2m   | m         | tailByEdge
         private readonly int[] _data;
 
-        internal Int32FrozenIncidenceGraph(int[] data)
+        internal Int32IncidenceGraph(int[] data)
         {
             Debug.Assert(data is not null, "data is not null");
             _data = data;
@@ -39,7 +39,7 @@ namespace Arborescence.Models.Specialized
         {
             get
             {
-                Int32FrozenIncidenceGraph self = this;
+                Int32IncidenceGraph self = this;
                 return self._data is null ? 0 : self.VertexCountUnchecked;
             }
         }
@@ -53,7 +53,7 @@ namespace Arborescence.Models.Specialized
         {
             get
             {
-                Int32FrozenIncidenceGraph self = this;
+                Int32IncidenceGraph self = this;
                 return self._data is null ? 0 : self.EdgeCountUnchecked;
             }
         }
@@ -74,7 +74,7 @@ namespace Arborescence.Models.Specialized
 
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
-            Int32FrozenIncidenceGraph self = this;
+            Int32IncidenceGraph self = this;
             if (self._data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -97,7 +97,7 @@ namespace Arborescence.Models.Specialized
 
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
         {
-            Int32FrozenIncidenceGraph self = this;
+            Int32IncidenceGraph self = this;
             EdgeEnumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
             return AdjacencyEnumerator<int, int>.Create(self, edgeEnumerator);
         }
@@ -105,7 +105,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetHeadByEdge()
         {
-            Int32FrozenIncidenceGraph self = this;
+            Int32IncidenceGraph self = this;
             if (self._data is null)
                 return ReadOnlySpan<int>.Empty;
             int n = self.VertexCountUnchecked;
@@ -116,7 +116,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTailByEdge()
         {
-            Int32FrozenIncidenceGraph self = this;
+            Int32IncidenceGraph self = this;
             if (self._data is null)
                 return ReadOnlySpan<int>.Empty;
             int n = self.VertexCountUnchecked;
@@ -127,7 +127,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetUpperBoundByVertexUnchecked()
         {
-            Int32FrozenIncidenceGraph self = this;
+            Int32IncidenceGraph self = this;
             return self._data.AsSpan(2, self.VertexCountUnchecked);
         }
     }
