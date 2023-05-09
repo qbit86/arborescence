@@ -23,7 +23,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, Endpoints<int>[] endpointsByEdge)
+        public static Int32FrozenIncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
@@ -111,7 +111,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, Span<Endpoints<int>> endpointsByEdge)
+        public static Int32FrozenIncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (vertexCount is 0)
                 return default;
@@ -135,7 +135,7 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdgeSpan);
         }
 
-        public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, List<Endpoints<int>> endpointsByEdge)
+        public static Int32FrozenIncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
                 throw new ArgumentNullException(nameof(endpointsByEdge));
