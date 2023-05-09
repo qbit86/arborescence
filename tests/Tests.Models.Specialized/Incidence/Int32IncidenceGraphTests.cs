@@ -29,8 +29,8 @@ public sealed class Int32IncidenceGraphTests
         static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
         // Act
-        Int32FrozenIncidenceGraph graph = Int32FrozenIncidenceGraphFactory.FromEdges(edges);
-        AdjacencyEnumerator<int, int, Int32FrozenIncidenceGraph, ArraySegment<int>.Enumerator> neighborEnumerator =
+        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
+        AdjacencyEnumerator<int, int, Int32IncidenceGraph, ArraySegment<int>.Enumerator> neighborEnumerator =
             graph.EnumerateOutNeighbors(vertex);
         HashSet<int> actualNeighbors = new(4);
         while (neighborEnumerator.MoveNext())
@@ -57,7 +57,7 @@ public sealed class Int32IncidenceGraphTests
         static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
         // Act
-        Int32FrozenIncidenceGraph graph = Int32FrozenIncidenceGraphFactory.FromEdges(edges);
+        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
         ArraySegment<int>.Enumerator edgeEnumerator = graph.EnumerateOutEdges(vertex);
         HashSet<int> actualEdges = new(4);
         while (edgeEnumerator.MoveNext())
