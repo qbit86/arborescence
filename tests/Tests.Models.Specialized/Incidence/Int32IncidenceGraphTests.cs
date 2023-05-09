@@ -4,12 +4,42 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Models;
 using Models.Specialized;
 using Workbench;
 using Xunit;
 
 public sealed class Int32IncidenceGraphTests
 {
+    [Fact]
+    internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
+    {
+        // Arrange
+        using TextReader textReader = IndexedGraphs.GetTextReader("09");
+        IEnumerable<Int32Endpoints> rawEdges = IndexedEdgeListParser.ParseEdges(textReader);
+#if NET5_0_OR_GREATER
+        var edges = rawEdges.Select(Transform).ToList();
+#else
+        Endpoints<int>[] edges = rawEdges.Select(Transform).ToArray();
+#endif
+        int vertex = Base32.Parse("p");
+        var expectedNeighbors = new HashSet<int>
+            { Base32.Parse("f"), Base32.Parse("m"), Base32.Parse("q"), Base32.Parse("r") };
+
+        static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
+        // Act
+        Int32FrozenIncidenceGraph graph = Int32FrozenIncidenceGraphFactory.FromEdges(edges);
+        AdjacencyEnumerator<int, int, Int32FrozenIncidenceGraph, ArraySegment<int>.Enumerator> neighborEnumerator =
+            graph.EnumerateOutNeighbors(vertex);
+        HashSet<int> actualNeighbors = new(4);
+        while (neighborEnumerator.MoveNext())
+            actualNeighbors.Add(neighborEnumerator.Current);
+
+        // Assert
+        Assert.Equal(expectedNeighbors, actualNeighbors);
+    }
+
     [Fact]
     internal void EnumerateOutEdges_ExistingVertex_ReturnsKnownEdges()
     {
