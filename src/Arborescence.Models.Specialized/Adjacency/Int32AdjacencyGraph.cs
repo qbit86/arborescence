@@ -8,12 +8,12 @@ namespace Arborescence.Models.Specialized
     using VertexEnumerator = System.ArraySegment<int>.Enumerator;
     using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
 
-    public readonly partial struct Int32FrozenAdjacencyGraph :
+    public readonly partial struct Int32AdjacencyGraph :
         IHeadIncidence<int, Edge>,
         ITailIncidence<int, Edge>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
         IOutNeighborsAdjacency<int, VertexEnumerator>,
-        IEquatable<Int32FrozenAdjacencyGraph>
+        IEquatable<Int32AdjacencyGraph>
     {
         // Offset       | Length    | Content
         // -------------|-----------|--------
@@ -23,7 +23,7 @@ namespace Arborescence.Models.Specialized
         // 2 + n        | m         | neighborsOrderedByTail
         private readonly int[] _data;
 
-        internal Int32FrozenAdjacencyGraph(int[] data)
+        internal Int32AdjacencyGraph(int[] data)
         {
             Debug.Assert(data is not null, "data is not null");
             _data = data;
@@ -36,7 +36,7 @@ namespace Arborescence.Models.Specialized
         {
             get
             {
-                Int32FrozenAdjacencyGraph self = this;
+                Int32AdjacencyGraph self = this;
                 return self._data is null ? 0 : self.VertexCountUnchecked;
             }
         }
@@ -68,7 +68,7 @@ namespace Arborescence.Models.Specialized
 
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
         {
-            Int32FrozenAdjacencyGraph self = this;
+            Int32AdjacencyGraph self = this;
             if (self._data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -92,7 +92,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetUpperBoundByVertexUnchecked()
         {
-            Int32FrozenAdjacencyGraph self = this;
+            Int32AdjacencyGraph self = this;
             Debug.Assert(self._data.Length >= 2, "_data.Length >= 2");
             return self._data.AsSpan(2, self.VertexCountUnchecked);
         }

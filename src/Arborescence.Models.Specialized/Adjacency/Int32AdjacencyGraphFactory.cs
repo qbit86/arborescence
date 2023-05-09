@@ -9,9 +9,9 @@ namespace Arborescence.Models.Specialized
     using System.Diagnostics;
     using Edge = Endpoints<int>;
 
-    public static class Int32FrozenAdjacencyGraphFactory
+    public static class Int32AdjacencyGraphFactory
     {
-        public static Int32FrozenAdjacencyGraph FromEdges(Edge[] edges)
+        public static Int32AdjacencyGraph FromEdges(Edge[] edges)
         {
             if (edges is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(edges));
@@ -25,7 +25,7 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
-        public static Int32FrozenAdjacencyGraph FromEdges(Edge[] edges, int vertexCount)
+        public static Int32AdjacencyGraph FromEdges(Edge[] edges, int vertexCount)
         {
             if (edges is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(edges));
@@ -50,7 +50,7 @@ namespace Arborescence.Models.Specialized
             return maxVertex + 1;
         }
 
-        private static Int32FrozenAdjacencyGraph FromOrderedEdges(
+        private static Int32AdjacencyGraph FromOrderedEdges(
             int vertexCount, ReadOnlySpan<Edge> edgesOrderedByTail)
         {
             int edgeCount = edgesOrderedByTail.Length;
@@ -98,7 +98,7 @@ namespace Arborescence.Models.Specialized
             return new(data);
         }
 
-        private static Int32FrozenAdjacencyGraph CreateTrivial(int vertexCount)
+        private static Int32AdjacencyGraph CreateTrivial(int vertexCount)
         {
             int dataLength = 2 + vertexCount;
             int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
@@ -109,7 +109,7 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
-        public static Int32FrozenAdjacencyGraph FromEdges(Span<Edge> edges)
+        public static Int32AdjacencyGraph FromEdges(Span<Edge> edges)
         {
             edges.Sort(EdgeComparer.Instance);
             int vertexCount = DeduceVertexCount(edges);
@@ -120,7 +120,7 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
-        public static Int32FrozenAdjacencyGraph FromEdges(Span<Edge> edges, int vertexCount)
+        public static Int32AdjacencyGraph FromEdges(Span<Edge> edges, int vertexCount)
         {
             if (vertexCount is 0)
                 return default;
@@ -131,7 +131,7 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
-        public static Int32FrozenAdjacencyGraph FromEdges(List<Edge> edges)
+        public static Int32AdjacencyGraph FromEdges(List<Edge> edges)
         {
             if (edges is null)
                 throw new ArgumentNullException(nameof(edges));
@@ -146,7 +146,7 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edgeSpan);
         }
 
-        public static Int32FrozenAdjacencyGraph FromEdges(List<Edge> edges, int vertexCount)
+        public static Int32AdjacencyGraph FromEdges(List<Edge> edges, int vertexCount)
         {
             if (edges is null)
                 throw new ArgumentNullException(nameof(edges));

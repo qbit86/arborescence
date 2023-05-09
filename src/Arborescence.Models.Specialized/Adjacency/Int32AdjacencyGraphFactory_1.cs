@@ -7,15 +7,15 @@ namespace Arborescence.Models.Specialized
     public static class Int32FrozenAdjacencyGraphFactory<TVertexCollection>
         where TVertexCollection : ICollection<int>
     {
-        public static Int32FrozenAdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
+        public static Int32AdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyList<TVertexCollection> =>
             neighborsByVertex is null ? default : FromListUnchecked(neighborsByVertex);
 
-        public static Int32FrozenAdjacencyGraph FromDictionary<TMultimap>(TMultimap neighborsByVertex)
+        public static Int32AdjacencyGraph FromDictionary<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyDictionary<int, TVertexCollection> =>
             neighborsByVertex is null ? default : FromDictionaryUnchecked(neighborsByVertex);
 
-        private static Int32FrozenAdjacencyGraph FromListUnchecked<TMultimap>(TMultimap neighborsByVertex)
+        private static Int32AdjacencyGraph FromListUnchecked<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyList<TVertexCollection>
         {
             Int32ReadOnlyDictionary<TVertexCollection, TMultimap> dictionary =
@@ -23,7 +23,7 @@ namespace Arborescence.Models.Specialized
             return FromDictionaryUnchecked(dictionary);
         }
 
-        private static Int32FrozenAdjacencyGraph FromDictionaryUnchecked<TMultimap>(TMultimap neighborsByVertex)
+        private static Int32AdjacencyGraph FromDictionaryUnchecked<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyDictionary<int, TVertexCollection>
         {
             int vertexCount = neighborsByVertex.Count;
