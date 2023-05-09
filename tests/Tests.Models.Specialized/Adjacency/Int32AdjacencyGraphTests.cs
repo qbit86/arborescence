@@ -8,7 +8,7 @@ using Models.Specialized;
 using Workbench;
 using Xunit;
 
-public sealed class Int32FrozenAdjacencyGraphTests
+public sealed class Int32AdjacencyGraphTests
 {
     [Fact]
     internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
