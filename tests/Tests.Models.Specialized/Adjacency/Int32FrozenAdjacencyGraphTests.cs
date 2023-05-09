@@ -1,0 +1,37 @@
+namespace Arborescence.Adjacency;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Models.Specialized;
+using Workbench;
+using Xunit;
+
+public sealed class Int32FrozenAdjacencyGraphTests
+{
+    [Fact]
+    internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
+    {
+        // Arrange
+        using TextReader textReader = IndexedGraphs.GetTextReader("09");
+        IEnumerable<Int32Endpoints> rawEdges = IndexedEdgeListParser.ParseEdges(textReader);
+        Endpoints<int>[] edges = rawEdges.Select(Transform).ToArray();
+        int vertexCount = 1 + edges.Select(it => Math.Max(it.Head, it.Tail)).Max();
+        int vertex = Base32.Parse("p");
+        var expectedNeighbors = new List<int>
+            { Base32.Parse("f"), Base32.Parse("m"), Base32.Parse("q"), Base32.Parse("r") };
+
+        static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
+        // Act
+        Int32FrozenAdjacencyGraph graph = Int32FrozenAdjacencyGraphFactory.FromEdges(vertexCount, edges);
+        ArraySegment<int>.Enumerator neighborEnumerators = graph.EnumerateOutNeighbors(vertex);
+        List<int> actualNeighbors = new(4);
+        while (neighborEnumerators.MoveNext())
+            actualNeighbors.Add(neighborEnumerators.Current);
+
+        // Assert
+        Assert.Equal(expectedNeighbors, actualNeighbors);
+    }
+}
