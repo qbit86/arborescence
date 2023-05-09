@@ -38,14 +38,14 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
-        private static int DeduceVertexCount(ReadOnlySpan<Edge> edges)
+        private static int DeduceVertexCount(ReadOnlySpan<Edge> edgesOrderedByTail)
         {
-            int maxVertex = -1;
-            foreach (Endpoints<int> edge in edges)
-            {
-                int vertex = Math.Max(edge.Tail, edge.Head);
-                maxVertex = Math.Max(maxVertex, vertex);
-            }
+            if (edgesOrderedByTail.Length is 0)
+                return 0;
+
+            int maxVertex = edgesOrderedByTail[^1].Tail;
+            foreach (Endpoints<int> edge in edgesOrderedByTail)
+                maxVertex = Math.Max(maxVertex, edge.Head);
 
             return maxVertex + 1;
         }
