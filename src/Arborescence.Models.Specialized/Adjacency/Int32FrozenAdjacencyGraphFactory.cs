@@ -11,6 +11,20 @@ namespace Arborescence.Models.Specialized
 
     public static class Int32FrozenAdjacencyGraphFactory
     {
+        public static Int32FrozenAdjacencyGraph FromEdges(Edge[] edges)
+        {
+            if (edges is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(edges));
+
+            Array.Sort(edges, EdgeComparer.Instance);
+            int vertexCount = DeduceVertexCount(edges);
+            if (vertexCount is 0)
+                return default;
+            Debug.Assert(vertexCount > 0);
+
+            return FromOrderedEdges(vertexCount, edges);
+        }
+
         public static Int32FrozenAdjacencyGraph FromEdges(int vertexCount, Edge[] edges)
         {
             if (edges is null)
@@ -22,6 +36,18 @@ namespace Arborescence.Models.Specialized
 
             Array.Sort(edges, EdgeComparer.Instance);
             return FromOrderedEdges(vertexCount, edges);
+        }
+
+        private static int DeduceVertexCount(ReadOnlySpan<Edge> edges)
+        {
+            int maxVertex = -1;
+            foreach (Endpoints<int> edge in edges)
+            {
+                int vertex = Math.Max(edge.Tail, edge.Head);
+                maxVertex = Math.Max(maxVertex, vertex);
+            }
+
+            return maxVertex + 1;
         }
 
         private static Int32FrozenAdjacencyGraph FromOrderedEdges(
@@ -83,6 +109,17 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
+        public static Int32FrozenAdjacencyGraph FromEdges(Span<Edge> edges)
+        {
+            edges.Sort(EdgeComparer.Instance);
+            int vertexCount = DeduceVertexCount(edges);
+            if (vertexCount is 0)
+                return default;
+            Debug.Assert(vertexCount > 0);
+
+            return FromOrderedEdges(vertexCount, edges);
+        }
+
         public static Int32FrozenAdjacencyGraph FromEdges(int vertexCount, Span<Edge> edges)
         {
             if (vertexCount is 0)
@@ -92,6 +129,21 @@ namespace Arborescence.Models.Specialized
 
             edges.Sort(EdgeComparer.Instance);
             return FromOrderedEdges(vertexCount, edges);
+        }
+
+        public static Int32FrozenAdjacencyGraph FromEdges(List<Edge> edges)
+        {
+            if (edges is null)
+                throw new ArgumentNullException(nameof(edges));
+
+            edges.Sort(EdgeComparer.Instance);
+            Span<Edge> edgeSpan = CollectionsMarshal.AsSpan(edges);
+            int vertexCount = DeduceVertexCount(edgeSpan);
+            if (vertexCount is 0)
+                return default;
+            Debug.Assert(vertexCount > 0);
+
+            return FromOrderedEdges(vertexCount, edgeSpan);
         }
 
         public static Int32FrozenAdjacencyGraph FromEdges(int vertexCount, List<Edge> edges)
