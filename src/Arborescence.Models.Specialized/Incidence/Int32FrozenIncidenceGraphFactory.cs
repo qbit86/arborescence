@@ -2,6 +2,7 @@
 namespace Arborescence.Models.Specialized
 {
     using System;
+    using System.Diagnostics;
 #if NET5_0_OR_GREATER
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
@@ -9,6 +10,19 @@ namespace Arborescence.Models.Specialized
 
     public static class Int32FrozenIncidenceGraphFactory
     {
+        public static Int32FrozenIncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge)
+        {
+            if (endpointsByEdge is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
+
+            int vertexCount = DeduceVertexCount(endpointsByEdge);
+            if (vertexCount is 0)
+                return default;
+            Debug.Assert(vertexCount > 0);
+
+            return FromEdgesUnchecked(vertexCount, endpointsByEdge);
+        }
+
         public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, Endpoints<int>[] endpointsByEdge)
         {
             if (endpointsByEdge is null)
@@ -31,6 +45,18 @@ namespace Arborescence.Models.Specialized
             // https://learn.microsoft.com/en-us/dotnet/api/system.array.sort?view=net-6.0
 
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
+        }
+
+        private static int DeduceVertexCount(ReadOnlySpan<Endpoints<int>> endpointsByEdge)
+        {
+            if (endpointsByEdge.Length is 0)
+                return 0;
+
+            int maxVertex = -1;
+            foreach (Endpoints<int> endpoints in endpointsByEdge)
+                maxVertex = Math.Max(maxVertex, Math.Max(endpoints.Tail, endpoints.Head));
+
+            return maxVertex + 1;
         }
 
         private static Int32FrozenIncidenceGraph CreateTrivial(int vertexCount)
@@ -75,6 +101,16 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
+        public static Int32FrozenIncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge)
+        {
+            int vertexCount = DeduceVertexCount(endpointsByEdge);
+            if (vertexCount is 0)
+                return default;
+            Debug.Assert(vertexCount > 0);
+
+            return FromEdgesUnchecked(vertexCount, endpointsByEdge);
+        }
+
         public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, Span<Endpoints<int>> endpointsByEdge)
         {
             if (vertexCount is 0)
@@ -83,6 +119,20 @@ namespace Arborescence.Models.Specialized
                 ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
 
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
+        }
+
+        public static Int32FrozenIncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge)
+        {
+            if (endpointsByEdge is null)
+                throw new ArgumentNullException(nameof(endpointsByEdge));
+
+            Span<Endpoints<int>> endpointsByEdgeSpan = CollectionsMarshal.AsSpan(endpointsByEdge);
+            int vertexCount = DeduceVertexCount(endpointsByEdgeSpan);
+            if (vertexCount is 0)
+                return default;
+            Debug.Assert(vertexCount > 0);
+
+            return FromEdgesUnchecked(vertexCount, endpointsByEdgeSpan);
         }
 
         public static Int32FrozenIncidenceGraph FromEdges(int vertexCount, List<Endpoints<int>> endpointsByEdge)
