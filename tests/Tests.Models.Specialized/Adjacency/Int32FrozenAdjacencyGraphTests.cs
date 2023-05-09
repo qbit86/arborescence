@@ -19,7 +19,7 @@ public sealed class Int32FrozenAdjacencyGraphTests
         Endpoints<int>[] edges = rawEdges.Select(Transform).ToArray();
         int vertexCount = 1 + edges.Select(it => Math.Max(it.Head, it.Tail)).Max();
         int vertex = Base32.Parse("p");
-        var expectedNeighbors = new List<int>
+        var expectedNeighbors = new HashSet<int>
             { Base32.Parse("f"), Base32.Parse("m"), Base32.Parse("q"), Base32.Parse("r") };
 
         static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
@@ -27,7 +27,7 @@ public sealed class Int32FrozenAdjacencyGraphTests
         // Act
         Int32FrozenAdjacencyGraph graph = Int32FrozenAdjacencyGraphFactory.FromEdges(vertexCount, edges);
         ArraySegment<int>.Enumerator neighborEnumerators = graph.EnumerateOutNeighbors(vertex);
-        List<int> actualNeighbors = new(4);
+        HashSet<int> actualNeighbors = new(4);
         while (neighborEnumerators.MoveNext())
             actualNeighbors.Add(neighborEnumerators.Current);
 
