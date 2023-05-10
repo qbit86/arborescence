@@ -8,8 +8,10 @@ using Models.Specialized;
 using Workbench;
 using Xunit;
 
-public sealed class Int32AdjacencyGraphTests
+public sealed partial class Int32AdjacencyGraphTests
 {
+    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
     [Fact]
     internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
     {
@@ -24,8 +26,6 @@ public sealed class Int32AdjacencyGraphTests
         int vertex = Base32.Parse("p");
         var expectedNeighbors = new HashSet<int>
             { Base32.Parse("f"), Base32.Parse("m"), Base32.Parse("q"), Base32.Parse("r") };
-
-        static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
         // Act
         Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
@@ -57,8 +57,6 @@ public sealed class Int32AdjacencyGraphTests
             Create("p", "m"),
             Create("p", "r"),
         };
-
-        static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
         static Endpoints<int> Create(ReadOnlySpan<char> tail, ReadOnlySpan<char> head) =>
             Endpoints.Create(Base32.Parse(tail), Base32.Parse(head));
