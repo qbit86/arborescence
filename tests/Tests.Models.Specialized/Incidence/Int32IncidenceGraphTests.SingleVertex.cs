@@ -9,7 +9,7 @@ using Models.Specialized;
 using Workbench;
 using Xunit;
 
-public sealed class Int32IncidenceGraphTests
+public sealed partial class Int32IncidenceGraphTests
 {
     private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
