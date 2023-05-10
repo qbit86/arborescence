@@ -11,6 +11,8 @@ using Xunit;
 
 public sealed class Int32IncidenceGraphTests
 {
+    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
     [Fact]
     internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
     {
@@ -25,8 +27,6 @@ public sealed class Int32IncidenceGraphTests
         int vertex = Base32.Parse("p");
         var expectedNeighbors = new HashSet<int>
             { Base32.Parse("f"), Base32.Parse("m"), Base32.Parse("q"), Base32.Parse("r") };
-
-        static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
         // Act
         Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
@@ -53,8 +53,6 @@ public sealed class Int32IncidenceGraphTests
 #endif
         int vertex = Base32.Parse("p");
         var expectedEdges = new HashSet<int> { 6, 8, 23, 25 };
-
-        static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
         // Act
         Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
