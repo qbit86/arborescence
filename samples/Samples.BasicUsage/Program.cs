@@ -2,27 +2,30 @@
 
 using System;
 using System.Collections.Generic;
-using Models;
+using Models.Specialized;
 using Traversal.Specialized;
 
 internal static class Program
 {
     private static void Main()
     {
-        SimpleIncidenceGraph.Builder builder = new();
-        builder.Add(2, 0);
-        builder.Add(4, 3);
-        builder.Add(0, 4);
-        builder.Add(3, 2);
-        builder.Add(4, 4);
-        builder.Add(0, 2);
-        builder.Add(2, 4);
-        SimpleIncidenceGraph graph = builder.ToGraph();
+        Endpoints<int>[] edges =
+        {
+            new(2, 0),
+            new(4, 3),
+            new(0, 4),
+            new(3, 2),
+            new(4, 4),
+            new(0, 2),
+            new(2, 4)
+        };
+        Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
 
-        EnumerableBfs<SimpleIncidenceGraph, Int32Endpoints, ArraySegment<Int32Endpoints>.Enumerator> bfs;
+        EnumerableBfs<Int32AdjacencyGraph, Endpoints<int>, IncidenceEnumerator<int, ArraySegment<int>.Enumerator>> bfs;
 
-        using IEnumerator<Int32Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
-        while (edges.MoveNext())
-            Console.WriteLine(edges.Current);
+        using IEnumerator<Endpoints<int>> treeEdges =
+            bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
+        while (treeEdges.MoveNext())
+            Console.WriteLine(treeEdges.Current);
     }
 }
