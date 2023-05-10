@@ -87,7 +87,7 @@ namespace Arborescence.Models.Specialized
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegmentHelpers.EmptyEnumerator<int>();
 
-            int lowerBound = vertex == 0 ? 0 : upperBoundByVertex[vertex - 1];
+            int lowerBound = vertex == 0 ? 2 + vertexCount : upperBoundByVertex[vertex - 1];
             int upperBound = upperBoundByVertex[vertex];
             Debug.Assert(lowerBound <= upperBound, "lowerBound <= upperBound");
             int count = upperBound - lowerBound;
