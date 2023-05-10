@@ -75,7 +75,7 @@ namespace Arborescence.Models.Specialized
 
                 if (expectedTail < actualTail)
                 {
-                    int filler = expectedTail is 0 ? 0 : upperBoundByVertex[expectedTail - 1];
+                    int filler = expectedTail is 0 ? offset : upperBoundByVertex[expectedTail - 1];
                     int length = Math.Clamp(actualTail - expectedTail, 0, vertexCount);
                     upperBoundByVertex.Slice(expectedTail, length).Fill(filler);
                 }
