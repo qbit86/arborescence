@@ -4,27 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Models;
+using Models.Specialized;
 using Traversal.Adjacency;
 using Workbench;
 using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 
 internal static partial class Program
 {
+    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
     private static void DemoAdjacencyBfsEdges()
     {
-        SimpleIncidenceGraph.Builder builder = new(18);
-        using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
-        {
-            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Int32Endpoints edge in edges)
-                builder.Add(edge.Tail, edge.Head);
-        }
+        using TextReader textReader = IndexedGraphs.GetTextReader("09");
+        var edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToList();
+        textReader.Dispose();
 
-        SimpleIncidenceGraph incidenceGraph = builder.ToGraph();
-        var adjacencyGraph = IncidenceAdjacencyAdapter<int, Int32Endpoints, EdgeEnumerator>.Create(incidenceGraph);
+        Int32AdjacencyGraph adjacencyGraph = Int32AdjacencyGraphFactory.FromEdges(edges);
         IEnumerable<int> sources = "abcd".Select(it => Base32.Parse(it.ToString()));
-        IEnumerable<Endpoints<int>> arrows = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, sources);
+        IEnumerable<Endpoints<int>> arrows = EnumerableBfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(
+            adjacencyGraph, sources);
+
         foreach (Endpoints<int> arrow in arrows)
         {
             (int tail, int head) = arrow;
