@@ -3,33 +3,23 @@ namespace Arborescence.Traversal.Adjacency.Tests;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Models;
+using Models.Specialized;
 using Workbench;
 using Xunit;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
-#else
-using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
-#endif
 
 public sealed class EnumerableBfs_Tests
 {
+    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
     [Fact]
     public void EnumerateEdges_SingleSource_ReturnsCorrectEdgesInOrder()
     {
         // Arrange
-        Graph.Builder builder = new(0, 31);
-        using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
-        {
-            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Int32Endpoints edge in edges)
-                builder.Add(edge.Tail, edge.Head);
-        }
+        using TextReader textReader = IndexedGraphs.GetTextReader("08");
+        Endpoints<int>[] edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToArray();
+        textReader.Dispose();
 
-        Graph incidenceGraph = builder.ToGraph();
-        var adjacencyGraph = IncidenceAdjacencyAdapter<int, Int32Endpoints, EdgeEnumerator>.Create(incidenceGraph);
+        Int32AdjacencyGraph adjacencyGraph = Int32AdjacencyGraphFactory.FromEdges(edges);
 
         List<(string Tail, string Head)> expectedBase32 = new(12)
         {
@@ -50,7 +40,8 @@ public sealed class EnumerableBfs_Tests
             .Select(it => Endpoints.Create(V(it.Tail), V(it.Head))).ToList();
 
         // Act
-        IEnumerable<Endpoints<int>> arrows = EnumerableBfs<int>.EnumerateEdges(adjacencyGraph, V("d"));
+        IEnumerable<Endpoints<int>> arrows =
+            EnumerableBfs<int, System.ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, V("d"));
         var actual = arrows.ToList();
 
         // Assert
