@@ -16,8 +16,8 @@ namespace Arborescence.Models.Specialized
             if (edges is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(edges));
 
-            Array.Sort(edges, EdgeComparer.Instance);
-            int vertexCount = DeduceVertexCount(edges);
+            if (ShouldOrderByTail(edges, out int vertexCount))
+                Array.Sort(edges, EdgeComparer.Instance);
             if (vertexCount is 0)
                 return default;
             Debug.Assert(vertexCount > 0);
@@ -38,16 +38,31 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
-        private static int DeduceVertexCount(ReadOnlySpan<Edge> edgesOrderedByTail)
+        private static bool ShouldOrderByTail(ReadOnlySpan<Edge> edges, out int vertexCount)
         {
-            if (edgesOrderedByTail.Length is 0)
-                return 0;
+            if (edges.Length is 0)
+                return TryHelpers.None(out vertexCount);
 
-            int maxVertex = edgesOrderedByTail[^1].Tail;
-            foreach (Endpoints<int> edge in edgesOrderedByTail)
-                maxVertex = Math.Max(maxVertex, edge.Head);
+            bool shouldOrder = false;
+            int maxTail = edges[0].Tail;
+            int maxVertex = Math.Max(maxTail, edges[0].Head);
+            ReadOnlySpan<Edge> remainingEdges = edges[1..];
+            foreach (Endpoints<int> edge in remainingEdges)
+            {
+                if (edge.Tail < maxTail)
+                {
+                    shouldOrder = true;
+                    maxVertex = Math.Max(maxVertex, edge.Head);
+                }
+                else
+                {
+                    maxTail = edge.Tail;
+                    maxVertex = Math.Max(maxVertex, Math.Max(maxTail, edge.Head));
+                }
+            }
 
-            return maxVertex + 1;
+            vertexCount = maxVertex + 1;
+            return shouldOrder;
         }
 
         private static Int32AdjacencyGraph FromOrderedEdges(
@@ -111,8 +126,8 @@ namespace Arborescence.Models.Specialized
 #if NET5_0_OR_GREATER
         public static Int32AdjacencyGraph FromEdges(Span<Edge> edges)
         {
-            edges.Sort(EdgeComparer.Instance);
-            int vertexCount = DeduceVertexCount(edges);
+            if (ShouldOrderByTail(edges, out int vertexCount))
+                edges.Sort(EdgeComparer.Instance);
             if (vertexCount is 0)
                 return default;
             Debug.Assert(vertexCount > 0);
@@ -136,9 +151,9 @@ namespace Arborescence.Models.Specialized
             if (edges is null)
                 throw new ArgumentNullException(nameof(edges));
 
-            edges.Sort(EdgeComparer.Instance);
             Span<Edge> edgeSpan = CollectionsMarshal.AsSpan(edges);
-            int vertexCount = DeduceVertexCount(edgeSpan);
+            if (ShouldOrderByTail(edgeSpan, out int vertexCount))
+                edges.Sort(EdgeComparer.Instance);
             if (vertexCount is 0)
                 return default;
             Debug.Assert(vertexCount > 0);
