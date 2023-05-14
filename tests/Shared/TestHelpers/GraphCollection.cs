@@ -122,13 +122,6 @@ internal sealed class MutableSimpleGraphCollection : GraphCollection<
         new(initialVertexCount);
 }
 
-internal sealed class UndirectedSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, SimpleIncidenceGraph.UndirectedBuilder>
-{
-    protected override SimpleIncidenceGraph.UndirectedBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
 internal sealed class MutableIndexedIncidenceGraphBuilder :
     IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,
     IDisposable
