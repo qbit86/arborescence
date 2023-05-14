@@ -1,3 +1,4 @@
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence;
 
 using System;
@@ -5,24 +6,17 @@ using System.Buffers;
 using System.Collections.Generic;
 using Traversal.Specialized;
 using Xunit;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
-using EnumerableDfs =
-    Traversal.Incidence.EnumerableDfs<int, Int32Endpoints, System.ArraySegment<Int32Endpoints>.Enumerator>;
-#else
-using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
-using EnumerableDfs =
-    Traversal.Incidence.EnumerableDfs<int, Int32Endpoints, System.Collections.Generic.IEnumerator<Int32Endpoints>>;
-#endif
+using Graph = Models.Specialized.Int32AdjacencyGraph;
+using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
+using EnumerableDfs = Traversal.Incidence.EnumerableDfs<
+    int, Endpoints<int>, IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>>;
 
 public sealed class BasicDfsTest
 {
-    private EnumerableDfs<Graph, Int32Endpoints, EdgeEnumerator> Dfs { get; }
+    private static EnumerableDfs<Graph, Endpoints<int>, EdgeEnumerator> Dfs => default;
 
     [Theory]
-    [ClassData(typeof(UndirectedSimpleGraphCollection))]
+    [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateEdges(GraphParameter<Graph> p)
     {
         Graph graph = p.Graph;
@@ -36,8 +30,9 @@ public sealed class BasicDfsTest
 
         // Act
 
-        using IEnumerator<Int32Endpoints> basicSteps = Dfs.EnumerateEdges(graph, source, graph.VertexCount);
-        using IEnumerator<Int32Endpoints> enumerableSteps = EnumerableDfs.EnumerateEdges(graph, source, exploredSet).GetEnumerator();
+        using IEnumerator<Endpoints<int>> basicSteps = Dfs.EnumerateEdges(graph, source, graph.VertexCount);
+        using IEnumerator<Endpoints<int>> enumerableSteps =
+            EnumerableDfs.EnumerateEdges(graph, source, exploredSet).GetEnumerator();
 
         // Assert
 
@@ -51,8 +46,8 @@ public sealed class BasicDfsTest
             if (!expectedHasCurrent || !actualHasCurrent)
                 break;
 
-            Int32Endpoints expected = enumerableSteps.Current;
-            Int32Endpoints actual = basicSteps.Current;
+            Endpoints<int> expected = enumerableSteps.Current;
+            Endpoints<int> actual = basicSteps.Current;
 
             if (expected != actual)
             {
@@ -63,7 +58,7 @@ public sealed class BasicDfsTest
     }
 
     [Theory]
-    [ClassData(typeof(UndirectedSimpleGraphCollection))]
+    [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateVertices(GraphParameter<Graph> p)
     {
         Graph graph = p.Graph;
@@ -78,7 +73,8 @@ public sealed class BasicDfsTest
         // Act
 
         using IEnumerator<int> basicSteps = Dfs.EnumerateVertices(graph, source, graph.VertexCount);
-        using IEnumerator<int> enumerableSteps = EnumerableDfs.EnumerateVertices(graph, source, exploredSet).GetEnumerator();
+        using IEnumerator<int> enumerableSteps =
+            EnumerableDfs.EnumerateVertices(graph, source, exploredSet).GetEnumerator();
 
         // Assert
 
@@ -103,3 +99,4 @@ public sealed class BasicDfsTest
         }
     }
 }
+#endif
