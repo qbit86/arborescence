@@ -1,3 +1,4 @@
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence;
 
 using System;
@@ -8,17 +9,12 @@ using Misnomer;
 using Traversal;
 using Traversal.Incidence;
 using Xunit;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-using Graph = Models.SimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
-#else
-using Graph = Models.Compatibility.SimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
-#endif
+using Graph = Models.Specialized.Int32AdjacencyGraph;
+using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
 
 public sealed class BfsEnumerateEdgesTest
 {
-    private static void EnumerateEdgesCore(Graph graph, bool multipleSource)
+    private static void EnumerateEdgesCore(Models.Specialized.Int32AdjacencyGraph graph, bool multipleSource)
     {
         // Arrange
 
@@ -29,9 +25,9 @@ public sealed class BfsEnumerateEdgesTest
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         IndexedSet set = new(setBackingStore);
 
-        using Rist<Int32Endpoints> eagerSteps = new(graph.VertexCount);
-        using Rist<Int32Endpoints> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<int, Int32Endpoints, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
+        using Rist<Endpoints<int>> eagerSteps = new(graph.VertexCount);
+        using Rist<Endpoints<int>> enumerableSteps = new(graph.VertexCount);
+        BfsHandler<int, Endpoints<int>, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -44,8 +40,8 @@ public sealed class BfsEnumerateEdgesTest
             IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
-            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-            IEnumerable<Int32Endpoints> edges = EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateEdges(
+            EagerBfs<int, Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
+            IEnumerable<Endpoints<int>> edges = EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, sources, set);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(edges);
@@ -53,8 +49,8 @@ public sealed class BfsEnumerateEdgesTest
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-            IEnumerable<Int32Endpoints> edges = EnumerableBfs<int, Int32Endpoints, EdgeEnumerator>.EnumerateEdges(
+            EagerBfs<int, Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
+            IEnumerable<Endpoints<int>> edges = EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, source, set);
             enumerableSteps.AddRange(edges);
         }
@@ -68,8 +64,8 @@ public sealed class BfsEnumerateEdgesTest
         int count = eagerStepCount;
         for (int i = 0; i < count; ++i)
         {
-            Int32Endpoints eagerStep = eagerSteps[i];
-            Int32Endpoints enumerableStep = enumerableSteps[i];
+            Endpoints<int> eagerStep = eagerSteps[i];
+            Endpoints<int> enumerableStep = enumerableSteps[i];
 
             if (eagerStep == enumerableStep)
                 continue;
@@ -83,21 +79,22 @@ public sealed class BfsEnumerateEdgesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<int, Int32Endpoints, Graph> CreateBfsHandler(IList<Int32Endpoints> treeEdges)
+    private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler(IList<Endpoints<int>> treeEdges)
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));
 
-        BfsHandler<int, Int32Endpoints, Graph> result = new();
+        BfsHandler<int, Endpoints<int>, Graph> result = new();
         result.TreeEdge += (_, e) => treeEdges.Add(e);
         return result;
     }
 
     [Theory]
-    [ClassData(typeof(UndirectedSimpleGraphCollection))]
+    [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, false);
 
     [Theory]
-    [ClassData(typeof(SimpleGraphCollection))]
+    [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateEdges_MultipleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, true);
 }
+#endif

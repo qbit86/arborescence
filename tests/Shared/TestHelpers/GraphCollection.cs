@@ -105,12 +105,15 @@ internal sealed class MutableIndexedGraphCollection : GraphCollection<
         new(initialVertexCount);
 }
 
-internal sealed class SimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, SimpleIncidenceGraph.Builder>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+internal sealed class Int32AdjacencyGraphCollection : GraphCollection<
+    Models.Specialized.Int32AdjacencyGraph, Endpoints<int>,
+    IncidenceEnumerator<int, ArraySegment<int>.Enumerator>, Int32AdjacencyGraphBuilder>
 {
-    protected override SimpleIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
+    protected override Int32AdjacencyGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
+        new();
 }
+#endif
 
 internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
     SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraph>
@@ -204,3 +207,24 @@ internal sealed class MutableSimpleIncidenceGraphBuilder :
         return result;
     }
 }
+
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+internal sealed class Int32AdjacencyGraphBuilder :
+    IGraphBuilder<Models.Specialized.Int32AdjacencyGraph, int, Endpoints<int>>
+{
+    private readonly List<Endpoints<int>> _edges = new();
+
+    public bool TryAdd(int tail, int head, out Endpoints<int> edge)
+    {
+        edge = new(tail, head);
+        _edges.Add(edge);
+        return true;
+    }
+
+    public Models.Specialized.Int32AdjacencyGraph ToGraph()
+    {
+        Endpoints<int>[] edges = _edges.ToArray();
+        return Models.Specialized.Int32AdjacencyGraphFactory.FromEdges(edges);
+    }
+}
+#endif
