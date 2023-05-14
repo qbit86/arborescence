@@ -115,13 +115,6 @@ internal sealed class Int32AdjacencyGraphCollection : GraphCollection<
 }
 #endif
 
-internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraph>
-{
-    protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
 internal sealed class MutableSimpleGraphCollection : GraphCollection<
     MutableSimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraphBuilder>
 {
