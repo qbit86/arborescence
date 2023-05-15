@@ -116,7 +116,7 @@ internal sealed class Int32AdjacencyGraphCollection : GraphCollection<
 }
 
 internal sealed class ListAdjacencyGraphCollection : GraphCollection<
-    ListAdjacencyGraph<int, Dictionary<int, List<int>>>,
+    ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>>,
     Endpoints<int>,
     IncidenceEnumerator<int, List<int>.Enumerator>,
     ListAdjacencyGraphBuilder>
@@ -184,26 +184,32 @@ internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<
 }
 
 internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
-    ListAdjacencyGraph<int, Dictionary<int, List<int>>>,
+    ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>>,
     int,
     Endpoints<int>>
 {
-    private readonly Dictionary<int, List<int>> _neighborsByVertex;
+    private readonly List<List<int>> _neighborsByVertex;
 
-    public ListAdjacencyGraphBuilder(int initialVertexCount) => _neighborsByVertex = new(initialVertexCount);
+    internal ListAdjacencyGraphBuilder(int initialVertexCount) => _neighborsByVertex = new(initialVertexCount);
 
     public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
-        if (_neighborsByVertex.TryGetValue(tail, out List<int>? neighbors))
+        while (tail >= _neighborsByVertex.Count)
+            _neighborsByVertex.Add(default!);
+        if (_neighborsByVertex[tail] is { } neighbors)
             neighbors.Add(head);
         else
-            _neighborsByVertex.Add(tail, new() { head });
+            _neighborsByVertex[tail] = new() { head };
 
         edge = new(tail, head);
         return true;
     }
 
-    public ListAdjacencyGraph<int, Dictionary<int, List<int>>> ToGraph() =>
-        ListAdjacencyGraphFactory<int>.Create(_neighborsByVertex);
+    public ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>> ToGraph()
+    {
+        Int32Dictionary<List<int>, List<List<int>>> neighborsByVertex =
+            Int32DictionaryFactory<List<int>>.Create(_neighborsByVertex);
+        return ListAdjacencyGraphFactory<int>.Create(neighborsByVertex);
+    }
 }
 #endif

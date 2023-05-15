@@ -10,8 +10,12 @@ using Misnomer;
 using Traversal;
 using Traversal.Incidence;
 using Xunit;
-using Graph = Models.Specialized.Int32AdjacencyGraph;
-using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
+using Graph = Models.ListAdjacencyGraph<
+    int,
+    Int32Dictionary<
+        System.Collections.Generic.List<int>,
+        System.Collections.Generic.List<System.Collections.Generic.List<int>>>>;
+using EdgeEnumerator = IncidenceEnumerator<int, System.Collections.Generic.List<int>.Enumerator>;
 
 public class QueueGenericSearchEnumerateVerticesTest
 {
@@ -92,11 +96,11 @@ public class QueueGenericSearchEnumerateVerticesTest
     }
 
     [Theory]
-    [ClassData(typeof(Int32AdjacencyGraphCollection))]
+    [ClassData(typeof(ListAdjacencyGraphCollection))]
     internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, false);
 
     [Theory]
-    [ClassData(typeof(Int32AdjacencyGraphCollection))]
+    [ClassData(typeof(ListAdjacencyGraphCollection))]
     internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, true);
 }
 #endif
