@@ -1,6 +1,5 @@
 ﻿namespace Arborescence
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
     internal static class TryHelpers
@@ -13,7 +12,7 @@
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool None<T>([MaybeNullWhen(false)] out T value)
+        internal static bool None<T>(out T? value)
         {
             value = default;
             return false;
