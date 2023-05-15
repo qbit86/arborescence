@@ -1,3 +1,4 @@
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence;
 
 using System;
@@ -9,21 +10,13 @@ using Misnomer;
 using Traversal;
 using Traversal.Incidence;
 using Xunit;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-using Graph = Models.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
-#else
-using Graph = Models.Compatibility.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
-#endif
+using Graph = Models.Specialized.Int32AdjacencyGraph;
+using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
 
 public class QueueGenericSearchEnumerateVerticesTest
 {
     private static void EnumerateVerticesCore(Graph graph, bool multipleSource)
     {
-        if (graph is null)
-            throw new ArgumentNullException(nameof(graph));
-
         // Arrange
 
         byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
@@ -36,7 +29,7 @@ public class QueueGenericSearchEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
-        BfsHandler<int, Int32Endpoints, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
+        BfsHandler<int, Endpoints<int>, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -49,8 +42,8 @@ public class QueueGenericSearchEnumerateVerticesTest
             IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
-            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-            IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
+            EagerBfs<int, Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
+            IEnumerable<int> vertices = EnumerableGenericSearch<int, Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, sources, frontier, set);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
@@ -58,8 +51,8 @@ public class QueueGenericSearchEnumerateVerticesTest
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerBfs<int, Int32Endpoints, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-            IEnumerable<int> vertices = EnumerableGenericSearch<int, Int32Endpoints, EdgeEnumerator>.EnumerateVertices(
+            EagerBfs<int, Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
+            IEnumerable<int> vertices = EnumerableGenericSearch<int, Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, source, frontier, set);
             enumerableSteps.AddRange(vertices);
         }
@@ -88,21 +81,22 @@ public class QueueGenericSearchEnumerateVerticesTest
         ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
-    private static BfsHandler<int, Int32Endpoints, Graph> CreateBfsHandler(IList<int> discoveredVertices)
+    private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler(IList<int> discoveredVertices)
     {
         if (discoveredVertices is null)
             throw new ArgumentNullException(nameof(discoveredVertices));
 
-        BfsHandler<int, Int32Endpoints, Graph> result = new();
+        BfsHandler<int, Endpoints<int>, Graph> result = new();
         result.DiscoverVertex += (_, v) => discoveredVertices.Add(v);
         return result;
     }
 
     [Theory]
-    [ClassData(typeof(MutableSimpleGraphCollection))]
+    [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, false);
 
     [Theory]
-    [ClassData(typeof(MutableSimpleGraphCollection))]
+    [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, true);
 }
+#endif
