@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
+    [Obsolete]
     internal static class IncidenceAdjacencyAdapter<TVertex, TEdge, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
@@ -13,6 +14,7 @@
             new(graph);
     }
 
+    [Obsolete]
     internal sealed class IncidenceAdjacencyAdapter<TVertex, TEdge, TEdgeEnumerator, TGraph> :
         IOutNeighborsAdjacency<
             TVertex, IEnumerator<TVertex>>, ITailIncidence<TVertex, TEdge>, IHeadIncidence<TVertex, TEdge>,
