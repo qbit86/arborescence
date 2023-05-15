@@ -107,20 +107,23 @@ internal sealed class MutableIndexedGraphCollection : GraphCollection<
 
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 internal sealed class Int32AdjacencyGraphCollection : GraphCollection<
-    Models.Specialized.Int32AdjacencyGraph, Endpoints<int>,
-    IncidenceEnumerator<int, ArraySegment<int>.Enumerator>, Int32AdjacencyGraphBuilder>
+    Models.Specialized.Int32AdjacencyGraph,
+    Endpoints<int>,
+    IncidenceEnumerator<int, ArraySegment<int>.Enumerator>,
+    Int32AdjacencyGraphBuilder>
 {
-    protected override Int32AdjacencyGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new();
+    protected override Int32AdjacencyGraphBuilder CreateGraphBuilder(int initialVertexCount) => new();
+}
+
+internal sealed class ListAdjacencyGraphCollection : GraphCollection<
+    ListAdjacencyGraph<int, Dictionary<int, List<int>>>,
+    Endpoints<int>,
+    IncidenceEnumerator<int, List<int>.Enumerator>,
+    ListAdjacencyGraphBuilder>
+{
+    protected override ListAdjacencyGraphBuilder CreateGraphBuilder(int initialVertexCount) => new(initialVertexCount);
 }
 #endif
-
-internal sealed class MutableSimpleGraphCollection : GraphCollection<
-    MutableSimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraphBuilder>
-{
-    protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
 
 internal sealed class MutableIndexedIncidenceGraphBuilder :
     IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,
@@ -158,45 +161,11 @@ internal sealed class MutableIndexedIncidenceGraphBuilder :
     }
 }
 
-internal sealed class MutableSimpleIncidenceGraphBuilder :
-    IGraphBuilder<MutableSimpleIncidenceGraph, int, Int32Endpoints>,
-    IDisposable
-{
-    private MutableSimpleIncidenceGraph? _graph;
-
-    public MutableSimpleIncidenceGraphBuilder(int initialVertexCount) => _graph = new(initialVertexCount);
-
-    public void Dispose()
-    {
-        if (_graph is null)
-            return;
-
-        _graph.Dispose();
-        _graph = null;
-    }
-
-    public bool TryAdd(int tail, int head, out Int32Endpoints edge)
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        return _graph.TryAdd(tail, head, out edge);
-    }
-
-    public MutableSimpleIncidenceGraph ToGraph()
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        MutableSimpleIncidenceGraph result = _graph;
-        _graph = null;
-        return result;
-    }
-}
-
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-internal sealed class Int32AdjacencyGraphBuilder :
-    IGraphBuilder<Models.Specialized.Int32AdjacencyGraph, int, Endpoints<int>>
+internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<
+    Models.Specialized.Int32AdjacencyGraph,
+    int,
+    Endpoints<int>>
 {
     private readonly List<Endpoints<int>> _edges = new();
 
@@ -212,5 +181,29 @@ internal sealed class Int32AdjacencyGraphBuilder :
         Endpoints<int>[] edges = _edges.ToArray();
         return Models.Specialized.Int32AdjacencyGraphFactory.FromEdges(edges);
     }
+}
+
+internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
+    ListAdjacencyGraph<int, Dictionary<int, List<int>>>,
+    int,
+    Endpoints<int>>
+{
+    private readonly Dictionary<int, List<int>> _neighborsByVertex;
+
+    public ListAdjacencyGraphBuilder(int initialVertexCount) => _neighborsByVertex = new(initialVertexCount);
+
+    public bool TryAdd(int tail, int head, out Endpoints<int> edge)
+    {
+        if (_neighborsByVertex.TryGetValue(tail, out List<int>? neighbors))
+            neighbors.Add(head);
+        else
+            _neighborsByVertex.Add(tail, new() { head });
+
+        edge = new(tail, head);
+        return true;
+    }
+
+    public ListAdjacencyGraph<int, Dictionary<int, List<int>>> ToGraph() =>
+        ListAdjacencyGraphFactory<int>.Create(_neighborsByVertex);
 }
 #endif
