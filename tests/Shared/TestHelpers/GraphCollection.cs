@@ -188,14 +188,15 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
     int,
     Endpoints<int>>
 {
-    private readonly List<List<int>> _neighborsByVertex;
+    private readonly Int32Dictionary<List<int>, List<List<int>>> _neighborsByVertex;
 
-    internal ListAdjacencyGraphBuilder(int initialVertexCount) => _neighborsByVertex = new(initialVertexCount);
+    internal ListAdjacencyGraphBuilder(int initialVertexCount) =>
+        _neighborsByVertex = Int32DictionaryFactory<List<int>>.Create(new List<List<int>>(initialVertexCount));
 
     public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
         while (tail >= _neighborsByVertex.Count)
-            _neighborsByVertex.Add(default!);
+            _neighborsByVertex.Add(_neighborsByVertex.Count, default!);
         if (_neighborsByVertex[tail] is { } neighbors)
             neighbors.Add(head);
         else
@@ -205,11 +206,7 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
         return true;
     }
 
-    public ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>> ToGraph()
-    {
-        Int32Dictionary<List<int>, List<List<int>>> neighborsByVertex =
-            Int32DictionaryFactory<List<int>>.Create(_neighborsByVertex);
-        return ListAdjacencyGraphFactory<int>.Create(neighborsByVertex);
-    }
+    public ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>> ToGraph() =>
+        ListAdjacencyGraphFactory<int>.Create(_neighborsByVertex);
 }
 #endif
