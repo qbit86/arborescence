@@ -11,8 +11,6 @@ using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 
 internal static partial class Program
 {
-    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
-
     private static void DemoAdjacencyBfsEdges()
     {
         using TextReader textReader = IndexedGraphs.GetTextReader("09");

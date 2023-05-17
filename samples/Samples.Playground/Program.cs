@@ -9,6 +9,8 @@ internal static partial class Program
 
     private static void Main() => DemoAdjacencyBfsVertices();
 
+    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
+
     private static string V(int v) => Base32.ToString(v);
 
     private static string E<TGraph>(TGraph g, int e)
