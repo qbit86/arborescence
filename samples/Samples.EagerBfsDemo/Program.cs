@@ -5,29 +5,27 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using Models;
+using System.Linq;
+using Models.Specialized;
 using Traversal;
 using Traversal.Incidence;
 using Workbench;
 
 internal static class Program
 {
-    private static CultureInfo F => CultureInfo.InvariantCulture;
+    private static CultureInfo P => CultureInfo.InvariantCulture;
+
+    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
     private static void Main()
     {
-        IndexedIncidenceGraph.Builder builder = new(0, 31);
+        using TextReader textReader = IndexedGraphs.GetTextReader("09");
+        Endpoints<int>[] endpointsByEdge = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToArray();
+        textReader.Dispose();
 
-        using (TextReader textReader = IndexedGraphs.GetTextReader("09"))
-        {
-            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Int32Endpoints edge in edges)
-                builder.Add(edge.Tail, edge.Head);
-        }
-
-        IndexedIncidenceGraph graph = builder.ToGraph();
-        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(F)}");
-        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(F)}");
+        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
+        Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
+        Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 
         TextWriter w = Console.Out;
 
@@ -48,7 +46,7 @@ internal static class Program
         Array.Clear(backingStore, 0, backingStore.Length);
         IndexedColorDictionary colorByVertex = new(backingStore);
         HashSet<int> examinedEdges = new(graph.EdgeCount);
-        BfsHandler<int, int, IndexedIncidenceGraph> handler = CreateHandler(w, examinedEdges);
+        BfsHandler<int, int, Int32IncidenceGraph> handler = CreateHandler(w, examinedEdges);
         EagerBfs<int, int, ArraySegment<int>.Enumerator>.Traverse(graph, sources, colorByVertex, handler);
         ArrayPool<byte>.Shared.Return(backingStore);
 
@@ -75,9 +73,9 @@ internal static class Program
         w.WriteLine("}");
     }
 
-    private static BfsHandler<int, int, IndexedIncidenceGraph> CreateHandler(TextWriter w, HashSet<int> examinedEdges)
+    private static BfsHandler<int, int, Int32IncidenceGraph> CreateHandler(TextWriter w, HashSet<int> examinedEdges)
     {
-        BfsHandler<int, int, IndexedIncidenceGraph> result = new();
+        BfsHandler<int, int, Int32IncidenceGraph> result = new();
         result.DiscoverVertex += (_, v) => w.WriteLine($"  {V(v)} [style=solid]");
         result.ExamineVertex += (_, v) => w.WriteLine($"  // {nameof(result.ExamineVertex)} {V(v)}");
         result.FinishVertex += (_, v) => w.WriteLine($"  // {nameof(result.FinishVertex)} {V(v)}");
@@ -90,7 +88,7 @@ internal static class Program
 
     private static string V(int v) => Base32.ToString(v);
 
-    private static string E(IndexedIncidenceGraph g, int e)
+    private static string E(Int32IncidenceGraph g, int e)
     {
         string head = g.TryGetHead(e, out int h) ? V(h) : "?";
         string tail = g.TryGetTail(e, out int t) ? V(t) : "?";
