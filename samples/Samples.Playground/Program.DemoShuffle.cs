@@ -1,26 +1,19 @@
 ﻿namespace Arborescence;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Models;
+using Models.Specialized;
 using Workbench;
 
 internal static partial class Program
 {
     private static void DemoShuffle()
     {
-        IndexedIncidenceGraph.Builder builder = new(10);
-
-        using (TextReader textReader = IndexedGraphs.GetTextReader("08"))
-        {
-            IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-            foreach (Int32Endpoints edge in edges)
-                builder.Add(edge.Tail, edge.Head);
-        }
-
-        IndexedIncidenceGraph graph = builder.ToGraph();
+        using TextReader textReader = IndexedGraphs.GetTextReader("08");
+        Endpoints<int>[] endpointsByEdge = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToArray();
+        textReader.Close();
+        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
         Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 
