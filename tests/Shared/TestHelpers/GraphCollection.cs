@@ -116,46 +116,7 @@ internal sealed class ListIncidenceGraphCollection : GraphCollection<
 {
     protected override ListIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) => new(initialVertexCount);
 }
-#endif
 
-[Obsolete]
-internal sealed class MutableIndexedIncidenceGraphBuilder :
-    IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,
-    IDisposable
-{
-    private MutableIndexedIncidenceGraph? _graph;
-
-    public MutableIndexedIncidenceGraphBuilder(int initialVertexCount) => _graph = new(initialVertexCount);
-
-    public void Dispose()
-    {
-        if (_graph is null)
-            return;
-
-        _graph.Dispose();
-        _graph = null;
-    }
-
-    public bool TryAdd(int tail, int head, out int edge)
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        return _graph.TryAdd(tail, head, out edge);
-    }
-
-    public MutableIndexedIncidenceGraph ToGraph()
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        MutableIndexedIncidenceGraph result = _graph;
-        _graph = null;
-        return result;
-    }
-}
-
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<Int32AdjacencyGraph, int, Endpoints<int>>
 {
     private readonly List<Endpoints<int>> _edges = new();
