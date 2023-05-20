@@ -195,7 +195,7 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
 
     public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
-        while (tail >= _neighborsByVertex.Count)
+        while (tail >= _neighborsByVertex.Count || head >= _neighborsByVertex.Count)
             _neighborsByVertex.Add(_neighborsByVertex.Count, default!);
         if (_neighborsByVertex[tail] is { } neighbors)
             neighbors.Add(head);
