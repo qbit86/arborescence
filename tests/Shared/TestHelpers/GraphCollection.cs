@@ -9,8 +9,6 @@ using System.IO;
 using Models;
 using Models.Specialized;
 using Workbench;
-using IndexedEnumerator = System.ArraySegment<int>.Enumerator;
-using SimpleEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 
 internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : IEnumerable<object[]>
     where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdges>
