@@ -80,14 +80,6 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
     protected abstract TGraphBuilder CreateGraphBuilder(int initialVertexCount);
 }
 
-[Obsolete]
-internal sealed class MutableIndexedGraphCollection : GraphCollection<
-    MutableIndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraphBuilder>
-{
-    protected override MutableIndexedIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 internal sealed class Int32AdjacencyGraphCollection : GraphCollection<
     Int32AdjacencyGraph,

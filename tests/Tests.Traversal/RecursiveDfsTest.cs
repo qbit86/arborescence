@@ -7,8 +7,12 @@ using Misnomer;
 using Traversal;
 using Traversal.Incidence;
 using Xunit;
-using Graph = Models.MutableIndexedIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
+using Graph = Models.ListIncidenceGraph<
+    int,
+    int,
+    Int32Dictionary<int, System.Collections.Generic.List<int>>,
+    System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>>>;
+using EdgeEnumerator = System.Collections.Generic.List<int>.Enumerator;
 
 public sealed class RecursiveDfsTest
 {
@@ -87,10 +91,10 @@ public sealed class RecursiveDfsTest
     }
 
     [Theory]
-    [ClassData(typeof(MutableIndexedGraphCollection))]
+    [ClassData(typeof(ListIncidenceGraphCollection))]
     internal void Traverse_SingleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, false);
 
     [Theory]
-    [ClassData(typeof(MutableIndexedGraphCollection))]
+    [ClassData(typeof(ListIncidenceGraphCollection))]
     internal void Traverse_MultipleSource(GraphParameter<Graph> p) => TraverseCore(p.Graph, true);
 }
