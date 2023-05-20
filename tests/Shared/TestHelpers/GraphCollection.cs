@@ -81,22 +81,6 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
 }
 
 [Obsolete]
-internal sealed class IndexedGraphCollection :
-    GraphCollection<IndexedIncidenceGraph, int, IndexedEnumerator, IndexedIncidenceGraph.Builder>
-{
-    protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
-[Obsolete]
-internal sealed class FromMutableIndexedGraphCollection :
-    GraphCollection<IndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraph>
-{
-    protected override MutableIndexedIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
-[Obsolete]
 internal sealed class MutableIndexedGraphCollection : GraphCollection<
     MutableIndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraphBuilder>
 {
