@@ -3,13 +3,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.MutableSimpleIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
-#else
-using Graph = Models.Compatibility.MutableSimpleIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
-#endif
 
 public sealed class MutableSimpleIncidenceGraphTest
 {

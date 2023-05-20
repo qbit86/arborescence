@@ -3,13 +3,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using Graph = Models.IndexedIncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
-#else
-using Graph = Models.Compatibility.IndexedIncidenceGraph;
-using EdgeEnumerator = System.Collections.Generic.IEnumerator<int>;
-#endif
 
 public sealed class IndexedIncidenceGraphTest
 {
