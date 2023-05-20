@@ -4,7 +4,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
-using Models;
+using Models.Specialized;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
@@ -17,12 +17,12 @@ public abstract class CompactSetBenchmark
     [Params(10, 100, 1000, 10000)]
     public int VertexCount { get; set; }
 
-    private IndexedIncidenceGraph Graph { get; set; }
+    private Int32IncidenceGraph Graph { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        Graph = GraphHelper.Default.GetGraph(VertexCount);
+        Graph = GraphHelper.Default.GetIncidenceGraph(VertexCount);
 
         _compactExploredSet = ArrayPool<byte>.Shared.Rent(CompactSet.GetByteCount(Graph.VertexCount));
         _fastExploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);

@@ -4,14 +4,14 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
-using Models;
+using Models.Specialized;
 using Traversal.Incidence;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
 [MemoryDiagnoser]
 public abstract class BfsBenchmark
 {
-    private readonly DummyHandler<IndexedIncidenceGraph> _handler = new();
+    private readonly DummyHandler<Int32IncidenceGraph> _handler = new();
 
     private byte[] _colorByVertex = Array.Empty<byte>();
     private byte[] _exploredSet = Array.Empty<byte>();
@@ -19,12 +19,12 @@ public abstract class BfsBenchmark
     [Params(10, 100, 1000)]
     public int VertexCount { get; set; }
 
-    private IndexedIncidenceGraph Graph { get; set; }
+    private Int32IncidenceGraph Graph { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        Graph = GraphHelper.Default.GetGraph(VertexCount);
+        Graph = GraphHelper.Default.GetIncidenceGraph(VertexCount);
 
         _colorByVertex = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
         _exploredSet = ArrayPool<byte>.Shared.Rent(Graph.VertexCount);
