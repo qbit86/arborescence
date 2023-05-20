@@ -1,4 +1,3 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence;
 
 using System;
@@ -97,4 +96,3 @@ public sealed class BfsEnumerateEdgesTest
     [ClassData(typeof(Int32AdjacencyGraphCollection))]
     internal void EnumerateEdges_MultipleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, true);
 }
-#endif

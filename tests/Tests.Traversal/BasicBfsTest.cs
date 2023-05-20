@@ -1,4 +1,3 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence;
 
 using System;
@@ -98,4 +97,3 @@ public sealed class BasicBfsTest
         }
     }
 }
-#endif
