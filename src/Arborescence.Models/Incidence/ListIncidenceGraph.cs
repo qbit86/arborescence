@@ -81,6 +81,9 @@ namespace Arborescence.Models
                 self._outEdgesByVertex.Add(tail, outEdges);
             }
 
+            if (!ContainsKey(self._outEdgesByVertex, head))
+                self._outEdgesByVertex.Add(head, new());
+
             // ReSharper disable once PossibleStructMemberModificationOfNonVariableStruct
             self._headByEdge[edge] = head;
             return true;
@@ -91,6 +94,11 @@ namespace Arborescence.Models
             TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TEdge>? value)
             where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> =>
             dictionary.TryGetValue(vertex, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool ContainsKey<TDictionary>(TDictionary dictionary, TVertex vertex)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> =>
+            dictionary.ContainsKey(vertex);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)

@@ -56,6 +56,9 @@ namespace Arborescence.Models
                 neighbors = new(1) { head };
                 self._neighborsByVertex.Add(tail, neighbors);
             }
+
+            if (!ContainsKey(self._neighborsByVertex, head))
+                self._neighborsByVertex.Add(head, new());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,6 +66,11 @@ namespace Arborescence.Models
             TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TVertex>? value)
             where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
             dictionary.TryGetValue(vertex, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool ContainsKey<TDictionary>(TDictionary dictionary, TVertex vertex)
+            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
+            dictionary.ContainsKey(vertex);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)
