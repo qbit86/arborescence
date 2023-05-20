@@ -3,12 +3,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Models;
 using Models.Specialized;
 using Workbench;
-using System.Diagnostics;
 using IndexedEnumerator = System.ArraySegment<int>.Enumerator;
 using SimpleEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 
@@ -250,9 +250,9 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
     int,
     int>
 {
-    private readonly Int32Dictionary<int, List<int>> _tailByEdge;
     private readonly Int32Dictionary<int, List<int>> _headByEdge;
     private readonly Dictionary<int, List<int>> _outEdgesByVertex;
+    private readonly Int32Dictionary<int, List<int>> _tailByEdge;
 
     internal ListIncidenceGraphBuilder(int initialVertexCount)
     {
@@ -271,6 +271,8 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
             outEdges.Add(edge);
         else
             _outEdgesByVertex[tail] = new() { edge };
+        if (!_outEdgesByVertex.ContainsKey(head))
+            _outEdgesByVertex[head] = new();
         return true;
     }
 
