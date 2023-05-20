@@ -7,9 +7,13 @@ using Misnomer;
 using Traversal;
 using Traversal.Incidence;
 using Xunit;
-using Graph = Models.IndexedIncidenceGraph;
-using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
-using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
+using Graph = Models.ListIncidenceGraph<
+    int,
+    int,
+    Int32Dictionary<int, System.Collections.Generic.List<int>>,
+    System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>>>;
+using EdgeEnumerator = System.Collections.Generic.List<int>.Enumerator;
+using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.Collections.Generic.List<int>.Enumerator>;
 
 public sealed class DfsEnumerateVerticesTest
 {
@@ -87,10 +91,10 @@ public sealed class DfsEnumerateVerticesTest
     }
 
     [Theory]
-    [ClassData(typeof(FromMutableIndexedGraphCollection))]
+    [ClassData(typeof(ListIncidenceGraphCollection))]
     internal void EnumerateVertices_SingleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, false);
 
     [Theory]
-    [ClassData(typeof(FromMutableIndexedGraphCollection))]
+    [ClassData(typeof(ListIncidenceGraphCollection))]
     internal void EnumerateVertices_MultipleSource(GraphParameter<Graph> p) => EnumerateVerticesCore(p.Graph, true);
 }

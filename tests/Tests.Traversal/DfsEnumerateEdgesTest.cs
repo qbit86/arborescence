@@ -7,7 +7,7 @@ using Misnomer;
 using Traversal;
 using Traversal.Incidence;
 using Xunit;
-using Graph = Models.IndexedIncidenceGraph;
+using Graph = Models.Specialized.Int32IncidenceGraph;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
@@ -85,10 +85,10 @@ public sealed class DfsEnumerateEdgesTest
     }
 
     [Theory]
-    [ClassData(typeof(IndexedGraphCollection))]
+    [ClassData(typeof(Int32IncidenceGraphCollection))]
     internal void EnumerateEdges_SingleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, false);
 
     [Theory]
-    [ClassData(typeof(IndexedGraphCollection))]
+    [ClassData(typeof(Int32IncidenceGraphCollection))]
     internal void EnumerateEdges_MultipleSource(GraphParameter<Graph> p) => EnumerateEdgesCore(p.Graph, true);
 }
