@@ -15,12 +15,10 @@ internal static class Program
 {
     private static CultureInfo P => CultureInfo.InvariantCulture;
 
-    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
-
     private static void Main()
     {
         using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        Endpoints<int>[] edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToArray();
+        Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Dispose();
 
         Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
