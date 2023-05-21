@@ -12,9 +12,9 @@ public sealed partial class Int32IncidenceGraphTests
     internal void EnumerateOutNeighbors_AllVertices_ReturnsSameSetOfVertices(GraphDefinitionParameter p)
     {
 #if NET5_0_OR_GREATER
-        var edges = p.Edges.Select(Transform).ToList();
+        var edges = p.Edges.ToList();
 #else
-        Endpoints<int>[] edges = p.Edges.Select(Transform).ToArray();
+        Endpoints<int>[] edges = p.Edges.ToArray();
 #endif
         Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
@@ -55,12 +55,12 @@ public sealed partial class Int32IncidenceGraphTests
     [ClassData(typeof(GraphDefinitionCollection))]
     internal void TryGetEndpoints_AllEdges_ReturnsSameEndpoints(GraphDefinitionParameter p)
     {
-        IReadOnlyList<Int32Endpoints> expectedEndpointsByEdge = p.Edges;
+        IReadOnlyList<Endpoints<int>> expectedEndpointsByEdge = p.Edges;
         int edgeCount = expectedEndpointsByEdge.Count;
 #if NET5_0_OR_GREATER
-        var edges = expectedEndpointsByEdge.Select(Transform).ToList();
+        var edges = expectedEndpointsByEdge.ToList();
 #else
-        Endpoints<int>[] edges = expectedEndpointsByEdge.Select(Transform).ToArray();
+        Endpoints<int>[] edges = expectedEndpointsByEdge.ToArray();
 #endif
         Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
@@ -72,7 +72,7 @@ public sealed partial class Int32IncidenceGraphTests
                 Assert.Fail($"{nameof(edge)}: {edge}, {nameof(graph.TryGetTail)}: false");
             if (!graph.TryGetHead(edge, out int actualHead))
                 Assert.Fail($"{nameof(edge)}: {edge}, {nameof(graph.TryGetHead)}: false");
-            Int32Endpoints expectedEndpoints = expectedEndpointsByEdge[edge];
+            Endpoints<int> expectedEndpoints = expectedEndpointsByEdge[edge];
             if (expectedEndpoints.Tail != actualTail)
             {
                 Assert.Fail(

@@ -24,13 +24,13 @@ internal static class GraphHelpers
         }
     }
 
-    internal static void GenerateEdges(int vertexCount, double densityPower, IList<Int32Endpoints> edges)
+    internal static void GenerateEdges(int vertexCount, double densityPower, IList<Endpoints<int>> edges)
     {
         if (edges is null)
             throw new ArgumentNullException(nameof(edges));
 
         int edgeCount = (int)Math.Ceiling(Math.Pow(vertexCount, densityPower));
-        if (edges is List<Int32Endpoints> list)
+        if (edges is List<Endpoints<int>> list)
             list.Capacity = edgeCount;
 
         Random prng = new(1729);

@@ -12,9 +12,9 @@ public sealed partial class Int32AdjacencyGraphTests
     internal void EnumerateOutNeighbors_AllVertices_ReturnsSameSetOfVertices(GraphDefinitionParameter p)
     {
 #if NET5_0_OR_GREATER
-        var edges = p.Edges.Select(Transform).ToList();
+        var edges = p.Edges.ToList();
 #else
-        Endpoints<int>[] edges = p.Edges.Select(Transform).ToArray();
+        Endpoints<int>[] edges = p.Edges.ToArray();
 #endif
         Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
