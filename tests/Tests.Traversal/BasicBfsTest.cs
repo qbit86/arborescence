@@ -1,9 +1,8 @@
-namespace Arborescence;
+namespace Arborescence.Traversal.Specialized;
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using Traversal.Specialized;
 using Xunit;
 using Graph = Models.Specialized.Int32AdjacencyGraph;
 using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
@@ -29,7 +28,7 @@ public sealed class BasicBfsTest
 
         using IEnumerator<Endpoints<int>> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount);
         using IEnumerator<Endpoints<int>> enumerableSteps =
-            Traversal.Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
+            Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, source, exploredSet).GetEnumerator();
 
         // Assert
@@ -71,7 +70,7 @@ public sealed class BasicBfsTest
         // Act
 
         using IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, source, graph.VertexCount);
-        using IEnumerator<int> enumerableSteps = Traversal.Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>
+        using IEnumerator<int> enumerableSteps = Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>
             .EnumerateVertices(graph, source, exploredSet).GetEnumerator();
 
         // Assert

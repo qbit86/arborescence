@@ -1,13 +1,12 @@
-namespace Arborescence;
+namespace Arborescence.Traversal.Generic;
 
 using System;
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using Incidence;
 using Misnomer;
-using Traversal;
-using Traversal.Incidence;
 using Xunit;
 using Graph = Models.ListAdjacencyGraph<
     int,

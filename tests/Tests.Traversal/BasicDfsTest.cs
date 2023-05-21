@@ -1,13 +1,12 @@
-namespace Arborescence;
+namespace Arborescence.Traversal.Specialized;
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using Traversal.Specialized;
 using Xunit;
 using Graph = Models.Specialized.Int32AdjacencyGraph;
 using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
-using EnumerableDfs = Traversal.Incidence.EnumerableDfs<
+using EnumerableDfs = Incidence.EnumerableDfs<
     int, Endpoints<int>, IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>>;
 
 public sealed class BasicDfsTest

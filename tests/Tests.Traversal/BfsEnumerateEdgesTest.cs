@@ -1,12 +1,11 @@
-namespace Arborescence;
+namespace Arborescence.Traversal.Bfs;
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
+using Incidence;
 using Misnomer;
-using Traversal;
-using Traversal.Incidence;
 using Xunit;
 using Graph = Models.Specialized.Int32AdjacencyGraph;
 using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;

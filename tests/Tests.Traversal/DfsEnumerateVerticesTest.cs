@@ -1,11 +1,10 @@
-namespace Arborescence;
+namespace Arborescence.Traversal.Dfs;
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using Incidence;
 using Misnomer;
-using Traversal;
-using Traversal.Incidence;
 using Xunit;
 using Graph = Models.ListIncidenceGraph<
     int,
@@ -13,7 +12,7 @@ using Graph = Models.ListIncidenceGraph<
     Int32Dictionary<int, System.Collections.Generic.List<int>>,
     System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>>>;
 using EdgeEnumerator = System.Collections.Generic.List<int>.Enumerator;
-using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.Collections.Generic.List<int>.Enumerator>;
+using EnumerableDfs = Incidence.EnumerableDfs<int, int, System.Collections.Generic.List<int>.Enumerator>;
 
 public sealed class DfsEnumerateVerticesTest
 {

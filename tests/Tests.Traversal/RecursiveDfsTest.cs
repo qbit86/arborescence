@@ -1,11 +1,10 @@
-namespace Arborescence;
+namespace Arborescence.Traversal.Dfs;
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using Incidence;
 using Misnomer;
-using Traversal;
-using Traversal.Incidence;
 using Xunit;
 using Graph = Models.ListIncidenceGraph<
     int,
