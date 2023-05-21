@@ -1,4 +1,4 @@
-namespace Arborescence.Traversal.Adjacency.Tests;
+namespace Arborescence.Traversal.Adjacency;
 
 using System.Collections.Generic;
 using System.IO;
