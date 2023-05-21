@@ -27,7 +27,7 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
             if (textReader == TextReader.Null)
                 continue;
 
-            var edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToList();
+            var edges = Base32EdgeListParser.ParseEdges(textReader).ToList();
             int vertexCount = edges.Count == 0 ? 0 : edges.Select(e => Math.Max(e.Tail, e.Head)).Max() + 1;
             string description = $"{{{nameof(testCase)}: {testCase}}}";
             GraphDefinitionParameter parameter = new(vertexCount, edges, description);
@@ -51,6 +51,4 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 }

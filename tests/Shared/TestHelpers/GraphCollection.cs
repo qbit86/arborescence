@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using Models;
 using Models.Specialized;
 using Workbench;
@@ -32,7 +31,7 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
                 if (textReader == TextReader.Null)
                     continue;
 
-                IEnumerable<Endpoints<int>> edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform);
+                IEnumerable<Endpoints<int>> edges = Base32EdgeListParser.ParseEdges(textReader);
                 foreach (Endpoints<int> edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
@@ -75,8 +74,6 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
 
     protected abstract TGraphBuilder CreateGraphBuilder(int initialVertexCount);
 }
