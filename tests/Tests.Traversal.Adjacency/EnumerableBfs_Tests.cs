@@ -9,14 +9,12 @@ using Xunit;
 
 public sealed class EnumerableBfs_Tests
 {
-    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
-
     [Fact]
     public void EnumerateEdges_SingleSource_ReturnsCorrectEdgesInOrder()
     {
         // Arrange
         using TextReader textReader = IndexedGraphs.GetTextReader("08");
-        Endpoints<int>[] edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToArray();
+        Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Dispose();
 
         Int32AdjacencyGraph adjacencyGraph = Int32AdjacencyGraphFactory.FromEdges(edges);
