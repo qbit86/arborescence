@@ -21,7 +21,10 @@ internal static class Program
         };
         Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
 
-        EnumerableBfs<Int32AdjacencyGraph, Endpoints<int>, IncidenceEnumerator<int, ArraySegment<int>.Enumerator>> bfs;
+        EnumerableBfs<
+            Int32AdjacencyGraph,
+            Endpoints<int>,
+            IncidenceEnumerator<int, ArraySegment<int>.Enumerator>> bfs;
 
         using IEnumerator<Endpoints<int>> treeEdges =
             bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
