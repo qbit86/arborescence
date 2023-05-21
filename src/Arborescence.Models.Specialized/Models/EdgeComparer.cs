@@ -1,4 +1,3 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
 {
     using System.Collections.Generic;
@@ -10,4 +9,3 @@ namespace Arborescence.Models
         public int Compare(Endpoints<int> x, Endpoints<int> y) => x.Tail.CompareTo(y.Tail);
     }
 }
-#endif

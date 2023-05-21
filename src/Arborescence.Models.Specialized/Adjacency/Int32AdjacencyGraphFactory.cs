@@ -1,4 +1,3 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models.Specialized
 {
 #if NET5_0_OR_GREATER
@@ -176,4 +175,3 @@ namespace Arborescence.Models.Specialized
 #endif
     }
 }
-#endif

@@ -1,4 +1,3 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models.Specialized
 {
     using System.Diagnostics.CodeAnalysis;
@@ -23,4 +22,3 @@ namespace Arborescence.Models.Specialized
             !left.Equals(right);
     }
 }
-#endif
