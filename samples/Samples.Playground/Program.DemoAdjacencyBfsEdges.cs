@@ -7,7 +7,6 @@ using System.Linq;
 using Models.Specialized;
 using Traversal.Adjacency;
 using Workbench;
-using EdgeEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
 
 internal static partial class Program
 {
