@@ -9,11 +9,11 @@ Arborescence is a generic .NET library for dealing with graphs.
 
 ## Features
 
-* [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
-* [Models] — some particular graph structures implementing the aforementioned interfaces.
-* [Primitives] — basic blocks for building different data structures.
-* Algorithms:
-    * [Traversal] — widely used algorithms for traversing graphs such as BFS and DFS.
+- [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
+- [Models] — some particular graph structures implementing the aforementioned interfaces.
+- [Primitives] — basic blocks for building different data structures.
+- Algorithms:
+    - [Traversal] — widely used algorithms for traversing graphs such as BFS and DFS.
 
 ## Installation
 
@@ -27,30 +27,34 @@ Let's consider a simple directed graph and a breadth-first tree on it:
 This is how you create a graph, instantiate an algorithm, and run it against the graph:
 
 ```csharp
-SimpleIncidenceGraph.Builder builder = new();
-builder.Add(2, 0);
-builder.Add(4, 3);
-builder.Add(0, 4);
-builder.Add(3, 2);
-builder.Add(4, 4);
-builder.Add(0, 2);
-builder.Add(2, 4);
-SimpleIncidenceGraph graph = builder.ToGraph();
+Endpoints<int>[] edges =
+{
+    new(2, 0),
+    new(4, 3),
+    new(0, 4),
+    new(3, 2),
+    new(4, 4),
+    new(0, 2),
+    new(2, 4)
+};
+Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
 
-EnumerableBfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
+EnumerableBfs<
+    Int32AdjacencyGraph,
+    Endpoints<int>,
+    IncidenceEnumerator<int, ArraySegment<int>.Enumerator>> bfs;
 
-IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
-while (edges.MoveNext())
-    Console.WriteLine(edges.Current);
+using IEnumerator<Endpoints<int>> treeEdges =
+    bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
+while (treeEdges.MoveNext())
+    Console.WriteLine(treeEdges.Current);
 ```
 
 Expected output:
 
-```
-[3, 2]
-[2, 0]
-[2, 4]
-```
+    [3, 2]
+    [2, 0]
+    [2, 4]
 
 ## Advanced usage
 
@@ -66,6 +70,8 @@ License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 [Abstractions]: https://nuget.org/packages/Arborescence.Abstractions/
 
 [Models]: https://nuget.org/packages/Arborescence.Models/
+
+[Models.Specialized]: https://nuget.org/packages/Arborescence.Models.Specialized/
 
 [Primitives]: https://nuget.org/packages/Arborescence.Primitives/
 
