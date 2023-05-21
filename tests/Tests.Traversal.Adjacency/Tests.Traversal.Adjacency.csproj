@@ -19,8 +19,6 @@
     <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
     <ProjectReference Include="..\..\tools\Tools.Workbench\Tools.Workbench.csproj" />
   </ItemGroup>
-
-  <Import Project="..\..\src\Shared\IncidenceAdjacencyAdapter\IncidenceAdjacencyAdapter.projitems" Label="Shared" />
   <Import Condition="'$(TargetFramework)' == 'net481'" Project="..\..\src\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 
 </Project>
