@@ -13,7 +13,7 @@ internal static partial class Program
     private static void DemoAdjacencyBfsEdges()
     {
         using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        var edges = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToList();
+        var edges = Base32EdgeListParser.ParseEdges(textReader).ToList();
         textReader.Dispose();
 
         Int32AdjacencyGraph adjacencyGraph = Int32AdjacencyGraphFactory.FromEdges(edges);

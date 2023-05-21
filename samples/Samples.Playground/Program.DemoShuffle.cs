@@ -11,7 +11,7 @@ internal static partial class Program
     private static void DemoShuffle()
     {
         using TextReader textReader = IndexedGraphs.GetTextReader("08");
-        Endpoints<int>[] endpointsByEdge = IndexedEdgeListParser.ParseEdges(textReader).Select(Transform).ToArray();
+        Endpoints<int>[] endpointsByEdge = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Dispose();
         Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
