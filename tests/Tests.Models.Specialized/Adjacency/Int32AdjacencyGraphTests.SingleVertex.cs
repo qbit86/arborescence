@@ -9,18 +9,16 @@ using Xunit;
 
 public sealed partial class Int32AdjacencyGraphTests
 {
-    private static Endpoints<int> Transform(Int32Endpoints endpoints) => new(endpoints.Tail, endpoints.Head);
-
     [Fact]
     internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
     {
         // Arrange
         using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        IEnumerable<Int32Endpoints> rawEdges = IndexedEdgeListParser.ParseEdges(textReader);
+        IEnumerable<Endpoints<int>> rawEdges = Base32EdgeListParser.ParseEdges(textReader);
 #if NET5_0_OR_GREATER
-        var edges = rawEdges.Select(Transform).ToList();
+        var edges = rawEdges.ToList();
 #else
-        Endpoints<int>[] edges = rawEdges.Select(Transform).ToArray();
+        Endpoints<int>[] edges = rawEdges.ToArray();
 #endif
         int vertex = Base32.Parse("p");
         var expectedNeighbors = new HashSet<int>
@@ -42,11 +40,11 @@ public sealed partial class Int32AdjacencyGraphTests
     {
         // Arrange
         using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        IEnumerable<Int32Endpoints> rawEdges = IndexedEdgeListParser.ParseEdges(textReader);
+        IEnumerable<Endpoints<int>> rawEdges = Base32EdgeListParser.ParseEdges(textReader);
 #if NET5_0_OR_GREATER
-        var edges = rawEdges.Select(Transform).ToList();
+        var edges = rawEdges.ToList();
 #else
-        Endpoints<int>[] edges = rawEdges.Select(Transform).ToArray();
+        Endpoints<int>[] edges = rawEdges.ToArray();
 #endif
         int vertex = Base32.Parse("p");
         var expectedEdges = new HashSet<Endpoints<int>>
