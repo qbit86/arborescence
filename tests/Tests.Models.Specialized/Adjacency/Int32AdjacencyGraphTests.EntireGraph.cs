@@ -1,9 +1,8 @@
-namespace Arborescence.Adjacency;
+namespace Arborescence.Models.Specialized.Adjacency;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Models.Specialized;
 using Xunit;
 
 public sealed partial class Int32AdjacencyGraphTests

@@ -1,10 +1,9 @@
-namespace Arborescence.Adjacency;
+namespace Arborescence.Models.Specialized.Adjacency;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Models.Specialized;
 using Workbench;
 using Xunit;
 

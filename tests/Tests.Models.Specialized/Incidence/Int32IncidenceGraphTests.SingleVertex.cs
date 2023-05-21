@@ -1,11 +1,9 @@
-namespace Arborescence.Incidence;
+namespace Arborescence.Models.Specialized.Incidence;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Models;
-using Models.Specialized;
 using Workbench;
 using Xunit;
 
