@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GraphDefinitionParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GraphParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IGraphBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RistFactory.cs" />
   </ItemGroup>
