@@ -1,4 +1,4 @@
-namespace Arborescence.Models.Specialized.Adjacency;
+namespace Arborescence.Models.Specialized;
 
 using System;
 using System.Collections.Generic;
