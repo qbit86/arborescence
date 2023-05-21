@@ -3,9 +3,8 @@
   <PropertyGroup>
     <Description>Data structures for graphs and some specialized collections.
 Commonly used types:
-• IndexedIncidenceGraph
-• SimpleIncidenceGraph
-• IGraphBuilder&lt;TGraph, TVertex, TEdge&gt;</Description>
+• Int32AdjacencyGraph
+• Int32IncidenceGraph</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>

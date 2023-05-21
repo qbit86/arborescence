@@ -2,7 +2,7 @@
 
 [![Arborescence.Models.Specialized version](https://img.shields.io/nuget/v/Arborescence.Models.Specialized.svg?label=Models.Specialized&logo=nuget)](https://nuget.org/packages/Arborescence.Models.Specialized/)
 
-This package provides a basic implementation for _Graph_ and _Forward Incidence_ concepts.
+This package provides a basic implementation for _Graph_ and _Forward Incidence_ interfaces.
 
 ```
         ┌   tail : E → V?
@@ -12,9 +12,8 @@ Graph   ┤
             out-edges : V → [E] ┘
 ```
 
-`SimpleIncidenceGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
-`IndexedIncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].  
-`MutableUndirectedSimpleIncidenceGraph` and `MutableUndirectedIndexedIncidenceGraph` provide their mutable undirected counterparts.
+`Int32AdjacencyGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
+`Int32IncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].
 
 Vertices are represented as integers and must fill the range [0.._VertexCount_).  
 Edges are stored as incidence lists in contiguous spans.
