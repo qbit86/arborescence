@@ -7,7 +7,7 @@ This package provides a basic implementation of the _Graph_, _Out-Edges Incidenc
             ┌   tail : E → V?
     Graph   ┤
             └   head : E → V?       ┐
-                                    ├   Out-Edges Incidence
+                                    ├   Forward Incidence
                 out-edges : V → [E] ┘
 
                 out-neighbors: V → [V]  Out-Neighbors Adjacency
