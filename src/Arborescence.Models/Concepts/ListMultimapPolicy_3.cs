@@ -4,7 +4,7 @@ namespace Arborescence.Models
 
     internal readonly struct ListMultimapPolicy<TKey, TValue, TMultimap> :
         IReadOnlyMultimapPolicy<TKey, TMultimap, List<TValue>.Enumerator>,
-        IAdditionDictionaryPolicy<TKey, TValue, TMultimap>
+        IDictionaryAddition<TKey, TValue, TMultimap>
         where TMultimap : IDictionary<TKey, List<TValue>>
     {
         private static ListEnumerablePolicy<TValue> CollectionPolicy => default;
