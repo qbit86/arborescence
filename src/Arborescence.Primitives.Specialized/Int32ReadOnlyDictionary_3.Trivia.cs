@@ -6,7 +6,7 @@ namespace Arborescence
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy>
+    partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>
     {
         public IEnumerable<int> Keys
         {
@@ -24,7 +24,7 @@ namespace Arborescence
 
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
             return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -39,35 +39,35 @@ namespace Arborescence
             for (int key = 0; key < count; ++key)
             {
                 TValue value = values[key];
-                if (!_absencePolicy.Equals(value))
+                if (!_absence.Equals(value))
                     yield return new(key, value);
             }
         }
 
-        public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> other)
+        public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> other)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
             return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
-                EqualityComparer<TAbsencePolicy>.Default.Equals(self._absencePolicy, other._absencePolicy);
+                EqualityComparer<TAbsence>.Default.Equals(self._absence, other._absence);
         }
 
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> other && Equals(other);
+            obj is Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> other && Equals(other);
 
         public override int GetHashCode()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
             return HashCode.Combine(
                 EqualityComparer<TValueList>.Default.GetHashCode(self._values),
-                EqualityComparer<TAbsencePolicy>.Default.GetHashCode(self._absencePolicy));
+                EqualityComparer<TAbsence>.Default.GetHashCode(self._absence));
         }
 
         public static bool operator ==(
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> left,
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> right) => left.Equals(right);
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> left,
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> right) => left.Equals(right);
 
         public static bool operator !=(
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> left,
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsencePolicy> right) => !left.Equals(right);
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> left,
+            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> right) => !left.Equals(right);
     }
 }
