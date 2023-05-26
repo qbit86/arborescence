@@ -3,9 +3,9 @@
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
 
 This package provides graph-related abstractions.
-These interfaces can be divided into three groups: concepts, policies, and utilities.
+These abstractions fall into two groups: interfaces and concepts.
 
-Concepts are direct contracts for algorithms, constraints on their type parameters.
+Interfaces are direct contracts for algorithms, constraints on their type parameters.
 The most important ones are:
 
 ```csharp
@@ -27,7 +27,7 @@ IOutEdgesIncidence<TVertex, TEdges>
 
 Worth noting that `IGraph<TVertex, TEdge>` is not such a primary abstraction.
 Utility interfaces are not directly used as type constraints in algorithms.
-They just group primary concepts together, and may be convenient for users to implement.
+They just group primary interfaces together, and may be convenient for users to implement.
 
 ```csharp
 IGraph<TVertex, TEdge> :
@@ -106,12 +106,12 @@ Graph   ┤
             out-edges : V → [E] ┘
 ```
 
-The _adjacency_ concept provides an interface for access of the adjacent vertices (neighbors) to a vertex in a graph.
+The _adjacency_ interface provides access to the neighbors of a vertex in a graph.
 In some contexts there is only concern for the vertices, while the edges are not important.
 
 ## Basic usage
 
-We start with the simpler concept of an adjacency graph, where edges (flights) are of no interest, only connected vertices (airports).
+We start with the simpler abstraction of an adjacency graph, where the edges (flights) are of no interest, only the connected vertices (airports).
 
 ```csharp
 using NeighborEnumerator = System.ArraySegment<string>.Enumerator;

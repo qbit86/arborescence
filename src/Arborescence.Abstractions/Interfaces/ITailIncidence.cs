@@ -3,7 +3,7 @@ namespace Arborescence
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Represents an incidence concept — an access to the tail of each edge.
+    /// Represents a notion of incidence — an access to the tail of each edge.
     /// </summary>
     /// <seealso href="https://en.wikipedia.org/wiki/Incidence_(graph)"/>
     /// <seealso href="https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)"/>

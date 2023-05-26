@@ -2,7 +2,7 @@ namespace Arborescence
 {
     using System.Diagnostics.CodeAnalysis;
 
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AdjacencyMatrix.html
+    // https://boost.org/doc/libs/1_82_0/libs/graph/doc/AdjacencyMatrix.html
 
     /// <summary>
     /// Provides an interface for efficient access to any edge in the graph given its endpoints.

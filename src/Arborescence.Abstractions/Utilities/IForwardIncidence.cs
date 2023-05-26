@@ -1,7 +1,7 @@
 namespace Arborescence
 {
     /// <summary>
-    /// Represents the concept of traversing along the edges of a graph —
+    /// Provides an interface for traversing along the edges of a graph —
     /// an access to the head of each edge and to the outgoing edges of each vertex.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>

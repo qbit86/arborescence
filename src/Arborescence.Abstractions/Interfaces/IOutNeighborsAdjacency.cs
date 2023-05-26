@@ -1,6 +1,6 @@
 namespace Arborescence
 {
-    // https://boost.org/doc/libs/1_76_0/libs/graph/doc/AdjacencyGraph.html
+    // https://boost.org/doc/libs/1_82_0/libs/graph/doc/AdjacencyGraph.html
 
     /// <summary>
     /// Provides an interface for efficient access to the adjacent vertices of a vertex in a graph.
