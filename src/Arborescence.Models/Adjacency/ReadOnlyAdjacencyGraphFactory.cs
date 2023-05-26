@@ -7,15 +7,15 @@ namespace Arborescence.Models
     {
         public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept>
             Create<TVertexMultimap, TVertexMultimapConcept>(
-                TVertexMultimap neighborsByVertex, TVertexMultimapConcept vertexMultimapPolicy)
+                TVertexMultimap neighborsByVertex, TVertexMultimapConcept vertexMultimapConcept)
             where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertex, TVertexMultimap, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
-            if (vertexMultimapPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(vertexMultimapPolicy));
+            if (vertexMultimapConcept is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(vertexMultimapConcept));
 
-            return new(neighborsByVertex, vertexMultimapPolicy);
+            return new(neighborsByVertex, vertexMultimapConcept);
         }
     }
 
@@ -23,20 +23,20 @@ namespace Arborescence.Models
         where TVertexEnumerator : IEnumerator<TVertex>
     {
         public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, ReadOnlyMultimapConcept<
-                TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexCollectionPolicy>>
-            Create<TVertexMultimap, TVertexCollectionPolicy>(
-                TVertexMultimap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
+                TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexEnumeratorProvider>>
+            Create<TVertexMultimap, TVertexEnumeratorProvider>(
+                TVertexMultimap neighborsByVertex, TVertexEnumeratorProvider vertexEnumeratorProvider)
             where TVertexMultimap : IReadOnlyDictionary<TVertex, TVertexCollection>
-            where TVertexCollectionPolicy : IEnumeratorProvider<TVertexCollection, TVertexEnumerator>
+            where TVertexEnumeratorProvider : IEnumeratorProvider<TVertexCollection, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
-            if (vertexCollectionPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(vertexCollectionPolicy));
+            if (vertexEnumeratorProvider is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(vertexEnumeratorProvider));
 
             ReadOnlyMultimapConcept<
-                    TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexCollectionPolicy>
-                vertexMultimapConcept = new(vertexCollectionPolicy);
+                    TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexEnumeratorProvider>
+                vertexMultimapConcept = new(vertexEnumeratorProvider);
             return new(neighborsByVertex, vertexMultimapConcept);
         }
     }
