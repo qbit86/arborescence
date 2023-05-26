@@ -2,34 +2,35 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public static class ReadOnlyMultimapPolicyFactory<TKey, TValueCollection, TValueEnumerator, TMultimap>
+    public static class ReadOnlyMultimapConceptFactory<TKey, TValueCollection, TValueEnumerator, TMultimap>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
     {
         public static ReadOnlyMultimapConcept<
-            TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> Create<TCollectionPolicy>(
-            TCollectionPolicy collectionPolicy)
-            where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator>
+            TKey, TValueCollection, TValueEnumerator, TMultimap, TEnumeratorProvider> Create<TEnumeratorProvider>(
+            TEnumeratorProvider enumeratorProvider)
+            where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator>
         {
-            if (collectionPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(collectionPolicy));
+            if (enumeratorProvider is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(enumeratorProvider));
 
-            return new(collectionPolicy);
+            return new(enumeratorProvider);
         }
     }
 
     public readonly struct ReadOnlyMultimapConcept<
-        TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> :
+        TKey, TValueCollection, TValueEnumerator, TMultimap, TEnumeratorProvider> :
         IReadOnlyMultimapConcept<TKey, TMultimap, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
-        where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator>
+        where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator>
     {
-        private readonly TCollectionPolicy _collectionPolicy;
+        private readonly TEnumeratorProvider _enumeratorProvider;
 
-        internal ReadOnlyMultimapConcept(TCollectionPolicy collectionPolicy) =>
-            _collectionPolicy = collectionPolicy;
+        internal ReadOnlyMultimapConcept(TEnumeratorProvider enumeratorProvider) =>
+            _enumeratorProvider = enumeratorProvider;
 
         public TValueEnumerator EnumerateValues(TMultimap multimap, TKey key) =>
-            ReadOnlyMultimapHelpers<TValueCollection, TValueEnumerator>.GetEnumerator(multimap, key, _collectionPolicy);
+            ReadOnlyMultimapHelpers<TValueCollection, TValueEnumerator>.GetEnumerator(
+                multimap, key, _enumeratorProvider);
 
         public int GetCount(TMultimap multimap) => multimap.Count;
     }
