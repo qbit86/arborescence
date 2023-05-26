@@ -4,23 +4,23 @@ namespace Arborescence.Models
 
     internal static class ReadOnlyMultimapHelpers<TValueCollection, TValueEnumerator>
     {
-        internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TCollectionPolicy>(
-            TMultimap multimap, TKey key, TCollectionPolicy policy)
+        internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TEnumeratorProvider>(
+            TMultimap multimap, TKey key, TEnumeratorProvider enumeratorProvider)
             where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
-            where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
+            where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
             multimap.TryGetValue(key, out TValueCollection? values)
-                ? policy.GetEnumerator(values)
-                : policy.GetEmptyEnumerator();
+                ? enumeratorProvider.GetEnumerator(values)
+                : enumeratorProvider.GetEmptyEnumerator();
     }
 
     internal static class MultimapHelpers<TValueCollection, TValueEnumerator>
     {
-        internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TCollectionPolicy>(
-            TMultimap multimap, TKey key, TCollectionPolicy policy)
+        internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TEnumeratorProvider>(
+            TMultimap multimap, TKey key, TEnumeratorProvider enumeratorProvider)
             where TMultimap : IDictionary<TKey, TValueCollection>
-            where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
+            where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
             multimap.TryGetValue(key, out TValueCollection? values)
-                ? policy.GetEnumerator(values)
-                : policy.GetEmptyEnumerator();
+                ? enumeratorProvider.GetEnumerator(values)
+                : enumeratorProvider.GetEmptyEnumerator();
     }
 }
