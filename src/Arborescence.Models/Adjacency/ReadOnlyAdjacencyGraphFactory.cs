@@ -5,10 +5,10 @@ namespace Arborescence.Models
     public static class ReadOnlyAdjacencyGraphFactory<TVertex, TVertexEnumerator>
         where TVertexEnumerator : IEnumerator<TVertex>
     {
-        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy>
-            Create<TVertexMultimap, TVertexMultimapPolicy>(
-                TVertexMultimap neighborsByVertex, TVertexMultimapPolicy vertexMultimapPolicy)
-            where TVertexMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
+        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept>
+            Create<TVertexMultimap, TVertexMultimapConcept>(
+                TVertexMultimap neighborsByVertex, TVertexMultimapConcept vertexMultimapPolicy)
+            where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertex, TVertexMultimap, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
@@ -22,7 +22,7 @@ namespace Arborescence.Models
     public static class ReadOnlyAdjacencyGraphFactory<TVertex, TVertexCollection, TVertexEnumerator>
         where TVertexEnumerator : IEnumerator<TVertex>
     {
-        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, ReadOnlyMultimapPolicy<
+        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, ReadOnlyMultimapConcept<
                 TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexCollectionPolicy>>
             Create<TVertexMultimap, TVertexCollectionPolicy>(
                 TVertexMultimap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
@@ -34,10 +34,10 @@ namespace Arborescence.Models
             if (vertexCollectionPolicy is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(vertexCollectionPolicy));
 
-            ReadOnlyMultimapPolicy<
+            ReadOnlyMultimapConcept<
                     TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexCollectionPolicy>
-                vertexMultimapPolicy = new(vertexCollectionPolicy);
-            return new(neighborsByVertex, vertexMultimapPolicy);
+                vertexMultimapConcept = new(vertexCollectionPolicy);
+            return new(neighborsByVertex, vertexMultimapConcept);
         }
     }
 }

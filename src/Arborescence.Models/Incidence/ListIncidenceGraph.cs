@@ -16,7 +16,7 @@ namespace Arborescence.Models
         where TEndpointMap : IDictionary<TEdge, TVertex>
         where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
     {
-        private static ListMultimapPolicy<TVertex, TEdge, TEdgeMultimap> MultimapPolicy => default;
+        private static ListMultimapConcept<TVertex, TEdge, TEdgeMultimap> MultimapConcept => default;
 
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;
@@ -54,7 +54,7 @@ namespace Arborescence.Models
             _headByEdge.TryGetValue(edge, out head);
 
         public List<TEdge>.Enumerator EnumerateOutEdges(TVertex vertex) =>
-            MultimapPolicy.EnumerateValues(_outEdgesByVertex, vertex);
+            MultimapConcept.EnumerateValues(_outEdgesByVertex, vertex);
 
         public AdjacencyEnumerator<
                 TVertex, TEdge, ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>

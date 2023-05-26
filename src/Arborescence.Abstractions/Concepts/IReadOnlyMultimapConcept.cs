@@ -1,6 +1,6 @@
 namespace Arborescence
 {
-    public interface IReadOnlyMultimapPolicy<in TKey, in TMultimap, out TValues>
+    public interface IReadOnlyMultimapConcept<in TKey, in TMultimap, out TValues>
     {
         TValues EnumerateValues(TMultimap multimap, TKey key);
 

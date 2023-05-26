@@ -5,48 +5,48 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
 
     partial struct ReadOnlyIncidenceGraph<
-        TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>
+        TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>
     {
         public bool Equals(ReadOnlyIncidenceGraph<
-            TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> other)
+            TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> other)
         {
             ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> self = this;
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
             return EqualityComparer<TEndpointMap>.Default.Equals(self._tailByEdge, other._tailByEdge) &&
                 EqualityComparer<TEndpointMap>.Default.Equals(self._headByEdge, other._headByEdge) &&
                 EqualityComparer<TEdgeMultimap>.Default.Equals(self._outEdgesByVertex, other._outEdgesByVertex) &&
-                EqualityComparer<TEdgeMultimapPolicy>.Default.Equals(
-                    self._edgeMultimapPolicy, other._edgeMultimapPolicy);
+                EqualityComparer<TEdgeMultimapConcept>.Default.Equals(
+                    self._edgeMultimapConcept, other._edgeMultimapConcept);
         }
 
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> other &&
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> other &&
             Equals(other);
 
         public override int GetHashCode()
         {
             ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> self = this;
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
             return HashCode.Combine(
                 EqualityComparer<TEndpointMap>.Default.GetHashCode(self._tailByEdge),
                 EqualityComparer<TEndpointMap>.Default.GetHashCode(self._headByEdge),
                 EqualityComparer<TEdgeMultimap>.Default.GetHashCode(self._outEdgesByVertex!),
-                EqualityComparer<TEdgeMultimapPolicy>.Default.GetHashCode(self._edgeMultimapPolicy));
+                EqualityComparer<TEdgeMultimapConcept>.Default.GetHashCode(self._edgeMultimapConcept));
         }
 
         public static bool operator ==(
             ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> left,
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> left,
             ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> right) =>
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> right) =>
             left.Equals(right);
 
         public static bool operator !=(
             ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> left,
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> left,
             ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy> right) =>
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> right) =>
             !left.Equals(right);
     }
 }

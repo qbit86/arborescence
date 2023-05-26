@@ -7,29 +7,29 @@ namespace Arborescence.Models
     using static TryHelpers;
 
     public readonly partial struct ReadOnlyAdjacencyGraph<
-        TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> :
+        TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, TVertexEnumerator>>,
         IOutNeighborsAdjacency<TVertex, TVertexEnumerator>,
-        IEquatable<ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy>>
+        IEquatable<ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept>>
         where TVertexEnumerator : IEnumerator<TVertex>
-        where TVertexMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TVertexMultimap, TVertexEnumerator>
+        where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertex, TVertexMultimap, TVertexEnumerator>
     {
         private readonly TVertexMultimap _neighborsByVertex;
-        private readonly TVertexMultimapPolicy _vertexMultimapPolicy;
+        private readonly TVertexMultimapConcept _vertexMultimapConcept;
 
-        internal ReadOnlyAdjacencyGraph(TVertexMultimap neighborsByVertex, TVertexMultimapPolicy vertexMultimapPolicy)
+        internal ReadOnlyAdjacencyGraph(TVertexMultimap neighborsByVertex, TVertexMultimapConcept vertexMultimapConcept)
         {
             _neighborsByVertex = neighborsByVertex;
-            _vertexMultimapPolicy = vertexMultimapPolicy;
+            _vertexMultimapConcept = vertexMultimapConcept;
         }
 
         public int VertexCount
         {
             get
             {
-                ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
+                ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
                 return self._neighborsByVertex is null ? 0 : self.GetCountUnchecked();
             }
         }
@@ -48,15 +48,15 @@ namespace Arborescence.Models
 
         public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex)
         {
-            ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
-            return self._vertexMultimapPolicy.EnumerateValues(self._neighborsByVertex, vertex);
+            ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
+            return self._vertexMultimapConcept.EnumerateValues(self._neighborsByVertex, vertex);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetCountUnchecked()
         {
-            ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapPolicy> self = this;
-            return self._vertexMultimapPolicy.GetCount(self._neighborsByVertex);
+            ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
+            return self._vertexMultimapConcept.GetCount(self._neighborsByVertex);
         }
     }
 }

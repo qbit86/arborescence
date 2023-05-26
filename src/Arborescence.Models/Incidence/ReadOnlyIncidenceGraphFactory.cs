@@ -6,12 +6,12 @@ namespace Arborescence.Models
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         public static ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>
-            CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeMultimapPolicy>(
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>
+            CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
-                TEdgeMultimapPolicy edgeMultimapPolicy)
+                TEdgeMultimapConcept edgeMultimapPolicy)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgeMultimapPolicy : IReadOnlyMultimapPolicy<TVertex, TEdgeMultimap, TEdgeEnumerator>
+            where TEdgeMultimapConcept : IReadOnlyMultimapConcept<TVertex, TEdgeMultimap, TEdgeEnumerator>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
@@ -30,7 +30,7 @@ namespace Arborescence.Models
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
         public static ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap,
-                ReadOnlyMultimapPolicy<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeCollectionPolicy>>
+                ReadOnlyMultimapConcept<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeCollectionPolicy>>
             CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeCollectionPolicy>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
                 TEdgeCollectionPolicy edgeCollectionPolicy)
@@ -47,9 +47,9 @@ namespace Arborescence.Models
             if (edgeCollectionPolicy is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(edgeCollectionPolicy));
 
-            ReadOnlyMultimapPolicy<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeCollectionPolicy>
-                edgeMultimapPolicy = new(edgeCollectionPolicy);
-            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapPolicy);
+            ReadOnlyMultimapConcept<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeCollectionPolicy>
+                edgeMultimapConcept = new(edgeCollectionPolicy);
+            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
     }
 }
