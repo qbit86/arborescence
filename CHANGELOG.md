@@ -334,7 +334,7 @@
 ### Removed
 
 - Models: `EdgeListIncidenceGraph`, `SortedAdjacencyListIncidenceGraph`.
-- Models: Some obsolete policies.
+- Models: Some obsolete concepts.
 
 ## [0.1.1] - 2020-07-13
 
