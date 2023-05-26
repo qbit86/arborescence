@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Data structures for the concepts of graphs and implementation of the policies.
+    <Description>Data structures that provide a generic implementation of graph interfaces and concepts.
       Commonly used types:
-      • AdditiveMonoid&lt;T&gt;</Description>
+      • AdditiveMonoid&lt;T&gt;
+      • ListAdjacencyGraph&lt;TVertex, TVertexMultimap&gt;
+      • ListIncidenceGraph&lt;TVertex, TEdge, …&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
