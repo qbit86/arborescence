@@ -210,7 +210,7 @@
 
 ### Added
 
-- Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` concepts.
+- Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` interfaces.
 
 ### Changed
 

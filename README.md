@@ -9,7 +9,7 @@ Arborescence is a generic .NET library for dealing with graphs.
 
 ## Features
 
-- [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
+- [Abstractions] — interfaces and concepts for examining graphs and collections in a data-structure neutral way.
 - [Models] — some particular graph structures implementing the aforementioned interfaces.
 - [Primitives] — basic blocks for building different data structures.
 - Algorithms:
