@@ -7,7 +7,7 @@ namespace Arborescence.Models
         internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TCollectionPolicy>(
             TMultimap multimap, TKey key, TCollectionPolicy policy)
             where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
-            where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator> =>
+            where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
             multimap.TryGetValue(key, out TValueCollection? values)
                 ? policy.GetEnumerator(values)
                 : policy.GetEmptyEnumerator();
@@ -18,7 +18,7 @@ namespace Arborescence.Models
         internal static TValueEnumerator GetEnumerator<TKey, TMultimap, TCollectionPolicy>(
             TMultimap multimap, TKey key, TCollectionPolicy policy)
             where TMultimap : IDictionary<TKey, TValueCollection>
-            where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator> =>
+            where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
             multimap.TryGetValue(key, out TValueCollection? values)
                 ? policy.GetEnumerator(values)
                 : policy.GetEmptyEnumerator();

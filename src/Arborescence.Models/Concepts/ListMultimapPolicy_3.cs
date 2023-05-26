@@ -7,7 +7,7 @@ namespace Arborescence.Models
         IDictionaryAddition<TKey, TValue, TMultimap>
         where TMultimap : IDictionary<TKey, List<TValue>>
     {
-        private static ListEnumerablePolicy<TValue> CollectionPolicy => default;
+        private static ListEnumeratorProvider<TValue> CollectionPolicy => default;
 
         public List<TValue>.Enumerator EnumerateValues(TMultimap multimap, TKey key) =>
             MultimapHelpers<List<TValue>, List<TValue>.Enumerator>.GetEnumerator(multimap, key, CollectionPolicy);

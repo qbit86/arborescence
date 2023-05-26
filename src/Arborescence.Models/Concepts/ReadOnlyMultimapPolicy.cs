@@ -8,7 +8,7 @@ namespace Arborescence.Models
         public static ReadOnlyMultimapPolicy<
             TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> Create<TCollectionPolicy>(
             TCollectionPolicy collectionPolicy)
-            where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator>
+            where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator>
         {
             if (collectionPolicy is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(collectionPolicy));
@@ -21,7 +21,7 @@ namespace Arborescence.Models
         TKey, TValueCollection, TValueEnumerator, TMultimap, TCollectionPolicy> :
         IReadOnlyMultimapPolicy<TKey, TMultimap, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
-        where TCollectionPolicy : IEnumerablePolicy<TValueCollection, TValueEnumerator>
+        where TCollectionPolicy : IEnumeratorProvider<TValueCollection, TValueEnumerator>
     {
         private readonly TCollectionPolicy _collectionPolicy;
 

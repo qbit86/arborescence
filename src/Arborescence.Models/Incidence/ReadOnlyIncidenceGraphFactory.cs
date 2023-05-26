@@ -36,7 +36,7 @@ namespace Arborescence.Models
                 TEdgeCollectionPolicy edgeCollectionPolicy)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
             where TEdgeMultimap : IReadOnlyDictionary<TVertex, TEdgeCollection>
-            where TEdgeCollectionPolicy : IEnumerablePolicy<TEdgeCollection, TEdgeEnumerator>
+            where TEdgeCollectionPolicy : IEnumeratorProvider<TEdgeCollection, TEdgeEnumerator>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));

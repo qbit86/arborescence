@@ -1,6 +1,6 @@
 namespace Arborescence
 {
-    public interface IEnumerablePolicy<in TCollection, out TEnumerator>
+    public interface IEnumeratorProvider<in TCollection, out TEnumerator>
     {
         TEnumerator GetEnumerator(TCollection collection);
 

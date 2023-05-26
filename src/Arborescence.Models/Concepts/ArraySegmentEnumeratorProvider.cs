@@ -4,7 +4,7 @@ namespace Arborescence.Models
     using System;
     using System.Runtime.CompilerServices;
 
-    internal struct ArraySegmentEnumerablePolicy<T> : IEnumerablePolicy<ArraySegment<T>, ArraySegment<T>.Enumerator>
+    internal struct ArraySegmentEnumeratorProvider<T> : IEnumeratorProvider<ArraySegment<T>, ArraySegment<T>.Enumerator>
     {
         public ArraySegment<T>.Enumerator GetEnumerator(ArraySegment<T> collection) =>
             collection.Array is not null ? collection.GetEnumerator() : GetEmptyEnumerator();

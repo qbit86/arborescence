@@ -27,7 +27,7 @@ namespace Arborescence.Models
             Create<TVertexMultimap, TVertexCollectionPolicy>(
                 TVertexMultimap neighborsByVertex, TVertexCollectionPolicy vertexCollectionPolicy)
             where TVertexMultimap : IReadOnlyDictionary<TVertex, TVertexCollection>
-            where TVertexCollectionPolicy : IEnumerablePolicy<TVertexCollection, TVertexEnumerator>
+            where TVertexCollectionPolicy : IEnumeratorProvider<TVertexCollection, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
