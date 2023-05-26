@@ -14,7 +14,7 @@ namespace Arborescence
             return new(values);
         }
 
-        public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsencePolicy<TValue>>
+        public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsence<TValue>>
             CreateWithAbsence<TValueList>(TValueList values)
             where TValueList : IReadOnlyList<TValue>
         {
