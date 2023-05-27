@@ -14,7 +14,7 @@ namespace Arborescence.Models
         IOutNeighborsAdjacency<TVertex, TVertexEnumerator>,
         IEquatable<ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept>>
         where TVertexEnumerator : IEnumerator<TVertex>
-        where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertex, TVertexMultimap, TVertexEnumerator>
+        where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertexMultimap, TVertex, TVertexEnumerator>
     {
         private readonly TVertexMultimap _neighborsByVertex;
         private readonly TVertexMultimapConcept _vertexMultimapConcept;

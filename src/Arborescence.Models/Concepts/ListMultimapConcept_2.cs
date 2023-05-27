@@ -3,7 +3,7 @@ namespace Arborescence.Models
     using System.Collections.Generic;
 
     internal readonly struct ListMultimapConcept<TMultimap, T> :
-        IReadOnlyMultimapConcept<T, TMultimap, List<T>.Enumerator>,
+        IReadOnlyMultimapConcept<TMultimap, T, List<T>.Enumerator>,
         IDictionaryAddition<TMultimap, T, T>
         where TMultimap : IDictionary<T, List<T>>
     {

@@ -18,7 +18,7 @@ namespace Arborescence.Models
             TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>>
         where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
         where TEdgeEnumerator : IEnumerator<TEdge>
-        where TEdgeMultimapConcept : IReadOnlyMultimapConcept<TVertex, TEdgeMultimap, TEdgeEnumerator>
+        where TEdgeMultimapConcept : IReadOnlyMultimapConcept<TEdgeMultimap, TVertex, TEdgeEnumerator>
     {
         private readonly TEndpointMap _tailByEdge;
         private readonly TEndpointMap _headByEdge;

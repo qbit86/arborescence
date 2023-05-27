@@ -19,7 +19,7 @@ namespace Arborescence.Models
 
     public readonly struct ReadOnlyMultimapConcept<
         TKey, TValueCollection, TValueEnumerator, TMultimap, TEnumeratorProvider> :
-        IReadOnlyMultimapConcept<TKey, TMultimap, TValueEnumerator>
+        IReadOnlyMultimapConcept<TMultimap, TKey, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
         where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator>
     {
