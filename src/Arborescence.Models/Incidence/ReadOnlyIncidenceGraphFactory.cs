@@ -9,7 +9,7 @@ namespace Arborescence.Models
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>
             CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
-                TEdgeMultimapConcept edgeMultimapPolicy)
+                TEdgeMultimapConcept edgeMultimapConcept)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
             where TEdgeMultimapConcept : IReadOnlyMultimapConcept<TVertex, TEdgeMultimap, TEdgeEnumerator>
         {
@@ -19,24 +19,25 @@ namespace Arborescence.Models
                 ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
             if (outEdgesByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
-            if (edgeMultimapPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeMultimapPolicy));
+            if (edgeMultimapConcept is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(edgeMultimapConcept));
 
-            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapPolicy);
+            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
     }
 
     public static class ReadOnlyIncidenceGraphFactory<TVertex, TEdge, TEdgeCollection, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge>
     {
-        public static ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap,
-                ReadOnlyMultimapConcept<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeCollectionPolicy>>
-            CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeCollectionPolicy>(
+        public static ReadOnlyIncidenceGraph<
+                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, ReadOnlyMultimapConcept<
+                    TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeEnumeratorProvider>>
+            CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeEnumeratorProvider>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
-                TEdgeCollectionPolicy edgeCollectionPolicy)
+                TEdgeEnumeratorProvider edgeEnumeratorProvider)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
             where TEdgeMultimap : IReadOnlyDictionary<TVertex, TEdgeCollection>
-            where TEdgeCollectionPolicy : IEnumeratorProvider<TEdgeCollection, TEdgeEnumerator>
+            where TEdgeEnumeratorProvider : IEnumeratorProvider<TEdgeCollection, TEdgeEnumerator>
         {
             if (tailByEdge is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
@@ -44,11 +45,11 @@ namespace Arborescence.Models
                 ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
             if (outEdgesByVertex is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
-            if (edgeCollectionPolicy is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeCollectionPolicy));
+            if (edgeEnumeratorProvider is null)
+                ThrowHelper.ThrowArgumentNullException(nameof(edgeEnumeratorProvider));
 
-            ReadOnlyMultimapConcept<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeCollectionPolicy>
-                edgeMultimapConcept = new(edgeCollectionPolicy);
+            ReadOnlyMultimapConcept<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeEnumeratorProvider>
+                edgeMultimapConcept = new(edgeEnumeratorProvider);
             return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
     }
