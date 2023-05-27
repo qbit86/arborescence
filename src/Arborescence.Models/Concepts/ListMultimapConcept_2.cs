@@ -2,9 +2,9 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    internal readonly struct ListMultimapConcept<T, TMultimap> :
+    internal readonly struct ListMultimapConcept<TMultimap, T> :
         IReadOnlyMultimapConcept<T, TMultimap, List<T>.Enumerator>,
-        IDictionaryAddition<T, T, TMultimap>
+        IDictionaryAddition<TMultimap, T, T>
         where TMultimap : IDictionary<T, List<T>>
     {
         private static ListEnumeratorProvider<T> EnumeratorProvider => default;
