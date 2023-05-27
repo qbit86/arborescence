@@ -181,7 +181,7 @@
 
 ### Added
 
-- Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without policy for the vertex color map.
+- Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without concept for the vertex color map.
 - Traversal: `IndexedColorDictionary` structure implementing `IDictionary<int, Color>` with an array as backing store.
 
 ## [0.8.0] - 2021-01-06
@@ -191,7 +191,7 @@
 - Models: `net5.0` as another target framework.
 - Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store.
 - Traversal: Another `GenericSearch<>` struct with less type parameters.
-- Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without policy for the vertex set.
+- Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without concept for the vertex set.
 
 ### Fixed
 
@@ -233,8 +233,8 @@
 
 ### Removed
 
-- Abstractions: Graph policy interfaces.
-- Models: Graph policy implementations.
+- Abstractions: Graph concepts.
+- Models: Graph concept implementations.
 
 ## [0.5.0] - 2020-11-03
 
@@ -342,7 +342,7 @@
 
 - Generating XML documentation files.
 - Primitives: Basic blocks for building algorithms and data structures.
-- Models: Data structures for graphs and policy models to manipulate them.
+- Models: Data structures for graphs and concept models to manipulate them.
 - Traversal: Graph traversal algorithms.
 
 ## [0.1.0] - 2020-07-05
