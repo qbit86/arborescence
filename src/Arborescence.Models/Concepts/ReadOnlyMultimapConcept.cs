@@ -2,11 +2,11 @@ namespace Arborescence.Models
 {
     using System.Collections.Generic;
 
-    public static class ReadOnlyMultimapConceptFactory<TKey, TValueCollection, TValueEnumerator, TMultimap>
+    public static class ReadOnlyMultimapConceptFactory<TMultimap, TKey, TValueCollection, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
     {
         public static ReadOnlyMultimapConcept<
-            TKey, TValueCollection, TValueEnumerator, TMultimap, TEnumeratorProvider> Create<TEnumeratorProvider>(
+            TMultimap, TKey, TValueCollection, TValueEnumerator, TEnumeratorProvider> Create<TEnumeratorProvider>(
             TEnumeratorProvider enumeratorProvider)
             where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator>
         {
@@ -18,7 +18,7 @@ namespace Arborescence.Models
     }
 
     public readonly struct ReadOnlyMultimapConcept<
-        TKey, TValueCollection, TValueEnumerator, TMultimap, TEnumeratorProvider> :
+        TMultimap, TKey, TValueCollection, TValueEnumerator, TEnumeratorProvider> :
         IReadOnlyMultimapConcept<TMultimap, TKey, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
         where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator>

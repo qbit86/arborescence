@@ -23,7 +23,7 @@ namespace Arborescence.Models
         where TVertexEnumerator : IEnumerator<TVertex>
     {
         public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, ReadOnlyMultimapConcept<
-                TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexEnumeratorProvider>>
+                TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider>>
             Create<TVertexMultimap, TVertexEnumeratorProvider>(
                 TVertexMultimap neighborsByVertex, TVertexEnumeratorProvider vertexEnumeratorProvider)
             where TVertexMultimap : IReadOnlyDictionary<TVertex, TVertexCollection>
@@ -35,7 +35,7 @@ namespace Arborescence.Models
                 ThrowHelper.ThrowArgumentNullException(nameof(vertexEnumeratorProvider));
 
             ReadOnlyMultimapConcept<
-                    TVertex, TVertexCollection, TVertexEnumerator, TVertexMultimap, TVertexEnumeratorProvider>
+                    TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider>
                 vertexMultimapConcept = new(vertexEnumeratorProvider);
             return new(neighborsByVertex, vertexMultimapConcept);
         }

@@ -31,7 +31,7 @@ namespace Arborescence.Models
     {
         public static ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, ReadOnlyMultimapConcept<
-                    TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeEnumeratorProvider>>
+                    TEdgeMultimap, TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeEnumeratorProvider>>
             CreateUnchecked<TEndpointMap, TEdgeMultimap, TEdgeEnumeratorProvider>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex,
                 TEdgeEnumeratorProvider edgeEnumeratorProvider)
@@ -48,7 +48,7 @@ namespace Arborescence.Models
             if (edgeEnumeratorProvider is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(edgeEnumeratorProvider));
 
-            ReadOnlyMultimapConcept<TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeMultimap, TEdgeEnumeratorProvider>
+            ReadOnlyMultimapConcept<TEdgeMultimap, TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeEnumeratorProvider>
                 edgeMultimapConcept = new(edgeEnumeratorProvider);
             return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
