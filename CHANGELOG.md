@@ -1,5 +1,34 @@
 # Changelog
 
+## [Unreleased] - 2023-05-28
+
+### Added
+
+- Abstractions: `IEnumeratorProvider<>`, `IDictionaryAddition<>`, `IReadOnlyMultimapConcept<>`.
+- Models: `AdjacencyEnumerator<>`, `IncidenceEnumerator<>`.
+- Models: `ListAdjacencyGraph<>`, `ListIncidenceGraph<>`, `ReadOnlyAdjacencyGraph<>`, `ReadOnlyIncidenceGraph<>`.
+- Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`.
+- Models: `ListMultimapConcept<>`, `ReadOnlyMultimapConcept<>`
+- Models.Specialized: `Int32AdjacencyGraph`, `Int32IncidenceGraph`.
+- Primitives: `DefaultAbsence<T>`.
+- Primitives.Specialized: `Int32ReadOnlyDictionary<>`, `Int32IndirectReadOnlyDictionary<>`, `Int32IndirectDictionary<>`.
+
+### Changed
+
+- Abstractions: Renamed some interfaces and some methods.
+- Models: Moved a lot of types to Models.Specialized project.
+- Traversal: Moved `Endpoints<TVertex>` and `Color` types to Primitives project.
+- Traversal: Moved `IndexedColorDictionary` types to Primitives.Specialized project.
+- Traversal: Moved `EnumerableBfs<>` and `EnumerableDfs<>` types to Traversal.Specialized project.
+
+### Removed
+
+- Dropped support of `.netcoreapp3.1` and several other TFMs.
+- Models: Dropped support of `netstandard1.0` TFM.
+- Models: `Int32Endpoints`.
+- Models: `SimpleIncidenceGraph`, `MutableSimpleIncidenceGraph`, `MutableUndirectedSimpleIncidenceGraph`.
+- Models: `IndexedIncidenceGraph`, `MutableIndexedIncidenceGraph`, `UndirectedIndexedIncidenceGraph`, `MutableUndirectedIndexedIncidenceGraph`.
+
 ## [0.15.3] - 2023-02-09
 
 ### Added
@@ -49,9 +78,9 @@
 ### Changed
 
 - Abstractions: Renamed `EnumerateAdjacentVertices(TVertex)` to `EnumerateNeighbors(TVertex vertex)`.
-- Abstractions: Elaborate Readme file.
+- Abstractions: Elaborated Readme file.
 - Models: Renamed non-generic type `Endpoints` to `Int32Endpoints`.
-- Primitives: Move `Endpoints<TVertex>` to Traversal project.
+- Primitives: Moved `Endpoints<TVertex>` to Traversal project.
 
 ### Removed
 
