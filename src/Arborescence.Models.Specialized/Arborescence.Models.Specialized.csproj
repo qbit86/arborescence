@@ -16,6 +16,7 @@ Commonly used types:
     <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
+    <NoWarn Condition="'$(Configuration)' == 'Debug'">$(NoWarn);CS1591</NoWarn>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
