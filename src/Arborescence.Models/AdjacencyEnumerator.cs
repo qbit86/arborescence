@@ -3,7 +3,7 @@ namespace Arborescence.Models
     using System.Collections;
     using System.Collections.Generic;
 
-    public static class AdjacencyEnumerator<TVertex, TEdge>
+    public static class AdjacencyEnumeratorFactory<TVertex, TEdge>
     {
         public static AdjacencyEnumerator<TVertex, TEdge, TGraph, TEdgeEnumerator> Create<TGraph, TEdgeEnumerator>(
             TGraph graph, TEdgeEnumerator edgeEnumerator)

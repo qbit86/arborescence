@@ -43,7 +43,7 @@ namespace Arborescence.Models
         public IncidenceEnumerator<TVertex, TVertexEnumerator> EnumerateOutEdges(TVertex vertex)
         {
             TVertexEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
-            return IncidenceEnumerator.Create(vertex, neighborEnumerator);
+            return IncidenceEnumeratorFactory.Create(vertex, neighborEnumerator);
         }
 
         public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex)

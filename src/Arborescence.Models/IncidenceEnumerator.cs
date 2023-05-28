@@ -4,7 +4,7 @@ namespace Arborescence
     using System.Collections.Generic;
     using Models;
 
-    public static class IncidenceEnumerator
+    public static class IncidenceEnumeratorFactory
     {
         public static IncidenceEnumerator<TVertex, TNeighborEnumerator> Create<TVertex, TNeighborEnumerator>(
             TVertex vertex, TNeighborEnumerator neighborEnumerator)
