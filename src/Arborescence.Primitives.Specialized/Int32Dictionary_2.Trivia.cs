@@ -28,19 +28,15 @@ namespace Arborescence
 
         ICollection<TValue> IDictionary<int, TValue>.Values => _values ?? (ICollection<TValue>)Array.Empty<TValue>();
 
-        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
-        {
-            Int32Dictionary<TValue, TValueList> self = this;
-            return self._values is not { Count: > 0 }
+        public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator() =>
+            _values is not { Count: > 0 } values
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
-                : self.GetEnumeratorIterator();
-        }
+                : GetEnumeratorIterator(values);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
+        private static IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator(TValueList values)
         {
-            TValueList values = _values;
             int count = values.Count;
             for (int key = 0; key < count; ++key)
                 yield return new(key, values[key]);
