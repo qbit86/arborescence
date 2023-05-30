@@ -29,18 +29,22 @@ namespace Arborescence.Models
             }
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);
 
+        /// <inheritdoc/>
         public bool TryGetHead(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex head) =>
             Some(edge.Head, out head);
 
+        /// <inheritdoc/>
         public IncidenceEnumerator<TVertex, List<TVertex>.Enumerator> EnumerateOutEdges(TVertex vertex)
         {
             List<TVertex>.Enumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
             return new(vertex, neighborEnumerator);
         }
 
+        /// <inheritdoc/>
         public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
             MultimapConcept.EnumerateValues(_neighborsByVertex, vertex);
 

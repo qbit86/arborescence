@@ -6,6 +6,7 @@ namespace Arborescence.Models
 
     partial struct ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept>
     {
+        /// <inheritdoc/>
         public bool Equals(
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> other)
         {
@@ -16,10 +17,12 @@ namespace Arborescence.Models
                     self._vertexMultimapConcept, other._vertexMultimapConcept);
         }
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> other &&
             Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;

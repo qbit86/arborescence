@@ -7,6 +7,7 @@ namespace Arborescence.Models
     partial struct ReadOnlyIncidenceGraph<
         TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>
     {
+        /// <inheritdoc/>
         public bool Equals(ReadOnlyIncidenceGraph<
             TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> other)
         {
@@ -19,11 +20,13 @@ namespace Arborescence.Models
                     self._edgeMultimapConcept, other._edgeMultimapConcept);
         }
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> other &&
             Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             ReadOnlyIncidenceGraph<

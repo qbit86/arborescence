@@ -5,6 +5,7 @@ namespace Arborescence.Models
 
     partial struct ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>
     {
+        /// <inheritdoc/>
         public bool Equals(ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> other)
         {
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
@@ -13,9 +14,11 @@ namespace Arborescence.Models
                 EqualityComparer<TEdgeMultimap>.Default.Equals(self._outEdgesByVertex, other._outEdgesByVertex);
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj) =>
             obj is ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;

@@ -47,12 +47,15 @@ namespace Arborescence.Models
 
         public int EdgeCount => _headByEdge is { } headByEdge ? headByEdge.Count : 0;
 
+        /// <inheritdoc/>
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
 
+        /// <inheritdoc/>
         public bool TryGetHead(TEdge edge, [MaybeNullWhen(false)] out TVertex head) =>
             _headByEdge.TryGetValue(edge, out head);
 
+        /// <inheritdoc/>
         public TEdgeEnumerator EnumerateOutEdges(TVertex vertex)
         {
             ReadOnlyIncidenceGraph<
@@ -60,6 +63,7 @@ namespace Arborescence.Models
             return self._edgeMultimapConcept.EnumerateValues(self._outEdgesByVertex, vertex);
         }
 
+        /// <inheritdoc/>
         public AdjacencyEnumerator<TVertex, TEdge,
             ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>,
             TEdgeEnumerator> EnumerateOutNeighbors(TVertex vertex)

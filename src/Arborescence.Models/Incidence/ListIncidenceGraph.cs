@@ -47,15 +47,19 @@ namespace Arborescence.Models
             }
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(TEdge edge, [MaybeNullWhen(false)] out TVertex tail) =>
             _tailByEdge.TryGetValue(edge, out tail);
 
+        /// <inheritdoc/>
         public bool TryGetHead(TEdge edge, [MaybeNullWhen(false)] out TVertex head) =>
             _headByEdge.TryGetValue(edge, out head);
 
+        /// <inheritdoc/>
         public List<TEdge>.Enumerator EnumerateOutEdges(TVertex vertex) =>
             MultimapConcept.EnumerateValues(_outEdgesByVertex, vertex);
 
+        /// <inheritdoc/>
         public AdjacencyEnumerator<
                 TVertex, TEdge, ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>
             EnumerateOutNeighbors(TVertex vertex)

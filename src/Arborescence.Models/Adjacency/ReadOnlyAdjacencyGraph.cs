@@ -34,18 +34,22 @@ namespace Arborescence.Models
             }
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex tail) =>
             Some(edge.Tail, out tail);
 
+        /// <inheritdoc/>
         public bool TryGetHead(Endpoints<TVertex> edge, [MaybeNullWhen(false)] out TVertex head) =>
             Some(edge.Head, out head);
 
+        /// <inheritdoc/>
         public IncidenceEnumerator<TVertex, TVertexEnumerator> EnumerateOutEdges(TVertex vertex)
         {
             TVertexEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
             return IncidenceEnumeratorFactory.Create(vertex, neighborEnumerator);
         }
 
+        /// <inheritdoc/>
         public TVertexEnumerator EnumerateOutNeighbors(TVertex vertex)
         {
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
