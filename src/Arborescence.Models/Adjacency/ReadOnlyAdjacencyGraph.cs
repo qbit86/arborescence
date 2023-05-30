@@ -6,6 +6,13 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
     using static TryHelpers;
 
+    /// <summary>
+    /// Represents a read-only adjacency graph.
+    /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
+    /// <typeparam name="TVertexMultimap">The type of dictionary that maps from a vertex to a sequence of its neighbors.</typeparam>
+    /// <typeparam name="TVertexMultimapConcept">The type that provides operations on the vertex multimap.</typeparam>
     public readonly partial struct ReadOnlyAdjacencyGraph<
         TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
@@ -25,6 +32,9 @@ namespace Arborescence.Models
             _vertexMultimapConcept = vertexMultimapConcept;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount
         {
             get
