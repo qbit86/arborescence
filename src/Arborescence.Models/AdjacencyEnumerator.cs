@@ -17,7 +17,7 @@ namespace Arborescence.Models
         /// <param name="edgeEnumerator">The enumerator for the collection of edges.</param>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
         /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
-        /// <returns></returns>
+        /// <returns>The enumerator for the heads of given edges.</returns>
         public static AdjacencyEnumerator<TVertex, TEdge, TGraph, TEdgeEnumerator> Create<TGraph, TEdgeEnumerator>(
             TGraph graph, TEdgeEnumerator edgeEnumerator)
             where TGraph : IHeadIncidence<TVertex, TEdge>
