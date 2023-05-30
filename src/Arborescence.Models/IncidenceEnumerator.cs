@@ -9,6 +9,14 @@ namespace Arborescence
     /// </summary>
     public static class IncidenceEnumeratorFactory
     {
+        /// <summary>
+        /// Creates a <see cref="IncidenceEnumerator{TVertex, TNeighborEnumerator}"/>.
+        /// </summary>
+        /// <param name="vertex">The vertex whose neighbors are to be enumerated.</param>
+        /// <param name="neighborEnumerator">The enumerator for the collection of neighbor vertices.</param>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+        /// <returns></returns>
         public static IncidenceEnumerator<TVertex, TNeighborEnumerator> Create<TVertex, TNeighborEnumerator>(
             TVertex vertex, TNeighborEnumerator neighborEnumerator)
             where TNeighborEnumerator : IEnumerator<TVertex>
