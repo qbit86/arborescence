@@ -1,7 +1,7 @@
 namespace Arborescence
 {
     /// <summary>
-    /// Represents data structures that map keys to sequences of values.
+    /// Provides basic read-only methods for data structures that map keys to sequences of values.
     /// </summary>
     /// <typeparam name="TMultimap">The type of the collection.</typeparam>
     /// <typeparam name="TKey">The type of keys.</typeparam>
