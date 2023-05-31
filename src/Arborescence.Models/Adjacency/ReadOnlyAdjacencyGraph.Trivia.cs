@@ -32,15 +32,15 @@ namespace Arborescence.Models
 
         /// <summary>
         /// Indicates whether two
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/> structures
-        /// are equal.
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+        /// structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
         /// <c>true</c> if the two
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/> structures
-        /// are equal; otherwise, <c>false</c>.
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+        /// structures are equal; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator ==(
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> left,
@@ -49,15 +49,15 @@ namespace Arborescence.Models
 
         /// <summary>
         /// Indicates whether two
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/> structures
-        /// are not equal.
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+        /// structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
         /// <c>true</c> if the two
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/> structures
-        /// are not equal; otherwise, <c>false</c>.
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+        /// structures are not equal; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator !=(
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> left,
