@@ -5,6 +5,15 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// Represents a read-only incidence graph.
+    /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    /// <typeparam name="TEndpointMap">The type of dictionary that maps from an edge to one of its endpoints.</typeparam>
+    /// <typeparam name="TEdgeMultimap">The type of dictionary that maps from a vertex to a sequence of its out-edges.</typeparam>
+    /// <typeparam name="TEdgeMultimapConcept">The type that provides operations on the edge multimap.</typeparam>
     public readonly partial struct ReadOnlyIncidenceGraph<
         TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> :
         ITailIncidence<TVertex, TEdge>,
@@ -35,6 +44,9 @@ namespace Arborescence.Models
             _edgeMultimapConcept = edgeMultimapConcept;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount
         {
             get
@@ -45,6 +57,9 @@ namespace Arborescence.Models
             }
         }
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount => _headByEdge is { } headByEdge ? headByEdge.Count : 0;
 
         /// <inheritdoc/>

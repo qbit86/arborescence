@@ -38,6 +38,18 @@ namespace Arborescence.Models
                 EqualityComparer<TEdgeMultimapConcept>.Default.GetHashCode(self._edgeMultimapConcept));
         }
 
+        /// <summary>
+        /// Indicates whether two
+        /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
+        /// structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two
+        /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
+        /// structures are equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(
             ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> left,
@@ -45,6 +57,18 @@ namespace Arborescence.Models
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> right) =>
             left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two
+        /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
+        /// structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two
+        /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
+        /// structures are not equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(
             ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> left,
