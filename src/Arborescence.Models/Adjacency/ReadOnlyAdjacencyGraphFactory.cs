@@ -4,7 +4,8 @@ namespace Arborescence.Models
 
     /// <summary>
     /// Provides support for creating
-    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/> objects.
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+    /// objects.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
@@ -36,11 +37,9 @@ namespace Arborescence.Models
 
     /// <summary>
     /// Provides support for creating
-    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/> objects,
-    /// when <c>TVertexMultimapConcept</c> is
-    /// <see
-    ///     cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>
-    /// .
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+    /// objects, when <c>TVertexMultimapConcept</c> is
+    /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TVertexCollection">The type of the vertex collection.</typeparam>
@@ -52,9 +51,7 @@ namespace Arborescence.Models
         /// Creates a
         /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>,
         /// when <c>TVertexMultimapConcept</c> is
-        /// <see
-        ///     cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>
-        /// .
+        /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>.
         /// </summary>
         /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
         /// <param name="vertexEnumeratorProvider">The vertex enumerator provider.</param>
