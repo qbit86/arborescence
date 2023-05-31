@@ -20,7 +20,7 @@ namespace Arborescence.Models
         /// </summary>
         /// <param name="enumeratorProvider">The enumerator provider.</param>
         /// <typeparam name="TEnumeratorProvider">The type of the enumerator provider.</typeparam>
-        /// <returns>The read-only dictionary that maps keys to sequences of values.</returns>
+        /// <returns>The object that provides the mapping of keys to sequences of values.</returns>
         public static ReadOnlyMultimapConcept<
             TMultimap, TKey, TValueCollection, TValueEnumerator, TEnumeratorProvider> Create<TEnumeratorProvider>(
             TEnumeratorProvider enumeratorProvider)
