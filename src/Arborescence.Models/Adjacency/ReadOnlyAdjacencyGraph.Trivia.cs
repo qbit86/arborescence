@@ -52,8 +52,8 @@ namespace Arborescence.Models
         /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
         /// structures are not equal.
         /// </summary>
-        /// <param name="left">The structure on the left side of the equality operator.</param>
-        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
         /// <c>true</c> if the two
         /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
