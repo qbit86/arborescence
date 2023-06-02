@@ -6,6 +6,14 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
     using static TryHelpers;
 
+    /// <summary>
+    /// Implements an adjacency graph as a dictionary of <see cref="List{TVertex}"/> objects.
+    /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TVertexMultimap">
+    /// The type of dictionary that maps from a vertex to a <see cref="List{TVertex}"/>
+    /// of its out-neighbors.
+    /// </typeparam>
     public readonly partial struct ListAdjacencyGraph<TVertex, TVertexMultimap> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,
         IHeadIncidence<TVertex, Endpoints<TVertex>>,
@@ -20,6 +28,9 @@ namespace Arborescence.Models
 
         internal ListAdjacencyGraph(TVertexMultimap neighborsByVertex) => _neighborsByVertex = neighborsByVertex;
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount
         {
             get
@@ -48,6 +59,11 @@ namespace Arborescence.Models
         public List<TVertex>.Enumerator EnumerateOutNeighbors(TVertex vertex) =>
             MultimapConcept.EnumerateValues(_neighborsByVertex, vertex);
 
+        /// <summary>
+        /// Adds the edge to the graph with the specified tail and head.
+        /// </summary>
+        /// <param name="tail">The tail of the edge to add.</param>
+        /// <param name="head">The head of the edge to add.</param>
         public void AddEdge(TVertex tail, TVertex head)
         {
             ListAdjacencyGraph<TVertex, TVertexMultimap> self = this;
