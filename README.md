@@ -27,7 +27,7 @@ To install packages of this library using the NuGet package manager, follow the 
 Let's consider a simple directed graph and a breadth-first tree on it:  
 ![](/assets/example.svg)
 
-This is how you create a graph, instantiate an algorithm, and run it against the graph:
+This is how you create a graph and run an algorithm against the graph:
 
 ```csharp
 Endpoints<int>[] edges =
@@ -40,17 +40,13 @@ Endpoints<int>[] edges =
     new(0, 2),
     new(2, 4)
 };
-Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
-
-EnumerableBfs<
-    Int32AdjacencyGraph,
-    Endpoints<int>,
-    IncidenceEnumerator<int, ArraySegment<int>.Enumerator>> bfs;
-
-using IEnumerator<Endpoints<int>> treeEdges =
-    bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
-while (treeEdges.MoveNext())
-    Console.WriteLine(treeEdges.Current);
+Int32AdjacencyGraph graph =
+    Int32AdjacencyGraphFactory.FromEdges(edges);
+IEnumerable<Endpoints<int>> treeEdges =
+    EnumerableBfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(
+        graph, source: 3);
+foreach (Endpoints<int> edge in treeEdges)
+    Console.WriteLine(edge);
 ```
 
 Expected output:
