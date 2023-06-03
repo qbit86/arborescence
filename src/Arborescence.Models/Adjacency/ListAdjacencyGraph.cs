@@ -7,12 +7,12 @@ namespace Arborescence.Models
     using static TryHelpers;
 
     /// <summary>
-    /// Implements an adjacency graph as a dictionary of <see cref="List{TVertex}"/> objects.
+    /// Implements an adjacency graph as a dictionary that maps vertices of type <see cref="TVertex"/>
+    /// to lists of out-neighbors of type <see cref="List{TVertex}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TVertexMultimap">
-    /// The type of dictionary that maps from a vertex to a <see cref="List{TVertex}"/>
-    /// of its out-neighbors.
+    /// The type of dictionary that maps from a vertex to a list of its out-neighbors of type <see cref="List{TVertex}"/>.
     /// </typeparam>
     public readonly partial struct ListAdjacencyGraph<TVertex, TVertexMultimap> :
         ITailIncidence<TVertex, Endpoints<TVertex>>,

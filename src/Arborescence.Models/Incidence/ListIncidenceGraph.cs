@@ -6,14 +6,14 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
 
     /// <summary>
-    /// Implements an incidence graph as a dictionary of <see cref="List{TEdge}"/> objects.
+    /// Implements an incidence graph as a dictionary that maps vertices of type <see cref="TVertex"/>
+    /// to lists of out-edges of type <see cref="List{TEdge}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEndpointMap">The type of mapping from an edge to one of its endpoints.</typeparam>
     /// <typeparam name="TEdgeMultimap">
-    /// The type of dictionary that maps from a vertex to a <see cref="List{TEdge}"/>
-    /// of its out-edges.
+    /// The type of dictionary that maps from a vertex to a list of its out-edges of type <see cref="List{TEdge}"/>.
     /// </typeparam>
     public readonly partial struct ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> :
         ITailIncidence<TVertex, TEdge>,
