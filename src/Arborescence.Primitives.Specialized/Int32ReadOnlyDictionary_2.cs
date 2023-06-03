@@ -12,7 +12,7 @@ namespace Arborescence
     /// and the default comparer is used.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in this dictionary.</typeparam>
-    /// <typeparam name="TValueList">The type of the list of the values.</typeparam>
+    /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
     public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList> :
         IReadOnlyDictionary<int, TValue>,
         IEquatable<Int32ReadOnlyDictionary<TValue, TValueList>>
