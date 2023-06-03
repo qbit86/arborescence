@@ -155,10 +155,8 @@ while (istanbulNeighborEnumerator.MoveNext())
 
 Expected output is:
 
-```
-LHR
-TPE
-```
+    LHR
+    TPE
 
 The second example demonstrates an incidence graph.
 Let's consider only the digits of the flight ids for simplicity, so we could encode them as integers: `676` instead of `BA676`, `1980` instead of `TK1980`, and so on.
@@ -227,10 +225,8 @@ while (istanbulFlightEnumerator.MoveNext())
 
 Expected output is:
 
-```
-677
-24
-```
+    677
+    24
 
 Which airports are connected by the flight `676`?
 
@@ -243,10 +239,8 @@ if (incidenceGraph.TryGetHead(676, out string? flight676Destination))
 
 Expected output is:
 
-```
-LHR
-IST
-```
+    LHR
+    IST
 
 ---
 
