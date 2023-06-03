@@ -66,19 +66,28 @@ namespace Arborescence.Models
         /// <param name="head">The head of the edge to add.</param>
         public void AddEdge(TVertex tail, TVertex head)
         {
-            ListAdjacencyGraph<TVertex, TVertexMultimap> self = this;
-            if (TryGetValue(self._neighborsByVertex, tail, out List<TVertex>? neighbors))
+            TVertexMultimap neighborsByVertex = _neighborsByVertex;
+            if (TryGetValue(neighborsByVertex, tail, out List<TVertex>? neighbors))
             {
                 neighbors.Add(head);
             }
             else
             {
                 neighbors = new(1) { head };
-                self._neighborsByVertex.Add(tail, neighbors);
+                neighborsByVertex.Add(tail, neighbors);
             }
 
-            if (!ContainsKey(self._neighborsByVertex, head))
-                self._neighborsByVertex.Add(head, new());
+            if (!ContainsKey(neighborsByVertex, head))
+                neighborsByVertex.Add(head, new());
+        }
+
+        public bool TryAddVertex(TVertex vertex)
+        {
+            TVertexMultimap neighborsByVertex = _neighborsByVertex;
+            if (ContainsKey(neighborsByVertex, vertex))
+                return false;
+            neighborsByVertex.Add(vertex, new());
+            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

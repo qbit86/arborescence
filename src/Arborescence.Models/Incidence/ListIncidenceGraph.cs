@@ -116,6 +116,15 @@ namespace Arborescence.Models
             return true;
         }
 
+        public bool TryAddVertex(TVertex vertex)
+        {
+            TEdgeMultimap outEdgesByVertex = _outEdgesByVertex;
+            if (ContainsKey(outEdgesByVertex, vertex))
+                return false;
+            outEdgesByVertex.Add(vertex, new());
+            return true;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValue<TDictionary>(
             TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TEdge>? value)
