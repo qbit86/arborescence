@@ -9,10 +9,13 @@ namespace Arborescence
 
     partial struct Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>
     {
+        /// <inheritdoc/>
         public bool IsReadOnly => false;
 
+        /// <inheritdoc/>
         public IEnumerable<TKey> Keys => _indexByKey?.Keys ?? Enumerable.Empty<TKey>();
 
+        /// <inheritdoc/>
         public IEnumerable<TValue> Values => _valueByIndex?.Values ?? Enumerable.Empty<TValue>();
 
         ICollection<TKey> IDictionary<TKey, TValue>.Keys
@@ -27,6 +30,7 @@ namespace Arborescence
 
         ICollection<TValue> IDictionary<TKey, TValue>.Values => _valueByIndex?.Values ?? Array.Empty<TValue>();
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
@@ -47,13 +51,17 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public void Add(KeyValuePair<TKey, TValue> item) => Add(item.Key, item.Value);
 
+        /// <inheritdoc/>
         public void Clear() => _valueByIndex?.Clear();
 
+        /// <inheritdoc/>
         public bool Contains(KeyValuePair<TKey, TValue> item) =>
             TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
+        /// <inheritdoc/>
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
             if (array is null)
@@ -82,6 +90,7 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
@@ -89,6 +98,7 @@ namespace Arborescence
                 self._valueByIndex.Remove(new KeyValuePair<int, TValue>(index, item.Value));
         }
 
+        /// <inheritdoc/>
         public bool Remove(TKey key)
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
@@ -100,6 +110,7 @@ namespace Arborescence
         bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
+        /// <inheritdoc/>
         public bool Equals(Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> other)
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
@@ -107,9 +118,11 @@ namespace Arborescence
                 EqualityComparer<TIndexToValueMap>.Default.Equals(self._valueByIndex, other._valueByIndex);
         }
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;

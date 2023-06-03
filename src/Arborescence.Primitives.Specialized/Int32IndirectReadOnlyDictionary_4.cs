@@ -22,8 +22,10 @@ namespace Arborescence
             _valueByIndex = valueByIndex;
         }
 
+        /// <inheritdoc/>
         public int Count => (_valueByIndex?.Count).GetValueOrDefault();
 
+        /// <inheritdoc/>
         public bool ContainsKey(TKey key)
         {
             Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
@@ -45,6 +47,7 @@ namespace Arborescence
                 : None(out value);
         }
 
+        /// <inheritdoc/>
         public TValue this[TKey key]
         {
             get

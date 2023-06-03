@@ -16,8 +16,10 @@ namespace Arborescence
 
         internal Int32ReadOnlyDictionary(TValueList values) => _values = values;
 
+        /// <inheritdoc/>
         public int Count => (_values?.Count).GetValueOrDefault();
 
+        /// <inheritdoc/>
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -32,6 +34,7 @@ namespace Arborescence
                 : Some(values[key], out value);
         }
 
+        /// <inheritdoc/>
         public TValue this[int key] => TryGetValueCore(key, out TValue? value)
             ? value
             : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);

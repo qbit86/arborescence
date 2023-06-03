@@ -13,6 +13,7 @@ namespace Arborescence
 
         int ICollection<KeyValuePair<int, TValue>>.Count => GetCount();
 
+        /// <inheritdoc/>
         public bool IsReadOnly => false;
 
         IEnumerable<int> IReadOnlyDictionary<int, TValue>.Keys
@@ -45,6 +46,7 @@ namespace Arborescence
         ICollection<TValue> IDictionary<int, TValue>.Values =>
             ThrowHelper.ThrowNotSupportedException<ICollection<TValue>>();
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
@@ -68,13 +70,17 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public void Add(KeyValuePair<int, TValue> item) => Add(item.Key, item.Value);
 
+        /// <inheritdoc/>
         public void Clear() => _values?.Clear();
 
+        /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) =>
             TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
+        /// <inheritdoc/>
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
         {
             if (array is null)
@@ -104,6 +110,7 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
@@ -121,6 +128,7 @@ namespace Arborescence
             return true;
         }
 
+        /// <inheritdoc/>
         public bool Remove(int key)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
@@ -138,6 +146,7 @@ namespace Arborescence
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
+        /// <inheritdoc/>
         public bool Equals(Int32Dictionary<TValue, TValueList, TAbsenceComparer> other)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
@@ -146,9 +155,11 @@ namespace Arborescence
                 EqualityComparer<TValue>.Default.Equals(self._absenceMarker!, other._absenceMarker!);
         }
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32Dictionary<TValue, TValueList, TAbsenceComparer> other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;

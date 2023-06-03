@@ -22,8 +22,10 @@ namespace Arborescence
             _absence = absence;
         }
 
+        /// <inheritdoc/>
         public int Count => (_values?.Count).GetValueOrDefault();
 
+        /// <inheritdoc/>
         public bool ContainsKey(int key)
         {
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
@@ -47,6 +49,7 @@ namespace Arborescence
             return !self._absence.Equals(value);
         }
 
+        /// <inheritdoc/>
         public TValue this[int key] => TryGetValueCore(key, out TValue? value)
             ? value
             : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);

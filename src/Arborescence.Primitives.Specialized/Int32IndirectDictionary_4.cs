@@ -22,6 +22,7 @@ namespace Arborescence
             _valueByIndex = valueByIndex;
         }
 
+        /// <inheritdoc/>
         public void Add(TKey key, TValue value)
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;

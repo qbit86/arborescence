@@ -7,6 +7,7 @@ namespace Arborescence
 
     partial struct Int32ReadOnlyDictionary<TValue, TValueList>
     {
+        /// <inheritdoc/>
         public IEnumerable<int> Keys
         {
             get
@@ -16,11 +17,13 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerable<TValue> Values => _values ?? Enumerable.Empty<TValue>();
 
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             Int32ReadOnlyDictionary<TValue, TValueList> self = this;
@@ -39,12 +42,15 @@ namespace Arborescence
                 yield return new(key, values[key]);
         }
 
+        /// <inheritdoc/>
         public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList> other) =>
             EqualityComparer<TValueList>.Default.Equals(_values, other._values);
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32ReadOnlyDictionary<TValue, TValueList> other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode() => EqualityComparer<TValueList>.Default.GetHashCode(_values);
 
         public static bool operator ==(

@@ -42,6 +42,7 @@ namespace Arborescence
             return result;
         }
 
+        /// <inheritdoc/>
         public void Add(int key, TValue value)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
