@@ -7,6 +7,13 @@ namespace Arborescence
     using Primitives;
     using static TryHelpers;
 
+    /// <summary>
+    /// Provides a read-only dictionary to use when the key is an <see cref="int"/> index in the contiguous range
+    /// and the default comparer is used.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the values in this dictionary.</typeparam>
+    /// <typeparam name="TValueList">The type of the list of the values.</typeparam>
+    /// <typeparam name="TAbsence">The type that provides a method for distinguishing missing elements.</typeparam>
     public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> :
         IReadOnlyDictionary<int, TValue>,
         IEquatable<Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>>
@@ -34,6 +41,19 @@ namespace Arborescence
             return unchecked((uint)key < (uint)values.Count) && !self._absence.Equals(values[key]);
         }
 
+        /// <summary>
+        /// Gets the value that is associated with the specified key.
+        /// </summary>
+        /// <param name="key">The key to locate.</param>
+        /// <param name="value">
+        /// When this method returns, the value associated with the specified key, if the key is found;
+        /// otherwise, the value is unspecified.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
+        /// contains an element that has the specified key;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
 
