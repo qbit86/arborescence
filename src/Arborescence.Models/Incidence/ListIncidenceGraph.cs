@@ -5,6 +5,16 @@ namespace Arborescence.Models
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// Implements an incidence graph as a dictionary of <see cref="List{TEdge}"/> objects.
+    /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of the edge.</typeparam>
+    /// <typeparam name="TEndpointMap">The type of mapping from an edge to one of its endpoints.</typeparam>
+    /// <typeparam name="TEdgeMultimap">
+    /// The type of dictionary that maps from a vertex to a <see cref="List{TEdge}"/>
+    /// of its out-edges.
+    /// </typeparam>
     public readonly partial struct ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> :
         ITailIncidence<TVertex, TEdge>,
         IHeadIncidence<TVertex, TEdge>,
@@ -29,6 +39,9 @@ namespace Arborescence.Models
             _outEdgesByVertex = outEdgesByVertex;
         }
 
+        /// <summary>
+        /// Gets the number of vertices.
+        /// </summary>
         public int VertexCount
         {
             get
@@ -38,6 +51,9 @@ namespace Arborescence.Models
             }
         }
 
+        /// <summary>
+        /// Gets the number of edges.
+        /// </summary>
         public int EdgeCount
         {
             get
@@ -69,6 +85,13 @@ namespace Arborescence.Models
             return AdjacencyEnumeratorFactory<TVertex, TEdge>.Create(self, edgeEnumerator);
         }
 
+        /// <summary>
+        /// Adds the edge to the graph with the specified tail and head.
+        /// </summary>
+        /// <param name="edge">The edge to add.</param>
+        /// <param name="tail">The tail of the edge to add.</param>
+        /// <param name="head">The head of the edge to add.</param>
+        /// <returns></returns>
         public bool TryAddEdge(TEdge edge, TVertex tail, TVertex head)
         {
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;

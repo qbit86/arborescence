@@ -28,10 +28,32 @@ namespace Arborescence.Models
                 EqualityComparer<TEdgeMultimap>.Default.GetHashCode(self._outEdgesByVertex));
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>
+        /// structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two
+        /// <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>
+        /// structures are equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator ==(
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> left,
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> right) => left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>
+        /// structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <c>true</c> if the two
+        /// <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>
+        /// structures are not equal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool operator !=(
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> left,
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> right) => !left.Equals(right);
