@@ -53,10 +53,34 @@ namespace Arborescence
         /// <inheritdoc/>
         public override int GetHashCode() => EqualityComparer<TValueList>.Default.GetHashCode(_values);
 
+        /// <summary>
+        /// Indicates whether two
+        /// <see cref="Int32ReadOnlyDictionary{TValue, TValueList}"/>
+        /// structures are equal.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying lists are equal with respect to
+        /// <see cref="EqualityComparer{TValueList}"/>.<see cref="EqualityComparer{TValueList}.Default"/>;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
         public static bool operator ==(
             Int32ReadOnlyDictionary<TValue, TValueList> left, Int32ReadOnlyDictionary<TValue, TValueList> right) =>
             left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two
+        /// <see cref="Int32ReadOnlyDictionary{TValue, TValueList}"/>
+        /// structures are not equal.
+        /// </summary>
+        /// <param name="left">The instance to the left of the operator.</param>
+        /// <param name="right">The instance to the right of the operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the underlying lists are not equal with respect to
+        /// <see cref="EqualityComparer{TValueList}"/>.<see cref="EqualityComparer{TValueList}.Default"/>;
+        /// <see langword="false"/> otherwise.
+        /// </returns>
         public static bool operator !=(
             Int32ReadOnlyDictionary<TValue, TValueList> left, Int32ReadOnlyDictionary<TValue, TValueList> right) =>
             !left.Equals(right);
