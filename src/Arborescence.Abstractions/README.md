@@ -25,9 +25,9 @@ IOutEdgesIncidence<TVertex, TEdges>
 }
 ```
 
-Worth noting that `IGraph<TVertex, TEdge>` is not such a primary abstraction.
+Note that `IGraph<TVertex, TEdge>` is not such a primary abstraction.
 Utility interfaces are not directly used as type constraints in algorithms.
-They just group primary interfaces together, and may be convenient for users to implement.
+They simply group primary interfaces together, and may be convenient for users to implement.
 
 ```csharp
 IGraph<TVertex, TEdge> :
@@ -161,7 +161,7 @@ TPE
 ```
 
 The second example demonstrates an incidence graph.
-Let's consider only the digits of the flight ids for simplicity, so we could encode them as `int`s: `676` instead of `BA676`, `1980` instead of `TK1980`, and so on.
+Let's consider only the digits of the flight ids for simplicity, so we could encode them as integers: `676` instead of `BA676`, `1980` instead of `TK1980`, and so on.
 
 ```csharp
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
