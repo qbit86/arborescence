@@ -62,7 +62,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TestHelpers", "tests\Shared
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Traversal.Adjacency", "tests\Tests.Traversal.Adjacency\Tests.Traversal.Adjacency.csproj", "{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.FlightGraphs", "samples\Samples.FlightGraphs\Samples.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Abstractions.FlightGraphs", "samples\Samples.Abstractions.FlightGraphs\Samples.Abstractions.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}"
 EndProject
