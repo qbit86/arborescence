@@ -11,10 +11,10 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.15.3</AssemblyVersion>
+    <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
