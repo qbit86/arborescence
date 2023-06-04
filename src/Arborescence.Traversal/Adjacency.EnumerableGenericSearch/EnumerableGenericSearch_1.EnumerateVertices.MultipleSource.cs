@@ -28,7 +28,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TFrontier>(
             TGraph graph, TSourceCollection sources, TFrontier frontier)
-            where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TGraph : IOutNeighborsAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceCollection : IEnumerable<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(graph, sources, frontier);
@@ -56,7 +56,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TFrontier>(
             TGraph graph, TSourceCollection sources, TFrontier frontier, IEqualityComparer<TVertex> comparer)
-            where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TGraph : IOutNeighborsAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceCollection : IEnumerable<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex> =>
             EnumerableGenericSearch<TVertex, IEnumerator<TVertex>>.EnumerateVerticesChecked(
@@ -87,7 +87,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<TVertex> EnumerateVertices<TGraph, TSourceCollection, TFrontier, TExploredSet>(
             TGraph graph, TSourceCollection sources, TFrontier frontier, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, IEnumerator<TVertex>>
+            where TGraph : IOutNeighborsAdjacency<TVertex, IEnumerator<TVertex>>
             where TSourceCollection : IEnumerable<TVertex>
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex> =>

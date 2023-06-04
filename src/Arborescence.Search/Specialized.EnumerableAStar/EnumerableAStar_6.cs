@@ -1,10 +1,10 @@
+#if false
 namespace Arborescence.Search.Specialized
 {
     using System;
     using System.Buffers;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Traversal;
 
     /// <summary>
     /// Implements a heuristic search on a weighted graph for the case where all edge weights are non-negative.
@@ -156,3 +156,4 @@ namespace Arborescence.Search.Specialized
         }
     }
 }
+#endif

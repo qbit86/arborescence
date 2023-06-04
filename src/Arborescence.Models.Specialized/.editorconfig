@@ -1,0 +1,8 @@
+[*.cs]
+dotnet_diagnostic.CA1000.severity = none # Do not declare static members on generic types
+
+[Int32*GraphFactory.cs]
+dotnet_diagnostic.CA1002.severity = none # Do not expose generic lists
+
+[Int32IncidenceGraphFactory.cs]
+dotnet_diagnostic.CA1062.severity = none # Validate arguments of public methods

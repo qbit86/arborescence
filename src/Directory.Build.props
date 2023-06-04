@@ -11,17 +11,20 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <VersionPrefix>0.15.3</VersionPrefix>
+    <VersionPrefix>0.16</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
+    <DebugType>portable</DebugType>
     <Deterministic>true</Deterministic>
     <EnablePackageValidation>true</EnablePackageValidation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <InformationalVersion>$(Version)</InformationalVersion>
     <IsPackable>true</IsPackable>
+    <IsTrimmable>true</IsTrimmable>
     <LangVersion>9</LangVersion>
+    <PackRelease>true</PackRelease>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>

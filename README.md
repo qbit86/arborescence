@@ -2,55 +2,59 @@
 
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
 [![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://nuget.org/packages/Arborescence.Models/)
+[![Arborescence.Models.Specialized version](https://img.shields.io/nuget/v/Arborescence.Models.Specialized.svg?label=Models.Specialized&logo=nuget)](https://nuget.org/packages/Arborescence.Models.Specialized/)
 [![Arborescence.Primitives version](https://img.shields.io/nuget/v/Arborescence.Primitives.svg?label=Primitives&logo=nuget)](https://nuget.org/packages/Arborescence.Primitives/)
+[![Arborescence.Primitives.Specialized version](https://img.shields.io/nuget/v/Arborescence.Primitives.Specialized.svg?label=Primitives.Specialized&logo=nuget)](https://nuget.org/packages/Arborescence.Primitives.Specialized/)
 [![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://nuget.org/packages/Arborescence.Traversal/)
 
 Arborescence is a generic .NET library for dealing with graphs.
 
 ## Features
 
-* [Abstractions] — concepts and policies for examining graphs and collections in a data-structure neutral way.
-* [Models] — some particular graph structures implementing the aforementioned interfaces.
-* [Primitives] — basic blocks for building different data structures.
-* Algorithms:
-    * [Traversal] — widely used algorithms for traversing graphs such as BFS and DFS.
+- [Abstractions] — interfaces and concepts for examining graphs and collections in a data-structure-agnostic way.
+- [Models] — generic graph structures that implement the aforementioned interfaces.
+- [Models.Specialized] — special adjacency and incidence graph data structures that provide efficient implementation when vertices are integers from contiguous range.
+- [Primitives] — building blocks for creating various data structures and APIs.
+- [Primitives.Specialized] — efficient specializations for different vocabulary generic types.
+- [Traversal] — widely used graph traversal algorithms such as BFS and DFS.
 
 ## Installation
 
-To install packages of this library with NuGet package manager follow the links above.
+To install packages of this library using the NuGet package manager, follow the links above.
 
 ## Basic usage
 
 Let's consider a simple directed graph and a breadth-first tree on it:  
 ![](/assets/example.svg)
 
-This is how you create a graph, instantiate an algorithm, and run it against the graph:
+This is how you create a graph and run an algorithm against the graph:
 
 ```csharp
-SimpleIncidenceGraph.Builder builder = new();
-builder.Add(2, 0);
-builder.Add(4, 3);
-builder.Add(0, 4);
-builder.Add(3, 2);
-builder.Add(4, 4);
-builder.Add(0, 2);
-builder.Add(2, 4);
-SimpleIncidenceGraph graph = builder.ToGraph();
+Endpoints<int>[] edges =
+{
+    new(2, 0),
+    new(4, 3),
+    new(0, 4),
+    new(3, 2),
+    new(4, 4),
+    new(0, 2),
+    new(2, 4)
+};
+Int32AdjacencyGraph graph =
+    Int32AdjacencyGraphFactory.FromEdges(edges);
 
-EnumerableBfs<SimpleIncidenceGraph, Endpoints, ArraySegment<Endpoints>.Enumerator> bfs;
-
-IEnumerator<Endpoints> edges = bfs.EnumerateEdges(graph, source: 3, vertexCount: graph.VertexCount);
-while (edges.MoveNext())
-    Console.WriteLine(edges.Current);
+IEnumerable<Endpoints<int>> treeEdges =
+    EnumerableBfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(
+        graph, source: 3);
+foreach (Endpoints<int> edge in treeEdges)
+    Console.WriteLine(edge);
 ```
 
 Expected output:
 
-```
-[3, 2]
-[2, 0]
-[2, 4]
-```
+    [3, 2]
+    [2, 0]
+    [2, 4]
 
 ## Advanced usage
 
@@ -67,6 +71,10 @@ License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 [Models]: https://nuget.org/packages/Arborescence.Models/
 
+[Models.Specialized]: https://nuget.org/packages/Arborescence.Models.Specialized/
+
 [Primitives]: https://nuget.org/packages/Arborescence.Primitives/
+
+[Primitives.Specialized]: https://nuget.org/packages/Arborescence.Primitives.Specialized/
 
 [Traversal]: https://nuget.org/packages/Arborescence.Traversal/

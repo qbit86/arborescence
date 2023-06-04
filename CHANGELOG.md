@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.16] - 2023-06-05
+
+### Added
+
+- Abstractions: `IEnumeratorProvider<>`, `IDictionaryAddition<>`, `IReadOnlyMultimapConcept<>`.
+- Models: `AdjacencyEnumerator<>`, `IncidenceEnumerator<>`.
+- Models: `ListAdjacencyGraph<>`, `ListIncidenceGraph<>`, `ReadOnlyAdjacencyGraph<>`, `ReadOnlyIncidenceGraph<>`.
+- Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`.
+- Models: `ListMultimapConcept<>`, `ReadOnlyMultimapConcept<>`
+- Models.Specialized: `Int32AdjacencyGraph`, `Int32IncidenceGraph`.
+- Primitives: `DefaultAbsence<T>`.
+- Primitives.Specialized: `Int32ReadOnlyDictionary<>`, `Int32IndirectReadOnlyDictionary<>`, `Int32IndirectDictionary<>`.
+
+### Changed
+
+- Abstractions: Renamed some interfaces and some methods.
+- Models: Moved a lot of types to Models.Specialized project.
+- Traversal: Moved `Endpoints<TVertex>` and `Color` types to Primitives project.
+- Traversal: Moved `IndexedColorDictionary` types to Primitives.Specialized project.
+- Traversal: Moved `EnumerableBfs<>` and `EnumerableDfs<>` types to Traversal.Specialized project.
+
+### Removed
+
+- Dropped support of `.netcoreapp3.1` and several other TFMs.
+- Models: Dropped support of `netstandard1.0` TFM.
+- Models: `Int32Endpoints`.
+- Models: `SimpleIncidenceGraph`, `MutableSimpleIncidenceGraph`, `MutableUndirectedSimpleIncidenceGraph`.
+- Models: `IndexedIncidenceGraph`, `MutableIndexedIncidenceGraph`, `UndirectedIndexedIncidenceGraph`, `MutableUndirectedIndexedIncidenceGraph`.
+
 ## [0.15.3] - 2023-02-09
 
 ### Added
@@ -49,9 +78,9 @@
 ### Changed
 
 - Abstractions: Renamed `EnumerateAdjacentVertices(TVertex)` to `EnumerateNeighbors(TVertex vertex)`.
-- Abstractions: Elaborate Readme file.
+- Abstractions: Elaborated Readme file.
 - Models: Renamed non-generic type `Endpoints` to `Int32Endpoints`.
-- Primitives: Move `Endpoints<TVertex>` to Traversal project.
+- Primitives: Moved `Endpoints<TVertex>` to Traversal project.
 
 ### Removed
 
@@ -181,7 +210,7 @@
 
 ### Added
 
-- Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without policy for the vertex color map.
+- Traversal: `EagerBfs<>` and `EagerDfs<>` generic types without concept for the vertex color map.
 - Traversal: `IndexedColorDictionary` structure implementing `IDictionary<int, Color>` with an array as backing store.
 
 ## [0.8.0] - 2021-01-06
@@ -191,7 +220,7 @@
 - Models: `net5.0` as another target framework.
 - Models: `IndexedSet` structure implementing `ISet<int>` with an array as backing store.
 - Traversal: Another `GenericSearch<>` struct with less type parameters.
-- Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without policy for the vertex set.
+- Traversal: `EnumerableBfs<>` and `EnumerableDfs<>` generic types without concept for the vertex set.
 
 ### Fixed
 
@@ -210,7 +239,7 @@
 
 ### Added
 
-- Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` concepts.
+- Abstractions: `IAdjacency<>`, `IAdjacencyMatrix<>` interfaces.
 
 ### Changed
 
@@ -233,8 +262,8 @@
 
 ### Removed
 
-- Abstractions: Graph policy interfaces.
-- Models: Graph policy implementations.
+- Abstractions: Graph concepts.
+- Models: Graph concept implementations.
 
 ## [0.5.0] - 2020-11-03
 
@@ -334,7 +363,7 @@
 ### Removed
 
 - Models: `EdgeListIncidenceGraph`, `SortedAdjacencyListIncidenceGraph`.
-- Models: Some obsolete policies.
+- Models: Some obsolete concepts.
 
 ## [0.1.1] - 2020-07-13
 
@@ -342,7 +371,7 @@
 
 - Generating XML documentation files.
 - Primitives: Basic blocks for building algorithms and data structures.
-- Models: Data structures for graphs and policy models to manipulate them.
+- Models: Data structures for graphs and concept models to manipulate them.
 - Traversal: Graph traversal algorithms.
 
 ## [0.1.0] - 2020-07-05
@@ -351,7 +380,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/traversal-0.15.3...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/abstractions-0.16...HEAD
+
+[0.16]: https://github.com/qbit86/arborescence/compare/traversal-0.15.3...abstractions-0.16
 
 [0.15.3]: https://github.com/qbit86/arborescence/compare/traversal-0.15.2...traversal-0.15.3
 

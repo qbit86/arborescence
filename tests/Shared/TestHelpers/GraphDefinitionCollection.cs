@@ -15,7 +15,7 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
 
     private static readonly double[] s_densityPowers = { 1.0, 1.5, 2.0 };
 
-    private static CultureInfo F => CultureInfo.InvariantCulture;
+    private static CultureInfo P => CultureInfo.InvariantCulture;
 
     public IEnumerator<object[]> GetEnumerator()
     {
@@ -27,7 +27,7 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
             if (textReader == TextReader.Null)
                 continue;
 
-            var edges = IndexedEdgeListParser.ParseEdges(textReader).ToList();
+            var edges = Base32EdgeListParser.ParseEdges(textReader).ToList();
             int vertexCount = edges.Count == 0 ? 0 : edges.Select(e => Math.Max(e.Tail, e.Head)).Max() + 1;
             string description = $"{{{nameof(testCase)}: {testCase}}}";
             GraphDefinitionParameter parameter = new(vertexCount, edges, description);
@@ -40,10 +40,10 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
             int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
             foreach (double densityPower in s_densityPowers)
             {
-                List<Int32Endpoints> edges = new();
+                List<Endpoints<int>> edges = new();
                 GraphHelpers.GenerateEdges(vertexCount, densityPower, edges);
                 string description =
-                    $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
+                    $"{{{nameof(vertexCount)}: {vertexCount.ToString(P)}, {nameof(densityPower)}: {densityPower.ToString(P)}}}";
                 GraphDefinitionParameter parameter = new(vertexCount, edges, description);
                 yield return new object[] { parameter };
             }

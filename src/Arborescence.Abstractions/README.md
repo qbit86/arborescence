@@ -2,7 +2,42 @@
 
 [![Arborescence.Abstractions version](https://img.shields.io/nuget/v/Arborescence.Abstractions.svg?label=Abstractions&logo=nuget)](https://nuget.org/packages/Arborescence.Abstractions/)
 
-This package provides abstractions for graph-related concepts.
+This package provides graph-related abstractions.
+These abstractions fall into two groups: interfaces and concepts.
+
+Interfaces are direct contracts for algorithms, constraints on their type parameters.
+The most important ones are:
+
+```csharp
+IOutNeighborsAdjacency<TVertex, TVertices>
+{
+    TVertices EnumerateOutNeighbors(TVertex vertex);
+}
+
+IHeadIncidence<TVertex, TEdge>
+{
+    bool TryGetHead(TEdge edge, out TVertex head);
+}
+
+IOutEdgesIncidence<TVertex, TEdges>
+{
+    TEdges EnumerateOutEdges(TVertex vertex);
+}
+```
+
+Note that `IGraph<TVertex, TEdge>` is not such a primary abstraction.
+Utility interfaces are not directly used as type constraints in algorithms.
+They simply group primary interfaces together, and may be convenient for users to implement.
+
+```csharp
+IGraph<TVertex, TEdge> :
+    ITailIncidence<TVertex, TEdge>,
+    IHeadIncidence<TVertex, TEdge> { }
+
+IForwardIncidence<TVertex, TEdge, TEdges> :
+    IHeadIncidence<TVertex, TEdge>,
+    IOutEdgesIncidence<TVertex, TEdges> { }
+```
 
 The library treats the term _graph_ in a specific sense.
 The closest analog in mathematics is the notion of a _quiver_ [1] — a directed graph [2] where loops and multiple edges between two vertices are allowed.
@@ -71,18 +106,18 @@ Graph   ┤
             out-edges : V → [E] ┘
 ```
 
-The _adjacency_ concept provides an interface for access of the adjacent vertices (neighbors) to a vertex in a graph.
+The _adjacency_ interface provides access to the neighbors of a vertex in a graph.
 In some contexts there is only concern for the vertices, while the edges are not important.
 
 ## Basic usage
 
-We start with the simpler concept of an adjacency graph, where edges (flights) are of no interest, only connected vertices (airports).
+We start with the simpler abstraction of an adjacency graph, where the edges (flights) are of no interest, only the connected vertices (airports).
 
 ```csharp
 using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 
 public sealed class FlightAdjacencyGraph :
-    IAdjacency<string, NeighborEnumerator>
+    IOutNeighborsAdjacency<string, NeighborEnumerator>
 {
     private readonly Dictionary<string, string[]> _neighborsByAirport;
 
@@ -90,7 +125,7 @@ public sealed class FlightAdjacencyGraph :
         Dictionary<string, string[]> neighborsByAirport) =>
         _neighborsByAirport = neighborsByAirport;
 
-    public NeighborEnumerator EnumerateNeighbors(string vertex) =>
+    public NeighborEnumerator EnumerateOutNeighbors(string vertex) =>
         _neighborsByAirport.TryGetValue(vertex, out string[]? neighbors)
             ? new ArraySegment<string>(neighbors).GetEnumerator()
             : ArraySegment<string>.Empty.GetEnumerator();
@@ -113,20 +148,18 @@ Where can we fly from Istanbul?
 ```csharp
 var adjacencyGraph = FlightAdjacencyGraph.Create();
 NeighborEnumerator istanbulNeighborEnumerator =
-    adjacencyGraph.EnumerateNeighbors("IST");
+    adjacencyGraph.EnumerateOutNeighbors("IST");
 while (istanbulNeighborEnumerator.MoveNext())
     Console.WriteLine(istanbulNeighborEnumerator.Current);
 ```
 
 Expected output is:
 
-```
-LHR
-TPE
-```
+    LHR
+    TPE
 
 The second example demonstrates an incidence graph.
-Let's consider only the digits of the flight ids for simplicity, so we could encode them as `int`s: `676` instead of `BA676`, `1980` instead of `TK1980`, and so on.
+Let's consider only the digits of the flight ids for simplicity, so we could encode them as integers: `676` instead of `BA676`, `1980` instead of `TK1980`, and so on.
 
 ```csharp
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
@@ -192,10 +225,8 @@ while (istanbulFlightEnumerator.MoveNext())
 
 Expected output is:
 
-```
-677
-24
-```
+    677
+    24
 
 Which airports are connected by the flight `676`?
 
@@ -208,10 +239,8 @@ if (incidenceGraph.TryGetHead(676, out string? flight676Destination))
 
 Expected output is:
 
-```
-LHR
-IST
-```
+    LHR
+    IST
 
 ---
 

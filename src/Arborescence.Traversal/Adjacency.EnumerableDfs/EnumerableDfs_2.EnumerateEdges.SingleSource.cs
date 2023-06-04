@@ -18,7 +18,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph>(
             TGraph graph, TVertex source)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator> =>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator> =>
             EnumerateEdgesChecked(graph, source);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph>(
             TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator> =>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator> =>
             EnumerateEdgesChecked(graph, source, comparer);
 
         /// <summary>
@@ -54,13 +54,13 @@ namespace Arborescence.Traversal.Adjacency
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex> =>
             EnumerateEdgesChecked(graph, source, exploredSet);
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph>(
             TGraph graph, TVertex source)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
         {
             if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
@@ -71,7 +71,7 @@ namespace Arborescence.Traversal.Adjacency
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph>(
             TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
         {
             if (graph is null)
                 ThrowHelper.ThrowArgumentNullException(nameof(graph));
@@ -82,7 +82,7 @@ namespace Arborescence.Traversal.Adjacency
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
@@ -96,7 +96,7 @@ namespace Arborescence.Traversal.Adjacency
 
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<TGraph, TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IAdjacency<TVertex, TNeighborEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TExploredSet : ISet<TVertex>
         {
             if (!exploredSet.Add(source))
@@ -104,7 +104,7 @@ namespace Arborescence.Traversal.Adjacency
             var stack = new ValueStack<StackFrame>();
             try
             {
-                stack.Add(new(source, graph.EnumerateNeighbors(source)));
+                stack.Add(new(source, graph.EnumerateOutNeighbors(source)));
 
                 while (stack.TryTake(out StackFrame stackFrame))
                 {
@@ -122,7 +122,7 @@ namespace Arborescence.Traversal.Adjacency
 
                     yield return new(current, neighbor);
                     exploredSet.Add(neighbor);
-                    stack.Add(new(neighbor, graph.EnumerateNeighbors(neighbor)));
+                    stack.Add(new(neighbor, graph.EnumerateOutNeighbors(neighbor)));
                 }
             }
             finally

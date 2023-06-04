@@ -3,18 +3,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Models;
+using Models.Specialized;
 using Workbench;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-using IndexedEnumerator = System.ArraySegment<int>.Enumerator;
-using SimpleEnumerator = System.ArraySegment<Int32Endpoints>.Enumerator;
-#else
-using Models.Compatibility;
-using IndexedEnumerator = System.Collections.Generic.IEnumerator<int>;
-using SimpleEnumerator = System.Collections.Generic.IEnumerator<Int32Endpoints>;
-#endif
 
 internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : IEnumerable<object[]>
     where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdges>
@@ -23,7 +17,7 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
     private const int LowerBound = 1;
     private const int UpperBound = 10;
 
-    private static CultureInfo F => CultureInfo.InvariantCulture;
+    private static CultureInfo P => CultureInfo.InvariantCulture;
 
     public IEnumerator<object[]> GetEnumerator()
     {
@@ -37,8 +31,8 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
                 if (textReader == TextReader.Null)
                     continue;
 
-                IEnumerable<Int32Endpoints> edges = IndexedEdgeListParser.ParseEdges(textReader);
-                foreach (Int32Endpoints edge in edges)
+                IEnumerable<Endpoints<int>> edges = Base32EdgeListParser.ParseEdges(textReader);
+                foreach (Endpoints<int> edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
@@ -56,7 +50,7 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
                 builder, vertexCount, densityPower);
             TGraph graph = builder.ToGraph();
             string description =
-                $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
+                $"{{{nameof(vertexCount)}: {vertexCount.ToString(P)}, {nameof(densityPower)}: {densityPower.ToString(P)}}}";
             var graphParameter = GraphParameter.Create(graph, description);
             yield return new object[] { graphParameter };
         }
@@ -72,7 +66,7 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
                     builder, vertexCount, densityPower);
                 TGraph graph = builder.ToGraph();
                 string description =
-                    $"{{{nameof(vertexCount)}: {vertexCount.ToString(F)}, {nameof(densityPower)}: {densityPower.ToString(F)}}}";
+                    $"{{{nameof(vertexCount)}: {vertexCount.ToString(P)}, {nameof(densityPower)}: {densityPower.ToString(P)}}}";
                 var graphParameter = GraphParameter.Create(graph, description);
                 yield return new object[] { graphParameter };
             }
@@ -84,123 +78,140 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
     protected abstract TGraphBuilder CreateGraphBuilder(int initialVertexCount);
 }
 
-internal sealed class IndexedGraphCollection :
-    GraphCollection<IndexedIncidenceGraph, int, IndexedEnumerator, IndexedIncidenceGraph.Builder>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+internal sealed class Int32AdjacencyGraphCollection : GraphCollection<
+    Int32AdjacencyGraph,
+    Endpoints<int>,
+    IncidenceEnumerator<int, ArraySegment<int>.Enumerator>,
+    Int32AdjacencyGraphBuilder>
 {
-    protected override IndexedIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
+    protected override Int32AdjacencyGraphBuilder CreateGraphBuilder(int initialVertexCount) => new();
 }
 
-internal sealed class FromMutableIndexedGraphCollection :
-    GraphCollection<IndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraph>
+internal sealed class ListAdjacencyGraphCollection : GraphCollection<
+    ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>>,
+    Endpoints<int>,
+    IncidenceEnumerator<int, List<int>.Enumerator>,
+    ListAdjacencyGraphBuilder>
 {
-    protected override MutableIndexedIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
+    protected override ListAdjacencyGraphBuilder CreateGraphBuilder(int initialVertexCount) => new(initialVertexCount);
 }
 
-internal sealed class MutableIndexedGraphCollection : GraphCollection<
-    MutableIndexedIncidenceGraph, int, IndexedEnumerator, MutableIndexedIncidenceGraphBuilder>
+internal sealed class Int32IncidenceGraphCollection : GraphCollection<
+    Int32IncidenceGraph,
+    int,
+    ArraySegment<int>.Enumerator,
+    Int32IncidenceGraphBuilder>
 {
-    protected override MutableIndexedIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
+    protected override Int32IncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) => new();
 }
 
-internal sealed class SimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, SimpleIncidenceGraph.Builder>
+internal sealed class ListIncidenceGraphCollection : GraphCollection<
+    ListIncidenceGraph<int, int, Int32Dictionary<int, List<int>>, Dictionary<int, List<int>>>,
+    int,
+    List<int>.Enumerator,
+    ListIncidenceGraphBuilder>
 {
-    protected override SimpleIncidenceGraph.Builder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
+    protected override ListIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) => new(initialVertexCount);
 }
 
-internal sealed class FromMutableSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraph>
+internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<Int32AdjacencyGraph, int, Endpoints<int>>
 {
-    protected override MutableSimpleIncidenceGraph CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
+    private readonly List<Endpoints<int>> _edges = new();
 
-internal sealed class MutableSimpleGraphCollection : GraphCollection<
-    MutableSimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, MutableSimpleIncidenceGraphBuilder>
-{
-    protected override MutableSimpleIncidenceGraphBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
-internal sealed class UndirectedSimpleGraphCollection : GraphCollection<
-    SimpleIncidenceGraph, Int32Endpoints, SimpleEnumerator, SimpleIncidenceGraph.UndirectedBuilder>
-{
-    protected override SimpleIncidenceGraph.UndirectedBuilder CreateGraphBuilder(int initialVertexCount) =>
-        new(initialVertexCount);
-}
-
-internal sealed class MutableIndexedIncidenceGraphBuilder :
-    IGraphBuilder<MutableIndexedIncidenceGraph, int, int>,
-    IDisposable
-{
-    private MutableIndexedIncidenceGraph? _graph;
-
-    public MutableIndexedIncidenceGraphBuilder(int initialVertexCount) => _graph = new(initialVertexCount);
-
-    public void Dispose()
+    public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
-        if (_graph is null)
-            return;
+        edge = new(tail, head);
+        _edges.Add(edge);
+        return true;
+    }
 
-        _graph.Dispose();
-        _graph = null;
+    public Int32AdjacencyGraph ToGraph()
+    {
+        Endpoints<int>[] edges = _edges.ToArray();
+        _edges.Clear();
+        return Int32AdjacencyGraphFactory.FromEdges(edges);
+    }
+}
+
+internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
+    ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>>,
+    int,
+    Endpoints<int>>
+{
+    private readonly Int32Dictionary<List<int>, List<List<int>>> _neighborsByVertex;
+
+    internal ListAdjacencyGraphBuilder(int initialVertexCount) =>
+        _neighborsByVertex = Int32DictionaryFactory<List<int>>.Create(new List<List<int>>(initialVertexCount));
+
+    public bool TryAdd(int tail, int head, out Endpoints<int> edge)
+    {
+        while (tail >= _neighborsByVertex.Count || head >= _neighborsByVertex.Count)
+            _neighborsByVertex.Add(_neighborsByVertex.Count, default!);
+        if (_neighborsByVertex[tail] is { } neighbors)
+            neighbors.Add(head);
+        else
+            _neighborsByVertex[tail] = new() { head };
+
+        edge = new(tail, head);
+        return true;
+    }
+
+    public ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>> ToGraph() =>
+        ListAdjacencyGraphFactory<int>.Create(_neighborsByVertex);
+}
+
+internal sealed class Int32IncidenceGraphBuilder : IGraphBuilder<Int32IncidenceGraph, int, int>
+{
+    private readonly List<Endpoints<int>> _endpointsByEdge = new();
+
+    public bool TryAdd(int tail, int head, out int edge)
+    {
+        edge = _endpointsByEdge.Count;
+        _endpointsByEdge.Add(new(tail, head));
+        return true;
+    }
+
+    public Int32IncidenceGraph ToGraph()
+    {
+        Endpoints<int>[] endpointsByEdge = _endpointsByEdge.ToArray();
+        _endpointsByEdge.Clear();
+        return Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
+    }
+}
+
+internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
+    ListIncidenceGraph<int, int, Int32Dictionary<int, List<int>>, Dictionary<int, List<int>>>,
+    int,
+    int>
+{
+    private readonly Int32Dictionary<int, List<int>> _headByEdge;
+    private readonly Dictionary<int, List<int>> _outEdgesByVertex;
+    private readonly Int32Dictionary<int, List<int>> _tailByEdge;
+
+    internal ListIncidenceGraphBuilder(int initialVertexCount)
+    {
+        _tailByEdge = Int32DictionaryFactory<int>.Create(new List<int>());
+        _headByEdge = Int32DictionaryFactory<int>.Create(new List<int>());
+        _outEdgesByVertex = new(initialVertexCount);
     }
 
     public bool TryAdd(int tail, int head, out int edge)
     {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        return _graph.TryAdd(tail, head, out edge);
+        Debug.Assert(_tailByEdge.Count == _headByEdge.Count);
+        edge = _headByEdge.Count;
+        _tailByEdge.Add(edge, tail);
+        _headByEdge.Add(edge, head);
+        if (_outEdgesByVertex.TryGetValue(tail, out List<int>? outEdges))
+            outEdges.Add(edge);
+        else
+            _outEdgesByVertex[tail] = new() { edge };
+        if (!_outEdgesByVertex.ContainsKey(head))
+            _outEdgesByVertex[head] = new();
+        return true;
     }
 
-    public MutableIndexedIncidenceGraph ToGraph()
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        MutableIndexedIncidenceGraph result = _graph;
-        _graph = null;
-        return result;
-    }
+    public ListIncidenceGraph<int, int, Int32Dictionary<int, List<int>>, Dictionary<int, List<int>>> ToGraph() =>
+        ListIncidenceGraphFactory<int, int>.CreateUnchecked(_tailByEdge, _headByEdge, _outEdgesByVertex);
 }
-
-internal sealed class MutableSimpleIncidenceGraphBuilder :
-    IGraphBuilder<MutableSimpleIncidenceGraph, int, Int32Endpoints>,
-    IDisposable
-{
-    private MutableSimpleIncidenceGraph? _graph;
-
-    public MutableSimpleIncidenceGraphBuilder(int initialVertexCount) => _graph = new(initialVertexCount);
-
-    public void Dispose()
-    {
-        if (_graph is null)
-            return;
-
-        _graph.Dispose();
-        _graph = null;
-    }
-
-    public bool TryAdd(int tail, int head, out Int32Endpoints edge)
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        return _graph.TryAdd(tail, head, out edge);
-    }
-
-    public MutableSimpleIncidenceGraph ToGraph()
-    {
-        if (_graph is null)
-            throw new ObjectDisposedException(nameof(MutableIndexedIncidenceGraphBuilder));
-
-        MutableSimpleIncidenceGraph result = _graph;
-        _graph = null;
-        return result;
-    }
-}
+#endif

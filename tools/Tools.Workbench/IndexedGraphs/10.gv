@@ -1,0 +1,31 @@
+﻿digraph Packages {
+  rankdir=BT
+  node [shape=box fixedsize=true fontname="JetBrains Mono"]
+  subgraph Generic {
+    cluster=true
+    style=invis
+    node [width=1.8]
+    a [label=Abstractions]
+    b [label=Primitives]
+    c [label=Models]
+    d [label=Traversal]
+  }
+  subgraph Specialized {
+    cluster=true
+    style=invis
+    node [width=3.0]
+    e [label="Primitives.Specialized"]
+    f [label="Models.Specialized"]
+    // g [label="Traversal.Specialized"]
+  }
+  c -> a
+  c -> b
+  d -> a
+  d -> b
+  e -> b
+  f -> a
+  f -> c
+  f -> e
+  // g -> a
+  // g -> e
+}

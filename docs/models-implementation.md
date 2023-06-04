@@ -1,14 +1,14 @@
 # Models — Implementation
 
-Undirected graphs are basically “duplicated” directed graphs, but storage is more efficient than in the case of naive edge duplication.
+Undirected graphs are basically “duplicated” directed graphs.
+However, for incidence graphs, storage can be more efficient than in the case of naive edge duplication.
+For example, for every integer edge `e` we can consider the inverted edge `~e`.
 
 ## Storage Layout
 
 ### Examples
 
-#### Unordered directed graph
-
-```plantuml
+```
 digraph Unordered {
   node [shape=circle fontname="Times-Italic"]
   a -> b [xlabel=0]
@@ -21,45 +21,32 @@ digraph Unordered {
 }
 ```
 
-#### Sorted directed graph
+### Int32AdjacencyGraph
 
-```plantuml
-digraph Sorted {
-  node [shape=circle fontname="Times-Italic"]
-  a -> b [xlabel=0]
-  a -> b [xlabel=1]
-  c -> c [xlabel=2]
-  {
-    rank=same
-    b d
-  }
-}
-```
+Offset       | Length    | Content
+-------------|-----------|--------
+0            | 1         | n = vertexCount
+1            | 1         | m = edgeCount
+2            | n         | upperBoundByVertex
+2 + n        | m         | neighborsOrderedByTail
 
-### IndexedIncidenceGraph
+### Int32IncidenceGraph
 
-Used in general case where graph is permitted to have parallel edges.
+Used in the general case where the graph is allowed to have parallel edges.
 
-|         Length | Content             |
-|---------------:|:--------------------|
-|              1 | _vertexCount_ (_n_) |
-|        2 × _n_ | _edgeBoundByVertex_ |
-|            _m_ | _reorderedEdges_    |
-|            _m_ | _heads_             |
-|            _m_ | _tails_             |
+| Offset       | Length    | Content
+|--------------|-----------|--------
+| 0            | 1         | n = vertexCount
+| 1            | 1         | m = edgeCount
+| 2            | n         | upperBoundByVertex
+| 2 + n        | m         | edgesOrderedByTail
+| 2 + n + m    | m         | headByEdge
+| 2 + n + 2m   | m         | tailByEdge
 
 ```
-vertexCount    reorderedEdges     tails
-        ↓↓↓             ↓↓↓↓↓     ↓↓↓↓↓
-        [4][_^|_^|_^|_^][021][bcb][aca]
-           ↑↑↑↑↑↑↑↑↑↑↑↑↑     ↑↑↑↑↑
-              edgeBounds     heads
+vertexCount  edgeCount   edgesOrderedByTail
+          ↓  ↓           ↓↓↓↓↓
+         [4][3][2|2|3|3][0|2|1][b|c|b][a|c|a]
+                ↑↑↑↑↑↑↑         ↑↑↑↑↑  ↑↑↑↑↑
+     upperBoundByVertex    headByEdge  tailByEdge
 ```
-
-### SimpleIncidenceGraph
-
-|         Length | Content              |
-|---------------:|:---------------------|
-|              1 | _vertexCount_ (_n_)  |
-|            _n_ | _UpperBoundByVertex_ |
-|            _m_ | _edges_              |

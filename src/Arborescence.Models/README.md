@@ -2,73 +2,84 @@
 
 [![Arborescence.Models version](https://img.shields.io/nuget/v/Arborescence.Models.svg?label=Models&logo=nuget)](https://nuget.org/packages/Arborescence.Models/)
 
-This package provides a basic implementation for _Graph_ and _Forward Incidence_ concepts.
+This package provides a generic implementation of graph interfaces and collection concepts.
 
-```
-        ┌   tail : E → V?
-Graph   ┤
-        └   head : E → V?       ┐
-                                ├   Forward Incidence
-            out-edges : V → [E] ┘
-```
-
-`SimpleIncidenceGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
-`IndexedIncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].  
-`MutableUndirectedSimpleIncidenceGraph` and `MutableUndirectedIndexedIncidenceGraph` provide their mutable undirected counterparts.
-
-Vertices are represented as integers and must fill the range [0.._VertexCount_).  
-Edges are stored as incidence lists in contiguous spans.
+`ListAdjacencyGraph<TVertex, TVertexMultimap>` implements an adjacency graph as a dictionary that maps from a vertex to a list of its out-neighbors of type `List<TVertex>`.  
+`ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>` implements an incidence graph as a dictionary that maps from a vertex to a list of its out-edges of type `List<TEdge>`. 
 
 ## Basic usage
 
-Let's consider this simple graph:
+For example, we have four airports (_Omsk_, _London_, _Istanbul_, _Taipei_) and five unspecified flights connecting them:
 
 ```
-       ┌──>──┐
-(0)   (1)─>─(2)─>─(3)┐
-       └──<──┘     └<┘
+  ┌───>───┐       ┌─>─┐
+[LHR]─>─[IST]─>─[TPE] │
+  └───<───┘       └───┘
+
+[OMS]
 ```
 
-This is how to recreate it in the code:
+We can create an adjacency graph as follows:
 
 ```csharp
-SimpleIncidenceGraph.Builder builder = new();
-builder.Add(1, 2);
-builder.Add(1, 2);
-builder.Add(2, 1);
-builder.Add(2, 3);
-builder.Add(3, 3);
-SimpleIncidenceGraph graph = builder.ToGraph();
-Console.WriteLine(graph.VertexCount);
-```
-
-The expected output is `4` — including vertex 0 even if it was not mentioned while creating the graph.
-Vertex count is determined as one plus the max id of the vertices, so they fill the range [0.._VertexCount_).
-
-Now let's explore the edges incident to vertex 2:
-
-```csharp
-const int vertex = 2;
-var edgeEnumerator = graph.EnumerateOutEdges(vertex);
-while (edgeEnumerator.MoveNext())
+Dictionary<string, List<string>> neighborsByVertex = new(4)
 {
-    Endpoints edge = edgeEnumerator.Current;
-    Debug.Assert(graph.TryGetTail(edge, out int tail) &&
-        tail == vertex);
-    if (graph.TryGetHead(edge, out int head))
-        Console.WriteLine(head);
-}
+    ["OMS"] = new(),
+    ["LHR"] = new() { "IST", "IST" },
+    ["IST"] = new() { "LHR" }
+    // Let's add "TPE" later.
+};
+ListAdjacencyGraph<string, Dictionary<string, List<string>>> graph =
+    ListAdjacencyGraphFactory<string>.Create(neighborsByVertex);
+graph.TryAddVertex("TPE");
+graph.AddEdge("IST", "TPE");
+graph.AddEdge("TPE", "TPE");
+
+IncidenceEnumerator<string, List<string>.Enumerator> flightsFromIstanbul =
+    graph.EnumerateOutEdges("IST");
+while (flightsFromIstanbul.MoveNext())
+    Console.WriteLine(flightsFromIstanbul.Current);
 ```
 
-The expected output — all the neighbors of vertex 2:
+Expected output is:
+
+    [IST, LHR]
+    [IST, TPE]
+
+Now let's look at the actual flights that connect these airports:
 
 ```
-1
-3
+        BA676
+  ┌───────>───────┐             EVA5288
+  │     TK1980    │      TK24     ┌─>─┐
+[LHR]─────>─────[IST]─────>─────[TPE] │
+  └───────<───────┘               └───┘
+        BA677
+
+[OMS]
 ```
 
----
+The following is one of the ways you can create an incident graph.
+(For clarity, we represent flights as integers rather than strings.)
 
-[1] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+```csharp
+ListIncidenceGraph<string, int, Dictionary<int, string>, Dictionary<string, List<int>>> graph =
+    ListIncidenceGraphFactory<string, int>.Create();
+_ = graph.TryAddVertex("OMS");
+_ = graph.TryAddEdge(676, "LHR", "IST");
+_ = graph.TryAddEdge(1980, "LHR", "IST");
+_ = graph.TryAddEdge(677, "IST", "LHR");
+_ = graph.TryAddEdge(24, "IST", "TPE");
+_ = graph.TryAddEdge(5288, "TPE", "TPE");
 
-[2] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+List<int>.Enumerator flightsFromIstanbul =
+    graph.EnumerateOutEdges("IST");
+while (flightsFromIstanbul.MoveNext())
+    Console.WriteLine(flightsFromIstanbul.Current);
+```
+
+Expected output is:
+
+    677
+    24
+
