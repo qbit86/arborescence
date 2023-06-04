@@ -10,7 +10,7 @@ This package provides an efficient implementation of _Out-Edges Incidence_ and _
                                     ├   Forward Incidence
                 out-edges : V → [E] ┘
 
-                out-neighbors: V → [V]  Out-Neighbors Adjacency
+                out-neighbors: V → [V]
 
 `Int32AdjacencyGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
 `Int32IncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].
