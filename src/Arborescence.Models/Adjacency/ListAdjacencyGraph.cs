@@ -7,7 +7,7 @@ namespace Arborescence.Models
     using static TryHelpers;
 
     /// <summary>
-    /// Implements an adjacency graph as a dictionary that maps vertices of type <see cref="TVertex"/>
+    /// Implements an adjacency graph as a dictionary that maps vertices of type <typeparamref name="TVertex"/>
     /// to lists of out-neighbors of type <see cref="List{TVertex}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -81,6 +81,15 @@ namespace Arborescence.Models
                 neighborsByVertex.Add(head, new());
         }
 
+        /// <summary>
+        /// Attempts to add the vertex to the graph.
+        /// </summary>
+        /// <param name="vertex">The vertex to add.</param>
+        /// <returns>
+        /// <see langword="false"/> if the <see cref="ListAdjacencyGraph{TVertex, TVertexMultimap}"/>
+        /// already contains the specified vertex;
+        /// otherwise, <see langword="true"/>.
+        /// </returns>
         public bool TryAddVertex(TVertex vertex)
         {
             TVertexMultimap neighborsByVertex = _neighborsByVertex;

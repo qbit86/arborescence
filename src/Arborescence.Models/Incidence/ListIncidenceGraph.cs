@@ -6,7 +6,7 @@ namespace Arborescence.Models
     using System.Runtime.CompilerServices;
 
     /// <summary>
-    /// Implements an incidence graph as a dictionary that maps vertices of type <see cref="TVertex"/>
+    /// Implements an incidence graph as a dictionary that maps vertices of type <typeparamref name="TVertex"/>
     /// to lists of out-edges of type <see cref="List{TEdge}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -91,7 +91,9 @@ namespace Arborescence.Models
         /// <param name="edge">The edge to add.</param>
         /// <param name="tail">The tail of the edge to add.</param>
         /// <param name="head">The head of the edge to add.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// <see langword="true"/> if the edge was added to the graph successfully; otherwise, <see langword="false"/>.
+        /// </returns>
         public bool TryAddEdge(TEdge edge, TVertex tail, TVertex head)
         {
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
@@ -116,6 +118,15 @@ namespace Arborescence.Models
             return true;
         }
 
+        /// <summary>
+        /// Attempts to add the vertex to the graph.
+        /// </summary>
+        /// <param name="vertex">The vertex to add.</param>
+        /// <returns>
+        /// <see langword="false"/> if the <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>
+        /// already contains the specified vertex;
+        /// otherwise, <see langword="true"/>.
+        /// </returns>
         public bool TryAddVertex(TVertex vertex)
         {
             TEdgeMultimap outEdgesByVertex = _outEdgesByVertex;
