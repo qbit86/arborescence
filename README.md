@@ -42,6 +42,7 @@ Endpoints<int>[] edges =
 };
 Int32AdjacencyGraph graph =
     Int32AdjacencyGraphFactory.FromEdges(edges);
+
 IEnumerable<Endpoints<int>> treeEdges =
     EnumerableBfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(
         graph, source: 3);

@@ -6,6 +6,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Arborescence.Models.Specialized\Arborescence.Models.Specialized.csproj" />
-    <ProjectReference Include="..\..\src\Arborescence.Traversal.Specialized\Arborescence.Traversal.Specialized.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Traversal\Arborescence.Traversal.csproj" />
   </ItemGroup>
 </Project>
