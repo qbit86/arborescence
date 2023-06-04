@@ -2,7 +2,7 @@
 
 [![Arborescence.Models.Specialized version](https://img.shields.io/nuget/v/Arborescence.Models.Specialized.svg?label=Models.Specialized&logo=nuget)](https://nuget.org/packages/Arborescence.Models.Specialized/)
 
-This package provides a basic implementation of the _Graph_, _Out-Edges Incidence_, and _Out-Neighbors Adjacency_ interfaces.
+This package provides an efficient implementation of _Out-Edges Incidence_ and _Out-Neighbors Adjacency_ for a special case of integer vertices from contiguous range.
 
             ┌   tail : E → V?
     Graph   ┤
@@ -37,7 +37,8 @@ Endpoints<int>[] edges =
     new(2, 3),
     new(3, 3)
 };
-Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
+Int32AdjacencyGraph graph =
+    Int32AdjacencyGraphFactory.FromEdges(edges);
 Console.WriteLine(graph.VertexCount);
 ```
 

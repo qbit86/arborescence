@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Data structures for graphs and some specialized collections.
+    <Description>Special graph data structures that provide efficient implementation when vertices are integers from a contiguous range.
 Commonly used types:
 • Int32AdjacencyGraph
 • Int32IncidenceGraph</Description>
