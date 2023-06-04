@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Traversal", "ben
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Primitives.Specialized", "src\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj", "{B2ACC725-7026-4D5D-A17F-F4FFA9E26871}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Playground", "samples\Samples.Playground\Samples.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.Playground", "samples\Samples.Traversal.Playground\Samples.Traversal.Playground.csproj", "{282AD4AD-D567-4B09-9521-118DDC9C3066}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.EagerBfsDemo", "samples\Samples.Traversal.EagerBfsDemo\Samples.Traversal.EagerBfsDemo.csproj", "{483A2A8F-6C85-403A-9F6F-99656E7916C2}"
 EndProject
