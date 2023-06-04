@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Data structures that provide a generic implementation of graph interfaces and concepts.
+    <Description>Data structures that provide a generic implementation of graph interfaces and collection concepts.
       Commonly used types:
       • AdditiveMonoid&lt;T&gt;
       • ListAdjacencyGraph&lt;TVertex, TVertexMultimap&gt;
