@@ -53,6 +53,25 @@ namespace Arborescence.Models
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }
 
+        /// <summary>
+        /// Creates a <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>.
+        /// </summary>
+        /// <param name="tailByEdge">The object that provides the mapping from an edge to its tail.</param>
+        /// <param name="headByEdge">The object that provides the mapping from an edge to its head.</param>
+        /// <param name="outEdgesByVertex">The object that provides the mapping from a vertex to its out-edges.</param>
+        /// <typeparam name="TEndpointMap">The type of mapping from an edge to one of its endpoints.</typeparam>
+        /// <typeparam name="TEdgeMultimap">The type of mapping from a vertex to a sequence of its out-edges.</typeparam>
+        /// <remarks>
+        /// <paramref name="tailByEdge"/> and <paramref name="outEdgesByVertex"/>
+        /// should be consistent in the sense that<br/>
+        /// ∀v ∀e   e ∈ out-edges(v) ⇔ v = tail(e)<br/>
+        /// but this property is not checked.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="ListIncidenceGraph{TVertex, TEdge, TEndpointMap, TEdgeMultimap}"/>
+        /// containing vertices and edges defined by <paramref name="tailByEdge"/>, <paramref name="headByEdge"/>,
+        /// and <paramref name="outEdgesByVertex"/>.
+        /// </returns>
         public static ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>
             CreateUnchecked<TEndpointMap, TEdgeMultimap>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)

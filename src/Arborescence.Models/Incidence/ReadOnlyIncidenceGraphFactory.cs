@@ -24,6 +24,12 @@ namespace Arborescence.Models
         /// <typeparam name="TEndpointMap">The type of mapping from an edge to one of its endpoints.</typeparam>
         /// <typeparam name="TEdgeMultimap">The type of mapping from a vertex to a sequence of its out-edges.</typeparam>
         /// <typeparam name="TEdgeMultimapConcept">The type that provides operations on the edge multimap.</typeparam>
+        /// <remarks>
+        /// <paramref name="tailByEdge"/> and <paramref name="outEdgesByVertex"/>
+        /// should be consistent in the sense that<br/>
+        /// ∀v ∀e   e ∈ out-edges(v) ⇔ v = tail(e)<br/>
+        /// but this property is not checked.
+        /// </remarks>
         /// <returns>The read-only incidence graph.</returns>
         public static ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>
@@ -72,6 +78,12 @@ namespace Arborescence.Models
         /// <typeparam name="TEndpointMap">The type of mapping from an edge to one of its endpoints.</typeparam>
         /// <typeparam name="TEdgeMultimap">The type of mapping from a vertex to a sequence of its out-edges.</typeparam>
         /// <typeparam name="TEdgeEnumeratorProvider">The type of the edge enumerator provider.</typeparam>
+        /// <remarks>
+        /// <paramref name="tailByEdge"/> and <paramref name="outEdgesByVertex"/>
+        /// should be consistent in the sense that<br/>
+        /// ∀v ∀e   e ∈ out-edges(v) ⇔ v = tail(e)<br/>
+        /// but this property is not checked.
+        /// </remarks>
         /// <returns>The read-only incidence graph.</returns>
         public static ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, ReadOnlyMultimapConcept<
