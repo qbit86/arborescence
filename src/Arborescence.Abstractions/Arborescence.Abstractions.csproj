@@ -9,10 +9,10 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyVersion>0.15</AssemblyVersion>
+    <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
