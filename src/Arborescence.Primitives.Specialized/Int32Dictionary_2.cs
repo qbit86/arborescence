@@ -16,8 +16,10 @@ namespace Arborescence
 
         internal Int32Dictionary(TValueList values) => _values = values;
 
+        /// <inheritdoc/>
         public int Count => (_values?.Count).GetValueOrDefault();
 
+        /// <inheritdoc/>
         public void Add(int key, TValue value)
         {
             TValueList values = _values;

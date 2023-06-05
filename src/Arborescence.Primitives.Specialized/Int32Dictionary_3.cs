@@ -58,6 +58,7 @@ namespace Arborescence
                 ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
         }
 
+        /// <inheritdoc/>
         public bool ContainsKey(int key)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
