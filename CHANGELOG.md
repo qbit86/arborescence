@@ -380,9 +380,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/primitives.specialized-0.16-preview...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/models.specialized-0.16-preview...HEAD
 
-[0.16]: https://github.com/qbit86/arborescence/compare/traversal-0.15.3...primitives.specialized-0.16-preview
+[0.16]: https://github.com/qbit86/arborescence/compare/traversal-0.15.3...models.specialized-0.16-preview
 
 [0.15.3]: https://github.com/qbit86/arborescence/compare/traversal-0.15.2...traversal-0.15.3
 
