@@ -46,9 +46,9 @@ namespace Arborescence.Models
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two
+        /// <see langword="true"/> if the two
         /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
-        /// structures are equal; otherwise, <c>false</c>.
+        /// structures are equal; otherwise, <see langword="false"/>.
         /// </returns>
         public static bool operator ==(
             ReadOnlyIncidenceGraph<
@@ -65,9 +65,9 @@ namespace Arborescence.Models
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two
+        /// <see langword="true"/> if the two
         /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
-        /// structures are not equal; otherwise, <c>false</c>.
+        /// structures are not equal; otherwise, <see langword="false"/>.
         /// </returns>
         public static bool operator !=(
             ReadOnlyIncidenceGraph<

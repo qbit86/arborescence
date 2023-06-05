@@ -38,9 +38,9 @@ namespace Arborescence.Models
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two
+        /// <see langword="true"/> if the two
         /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
-        /// structures are equal; otherwise, <c>false</c>.
+        /// structures are equal; otherwise, <see langword="false"/>.
         /// </returns>
         public static bool operator ==(
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> left,
@@ -55,9 +55,9 @@ namespace Arborescence.Models
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
-        /// <c>true</c> if the two
+        /// <see langword="true"/> if the two
         /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
-        /// structures are not equal; otherwise, <c>false</c>.
+        /// structures are not equal; otherwise, <see langword="false"/>.
         /// </returns>
         public static bool operator !=(
             ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept> left,
