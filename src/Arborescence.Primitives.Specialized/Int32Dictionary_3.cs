@@ -58,7 +58,7 @@ namespace Arborescence
                 ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey, TValue}.ContainsKey"/>
         public bool ContainsKey(int key)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
@@ -105,6 +105,7 @@ namespace Arborescence
             values.Add(value);
         }
 
+        /// <inheritdoc cref="Dictionary{TKey, TValue}.this"/>
         public TValue this[int key]
         {
             get => TryGetValueCore(key, out TValue? value)

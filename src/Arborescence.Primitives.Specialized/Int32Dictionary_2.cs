@@ -16,7 +16,7 @@ namespace Arborescence
 
         internal Int32Dictionary(TValueList values) => _values = values;
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         public int Count => (_values?.Count).GetValueOrDefault();
 
         /// <inheritdoc/>
@@ -32,6 +32,7 @@ namespace Arborescence
                 ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException(key);
         }
 
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey, TValue}.ContainsKey"/>
         public bool ContainsKey(int key) => unchecked((uint)key < (uint)Count);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -58,6 +59,7 @@ namespace Arborescence
                 values[key] = value;
         }
 
+        /// <inheritdoc cref="Dictionary{TKey, TValue}.this"/>
         public TValue this[int key]
         {
             get => TryGetValueCore(key, out TValue? value)

@@ -31,8 +31,10 @@ namespace Arborescence
             self._valueByIndex.Add(index, value);
         }
 
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         public int Count => (_valueByIndex?.Count).GetValueOrDefault();
 
+        /// <inheritdoc cref="IReadOnlyDictionary{TKey, TValue}.ContainsKey"/>
         public bool ContainsKey(TKey key)
         {
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
@@ -63,6 +65,7 @@ namespace Arborescence
             valueByIndex[index] = value;
         }
 
+        /// <inheritdoc cref="Dictionary{TKey, TValue}.this"/>
         public TValue this[TKey key]
         {
             get
