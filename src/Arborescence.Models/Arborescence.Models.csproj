@@ -2,15 +2,17 @@
 
   <PropertyGroup>
     <Description>Data structures that provide a generic implementation of graph interfaces and collection concepts.
-      Commonly used types:
-      • AdditiveMonoid&lt;T&gt;
-      • ListAdjacencyGraph&lt;TVertex, TVertexMultimap&gt;
-      • ListIncidenceGraph&lt;TVertex, TEdge, …&gt;</Description>
+Commonly used types:
+• AdditiveMonoid&lt;T&gt;
+• AdjacencyEnumerator&lt;TVertex, TEdge, TGraph, TEdgeEnumerator&gt;
+• IncidenceEnumerator&lt;TVertex, TNeighborEnumerator&gt;
+• ListAdjacencyGraph&lt;TVertex, TVertexMultimap&gt;
+• ListIncidenceGraph&lt;TVertex, TEdge, …&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
     <Title>Generic graph models</Title>
-    <VersionPrefix>0.16</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
