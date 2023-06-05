@@ -3,6 +3,12 @@ namespace Arborescence
     using System.Collections.Generic;
     using Primitives;
 
+    /// <summary>
+    /// Provides a set of initialization methods for instances
+    /// of the <see cref="Int32IndirectDictionary{TKey, TValue, TKeyToIndexMap, TIndexToValueMap}"/> type.
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+    /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
     public static class Int32IndirectDictionaryFactory<TKey, TValue>
     {
         public static Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, Int32Dictionary<TValue, TValueList>>

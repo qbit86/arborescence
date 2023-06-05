@@ -3,6 +3,13 @@ namespace Arborescence
     using System.Collections.Generic;
     using Primitives;
 
+    /// <summary>
+    /// Provides a set of initialization methods for instances
+    /// of the <see cref="Int32Dictionary{TValue, TValueList}"/>
+    /// and the <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+    /// types.
+    /// </summary>
+    /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
     public static class Int32DictionaryFactory<TValue>
     {
         public static Int32Dictionary<TValue, TValueList> Create<TValueList>(TValueList items)
