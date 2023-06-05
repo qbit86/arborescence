@@ -9,12 +9,13 @@ Commonly used types:
 • IndexedSet</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
-    <Title>Stable primitive types</Title>
+    <Title>Specialized primitive types</Title>
+    <VersionPrefix>0.16</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.15.3</AssemblyVersion>
+    <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <NoWarn Condition="'$(Configuration)' == 'Debug'">$(NoWarn);CS1591</NoWarn>
     <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
