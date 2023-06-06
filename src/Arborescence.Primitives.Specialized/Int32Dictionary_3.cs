@@ -7,6 +7,13 @@ namespace Arborescence
     using Primitives;
     using static TryHelpers;
 
+    /// <summary>
+    /// Provides a frozen dictionary to use when the key is an <see cref="int"/> from a contiguous range
+    /// and <typeparamref name="TAbsenceComparer"/> is used to distinguish missing elements.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+    /// <typeparam name="TValueList">The type of the backing list.</typeparam>
+    /// <typeparam name="TAbsenceComparer">The type that provides a method to distinguish missing elements.</typeparam>
     public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>,
         IEquatable<Int32Dictionary<TValue, TValueList, TAbsenceComparer>>
@@ -24,8 +31,18 @@ namespace Arborescence
             _absenceMarker = absenceMarker;
         }
 
+        /// <summary>
+        /// Gets the maximum number of elements contained in the
+        /// <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>.
+        /// </summary>
         public int MaxCount => (_values?.Count).GetValueOrDefault();
 
+        /// <summary>
+        /// Computes the number of elements in the dictionary taking into account
+        /// the <typeparamref name="TAbsenceComparer"/>.
+        /// </summary>
+        /// <remarks>Retrieving the number of elements is an O(n) operation.</remarks>
+        /// <returns>The number of elements in the dictionary.</returns>
         public int GetCount()
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
@@ -67,6 +84,19 @@ namespace Arborescence
             return unchecked((uint)key < (uint)values.Count) && !self.IsAbsence(values[key]);
         }
 
+        /// <summary>
+        /// Gets the value associated with the specified key.
+        /// </summary>
+        /// <param name="key">The key of the value to get.</param>
+        /// <param name="value">
+        /// When this method returns, the value associated with the specified key, if the key is found;
+        /// otherwise, the value is unspecified.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// contains an element that has the specified key;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetValue(int key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
 
