@@ -8,7 +8,7 @@ namespace Arborescence
     using static TryHelpers;
 
     /// <summary>
-    /// Provides a frozen dictionary to use when the key is an <see cref="int"/> from a contiguous range
+    /// Provides a dictionary to use when the key is an <see cref="int"/> from a contiguous range
     /// and <typeparamref name="TAbsenceComparer"/> is used to distinguish missing elements.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
