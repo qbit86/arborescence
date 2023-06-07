@@ -30,12 +30,6 @@ Commonly used types:
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" />
-    <PackageReference Include="System.Buffers" />
-    <PackageReference Include="System.Memory" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Models\Arborescence.Models.csproj" />
@@ -43,6 +37,5 @@ Commonly used types:
   </ItemGroup>
 
   <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 
 </Project>
