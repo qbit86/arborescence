@@ -59,18 +59,21 @@ namespace Arborescence.Models.Specialized
 
         private int EdgeCountUnchecked => _data[1];
 
+        /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> headByEdge = GetHeadByEdge();
             return unchecked((uint)edge < (uint)headByEdge.Length) ? Some(headByEdge[edge], out head) : None(out head);
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> tailByEdge = GetTailByEdge();
             return unchecked((uint)edge < (uint)tailByEdge.Length) ? Some(tailByEdge[edge], out tail) : None(out tail);
         }
 
+        /// <inheritdoc/>
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             Int32IncidenceGraph self = this;
@@ -94,6 +97,7 @@ namespace Arborescence.Models.Specialized
             return segment.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
         {
             Int32IncidenceGraph self = this;

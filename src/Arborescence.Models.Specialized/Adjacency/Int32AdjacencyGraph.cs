@@ -47,24 +47,28 @@ namespace Arborescence.Models.Specialized
         /// </summary>
         public int EdgeCount => (_data?[1]).GetValueOrDefault();
 
+        /// <inheritdoc/>
         public bool TryGetHead(Edge edge, out int head)
         {
             head = edge.Head;
             return unchecked((uint)head < (uint)VertexCount);
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(Edge edge, out int tail)
         {
             tail = edge.Tail;
             return unchecked((uint)tail < (uint)VertexCount);
         }
 
+        /// <inheritdoc/>
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             VertexEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
             return IncidenceEnumeratorFactory.Create(vertex, neighborEnumerator);
         }
 
+        /// <inheritdoc/>
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
         {
             Int32AdjacencyGraph self = this;

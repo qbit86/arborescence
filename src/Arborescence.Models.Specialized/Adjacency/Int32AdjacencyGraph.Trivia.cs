@@ -4,11 +4,14 @@ namespace Arborescence.Models.Specialized
 
     partial struct Int32AdjacencyGraph
     {
+        /// <inheritdoc/>
         public bool Equals(Int32AdjacencyGraph other) => _data == other._data;
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32AdjacencyGraph other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             int[]? data = _data;
