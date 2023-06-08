@@ -8,6 +8,10 @@ namespace Arborescence.Models.Specialized
         AdjacencyEnumerator<int, int, Int32IncidenceGraph, System.ArraySegment<int>.Enumerator>;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
+    /// <summary>
+    /// Provides an efficient implementation of an incidence graph
+    /// when the vertices are <see cref="int"/> indices from the contiguous range [0..VertexCount).
+    /// </summary>
     public readonly partial struct Int32IncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
