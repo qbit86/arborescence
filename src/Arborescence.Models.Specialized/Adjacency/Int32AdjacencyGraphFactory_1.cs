@@ -3,13 +3,42 @@ namespace Arborescence.Models.Specialized
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Provides a set of initialization methods for instances
+    /// of the <see cref="Int32AdjacencyGraph"/> type.
+    /// </summary>
+    /// <typeparam name="TVertexCollection">The type of the vertex collection.</typeparam>
     public static class Int32AdjacencyGraphFactory<TVertexCollection>
         where TVertexCollection : ICollection<int>
     {
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified list of neighbor lists.
+        /// </summary>
+        /// <param name="neighborsByVertex">
+        /// The list that maps a vertex in a range [0, vertexCount) to a list of its neighbors.
+        /// </param>
+        /// <typeparam name="TMultimap">
+        /// The type of the list that maps a vertex in a range [0, vertexCount) to a list of its neighbors.
+        /// </typeparam>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> defined by the lists of neighbors.
+        /// </returns>
         public static Int32AdjacencyGraph FromList<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyList<TVertexCollection> =>
             neighborsByVertex is null ? default : FromListUnchecked(neighborsByVertex);
 
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified dictionary of neighbor lists.
+        /// </summary>
+        /// <param name="neighborsByVertex">
+        /// The dictionary that maps a vertex to a list of its neighbors.
+        /// </param>
+        /// <typeparam name="TMultimap">
+        /// The type of the dictionary that maps a vertex to a list of its neighbors.
+        /// </typeparam>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> defined by the dictionary that maps a vertex to a list of its neighbors.
+        /// </returns>
         public static Int32AdjacencyGraph FromDictionary<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyDictionary<int, TVertexCollection> =>
             neighborsByVertex is null ? default : FromDictionaryUnchecked(neighborsByVertex);
