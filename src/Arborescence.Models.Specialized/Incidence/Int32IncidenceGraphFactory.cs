@@ -7,8 +7,26 @@ namespace Arborescence.Models.Specialized
     using System.Runtime.InteropServices;
 #endif
 
+    /// <summary>
+    /// Provides a set of initialization methods for instances
+    /// of the <see cref="Int32IncidenceGraph"/> type.
+    /// </summary>
     public static class Int32IncidenceGraphFactory
     {
+        /// <summary>
+        /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method sorts the incoming collection of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="endpointsByEdge">
+        /// The collection that maps an edge in a range [0, edgeCount) to a pair of its endpoints.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Int32IncidenceGraph"/> containing the specified edges
+        /// defined by their endpoint pairs.
+        /// </returns>
         public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge)
         {
             if (endpointsByEdge is null)
@@ -22,6 +40,22 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs
+        /// and number of vertices.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method sorts the incoming collection of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="endpointsByEdge">
+        /// The collection that maps an edge in a range [0, edgeCount) to a pair of its endpoints.
+        /// </param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <returns>
+        /// An <see cref="Int32IncidenceGraph"/> containing the specified edges
+        /// and the vertices in the range [0, <paramref name="vertexCount"/>).
+        /// </returns>
         public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
@@ -100,6 +134,20 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
+        /// <summary>
+        /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method sorts the incoming collection of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="endpointsByEdge">
+        /// The collection that maps an edge in a range [0, edgeCount) to a pair of its endpoints.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Int32IncidenceGraph"/> containing the specified edges
+        /// defined by their endpoint pairs.
+        /// </returns>
         public static Int32IncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge)
         {
             int vertexCount = DeduceVertexCount(endpointsByEdge);
@@ -110,6 +158,22 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs
+        /// and number of vertices.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method sorts the incoming collection of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="endpointsByEdge">
+        /// The collection that maps an edge in a range [0, edgeCount) to a pair of its endpoints.
+        /// </param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <returns>
+        /// An <see cref="Int32IncidenceGraph"/> containing the specified edges
+        /// and the vertices in the range [0, <paramref name="vertexCount"/>).
+        /// </returns>
         public static Int32IncidenceGraph FromEdges(Span<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (vertexCount is 0)
@@ -120,6 +184,23 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method sorts the incoming collection of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="endpointsByEdge">
+        /// The collection that maps an edge in a range [0, edgeCount) to a pair of its endpoints.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Int32IncidenceGraph"/> containing the specified edges
+        /// defined by their endpoint pairs.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="endpointsByEdge"/> is <see langword="null"/>.
+        /// </exception>
         public static Int32IncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge)
         {
             if (endpointsByEdge is null)
@@ -134,6 +215,25 @@ namespace Arborescence.Models.Specialized
             return FromEdgesUnchecked(vertexCount, endpointsByEdgeSpan);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs
+        /// and number of vertices.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method sorts the incoming collection of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="endpointsByEdge">
+        /// The collection that maps an edge in a range [0, edgeCount) to a pair of its endpoints.
+        /// </param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <returns>
+        /// An <see cref="Int32IncidenceGraph"/> containing the specified edges
+        /// and the vertices in the range [0, <paramref name="vertexCount"/>).
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="endpointsByEdge"/> is <see langword="null"/>.
+        /// </exception>
         public static Int32IncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
