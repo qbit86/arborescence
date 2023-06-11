@@ -1,15 +1,10 @@
 # Changelog
 
-## [Unreleased] - 2023-06-11
-
-### Added
-
-- Models.Specialized: XML-doc comments.
-
 ## [0.16.1] - 2023-06-11
 
 ### Added
 
+- Models.Specialized: XML-doc comments.
 - Primitives.Specialized: XML-doc comments.
 
 ### Changed
