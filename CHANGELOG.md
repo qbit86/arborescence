@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased] - 2023-06-11
+
+### Added
+
+- Models.Specialized: XML-doc comments.
+- Primitives.Specialized: XML-doc comments.
+
+### Changed
+
+- Models: Improved package description.
+- Primitives.Specialized: Renamed `IndexedColorDictionary` to `Int32ColorDictionary`.
+
 ## [0.16] - 2023-06-05
 
 ### Added
