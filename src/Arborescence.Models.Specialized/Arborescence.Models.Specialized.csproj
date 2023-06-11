@@ -3,13 +3,12 @@
   <PropertyGroup>
     <Description>Special graph data structures that provide efficient implementation when vertices are integers from a contiguous range.
 Commonly used types:
-• Int32AdjacencyGraph
-• Int32IncidenceGraph</Description>
+• Int32AdjacencyGraph
+• Int32IncidenceGraph</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
     <Title>Specialized graph models</Title>
-    <VersionPrefix>0.16</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
