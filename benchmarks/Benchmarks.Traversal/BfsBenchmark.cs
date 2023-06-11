@@ -44,7 +44,7 @@ public abstract class BfsBenchmark
     public int EagerBfsSteps()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        EagerBfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
+        EagerBfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new Int32ColorDictionary(_colorByVertex), _handler);
         return _handler.Count;
     }
 

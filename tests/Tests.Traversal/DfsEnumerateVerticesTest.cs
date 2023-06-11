@@ -25,7 +25,7 @@ public sealed class DfsEnumerateVerticesTest
 
         byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
-        IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
+        Int32ColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         IndexedSet set = new(setBackingStore);
