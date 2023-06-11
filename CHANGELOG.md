@@ -9,8 +9,13 @@
 
 ### Changed
 
-- Models: Improved package description.
 - Primitives.Specialized: Renamed `IndexedColorDictionary` to `Int32ColorDictionary`.
+
+## [0.16.1] - 2023-06-11
+
+### Changed
+
+- Models: Improved package description.
 
 ## [0.16] - 2023-06-05
 
@@ -392,7 +397,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/models.specialized-0.16-preview...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.1...HEAD
+
+[0.16.1]: https://github.com/qbit86/arborescence/compare/models.specialized-0.16-preview...arborescence-0.16.1
 
 [0.16]: https://github.com/qbit86/arborescence/compare/traversal-0.15.3...models.specialized-0.16-preview
 

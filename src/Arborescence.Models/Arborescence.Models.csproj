@@ -12,7 +12,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
     <Title>Generic graph models</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16.1</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
