@@ -10,11 +10,11 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Specialized primitive types</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16.1</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16</AssemblyVersion>
+    <AssemblyVersion>0.16.1</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
