@@ -3,14 +3,13 @@
   <PropertyGroup>
     <Description>Basic blocks for building algorithms and data structures.
 Commonly used types:
-• ArrayPrefix&lt;T&gt;
-• ArrayPrefixEnumerator&lt;T&gt;
-• IndexedDictionary&lt;TValue&gt;
-• IndexedSet</Description>
+• Int32ColorDictionary
+• Int32Dictionary&lt;TValue, TValueList&gt;
+• Int32ReadOnlyDictionary&lt;TValue, TValueList&gt;
+• Int32Set</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Specialized primitive types</Title>
-    <VersionPrefix>0.16</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 

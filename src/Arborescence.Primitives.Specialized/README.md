@@ -5,6 +5,7 @@
 This package provides basic building blocks for specialized algorithms and data structures.
 Commonly used types:
 
-- `ArrayPrefix<T>`
-- `IndexedDictionary<TValue>`
-- `IndexedSet`
+- `Int32ColorDictionary`
+- `Int32Dictionary<TValue, TValueList>`
+- `Int32ReadOnlyDictionary<TValue, TValueList>`
+- `Int32Set`
