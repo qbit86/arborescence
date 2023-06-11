@@ -21,13 +21,13 @@ public sealed class RecursiveDfsTest
 
         byte[] eagerColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(eagerColorByVertexBackingStore, 0, eagerColorByVertexBackingStore.Length);
-        IndexedColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
+        Int32ColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
         using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
         DfsHandler<int, int, Graph> eagerHandler = CreateDfsHandler(eagerSteps);
 
         byte[] recursiveColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(recursiveColorByVertexBackingStore, 0, recursiveColorByVertexBackingStore.Length);
-        IndexedColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
+        Int32ColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
         using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
         DfsHandler<int, int, Graph> recursiveHandler = CreateDfsHandler(recursiveSteps);
 

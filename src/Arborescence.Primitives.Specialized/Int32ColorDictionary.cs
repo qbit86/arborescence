@@ -10,16 +10,16 @@ namespace Arborescence
     /// <summary>
     /// Represents a map from an index to a color as a byte array.
     /// </summary>
-    public readonly struct IndexedColorDictionary :
-        IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<IndexedColorDictionary>
+    public readonly struct Int32ColorDictionary :
+        IReadOnlyDictionary<int, Color>, IDictionary<int, Color>, IEquatable<Int32ColorDictionary>
     {
         private readonly byte[] _items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IndexedColorDictionary"/> structure.
+        /// Initializes a new instance of the <see cref="Int32ColorDictionary"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the map.</param>
-        public IndexedColorDictionary(byte[] items) => _items = items;
+        public Int32ColorDictionary(byte[] items) => _items = items;
 
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, Color>> GetEnumerator()
@@ -122,11 +122,11 @@ namespace Arborescence
         public IEnumerable<Color> Values => _items.Cast<Color>();
 
         /// <inheritdoc/>
-        public bool Equals(IndexedColorDictionary other) => Equals(_items, other._items);
+        public bool Equals(Int32ColorDictionary other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is IndexedColorDictionary other && Equals(other);
+            obj is Int32ColorDictionary other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items.GetHashCode();
@@ -140,7 +140,7 @@ namespace Arborescence
         /// <see langword="true"/> if the underlying arrays are reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(IndexedColorDictionary left, IndexedColorDictionary right) => left.Equals(right);
+        public static bool operator ==(Int32ColorDictionary left, Int32ColorDictionary right) => left.Equals(right);
 
         /// <summary>
         /// Checks inequality between two instances.
@@ -151,7 +151,7 @@ namespace Arborescence
         /// <see langword="true"/> if the underlying arrays are not reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(IndexedColorDictionary left, IndexedColorDictionary right) =>
+        public static bool operator !=(Int32ColorDictionary left, Int32ColorDictionary right) =>
             !left.Equals(right);
     }
 }

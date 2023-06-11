@@ -8,8 +8,23 @@ namespace Arborescence.Models.Specialized
     using System.Diagnostics;
     using Edge = Endpoints<int>;
 
+    /// <summary>
+    /// Provides a set of initialization methods for instances
+    /// of the <see cref="Int32AdjacencyGraph"/> type.
+    /// </summary>
     public static class Int32AdjacencyGraphFactory
     {
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method may sort the incoming sequence of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="edges">The edges of the graph.</param>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> containing the specified edges.
+        /// </returns>
         public static Int32AdjacencyGraph FromEdges(Edge[] edges)
         {
             if (edges is null)
@@ -24,6 +39,19 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges and number of vertices.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method may sort the incoming sequence of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="edges">The edges of the graph.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> containing the specified edges
+        /// and the vertices in the range [0, <paramref name="vertexCount"/>).
+        /// </returns>
         public static Int32AdjacencyGraph FromEdges(Edge[] edges, int vertexCount)
         {
             if (edges is null)
@@ -123,6 +151,17 @@ namespace Arborescence.Models.Specialized
         }
 
 #if NET5_0_OR_GREATER
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method may sort the incoming sequence of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="edges">The edges of the graph.</param>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> containing the specified edges.
+        /// </returns>
         public static Int32AdjacencyGraph FromEdges(Span<Edge> edges)
         {
             if (ShouldOrderByTail(edges, out int vertexCount))
@@ -134,6 +173,19 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges and number of vertices.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method may sort the incoming sequence of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="edges">The edges of the graph.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> containing the specified edges
+        /// and the vertices in the range [0, <paramref name="vertexCount"/>).
+        /// </returns>
         public static Int32AdjacencyGraph FromEdges(Span<Edge> edges, int vertexCount)
         {
             if (vertexCount is 0)
@@ -145,6 +197,20 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edges);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method may sort the incoming sequence of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="edges">The edges of the graph.</param>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> containing the specified edges.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="edges"/> is <see langword="null"/>.
+        /// </exception>
         public static Int32AdjacencyGraph FromEdges(List<Edge> edges)
         {
             if (edges is null)
@@ -160,6 +226,22 @@ namespace Arborescence.Models.Specialized
             return FromOrderedEdges(vertexCount, edgeSpan);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges and number of vertices.
+        /// </summary>
+        /// <remarks>
+        /// As a side effect, this method may sort the incoming sequence of edges,
+        /// which entails an O(n·log n) operation.
+        /// </remarks>
+        /// <param name="edges">The edges of the graph.</param>
+        /// <param name="vertexCount">The number of vertices.</param>
+        /// <returns>
+        /// An <see cref="Int32AdjacencyGraph"/> containing the specified edges
+        /// and the vertices in the range [0, <paramref name="vertexCount"/>).
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="edges"/> is <see langword="null"/>.
+        /// </exception>
         public static Int32AdjacencyGraph FromEdges(List<Edge> edges, int vertexCount)
         {
             if (edges is null)

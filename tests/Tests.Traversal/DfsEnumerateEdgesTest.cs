@@ -18,10 +18,10 @@ public sealed class DfsEnumerateEdgesTest
 
         byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
-        IndexedColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
+        Int32ColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        IndexedSet set = new(setBackingStore);
+        Int32Set set = new(setBackingStore);
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);

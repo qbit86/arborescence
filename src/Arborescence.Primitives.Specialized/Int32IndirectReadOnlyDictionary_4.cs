@@ -7,6 +7,14 @@ namespace Arborescence
     using Primitives;
     using static TryHelpers;
 
+    /// <summary>
+    /// Provides a read-only dictionary to use when there is a mapping from a key to an <see cref="int"/>
+    /// from a contiguous range.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
+    /// <typeparam name="TKeyToIndexMap">The type of the mapping from a key to an <see cref="int"/>.</typeparam>
+    /// <typeparam name="TIndexToValueMap">The type of the mapping from an <see cref="int"/> to a value.</typeparam>
     public readonly partial struct Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> :
         IReadOnlyDictionary<TKey, TValue>,
         IEquatable<Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap>>
@@ -34,6 +42,20 @@ namespace Arborescence
             return indexByKey.TryGetValue(key, out int index) && valueByIndex.ContainsKey(index);
         }
 
+        /// <summary>
+        /// Gets the value associated with the specified key.
+        /// </summary>
+        /// <param name="key">The key of the value to get.</param>
+        /// <param name="value">
+        /// When this method returns, the value associated with the specified key, if the key is found;
+        /// otherwise, the value is unspecified.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the
+        /// <see cref="Int32IndirectReadOnlyDictionary{TKey, TValue, TKeyToIndexMap, TIndexToValueMap}"/>
+        /// contains an element that has the specified key;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value) => TryGetValueCore(key, out value);
 

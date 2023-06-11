@@ -42,7 +42,7 @@ internal static class Program
         IndexEnumerator sources = new(2);
         byte[] backingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(backingStore, 0, backingStore.Length);
-        IndexedColorDictionary colorByVertex = new(backingStore);
+        Int32ColorDictionary colorByVertex = new(backingStore);
         HashSet<int> examinedEdges = new(graph.EdgeCount);
         DfsHandler<int, int, Int32IncidenceGraph> handler = CreateHandler(w, examinedEdges);
         EagerDfs<int, int, ArraySegment<int>.Enumerator>.Traverse(graph, sources, colorByVertex, handler);

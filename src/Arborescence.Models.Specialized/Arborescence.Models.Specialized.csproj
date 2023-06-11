@@ -3,21 +3,19 @@
   <PropertyGroup>
     <Description>Special graph data structures that provide efficient implementation when vertices are integers from a contiguous range.
 Commonly used types:
-• Int32AdjacencyGraph
-• Int32IncidenceGraph</Description>
+• Int32AdjacencyGraph
+• Int32IncidenceGraph</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
     <Title>Specialized graph models</Title>
-    <VersionPrefix>0.16</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16.1</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
     <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
-    <NoWarn Condition="'$(Configuration)' == 'Debug'">$(NoWarn);CS1591</NoWarn>
     <RootNamespace>Arborescence.Models</RootNamespace>
     <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
@@ -30,12 +28,6 @@ Commonly used types:
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" />
-    <PackageReference Include="System.Buffers" />
-    <PackageReference Include="System.Memory" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Models\Arborescence.Models.csproj" />
@@ -43,6 +35,5 @@ Commonly used types:
   </ItemGroup>
 
   <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 
 </Project>

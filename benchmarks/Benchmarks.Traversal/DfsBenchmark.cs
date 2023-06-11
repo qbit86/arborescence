@@ -41,7 +41,7 @@ public abstract class DfsBenchmark
     public int EagerDfsSteps()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        EagerDfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
+        EagerDfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new Int32ColorDictionary(_colorByVertex), _handler);
         return _handler.Count;
     }
 
@@ -49,7 +49,7 @@ public abstract class DfsBenchmark
     public int RecursiveDfsSteps()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        RecursiveDfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new IndexedColorDictionary(_colorByVertex), _handler);
+        RecursiveDfs<int, int, EdgeEnumerator>.Traverse(Graph, 0, new Int32ColorDictionary(_colorByVertex), _handler);
         return _handler.Count;
     }
 
@@ -57,7 +57,7 @@ public abstract class DfsBenchmark
     public int EnumerableDfsEdges()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_colorByVertex));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new Int32Set(_colorByVertex));
         int count = 0;
         foreach (int _ in steps)
             ++count;
@@ -69,7 +69,7 @@ public abstract class DfsBenchmark
     public int EnumerableDfsVertices()
     {
         Array.Clear(_colorByVertex, 0, _colorByVertex.Length);
-        IEnumerable<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new IndexedSet(_colorByVertex));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateVertices(Graph, 0, new Int32Set(_colorByVertex));
         int count = 0;
         foreach (int _ in steps)
             ++count;

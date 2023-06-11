@@ -9,8 +9,10 @@ namespace Arborescence
 
     partial struct Int32Dictionary<TValue, TValueList>
     {
+        /// <inheritdoc/>
         public bool IsReadOnly => false;
 
+        /// <inheritdoc/>
         public IEnumerable<int> Keys
         {
             get
@@ -20,6 +22,7 @@ namespace Arborescence
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerable<TValue> Values => _values ?? Enumerable.Empty<TValue>();
 
         ICollection<int> IDictionary<int, TValue>.Keys => _values is not { Count: > 0 }
@@ -28,6 +31,7 @@ namespace Arborescence
 
         ICollection<TValue> IDictionary<int, TValue>.Values => _values ?? (ICollection<TValue>)Array.Empty<TValue>();
 
+        /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator() =>
             _values is not { Count: > 0 } values
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
@@ -42,13 +46,17 @@ namespace Arborescence
                 yield return new(key, values[key]);
         }
 
+        /// <inheritdoc/>
         public void Add(KeyValuePair<int, TValue> item) => Add(item.Key, item.Value);
 
+        /// <inheritdoc/>
         public void Clear() => _values?.Clear();
 
+        /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) =>
             TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
+        /// <inheritdoc/>
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
         {
             if (array is null)
@@ -70,6 +78,7 @@ namespace Arborescence
                 destination[i] = new(i, values[i]);
         }
 
+        /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item)
         {
             if (_values is not { } values)
@@ -86,6 +95,7 @@ namespace Arborescence
             return true;
         }
 
+        /// <inheritdoc/>
         public bool Remove(int key)
         {
             if (_values is not { } values)
@@ -104,17 +114,42 @@ namespace Arborescence
         bool IReadOnlyDictionary<int, TValue>.TryGetValue(int key, out TValue value) =>
             TryGetValueCore(key, out value!);
 
+        /// <inheritdoc/>
         public bool Equals(Int32Dictionary<TValue, TValueList> other) =>
             EqualityComparer<TValueList>.Default.Equals(_values, other._values);
 
+        /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32Dictionary<TValue, TValueList> other && Equals(other);
 
+        /// <inheritdoc/>
         public override int GetHashCode() => EqualityComparer<TValueList>.Default.GetHashCode(_values);
 
+        /// <summary>
+        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList}"/>
+        /// structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the two
+        /// <see cref="Int32Dictionary{TValue, TValueList}"/>
+        /// structures are equal; otherwise, <see langword="false"/>.
+        /// </returns>
         public static bool operator ==(
             Int32Dictionary<TValue, TValueList> left, Int32Dictionary<TValue, TValueList> right) => left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList}"/>
+        /// structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the two
+        /// <see cref="Int32Dictionary{TValue, TValueList}"/>
+        /// structures are not equal; otherwise, <see langword="false"/>.
+        /// </returns>
         public static bool operator !=(
             Int32Dictionary<TValue, TValueList> left, Int32Dictionary<TValue, TValueList> right) => !left.Equals(right);
     }

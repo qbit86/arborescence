@@ -168,10 +168,32 @@ namespace Arborescence
                 EqualityComparer<TValue>.Default.GetHashCode(self._absenceMarker!));
         }
 
+        /// <summary>
+        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// structures are equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the equality operator.</param>
+        /// <param name="right">The structure on the right side of the equality operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the two
+        /// <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// structures are equal; otherwise, <see langword="false"/>.
+        /// </returns>
         public static bool operator ==(
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> right) => left.Equals(right);
 
+        /// <summary>
+        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// structures are not equal.
+        /// </summary>
+        /// <param name="left">The structure on the left side of the inequality operator.</param>
+        /// <param name="right">The structure on the right side of the inequality operator.</param>
+        /// <returns>
+        /// <see langword="true"/> if the two
+        /// <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// structures are not equal; otherwise, <see langword="false"/>.
+        /// </returns>
         public static bool operator !=(
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> right) => !left.Equals(right);

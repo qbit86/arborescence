@@ -8,6 +8,10 @@ namespace Arborescence.Models.Specialized
         AdjacencyEnumerator<int, int, Int32IncidenceGraph, System.ArraySegment<int>.Enumerator>;
     using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
+    /// <summary>
+    /// Provides an efficient implementation of an incidence graph
+    /// when the vertices are <see cref="int"/> indices from the contiguous range [0..VertexCount).
+    /// </summary>
     public readonly partial struct Int32IncidenceGraph :
         IHeadIncidence<int, int>,
         ITailIncidence<int, int>,
@@ -59,18 +63,21 @@ namespace Arborescence.Models.Specialized
 
         private int EdgeCountUnchecked => _data[1];
 
+        /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
             ReadOnlySpan<int> headByEdge = GetHeadByEdge();
             return unchecked((uint)edge < (uint)headByEdge.Length) ? Some(headByEdge[edge], out head) : None(out head);
         }
 
+        /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
             ReadOnlySpan<int> tailByEdge = GetTailByEdge();
             return unchecked((uint)edge < (uint)tailByEdge.Length) ? Some(tailByEdge[edge], out tail) : None(out tail);
         }
 
+        /// <inheritdoc/>
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             Int32IncidenceGraph self = this;
@@ -94,6 +101,7 @@ namespace Arborescence.Models.Specialized
             return segment.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         public VertexEnumerator EnumerateOutNeighbors(int vertex)
         {
             Int32IncidenceGraph self = this;

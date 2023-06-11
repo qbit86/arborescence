@@ -18,7 +18,7 @@ internal static partial class Program
 
         byte[] backingStore = ArrayPool<byte>.Shared.Rent(vertexCount);
         Array.Clear(backingStore, 0, backingStore.Length);
-        IndexedColorDictionary colorByVertex = new(backingStore);
+        Int32ColorDictionary colorByVertex = new(backingStore);
         List<int> steps = new();
         DfsHandler<int, int, Int32IncidenceGraph> dfsHandler = CreateDfsHandler(steps);
 
