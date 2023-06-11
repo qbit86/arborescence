@@ -24,7 +24,7 @@ public sealed class BasicDfsTest
         int source = graph.VertexCount >> 1;
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        IndexedSet exploredSet = new(setBackingStore);
+        Int32Set exploredSet = new(setBackingStore);
 
         // Act
 
@@ -66,7 +66,7 @@ public sealed class BasicDfsTest
         int source = graph.VertexCount >> 1;
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, source + 1));
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        IndexedSet exploredSet = new(setBackingStore);
+        Int32Set exploredSet = new(setBackingStore);
 
         // Act
 

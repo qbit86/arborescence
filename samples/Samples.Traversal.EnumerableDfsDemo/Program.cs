@@ -42,7 +42,7 @@ internal static class Program
         int[] sources = { 3 };
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        IndexedSet enumerableExploredSet = new(setBackingStore);
+        Int32Set enumerableExploredSet = new(setBackingStore);
         HashSet<Endpoints<int>> treeEdges = new(graph.EdgeCount);
         IEnumerable<Endpoints<int>> steps = EnumerableDfs.EnumerateEdges(graph, sources, enumerableExploredSet);
         foreach (Endpoints<int> e in steps)

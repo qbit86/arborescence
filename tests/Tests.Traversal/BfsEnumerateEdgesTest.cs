@@ -21,7 +21,7 @@ public sealed class BfsEnumerateEdgesTest
         Int32ColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        IndexedSet set = new(setBackingStore);
+        Int32Set set = new(setBackingStore);
 
         using Rist<Endpoints<int>> eagerSteps = new(graph.VertexCount);
         using Rist<Endpoints<int>> enumerableSteps = new(graph.VertexCount);

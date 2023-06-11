@@ -41,7 +41,7 @@ public abstract class CompactSetBenchmark
     public int Fast()
     {
         Array.Clear(_fastExploredSet, 0, _fastExploredSet.Length);
-        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new IndexedSet(_fastExploredSet));
+        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new Int32Set(_fastExploredSet));
         int count = 0;
         foreach (int _ in steps)
             ++count;

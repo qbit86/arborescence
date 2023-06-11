@@ -53,7 +53,7 @@ public abstract class BfsBenchmark
     {
         Array.Clear(_exploredSet, 0, _exploredSet.Length);
         using IEnumerator<int> steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateEdges(
-            Graph, 0, new IndexedSet(_exploredSet)).GetEnumerator();
+            Graph, 0, new Int32Set(_exploredSet)).GetEnumerator();
         int count = 0;
         while (steps.MoveNext())
             ++count;
@@ -66,7 +66,7 @@ public abstract class BfsBenchmark
     {
         Array.Clear(_exploredSet, 0, _exploredSet.Length);
         using IEnumerator<int> steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateVertices(
-            Graph, 0, new IndexedSet(_exploredSet)).GetEnumerator();
+            Graph, 0, new Int32Set(_exploredSet)).GetEnumerator();
         int count = 0;
         while (steps.MoveNext())
             ++count;

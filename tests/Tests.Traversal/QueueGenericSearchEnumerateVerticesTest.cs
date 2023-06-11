@@ -27,7 +27,7 @@ public class QueueGenericSearchEnumerateVerticesTest
         ConcurrentQueue<int> frontier = new();
         byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        IndexedSet set = new(setBackingStore);
+        Int32Set set = new(setBackingStore);
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);

@@ -9,20 +9,20 @@ namespace Arborescence
     /// <summary>
     /// Represents a set of values as a byte array.
     /// </summary>
-    public readonly struct IndexedSet : ISet<int>,
+    public readonly struct Int32Set : ISet<int>,
 #if NET5_0_OR_GREATER
         IReadOnlySet<int>,
 #endif
-        IEquatable<IndexedSet>
+        IEquatable<Int32Set>
     {
         private readonly byte[] _items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IndexedSet"/> structure.
+        /// Initializes a new instance of the <see cref="Int32Set"/> structure.
         /// </summary>
         /// <param name="items">The backing store for the set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="items"/> is <see langword="null"/>.</exception>
-        public IndexedSet(byte[] items)
+        public Int32Set(byte[] items)
         {
             if (items is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.items);
@@ -92,16 +92,16 @@ namespace Arborescence
         }
 
         /// <summary>
-        /// Removes all elements from a <see cref="IndexedSet"/> object.
+        /// Removes all elements from a <see cref="Int32Set"/> object.
         /// </summary>
         public void Clear() => Array.Clear(_items, 0, _items.Length);
 
         /// <summary>
-        /// Determines whether a <see cref="IndexedSet"/> object contains the specified element.
+        /// Determines whether a <see cref="Int32Set"/> object contains the specified element.
         /// </summary>
-        /// <param name="item">The element to locate in the <see cref="IndexedSet"/> object.</param>
+        /// <param name="item">The element to locate in the <see cref="Int32Set"/> object.</param>
         /// <returns>
-        /// <see langword="true"/> if the <see cref="IndexedSet"/> object contains the specified element;
+        /// <see langword="true"/> if the <see cref="Int32Set"/> object contains the specified element;
         /// otherwise, <see langword="false"/>.
         /// </returns>
         public bool Contains(int item)
@@ -116,7 +116,7 @@ namespace Arborescence
         public void CopyTo(int[] array, int arrayIndex) => ThrowHelper.ThrowNotSupportedException();
 
         /// <summary>
-        /// Removes the specified element from a <see cref="IndexedSet"/> object.
+        /// Removes the specified element from a <see cref="Int32Set"/> object.
         /// </summary>
         /// <param name="item">The element to remove.</param>
         /// <returns>
@@ -138,11 +138,11 @@ namespace Arborescence
         public bool IsReadOnly => false;
 
         /// <inheritdoc/>
-        public bool Equals(IndexedSet other) => Equals(_items, other._items);
+        public bool Equals(Int32Set other) => Equals(_items, other._items);
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is IndexedSet other && Equals(other);
+            obj is Int32Set other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode() => _items != null ? _items.GetHashCode() : 0;
@@ -156,7 +156,7 @@ namespace Arborescence
         /// <see langword="true"/> if the underlying arrays are reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(IndexedSet left, IndexedSet right) => left.Equals(right);
+        public static bool operator ==(Int32Set left, Int32Set right) => left.Equals(right);
 
         /// <summary>
         /// Checks inequality between two instances.
@@ -167,6 +167,6 @@ namespace Arborescence
         /// <see langword="true"/> if the underlying arrays are not reference equal;
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(IndexedSet left, IndexedSet right) => !left.Equals(right);
+        public static bool operator !=(Int32Set left, Int32Set right) => !left.Equals(right);
     }
 }
