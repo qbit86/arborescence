@@ -3,7 +3,7 @@ namespace Arborescence.Models
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-    internal readonly struct ListEnumeratorProvider<T> : IEnumeratorProvider<List<T>, List<T>.Enumerator>
+    public readonly struct ListEnumeratorProvider<T> : IEnumeratorProvider<List<T>, List<T>.Enumerator>
     {
         // ReSharper disable once CollectionNeverUpdated.Local
         private static readonly List<T> s_empty = new();
