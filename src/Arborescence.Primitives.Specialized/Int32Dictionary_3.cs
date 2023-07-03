@@ -115,7 +115,7 @@ namespace Arborescence
         private void Put(int key, TValue value)
         {
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
-            TValueList values = _values;
+            TValueList values = self._values;
             int count = values.Count;
             if (key < 0)
             {
