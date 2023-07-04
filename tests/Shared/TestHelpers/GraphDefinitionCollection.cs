@@ -3,21 +3,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using Workbench;
+using static System.FormattableString;
 
 internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
 {
     private const int LowerBound = 1;
-    private const int UpperBound = 10;
+    private const int UpperBound = 13;
 
     public IEnumerator<object[]> GetEnumerator()
     {
         for (int i = LowerBound; i < UpperBound; ++i)
         {
-            string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
+            string testCase = Invariant($"{i:D2}");
 
             using TextReader textReader = IndexedGraphs.GetTextReader(testCase);
             if (textReader == TextReader.Null)
