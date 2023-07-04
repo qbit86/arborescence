@@ -8,9 +8,9 @@ public sealed class ReadOnlyAdjacencyGraph_Tests
     [Fact]
     public void EnumerateOutNeighbors_AfterAdding_ShouldReturnHeadsAsNeighbors()
     {
-        Dictionary<string, List<string>> neighborsByVertex = new();
         const string vertex = "μηδέν";
         string[] expectedNeighbors = { "ένα", "δύο" };
+        Dictionary<string, List<string>> neighborsByVertex = new();
         foreach (string neighbor in expectedNeighbors)
         {
             if (neighborsByVertex.TryGetValue(vertex, out List<string>? neighbors))

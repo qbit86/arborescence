@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Models\Arborescence.Models.csproj" />
+    <ProjectReference Include="..\..\src\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
   </ItemGroup>
 
 </Project>
