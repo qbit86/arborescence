@@ -9,6 +9,7 @@ public sealed partial class Int32IncidenceGraphTests
 {
     [Theory]
     [ClassData(typeof(GraphDefinitionCollection))]
+    [ClassData(typeof(RandomGraphDefinitionCollection))]
     internal void EnumerateOutNeighbors_AllVertices_ReturnsSameSetOfVertices(GraphDefinitionParameter p)
     {
 #if NET5_0_OR_GREATER
@@ -53,6 +54,7 @@ public sealed partial class Int32IncidenceGraphTests
 
     [Theory]
     [ClassData(typeof(GraphDefinitionCollection))]
+    [ClassData(typeof(RandomGraphDefinitionCollection))]
     internal void TryGetEndpoints_AllEdges_ReturnsSameEndpoints(GraphDefinitionParameter p)
     {
         IReadOnlyList<Endpoints<int>> expectedEndpointsByEdge = p.Edges;
