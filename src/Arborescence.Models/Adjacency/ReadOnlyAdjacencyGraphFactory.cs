@@ -27,9 +27,9 @@ namespace Arborescence.Models
             where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertexMultimap, TVertex, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
             if (vertexMultimapConcept is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(vertexMultimapConcept));
+                ArgumentNullExceptionHelpers.Throw(nameof(vertexMultimapConcept));
 
             return new(neighborsByVertex, vertexMultimapConcept);
         }
@@ -66,9 +66,9 @@ namespace Arborescence.Models
             where TVertexEnumeratorProvider : IEnumeratorProvider<TVertexCollection, TVertexEnumerator>
         {
             if (neighborsByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
             if (vertexEnumeratorProvider is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(vertexEnumeratorProvider));
+                ArgumentNullExceptionHelpers.Throw(nameof(vertexEnumeratorProvider));
 
             ReadOnlyMultimapConcept<
                     TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider>

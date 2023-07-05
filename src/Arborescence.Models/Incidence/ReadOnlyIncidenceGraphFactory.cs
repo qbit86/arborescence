@@ -40,13 +40,13 @@ namespace Arborescence.Models
             where TEdgeMultimapConcept : IReadOnlyMultimapConcept<TEdgeMultimap, TVertex, TEdgeEnumerator>
         {
             if (tailByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(tailByEdge));
             if (headByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(headByEdge));
             if (outEdgesByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(outEdgesByVertex));
             if (edgeMultimapConcept is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeMultimapConcept));
+                ArgumentNullExceptionHelpers.Throw(nameof(edgeMultimapConcept));
 
             return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
@@ -96,13 +96,13 @@ namespace Arborescence.Models
             where TEdgeEnumeratorProvider : IEnumeratorProvider<TEdgeCollection, TEdgeEnumerator>
         {
             if (tailByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(tailByEdge));
             if (headByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(headByEdge));
             if (outEdgesByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(outEdgesByVertex));
             if (edgeEnumeratorProvider is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeEnumeratorProvider));
+                ArgumentNullExceptionHelpers.Throw(nameof(edgeEnumeratorProvider));
 
             ReadOnlyMultimapConcept<TEdgeMultimap, TVertex, TEdgeCollection, TEdgeEnumerator, TEdgeEnumeratorProvider>
                 edgeMultimapConcept = new(edgeEnumeratorProvider);
