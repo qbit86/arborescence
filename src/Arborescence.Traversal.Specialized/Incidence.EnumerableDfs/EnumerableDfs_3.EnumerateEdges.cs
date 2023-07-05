@@ -22,7 +22,7 @@ namespace Arborescence.Traversal.Specialized
         public IEnumerator<TEdge> EnumerateEdges(TGraph graph, int source, int vertexCount)
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (vertexCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(vertexCount));
