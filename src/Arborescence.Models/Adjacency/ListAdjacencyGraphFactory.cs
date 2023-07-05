@@ -54,7 +54,7 @@ namespace Arborescence.Models
             where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
         {
             if (neighborsByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
 
             return new(neighborsByVertex);
         }

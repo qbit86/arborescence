@@ -22,7 +22,7 @@ namespace Arborescence
             where TNeighborEnumerator : IEnumerator<TVertex>
         {
             if (neighborEnumerator is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborEnumerator));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborEnumerator));
 
             return new(vertex, neighborEnumerator);
         }
