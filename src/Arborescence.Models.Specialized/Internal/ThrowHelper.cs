@@ -6,9 +6,6 @@ namespace Arborescence.Models
     internal static class ThrowHelper
     {
         [DoesNotReturn]
-        internal static void ThrowArgumentNullException(string argument) => throw new ArgumentNullException(argument);
-
-        [DoesNotReturn]
         internal static void ThrowArgumentOutOfRangeException(string argument) =>
             throw new ArgumentOutOfRangeException(argument);
     }

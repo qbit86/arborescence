@@ -28,7 +28,7 @@ namespace Arborescence.Models.Specialized
         public static Int32AdjacencyGraph FromEdges(Edge[] edges)
         {
             if (edges is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edges));
+                ArgumentNullExceptionHelpers.Throw(nameof(edges));
 
             if (ShouldOrderByTail(edges, out int vertexCount))
                 Array.Sort(edges, EdgeComparer.Instance);
@@ -55,7 +55,7 @@ namespace Arborescence.Models.Specialized
         public static Int32AdjacencyGraph FromEdges(Edge[] edges, int vertexCount)
         {
             if (edges is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edges));
+                ArgumentNullExceptionHelpers.Throw(nameof(edges));
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)

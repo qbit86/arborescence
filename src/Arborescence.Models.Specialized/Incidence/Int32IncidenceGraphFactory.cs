@@ -30,7 +30,7 @@ namespace Arborescence.Models.Specialized
         public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge)
         {
             if (endpointsByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
 
             int vertexCount = DeduceVertexCount(endpointsByEdge);
             if (vertexCount is 0)
@@ -59,7 +59,7 @@ namespace Arborescence.Models.Specialized
         public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)

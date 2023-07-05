@@ -9,7 +9,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
     <Title>Specialized graph models</Title>
-    <VersionPrefix>0.16.1</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -34,6 +34,7 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
   </ItemGroup>
 
+  <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
   <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
 
 </Project>
