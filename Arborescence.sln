@@ -82,6 +82,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Models.ListGraphs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Models", "tests\Tests.Models\Tests.Models.csproj", "{3D604A68-F32F-4966-B073-BB95F81F005E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ArgumentNullExceptionHelpers", "src\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.shproj", "{D4BA9C2A-D3FD-4432-9FB0-E62610D39A37}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
@@ -215,6 +217,7 @@ Global
 		{87EAA53B-5EF7-4B73-A082-131D4113E5FA} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{1C8F7BE0-FC28-4902-9976-04497BA418BE} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{3D604A68-F32F-4966-B073-BB95F81F005E} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
+		{D4BA9C2A-D3FD-4432-9FB0-E62610D39A37} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}
