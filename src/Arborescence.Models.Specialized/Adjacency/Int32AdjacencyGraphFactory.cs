@@ -59,7 +59,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             Array.Sort(edges, EdgeComparer.Instance);
             return FromOrderedEdges(vertexCount, edges);
@@ -191,7 +191,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             edges.Sort(EdgeComparer.Instance);
             return FromOrderedEdges(vertexCount, edges);
@@ -249,7 +249,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             edges.Sort(EdgeComparer.Instance);
             return FromOrderedEdges(vertexCount, CollectionsMarshal.AsSpan(edges));

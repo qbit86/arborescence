@@ -35,6 +35,7 @@ Commonly used types:
   </ItemGroup>
 
   <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.projitems" Label="Shared" />
   <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
 
 </Project>

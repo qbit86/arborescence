@@ -63,7 +63,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             // We cannot reuse this overload taking span:
             // Int32IncidenceGraphFactory.FromEdgesUnchecked(int, Span<Endpoints<int>>)
@@ -179,7 +179,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
@@ -241,7 +241,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             return FromEdgesUnchecked(vertexCount, CollectionsMarshal.AsSpan(endpointsByEdge));
         }
