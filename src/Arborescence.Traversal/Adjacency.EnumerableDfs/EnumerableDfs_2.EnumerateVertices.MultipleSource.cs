@@ -73,10 +73,10 @@ namespace Arborescence.Traversal.Adjacency
             where TSourceCollection : IEnumerable<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (sources is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(sources));
+                ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             HashSet<TVertex> exploredSet = new();
             return EnumerateVerticesIterator(graph, sources, exploredSet);
@@ -88,10 +88,10 @@ namespace Arborescence.Traversal.Adjacency
             where TSourceCollection : IEnumerable<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (sources is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(sources));
+                ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             HashSet<TVertex> exploredSet = new(comparer);
             return EnumerateVerticesIterator(graph, sources, exploredSet);
@@ -104,13 +104,13 @@ namespace Arborescence.Traversal.Adjacency
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (sources is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(sources));
+                ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             if (exploredSet is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
+                ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, sources, exploredSet);
         }

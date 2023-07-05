@@ -61,7 +61,7 @@ namespace Arborescence.Traversal.Adjacency
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
             return EnumerateVerticesIterator(graph, source, exploredSet);
@@ -72,7 +72,7 @@ namespace Arborescence.Traversal.Adjacency
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
             return EnumerateVerticesIterator(graph, source, exploredSet);
@@ -84,10 +84,10 @@ namespace Arborescence.Traversal.Adjacency
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (exploredSet is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
+                ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, source, exploredSet);
         }

@@ -102,13 +102,13 @@ namespace Arborescence.Traversal.Incidence
             where TFrontier : IProducerConsumerCollection<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (sources is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(sources));
+                ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             if (frontier is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+                ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new();
             return EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
@@ -121,13 +121,13 @@ namespace Arborescence.Traversal.Incidence
             where TFrontier : IProducerConsumerCollection<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (sources is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(sources));
+                ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             if (frontier is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+                ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new(comparer);
             return EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
@@ -142,16 +142,16 @@ namespace Arborescence.Traversal.Incidence
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (sources is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(sources));
+                ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             if (frontier is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(frontier));
+                ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             if (exploredSet is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
+                ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
         }
