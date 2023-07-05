@@ -71,7 +71,7 @@ namespace Arborescence
             }
 
             if (unchecked((uint)arrayIndex > (uint)array.Length))
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(arrayIndex));
 
             Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
             if (self._indexByKey is not { } indexByKey || self._valueByIndex is not { } valueByIndex)

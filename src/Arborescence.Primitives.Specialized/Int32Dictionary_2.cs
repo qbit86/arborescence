@@ -30,7 +30,7 @@ namespace Arborescence
             TValueList values = _values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
             else if (key == count)
                 values.Add(value);
             else
@@ -70,7 +70,7 @@ namespace Arborescence
             TValueList values = _values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
             else if (key == count)
                 values.Add(value);
             else

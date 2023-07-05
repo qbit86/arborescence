@@ -27,10 +27,6 @@
             throw new ArgumentNullException(GetArgumentName(argument));
 
         [DoesNotReturn]
-        internal static void ThrowArgumentOutOfRangeException(string paramName) =>
-            throw new ArgumentOutOfRangeException(paramName);
-
-        [DoesNotReturn]
         internal static TResult ThrowKeyNotFoundException<TResult>(int key) =>
             throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
 

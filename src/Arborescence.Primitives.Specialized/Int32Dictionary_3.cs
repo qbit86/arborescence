@@ -66,7 +66,7 @@ namespace Arborescence
             TValueList values = self._values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
             else if (key == count)
                 values.Add(value);
             else if (self.IsAbsence(values[key]))
@@ -119,7 +119,7 @@ namespace Arborescence
             int count = values.Count;
             if (key < 0)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(key));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
                 return;
             }
 

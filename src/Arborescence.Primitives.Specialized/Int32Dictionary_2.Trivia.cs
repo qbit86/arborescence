@@ -66,7 +66,7 @@ namespace Arborescence
             }
 
             if (unchecked((uint)arrayIndex > (uint)array.Length))
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(arrayIndex));
 
             if (_values is not { } values)
                 return;
