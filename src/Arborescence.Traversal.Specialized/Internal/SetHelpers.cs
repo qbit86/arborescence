@@ -15,7 +15,7 @@
         internal static void Add(byte[] items, int item)
         {
             if ((uint)item >= (uint)items.Length)
-                throw new ArgumentOutOfRangeException(nameof(item));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(item));
 
             items[item] = 1;
         }

@@ -25,7 +25,7 @@ namespace Arborescence.Traversal.Specialized
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             return EnumerateVerticesIterator(graph, source, vertexCount);
         }
