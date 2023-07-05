@@ -8,7 +8,7 @@ using Incidence;
 using Misnomer;
 using Xunit;
 using Graph = Models.Specialized.Int32AdjacencyGraph;
-using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
+using EdgeEnumerator = Models.IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
 
 public sealed class BfsEnumerateEdgesTest
 {

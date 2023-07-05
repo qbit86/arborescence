@@ -13,7 +13,7 @@ using Graph = Models.ListAdjacencyGraph<
     Int32Dictionary<
         System.Collections.Generic.List<int>,
         System.Collections.Generic.List<System.Collections.Generic.List<int>>>>;
-using EdgeEnumerator = IncidenceEnumerator<int, System.Collections.Generic.List<int>.Enumerator>;
+using EdgeEnumerator = Models.IncidenceEnumerator<int, System.Collections.Generic.List<int>.Enumerator>;
 
 public class QueueGenericSearchEnumerateVerticesTest
 {

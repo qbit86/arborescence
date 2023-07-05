@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Models;
 using Models.Specialized;
 using Workbench;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<
-    int, Endpoints<int>, IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>>;
+    int, Endpoints<int>, Models.IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>>;
 
 internal static class Program
 {
