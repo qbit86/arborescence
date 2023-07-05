@@ -42,10 +42,10 @@ namespace Arborescence.Search
         public EnumerableAStar(TCostComparer costComparer, TCostMonoid costMonoid)
         {
             if (costComparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(costComparer));
+                ArgumentNullExceptionHelpers.Throw(nameof(costComparer));
 
             if (costMonoid is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(costMonoid));
+                ArgumentNullExceptionHelpers.Throw(nameof(costMonoid));
 
             _costComparer = costComparer;
             _costMonoid = costMonoid;
@@ -99,25 +99,25 @@ namespace Arborescence.Search
             where TIndexMap : IDictionary<TVertex, int>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (heuristic is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(heuristic));
+                ArgumentNullExceptionHelpers.Throw(nameof(heuristic));
 
             if (costByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(costByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(costByVertex));
 
             if (distanceByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(distanceByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(distanceByVertex));
 
             if (weightByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(weightByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             if (colorByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(colorByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(colorByVertex));
 
             if (indexByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByVertex));
 
             return EnumerateRelaxedEdgesIterator(
                 graph, source, heuristic, weightByEdge, costByVertex, distanceByVertex, colorByVertex, indexByVertex);

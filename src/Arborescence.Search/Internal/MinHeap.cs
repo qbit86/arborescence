@@ -29,13 +29,13 @@ namespace Arborescence.Search
             TPriorityMap priorityByElement, TIndexInHeapMap indexInHeapByElement, TPriorityComparer priorityComparer)
         {
             if (priorityByElement is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(priorityByElement));
+                ArgumentNullExceptionHelpers.Throw(nameof(priorityByElement));
 
             if (indexInHeapByElement is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexInHeapByElement));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexInHeapByElement));
 
             if (priorityComparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(priorityComparer));
+                ArgumentNullExceptionHelpers.Throw(nameof(priorityComparer));
 
             _arrayFromPool = Array.Empty<TElement>();
             _count = 0;

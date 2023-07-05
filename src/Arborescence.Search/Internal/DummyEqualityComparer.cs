@@ -2,7 +2,6 @@ namespace Arborescence.Search
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
     internal readonly struct DummyEqualityComparer<TCost, TCostComparer> : IEquatable<TCost>
         where TCostComparer : IComparer<TCost>
@@ -13,12 +12,12 @@ namespace Arborescence.Search
         public DummyEqualityComparer(TCost dummy, TCostComparer comparer)
         {
             if (comparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(comparer));
+                ArgumentNullExceptionHelpers.Throw(nameof(comparer));
 
             _dummy = dummy;
             _comparer = comparer;
         }
 
-        public bool Equals([AllowNull] TCost other) => _comparer.Compare(_dummy, other!) == 0;
+        public bool Equals(TCost other) => _comparer.Compare(_dummy, other!) == 0;
     }
 }
