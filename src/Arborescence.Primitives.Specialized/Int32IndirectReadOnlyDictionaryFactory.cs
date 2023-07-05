@@ -31,9 +31,9 @@ namespace Arborescence
             where TValueList : IReadOnlyList<TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             Int32ReadOnlyDictionary<TValue, TValueList> valueByIndex = new(values);
             return new(indexByKey, valueByIndex);
         }
@@ -58,9 +58,9 @@ namespace Arborescence
             where TValueList : IReadOnlyList<TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsence<TValue>> valueByIndex =
                 new(values, default);
             return new(indexByKey, valueByIndex);
@@ -89,11 +89,11 @@ namespace Arborescence
             where TAbsence : IEquatable<TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absence is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(absence));
+                ArgumentNullExceptionHelpers.Throw(nameof(absence));
             Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> valueByIndex = new(values, absence);
             return new(indexByKey, valueByIndex);
         }
@@ -115,9 +115,9 @@ namespace Arborescence
             where TIndexToValueMap : IReadOnlyDictionary<int, TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (valueByIndex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(valueByIndex));
+                ArgumentNullExceptionHelpers.Throw(nameof(valueByIndex));
             return new(indexByKey, valueByIndex);
         }
     }

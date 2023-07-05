@@ -19,9 +19,6 @@
             "Destination array is not long enough to copy all the items in the collection. Check array index and length.");
 
         [DoesNotReturn]
-        internal static void ThrowArgumentNullException(string paramName) => throw new ArgumentNullException(paramName);
-
-        [DoesNotReturn]
         internal static TResult ThrowArgumentNullException<TResult>(string paramName) =>
             throw new ArgumentNullException(paramName);
 
@@ -58,14 +55,8 @@
             {
                 case ExceptionArgument.array:
                     return nameof(ExceptionArgument.array);
-                case ExceptionArgument.count:
-                    return nameof(ExceptionArgument.count);
-                case ExceptionArgument.index:
-                    return nameof(ExceptionArgument.index);
                 case ExceptionArgument.items:
                     return nameof(ExceptionArgument.items);
-                case ExceptionArgument.start:
-                    return nameof(ExceptionArgument.start);
                 default:
                     Debug.Assert(false, "The enum value is not defined, please check the ExceptionArgument enum.");
                     return string.Empty;
@@ -76,10 +67,6 @@
     internal enum ExceptionArgument
     {
         array,
-        count,
-        dummy,
-        index,
-        items,
-        start
+        items
     }
 }
