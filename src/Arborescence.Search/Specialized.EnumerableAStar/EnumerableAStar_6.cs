@@ -88,7 +88,7 @@ namespace Arborescence.Search.Specialized
                 ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             return EnumerateRelaxedEdgesIterator(graph, source, heuristic, weightByEdge, vertexCount, infinity);
         }
