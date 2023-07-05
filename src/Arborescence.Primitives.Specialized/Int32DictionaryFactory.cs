@@ -1,7 +1,6 @@
 namespace Arborescence
 {
     using System.Collections.Generic;
-    using Primitives;
 
     /// <summary>
     /// Provides a set of initialization methods for instances
