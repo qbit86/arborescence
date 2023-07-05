@@ -34,7 +34,7 @@ namespace Arborescence
         public void Add(KeyValuePair<int, Color> item)
         {
             if ((uint)item.Key >= (uint)_items.Length)
-                throw new ArgumentOutOfRangeException(nameof(item));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(item));
 
             _items[item.Key] = (byte)item.Value;
         }
@@ -68,7 +68,7 @@ namespace Arborescence
         public void Add(int key, Color value)
         {
             if ((uint)key >= (uint)_items.Length)
-                throw new ArgumentOutOfRangeException(nameof(key));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
 
             _items[key] = (byte)value;
         }
@@ -105,7 +105,7 @@ namespace Arborescence
             set
             {
                 if ((uint)key >= (uint)_items.Length)
-                    throw new ArgumentOutOfRangeException(nameof(key));
+                    ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
 
                 _items[key] = (byte)value;
             }

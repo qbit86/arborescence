@@ -37,12 +37,6 @@
         }
 
         [DoesNotReturn]
-        internal static void ThrowArgumentOutOfRangeException(string paramName)
-        {
-            throw new ArgumentOutOfRangeException(paramName);
-        }
-
-        [DoesNotReturn]
         internal static void ThrowInvalidOperationException(ExceptionResource resource)
         {
             throw new InvalidOperationException(GetResourceString(resource));
