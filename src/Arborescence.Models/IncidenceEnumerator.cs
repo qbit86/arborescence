@@ -2,7 +2,6 @@ namespace Arborescence
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Models;
 
     /// <summary>
     /// Provides support for creating <see cref="IncidenceEnumerator{TVertex, TNeighborEnumerator}"/> objects.
