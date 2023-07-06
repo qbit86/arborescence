@@ -51,7 +51,6 @@ namespace Arborescence.Traversal.Adjacency
                         }
 
                         TVertex neighbor = neighbors.Current!;
-
                         var edge = Endpoints.Create(vertex, neighbor);
                         handler.OnExamineEdge(graph, edge);
                         Color color = GetColorOrDefault(colorByVertex, neighbor);
