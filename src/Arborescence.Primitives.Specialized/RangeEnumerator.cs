@@ -1,6 +1,5 @@
 namespace Arborescence
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
 
