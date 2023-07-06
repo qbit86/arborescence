@@ -86,14 +86,10 @@ namespace Arborescence.Traversal.Incidence
                     handler.OnFinishVertex(graph, vertex);
                 }
             }
-            catch
+            finally
             {
                 while (stack.TryTake(out StackFrame stackFrame))
                     stackFrame.EdgeEnumerator.Dispose();
-                throw;
-            }
-            finally
-            {
                 stack.Dispose();
             }
         }
