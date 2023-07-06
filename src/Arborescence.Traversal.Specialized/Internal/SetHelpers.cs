@@ -1,7 +1,5 @@
 ﻿namespace Arborescence.Traversal
 {
-    using System;
-
     internal static class SetHelpers
     {
         internal static bool Contains(byte[] items, int item)
