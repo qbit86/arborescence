@@ -1,5 +1,6 @@
 namespace Arborescence.Traversal.Specialized
 {
+    using System;
     using System.Collections.Generic;
 
 #pragma warning disable CA1815
@@ -12,6 +13,7 @@ namespace Arborescence.Traversal.Specialized
     /// <typeparam name="TGraph">The type of the graph.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
     /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    [Obsolete]
     public readonly partial struct EnumerableBfs<TGraph, TEdge, TEdgeEnumerator>
         where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator>
         where TEdgeEnumerator : IEnumerator<TEdge> { }
