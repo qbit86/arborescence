@@ -1,5 +1,6 @@
 namespace Arborescence.Traversal.Specialized.Adjacency
 {
+    using System;
     using System.Buffers;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
@@ -29,6 +30,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+            Array.Clear(arrayFromPool, 0, vertexCount);
             try
             {
                 var colorByVertex = new Int32ColorDictionary(arrayFromPool);
