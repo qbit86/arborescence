@@ -28,7 +28,7 @@ public sealed class BasicBfsTest
 
         using IEnumerator<Endpoints<int>> basicSteps = Bfs.EnumerateEdges(graph, source, graph.VertexCount);
         using IEnumerator<Endpoints<int>> enumerableSteps =
-            Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
+            Arborescence.Traversal.Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, source, exploredSet).GetEnumerator();
 
         // Assert
@@ -70,7 +70,8 @@ public sealed class BasicBfsTest
         // Act
 
         using IEnumerator<int> basicSteps = Bfs.EnumerateVertices(graph, source, graph.VertexCount);
-        using IEnumerator<int> enumerableSteps = Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>
+        using IEnumerator<int> enumerableSteps =
+            Arborescence.Traversal.Incidence.EnumerableBfs<int, Endpoints<int>, EdgeEnumerator>
             .EnumerateVertices(graph, source, exploredSet).GetEnumerator();
 
         // Assert

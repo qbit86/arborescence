@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Xunit;
 using Graph = Models.Specialized.Int32AdjacencyGraph;
 using EdgeEnumerator = Models.IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
-using EnumerableDfs = Incidence.EnumerableDfs<
+using EnumerableDfs = Arborescence.Traversal.Incidence.EnumerableDfs<
     int, Endpoints<int>, Models.IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>>;
 
 public sealed class BasicDfsTest
