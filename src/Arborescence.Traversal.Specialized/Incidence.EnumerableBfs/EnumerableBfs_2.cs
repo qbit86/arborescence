@@ -1,22 +1,34 @@
 namespace Arborescence.Traversal.Specialized.Incidence
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
 
     public static class EnumerableBfs<TEdge, TEdgeEnumerator>
-        where TEdgeEnumerator : IEnumerator<int>
+        where TEdgeEnumerator : IEnumerator<TEdge>
     {
-        public static IEnumerator<int> EnumerateVertices<TGraph>(TGraph graph, int source, int vertexCount)
+        public static IEnumerable<int> EnumerateVertices<TGraph>(TGraph graph, int source, int vertexCount)
             where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator> =>
             EnumerateVerticesChecked(graph, source, vertexCount);
 
-        internal static IEnumerator<int> EnumerateVerticesChecked<TGraph>(TGraph graph, int source, int vertexCount)
+        internal static IEnumerable<int> EnumerateVerticesChecked<TGraph>(TGraph graph, int source, int vertexCount)
             where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator>
         {
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
-            throw new NotImplementedException();
+            byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+            Array.Clear(arrayFromPool, 0, vertexCount);
+            try
+            {
+                Int32Set exploredSet = new(arrayFromPool);
+                return Arborescence.Traversal.Incidence.EnumerableBfs<int, TEdge, TEdgeEnumerator>
+                    .EnumerateVerticesIterator(graph, source, exploredSet);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(arrayFromPool);
+            }
         }
     }
 }
