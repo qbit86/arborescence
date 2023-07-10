@@ -117,7 +117,7 @@ namespace Arborescence.Traversal.Incidence
         }
 
 
-        private static IEnumerable<TEdge> EnumerateEdgesIterator<TGraph, TSourceCollection, TExploredSet>(
+        internal static IEnumerable<TEdge> EnumerateEdgesIterator<TGraph, TSourceCollection, TExploredSet>(
             TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
