@@ -116,7 +116,7 @@ namespace Arborescence.Traversal.Adjacency
             return EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
-        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<
             TGraph, TSourceCollection, TExploredSet>(
             TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
