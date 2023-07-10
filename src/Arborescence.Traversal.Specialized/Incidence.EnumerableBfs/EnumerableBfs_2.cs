@@ -14,8 +14,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
             EnumerateVerticesChecked(graph, source, vertexCount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TEdge> EnumerateEdges<TGraph>(
-            TGraph graph, int source, int vertexCount)
+        public static IEnumerable<TEdge> EnumerateEdges<TGraph>(TGraph graph, int source, int vertexCount)
             where TGraph : IHeadIncidence<int, TEdge>, IOutEdgesIncidence<int, TEdgeEnumerator> =>
             EnumerateEdgesChecked(graph, source, vertexCount);
 
