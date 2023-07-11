@@ -149,7 +149,7 @@ namespace Arborescence.Traversal.Adjacency
             TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
         }
 
-        private static void TraverseUnchecked<TGraph, TColorMap, THandler>(
+        internal static void TraverseUnchecked<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
             where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
