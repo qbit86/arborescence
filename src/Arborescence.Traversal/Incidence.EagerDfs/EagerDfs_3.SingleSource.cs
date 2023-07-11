@@ -149,7 +149,7 @@ namespace Arborescence.Traversal.Incidence
             TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
         }
 
-        private static void TraverseUnchecked<TGraph, TColorMap, THandler>(
+        internal static void TraverseUnchecked<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
