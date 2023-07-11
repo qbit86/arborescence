@@ -5,6 +5,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
+    using Traversal.Adjacency;
 
     public static class EagerBfs<TVertexEnumerator>
         where TVertexEnumerator : IEnumerator<int>
@@ -43,7 +44,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
             try
             {
                 var colorByVertex = new Int32ColorDictionary(arrayFromPool);
-                Arborescence.Traversal.Adjacency.EagerBfs<int, TVertexEnumerator>.TraverseUnchecked(
+                EagerBfs<int, TVertexEnumerator>.TraverseUnchecked(
                     graph, source, colorByVertex, handler, cancellationToken);
             }
             finally
@@ -73,7 +74,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
             try
             {
                 var colorByVertex = new Int32ColorDictionary(arrayFromPool);
-                Arborescence.Traversal.Adjacency.EagerBfs<int, TVertexEnumerator>.TraverseUnchecked(
+                EagerBfs<int, TVertexEnumerator>.TraverseUnchecked(
                     graph, sources, colorByVertex, handler, cancellationToken);
             }
             finally
