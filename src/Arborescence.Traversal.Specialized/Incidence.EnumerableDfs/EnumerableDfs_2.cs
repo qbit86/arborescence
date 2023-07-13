@@ -38,6 +38,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
+            if (vertexCount < 0)
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
+
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(arrayFromPool, 0, vertexCount);
             try
@@ -63,6 +66,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
             if (sources is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
+            if (vertexCount < 0)
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
+
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(arrayFromPool, 0, vertexCount);
             try
@@ -82,6 +88,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         {
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            if (vertexCount < 0)
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(arrayFromPool, 0, vertexCount);
@@ -107,6 +116,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
 
             if (sources is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
+
+            if (vertexCount < 0)
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
             Array.Clear(arrayFromPool, 0, vertexCount);

@@ -36,6 +36,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
+            if (vertexCount < 0)
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
+
             if (handler is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
@@ -65,6 +68,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
 
             if (sources is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
+
+            if (vertexCount < 0)
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
             if (handler is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
