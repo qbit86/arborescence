@@ -20,10 +20,10 @@
                 return new ArgumentNullException(nameof(array));
 
             if (offset < 0)
-                return new ArgumentOutOfRangeException(nameof(offset), SR.ArgumentOutOfRange_NeedNonNegNum);
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(offset), offset);
 
             if (count < 0)
-                return new ArgumentOutOfRangeException(nameof(count), SR.ArgumentOutOfRange_NeedNonNegNum);
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(count), count);
 
             Debug.Assert(array.Length - offset < count);
 
