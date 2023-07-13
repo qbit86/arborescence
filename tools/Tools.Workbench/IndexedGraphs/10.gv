@@ -16,7 +16,7 @@
     node [width=3.0]
     e [label="Primitives.Specialized"]
     f [label="Models.Specialized"]
-    // g [label="Traversal.Specialized"]
+    g [label="Traversal.Specialized"]
   }
   c -> a
   c -> b
@@ -26,6 +26,8 @@
   f -> a
   f -> c
   f -> e
-  // g -> a
-  // g -> e
+  g -> a
+  g -> b
+  g -> d
+  g -> e
 }
