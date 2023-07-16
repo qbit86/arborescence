@@ -19,6 +19,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<int> EnumerateVertices<TGraph>(TGraph graph, int source, int vertexCount)
             where TGraph : IOutNeighborsAdjacency<int, IEnumerator<int>> =>
@@ -36,6 +39,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<int> EnumerateVertices<TGraph, TSourceCollection>(
@@ -55,6 +61,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>.
         /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<int>> EnumerateEdges<TGraph>(TGraph graph, int source, int vertexCount)
             where TGraph : IOutNeighborsAdjacency<int, IEnumerator<int>> =>
@@ -72,6 +81,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<int>> EnumerateEdges<TGraph, TSourceCollection>(
