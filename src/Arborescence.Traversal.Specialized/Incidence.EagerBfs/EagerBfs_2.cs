@@ -34,6 +34,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         /// or <paramref name="source"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
         /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, THandler>(
             TGraph graph, int source, int vertexCount, THandler handler,
@@ -61,6 +64,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         /// <paramref name="graph"/> is <see langword="null"/>,
         /// or <paramref name="sources"/> is <see langword="null"/>,
         /// or <paramref name="handler"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Traverse<TGraph, TSourceCollection, THandler>(

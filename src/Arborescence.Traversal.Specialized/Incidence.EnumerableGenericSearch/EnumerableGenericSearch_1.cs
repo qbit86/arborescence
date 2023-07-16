@@ -29,6 +29,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         /// <see cref="IProducerConsumerCollection{T}.TryAdd"/> for <paramref name="frontier"/>
         /// returns <see langword="false"/>.
         /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<int> EnumerateVertices<TGraph, TFrontier>(
             TGraph graph, int source, TFrontier frontier, int vertexCount)
@@ -57,6 +60,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         /// <see cref="IProducerConsumerCollection{T}.TryAdd"/> for <paramref name="frontier"/>
         /// returns <see langword="false"/>.
         /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
+        /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<int> EnumerateVertices<TGraph, TSourceCollection, TFrontier>(
             TGraph graph, TSourceCollection sources, TFrontier frontier, int vertexCount)
@@ -83,6 +89,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         /// <exception cref="System.InvalidOperationException">
         /// <see cref="IProducerConsumerCollection{T}.TryAdd"/> for <paramref name="frontier"/>
         /// returns <see langword="false"/>.
+        /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<TEdge> EnumerateEdges<TGraph, TFrontier>(
@@ -111,6 +120,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
         /// <exception cref="System.InvalidOperationException">
         /// <see cref="IProducerConsumerCollection{T}.TryAdd"/> for <paramref name="frontier"/>
         /// returns <see langword="false"/>.
+        /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <paramref name="vertexCount"/> is less than zero.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<TEdge> EnumerateEdges<TGraph, TSourceCollection, TFrontier>(
