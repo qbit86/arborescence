@@ -25,10 +25,10 @@ public sealed class BfsEnumerateEdgesTest
 
         if (multipleSource)
         {
-            if (vertexCount < 3)
+            if (graph.VertexCount < 3)
                 return;
 
-            int sourceCount = vertexCount / 3;
+            int sourceCount = graph.VertexCount / 3;
             IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
@@ -40,7 +40,7 @@ public sealed class BfsEnumerateEdgesTest
         }
         else
         {
-            int source = vertexCount >> 1;
+            int source = graph.VertexCount >> 1;
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, vertexCount, bfsHandler);
             IEnumerable<Endpoints<int>> edges = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, source, vertexCount);
