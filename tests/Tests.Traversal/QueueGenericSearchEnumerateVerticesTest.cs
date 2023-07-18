@@ -1,12 +1,11 @@
 namespace Arborescence.Traversal.Generic;
 
 using System;
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Incidence;
 using Misnomer;
+using Specialized.Incidence;
 using Xunit;
 using Graph = Models.ListAdjacencyGraph<
     int,
@@ -21,16 +20,12 @@ public class QueueGenericSearchEnumerateVerticesTest
     {
         // Arrange
 
-        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-        Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
-        Int32ColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
-        ConcurrentQueue<int> frontier = new();
-        byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-        Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        Int32Set set = new(setBackingStore);
+        int vertexCount = Math.Max(graph.VertexCount, 1);
 
-        using Rist<int> eagerSteps = new(graph.VertexCount);
-        using Rist<int> enumerableSteps = new(graph.VertexCount);
+        ConcurrentQueue<int> frontier = new();
+
+        using Rist<int> eagerSteps = new(vertexCount);
+        using Rist<int> enumerableSteps = new(vertexCount);
         BfsHandler<int, Endpoints<int>, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
@@ -44,18 +39,18 @@ public class QueueGenericSearchEnumerateVerticesTest
             IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
-            EagerBfs<int, Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, bfsHandler);
-            IEnumerable<int> vertices = EnumerableGenericSearch<int, Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
-                graph, sources, frontier, set);
+            EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, vertexCount, bfsHandler);
+            IEnumerable<int> vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
+                graph, sources, frontier, vertexCount);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerBfs<int, Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, bfsHandler);
-            IEnumerable<int> vertices = EnumerableGenericSearch<int, Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
-                graph, source, frontier, set);
+            EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, vertexCount, bfsHandler);
+            IEnumerable<int> vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
+                graph, source, frontier, vertexCount);
             enumerableSteps.AddRange(vertices);
         }
 
@@ -76,11 +71,6 @@ public class QueueGenericSearchEnumerateVerticesTest
 
             Assert.Equal(eagerStep, enumerableStep);
         }
-
-        // Cleanup
-
-        ArrayPool<byte>.Shared.Return(colorByVertexBackingStore);
-        ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
     private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler(IList<int> discoveredVertices)
