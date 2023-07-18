@@ -15,7 +15,7 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
     where TGraphBuilder : IGraphBuilder<TGraph, int, TEdge>
 {
     private const int LowerBound = 1;
-    private const int UpperBound = 10;
+    private const int UpperBound = 13;
 
     private static CultureInfo P => CultureInfo.InvariantCulture;
 
