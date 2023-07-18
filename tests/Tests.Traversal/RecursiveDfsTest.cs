@@ -1,10 +1,9 @@
 namespace Arborescence.Traversal.Dfs;
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using Incidence;
 using Misnomer;
+using Specialized.Incidence;
 using Xunit;
 using Graph = Models.ListIncidenceGraph<
     int,
@@ -19,16 +18,12 @@ public sealed class RecursiveDfsTest
     {
         // Arrange
 
-        byte[] eagerColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-        Array.Clear(eagerColorByVertexBackingStore, 0, eagerColorByVertexBackingStore.Length);
-        Int32ColorDictionary eagerColorByVertex = new(eagerColorByVertexBackingStore);
-        using Rist<(string, int)> eagerSteps = new(Math.Max(graph.VertexCount, 1));
+        int vertexCount = Math.Max(graph.VertexCount, 1);
+
+        using Rist<(string, int)> eagerSteps = new(vertexCount);
         DfsHandler<int, int, Graph> eagerHandler = CreateDfsHandler(eagerSteps);
 
-        byte[] recursiveColorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(Math.Max(graph.VertexCount, 1));
-        Array.Clear(recursiveColorByVertexBackingStore, 0, recursiveColorByVertexBackingStore.Length);
-        Int32ColorDictionary recursiveColorByVertex = new(recursiveColorByVertexBackingStore);
-        using Rist<(string, int)> recursiveSteps = new(Math.Max(graph.VertexCount, 1));
+        using Rist<(string, int)> recursiveSteps = new(vertexCount);
         DfsHandler<int, int, Graph> recursiveHandler = CreateDfsHandler(recursiveSteps);
 
         // Act
@@ -41,14 +36,14 @@ public sealed class RecursiveDfsTest
             int sourceCount = graph.VertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
 
-            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, eagerHandler);
-            RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, recursiveColorByVertex, recursiveHandler);
+            EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, vertexCount, eagerHandler);
+            RecursiveDfs<int, EdgeEnumerator>.Traverse(graph, sources, vertexCount, recursiveHandler);
         }
         else
         {
             int source = graph.VertexCount >> 1;
-            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, eagerHandler);
-            RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, source, recursiveColorByVertex, recursiveHandler);
+            EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, vertexCount, eagerHandler);
+            RecursiveDfs<int, EdgeEnumerator>.Traverse(graph, source, vertexCount, recursiveHandler);
         }
 
         // Assert
@@ -68,11 +63,6 @@ public sealed class RecursiveDfsTest
 
             Assert.Equal(eagerStep, recursiveStep);
         }
-
-        // Cleanup
-
-        ArrayPool<byte>.Shared.Return(eagerColorByVertexBackingStore);
-        ArrayPool<byte>.Shared.Return(recursiveColorByVertexBackingStore);
     }
 
     private static DfsHandler<int, int, Graph> CreateDfsHandler(ICollection<(string, int)> steps)
