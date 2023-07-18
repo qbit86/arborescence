@@ -4,6 +4,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
     using System.Buffers;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
+    using Traversal.Incidence;
 
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph — implemented as iterator.
@@ -106,17 +107,27 @@ namespace Arborescence.Traversal.Specialized.Incidence
             if (vertexCount < 0)
                 ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
-            byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(arrayFromPool, 0, vertexCount);
-            try
+            return EnumerateVerticesIterator();
+
+            IEnumerable<int> EnumerateVerticesIterator()
             {
-                Int32Set exploredSet = new(arrayFromPool);
-                return Arborescence.Traversal.Incidence.EnumerableDfs<int, TEdge, TEdgeEnumerator>
-                    .EnumerateVerticesIterator(graph, source, exploredSet);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(arrayFromPool);
+                byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+#if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
+                Array.Fill(arrayFromPool, (byte)0xFF, vertexCount, arrayFromPool.Length - vertexCount);
+#endif
+                Array.Clear(arrayFromPool, 0, vertexCount);
+                try
+                {
+                    Int32Set exploredSet = new(arrayFromPool);
+                    IEnumerable<int> vertices = EnumerableDfs<int, TEdge, TEdgeEnumerator>.EnumerateVerticesIterator(
+                        graph, source, exploredSet);
+                    foreach (int vertex in vertices)
+                        yield return vertex;
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(arrayFromPool);
+                }
             }
         }
 
@@ -134,20 +145,27 @@ namespace Arborescence.Traversal.Specialized.Incidence
             if (vertexCount < 0)
                 ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
-            byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+            return EnumerateVerticesIterator();
+
+            IEnumerable<int> EnumerateVerticesIterator()
+            {
+                byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
 #if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
-            Array.Fill(arrayFromPool, (byte)1, vertexCount, arrayFromPool.Length - vertexCount);
+                Array.Fill(arrayFromPool, (byte)0xFF, vertexCount, arrayFromPool.Length - vertexCount);
 #endif
-            Array.Clear(arrayFromPool, 0, vertexCount);
-            try
-            {
-                Int32Set exploredSet = new(arrayFromPool);
-                return Arborescence.Traversal.Incidence.EnumerableDfs<int, TEdge, TEdgeEnumerator>
-                    .EnumerateVerticesIterator(graph, sources, exploredSet);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(arrayFromPool);
+                Array.Clear(arrayFromPool, 0, vertexCount);
+                try
+                {
+                    Int32Set exploredSet = new(arrayFromPool);
+                    IEnumerable<int> vertices = EnumerableDfs<int, TEdge, TEdgeEnumerator>.EnumerateVerticesIterator(
+                        graph, sources, exploredSet);
+                    foreach (int vertex in vertices)
+                        yield return vertex;
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(arrayFromPool);
+                }
             }
         }
 
@@ -160,17 +178,27 @@ namespace Arborescence.Traversal.Specialized.Incidence
             if (vertexCount < 0)
                 ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
-            byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(arrayFromPool, 0, vertexCount);
-            try
+            return EnumerateEdgesIterator();
+
+            IEnumerable<TEdge> EnumerateEdgesIterator()
             {
-                Int32Set exploredSet = new(arrayFromPool);
-                return Arborescence.Traversal.Incidence.EnumerableDfs<int, TEdge, TEdgeEnumerator>
-                    .EnumerateEdgesIterator(graph, source, exploredSet);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(arrayFromPool);
+                byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+#if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
+                Array.Fill(arrayFromPool, (byte)0xFF, vertexCount, arrayFromPool.Length - vertexCount);
+#endif
+                Array.Clear(arrayFromPool, 0, vertexCount);
+                try
+                {
+                    Int32Set exploredSet = new(arrayFromPool);
+                    IEnumerable<TEdge> edges = EnumerableDfs<int, TEdge, TEdgeEnumerator>.EnumerateEdgesIterator(
+                        graph, source, exploredSet);
+                    foreach (TEdge edge in edges)
+                        yield return edge;
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(arrayFromPool);
+                }
             }
         }
 
@@ -188,17 +216,27 @@ namespace Arborescence.Traversal.Specialized.Incidence
             if (vertexCount < 0)
                 ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
-            byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
-            Array.Clear(arrayFromPool, 0, vertexCount);
-            try
+            return EnumerateEdgesIterator();
+
+            IEnumerable<TEdge> EnumerateEdgesIterator()
             {
-                Int32Set exploredSet = new(arrayFromPool);
-                return Arborescence.Traversal.Incidence.EnumerableDfs<int, TEdge, TEdgeEnumerator>
-                    .EnumerateEdgesIterator(graph, sources, exploredSet);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(arrayFromPool);
+                byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+#if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
+                Array.Fill(arrayFromPool, (byte)0xFF, vertexCount, arrayFromPool.Length - vertexCount);
+#endif
+                Array.Clear(arrayFromPool, 0, vertexCount);
+                try
+                {
+                    Int32Set exploredSet = new(arrayFromPool);
+                    IEnumerable<TEdge> edges = EnumerableDfs<int, TEdge, TEdgeEnumerator>.EnumerateEdgesIterator(
+                        graph, sources, exploredSet);
+                    foreach (TEdge edge in edges)
+                        yield return edge;
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(arrayFromPool);
+                }
             }
         }
     }
