@@ -92,6 +92,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+#if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
+            Array.Fill(arrayFromPool, (byte)0xFF, vertexCount, arrayFromPool.Length - vertexCount);
+#endif
             Array.Clear(arrayFromPool, 0, vertexCount);
             try
             {
@@ -126,7 +129,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
 
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
 #if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
-            Array.Fill(arrayFromPool, (byte)1, vertexCount, arrayFromPool.Length - vertexCount);
+            Array.Fill(arrayFromPool, (byte)0xFF, vertexCount, arrayFromPool.Length - vertexCount);
 #endif
             Array.Clear(arrayFromPool, 0, vertexCount);
             try
