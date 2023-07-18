@@ -149,6 +149,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
             byte[] arrayFromPool = ArrayPool<byte>.Shared.Rent(vertexCount);
+#if DEBUG && (NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
+            Array.Fill(arrayFromPool, (byte)1, vertexCount, arrayFromPool.Length - vertexCount);
+#endif
             Array.Clear(arrayFromPool, 0, vertexCount);
             try
             {
