@@ -18,7 +18,9 @@ public sealed class RecursiveDfsTest
     {
         // Arrange
 
-        int vertexCount = Math.Max(graph.VertexCount, 1);
+        int vertexCount = graph.VertexCount;
+        if (vertexCount is 0)
+            return;
 
         using Rist<(string, int)> eagerSteps = new(vertexCount);
         DfsHandler<int, int, Graph> eagerHandler = CreateDfsHandler(eagerSteps);

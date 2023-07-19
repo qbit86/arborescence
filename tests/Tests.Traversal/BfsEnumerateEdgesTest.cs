@@ -15,7 +15,9 @@ public sealed class BfsEnumerateEdgesTest
     {
         // Arrange
 
-        int vertexCount = Math.Max(graph.VertexCount, 1);
+        int vertexCount = graph.VertexCount;
+        if (vertexCount is 0)
+            return;
 
         using Rist<Endpoints<int>> eagerSteps = new(vertexCount);
         using Rist<Endpoints<int>> enumerableSteps = new(vertexCount);

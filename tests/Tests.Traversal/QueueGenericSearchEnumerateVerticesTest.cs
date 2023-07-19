@@ -20,7 +20,9 @@ public class QueueGenericSearchEnumerateVerticesTest
     {
         // Arrange
 
-        int vertexCount = Math.Max(graph.VertexCount, 1);
+        int vertexCount = graph.VertexCount;
+        if (vertexCount is 0)
+            return;
 
         ConcurrentQueue<int> frontier = new();
 

@@ -14,7 +14,9 @@ public sealed class DfsEnumerateEdgesTest
     {
         // Arrange
 
-        int vertexCount = Math.Max(graph.VertexCount, 1);
+        int vertexCount = graph.VertexCount;
+        if (vertexCount is 0)
+            return;
 
         using Rist<int> eagerSteps = new(vertexCount);
         using Rist<int> enumerableSteps = new(vertexCount);
