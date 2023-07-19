@@ -146,7 +146,8 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
 
     public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
-        while (tail >= _neighborsByVertex.Count || head >= _neighborsByVertex.Count)
+        int max = Math.Max(tail, head);
+        while (max >= _neighborsByVertex.Count)
             _neighborsByVertex.Add(_neighborsByVertex.Count, default!);
         if (_neighborsByVertex[tail] is { } neighbors)
             neighbors.Add(head);
@@ -199,15 +200,16 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
     public bool TryAdd(int tail, int head, out int edge)
     {
         Debug.Assert(_tailByEdge.Count == _headByEdge.Count);
+        int max = Math.Max(tail, head);
+        while (max >= _outEdgesByVertex.Count)
+            _outEdgesByVertex.Add(_outEdgesByVertex.Count, default!);
         edge = _headByEdge.Count;
         _tailByEdge.Add(edge, tail);
         _headByEdge.Add(edge, head);
-        if (_outEdgesByVertex.TryGetValue(tail, out List<int>? outEdges))
+        if (_outEdgesByVertex[tail] is { } outEdges)
             outEdges.Add(edge);
         else
             _outEdgesByVertex[tail] = new() { edge };
-        if (!_outEdgesByVertex.ContainsKey(head))
-            _outEdgesByVertex[head] = new();
         return true;
     }
 
