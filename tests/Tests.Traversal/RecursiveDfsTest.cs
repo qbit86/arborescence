@@ -1,6 +1,5 @@
 namespace Arborescence.Traversal.Dfs;
 
-using System;
 using System.Collections.Generic;
 using Misnomer;
 using Specialized.Incidence;
