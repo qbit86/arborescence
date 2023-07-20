@@ -1,17 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Description>Graph traversal algorithms specialized for integer vertices from a contiguous range.
+Commonly used types:
+• Adjacency.EnumerableBfs&lt;TNeighborEnumerator&gt;
+• Adjacency.EnumerableDfs&lt;TNeighborEnumerator&gt;
+• Adjacency.EnumerableGenericSearch&lt;TNeighborEnumerator&gt;
+• Adjacency.EagerBfs&lt;TVertexEnumerator&gt;
+• Adjacency.EagerDfs&lt;TVertexEnumerator&gt;
+• Incidence.EnumerableBfs&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EnumerableDfs&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EnumerableGenericSearch&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EagerBfs&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EagerDfs&lt;TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Specialized graph traversal algorithms</Title>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
+    <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal.Specialized</RootNamespace>
     <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
