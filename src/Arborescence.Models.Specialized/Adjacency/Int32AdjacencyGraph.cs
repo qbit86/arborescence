@@ -4,7 +4,7 @@ namespace Arborescence.Models.Specialized
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using Edge = Endpoints<int>;
-    using VertexEnumerator = System.ArraySegment<int>.Enumerator;
+    using NeighborEnumerator = System.ArraySegment<int>.Enumerator;
     using EdgeEnumerator = IncidenceEnumerator<int, System.ArraySegment<int>.Enumerator>;
 
     /// <summary>
@@ -15,7 +15,7 @@ namespace Arborescence.Models.Specialized
         IHeadIncidence<int, Edge>,
         ITailIncidence<int, Edge>,
         IOutEdgesIncidence<int, EdgeEnumerator>,
-        IOutNeighborsAdjacency<int, VertexEnumerator>,
+        IOutNeighborsAdjacency<int, NeighborEnumerator>,
         IEquatable<Int32AdjacencyGraph>
     {
         // Offset       | Length    | Content
@@ -68,12 +68,12 @@ namespace Arborescence.Models.Specialized
         /// <inheritdoc/>
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
-            VertexEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
+            NeighborEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
             return IncidenceEnumeratorFactory.Create(vertex, neighborEnumerator);
         }
 
         /// <inheritdoc/>
-        public VertexEnumerator EnumerateOutNeighbors(int vertex)
+        public NeighborEnumerator EnumerateOutNeighbors(int vertex)
         {
             Int32AdjacencyGraph self = this;
             if (self._data is null)
