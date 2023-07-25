@@ -6,7 +6,7 @@ namespace Arborescence
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
+    /// <typeparam name="TEdges">The type of the enumerator for the edges.</typeparam>
     public interface IForwardIncidence<TVertex, in TEdge, out TEdges> :
         IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdges> { }
 }

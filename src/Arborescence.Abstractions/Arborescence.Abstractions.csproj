@@ -1,30 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>Abstractions of graphs to be examined and manipulated in a data-structure agnostic fashion.
 Commonly used types:
-• IHeadIncidence&lt;TVertex, TEdge&gt;
-• IOutEdgesIncidence&lt;TVertex, TEdges&gt;
-• IOutNeighborsAdjacency&lt;TVertex, TVertices&gt;
-• IMonoid&lt;T&gt;</Description>
+• IHeadIncidence&lt;TVertex, TEdge&gt;
+• IOutEdgesIncidence&lt;TVertex, TEdges&gt;
+• IOutNeighborsAdjacency&lt;TVertex, TNeighbors&gt;
+• IMonoid&lt;T&gt;</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionPrefix>0.16</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
+
   <PropertyGroup>
     <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
     <EmbedAllSources>true</EmbedAllSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
+
   <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+
 </Project>

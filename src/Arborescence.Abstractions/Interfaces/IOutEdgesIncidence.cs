@@ -5,7 +5,7 @@ namespace Arborescence
     /// </summary>
     /// <seealso href="https://en.wikipedia.org/wiki/Incidence_(graph)"/>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TEdges">The type of the edges enumerator.</typeparam>
+    /// <typeparam name="TEdges">The type of the enumerator for the edges.</typeparam>
     public interface IOutEdgesIncidence<in TVertex, out TEdges>
     {
         /// <summary>

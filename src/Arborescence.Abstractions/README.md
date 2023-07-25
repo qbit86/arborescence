@@ -9,9 +9,9 @@ Interfaces are direct contracts for algorithms, constraints on their type parame
 The most important ones are:
 
 ```csharp
-IOutNeighborsAdjacency<TVertex, TVertices>
+IOutNeighborsAdjacency<TVertex, TNeighbors>
 {
-    TVertices EnumerateOutNeighbors(TVertex vertex);
+    TNeighbors EnumerateOutNeighbors(TVertex vertex);
 }
 
 IHeadIncidence<TVertex, TEdge>
