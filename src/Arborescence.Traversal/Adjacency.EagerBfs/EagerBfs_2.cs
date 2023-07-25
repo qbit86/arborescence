@@ -9,15 +9,15 @@ namespace Arborescence.Traversal.Adjacency
     /// Represents the BFS algorithm — breadth-first traversal of the graph.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-    public static partial class EagerBfs<TVertex, TVertexEnumerator>
+    /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+    public static partial class EagerBfs<TVertex, TNeighborEnumerator>
         where TVertex : notnull
-        where TVertexEnumerator : IEnumerator<TVertex>
+        where TNeighborEnumerator : IEnumerator<TVertex>
     {
         private static void Traverse<TGraph, TColorMap, THandler>(
             TGraph graph, ref ValueQueue<TVertex> queue, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
@@ -27,7 +27,7 @@ namespace Arborescence.Traversal.Adjacency
                 Debug.Assert(GetColorOrDefault(colorByVertex, current) != default);
 #endif
                 handler.OnExamineVertex(graph, current);
-                TVertexEnumerator outNeighbors = graph.EnumerateOutNeighbors(current);
+                TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(current);
                 try
                 {
                     while (outNeighbors.MoveNext())

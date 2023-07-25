@@ -6,8 +6,8 @@ Commonly used types:
 • Adjacency.EnumerableBfs&lt;TVertex, TNeighborEnumerator&gt;
 • Adjacency.EnumerableDfs&lt;TVertex, TNeighborEnumerator&gt;
 • Adjacency.EnumerableGenericSearch&lt;TVertex, TNeighborEnumerator&gt;
-• Adjacency.EagerBfs&lt;TVertex, TVertexEnumerator&gt;
-• Adjacency.EagerDfs&lt;TVertex, TVertexEnumerator&gt;
+• Adjacency.EagerBfs&lt;TVertex, TNeighborEnumerator&gt;
+• Adjacency.EagerDfs&lt;TVertex, TNeighborEnumerator&gt;
 • Incidence.EnumerableBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
 • Incidence.EnumerableDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
 • Incidence.EnumerableGenericSearch&lt;TVertex, TEdge, TEdgeEnumerator&gt;

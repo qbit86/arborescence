@@ -4,7 +4,7 @@ namespace Arborescence.Traversal.Adjacency
     using System.Runtime.CompilerServices;
     using System.Threading;
 
-    public static partial class EagerDfs<TVertex, TVertexEnumerator>
+    public static partial class EagerDfs<TVertex, TNeighborEnumerator>
     {
         /// <summary>
         /// Traverses the graph in a depth-first order starting from the multiple sources
@@ -29,7 +29,7 @@ namespace Arborescence.Traversal.Adjacency
         public static void Traverse<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph> =>
             TraverseChecked(graph, sources, handler, cancellationToken);
@@ -58,7 +58,7 @@ namespace Arborescence.Traversal.Adjacency
         public static void Traverse<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph> =>
             TraverseChecked(graph, sources, comparer, handler, cancellationToken);
@@ -89,7 +89,7 @@ namespace Arborescence.Traversal.Adjacency
         public static void Traverse<TGraph, TSourceCollection, TColorMap, THandler>(
             TGraph graph, TSourceCollection sources, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph> =>
@@ -98,7 +98,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseChecked<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
@@ -118,7 +118,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseChecked<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, IEqualityComparer<TVertex> comparer, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
@@ -138,7 +138,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseChecked<TGraph, TSourceCollection, TColorMap, THandler>(
             TGraph graph, TSourceCollection sources, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
@@ -161,7 +161,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseUnchecked<TGraph, TVertexCollection, TColorMap, THandler>(
             TGraph graph, TVertexCollection sources, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TVertexCollection : IEnumerable<TVertex>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>

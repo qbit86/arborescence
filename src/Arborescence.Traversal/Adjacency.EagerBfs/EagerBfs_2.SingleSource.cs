@@ -4,7 +4,7 @@ namespace Arborescence.Traversal.Adjacency
     using System.Runtime.CompilerServices;
     using System.Threading;
 
-    public static partial class EagerBfs<TVertex, TVertexEnumerator>
+    public static partial class EagerBfs<TVertex, TNeighborEnumerator>
     {
         /// <summary>
         /// Traverses the graph in a breadth-first order starting from the single source
@@ -28,7 +28,7 @@ namespace Arborescence.Traversal.Adjacency
         public static void Traverse<TGraph, THandler>(
             TGraph graph, TVertex source, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph> =>
             TraverseChecked(graph, source, handler, cancellationToken);
 
@@ -55,7 +55,7 @@ namespace Arborescence.Traversal.Adjacency
         public static void Traverse<TGraph, THandler>(
             TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph> =>
             TraverseChecked(graph, source, comparer, handler, cancellationToken);
 
@@ -84,7 +84,7 @@ namespace Arborescence.Traversal.Adjacency
         public static void Traverse<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph> =>
             TraverseChecked(graph, source, colorByVertex, handler, cancellationToken);
@@ -92,7 +92,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseChecked<TGraph, THandler>(
             TGraph graph, TVertex source, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
             if (graph is null)
@@ -111,7 +111,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseChecked<TGraph, THandler>(
             TGraph graph, TVertex source, IEqualityComparer<TVertex> comparer, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
             if (graph is null)
@@ -130,7 +130,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseChecked<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
@@ -152,7 +152,7 @@ namespace Arborescence.Traversal.Adjacency
         internal static void TraverseUnchecked<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {

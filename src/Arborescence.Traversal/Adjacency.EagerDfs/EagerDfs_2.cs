@@ -8,15 +8,15 @@ namespace Arborescence.Traversal.Adjacency
     /// Represents the DFS algorithm — depth-first traversal of the graph in a non-recursive manner.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-    public static partial class EagerDfs<TVertex, TVertexEnumerator>
+    /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+    public static partial class EagerDfs<TVertex, TNeighborEnumerator>
         where TVertex : notnull
-        where TVertexEnumerator : IEnumerator<TVertex>
+        where TNeighborEnumerator : IEnumerator<TVertex>
     {
         private static void TraverseCore<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex vertex, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
@@ -32,7 +32,7 @@ namespace Arborescence.Traversal.Adjacency
             var stack = new ValueStack<StackFrame>();
             try
             {
-                TVertexEnumerator outNeighbors = graph.EnumerateOutNeighbors(vertex);
+                TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(vertex);
                 stack.Add(new(vertex, outNeighbors));
 
                 while (stack.TryTake(out StackFrame stackFrame))
@@ -41,7 +41,7 @@ namespace Arborescence.Traversal.Adjacency
                     if (stackFrame.TryGetNeighbor(out TVertex inNeighbor))
                         handler.OnFinishEdge(graph, Endpoints.Create(inNeighbor, vertex));
 
-                    TVertexEnumerator neighbors = stackFrame.NeighborEnumerator;
+                    TNeighborEnumerator neighbors = stackFrame.NeighborEnumerator;
                     while (true)
                     {
                         if (!neighbors.MoveNext())
@@ -101,7 +101,7 @@ namespace Arborescence.Traversal.Adjacency
             private readonly TVertex _neighbor;
             private readonly bool _hasNeighbor;
 
-            internal StackFrame(TVertex vertex, TVertexEnumerator neighborEnumerator)
+            internal StackFrame(TVertex vertex, TNeighborEnumerator neighborEnumerator)
             {
                 _hasNeighbor = false;
                 _neighbor = default!;
@@ -109,7 +109,7 @@ namespace Arborescence.Traversal.Adjacency
                 NeighborEnumerator = neighborEnumerator;
             }
 
-            internal StackFrame(TVertex vertex, TVertex neighbor, TVertexEnumerator neighborEnumerator)
+            internal StackFrame(TVertex vertex, TVertex neighbor, TNeighborEnumerator neighborEnumerator)
             {
                 _hasNeighbor = true;
                 _neighbor = neighbor;
@@ -118,7 +118,7 @@ namespace Arborescence.Traversal.Adjacency
             }
 
             internal TVertex Vertex { get; }
-            internal TVertexEnumerator NeighborEnumerator { get; }
+            internal TNeighborEnumerator NeighborEnumerator { get; }
 
             internal bool TryGetNeighbor(out TVertex neighbor)
             {

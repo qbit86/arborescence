@@ -8,15 +8,15 @@ namespace Arborescence.Traversal.Adjacency
     /// Represents the DFS algorithm — depth-first traversal of the graph in a recursive manner using the program stack.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-    public static partial class RecursiveDfs<TVertex, TVertexEnumerator>
+    /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+    public static partial class RecursiveDfs<TVertex, TNeighborEnumerator>
         where TVertex : notnull
-        where TVertexEnumerator : IEnumerator<TVertex>
+        where TNeighborEnumerator : IEnumerator<TVertex>
     {
         private static void Visit<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex vertex, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
@@ -30,7 +30,7 @@ namespace Arborescence.Traversal.Adjacency
                 return;
             }
 
-            TVertexEnumerator outNeighbors = graph.EnumerateOutNeighbors(vertex);
+            TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(vertex);
             try
             {
                 while (outNeighbors.MoveNext())
