@@ -10,9 +10,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph.
     /// </summary>
-    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-    public static class EagerBfs<TVertexEnumerator>
-        where TVertexEnumerator : IEnumerator<int>
+    /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+    public static class EagerBfs<TNeighborEnumerator>
+        where TNeighborEnumerator : IEnumerator<int>
     {
         /// <summary>
         /// Traverses the graph in a breadth-first order starting from the single source
@@ -40,7 +40,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         public static void Traverse<TGraph, THandler>(
             TGraph graph, int source, int vertexCount, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<int, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<int, TNeighborEnumerator>
             where THandler : IBfsHandler<int, Endpoints<int>, TGraph> =>
             TraverseChecked(graph, source, vertexCount, handler, cancellationToken);
 
@@ -71,7 +71,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         public static void Traverse<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, int vertexCount, THandler handler,
             CancellationToken cancellationToken = default)
-            where TGraph : IOutNeighborsAdjacency<int, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<int, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<int>
             where THandler : IBfsHandler<int, Endpoints<int>, TGraph> =>
             TraverseChecked(graph, sources, vertexCount, handler, cancellationToken);
@@ -79,7 +79,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         internal static void TraverseChecked<TGraph, THandler>(
             TGraph graph, int source, int vertexCount, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<int, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<int, TNeighborEnumerator>
             where THandler : IBfsHandler<int, Endpoints<int>, TGraph>
         {
             if (graph is null)
@@ -99,7 +99,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
             try
             {
                 var colorByVertex = new Int32ColorDictionary(arrayFromPool);
-                EagerBfs<int, TVertexEnumerator>.TraverseUnchecked(
+                EagerBfs<int, TNeighborEnumerator>.TraverseUnchecked(
                     graph, source, colorByVertex, handler, cancellationToken);
             }
             finally
@@ -111,7 +111,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
         internal static void TraverseChecked<TGraph, TSourceCollection, THandler>(
             TGraph graph, TSourceCollection sources, int vertexCount, THandler handler,
             CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<int, TVertexEnumerator>
+            where TGraph : IOutNeighborsAdjacency<int, TNeighborEnumerator>
             where TSourceCollection : IEnumerable<int>
             where THandler : IBfsHandler<int, Endpoints<int>, TGraph>
         {
@@ -135,7 +135,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
             try
             {
                 var colorByVertex = new Int32ColorDictionary(arrayFromPool);
-                EagerBfs<int, TVertexEnumerator>.TraverseUnchecked(
+                EagerBfs<int, TNeighborEnumerator>.TraverseUnchecked(
                     graph, sources, colorByVertex, handler, cancellationToken);
             }
             finally
