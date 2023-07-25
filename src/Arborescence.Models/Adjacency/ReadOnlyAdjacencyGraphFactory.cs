@@ -4,7 +4,7 @@ namespace Arborescence.Models
 
     /// <summary>
     /// Provides support for creating
-    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>
     /// objects.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -14,7 +14,7 @@ namespace Arborescence.Models
     {
         /// <summary>
         /// Creates a
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>.
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>.
         /// </summary>
         /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
         /// <param name="vertexMultimapConcept">The object that provides operations on the vertex multimap.</param>
@@ -37,9 +37,9 @@ namespace Arborescence.Models
 
     /// <summary>
     /// Provides support for creating
-    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>
     /// objects, when <c>TVertexMultimapConcept</c> is
-    /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>.
+    /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap,TVertex,TVertexCollection,TNeighborEnumerator,TNeighborEnumeratorProvider}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TVertexCollection">The type of the vertex collection.</typeparam>
@@ -49,9 +49,9 @@ namespace Arborescence.Models
     {
         /// <summary>
         /// Creates a
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>,
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>,
         /// when <c>TVertexMultimapConcept</c> is
-        /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>.
+        /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap,TVertex,TVertexCollection,TNeighborEnumerator,TNeighborEnumeratorProvider}"/>.
         /// </summary>
         /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
         /// <param name="vertexEnumeratorProvider">The vertex enumerator provider.</param>
