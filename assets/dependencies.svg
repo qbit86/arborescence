@@ -1,0 +1,121 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="618pt" height="188pt" viewBox="0.00 0.00 618.45 188">
+<g id="graph0" class="graph" transform="translate(4,184) scale(1)" data-name="Packages">
+
+<polygon fill="white" stroke="none" points="-4,4 -4,-184 614.45,-184 614.45,4 -4,4"/>
+<!-- a -->
+<g id="node1" class="node" pointer-events="visible" data-name="a">
+
+<polygon fill="none" stroke="black" points="240,-180 110,-180 110,-144 240,-144 240,-180"/>
+<text text-anchor="middle" x="175" y="-157.8" font-family="JetBrains Mono" font-size="14.00">Abstractions</text>
+</g>
+<!-- b -->
+<g id="node2" class="node" pointer-events="visible" data-name="b">
+
+<polygon fill="none" stroke="black" points="428,-180 298,-180 298,-144 428,-144 428,-180"/>
+<text text-anchor="middle" x="363" y="-157.8" font-family="JetBrains Mono" font-size="14.00">Primitives</text>
+</g>
+<!-- c -->
+<g id="node3" class="node" pointer-events="visible" data-name="c">
+
+<polygon fill="none" stroke="black" points="173,-108 43,-108 43,-72 173,-72 173,-108"/>
+<text text-anchor="middle" x="108" y="-85.8" font-family="JetBrains Mono" font-size="14.00">Models</text>
+</g>
+<!-- c&#45;&gt;a -->
+<g id="edge1" class="edge" data-name="c-&gt;a">
+
+<path fill="none" stroke="black" d="M124.56,-108.3C132.43,-116.53 141.99,-126.52 150.67,-135.58"/>
+<polygon fill="black" stroke="black" points="148.14,-138 157.58,-142.8 153.2,-133.16 148.14,-138"/>
+</g>
+<!-- c&#45;&gt;b -->
+<g id="edge2" class="edge" data-name="c-&gt;b">
+
+<path fill="none" stroke="black" d="M171.69,-108.48C207.27,-118.25 251.78,-130.47 288.92,-140.66"/>
+<polygon fill="black" stroke="black" points="287.65,-143.95 298.22,-143.22 289.5,-137.2 287.65,-143.95"/>
+</g>
+<!-- d -->
+<g id="node4" class="node" pointer-events="visible" data-name="d">
+
+<polygon fill="none" stroke="black" points="593,-108 463,-108 463,-72 593,-72 593,-108"/>
+<text text-anchor="middle" x="528" y="-85.8" font-family="JetBrains Mono" font-size="14.00">Traversal</text>
+</g>
+<!-- d&#45;&gt;a -->
+<g id="edge3" class="edge" data-name="d-&gt;a">
+
+<path fill="none" stroke="black" d="M462.66,-106.15C459.74,-106.79 456.84,-107.4 454,-108 385.72,-122.32 307.68,-137 251.53,-147.27"/>
+<polygon fill="black" stroke="black" points="250.95,-143.82 241.74,-149.06 252.21,-150.71 250.95,-143.82"/>
+</g>
+<!-- d&#45;&gt;b -->
+<g id="edge4" class="edge" data-name="d-&gt;b">
+
+<path fill="none" stroke="black" d="M486.79,-108.48C464.85,-117.79 437.67,-129.32 414.37,-139.21"/>
+<polygon fill="black" stroke="black" points="413.2,-135.9 405.36,-143.03 415.94,-142.34 413.2,-135.9"/>
+</g>
+<!-- e -->
+<g id="node5" class="node" pointer-events="visible" data-name="e">
+
+<polygon fill="lightgrey" stroke="black" points="445,-108 229,-108 229,-72 445,-72 445,-108"/>
+<text text-anchor="middle" x="337" y="-85.8" font-family="JetBrains Mono" font-size="14.00">Primitives.Specialized</text>
+</g>
+<!-- e&#45;&gt;b -->
+<g id="edge5" class="edge" data-name="e-&gt;b">
+
+<path fill="none" stroke="black" d="M343.43,-108.3C346.23,-115.85 349.58,-124.88 352.72,-133.32"/>
+<polygon fill="black" stroke="black" points="349.36,-134.32 356.12,-142.48 355.92,-131.88 349.36,-134.32"/>
+</g>
+<!-- f -->
+<g id="node6" class="node" pointer-events="visible" data-name="f">
+
+<polygon fill="lightgrey" stroke="black" points="216,-36 0,-36 0,0 216,0 216,-36"/>
+<text text-anchor="middle" x="108" y="-13.8" font-family="JetBrains Mono" font-size="14.00">Models.Specialized</text>
+</g>
+<!-- f&#45;&gt;a -->
+<g id="edge6" class="edge" data-name="f-&gt;a">
+
+<path fill="none" stroke="black" d="M70.22,-36.44C56.19,-45.02 41.8,-56.82 34,-72 26.69,-86.23 24.89,-94.85 34,-108 48.98,-129.63 73.96,-142.45 98.77,-150.03"/>
+<polygon fill="black" stroke="black" points="97.71,-153.37 108.28,-152.67 99.58,-146.63 97.71,-153.37"/>
+</g>
+<!-- f&#45;&gt;c -->
+<g id="edge7" class="edge" data-name="f-&gt;c">
+
+<path fill="none" stroke="black" d="M108,-36.3C108,-43.59 108,-52.27 108,-60.46"/>
+<polygon fill="black" stroke="black" points="104.5,-60.38 108,-70.38 111.5,-60.38 104.5,-60.38"/>
+</g>
+<!-- f&#45;&gt;e -->
+<g id="edge8" class="edge" data-name="f-&gt;e">
+
+<path fill="none" stroke="black" d="M165.2,-36.48C196.74,-46.12 236.09,-58.16 269.18,-68.27"/>
+<polygon fill="black" stroke="black" points="268.1,-71.6 278.69,-71.18 270.15,-64.91 268.1,-71.6"/>
+</g>
+<!-- g -->
+<g id="node7" class="node" pointer-events="visible" data-name="g">
+
+<polygon fill="lightgrey" stroke="black" points="543,-36 327,-36 327,0 543,0 543,-36"/>
+<text text-anchor="middle" x="435" y="-13.8" font-family="JetBrains Mono" font-size="14.00">Traversal.Specialized</text>
+</g>
+<!-- g&#45;&gt;a -->
+<g id="edge9" class="edge" data-name="g-&gt;a">
+
+<path fill="none" stroke="black" d="M326.58,-27.33C289.66,-34.67 250.16,-48 220,-72 200.75,-87.32 189,-113.06 182.36,-132.93"/>
+<polygon fill="black" stroke="black" points="179.05,-131.79 179.47,-142.37 185.74,-133.84 179.05,-131.79"/>
+</g>
+<!-- g&#45;&gt;b -->
+<g id="edge10" class="edge" data-name="g-&gt;b">
+
+<path fill="none" stroke="black" d="M529.4,-36.44C581.27,-50.3 629.91,-73.22 602,-108 581.84,-133.12 501.78,-147.07 439.81,-154.28"/>
+<polygon fill="black" stroke="black" points="439.52,-150.79 429.97,-155.38 440.3,-157.74 439.52,-150.79"/>
+</g>
+<!-- g&#45;&gt;d -->
+<g id="edge11" class="edge" data-name="g-&gt;d">
+
+<path fill="none" stroke="black" d="M457.99,-36.3C469.39,-44.89 483.35,-55.39 495.8,-64.76"/>
+<polygon fill="black" stroke="black" points="493.65,-67.53 503.74,-70.74 497.86,-61.93 493.65,-67.53"/>
+</g>
+<!-- g&#45;&gt;e -->
+<g id="edge12" class="edge" data-name="g-&gt;e">
+
+<path fill="none" stroke="black" d="M410.52,-36.48C398.39,-45.15 383.55,-55.75 370.39,-65.15"/>
+<polygon fill="black" stroke="black" points="368.5,-62.2 362.4,-70.86 372.57,-67.9 368.5,-62.2"/>
+</g>
+</g>
+</svg>
