@@ -12,8 +12,8 @@ This package provides an efficient implementation of _Out-Edges Incidence_ and _
 
                 out-neighbors: V → [V]
 
-`Int32AdjacencyGraph` represents a directed multigraph (permitting loops) with edges not having their own identity [1].  
-`Int32IncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity [2].
+`Int32AdjacencyGraph` represents a directed multigraph (permitting loops) with edges not having their own identity[^EWO].  
+`Int32IncidenceGraph` represents a directed multigraph (permitting loops) with edges having their own identity[^EWI].
 
 Vertices are represented as integers and must fill the range [0.._VertexCount_).  
 Edges are stored as incidence lists in contiguous spans.
@@ -65,8 +65,6 @@ The expected output — all the neighbors of vertex 2:
     1
     3
 
----
+[^EWI]: https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
 
-[1] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
-
-[2] https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+[^EWO]: https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
