@@ -46,7 +46,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.EagerBfsD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.EnumerableDfsDemo", "samples\Samples.Traversal.EnumerableDfsDemo\Samples.Traversal.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.BasicUsage", "samples\Samples.BasicUsage\Samples.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Traversal.BasicUsage", "samples\Samples.Traversal.BasicUsage\Samples.Traversal.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NullableAttributes", "src\Shared\NullableAttributes\NullableAttributes.shproj", "{81A3650F-6933-44B9-B0E8-2FA1BD3F3686}"
 EndProject
