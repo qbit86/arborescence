@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <Description>Basic blocks for building algorithms and data structures.
-      Commonly used types:
-      • Endpoints&lt;TVertex&gt;
-      • Color</Description>
+Commonly used types:
+• Endpoints&lt;TVertex&gt;
+• Color</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16.2</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>

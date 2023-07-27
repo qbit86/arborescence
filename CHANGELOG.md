@@ -30,8 +30,6 @@
 
 - Models.Specialized: Renamed type parameters and fixed XML-doc comments.
 
-- Primitives: Fixed `Endpoints<TVertex>`.
-
 - Primitives.Specialized: Fixed `Int32Dictionary<>`
 
 - Traversal: Renamed type parameters and fixed XML-doc comments.
@@ -45,6 +43,8 @@
 ### Changed
 
 - Abstractions: Renamed type parameters and fixed XML-doc comments.
+
+- Primitives: Fixed `Endpoints<TVertex>`.
 
 ## [0.16.1] - 2023-06-11
 
@@ -106,9 +106,9 @@
 
 ### Added
 
-- Traversal: `Incidence.EnumerableGenericSearch<TVertex, TEdge>`, `Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>`.
-- Traversal: `Incidence.EnumerableBfs<TVertex, TEdge>`, `Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>`.
-- Traversal: `Incidence.EnumerableDfs<TVertex, TEdge>`, `Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `Incidence.EnumerableGenericSearch<TVertex, TEdge>`, `Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>`
+- Traversal: `Incidence.EnumerableBfs<TVertex, TEdge>`, `Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>`
+- Traversal: `Incidence.EnumerableDfs<TVertex, TEdge>`, `Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>`
 
 ### Changed
 
@@ -116,7 +116,7 @@
 
 ### Removed
 
-- Traversal: `GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`
 
 ## [0.15.1] - 2023-01-19
 
