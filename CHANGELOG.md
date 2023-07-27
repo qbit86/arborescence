@@ -1,11 +1,53 @@
 # Changelog
 
+## [Unreleased] - 2023-07-28
+
+### Added
+
+- Models: `ListEnumeratorProvider<T>`
+
+- Traversal: `Adjacency.EagerBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerBfs<TVertex>`
+- Traversal: `Adjacency.EagerDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerDfs<TVertex>`
+- Traversal: `Adjacency.RecursiveDfs<TVertex, TNeighborEnumerator>`, `Adjacency.RecursiveDfs<TVertex>`
+
+- Traversal.Specialized: `Adjacency.EagerBfs<TNeighborEnumerator>`, `Adjacency.EagerBfs`
+- Traversal.Specialized: `Adjacency.EagerDfs<TNeighborEnumerator>`, `Adjacency.EagerDfs`
+- Traversal.Specialized: `Adjacency.EnumerableBfs<TNeighborEnumerator>`, `Adjacency.EnumerableBfs`
+- Traversal.Specialized: `Adjacency.EnumerableDfs<TNeighborEnumerator>`, `Adjacency.EnumerableDfs`
+- Traversal.Specialized: `Adjacency.EnumerableGenericSearch<TNeighborEnumerator>`, `Adjacency.EnumerableGenericSearch`
+- Traversal.Specialized: `Adjacency.RecursiveDfs<TNeighborEnumerator>`, `Adjacency.RecursiveDfs`
+- Traversal.Specialized: `Incidence.EagerBfs<TEdge>`, `Incidence.EagerBfs`
+- Traversal.Specialized: `Incidence.EagerDfs<TEdge>`, `Incidence.EagerDfs`
+- Traversal.Specialized: `Incidence.EnumerableBfs<TEdge, TEdgeEnumerator>`, `Incidence.EnumerableBfs<TEdge>`
+- Traversal.Specialized: `Incidence.EnumerableDfs<TEdge, TEdgeEnumerator>`, `Incidence.EnumerableDfs<TEdge>`
+- Traversal.Specialized: `Incidence.EnumerableGenericSearch<TEdge, TEdgeEnumerator>`, `Incidence.EnumerableGenericSearch<TEdge>`
+- Traversal.Specialized: `Incidence.RecursiveDfs<TEdge, TEdgeEnumerator>`, `Incidence.RecursiveDfs<TEdge>`
+
+### Changed
+
+- Abstractions: Renamed type parameters and fixed XML-doc comments.
+
+- Models: Moved `IncidenceEnumerator<>` to `Arborescence.Models` namespace.
+- Models: Renamed type parameters and fixed XML-doc comments.
+
+- Models.Specialized: Renamed type parameters and fixed XML-doc comments.
+
+- Primitives: Fixed `Endpoints<TVertex>`.
+
+- Primitives.Specialized: Fixed `Int32Dictionary<>`
+
+- Traversal: Renamed type parameters and fixed XML-doc comments.
+
+### Removed
+
+- Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
+
 ## [0.16.1] - 2023-06-11
 
 ### Added
 
-- Models.Specialized: XML-doc comments.
-- Primitives.Specialized: XML-doc comments.
+- Models.Specialized: XML-doc comments
+- Primitives.Specialized: XML-doc comments
 
 ### Changed
 
@@ -16,14 +58,14 @@
 
 ### Added
 
-- Abstractions: `IEnumeratorProvider<>`, `IDictionaryAddition<>`, `IReadOnlyMultimapConcept<>`.
-- Models: `AdjacencyEnumerator<>`, `IncidenceEnumerator<>`.
-- Models: `ListAdjacencyGraph<>`, `ListIncidenceGraph<>`, `ReadOnlyAdjacencyGraph<>`, `ReadOnlyIncidenceGraph<>`.
-- Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`.
+- Abstractions: `IEnumeratorProvider<>`, `IDictionaryAddition<>`, `IReadOnlyMultimapConcept<>`
+- Models: `AdjacencyEnumerator<>`, `IncidenceEnumerator<>`
+- Models: `ListAdjacencyGraph<>`, `ListIncidenceGraph<>`, `ReadOnlyAdjacencyGraph<>`, `ReadOnlyIncidenceGraph<>`
+- Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`
 - Models: `ListMultimapConcept<>`, `ReadOnlyMultimapConcept<>`
-- Models.Specialized: `Int32AdjacencyGraph`, `Int32IncidenceGraph`.
-- Primitives: `DefaultAbsence<T>`.
-- Primitives.Specialized: `Int32ReadOnlyDictionary<>`, `Int32IndirectReadOnlyDictionary<>`, `Int32IndirectDictionary<>`.
+- Models.Specialized: `Int32AdjacencyGraph`, `Int32IncidenceGraph`
+- Primitives: `DefaultAbsence<T>`
+- Primitives.Specialized: `Int32ReadOnlyDictionary<>`, `Int32IndirectReadOnlyDictionary<>`, `Int32IndirectDictionary<>`
 
 ### Changed
 
@@ -37,9 +79,9 @@
 
 - Dropped support of `.netcoreapp3.1` and several other TFMs.
 - Models: Dropped support of `netstandard1.0` TFM.
-- Models: `Int32Endpoints`.
-- Models: `SimpleIncidenceGraph`, `MutableSimpleIncidenceGraph`, `MutableUndirectedSimpleIncidenceGraph`.
-- Models: `IndexedIncidenceGraph`, `MutableIndexedIncidenceGraph`, `UndirectedIndexedIncidenceGraph`, `MutableUndirectedIndexedIncidenceGraph`.
+- Models: `Int32Endpoints`
+- Models: `SimpleIncidenceGraph`, `MutableSimpleIncidenceGraph`, `MutableUndirectedSimpleIncidenceGraph`
+- Models: `IndexedIncidenceGraph`, `MutableIndexedIncidenceGraph`, `UndirectedIndexedIncidenceGraph`, `MutableUndirectedIndexedIncidenceGraph`
 
 ## [0.15.3] - 2023-02-09
 
