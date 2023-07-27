@@ -7,7 +7,7 @@
     using System.Text;
 
     /// <summary>
-    /// Provides the Create factory method for <see cref="Endpoints{TVertex}"/>.
+    /// Provides the factory method for <see cref="Endpoints{TVertex}"/>.
     /// </summary>
     public static class Endpoints
     {
@@ -17,7 +17,7 @@
         /// <param name="tail">The tail of the edge.</param>
         /// <param name="head">The head of the edge.</param>
         /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-        /// <returns>A <see cref="Endpoints{TVertex}"/> containing the provided tail and head as endpoints.</returns>
+        /// <returns>An <see cref="Endpoints{TVertex}"/> containing the provided tail and head as endpoints.</returns>
         public static Endpoints<TVertex> Create<TVertex>(TVertex tail, TVertex head) => new(tail, head);
 
         /// <summary>
@@ -68,7 +68,11 @@
         private static EqualityComparer<TVertex> C => EqualityComparer<TVertex>.Default;
 
         /// <inheritdoc/>
-        public override string ToString() => Endpoints.ToString(Tail?.ToString(), Head?.ToString());
+        public override string ToString()
+        {
+            Endpoints<TVertex> self = this;
+            return Endpoints.ToString(self.Tail?.ToString(), self.Head?.ToString());
+        }
 
         /// <summary>
         /// Deconstructs the current <see cref="Endpoints{TVertex}"/> structure.
@@ -78,8 +82,9 @@
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void Deconstruct(out TVertex tail, out TVertex head)
         {
-            tail = Tail;
-            head = Head;
+            Endpoints<TVertex> self = this;
+            tail = self.Tail;
+            head = self.Head;
         }
 
         /// <inheritdoc/>
