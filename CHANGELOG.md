@@ -25,8 +25,6 @@
 
 ### Changed
 
-- Abstractions: Renamed type parameters and fixed XML-doc comments.
-
 - Models: Moved `IncidenceEnumerator<>` to `Arborescence.Models` namespace.
 - Models: Renamed type parameters and fixed XML-doc comments.
 
@@ -41,6 +39,12 @@
 ### Removed
 
 - Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
+
+## [0.16.2] - 2023-07-28
+
+### Changed
+
+- Abstractions: Renamed type parameters and fixed XML-doc comments.
 
 ## [0.16.1] - 2023-06-11
 
@@ -87,16 +91,16 @@
 
 ### Added
 
-- Traversal: `EagerBfs<TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `EagerBfs<TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>`
 - Traversal: Added a cancellation token to the eager versions of the algorithms.
 
 ### Changed
 
-- Changed the type for the sources from `TSourceEnumerator : IEnumerator<TVertex>` to `TSourceCollection : IEnumerable<TVertex>`.
+- Traversal: Changed the type for the sources from `TSourceEnumerator : IEnumerator<TVertex>` to `TSourceCollection : IEnumerable<TVertex>`.
 
 ### Removed
 
-- Traversal: `EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`
 
 ## [0.15.2] - 2023-01-25
 
@@ -434,7 +438,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.2...HEAD
+
+[0.16.2]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.1...arborescence-0.16.2
 
 [0.16.1]: https://github.com/qbit86/arborescence/compare/models.specialized-0.16-preview...arborescence-0.16.1
 
