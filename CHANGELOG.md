@@ -4,8 +4,6 @@
 
 ### Added
 
-- Models: `ListEnumeratorProvider<T>`
-
 - Traversal: `Adjacency.EagerBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerBfs<TVertex>`
 - Traversal: `Adjacency.EagerDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerDfs<TVertex>`
 - Traversal: `Adjacency.RecursiveDfs<TVertex, TNeighborEnumerator>`, `Adjacency.RecursiveDfs<TVertex>`
@@ -25,9 +23,6 @@
 
 ### Changed
 
-- Models: Moved `IncidenceEnumerator<>` to `Arborescence.Models` namespace.
-- Models: Renamed type parameters and fixed XML-doc comments.
-
 - Models.Specialized: Renamed type parameters and fixed XML-doc comments.
 
 - Primitives.Specialized: Fixed `Int32Dictionary<>`
@@ -40,9 +35,16 @@
 
 ## [0.16.2] - 2023-07-28
 
+### Added
+
+- Models: `ListEnumeratorProvider<T>`
+
 ### Changed
 
 - Abstractions: Renamed type parameters and fixed XML-doc comments.
+
+- Models: Moved `IncidenceEnumerator<>` to `Arborescence.Models` namespace.
+- Models: Renamed type parameters and fixed XML-doc comments.
 
 - Primitives: Fixed `Endpoints<TVertex>`.
 
@@ -122,16 +124,16 @@
 
 ### Added
 
-- Traversal: `Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableDfs<TVertex>`.
+- Traversal: `Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableDfs<TVertex>`
 
 ## [0.15.0] - 2023-01-17
 
 ### Added
 
-- Abstractions: `IForwardIncidence<TVertex, TEdge, TEdges>`.
-- Traversal: `Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableGenericSearch<TVertex>`.
-- Traversal: `Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableBfs<TVertex>`.
-- Samples: Project Arborescence.FlightGraphs.
+- Abstractions: `IForwardIncidence<TVertex, TEdge, TEdges>`
+- Traversal: `Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableGenericSearch<TVertex>`
+- Traversal: `Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableBfs<TVertex>`
+- Samples: Project Arborescence.FlightGraphs
 
 ### Changed
 
@@ -142,7 +144,7 @@
 
 ### Removed
 
-- Abstractions: `ITraversable<TVertex, TEdge, TEdges>`.
+- Abstractions: `ITraversable<TVertex, TEdge, TEdges>`
 
 ## [0.14.1] - 2022-01-10
 
