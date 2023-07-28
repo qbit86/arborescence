@@ -17,10 +17,6 @@
 - Traversal.Specialized: `Incidence.EnumerableGenericSearch<TEdge, TEdgeEnumerator>`, `Incidence.EnumerableGenericSearch<TEdge>`
 - Traversal.Specialized: `Incidence.RecursiveDfs<TEdge, TEdgeEnumerator>`, `Incidence.RecursiveDfs<TEdge>`
 
-### Changed
-
-- Models.Specialized: Renamed type parameters and fixed XML-doc comments.
-
 ### Removed
 
 - Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
@@ -41,6 +37,8 @@
 
 - Models: Moved `IncidenceEnumerator<>` to `Arborescence.Models` namespace.
 - Models: Renamed type parameters and fixed XML-doc comments.
+
+- Models.Specialized: Renamed type parameters and fixed XML-doc comments.
 
 - Primitives: Fixed `Endpoints<TVertex>`.
 
