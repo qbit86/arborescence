@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2023-07-28
+## [0.16.2] - 2023-07-28
 
 ### Added
 
@@ -37,10 +37,6 @@
 - Primitives.Specialized: Fixed `Int32Dictionary<>`
 
 - Traversal: Renamed type parameters and fixed XML-doc comments.
-
-### Removed
-
-- Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
 
 ## [0.16.1] - 2023-06-11
 
@@ -87,24 +83,24 @@
 
 ### Added
 
-- Traversal: `EagerBfs<TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `EagerBfs<TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>`
 - Traversal: Added a cancellation token to the eager versions of the algorithms.
 
 ### Changed
 
-- Changed the type for the sources from `TSourceEnumerator : IEnumerator<TVertex>` to `TSourceCollection : IEnumerable<TVertex>`.
+- Traversal: Changed the type for the sources from `TSourceEnumerator : IEnumerator<TVertex>` to `TSourceCollection : IEnumerable<TVertex>`.
 
 ### Removed
 
-- Traversal: `EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `EagerBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EagerDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `RecursiveDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`
 
 ## [0.15.2] - 2023-01-25
 
 ### Added
 
-- Traversal: `Incidence.EnumerableGenericSearch<TVertex, TEdge>`, `Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>`.
-- Traversal: `Incidence.EnumerableBfs<TVertex, TEdge>`, `Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>`.
-- Traversal: `Incidence.EnumerableDfs<TVertex, TEdge>`, `Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `Incidence.EnumerableGenericSearch<TVertex, TEdge>`, `Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>`
+- Traversal: `Incidence.EnumerableBfs<TVertex, TEdge>`, `Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>`
+- Traversal: `Incidence.EnumerableDfs<TVertex, TEdge>`, `Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>`
 
 ### Changed
 
@@ -112,22 +108,22 @@
 
 ### Removed
 
-- Traversal: `GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`.
+- Traversal: `GenericSearch<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableBfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`, `EnumerableDfs<TGraph, TVertex, TEdge, TEdgeEnumerator>`
 
 ## [0.15.1] - 2023-01-19
 
 ### Added
 
-- Traversal: `Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableDfs<TVertex>`.
+- Traversal: `Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableDfs<TVertex>`
 
 ## [0.15.0] - 2023-01-17
 
 ### Added
 
-- Abstractions: `IForwardIncidence<TVertex, TEdge, TEdges>`.
-- Traversal: `Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableGenericSearch<TVertex>`.
-- Traversal: `Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableBfs<TVertex>`.
-- Samples: Project Arborescence.FlightGraphs.
+- Abstractions: `IForwardIncidence<TVertex, TEdge, TEdges>`
+- Traversal: `Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableGenericSearch<TVertex>`
+- Traversal: `Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EnumerableBfs<TVertex>`
+- Samples: Project Arborescence.FlightGraphs
 
 ### Changed
 
@@ -138,20 +134,20 @@
 
 ### Removed
 
-- Abstractions: `ITraversable<TVertex, TEdge, TEdges>`.
+- Abstractions: `ITraversable<TVertex, TEdge, TEdges>`
 
 ## [0.14.1] - 2022-01-10
 
 ### Added
 
-- Models: `Arborescence.Models.Compatibility` namespace with graph implementations for legacy TFMs.
+- Models: `Arborescence.Models.Compatibility` namespace with graph implementations for legacy TFMs
 
 ## [0.14.0] - 2022-01-07
 
 ### Added
 
-- Abstractions: `IHeadIncidence<TVertex, TEdge>`, `ITailIncidence<TVertex, TEdge>`, `IOutEdgesIncidence<TVertex, TEdges>`, `ITraversable<TVertex, TEdge, TEdges>`.
-- Models: `AdditiveMonoid<T>`.
+- Abstractions: `IHeadIncidence<TVertex, TEdge>`, `ITailIncidence<TVertex, TEdge>`, `IOutEdgesIncidence<TVertex, TEdges>`, `ITraversable<TVertex, TEdge, TEdges>`
+- Models: `AdditiveMonoid<T>`
 
 ### Changed
 
@@ -160,10 +156,10 @@
 
 ### Removed
 
-- Abstractions: `IIncidenceGraph<TVertex, TEdge, TEdges>`, `IBidirectionalGraph<TVertex, TEdge, TEdges>`.
-- Models: `Int32AdditiveMonoid`.
-- Models: types in `Arborescence.Models.Compatibility` namespace.
-- Primitives: `ArraySegmentEnumerator<T>`.
+- Abstractions: `IIncidenceGraph<TVertex, TEdge, TEdges>`, `IBidirectionalGraph<TVertex, TEdge, TEdges>`
+- Models: `Int32AdditiveMonoid`
+- Models: types in `Arborescence.Models.Compatibility` namespace
+- Primitives: `ArraySegmentEnumerator<T>`
 
 ## [0.13.1] - 2021-07-07
 
@@ -434,7 +430,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.1...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.2...HEAD
+
+[0.16.2]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.1...arborescence-0.16.2
 
 [0.16.1]: https://github.com/qbit86/arborescence/compare/models.specialized-0.16-preview...arborescence-0.16.1
 
