@@ -79,11 +79,11 @@ namespace Arborescence.Models
             where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
         {
             if (tailByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(tailByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(tailByEdge));
             if (headByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(headByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(headByEdge));
             if (outEdgesByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(outEdgesByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(outEdgesByVertex));
 
             return new(tailByEdge, headByEdge, outEdgesByVertex);
         }

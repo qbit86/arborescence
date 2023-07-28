@@ -1,10 +1,9 @@
 namespace Arborescence.Traversal.Dfs;
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using Incidence;
 using Misnomer;
+using Specialized.Incidence;
 using Xunit;
 using Graph = Models.ListIncidenceGraph<
     int,
@@ -12,7 +11,6 @@ using Graph = Models.ListIncidenceGraph<
     Int32Dictionary<int, System.Collections.Generic.List<int>>,
     System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>>>;
 using EdgeEnumerator = System.Collections.Generic.List<int>.Enumerator;
-using EnumerableDfs = Incidence.EnumerableDfs<int, int, System.Collections.Generic.List<int>.Enumerator>;
 
 public sealed class DfsEnumerateVerticesTest
 {
@@ -22,13 +20,6 @@ public sealed class DfsEnumerateVerticesTest
 
         if (graph.VertexCount == 0)
             return;
-
-        byte[] colorByVertexBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-        Array.Clear(colorByVertexBackingStore, 0, colorByVertexBackingStore.Length);
-        Int32ColorDictionary eagerColorByVertex = new(colorByVertexBackingStore);
-        byte[] setBackingStore = ArrayPool<byte>.Shared.Rent(graph.VertexCount);
-        Array.Clear(setBackingStore, 0, setBackingStore.Length);
-        Int32Set set = new(setBackingStore);
 
         using Rist<int> eagerSteps = new(graph.VertexCount);
         using Rist<int> enumerableSteps = new(graph.VertexCount);
@@ -43,15 +34,17 @@ public sealed class DfsEnumerateVerticesTest
 
             int sourceCount = graph.VertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
-            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, sources, eagerColorByVertex, dfsHandler);
-            IEnumerable<int> vertices = EnumerableDfs.EnumerateVertices(graph, sources, set);
+            EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, graph.VertexCount, dfsHandler);
+            IEnumerable<int> vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
+                graph, sources, graph.VertexCount);
             enumerableSteps.AddRange(vertices);
         }
         else
         {
             int source = graph.VertexCount - 1;
-            EagerDfs<int, int, EdgeEnumerator>.Traverse(graph, source, eagerColorByVertex, dfsHandler);
-            IEnumerable<int> vertices = EnumerableDfs.EnumerateVertices(graph, source, set);
+            EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, graph.VertexCount, dfsHandler);
+            IEnumerable<int> vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
+                graph, source, graph.VertexCount);
             enumerableSteps.AddRange(vertices);
         }
 
@@ -72,11 +65,6 @@ public sealed class DfsEnumerateVerticesTest
 
             Assert.Equal(eagerStep, enumerableStep);
         }
-
-        // Cleanup
-
-        ArrayPool<byte>.Shared.Return(colorByVertexBackingStore);
-        ArrayPool<byte>.Shared.Return(setBackingStore);
     }
 
     private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> steps)

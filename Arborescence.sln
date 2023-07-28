@@ -46,7 +46,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.EagerBfsD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.EnumerableDfsDemo", "samples\Samples.Traversal.EnumerableDfsDemo\Samples.Traversal.EnumerableDfsDemo.csproj", "{866FB4B8-0AB1-41FC-9206-13C22EAC625A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.BasicUsage", "samples\Samples.BasicUsage\Samples.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Traversal.BasicUsage", "samples\Samples.Traversal.BasicUsage\Samples.Traversal.BasicUsage.csproj", "{ED89FFB3-B60C-47DD-85D0-987C8EBA64CF}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NullableAttributes", "src\Shared\NullableAttributes\NullableAttributes.shproj", "{81A3650F-6933-44B9-B0E8-2FA1BD3F3686}"
 EndProject
@@ -59,8 +59,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3BACC594-26D7-4402-B198-5965AF8D6D59}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TestHelpers", "tests\Shared\TestHelpers\TestHelpers.shproj", "{40766C58-C5EC-40DD-9A51-7A8D7F82F85E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Traversal.Adjacency", "tests\Tests.Traversal.Adjacency\Tests.Traversal.Adjacency.csproj", "{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Abstractions.FlightGraphs", "samples\Samples.Abstractions.FlightGraphs\Samples.Abstractions.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
 EndProject
@@ -81,6 +79,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Primitives.Specialized", "tests\Tests.Primitives.Specialized\Tests.Primitives.Specialized.csproj", "{87EAA53B-5EF7-4B73-A082-131D4113E5FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Models.ListGraphs", "samples\Samples.Models.ListGraphs\Samples.Models.ListGraphs.csproj", "{1C8F7BE0-FC28-4902-9976-04497BA418BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Models", "tests\Tests.Models\Tests.Models.csproj", "{3D604A68-F32F-4966-B073-BB95F81F005E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ArgumentNullExceptionHelpers", "src\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.shproj", "{D4BA9C2A-D3FD-4432-9FB0-E62610D39A37}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ArgumentOutOfRangeExceptionHelpers", "src\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.shproj", "{8F9139FA-DC2F-40FF-B90B-4D7FB864A205}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Traversal.Specialized.BasicUsage", "samples\Samples.Traversal.Specialized.BasicUsage\Samples.Traversal.Specialized.BasicUsage.csproj", "{72FD93D1-A12F-4244-A25C-AE1564936CE0}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -150,10 +156,6 @@ Global
 		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0173C1C6-8139-4670-9310-D08FE6DD5011}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3466CE43-A92D-405B-B1AD-C144C704583B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3466CE43-A92D-405B-B1AD-C144C704583B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3466CE43-A92D-405B-B1AD-C144C704583B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -182,6 +184,14 @@ Global
 		{1C8F7BE0-FC28-4902-9976-04497BA418BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C8F7BE0-FC28-4902-9976-04497BA418BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C8F7BE0-FC28-4902-9976-04497BA418BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D604A68-F32F-4966-B073-BB95F81F005E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D604A68-F32F-4966-B073-BB95F81F005E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D604A68-F32F-4966-B073-BB95F81F005E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D604A68-F32F-4966-B073-BB95F81F005E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72FD93D1-A12F-4244-A25C-AE1564936CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72FD93D1-A12F-4244-A25C-AE1564936CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72FD93D1-A12F-4244-A25C-AE1564936CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72FD93D1-A12F-4244-A25C-AE1564936CE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,7 +215,6 @@ Global
 		{81A3650F-6933-44B9-B0E8-2FA1BD3F3686} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
 		{3BACC594-26D7-4402-B198-5965AF8D6D59} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{40766C58-C5EC-40DD-9A51-7A8D7F82F85E} = {3BACC594-26D7-4402-B198-5965AF8D6D59}
-		{8B15BF75-2CF5-4DAE-B447-0C2728F2A66B} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{3466CE43-A92D-405B-B1AD-C144C704583B} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 		{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8} = {5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}
 		{923DACC1-3452-4188-BEFA-7DD898FA16CF} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
@@ -215,6 +224,10 @@ Global
 		{2E33B2C9-0912-493C-A702-3F7AB61DA44C} = {B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}
 		{87EAA53B-5EF7-4B73-A082-131D4113E5FA} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
 		{1C8F7BE0-FC28-4902-9976-04497BA418BE} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
+		{3D604A68-F32F-4966-B073-BB95F81F005E} = {6561325C-4C3A-4949-81E4-BF8D87ED7F37}
+		{D4BA9C2A-D3FD-4432-9FB0-E62610D39A37} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
+		{8F9139FA-DC2F-40FF-B90B-4D7FB864A205} = {0CE9CFFB-DE1E-4012-B69A-8ABBEA050C6D}
+		{72FD93D1-A12F-4244-A25C-AE1564936CE0} = {8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA3444B3-41DC-410A-87E0-1EDB37DB4206}

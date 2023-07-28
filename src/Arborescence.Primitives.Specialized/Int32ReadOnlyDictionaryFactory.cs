@@ -2,7 +2,6 @@ namespace Arborescence
 {
     using System;
     using System.Collections.Generic;
-    using Primitives;
 
     /// <summary>
     /// Provides a set of initialization methods for instances of the
@@ -25,7 +24,7 @@ namespace Arborescence
             where TValueList : IReadOnlyList<TValue>
         {
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             return new(values);
         }
 
@@ -43,7 +42,7 @@ namespace Arborescence
             where TValueList : IReadOnlyList<TValue>
         {
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             return new(values, default);
         }
 
@@ -64,9 +63,9 @@ namespace Arborescence
             where TAbsence : IEquatable<TValue>
         {
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absence is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(absence));
+                ArgumentNullExceptionHelpers.Throw(nameof(absence));
             return new(values, absence);
         }
     }

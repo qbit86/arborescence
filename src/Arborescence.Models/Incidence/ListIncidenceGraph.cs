@@ -46,8 +46,8 @@ namespace Arborescence.Models
         {
             get
             {
-                ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
-                return self._outEdgesByVertex is null ? 0 : GetCountUnchecked(self._outEdgesByVertex);
+                TEdgeMultimap? outEdgesByVertex = _outEdgesByVertex;
+                return outEdgesByVertex is null ? 0 : GetCountUnchecked(outEdgesByVertex);
             }
         }
 

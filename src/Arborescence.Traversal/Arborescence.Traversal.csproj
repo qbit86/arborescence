@@ -1,39 +1,57 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>Graph traversal algorithms: BFS, DFS.
 Commonly used types:
-• EnumerableGenericSearch&lt;TVertex, TNeighborEnumerator&gt;, EnumerableGenericSearch&lt;TVertex, TEdge, TEdgeEnumerator&gt;
-• EnumerableBfs&lt;TVertex, TNeighborEnumerator&gt;, EnumerableBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
-• EnumerableDfs&lt;TVertex, TNeighborEnumerator&gt;, EnumerableDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
-• EagerBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
-• EagerDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;</Description>
+• Adjacency.EnumerableBfs&lt;TVertex, TNeighborEnumerator&gt;
+• Adjacency.EnumerableDfs&lt;TVertex, TNeighborEnumerator&gt;
+• Adjacency.EnumerableGenericSearch&lt;TVertex, TNeighborEnumerator&gt;
+• Adjacency.EagerBfs&lt;TVertex, TNeighborEnumerator&gt;
+• Adjacency.EagerDfs&lt;TVertex, TNeighborEnumerator&gt;
+• Incidence.EnumerableBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• Incidence.EnumerableDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• Incidence.EnumerableGenericSearch&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• Incidence.EagerBfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;
+• Incidence.EagerDfs&lt;TVertex, TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionPrefix>0.16</VersionPrefix>
+    <VersionPrefix>0.16.2</VersionPrefix>
   </PropertyGroup>
+
   <PropertyGroup>
-    <AssemblyVersion>0.16</AssemblyVersion>
+    <AssemblyVersion>0.16.2</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Arborescence.Traversal.Specialized, PublicKey=0024000004800000940000000602000000240000525341310004000001000100dd071aad0619a7f0f4efe751b7dacafd2320b256d39904fed1493a401cc48faebe6101e81fd2c2da86a45ef2bf0c2d0122d8578c8bafa3170096a9132b9d50c39ad5021e6d5ed4c0cf150dedbd41f4debc88e315519a4cd96b5cf420b07699daee4405ce4513cedb6802e007bf54138cc00572ec1990d83dc52cb0948210aebe" />
+  </ItemGroup>
+
   <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
   <Import Project="..\Shared\ValueQueue\ValueQueue.projitems" Label="Shared" />
   <Import Project="..\Shared\ValueStack\ValueStack.projitems" Label="Shared" />
+
 </Project>

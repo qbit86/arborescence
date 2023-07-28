@@ -24,9 +24,9 @@ namespace Arborescence.Models
             where TEdgeEnumerator : IEnumerator<TEdge>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
             if (edgeEnumerator is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(edgeEnumerator));
+                ArgumentNullExceptionHelpers.Throw(nameof(edgeEnumerator));
 
             return new(graph, edgeEnumerator);
         }

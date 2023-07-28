@@ -4,32 +4,32 @@ namespace Arborescence.Models
 
     /// <summary>
     /// Provides support for creating
-    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>
     /// objects.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-    public static class ReadOnlyAdjacencyGraphFactory<TVertex, TVertexEnumerator>
-        where TVertexEnumerator : IEnumerator<TVertex>
+    /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+    public static class ReadOnlyAdjacencyGraphFactory<TVertex, TNeighborEnumerator>
+        where TNeighborEnumerator : IEnumerator<TVertex>
     {
         /// <summary>
         /// Creates a
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>.
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>.
         /// </summary>
         /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
         /// <param name="vertexMultimapConcept">The object that provides operations on the vertex multimap.</param>
         /// <typeparam name="TVertexMultimap">The type of mapping from a vertex to a sequence of its out-neighbors.</typeparam>
         /// <typeparam name="TVertexMultimapConcept">The type that provides operations on the vertex multimap.</typeparam>
         /// <returns>The read-only adjacency graph.</returns>
-        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept>
+        public static ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept>
             Create<TVertexMultimap, TVertexMultimapConcept>(
                 TVertexMultimap neighborsByVertex, TVertexMultimapConcept vertexMultimapConcept)
-            where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertexMultimap, TVertex, TVertexEnumerator>
+            where TVertexMultimapConcept : IReadOnlyMultimapConcept<TVertexMultimap, TVertex, TNeighborEnumerator>
         {
             if (neighborsByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
             if (vertexMultimapConcept is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(vertexMultimapConcept));
+                ArgumentNullExceptionHelpers.Throw(nameof(vertexMultimapConcept));
 
             return new(neighborsByVertex, vertexMultimapConcept);
         }
@@ -37,42 +37,42 @@ namespace Arborescence.Models
 
     /// <summary>
     /// Provides support for creating
-    /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>
     /// objects, when <c>TVertexMultimapConcept</c> is
-    /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>.
+    /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap,TVertex,TNeighborCollection,TNeighborEnumerator,TNeighborEnumeratorProvider}"/>.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TVertexCollection">The type of the vertex collection.</typeparam>
-    /// <typeparam name="TVertexEnumerator">The type of the vertex enumerator.</typeparam>
-    public static class ReadOnlyAdjacencyGraphFactory<TVertex, TVertexCollection, TVertexEnumerator>
-        where TVertexEnumerator : IEnumerator<TVertex>
+    /// <typeparam name="TNeighborCollection">The type of the neighbor collection.</typeparam>
+    /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
+    public static class ReadOnlyAdjacencyGraphFactory<TVertex, TNeighborCollection, TNeighborEnumerator>
+        where TNeighborEnumerator : IEnumerator<TVertex>
     {
         /// <summary>
         /// Creates a
-        /// <see cref="ReadOnlyAdjacencyGraph{TVertex, TVertexEnumerator, TVertexMultimap, TVertexMultimapConcept}"/>,
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>,
         /// when <c>TVertexMultimapConcept</c> is
-        /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider}"/>.
+        /// <see cref="ReadOnlyMultimapConcept{TVertexMultimap,TVertex,TVertexCollection,TNeighborEnumerator,TNeighborEnumeratorProvider}"/>.
         /// </summary>
         /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
-        /// <param name="vertexEnumeratorProvider">The vertex enumerator provider.</param>
+        /// <param name="neighborEnumeratorProvider">The neighbor enumerator provider.</param>
         /// <typeparam name="TVertexMultimap">The type of mapping from a vertex to a sequence of its out-neighbors.</typeparam>
-        /// <typeparam name="TVertexEnumeratorProvider">The type of the vertex enumerator provider.</typeparam>
+        /// <typeparam name="TNeighborEnumeratorProvider">The type of the neighbor enumerator provider.</typeparam>
         /// <returns>The read-only adjacency graph.</returns>
-        public static ReadOnlyAdjacencyGraph<TVertex, TVertexEnumerator, TVertexMultimap, ReadOnlyMultimapConcept<
-                TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider>>
-            Create<TVertexMultimap, TVertexEnumeratorProvider>(
-                TVertexMultimap neighborsByVertex, TVertexEnumeratorProvider vertexEnumeratorProvider)
-            where TVertexMultimap : IReadOnlyDictionary<TVertex, TVertexCollection>
-            where TVertexEnumeratorProvider : IEnumeratorProvider<TVertexCollection, TVertexEnumerator>
+        public static ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, ReadOnlyMultimapConcept<
+                TVertexMultimap, TVertex, TNeighborCollection, TNeighborEnumerator, TNeighborEnumeratorProvider>>
+            Create<TVertexMultimap, TNeighborEnumeratorProvider>(
+                TVertexMultimap neighborsByVertex, TNeighborEnumeratorProvider neighborEnumeratorProvider)
+            where TVertexMultimap : IReadOnlyDictionary<TVertex, TNeighborCollection>
+            where TNeighborEnumeratorProvider : IEnumeratorProvider<TNeighborCollection, TNeighborEnumerator>
         {
             if (neighborsByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborsByVertex));
-            if (vertexEnumeratorProvider is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(vertexEnumeratorProvider));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
+            if (neighborEnumeratorProvider is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborEnumeratorProvider));
 
             ReadOnlyMultimapConcept<
-                    TVertexMultimap, TVertex, TVertexCollection, TVertexEnumerator, TVertexEnumeratorProvider>
-                vertexMultimapConcept = new(vertexEnumeratorProvider);
+                    TVertexMultimap, TVertex, TNeighborCollection, TNeighborEnumerator, TNeighborEnumeratorProvider>
+                vertexMultimapConcept = new(neighborEnumeratorProvider);
             return new(neighborsByVertex, vertexMultimapConcept);
         }
     }

@@ -1,7 +1,6 @@
 namespace Arborescence
 {
     using System.Collections.Generic;
-    using Primitives;
 
     /// <summary>
     /// Provides a set of initialization methods for instances
@@ -29,9 +28,9 @@ namespace Arborescence
             where TValueList : IList<TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             Int32Dictionary<TValue, TValueList> valueByIndex = new(values);
             return new(indexByKey, valueByIndex);
         }
@@ -57,9 +56,9 @@ namespace Arborescence
             where TValueList : IList<TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             Int32Dictionary<TValue, TValueList, EqualityComparer<TValue>> valueByIndex =
                 new(values, EqualityComparer<TValue>.Default, absenceMarker);
             return new(indexByKey, valueByIndex);
@@ -91,11 +90,11 @@ namespace Arborescence
             where TAbsenceComparer : IEqualityComparer<TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absenceComparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(absenceComparer));
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> valueByIndex =
                 new(values, absenceComparer, absenceMarker);
             return new(indexByKey, valueByIndex);
@@ -118,9 +117,9 @@ namespace Arborescence
             where TIndexToValueMap : IDictionary<int, TValue>
         {
             if (indexByKey is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(indexByKey));
+                ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (valueByIndex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(valueByIndex));
+                ArgumentNullExceptionHelpers.Throw(nameof(valueByIndex));
             return new(indexByKey, valueByIndex);
         }
     }

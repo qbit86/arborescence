@@ -1,8 +1,7 @@
-namespace Arborescence
+namespace Arborescence.Models
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Models;
 
     /// <summary>
     /// Provides support for creating <see cref="IncidenceEnumerator{TVertex, TNeighborEnumerator}"/> objects.
@@ -22,7 +21,7 @@ namespace Arborescence
             where TNeighborEnumerator : IEnumerator<TVertex>
         {
             if (neighborEnumerator is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(neighborEnumerator));
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborEnumerator));
 
             return new(vertex, neighborEnumerator);
         }

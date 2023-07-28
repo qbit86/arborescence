@@ -96,13 +96,13 @@ namespace Arborescence.Traversal.Incidence
             where THandler : IBfsHandler<TVertex, TEdge, TGraph>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (source is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(source));
+                ArgumentNullExceptionHelpers.Throw(nameof(source));
 
             if (handler is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(handler));
+                ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new();
             TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
@@ -115,13 +115,13 @@ namespace Arborescence.Traversal.Incidence
             where THandler : IBfsHandler<TVertex, TEdge, TGraph>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (source is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(source));
+                ArgumentNullExceptionHelpers.Throw(nameof(source));
 
             if (handler is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(handler));
+                ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new(comparer);
             TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
@@ -135,21 +135,21 @@ namespace Arborescence.Traversal.Incidence
             where THandler : IBfsHandler<TVertex, TEdge, TGraph>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (source is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(source));
+                ArgumentNullExceptionHelpers.Throw(nameof(source));
 
             if (colorByVertex is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(colorByVertex));
+                ArgumentNullExceptionHelpers.Throw(nameof(colorByVertex));
 
             if (handler is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(handler));
+                ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
         }
 
-        private static void TraverseUnchecked<TGraph, TColorMap, THandler>(
+        internal static void TraverseUnchecked<TGraph, TColorMap, THandler>(
             TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
             CancellationToken cancellationToken)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>

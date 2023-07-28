@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GraphParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IGraphBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ListExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RandomGraphDefinitionCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RistFactory.cs" />
   </ItemGroup>
 </Project>

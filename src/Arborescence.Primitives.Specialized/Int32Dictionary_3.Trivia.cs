@@ -90,7 +90,7 @@ namespace Arborescence
             }
 
             if (unchecked((uint)arrayIndex > (uint)array.Length))
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(arrayIndex));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(arrayIndex));
 
             Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
             if (self._values is not { } values)

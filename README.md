@@ -6,10 +6,11 @@
 [![Arborescence.Primitives version](https://img.shields.io/nuget/v/Arborescence.Primitives.svg?label=Primitives&logo=nuget)](https://nuget.org/packages/Arborescence.Primitives/)
 [![Arborescence.Primitives.Specialized version](https://img.shields.io/nuget/v/Arborescence.Primitives.Specialized.svg?label=Primitives.Specialized&logo=nuget)](https://nuget.org/packages/Arborescence.Primitives.Specialized/)
 [![Arborescence.Traversal version](https://img.shields.io/nuget/v/Arborescence.Traversal.svg?label=Traversal&logo=nuget)](https://nuget.org/packages/Arborescence.Traversal/)
+[![Arborescence.Traversal.Specialized version](https://img.shields.io/nuget/v/Arborescence.Traversal.Specialized.svg?label=Traversal.Specialized&logo=nuget)](https://nuget.org/packages/Arborescence.Traversal.Specialized/)
 
 Arborescence is a generic .NET library for dealing with graphs.
 
-## Features
+## Packages
 
 - [Abstractions] — interfaces and concepts for examining graphs and collections in a data-structure-agnostic way.
 - [Models] — generic graph structures that implement the aforementioned interfaces.
@@ -17,6 +18,9 @@ Arborescence is a generic .NET library for dealing with graphs.
 - [Primitives] — building blocks for creating various data structures and APIs.
 - [Primitives.Specialized] — efficient specializations for different vocabulary generic types.
 - [Traversal] — widely used graph traversal algorithms such as BFS and DFS.
+- [Traversal.Specialized] — traversal algorithms specialized for integer vertices from a contiguous range.
+
+![](/assets/dependencies.svg)
 
 ## Installation
 
@@ -30,6 +34,10 @@ Let's consider a simple directed graph and a breadth-first tree on it:
 This is how you create a graph and run an algorithm against the graph:
 
 ```csharp
+using Traversal.Adjacency;
+
+...
+
 Endpoints<int>[] edges =
 {
     new(2, 0),
@@ -78,3 +86,5 @@ License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 [Primitives.Specialized]: https://nuget.org/packages/Arborescence.Primitives.Specialized/
 
 [Traversal]: https://nuget.org/packages/Arborescence.Traversal/
+
+[Traversal.Specialized]: https://nuget.org/packages/Arborescence.Traversal.Specialized/

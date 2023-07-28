@@ -30,7 +30,7 @@ namespace Arborescence.Models.Specialized
         public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge)
         {
             if (endpointsByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
 
             int vertexCount = DeduceVertexCount(endpointsByEdge);
             if (vertexCount is 0)
@@ -59,11 +59,11 @@ namespace Arborescence.Models.Specialized
         public static Int32IncidenceGraph FromEdges(Endpoints<int>[] endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(endpointsByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             // We cannot reuse this overload taking span:
             // Int32IncidenceGraphFactory.FromEdgesUnchecked(int, Span<Endpoints<int>>)
@@ -179,7 +179,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             return FromEdgesUnchecked(vertexCount, endpointsByEdge);
         }
@@ -241,7 +241,7 @@ namespace Arborescence.Models.Specialized
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             return FromEdgesUnchecked(vertexCount, CollectionsMarshal.AsSpan(endpointsByEdge));
         }

@@ -1,7 +1,6 @@
 namespace Arborescence
 {
     using System.Collections.Generic;
-    using Primitives;
 
     /// <summary>
     /// Provides a set of initialization methods for instances
@@ -24,7 +23,7 @@ namespace Arborescence
             where TValueList : IList<TValue>
         {
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             return new(values);
         }
 
@@ -43,7 +42,7 @@ namespace Arborescence
             where TValueList : IList<TValue>
         {
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             return new(values, EqualityComparer<TValue>.Default, absenceMarker);
         }
 
@@ -66,9 +65,9 @@ namespace Arborescence
             where TAbsenceComparer : IEqualityComparer<TValue>
         {
             if (values is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(values));
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absenceComparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(absenceComparer));
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
             return new(values, absenceComparer, absenceMarker);
         }
     }

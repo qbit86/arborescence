@@ -41,10 +41,10 @@ namespace Arborescence.Search.Specialized
         public EnumerableAStar(TCostComparer costComparer, TCostMonoid costMonoid)
         {
             if (costComparer is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(costComparer));
+                ArgumentNullExceptionHelpers.Throw(nameof(costComparer));
 
             if (costMonoid is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(costMonoid));
+                ArgumentNullExceptionHelpers.Throw(nameof(costMonoid));
 
             _costComparer = costComparer;
             _costMonoid = costMonoid;
@@ -79,16 +79,16 @@ namespace Arborescence.Search.Specialized
             where TWeightMap : IReadOnlyDictionary<TEdge, TCost>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (heuristic is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(heuristic));
+                ArgumentNullExceptionHelpers.Throw(nameof(heuristic));
 
             if (weightByEdge is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(weightByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             if (vertexCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(vertexCount));
+                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(vertexCount), vertexCount);
 
             return EnumerateRelaxedEdgesIterator(graph, source, heuristic, weightByEdge, vertexCount, infinity);
         }

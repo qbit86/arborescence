@@ -13,11 +13,11 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;model;adjacency;incidence</PackageTags>
     <Title>Generic graph models</Title>
-    <VersionPrefix>0.16.1</VersionPrefix>
+    <VersionPrefix>0.16.2</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16</AssemblyVersion>
+    <AssemblyVersion>0.16.2</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion Condition="'$(TargetFramework)' == 'net7.0'">11</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
@@ -41,7 +41,8 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
 
-  <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
   <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
+  <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
 
 </Project>

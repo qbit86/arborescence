@@ -24,6 +24,9 @@ ij_formatter_enabled = false
 
 [*.{config,csproj,html,props,resx,shproj,targets,xml}]
 resharper_space_before_self_closing = true
+resharper_xml_space_before_self_closing = true
+space_before_self_closing = true
+xml_space_before_self_closing = true
 
 [*.{cs,vb}]
 dotnet_code_quality_unused_parameters = non_public:suggestion
@@ -149,6 +152,7 @@ resharper_space_within_single_line_array_initializer_braces = true
 resharper_xmldoc_indent_child_elements = DoNotTouch
 resharper_xmldoc_indent_text = DoNotTouch
 resharper_xmldoc_space_before_self_closing = false
+resharper_xmldoc_wrap_lines = false
 
 [AssemblyInfo.cs]
 generated_code = true

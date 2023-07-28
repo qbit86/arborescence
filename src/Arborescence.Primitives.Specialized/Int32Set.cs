@@ -45,7 +45,7 @@ namespace Arborescence
         void ICollection<int>.Add(int item)
         {
             if ((uint)item >= (uint)_items.Length)
-                throw new ArgumentOutOfRangeException(nameof(item));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(item));
 
             _items[item] = 1;
         }
@@ -84,7 +84,7 @@ namespace Arborescence
         public bool Add(int item)
         {
             if ((uint)item >= (uint)_items.Length)
-                throw new ArgumentOutOfRangeException(nameof(item));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(item));
 
             bool result = _items[item] == 0;
             _items[item] = 1;

@@ -10,7 +10,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Specialized primitive types</Title>
-    <VersionPrefix>0.16.1</VersionPrefix>
+    <VersionPrefix>0.16.2</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -42,7 +42,9 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
 
-  <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
   <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.projitems" Label="Shared" />
+  <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
 
 </Project>

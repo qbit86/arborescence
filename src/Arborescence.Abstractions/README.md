@@ -9,9 +9,9 @@ Interfaces are direct contracts for algorithms, constraints on their type parame
 The most important ones are:
 
 ```csharp
-IOutNeighborsAdjacency<TVertex, TVertices>
+IOutNeighborsAdjacency<TVertex, TNeighbors>
 {
-    TVertices EnumerateOutNeighbors(TVertex vertex);
+    TNeighbors EnumerateOutNeighbors(TVertex vertex);
 }
 
 IHeadIncidence<TVertex, TEdge>
@@ -40,7 +40,7 @@ IForwardIncidence<TVertex, TEdge, TEdges> :
 ```
 
 The library treats the term _graph_ in a specific sense.
-The closest analog in mathematics is the notion of a _quiver_ [1] — a directed graph [2] where loops and multiple edges between two vertices are allowed.
+The closest analog in mathematics is the notion of a _quiver_[^Q] — a directed graph[^DG] where loops and multiple edges between two vertices are allowed.
 
 Let's look at an example of four airports (_Omsk_, _London_, _Istanbul_, _Taipei_) and five flights between them:
 
@@ -78,7 +78,7 @@ Here common restrictions of _simple directed graphs_ are relaxed:
 
 - parallel edges like `BA676` and `TK1980` are permitted,
 - antiparallel edges like `TK1980` and `BA677` are also fine,
-- nothing special about loops like edge `EVA5288` [3],
+- nothing special about loops like edge `EVA5288`[^EVA],
 - isolated vertices like _OMS_ are allowed too.
 
 The edges are _not_ treated as a set of ordered pairs of vertices.
@@ -86,10 +86,10 @@ Instead, they are described in terms of two _incidence_ functions _tail_ and _he
 In the example above, the _tail_ function is defined as { `BA676` ↦ _LHR_, `TK1980` ↦ _LHR_, `BA677` ↦ _IST_, `TK24` ↦ _IST_, `EVA5288` ↦ _TPE_ }.
 
 There are two distinct notions of multiple edges:
-- Without their own identity [4]: the identity of an edge is defined solely by the two vertices it connects.
+- Without their own identity[^EWO]: the identity of an edge is defined solely by the two vertices it connects.
   Let's ignore for now the flight ids in the figure above.
   Then outgoing edges of vertex _LHR_ would be two entries of the same endpoints pair: ⟨_LHR_, _IST_⟩ and ⟨_LHR_, _IST_⟩ again.
-- With their own identity [5]: edges are primitive entities just like vertices.
+- With their own identity[^EWI]: edges are primitive entities just like vertices.
   In this case, the outgoing edges of vertex _LHR_ are two different independent edges `BA676` and `TK1980`, which just occasionally happen to have the same endpoints.
 
 Another useful function maps the vertex to its _outgoing edges_, making a graph traversable.
@@ -242,20 +242,18 @@ Expected output is:
     LHR
     IST
 
----
+[^DG]: Directed graph  
+  https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
 
-[1] Quiver  
-https://en.wikipedia.org/wiki/Quiver_(mathematics)
+[^EVA]: EVA Air introduces special flight to nowhere  
+  https://edition.cnn.com/travel/article/eva-air-hello-kitty-fathers-day-flight/index.html  
+  https://flightaware.com/live/flight/EVA5288
 
-[2] Directed graph  
-https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
+[^EWI]: Edges with own identity  
+  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
 
-[3] EVA Air introduces special flight to nowhere  
-https://edition.cnn.com/travel/article/eva-air-hello-kitty-fathers-day-flight/index.html  
-https://flightaware.com/live/flight/EVA5288
+[^EWO]: Edges without own identity  
+  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
 
-[4] Edges without own identity  
-https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
-
-[5] Edges with own identity  
-https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+[^Q]: Quiver  
+  https://en.wikipedia.org/wiki/Quiver_(mathematics)

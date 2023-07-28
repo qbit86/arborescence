@@ -27,7 +27,7 @@ namespace Arborescence.Models
             where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator>
         {
             if (enumeratorProvider is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(enumeratorProvider));
+                ArgumentNullExceptionHelpers.Throw(nameof(enumeratorProvider));
 
             return new(enumeratorProvider);
         }

@@ -1,23 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Description>Graph traversal algorithms specialized for integer vertices from a contiguous range.
+Commonly used types:
+• Adjacency.EnumerableBfs&lt;TNeighborEnumerator&gt;
+• Adjacency.EnumerableDfs&lt;TNeighborEnumerator&gt;
+• Adjacency.EnumerableGenericSearch&lt;TNeighborEnumerator&gt;
+• Adjacency.EagerBfs&lt;TNeighborEnumerator&gt;
+• Adjacency.EagerDfs&lt;TNeighborEnumerator&gt;
+• Incidence.EnumerableBfs&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EnumerableDfs&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EnumerableGenericSearch&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EagerBfs&lt;TEdge, TEdgeEnumerator&gt;
+• Incidence.EagerDfs&lt;TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Specialized graph traversal algorithms</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.16.2</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
+    <AssemblyVersion>0.16.2</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal.Specialized</RootNamespace>
-    <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup>
+    <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
+    <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
+    <ProjectReference Include="..\Arborescence.Traversal\Arborescence.Traversal.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
 
@@ -25,7 +46,6 @@
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
-  <Import Project="..\Shared\ValueQueue\ValueQueue.projitems" Label="Shared" />
-  <Import Project="..\Shared\ValueStack\ValueStack.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.projitems" Label="Shared" />
+
 </Project>

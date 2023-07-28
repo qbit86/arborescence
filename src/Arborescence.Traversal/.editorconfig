@@ -1,5 +1,5 @@
 [*.cs]
-dotnet_diagnostic.CA1000.severity = silent # Do not declare static members on generic types
+dotnet_diagnostic.CA1000.severity = none # Do not declare static members on generic types
 resharper_unused_type_parameter_highlighting = hint
 
 [*.MultipleSource.cs]

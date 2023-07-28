@@ -1,6 +1,5 @@
 namespace Arborescence
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -21,7 +20,7 @@ namespace Arborescence
         public RangeEnumerator(int start, int endExclusive)
         {
             if (endExclusive < start)
-                ThrowArgumentOutOfRangeException(nameof(start));
+                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(start));
 
             _start = start;
             _end = endExclusive;
@@ -60,8 +59,5 @@ namespace Arborescence
         IEnumerator<int> IEnumerable<int>.GetEnumerator() => GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        private static void ThrowArgumentOutOfRangeException(string argument) =>
-            throw new ArgumentOutOfRangeException(argument);
     }
 }

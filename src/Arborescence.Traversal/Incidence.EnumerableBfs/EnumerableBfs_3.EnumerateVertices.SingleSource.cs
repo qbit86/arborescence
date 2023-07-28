@@ -61,7 +61,7 @@ namespace Arborescence.Traversal.Incidence
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
             return EnumerateVerticesIterator(graph, source, exploredSet);
@@ -72,7 +72,7 @@ namespace Arborescence.Traversal.Incidence
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
             return EnumerateVerticesIterator(graph, source, exploredSet);
@@ -84,15 +84,15 @@ namespace Arborescence.Traversal.Incidence
             where TExploredSet : ISet<TVertex>
         {
             if (graph is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (exploredSet is null)
-                ThrowHelper.ThrowArgumentNullException(nameof(exploredSet));
+                ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
             return EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
-        private static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
+        internal static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
             TGraph graph, TVertex source, TExploredSet exploredSet)
             where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
             where TExploredSet : ISet<TVertex>

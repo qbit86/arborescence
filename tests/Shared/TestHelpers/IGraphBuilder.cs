@@ -6,7 +6,7 @@ namespace Arborescence.Models;
 /// <typeparam name="TGraph">The type of the graph.</typeparam>
 /// <typeparam name="TVertex">The type of the vertex.</typeparam>
 /// <typeparam name="TEdge">The type of the edge.</typeparam>
-public interface IGraphBuilder<out TGraph, in TVertex, TEdge>
+internal interface IGraphBuilder<out TGraph, in TVertex, TEdge>
 {
     /// <summary>
     /// Attempts to add the edge with the specified endpoints to the graph.

@@ -9,6 +9,7 @@ public sealed partial class Int32AdjacencyGraphTests
 {
     [Theory]
     [ClassData(typeof(GraphDefinitionCollection))]
+    [ClassData(typeof(RandomGraphDefinitionCollection))]
     internal void EnumerateOutNeighbors_AllVertices_ReturnsSameSetOfVertices(GraphDefinitionParameter p)
     {
 #if NET5_0_OR_GREATER
