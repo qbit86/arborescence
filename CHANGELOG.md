@@ -21,8 +21,6 @@
 
 - Models.Specialized: Renamed type parameters and fixed XML-doc comments.
 
-- Primitives.Specialized: Fixed `Int32Dictionary<>`
-
 ### Removed
 
 - Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
@@ -45,6 +43,8 @@
 - Models: Renamed type parameters and fixed XML-doc comments.
 
 - Primitives: Fixed `Endpoints<TVertex>`.
+
+- Primitives.Specialized: Fixed `Int32Dictionary<>`
 
 - Traversal: Renamed type parameters and fixed XML-doc comments.
 
