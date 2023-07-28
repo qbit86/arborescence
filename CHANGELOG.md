@@ -1,8 +1,14 @@
 # Changelog
 
-## [Unreleased] - 2023-07-28
+## [0.16.2] - 2023-07-28
 
 ### Added
+
+- Models: `ListEnumeratorProvider<T>`
+
+- Traversal: `Adjacency.EagerBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerBfs<TVertex>`
+- Traversal: `Adjacency.EagerDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerDfs<TVertex>`
+- Traversal: `Adjacency.RecursiveDfs<TVertex, TNeighborEnumerator>`, `Adjacency.RecursiveDfs<TVertex>`
 
 - Traversal.Specialized: `Adjacency.EagerBfs<TNeighborEnumerator>`, `Adjacency.EagerBfs`
 - Traversal.Specialized: `Adjacency.EagerDfs<TNeighborEnumerator>`, `Adjacency.EagerDfs`
@@ -16,20 +22,6 @@
 - Traversal.Specialized: `Incidence.EnumerableDfs<TEdge, TEdgeEnumerator>`, `Incidence.EnumerableDfs<TEdge>`
 - Traversal.Specialized: `Incidence.EnumerableGenericSearch<TEdge, TEdgeEnumerator>`, `Incidence.EnumerableGenericSearch<TEdge>`
 - Traversal.Specialized: `Incidence.RecursiveDfs<TEdge, TEdgeEnumerator>`, `Incidence.RecursiveDfs<TEdge>`
-
-### Removed
-
-- Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
-
-## [0.16.2] - 2023-07-28
-
-### Added
-
-- Models: `ListEnumeratorProvider<T>`
-
-- Traversal: `Adjacency.EagerBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerBfs<TVertex>`
-- Traversal: `Adjacency.EagerDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerDfs<TVertex>`
-- Traversal: `Adjacency.RecursiveDfs<TVertex, TNeighborEnumerator>`, `Adjacency.RecursiveDfs<TVertex>`
 
 ### Changed
 
