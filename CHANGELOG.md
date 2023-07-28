@@ -4,10 +4,6 @@
 
 ### Added
 
-- Traversal: `Adjacency.EagerBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerBfs<TVertex>`
-- Traversal: `Adjacency.EagerDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerDfs<TVertex>`
-- Traversal: `Adjacency.RecursiveDfs<TVertex, TNeighborEnumerator>`, `Adjacency.RecursiveDfs<TVertex>`
-
 - Traversal.Specialized: `Adjacency.EagerBfs<TNeighborEnumerator>`, `Adjacency.EagerBfs`
 - Traversal.Specialized: `Adjacency.EagerDfs<TNeighborEnumerator>`, `Adjacency.EagerDfs`
 - Traversal.Specialized: `Adjacency.EnumerableBfs<TNeighborEnumerator>`, `Adjacency.EnumerableBfs`
@@ -27,8 +23,6 @@
 
 - Primitives.Specialized: Fixed `Int32Dictionary<>`
 
-- Traversal: Renamed type parameters and fixed XML-doc comments.
-
 ### Removed
 
 - Traversal.Specialized: `Arborescence.Traversal.Specialized.EnumerableDfs<TGraph, TEdge, TEdgeEnumerator>`
@@ -39,6 +33,10 @@
 
 - Models: `ListEnumeratorProvider<T>`
 
+- Traversal: `Adjacency.EagerBfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerBfs<TVertex>`
+- Traversal: `Adjacency.EagerDfs<TVertex, TNeighborEnumerator>`, `Adjacency.EagerDfs<TVertex>`
+- Traversal: `Adjacency.RecursiveDfs<TVertex, TNeighborEnumerator>`, `Adjacency.RecursiveDfs<TVertex>`
+
 ### Changed
 
 - Abstractions: Renamed type parameters and fixed XML-doc comments.
@@ -47,6 +45,8 @@
 - Models: Renamed type parameters and fixed XML-doc comments.
 
 - Primitives: Fixed `Endpoints<TVertex>`.
+
+- Traversal: Renamed type parameters and fixed XML-doc comments.
 
 ## [0.16.1] - 2023-06-11
 
@@ -150,14 +150,14 @@
 
 ### Added
 
-- Models: `Arborescence.Models.Compatibility` namespace with graph implementations for legacy TFMs.
+- Models: `Arborescence.Models.Compatibility` namespace with graph implementations for legacy TFMs
 
 ## [0.14.0] - 2022-01-07
 
 ### Added
 
-- Abstractions: `IHeadIncidence<TVertex, TEdge>`, `ITailIncidence<TVertex, TEdge>`, `IOutEdgesIncidence<TVertex, TEdges>`, `ITraversable<TVertex, TEdge, TEdges>`.
-- Models: `AdditiveMonoid<T>`.
+- Abstractions: `IHeadIncidence<TVertex, TEdge>`, `ITailIncidence<TVertex, TEdge>`, `IOutEdgesIncidence<TVertex, TEdges>`, `ITraversable<TVertex, TEdge, TEdges>`
+- Models: `AdditiveMonoid<T>`
 
 ### Changed
 
@@ -166,10 +166,10 @@
 
 ### Removed
 
-- Abstractions: `IIncidenceGraph<TVertex, TEdge, TEdges>`, `IBidirectionalGraph<TVertex, TEdge, TEdges>`.
-- Models: `Int32AdditiveMonoid`.
-- Models: types in `Arborescence.Models.Compatibility` namespace.
-- Primitives: `ArraySegmentEnumerator<T>`.
+- Abstractions: `IIncidenceGraph<TVertex, TEdge, TEdges>`, `IBidirectionalGraph<TVertex, TEdge, TEdges>`
+- Models: `Int32AdditiveMonoid`
+- Models: types in `Arborescence.Models.Compatibility` namespace
+- Primitives: `ArraySegmentEnumerator<T>`
 
 ## [0.13.1] - 2021-07-07
 
