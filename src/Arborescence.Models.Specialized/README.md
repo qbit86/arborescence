@@ -65,6 +65,8 @@ The expected output — all the neighbors of vertex 2:
     1
     3
 
-[^EWI]: https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+[^EWI]: Edges with own identity  
+  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
 
-[^EWO]: https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+[^EWO]: Edges without own identity  
+  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
