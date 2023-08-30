@@ -7,5 +7,6 @@
     <Nullable>enable</Nullable>
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
     <RootNamespace>Arborescence</RootNamespace>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
   </PropertyGroup>
 </Project>
