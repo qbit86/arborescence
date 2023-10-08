@@ -67,7 +67,8 @@ public sealed class DfsEnumerateVerticesTest
         }
     }
 
-    private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> steps)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler<TCollection>(TCollection steps)
+        where TCollection : ICollection<int>
     {
         if (steps is null)
             throw new ArgumentNullException(nameof(steps));

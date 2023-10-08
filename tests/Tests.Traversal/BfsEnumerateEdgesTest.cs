@@ -67,7 +67,8 @@ public sealed class BfsEnumerateEdgesTest
         }
     }
 
-    private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler(IList<Endpoints<int>> treeEdges)
+    private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler<TCollection>(TCollection treeEdges)
+        where TCollection : ICollection<Endpoints<int>>
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));

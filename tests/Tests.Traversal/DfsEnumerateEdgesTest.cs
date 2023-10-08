@@ -63,7 +63,8 @@ public sealed class DfsEnumerateEdgesTest
         }
     }
 
-    private static DfsHandler<int, int, Graph> CreateDfsHandler(IList<int> treeEdges)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler<TCollection>(TCollection treeEdges)
+        where TCollection : ICollection<int>
     {
         if (treeEdges is null)
             throw new ArgumentNullException(nameof(treeEdges));
