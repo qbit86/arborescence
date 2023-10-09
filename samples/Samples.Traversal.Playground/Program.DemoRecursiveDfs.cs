@@ -28,7 +28,8 @@ internal static partial class Program
         ArrayPool<byte>.Shared.Return(backingStore, true);
     }
 
-    private static DfsHandler<int, int, Int32IncidenceGraph> CreateDfsHandler(ICollection<int> steps)
+    private static DfsHandler<int, int, Int32IncidenceGraph> CreateDfsHandler<TCollection>(TCollection steps)
+        where TCollection : ICollection<int>
     {
         DfsHandler<int, int, Int32IncidenceGraph> result = new();
         result.TreeEdge += (_, e) => steps.Add(e);
