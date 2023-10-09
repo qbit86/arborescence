@@ -204,7 +204,7 @@ namespace Arborescence.Models.Specialized
         public static Int32IncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge)
         {
             if (endpointsByEdge is null)
-                throw new ArgumentNullException(nameof(endpointsByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
 
             Span<Endpoints<int>> endpointsByEdgeSpan = CollectionsMarshal.AsSpan(endpointsByEdge);
             int vertexCount = DeduceVertexCount(endpointsByEdgeSpan);
@@ -237,7 +237,7 @@ namespace Arborescence.Models.Specialized
         public static Int32IncidenceGraph FromEdges(List<Endpoints<int>> endpointsByEdge, int vertexCount)
         {
             if (endpointsByEdge is null)
-                throw new ArgumentNullException(nameof(endpointsByEdge));
+                ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
