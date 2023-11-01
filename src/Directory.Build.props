@@ -17,7 +17,6 @@
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
     <DebugType>portable</DebugType>
-    <Deterministic>true</Deterministic>
     <EnablePackageValidation>true</EnablePackageValidation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>

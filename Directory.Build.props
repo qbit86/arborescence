@@ -3,6 +3,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AnalysisMode>All</AnalysisMode>
     <ArtifactsPath>$(MSBuildThisFileDirectory).artifacts/</ArtifactsPath>
+    <Deterministic>true</Deterministic>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>enable</Nullable>
