@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B6953B67-3D80-4C2B-8D28-66CF0E24DD3E}"
+	ProjectSection(SolutionItems) = preProject
+		src\.editorconfig = src\.editorconfig
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Abstractions", "src\Arborescence.Abstractions\Arborescence.Abstractions.csproj", "{1AFCCDC0-7368-45DF-9B87-C64E05037BA0}"
 EndProject
@@ -25,8 +29,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arborescence.Traversal", "src\Arborescence.Traversal\Arborescence.Traversal.csproj", "{59271DA1-4B19-4804-962C-DF2791D123A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6561325C-4C3A-4949-81E4-BF8D87ED7F37}"
+	ProjectSection(SolutionItems) = preProject
+		tests\.editorconfig = tests\.editorconfig
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E04B2FB-E3BE-4A63-9244-FDF82CE724F8}"
+	ProjectSection(SolutionItems) = preProject
+		samples\.editorconfig = samples\.editorconfig
+		samples\Directory.Build.props = samples\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Traversal.EagerDfsDemo", "samples\Samples.Traversal.EagerDfsDemo\Samples.Traversal.EagerDfsDemo.csproj", "{F2190E07-B264-4DD2-BD2E-90F1B6E1C902}"
 EndProject
@@ -35,6 +47,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Models.Specialized", "tests\Tests.Models.Specialized\Tests.Models.Specialized.csproj", "{68408E95-6D55-47EF-97D7-C766613C8CA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{4CA9C5AF-0249-4CBF-B8A6-71AB4E09ADBC}"
+	ProjectSection(SolutionItems) = preProject
+		benchmarks\Directory.Build.props = benchmarks\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Traversal", "benchmarks\Benchmarks.Traversal\Benchmarks.Traversal.csproj", "{A4C5689D-90BF-4EE7-BD60-4E59339D9FC9}"
 EndProject
@@ -63,6 +78,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Abstractions.FlightGraphs", "samples\Samples.Abstractions.FlightGraphs\Samples.Abstractions.FlightGraphs.csproj", "{3466CE43-A92D-405B-B1AD-C144C704583B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5BC3AA5C-374C-474A-AD8F-2ACCE6E13630}"
+	ProjectSection(SolutionItems) = preProject
+		tools\Directory.Build.props = tools\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.Workbench", "tools\Tools.Workbench\Tools.Workbench.csproj", "{D2E4E9B1-3CE6-4C57-916F-DE9446D702C8}"
 EndProject
