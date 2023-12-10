@@ -20,7 +20,7 @@ internal static class Program
     {
         using TextReader textReader = IndexedGraphs.GetTextReader("09");
         Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
-        textReader.Dispose();
+        textReader.Close();
 
         Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
