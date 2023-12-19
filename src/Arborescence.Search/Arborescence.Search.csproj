@@ -7,7 +7,8 @@
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Search</RootNamespace>
-    <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <!--<TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1;net6.0;net7.0</TargetFrameworks>-->
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">ASTAR_SUPPORTED</DefineConstants>
