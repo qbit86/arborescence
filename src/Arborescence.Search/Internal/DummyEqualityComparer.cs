@@ -1,3 +1,5 @@
+#if ASTAR_SUPPORTED
+
 namespace Arborescence.Search
 {
     using System;
@@ -21,3 +23,5 @@ namespace Arborescence.Search
         public bool Equals(TCost other) => _comparer.Compare(_dummy, other!) == 0;
     }
 }
+
+#endif

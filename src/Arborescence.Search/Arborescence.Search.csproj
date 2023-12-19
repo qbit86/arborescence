@@ -9,6 +9,9 @@
     <RootNamespace>Arborescence.Search</RootNamespace>
     <TargetFrameworks>net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants Condition="'$(Configuration)' == 'Debug'">ASTAR_SUPPORTED</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>

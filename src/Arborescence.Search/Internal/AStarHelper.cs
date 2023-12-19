@@ -1,3 +1,5 @@
+#if ASTAR_SUPPORTED
+
 namespace Arborescence.Search
 {
     using System;
@@ -12,3 +14,5 @@ namespace Arborescence.Search
         }
     }
 }
+
+#endif
