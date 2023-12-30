@@ -16,11 +16,10 @@ public sealed class ReadOnlyAdjacencyGraph_Tests
             if (neighborsByVertex.TryGetValue(vertex, out List<string>? neighbors))
                 neighbors.Add(neighbor);
             else
-                neighborsByVertex.Add(vertex, new(1) { neighbor });
+                neighborsByVertex.Add(vertex, [neighbor]);
         }
 
-        var graph = ReadOnlyAdjacencyGraphFactory<string, List<string>, List<string>.Enumerator>.Create(
-            neighborsByVertex, default(ListEnumeratorProvider<string>));
+        var graph = ReadOnlyAdjacencyGraphFactory<string>.FromLists(neighborsByVertex);
 
         List<string>.Enumerator actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
