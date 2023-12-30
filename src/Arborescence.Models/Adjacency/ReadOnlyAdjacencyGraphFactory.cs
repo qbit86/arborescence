@@ -4,6 +4,9 @@ namespace Arborescence.Models
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     using System;
 #endif
+#if NET8_0_OR_GREATER
+    using System.Collections.Frozen;
+#endif
 
     public static class ReadOnlyAdjacencyGraphFactory<TVertex>
     {
@@ -28,6 +31,34 @@ namespace Arborescence.Models
                 vertexMultimapConcept = new(default);
             return new(neighborsByVertex, vertexMultimapConcept);
         }
+
+#if NET8_0_OR_GREATER
+        public static ReadOnlyAdjacencyGraph<
+                TVertex,
+                FrozenSet<TVertex>.Enumerator,
+                TVertexMultimap,
+                ReadOnlyMultimapConcept<
+                    TVertexMultimap,
+                    TVertex,
+                    FrozenSet<TVertex>,
+                    FrozenSet<TVertex>.Enumerator,
+                    FrozenSetEnumeratorProvider<TVertex>>>
+            FromFrozenSets<TVertexMultimap>(TVertexMultimap neighborsByVertex)
+            where TVertexMultimap : IReadOnlyDictionary<TVertex, FrozenSet<TVertex>>
+        {
+            if (neighborsByVertex is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
+
+            ReadOnlyMultimapConcept<
+                    TVertexMultimap,
+                    TVertex,
+                    FrozenSet<TVertex>,
+                    FrozenSet<TVertex>.Enumerator,
+                    FrozenSetEnumeratorProvider<TVertex>>
+                vertexMultimapConcept = new(default);
+            return new(neighborsByVertex, vertexMultimapConcept);
+        }
+#endif
 
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         public static ReadOnlyAdjacencyGraph<
