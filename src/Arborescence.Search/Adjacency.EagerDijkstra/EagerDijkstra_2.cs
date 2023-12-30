@@ -1,5 +1,4 @@
 #if false
-
 namespace Arborescence.Search.Adjacency
 {
     using System.Collections.Generic;
@@ -8,5 +7,4 @@ namespace Arborescence.Search.Adjacency
         where TVertex : notnull
         where TNeighborEnumerator : IEnumerator<TVertex> { }
 }
-
 #endif

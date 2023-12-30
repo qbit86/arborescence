@@ -1,5 +1,4 @@
 #if false
-
 namespace Arborescence.Search.Specialized
 {
     using System;
@@ -157,5 +156,4 @@ namespace Arborescence.Search.Specialized
         }
     }
 }
-
 #endif
