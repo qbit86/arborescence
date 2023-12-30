@@ -19,10 +19,10 @@ Commonly used types:
   <PropertyGroup>
     <AssemblyVersion>0.16.2</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <LangVersion Condition="'$(TargetFramework)' == 'net7.0'">11</LangVersion>
+    <LangVersion Condition="'$(TargetFramework)' == 'net7.0' OR '$(TargetFramework)' == 'net8.0'">11</LangVersion>
     <NoWarn Condition="'$(Configuration)' == 'Debug'">$(NoWarn);CS1591</NoWarn>
     <RootNamespace>Arborescence.Models</RootNamespace>
-    <TargetFrameworks>net461;net7.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;net7.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
