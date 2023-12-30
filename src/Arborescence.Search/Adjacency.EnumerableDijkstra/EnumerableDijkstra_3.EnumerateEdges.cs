@@ -7,6 +7,7 @@ namespace Arborescence.Search.Adjacency
 
     public static partial class EnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>
     {
+        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<
             TGraph, TWeightMap, TDistanceMap, TWeightMonoid, TWeightComparer>(
             TGraph graph, TVertex source, PriorityQueue<TVertex, TWeight> frontier, TWeightMap weightByEdge,
