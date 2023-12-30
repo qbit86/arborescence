@@ -12,7 +12,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">ASTAR_SUPPORTED</DefineConstants>
-    <NoWarn Condition="'$(Configuration)' == 'Debug' OR '$(VersionSuffix)' != ''">CS1591</NoWarn>
+    <NoWarn Condition="'$(Configuration)' == 'Debug' OR '$(VersionSuffix)' != ''">$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
