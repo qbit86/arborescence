@@ -17,7 +17,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
     <Title>Specialized graph traversal algorithms</Title>
-    <VersionPrefix>0.16.2</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
