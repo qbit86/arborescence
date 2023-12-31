@@ -6,6 +6,13 @@ namespace Arborescence.Models
 
     public static partial class ReadOnlyAdjacencyGraphFactory<TVertex>
     {
+        /// <summary>
+        /// Creates a
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>.
+        /// </summary>
+        /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
+        /// <typeparam name="TVertexMultimap">The type of mapping from a vertex to a sequence of its out-neighbors.</typeparam>
+        /// <returns>The read-only adjacency graph.</returns>
         public static ReadOnlyAdjacencyGraph<
                 TVertex,
                 ArraySegment<TVertex>.Enumerator,
@@ -29,6 +36,13 @@ namespace Arborescence.Models
             return new(neighborsByVertex, vertexMultimapConcept);
         }
 
+        /// <summary>
+        /// Creates a
+        /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>.
+        /// </summary>
+        /// <param name="neighborsByVertex">The object that provides the mapping from a vertex to its out-neighbors.</param>
+        /// <typeparam name="TVertexMultimap">The type of mapping from a vertex to a sequence of its out-neighbors.</typeparam>
+        /// <returns>The read-only adjacency graph.</returns>
         public static ReadOnlyAdjacencyGraph<
                 TVertex,
                 ArraySegment<TVertex>.Enumerator,
