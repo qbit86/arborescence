@@ -1,6 +1,5 @@
 namespace Arborescence.Models
 {
-    using System;
     using System.Collections.Generic;
 
     public static class ReadOnlyIncidenceGraphFactory<TVertex, TEdge>
@@ -29,7 +28,13 @@ namespace Arborescence.Models
             if (outEdgesByVertex is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(outEdgesByVertex));
 
-            throw new NotImplementedException();
+            ReadOnlyMultimapConcept<
+                    TEdgeMultimap,
+                    TVertex, List<TEdge>,
+                    List<TEdge>.Enumerator,
+                    ListEnumeratorProvider<TEdge>>
+                edgeMultimapConcept = new(default);
+            return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
     }
 
