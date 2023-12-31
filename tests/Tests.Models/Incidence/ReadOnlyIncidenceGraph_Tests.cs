@@ -23,14 +23,13 @@ public sealed class ReadOnlyIncidenceGraph_Tests
             if (outEdgesByVertex.TryGetValue(vertex, out List<int>? outEdges))
                 outEdges.Add(edge);
             else
-                outEdgesByVertex.Add(vertex, new(1) { edge });
+                outEdgesByVertex.Add(vertex, [edge]);
         }
 
-        var graph = ReadOnlyIncidenceGraphFactory<string, int, List<int>, List<int>.Enumerator>.CreateUnchecked(
+        var graph = ReadOnlyIncidenceGraphFactory<string, int>.FromLists(
             Int32ReadOnlyDictionaryFactory<string>.Create(tailByEdge),
             Int32ReadOnlyDictionaryFactory<string>.Create(headByEdge),
-            outEdgesByVertex,
-            default(ListEnumeratorProvider<int>));
+            outEdgesByVertex);
 
         var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
