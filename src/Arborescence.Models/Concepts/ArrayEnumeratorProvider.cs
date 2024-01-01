@@ -4,7 +4,6 @@ namespace Arborescence.Models
     using System;
     using System.Runtime.CompilerServices;
 
-
     /// <summary>
     /// Provides an enumerator over the <see cref="T:T[]"/>.
     /// </summary>
