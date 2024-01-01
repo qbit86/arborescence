@@ -1,6 +1,12 @@
 [*.cs]
 dotnet_diagnostic.CA1000.severity = none # Do not declare static members on generic types
 
+[ArraySegmentHelpers.cs]
+resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedResourceIsReturned
+
+[Int32*Graph.cs]
+resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedResourceIsReturned
+
 [Int32*GraphFactory.cs]
 dotnet_diagnostic.CA1002.severity = none # Do not expose generic lists
 

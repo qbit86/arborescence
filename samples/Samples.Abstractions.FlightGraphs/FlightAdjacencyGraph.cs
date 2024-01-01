@@ -7,6 +7,9 @@ using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 public sealed class FlightAdjacencyGraph :
     IOutNeighborsAdjacency<string, NeighborEnumerator>
 {
+    private static readonly string[] s_lhrNeighbors = { "IST", "IST" };
+    private static readonly string[] s_istNeighbors = { "LHR", "TPE" };
+    private static readonly string[] s_tpeNeighbors = { "TPE" };
     private readonly Dictionary<string, string[]> _neighborsByAirport;
 
     private FlightAdjacencyGraph(
@@ -22,9 +25,9 @@ public sealed class FlightAdjacencyGraph :
     {
         Dictionary<string, string[]> neighborsByAirport = new(3)
         {
-            { "LHR", new[] { "IST", "IST" } },
-            { "IST", new[] { "LHR", "TPE" } },
-            { "TPE", new[] { "TPE" } }
+            { "LHR", s_lhrNeighbors },
+            { "IST", s_istNeighbors },
+            { "TPE", s_tpeNeighbors }
         };
         return new(neighborsByAirport);
     }

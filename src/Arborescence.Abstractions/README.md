@@ -44,35 +44,31 @@ The closest analog in mathematics is the notion of a _quiver_[^Q] — a directed
 
 Let's look at an example of four airports (_Omsk_, _London_, _Istanbul_, _Taipei_) and five flights between them:
 
-```
-        BA676
-  ┌───────>───────┐             EVA5288
-  │     TK1980    │      TK24     ┌─>─┐
-[LHR]─────>─────[IST]─────>─────[TPE] │
-  └───────<───────┘               └───┘
-        BA677
+            BA676
+      ┌───────>───────┐             EVA5288
+      │     TK1980    │      TK24     ┌─>─┐
+    [LHR]─────>─────[IST]─────>─────[TPE] │
+      └───────<───────┘               └───┘
+            BA677
 
-[OMS]
-```
+    [OMS]
 
 The same in Graphviz notation:
 
-```
-digraph Flights {
-  rankdir=LR
-  node [shape=box fontname="Times-Italic"]
-  OMS // Omsk
-  LHR // London
-  IST // Istanbul
-  TPE // Taipei
-  edge [fontname="Monospace"]
-  LHR -> IST [label="BA676"]
-  LHR -> IST [label="TK1980"]
-  IST -> LHR [label="BA677"]
-  IST -> TPE [label="TK24"]
-  TPE -> TPE [label="EVA5288"]
-}
-```
+    digraph Flights {
+      rankdir=LR
+      node [shape=box fontname="Times-Italic"]
+      OMS // Omsk
+      LHR // London
+      IST // Istanbul
+      TPE // Taipei
+      edge [fontname="Monospace"]
+      LHR -> IST [label="BA676"]
+      LHR -> IST [label="TK1980"]
+      IST -> LHR [label="BA677"]
+      IST -> TPE [label="TK24"]
+      TPE -> TPE [label="EVA5288"]
+    }
 
 Here common restrictions of _simple directed graphs_ are relaxed:
 
@@ -98,13 +94,11 @@ It must be consistent with the incidence function:
 
 Together these functions form a scheme:
 
-```
-        ┌   tail : E → V?
-Graph   ┤
-        └   head : E → V?       ┐
-                                ├   Forward Incidence
-            out-edges : V → [E] ┘
-```
+            ┌   tail : E → V?
+    Graph   ┤
+            └   head : E → V?       ┐
+                                    ├   Forward Incidence
+                out-edges : V → [E] ┘
 
 The _adjacency_ interface provides access to the neighbors of a vertex in a graph.
 In some contexts there is only concern for the vertices, while the edges are not important.
@@ -255,5 +249,5 @@ Expected output is:
 [^EWO]: Edges without own identity  
   https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
 
-[^Q]: Quiver  
+[^Q]: Quiver<br />
   https://en.wikipedia.org/wiki/Quiver_(mathematics)

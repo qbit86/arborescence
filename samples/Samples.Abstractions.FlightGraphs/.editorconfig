@@ -1,0 +1,2 @@
+[*Graph.cs]
+resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedResourceIsReturned

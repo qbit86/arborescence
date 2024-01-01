@@ -1,3 +1,5 @@
+#if ASTAR_SUPPORTED
+
 namespace Arborescence.Search
 {
     using System;
@@ -256,3 +258,5 @@ namespace Arborescence.Search
             colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }
+
+#endif

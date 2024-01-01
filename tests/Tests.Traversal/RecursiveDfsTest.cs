@@ -66,7 +66,8 @@ public sealed class RecursiveDfsTest
         }
     }
 
-    private static DfsHandler<int, int, Graph> CreateDfsHandler(ICollection<(string, int)> steps)
+    private static DfsHandler<int, int, Graph> CreateDfsHandler<TCollection>(TCollection steps)
+        where TCollection : ICollection<(string, int)>
     {
         DfsHandler<int, int, Graph> result = new();
         result.StartVertex += (_, v) => steps.Add((nameof(result.OnStartVertex), v));

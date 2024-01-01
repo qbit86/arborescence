@@ -3,3 +3,12 @@ dotnet_diagnostic.CA1000.severity = none # Do not declare static members on gene
 
 [Concepts/*.cs]
 dotnet_diagnostic.CA1815.severity = none # Override equals and operator equals on value types
+
+[*EnumeratorProvider.cs]
+resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedResourceIsReturned
+
+[ReadOnly*GraphFactory*.cs]
+resharper_partial_type_with_single_part_highlighting = none # PartialTypeWithSinglePart
+
+[ArrayEnumeratorProvider.cs]
+dotnet_diagnostic.CA1200.severity = none

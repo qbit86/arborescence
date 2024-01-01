@@ -8,6 +8,9 @@ using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 public sealed class FlightIncidenceGraph :
     IGraph<string, int>, IForwardIncidence<string, int, EdgeEnumerator>
 {
+    private static readonly int[] s_lhrFlights = { 676, 1980 };
+    private static readonly int[] s_istFlights = { 677, 24 };
+    private static readonly int[] s_tpeFlights = { 5288 };
     private readonly Dictionary<int, string> _destinationByFlight;
     private readonly Dictionary<string, int[]> _flightsByOrigin;
     private readonly Dictionary<int, string> _originByFlight;
@@ -45,9 +48,9 @@ public sealed class FlightIncidenceGraph :
         };
         Dictionary<string, int[]> flightsByOrigin = new(3)
         {
-            { "LHR", new[] { 676, 1980 } },
-            { "IST", new[] { 677, 24 } },
-            { "TPE", new[] { 5288 } }
+            { "LHR", s_lhrFlights },
+            { "IST", s_istFlights },
+            { "TPE", s_tpeFlights }
         };
         return new(originByFlight, destinationByFlight, flightsByOrigin);
     }

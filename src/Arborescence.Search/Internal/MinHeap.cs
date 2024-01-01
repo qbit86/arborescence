@@ -1,3 +1,5 @@
+#if ASTAR_SUPPORTED
+
 namespace Arborescence.Search
 {
     using System;
@@ -59,7 +61,7 @@ namespace Arborescence.Search
         internal void Add(TElement element)
         {
             EnsureCapacity();
-            UncheckedAdd(element);
+            AddUnchecked(element);
             VerifyHeap();
         }
 
@@ -140,7 +142,7 @@ namespace Arborescence.Search
             else
             {
                 EnsureCapacity();
-                UncheckedAdd(element);
+                AddUnchecked(element);
             }
 
             VerifyHeap();
@@ -154,7 +156,7 @@ namespace Arborescence.Search
             throw new InvalidOperationException("Priority was not found for the given element.");
         }
 
-        private void UncheckedAdd(TElement element)
+        private void AddUnchecked(TElement element)
         {
             int count = _count;
             TElement[] array = _arrayFromPool;
@@ -166,7 +168,7 @@ namespace Arborescence.Search
             HeapifyUp(count);
         }
 
-        private void UncheckedGrow()
+        private void GrowUnchecked()
         {
             int count = _count;
             TElement[] arrayFromPool = _arrayFromPool;
@@ -189,7 +191,7 @@ namespace Arborescence.Search
             Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
             if (count == array.Length)
-                UncheckedGrow();
+                GrowUnchecked();
         }
 
         private static int GetParentIndex(int index) => (index - 1) >> Log2Arity;
@@ -342,3 +344,5 @@ namespace Arborescence.Search
         }
     }
 }
+
+#endif

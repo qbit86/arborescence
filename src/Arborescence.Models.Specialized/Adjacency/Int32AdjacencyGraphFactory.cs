@@ -214,11 +214,13 @@ namespace Arborescence.Models.Specialized
         public static Int32AdjacencyGraph FromEdges(List<Edge> edges)
         {
             if (edges is null)
-                throw new ArgumentNullException(nameof(edges));
+                ArgumentNullExceptionHelpers.Throw(nameof(edges));
 
             Span<Edge> edgeSpan = CollectionsMarshal.AsSpan(edges);
+#pragma warning disable CA1062
             if (ShouldOrderByTail(edgeSpan, out int vertexCount))
                 edges.Sort(EdgeComparer.Instance);
+#pragma warning restore CA1062
             if (vertexCount is 0)
                 return default;
             Debug.Assert(vertexCount > 0);
@@ -245,13 +247,15 @@ namespace Arborescence.Models.Specialized
         public static Int32AdjacencyGraph FromEdges(List<Edge> edges, int vertexCount)
         {
             if (edges is null)
-                throw new ArgumentNullException(nameof(edges));
+                ArgumentNullExceptionHelpers.Throw(nameof(edges));
             if (vertexCount is 0)
                 return default;
             if (vertexCount < 0)
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
+#pragma warning disable CA1062
             edges.Sort(EdgeComparer.Instance);
+#pragma warning restore CA1062
             return FromOrderedEdges(vertexCount, CollectionsMarshal.AsSpan(edges));
         }
 #endif

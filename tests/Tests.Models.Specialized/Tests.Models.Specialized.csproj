@@ -5,8 +5,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Misnomer.Rist" />
+    <PackageReference Include="xunit.runner.visualstudio" Condition="'$(TargetFramework)' == 'net6.0'">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="xunit" PrivateAssets="all" />
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arborescence.Models.Specialized\Arborescence.Models.Specialized.csproj" />

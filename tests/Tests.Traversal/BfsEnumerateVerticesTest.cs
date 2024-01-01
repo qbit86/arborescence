@@ -63,7 +63,8 @@ public sealed class BfsEnumerateVerticesTest
         }
     }
 
-    private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler(IList<int> discoveredVertices)
+    private static BfsHandler<int, Endpoints<int>, Graph> CreateBfsHandler<TCollection>(TCollection discoveredVertices)
+        where TCollection : ICollection<int>
     {
         if (discoveredVertices is null)
             throw new ArgumentNullException(nameof(discoveredVertices));

@@ -9,10 +9,12 @@
         internal static void Throw(string? paramName) => throw new ArgumentOutOfRangeException(paramName);
 
         [DoesNotReturn]
-        internal static void ThrowNegative<T>(string? paramName, T value)
+        internal static void ThrowNegative<T>(string? paramName, T value) => throw CreateNegative(paramName, value);
+
+        internal static ArgumentOutOfRangeException CreateNegative<T>(string? paramName, T value)
         {
             string message = $"{paramName} ('{value}') must be a non-negative value.";
-            throw new ArgumentOutOfRangeException(paramName, value, message);
+            return new(paramName, value, message);
         }
     }
 }

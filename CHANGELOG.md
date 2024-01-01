@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.16.3] - 2024-01-01
+
+### Added
+
+- Models: `net8.0` target framework moniker to support `FrozenSet<T>`
+- Models:  `FrozenSetEnumeratorProvider<T>`, `HashSetEnumeratorProvider<T>`
+- Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`
+- Models: `ReadOnlyAdjacencyGraphFactory<TVertex>`, `ReadOnlyIncidenceGraphFactory<TVertex, TEdge>`
+
+### Changed
+
+- Abstractions: Fixed package description.
+- Primitives.Specialized: Fixed `ArrayPrefixEnumerator<T>` constructor.
+
 ## [0.16.2] - 2023-07-28
 
 ### Added
@@ -34,7 +48,7 @@
 
 - Primitives: Fixed `Endpoints<TVertex>`.
 
-- Primitives.Specialized: Fixed `Int32Dictionary<>`
+- Primitives.Specialized: Fixed `Int32Dictionary<>`.
 
 - Traversal: Renamed type parameters and fixed XML-doc comments.
 
@@ -430,7 +444,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.2...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.3...HEAD
+
+[0.16.3]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.2...arborescence-0.16.3
 
 [0.16.2]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.1...arborescence-0.16.2
 

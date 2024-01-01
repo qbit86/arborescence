@@ -29,10 +29,10 @@
                 return new ArgumentNullException(nameof(array));
 
             if (count < 0)
-                ArgumentOutOfRangeExceptionHelpers.ThrowNegative(nameof(count), count);
+                return ArgumentOutOfRangeExceptionHelpers.CreateNegative(nameof(count), count);
 
             if (count > array.Length)
-                ArgumentOutOfRangeExceptionHelpers.Throw(nameof(count));
+                return new ArgumentOutOfRangeException(nameof(count));
 
             throw new InvalidOperationException(SR.UnreachableLocation);
         }

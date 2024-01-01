@@ -1,7 +1,6 @@
+.artifacts/
 .idea/**/riderMarkupCache.xml
 .vs/
 .vscode/
 *.suo
 *.user
-bin/
-obj/

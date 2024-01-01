@@ -5,7 +5,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models.Specialized;
-using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
 [MemoryDiagnoser]

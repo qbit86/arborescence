@@ -8,17 +8,17 @@ insert_final_newline = true
 max_line_length = 120
 trim_trailing_whitespace = true
 
-[*.{config,csproj,gv,props,resx,shproj,targets,xml}]
+[*.{config,csproj,gv,projitems,props,resx,shproj,targets,xml}]
 indent_size = 2
 
-[*.{sln,sln.DotSettings}]
+[*.{sln,csproj.DotSettings,sln.DotSettings}]
 indent_style = tab
 
 [*.md]
 max_line_length = 2147483647
 trim_trailing_whitespace = false
 
-[*.{sln.DotSettings}]
+[*.{csproj.DotSettings,sln.DotSettings}]
 generated_code = true
 ij_formatter_enabled = false
 

@@ -15,7 +15,7 @@ public sealed class EnumerableDfs_Tests
         // Arrange
         using TextReader textReader = IndexedGraphs.GetTextReader("08");
         Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
-        textReader.Dispose();
+        textReader.Close();
 
         Int32AdjacencyGraph adjacencyGraph = Int32AdjacencyGraphFactory.FromEdges(edges);
 

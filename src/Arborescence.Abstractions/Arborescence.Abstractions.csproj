@@ -10,7 +10,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;abstraction</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionPrefix>0.16.2</VersionPrefix>
+    <VersionPrefix>0.16.3</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -2,7 +2,7 @@
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
     <Authors>Viktor Tselov</Authors>
-    <Copyright>Copyright (c) Viktor Tselov 2023</Copyright>
+    <Copyright>Copyright (c) Viktor Tselov 2024</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -11,18 +11,16 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <VersionPrefix>0.16.2</VersionPrefix>
+    <VersionPrefix>0.16.3</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>$(RepoRoot)assets/arborescence.snk</AssemblyOriginatorKeyFile>
     <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
     <DebugType>portable</DebugType>
-    <Deterministic>true</Deterministic>
     <EnablePackageValidation>true</EnablePackageValidation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <InformationalVersion>$(Version)</InformationalVersion>
     <IsPackable>true</IsPackable>
-    <IsTrimmable>true</IsTrimmable>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
     <LangVersion>9</LangVersion>
     <PackRelease>true</PackRelease>
     <SignAssembly>true</SignAssembly>
