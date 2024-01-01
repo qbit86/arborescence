@@ -21,8 +21,7 @@ internal static class Program
             ["IST"] = new() { "LHR" }
             // Let's add "TPE" later.
         };
-        ListAdjacencyGraph<string, Dictionary<string, List<string>>> graph =
-            ListAdjacencyGraphFactory<string>.Create(neighborsByVertex);
+        var graph = ListAdjacencyGraph<string>.Create(neighborsByVertex);
         graph.TryAddVertex("TPE");
         graph.AddEdge("IST", "TPE");
         graph.AddEdge("TPE", "TPE");
@@ -35,8 +34,7 @@ internal static class Program
 
     private static void DemoIncidenceListGraph()
     {
-        ListIncidenceGraph<string, int, Dictionary<int, string>, Dictionary<string, List<int>>> graph =
-            ListIncidenceGraphFactory<string, int>.Create();
+        var graph = ListIncidenceGraph<string, int>.Create();
         _ = graph.TryAddVertex("OMS");
         _ = graph.TryAddEdge(676, "LHR", "IST");
         _ = graph.TryAddEdge(1980, "LHR", "IST");

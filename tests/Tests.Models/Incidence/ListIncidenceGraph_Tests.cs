@@ -8,8 +8,7 @@ public sealed class ListIncidenceGraph_Tests
     [Fact]
     public void TryAddVertex_AfterAdding_ShouldIncreaseVertexCount()
     {
-        ListIncidenceGraph<string, int, Dictionary<int, string>, Dictionary<string, List<int>>> graph =
-            ListIncidenceGraphFactory<string, int>.Create();
+        var graph = ListIncidenceGraph<string, int>.Create();
         Assert.True(graph.TryAddVertex("μηδέν"));
         Assert.True(graph.TryAddVertex("δύο"));
         Assert.Equal(2, graph.VertexCount);
@@ -18,8 +17,7 @@ public sealed class ListIncidenceGraph_Tests
     [Fact]
     public void EnumerateOutNeighbors_AfterAdding_ShouldReturnHeadsAsNeighbors()
     {
-        ListIncidenceGraph<string, int, Dictionary<int, string>, Dictionary<string, List<int>>> graph =
-            ListIncidenceGraphFactory<string, int>.Create();
+        var graph = ListIncidenceGraph<string, int>.Create();
         const string vertex = "μηδέν";
         string[] expectedNeighbors = { "ένα", "δύο" };
         foreach (string neighbor in expectedNeighbors)

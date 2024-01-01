@@ -159,7 +159,7 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
     }
 
     public ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>> ToGraph() =>
-        ListAdjacencyGraphFactory<int>.Create(_neighborsByVertex);
+        ListAdjacencyGraph<int>.Create(_neighborsByVertex);
 }
 
 internal sealed class Int32IncidenceGraphBuilder : IGraphBuilder<Int32IncidenceGraph, int, int>
@@ -214,6 +214,6 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
     }
 
     public ListIncidenceGraph<int, int, Int32Dictionary<int, List<int>>, Dictionary<int, List<int>>> ToGraph() =>
-        ListIncidenceGraphFactory<int, int>.CreateUnchecked(_tailByEdge, _headByEdge, _outEdgesByVertex);
+        ListIncidenceGraph<int, int>.CreateUnchecked(_tailByEdge, _headByEdge, _outEdgesByVertex);
 }
 #endif
