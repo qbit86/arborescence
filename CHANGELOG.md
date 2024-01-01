@@ -9,15 +9,12 @@
 - Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`
 - Models: `ReadOnlyAdjacencyGraphFactory<TVertex>`, `ReadOnlyIncidenceGraphFactory<TVertex, TEdge>`
 
-### Changed
-
-- Primitives.Specialized: Fixed `ArrayPrefixEnumerator<T>` constructor.
-
 ## [0.16.3] - 2024-01-01
 
 ### Changed
 
 - Abstractions: Fixed package description.
+- Primitives.Specialized: Fixed `ArrayPrefixEnumerator<T>` constructor.
 
 ## [0.16.2] - 2023-07-28
 
