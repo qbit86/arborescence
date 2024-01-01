@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.16.3] - 2024-01-01
 
 ### Added
 
@@ -8,8 +8,6 @@
 - Models:  `FrozenSetEnumeratorProvider<T>`, `HashSetEnumeratorProvider<T>`
 - Models: `ArrayEnumeratorProvider<T>`, `ArraySegmentEnumeratorProvider<T>`
 - Models: `ReadOnlyAdjacencyGraphFactory<TVertex>`, `ReadOnlyIncidenceGraphFactory<TVertex, TEdge>`
-
-## [0.16.3] - 2024-01-01
 
 ### Changed
 
