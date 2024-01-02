@@ -142,7 +142,7 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
     private readonly Int32Dictionary<List<int>, List<List<int>>> _neighborsByVertex;
 
     internal ListAdjacencyGraphBuilder(int initialVertexCount) =>
-        _neighborsByVertex = Int32DictionaryFactory<List<int>>.Create(new List<List<int>>(initialVertexCount));
+        _neighborsByVertex = Int32Dictionary<List<int>>.Create(new List<List<int>>(initialVertexCount));
 
     public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
@@ -192,8 +192,8 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
 
     internal ListIncidenceGraphBuilder(int initialVertexCount)
     {
-        _tailByEdge = Int32DictionaryFactory<int>.Create(new List<int>());
-        _headByEdge = Int32DictionaryFactory<int>.Create(new List<int>());
+        _tailByEdge = Int32Dictionary<int>.Create(new List<int>());
+        _headByEdge = Int32Dictionary<int>.Create(new List<int>());
         _outEdgesByVertex = new(initialVertexCount);
     }
 
