@@ -46,8 +46,7 @@ namespace Arborescence.Models.Specialized
         private static Int32AdjacencyGraph FromListUnchecked<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyList<TNeighborCollection>
         {
-            Int32ReadOnlyDictionary<TNeighborCollection, TMultimap> dictionary =
-                Int32ReadOnlyDictionaryFactory<TNeighborCollection>.Create(neighborsByVertex);
+            var dictionary = Int32ReadOnlyDictionary<TNeighborCollection>.Create(neighborsByVertex);
             return FromDictionaryUnchecked(dictionary);
         }
 

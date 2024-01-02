@@ -27,8 +27,8 @@ public sealed class ReadOnlyIncidenceGraph_Tests
         }
 
         var graph = ReadOnlyIncidenceGraph<string, int>.FromLists(
-            Int32ReadOnlyDictionaryFactory<string>.Create(tailByEdge),
-            Int32ReadOnlyDictionaryFactory<string>.Create(headByEdge),
+            Int32ReadOnlyDictionary<string>.Create(tailByEdge),
+            Int32ReadOnlyDictionary<string>.Create(headByEdge),
             outEdgesByVertex);
 
         var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);

@@ -14,3 +14,6 @@ resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlw
 [Int32Dictionary_*.cs]
 dotnet_diagnostic.CS8767.severity = suggestion # Nullability of type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
 resharper_condition_is_always_true_or_false_highlighting = none # ConditionIsAlwaysTrueOrFalse
+
+[Int32ReadOnlyDictionary_1.cs]
+dotnet_diagnostic.CA1711.severity = none
