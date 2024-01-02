@@ -25,7 +25,7 @@ public sealed partial class Int32IncidenceGraphTests
             { Base32.Parse("f"), Base32.Parse("m"), Base32.Parse("q"), Base32.Parse("r") };
 
         // Act
-        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
+        var graph = Int32IncidenceGraph.FromEdges(edges);
         AdjacencyEnumerator<int, int, Int32IncidenceGraph, ArraySegment<int>.Enumerator> neighborEnumerator =
             graph.EnumerateOutNeighbors(vertex);
         HashSet<int> actualNeighbors = new(4);
@@ -51,7 +51,7 @@ public sealed partial class Int32IncidenceGraphTests
         var expectedEdges = new HashSet<int> { 6, 8, 23, 25 };
 
         // Act
-        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
+        var graph = Int32IncidenceGraph.FromEdges(edges);
         ArraySegment<int>.Enumerator edgeEnumerator = graph.EnumerateOutEdges(vertex);
         HashSet<int> actualEdges = new(4);
         while (edgeEnumerator.MoveNext())

@@ -1,15 +1,10 @@
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
 {
+    using System;
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Provides support for creating
-    /// <see cref="ReadOnlyIncidenceGraph{TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept}"/>
-    /// objects.
-    /// </summary>
-    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public static partial class ReadOnlyIncidenceGraphFactory<TVertex, TEdge>
+    public static partial class ReadOnlyIncidenceGraph<TVertex, TEdge>
     {
         /// <summary>
         /// Creates a
@@ -30,19 +25,19 @@ namespace Arborescence.Models
         public static ReadOnlyIncidenceGraph<
                 TVertex,
                 TEdge,
-                List<TEdge>.Enumerator,
+                ArraySegment<TEdge>.Enumerator,
                 TEndpointMap,
                 TEdgeMultimap,
                 ReadOnlyMultimapConcept<
                     TEdgeMultimap,
                     TVertex,
-                    List<TEdge>,
-                    List<TEdge>.Enumerator,
-                    ListEnumeratorProvider<TEdge>>>
-            FromLists<TEndpointMap, TEdgeMultimap>(
+                    TEdge[],
+                    ArraySegment<TEdge>.Enumerator,
+                    ArrayEnumeratorProvider<TEdge>>>
+            FromArrays<TEndpointMap, TEdgeMultimap>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgeMultimap : IReadOnlyDictionary<TVertex, List<TEdge>>
+            where TEdgeMultimap : IReadOnlyDictionary<TVertex, TEdge[]>
         {
             if (tailByEdge is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(tailByEdge));
@@ -54,9 +49,9 @@ namespace Arborescence.Models
             ReadOnlyMultimapConcept<
                     TEdgeMultimap,
                     TVertex,
-                    List<TEdge>,
-                    List<TEdge>.Enumerator,
-                    ListEnumeratorProvider<TEdge>>
+                    TEdge[],
+                    ArraySegment<TEdge>.Enumerator,
+                    ArrayEnumeratorProvider<TEdge>>
                 edgeMultimapConcept = new(default);
             return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
@@ -80,19 +75,19 @@ namespace Arborescence.Models
         public static ReadOnlyIncidenceGraph<
                 TVertex,
                 TEdge,
-                HashSet<TEdge>.Enumerator,
+                ArraySegment<TEdge>.Enumerator,
                 TEndpointMap,
                 TEdgeMultimap,
                 ReadOnlyMultimapConcept<
                     TEdgeMultimap,
                     TVertex,
-                    HashSet<TEdge>,
-                    HashSet<TEdge>.Enumerator,
-                    HashSetEnumeratorProvider<TEdge>>>
-            FromHashSets<TEndpointMap, TEdgeMultimap>(
+                    ArraySegment<TEdge>,
+                    ArraySegment<TEdge>.Enumerator,
+                    ArraySegmentEnumeratorProvider<TEdge>>>
+            FromArraySegments<TEndpointMap, TEdgeMultimap>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
             where TEndpointMap : IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgeMultimap : IReadOnlyDictionary<TVertex, HashSet<TEdge>>
+            where TEdgeMultimap : IReadOnlyDictionary<TVertex, ArraySegment<TEdge>>
         {
             if (tailByEdge is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(tailByEdge));
@@ -104,11 +99,12 @@ namespace Arborescence.Models
             ReadOnlyMultimapConcept<
                     TEdgeMultimap,
                     TVertex,
-                    HashSet<TEdge>,
-                    HashSet<TEdge>.Enumerator,
-                    HashSetEnumeratorProvider<TEdge>>
+                    ArraySegment<TEdge>,
+                    ArraySegment<TEdge>.Enumerator,
+                    ArraySegmentEnumeratorProvider<TEdge>>
                 edgeMultimapConcept = new(default);
             return new(tailByEdge, headByEdge, outEdgesByVertex, edgeMultimapConcept);
         }
     }
 }
+#endif

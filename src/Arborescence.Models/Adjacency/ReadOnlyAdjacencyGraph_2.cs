@@ -9,7 +9,7 @@ namespace Arborescence.Models
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>
-    public static class ReadOnlyAdjacencyGraphFactory<TVertex, TNeighborEnumerator>
+    public static class ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator>
         where TNeighborEnumerator : IEnumerator<TVertex>
     {
         /// <summary>

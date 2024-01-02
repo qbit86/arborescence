@@ -50,7 +50,6 @@ internal static partial class Program
             endpointsByEdge.Add(new(tail, head));
         }
 
-        Int32IncidenceGraph result = Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
-        return result;
+        return Int32IncidenceGraph.FromEdges(endpointsByEdge);
     }
 }

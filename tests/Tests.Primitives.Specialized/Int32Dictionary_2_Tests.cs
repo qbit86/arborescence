@@ -8,7 +8,7 @@ public sealed class Int32Dictionary_2_Tests
     [Fact]
     public void TryGetValue_AfterPutting_ShouldRetrieveSameValue()
     {
-        Int32Dictionary<string, List<string>> dictionary = Int32DictionaryFactory<string>.Create(new List<string>());
+        var dictionary = Int32Dictionary<string>.Create(new List<string>());
         const int key = 0;
         const string originalValue = "Καλημέρα";
 

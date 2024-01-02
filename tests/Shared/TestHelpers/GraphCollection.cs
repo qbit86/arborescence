@@ -130,7 +130,7 @@ internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<Int32AdjacencyG
     {
         Endpoints<int>[] edges = _edges.ToArray();
         _edges.Clear();
-        return Int32AdjacencyGraphFactory.FromEdges(edges);
+        return Int32AdjacencyGraph.FromEdges(edges);
     }
 }
 
@@ -142,7 +142,7 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
     private readonly Int32Dictionary<List<int>, List<List<int>>> _neighborsByVertex;
 
     internal ListAdjacencyGraphBuilder(int initialVertexCount) =>
-        _neighborsByVertex = Int32DictionaryFactory<List<int>>.Create(new List<List<int>>(initialVertexCount));
+        _neighborsByVertex = Int32Dictionary<List<int>>.Create(new List<List<int>>(initialVertexCount));
 
     public bool TryAdd(int tail, int head, out Endpoints<int> edge)
     {
@@ -159,7 +159,7 @@ internal sealed class ListAdjacencyGraphBuilder : IGraphBuilder<
     }
 
     public ListAdjacencyGraph<int, Int32Dictionary<List<int>, List<List<int>>>> ToGraph() =>
-        ListAdjacencyGraphFactory<int>.Create(_neighborsByVertex);
+        ListAdjacencyGraph<int>.Create(_neighborsByVertex);
 }
 
 internal sealed class Int32IncidenceGraphBuilder : IGraphBuilder<Int32IncidenceGraph, int, int>
@@ -177,7 +177,7 @@ internal sealed class Int32IncidenceGraphBuilder : IGraphBuilder<Int32IncidenceG
     {
         Endpoints<int>[] endpointsByEdge = _endpointsByEdge.ToArray();
         _endpointsByEdge.Clear();
-        return Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
+        return Int32IncidenceGraph.FromEdges(endpointsByEdge);
     }
 }
 
@@ -192,8 +192,8 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
 
     internal ListIncidenceGraphBuilder(int initialVertexCount)
     {
-        _tailByEdge = Int32DictionaryFactory<int>.Create(new List<int>());
-        _headByEdge = Int32DictionaryFactory<int>.Create(new List<int>());
+        _tailByEdge = Int32Dictionary<int>.Create(new List<int>());
+        _headByEdge = Int32Dictionary<int>.Create(new List<int>());
         _outEdgesByVertex = new(initialVertexCount);
     }
 
@@ -214,6 +214,6 @@ internal sealed class ListIncidenceGraphBuilder : IGraphBuilder<
     }
 
     public ListIncidenceGraph<int, int, Int32Dictionary<int, List<int>>, Dictionary<int, List<int>>> ToGraph() =>
-        ListIncidenceGraphFactory<int, int>.CreateUnchecked(_tailByEdge, _headByEdge, _outEdgesByVertex);
+        ListIncidenceGraph<int, int>.CreateUnchecked(_tailByEdge, _headByEdge, _outEdgesByVertex);
 }
 #endif

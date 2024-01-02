@@ -36,6 +36,6 @@ internal sealed class GraphHelper
             endpointsByEdge.Add(new(tail, head));
         }
 
-        return Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
+        return Int32IncidenceGraph.FromEdges(endpointsByEdge);
     }
 }

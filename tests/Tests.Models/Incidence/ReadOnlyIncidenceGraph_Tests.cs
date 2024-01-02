@@ -26,11 +26,12 @@ public sealed class ReadOnlyIncidenceGraph_Tests
                 outEdgesByVertex.Add(vertex, [edge]);
         }
 
-        var graph = ReadOnlyIncidenceGraphFactory<string, int>.FromLists(
-            Int32ReadOnlyDictionaryFactory<string>.Create(tailByEdge),
-            Int32ReadOnlyDictionaryFactory<string>.Create(headByEdge),
+        var graph = ReadOnlyIncidenceGraph<string, int>.FromLists(
+            Int32ReadOnlyDictionary<string>.Create(tailByEdge),
+            Int32ReadOnlyDictionary<string>.Create(headByEdge),
             outEdgesByVertex);
 
+        // ReSharper disable once SuggestVarOrType_Elsewhere
         var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
         while (actualNeighborEnumerator.MoveNext())

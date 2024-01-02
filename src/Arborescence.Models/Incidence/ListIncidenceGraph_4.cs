@@ -82,7 +82,7 @@ namespace Arborescence.Models
         {
             ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
             List<TEdge>.Enumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
-            return AdjacencyEnumeratorFactory<TVertex, TEdge>.Create(self, edgeEnumerator);
+            return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
         }
 
         /// <summary>

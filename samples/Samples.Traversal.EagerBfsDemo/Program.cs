@@ -21,7 +21,7 @@ internal static class Program
         Endpoints<int>[] endpointsByEdge = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
-        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
+        var graph = Int32IncidenceGraph.FromEdges(endpointsByEdge);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
         Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 

@@ -1,10 +1,14 @@
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace Arborescence.Models
 {
-    using System;
     using System.Collections.Generic;
 
-    public static partial class ReadOnlyAdjacencyGraphFactory<TVertex>
+    /// <summary>
+    /// Provides support for creating
+    /// <see cref="ReadOnlyAdjacencyGraph{TVertex,TNeighborEnumerator,TVertexMultimap,TVertexMultimapConcept}"/>
+    /// objects.
+    /// </summary>
+    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    public static partial class ReadOnlyAdjacencyGraph<TVertex>
     {
         /// <summary>
         /// Creates a
@@ -15,23 +19,22 @@ namespace Arborescence.Models
         /// <returns>The read-only adjacency graph.</returns>
         public static ReadOnlyAdjacencyGraph<
                 TVertex,
-                ArraySegment<TVertex>.Enumerator,
+                List<TVertex>.Enumerator,
                 TVertexMultimap,
                 ReadOnlyMultimapConcept<
                     TVertexMultimap,
                     TVertex,
-                    TVertex[],
-                    ArraySegment<TVertex>.Enumerator,
-                    ArrayEnumeratorProvider<TVertex>>>
-            FromArrays<TVertexMultimap>(TVertexMultimap neighborsByVertex)
-            where TVertexMultimap : IReadOnlyDictionary<TVertex, TVertex[]>
+                    List<TVertex>,
+                    List<TVertex>.Enumerator,
+                    ListEnumeratorProvider<TVertex>>>
+            FromLists<TVertexMultimap>(TVertexMultimap neighborsByVertex)
+            where TVertexMultimap : IReadOnlyDictionary<TVertex, List<TVertex>>
         {
             if (neighborsByVertex is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
 
             ReadOnlyMultimapConcept<
-                    TVertexMultimap, TVertex, TVertex[], ArraySegment<TVertex>.Enumerator,
-                    ArrayEnumeratorProvider<TVertex>>
+                    TVertexMultimap, TVertex, List<TVertex>, List<TVertex>.Enumerator, ListEnumeratorProvider<TVertex>>
                 vertexMultimapConcept = new(default);
             return new(neighborsByVertex, vertexMultimapConcept);
         }
@@ -45,26 +48,28 @@ namespace Arborescence.Models
         /// <returns>The read-only adjacency graph.</returns>
         public static ReadOnlyAdjacencyGraph<
                 TVertex,
-                ArraySegment<TVertex>.Enumerator,
+                HashSet<TVertex>.Enumerator,
                 TVertexMultimap,
                 ReadOnlyMultimapConcept<
                     TVertexMultimap,
                     TVertex,
-                    ArraySegment<TVertex>,
-                    ArraySegment<TVertex>.Enumerator,
-                    ArraySegmentEnumeratorProvider<TVertex>>>
-            FromArraySegments<TVertexMultimap>(TVertexMultimap neighborsByVertex)
-            where TVertexMultimap : IReadOnlyDictionary<TVertex, ArraySegment<TVertex>>
+                    HashSet<TVertex>,
+                    HashSet<TVertex>.Enumerator,
+                    HashSetEnumeratorProvider<TVertex>>>
+            FromHashSets<TVertexMultimap>(TVertexMultimap neighborsByVertex)
+            where TVertexMultimap : IReadOnlyDictionary<TVertex, HashSet<TVertex>>
         {
             if (neighborsByVertex is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));
 
             ReadOnlyMultimapConcept<
-                    TVertexMultimap, TVertex, ArraySegment<TVertex>, ArraySegment<TVertex>.Enumerator,
-                    ArraySegmentEnumeratorProvider<TVertex>>
+                    TVertexMultimap,
+                    TVertex,
+                    HashSet<TVertex>,
+                    HashSet<TVertex>.Enumerator,
+                    HashSetEnumeratorProvider<TVertex>>
                 vertexMultimapConcept = new(default);
             return new(neighborsByVertex, vertexMultimapConcept);
         }
     }
 }
-#endif

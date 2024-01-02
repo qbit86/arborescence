@@ -9,7 +9,7 @@ namespace Arborescence
     /// types.
     /// </summary>
     /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
-    public static class Int32DictionaryFactory<TValue>
+    public static class Int32Dictionary<TValue>
     {
         /// <summary>
         /// Creates an <see cref="Int32Dictionary{TValue, TValueList}"/> with the specified list of values.

@@ -4,7 +4,7 @@ namespace Arborescence.Models
     using System.Collections.Frozen;
     using System.Collections.Generic;
 
-    public static partial class ReadOnlyAdjacencyGraphFactory<TVertex>
+    public static partial class ReadOnlyAdjacencyGraph<TVertex>
     {
         /// <summary>
         /// Creates a
