@@ -8,7 +8,7 @@ namespace Arborescence.Models.Specialized
     /// of the <see cref="Int32AdjacencyGraph"/> type.
     /// </summary>
     /// <typeparam name="TNeighborCollection">The type of the neighbor collection.</typeparam>
-    public static class Int32AdjacencyGraphFactory<TNeighborCollection>
+    public static class Int32AdjacencyGraph<TNeighborCollection>
         where TNeighborCollection : ICollection<int>
     {
         /// <summary>
