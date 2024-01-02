@@ -69,7 +69,7 @@ namespace Arborescence.Models.Specialized
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
             NeighborEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
-            return IncidenceEnumeratorFactory.Create(vertex, neighborEnumerator);
+            return IncidenceEnumerator.Create(vertex, neighborEnumerator);
         }
 
         /// <inheritdoc/>
