@@ -17,7 +17,7 @@ public sealed class EnumerableDfs_Tests
         Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
-        Int32AdjacencyGraph adjacencyGraph = Int32AdjacencyGraphFactory.FromEdges(edges);
+        var adjacencyGraph = Int32AdjacencyGraph.FromEdges(edges);
 
         List<(string Tail, string Head)> expectedBase32 = new(12)
         {

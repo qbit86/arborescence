@@ -130,7 +130,7 @@ internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<Int32AdjacencyG
     {
         Endpoints<int>[] edges = _edges.ToArray();
         _edges.Clear();
-        return Int32AdjacencyGraphFactory.FromEdges(edges);
+        return Int32AdjacencyGraph.FromEdges(edges);
     }
 }
 
