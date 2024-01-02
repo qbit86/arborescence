@@ -17,7 +17,7 @@ public sealed partial class Int32IncidenceGraphTests
 #else
         Endpoints<int>[] edges = p.Edges.ToArray();
 #endif
-        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
+        var graph = Int32IncidenceGraph.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
         Assert.Equal(p.Edges.Count, graph.EdgeCount);
         ILookup<int, int> expectedNeighborsByVertex = p.Edges.ToLookup(it => it.Tail, it => it.Head);
@@ -64,7 +64,7 @@ public sealed partial class Int32IncidenceGraphTests
 #else
         Endpoints<int>[] edges = expectedEndpointsByEdge.ToArray();
 #endif
-        Int32IncidenceGraph graph = Int32IncidenceGraphFactory.FromEdges(edges);
+        var graph = Int32IncidenceGraph.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
         Assert.Equal(edgeCount, graph.EdgeCount);
 

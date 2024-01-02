@@ -7,11 +7,7 @@ namespace Arborescence.Models.Specialized
     using System.Runtime.InteropServices;
 #endif
 
-    /// <summary>
-    /// Provides a set of initialization methods for instances
-    /// of the <see cref="Int32IncidenceGraph"/> type.
-    /// </summary>
-    public static class Int32IncidenceGraphFactory
+    partial struct Int32IncidenceGraph
     {
         /// <summary>
         /// Creates an <see cref="Int32IncidenceGraph"/> with the specified edges defined by their endpoint pairs.

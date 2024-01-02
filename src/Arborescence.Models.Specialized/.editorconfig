@@ -7,8 +7,9 @@ resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedRes
 [Int32*Graph.cs]
 resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedResourceIsReturned
 
-[Int32*GraphFactory.cs]
+[Int32AdjacencyGraphFactory.cs]
 dotnet_diagnostic.CA1002.severity = none # Do not expose generic lists
 
-[Int32IncidenceGraphFactory.cs]
+[Int32IncidenceGraph.Factory.cs]
+dotnet_diagnostic.CA1002.severity = none # Do not expose generic lists
 dotnet_diagnostic.CA1062.severity = none # Validate arguments of public methods

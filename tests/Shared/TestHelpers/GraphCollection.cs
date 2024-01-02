@@ -177,7 +177,7 @@ internal sealed class Int32IncidenceGraphBuilder : IGraphBuilder<Int32IncidenceG
     {
         Endpoints<int>[] endpointsByEdge = _endpointsByEdge.ToArray();
         _endpointsByEdge.Clear();
-        return Int32IncidenceGraphFactory.FromEdges(endpointsByEdge);
+        return Int32IncidenceGraph.FromEdges(endpointsByEdge);
     }
 }
 
