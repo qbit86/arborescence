@@ -1,11 +1,5 @@
 # Changelog
 
-## [Unreleased] - 2024-01-02
-
-### Changed
-
-- Traversal.Specialized: Fixed Readme.
-
 ## [0.16.4] - 2024-01-02
 
 ### Changed
@@ -15,6 +9,7 @@
 - Models.Specialized: Renamed `*Factory` static classes to match the types they create.
 - Primitives: Fixed XML-doc comment.
 - Primitives.Specialized: Renamed `*Factory` static classes to match the types they create.
+- Traversal.Specialized: Fixed Readme.
 
 ## [0.16.3] - 2024-01-01
 
