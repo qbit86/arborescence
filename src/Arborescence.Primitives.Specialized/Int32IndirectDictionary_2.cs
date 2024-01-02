@@ -8,7 +8,7 @@ namespace Arborescence
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
-    public static class Int32IndirectDictionaryFactory<TKey, TValue>
+    public static class Int32IndirectDictionary<TKey, TValue>
     {
         /// <summary>
         /// Creates an <see cref="Int32IndirectDictionary{TKey, TValue, TKeyToIndexMap, TIndexToValueMap}"/>
