@@ -26,7 +26,7 @@ public sealed class ReadOnlyIncidenceGraph_Tests
                 outEdgesByVertex.Add(vertex, [edge]);
         }
 
-        var graph = ReadOnlyIncidenceGraphFactory<string, int>.FromLists(
+        var graph = ReadOnlyIncidenceGraph<string, int>.FromLists(
             Int32ReadOnlyDictionaryFactory<string>.Create(tailByEdge),
             Int32ReadOnlyDictionaryFactory<string>.Create(headByEdge),
             outEdgesByVertex);

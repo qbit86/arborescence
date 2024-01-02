@@ -4,7 +4,7 @@ namespace Arborescence.Models
     using System.Collections.Frozen;
     using System.Collections.Generic;
 
-    public static partial class ReadOnlyIncidenceGraphFactory<TVertex, TEdge>
+    public static partial class ReadOnlyIncidenceGraph<TVertex, TEdge>
     {
         /// <summary>
         /// Creates a
