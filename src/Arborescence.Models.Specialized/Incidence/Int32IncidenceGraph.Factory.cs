@@ -62,13 +62,13 @@ namespace Arborescence.Models.Specialized
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(vertexCount));
 
             // We cannot reuse this overload taking span:
-            // Int32IncidenceGraphFactory.FromEdgesUnchecked(int, Span<Endpoints<int>>)
+            // Int32IncidenceGraph.FromEdgesUnchecked(int, Span<Endpoints<int>>)
             // Because the sorting algorithm that takes spans is only available in .NET 5 and later:
             // MemoryExtensions.Sort<TKey,TValue,TComparer>(Span<TKey>, Span<TValue>, TComparer)
             // https://learn.microsoft.com/en-us/dotnet/api/system.memoryextensions.sort?view=net-6.0
 
             // We need to implement sorting independently with another overload that takes arrays:
-            // Int32IncidenceGraphFactory.FromEdgesUnchecked(int, Endpoints<int>[])
+            // Int32IncidenceGraph.FromEdgesUnchecked(int, Endpoints<int>[])
             // Because the sorting algorithm that takes arrays is available on older versions of .NET:
             // Array.Sort<TKey,TValue>(TKey[], TValue[], IComparer<TKey>)
             // https://learn.microsoft.com/en-us/dotnet/api/system.array.sort?view=net-6.0
