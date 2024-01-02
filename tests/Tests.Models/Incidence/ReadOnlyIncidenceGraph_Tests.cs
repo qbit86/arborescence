@@ -31,6 +31,7 @@ public sealed class ReadOnlyIncidenceGraph_Tests
             Int32ReadOnlyDictionary<string>.Create(headByEdge),
             outEdgesByVertex);
 
+        // ReSharper disable once SuggestVarOrType_Elsewhere
         var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
         while (actualNeighborEnumerator.MoveNext())
