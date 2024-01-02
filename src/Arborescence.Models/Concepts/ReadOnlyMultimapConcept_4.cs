@@ -11,7 +11,7 @@ namespace Arborescence.Models
     /// <typeparam name="TKey">The type of keys.</typeparam>
     /// <typeparam name="TValueCollection">The type of the value collection.</typeparam>
     /// <typeparam name="TValueEnumerator">The type of the value enumerator.</typeparam>
-    public static class ReadOnlyMultimapConceptFactory<TMultimap, TKey, TValueCollection, TValueEnumerator>
+    public static class ReadOnlyMultimapConcept<TMultimap, TKey, TValueCollection, TValueEnumerator>
         where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
     {
         /// <summary>
