@@ -1,13 +1,13 @@
 # Changelog
 
-## [Unreleased] - 2024-01-02
+## [0.16.4] - 2024-01-02
 
 ### Changed
 
 - Models: Renamed `*Factory` static classes to match the types they create.
 - Models.Specialized: Removed `Int32*GraphFactory` static class in favor of static factory methods in `Int32*Graph`.
 - Models.Specialized: Renamed `*Factory` static classes to match the types they create.
-- Primitives: Fix XML-doc comment.
+- Primitives: Fixed XML-doc comment.
 - Primitives.Specialized: Renamed `*Factory` static classes to match the types they create.
 - Traversal.Specialized: Fixed Readme.
 
@@ -455,7 +455,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.3...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.4...HEAD
+
+[0.16.4]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.3...arborescence-0.16.4
 
 [0.16.3]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.2...arborescence-0.16.3
 
