@@ -8,11 +8,7 @@ namespace Arborescence.Models.Specialized
     using System.Diagnostics;
     using Edge = Endpoints<int>;
 
-    /// <summary>
-    /// Provides a set of initialization methods for instances
-    /// of the <see cref="Int32AdjacencyGraph"/> type.
-    /// </summary>
-    public static class Int32AdjacencyGraphFactory
+    partial struct Int32AdjacencyGraph
     {
         /// <summary>
         /// Creates an <see cref="Int32AdjacencyGraph"/> with the specified edges.

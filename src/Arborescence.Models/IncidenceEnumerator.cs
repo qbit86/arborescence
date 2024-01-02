@@ -5,7 +5,7 @@ namespace Arborescence.Models
     /// <summary>
     /// Provides support for creating <see cref="IncidenceEnumerator{TVertex, TNeighborEnumerator}"/> objects.
     /// </summary>
-    public static class IncidenceEnumeratorFactory
+    public static class IncidenceEnumerator
     {
         /// <summary>
         /// Creates a <see cref="IncidenceEnumerator{TVertex, TNeighborEnumerator}"/>.

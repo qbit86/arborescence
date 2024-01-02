@@ -22,7 +22,7 @@ internal static class Program
         Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
-        Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
+        var graph = Int32AdjacencyGraph.FromEdges(edges);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
         Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 

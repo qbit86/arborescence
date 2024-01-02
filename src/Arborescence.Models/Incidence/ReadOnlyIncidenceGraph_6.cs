@@ -86,7 +86,7 @@ namespace Arborescence.Models
             ReadOnlyIncidenceGraph<
                 TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
             TEdgeEnumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
-            return AdjacencyEnumeratorFactory<TVertex, TEdge>.Create(self, edgeEnumerator);
+            return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

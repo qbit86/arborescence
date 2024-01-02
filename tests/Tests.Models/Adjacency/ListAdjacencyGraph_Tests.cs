@@ -8,7 +8,7 @@ public sealed class ListAdjacencyGraph_Tests
     [Fact]
     public void TryAddVertex_AfterAdding_ShouldIncreaseVertexCount()
     {
-        ListAdjacencyGraph<string, Dictionary<string, List<string>>> graph = ListAdjacencyGraphFactory<string>.Create();
+        var graph = ListAdjacencyGraph<string>.Create();
         Assert.True(graph.TryAddVertex("μηδέν"));
         Assert.True(graph.TryAddVertex("δύο"));
         Assert.Equal(2, graph.VertexCount);
@@ -17,7 +17,7 @@ public sealed class ListAdjacencyGraph_Tests
     [Fact]
     public void EnumerateOutNeighbors_AfterAdding_ShouldReturnHeadsAsNeighbors()
     {
-        ListAdjacencyGraph<string, Dictionary<string, List<string>>> graph = ListAdjacencyGraphFactory<string>.Create();
+        var graph = ListAdjacencyGraph<string>.Create();
         const string vertex = "μηδέν";
         string[] expectedNeighbors = { "ένα", "δύο" };
         foreach (string neighbor in expectedNeighbors)

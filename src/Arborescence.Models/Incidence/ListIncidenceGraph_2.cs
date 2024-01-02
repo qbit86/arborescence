@@ -8,7 +8,7 @@ namespace Arborescence.Models
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public static class ListIncidenceGraphFactory<TVertex, TEdge>
+    public static class ListIncidenceGraph<TVertex, TEdge>
         where TVertex : notnull
         where TEdge : notnull
     {

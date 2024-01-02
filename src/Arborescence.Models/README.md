@@ -29,8 +29,7 @@ Dictionary<string, List<string>> neighborsByVertex = new(4)
     ["IST"] = new() { "LHR" }
     // Let's add "TPE" later.
 };
-ListAdjacencyGraph<string, Dictionary<string, List<string>>> graph =
-    ListAdjacencyGraphFactory<string>.Create(neighborsByVertex);
+var graph = ListAdjacencyGraph<string>.Create(neighborsByVertex);
 graph.TryAddVertex("TPE");
 graph.AddEdge("IST", "TPE");
 graph.AddEdge("TPE", "TPE");
@@ -63,8 +62,7 @@ The following is one of the ways you can create an incident graph.
 (For clarity, we represent flights as integers rather than strings.)
 
 ```csharp
-ListIncidenceGraph<string, int, Dictionary<int, string>, Dictionary<string, List<int>>> graph =
-    ListIncidenceGraphFactory<string, int>.Create();
+var graph = ListIncidenceGraph<string, int>.Create();
 _ = graph.TryAddVertex("OMS");
 _ = graph.TryAddEdge(676, "LHR", "IST");
 _ = graph.TryAddEdge(1980, "LHR", "IST");

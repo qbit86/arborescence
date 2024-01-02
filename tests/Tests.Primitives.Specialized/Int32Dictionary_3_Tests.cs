@@ -38,9 +38,8 @@ public sealed class Int32Dictionary_3_Tests
 
     private static Int32Dictionary<string, List<string>, StringComparer> CreateSparseDictionary()
     {
-        Int32Dictionary<string, List<string>, StringComparer> dictionary =
-            Int32DictionaryFactory<string>.CreateWithAbsence(
-                new List<string>(), StringComparer.InvariantCultureIgnoreCase, AbsenceMarkerUpperCase);
+        var dictionary = Int32Dictionary<string>.CreateWithAbsence(
+            new List<string>(), StringComparer.InvariantCultureIgnoreCase, AbsenceMarkerUpperCase);
         dictionary[0] = "Καλημέρα";
         dictionary[1] = AbsenceMarkerLowerCase;
         dictionary[2] = "Mañana";

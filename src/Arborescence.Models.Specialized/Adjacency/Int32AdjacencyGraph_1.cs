@@ -8,7 +8,7 @@ namespace Arborescence.Models.Specialized
     /// of the <see cref="Int32AdjacencyGraph"/> type.
     /// </summary>
     /// <typeparam name="TNeighborCollection">The type of the neighbor collection.</typeparam>
-    public static class Int32AdjacencyGraphFactory<TNeighborCollection>
+    public static class Int32AdjacencyGraph<TNeighborCollection>
         where TNeighborCollection : ICollection<int>
     {
         /// <summary>
@@ -46,8 +46,7 @@ namespace Arborescence.Models.Specialized
         private static Int32AdjacencyGraph FromListUnchecked<TMultimap>(TMultimap neighborsByVertex)
             where TMultimap : IReadOnlyList<TNeighborCollection>
         {
-            Int32ReadOnlyDictionary<TNeighborCollection, TMultimap> dictionary =
-                Int32ReadOnlyDictionaryFactory<TNeighborCollection>.Create(neighborsByVertex);
+            var dictionary = Int32ReadOnlyDictionary<TNeighborCollection>.Create(neighborsByVertex);
             return FromDictionaryUnchecked(dictionary);
         }
 

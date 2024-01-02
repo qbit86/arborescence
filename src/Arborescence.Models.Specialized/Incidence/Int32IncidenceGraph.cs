@@ -106,7 +106,7 @@ namespace Arborescence.Models.Specialized
         {
             Int32IncidenceGraph self = this;
             EdgeEnumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
-            return AdjacencyEnumeratorFactory<int, int>.Create(self, edgeEnumerator);
+            return AdjacencyEnumerator<int, int>.Create(self, edgeEnumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

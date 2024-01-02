@@ -17,7 +17,7 @@ public sealed partial class Int32AdjacencyGraphTests
 #else
         Endpoints<int>[] edges = p.Edges.ToArray();
 #endif
-        Int32AdjacencyGraph graph = Int32AdjacencyGraphFactory.FromEdges(edges);
+        var graph = Int32AdjacencyGraph.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
         Assert.Equal(p.Edges.Count, graph.EdgeCount);
         ILookup<int, int> expectedNeighborsByVertex = p.Edges.ToLookup(it => it.Tail, it => it.Head);

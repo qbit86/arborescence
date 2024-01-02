@@ -7,7 +7,7 @@ namespace Arborescence.Models
     /// of the <see cref="ListAdjacencyGraph{TVertex, TVertexMultimap}"/> type.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    public static class ListAdjacencyGraphFactory<TVertex>
+    public static class ListAdjacencyGraph<TVertex>
         where TVertex : notnull
     {
         /// <summary>

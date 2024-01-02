@@ -7,7 +7,7 @@ namespace Arborescence.Models
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public static class AdjacencyEnumeratorFactory<TVertex, TEdge>
+    public static class AdjacencyEnumerator<TVertex, TEdge>
     {
         /// <summary>
         /// Creates a <see cref="AdjacencyEnumerator{TVertex, TEdge, TGraph, TEdgeEnumerator}"/>.

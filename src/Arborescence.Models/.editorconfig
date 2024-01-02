@@ -7,7 +7,7 @@ dotnet_diagnostic.CA1815.severity = none # Override equals and operator equals o
 [*EnumeratorProvider.cs]
 resharper_not_disposed_resource_is_returned_highlighting = none # NotDisposedResourceIsReturned
 
-[ReadOnly*GraphFactory*.cs]
+[ReadOnly*Graph*.cs]
 resharper_partial_type_with_single_part_highlighting = none # PartialTypeWithSinglePart
 
 [ArrayEnumeratorProvider.cs]

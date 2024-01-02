@@ -19,7 +19,7 @@ public sealed class ReadOnlyAdjacencyGraph_Tests
                 neighborsByVertex.Add(vertex, [neighbor]);
         }
 
-        var graph = ReadOnlyAdjacencyGraphFactory<string>.FromLists(neighborsByVertex);
+        var graph = ReadOnlyAdjacencyGraph<string>.FromLists(neighborsByVertex);
 
         List<string>.Enumerator actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);

@@ -10,7 +10,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Specialized primitive types</Title>
-    <VersionPrefix>0.16.3</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>

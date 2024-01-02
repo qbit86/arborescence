@@ -7,7 +7,7 @@
     using System.Text;
 
     /// <summary>
-    /// Provides the factory method for <see cref="Endpoints{TVertex}"/>.
+    /// Creates instances of the <see cref="Endpoints{TVertex}"/> struct.
     /// </summary>
     public static class Endpoints
     {
