@@ -37,8 +37,7 @@ Endpoints<int>[] edges =
     new(2, 3),
     new(3, 3)
 };
-Int32AdjacencyGraph graph =
-    Int32AdjacencyGraphFactory.FromEdges(edges);
+var graph = Int32AdjacencyGraph.FromEdges(edges);
 Console.WriteLine(graph.VertexCount);
 ```
 
