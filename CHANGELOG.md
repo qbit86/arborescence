@@ -7,9 +7,14 @@
 - Models: Renamed `*Factory` static classes to match the types they create.
 - Models.Specialized: Removed `Int32*GraphFactory` static class in favor of static factory methods in `Int32*Graph`.
 - Models.Specialized: Renamed `*Factory` static classes to match the types they create.
-- Primitives: Fix XML-doc comment.
 - Primitives.Specialized: Renamed `*Factory` static classes to match the types they create.
 - Traversal.Specialized: Fixed Readme.
+
+## [0.16.4] - 2024-01-02
+
+### Changed
+
+- Primitives: Fixed XML-doc comment.
 
 ## [0.16.3] - 2024-01-01
 
