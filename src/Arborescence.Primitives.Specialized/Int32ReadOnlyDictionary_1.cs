@@ -30,7 +30,7 @@ namespace Arborescence
 
         /// <summary>
         /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
-        /// where <c>TEquatable</c> is <see cref="DefaultAbsence{TValue}"/>.
+        /// where <c>TEquatable</c> is <see cref="DefaultComparerEquatable{TValue}"/>.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
