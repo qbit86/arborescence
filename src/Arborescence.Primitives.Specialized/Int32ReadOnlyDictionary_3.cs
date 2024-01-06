@@ -9,7 +9,7 @@ namespace Arborescence
 
     /// <summary>
     /// Provides a read-only dictionary to use when the key is an <see cref="int"/> index in the contiguous range
-    /// and the default comparer is used.
+    /// and <typeparamref name="TEquatable"/> is used to distinguish missing elements.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in this dictionary.</typeparam>
     /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
