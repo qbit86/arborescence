@@ -30,20 +30,20 @@ namespace Arborescence
 
         /// <summary>
         /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
-        /// where <c>TEquatable</c> is <see cref="DefaultComparerEquatable{TValue}"/>.
+        /// where <c>TEquatable</c> is <see cref="DefaultEqualityComparerEquatable{T}"/>.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
         /// <returns>
         /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
         /// </returns>
-        public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultComparerEquatable<TValue?>>
+        public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultEqualityComparerEquatable<TValue?>>
             CreateWithAbsence<TValueList>(TValueList values)
             where TValueList : IReadOnlyList<TValue>
         {
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
-            DefaultComparerEquatable<TValue?> absenceEquatable = default;
+            DefaultEqualityComparerEquatable<TValue?> absenceEquatable = default;
             return new(values, absenceEquatable);
         }
 

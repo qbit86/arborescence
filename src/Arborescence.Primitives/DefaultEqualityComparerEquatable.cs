@@ -7,7 +7,7 @@ namespace Arborescence
     /// Models the concept of absence by treating the element as missing if it is equal to the default value of its type.
     /// </summary>
     /// <typeparam name="T">The type of the elements to check.</typeparam>
-    public readonly struct DefaultComparerEquatable<T> : IEquatable<T>
+    public readonly struct DefaultEqualityComparerEquatable<T> : IEquatable<T>
     {
         /// <summary>
         /// Indicates whether the default object is equal to another object of the same type.
