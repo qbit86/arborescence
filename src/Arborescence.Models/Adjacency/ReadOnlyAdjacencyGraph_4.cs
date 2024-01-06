@@ -33,9 +33,9 @@ namespace Arborescence.Models
         }
 
         /// <summary>
-        /// Gets the number of vertices.
+        /// Gets the number of vertices that can have out-neighbors.
         /// </summary>
-        public int VertexCount
+        public int TailCount
         {
             get
             {

@@ -17,7 +17,7 @@ public sealed class RecursiveDfsTest
     {
         // Arrange
 
-        int vertexCount = graph.VertexCount;
+        int vertexCount = graph.TailCount;
         if (vertexCount is 0)
             return;
 
@@ -31,10 +31,10 @@ public sealed class RecursiveDfsTest
 
         if (multipleSource)
         {
-            if (graph.VertexCount < 3)
+            if (graph.TailCount < 3)
                 return;
 
-            int sourceCount = graph.VertexCount / 3;
+            int sourceCount = graph.TailCount / 3;
             IndexEnumerator sources = new(sourceCount);
 
             EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, vertexCount, eagerHandler);
@@ -42,7 +42,7 @@ public sealed class RecursiveDfsTest
         }
         else
         {
-            int source = graph.VertexCount >> 1;
+            int source = graph.TailCount >> 1;
             EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, vertexCount, eagerHandler);
             RecursiveDfs<int, EdgeEnumerator>.Traverse(graph, source, vertexCount, recursiveHandler);
         }

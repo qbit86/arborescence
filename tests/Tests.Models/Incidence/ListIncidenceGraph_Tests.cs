@@ -11,7 +11,7 @@ public sealed class ListIncidenceGraph_Tests
         var graph = ListIncidenceGraph<string, int>.Create();
         Assert.True(graph.TryAddVertex("μηδέν"));
         Assert.True(graph.TryAddVertex("δύο"));
-        Assert.Equal(2, graph.VertexCount);
+        Assert.Equal(2, graph.TailCount);
     }
 
     [Fact]
