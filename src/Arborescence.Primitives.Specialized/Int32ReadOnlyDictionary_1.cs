@@ -47,8 +47,21 @@ namespace Arborescence
             return new(values, absenceEquatable);
         }
 
+        /// <summary>
+        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
+        /// with the specified list of values, the absence object, and the absence comparer.
+        /// </summary>
+        /// <param name="values">The underlying list of the values.</param>
+        /// <param name="absenceMarker">The object to use as the absence marker.</param>
+        /// <param name="absenceComparer">The comparer to compare the values with the absence marker.</param>
+        /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
+        /// <typeparam name="TComparer">The type that provides a method to distinguish missing elements.</typeparam>
+        /// <returns>
+        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
+        /// </returns>
         public static Int32ReadOnlyDictionary<TValue, TValueList, EqualityComparerEquatable<TValue?, TComparer>>
-            CreateWithAbsence<TValueList, TComparer>(TValueList values, TValue? absence, TComparer absenceComparer)
+            CreateWithAbsence<TValueList, TComparer>(
+                TValueList values, TValue? absenceMarker, TComparer absenceComparer)
             where TValueList : IReadOnlyList<TValue>
             where TComparer : IEqualityComparer<TValue?>
         {
@@ -56,7 +69,7 @@ namespace Arborescence
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absenceComparer is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
-            EqualityComparerEquatable<TValue?, TComparer> absenceEquatable = new(absence, absenceComparer);
+            EqualityComparerEquatable<TValue?, TComparer> absenceEquatable = new(absenceMarker, absenceComparer);
             return new(values, absenceEquatable);
         }
 
