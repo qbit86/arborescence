@@ -71,29 +71,29 @@ namespace Arborescence
         /// </summary>
         /// <param name="indexByKey">The mapping from a key to an index.</param>
         /// <param name="values">The underlying list of the values.</param>
-        /// <param name="absence">The object that provides a method for distinguishing missing elements.</param>
+        /// <param name="absenceEquatable">The object that provides a method for distinguishing missing elements.</param>
         /// <typeparam name="TKeyToIndexMap">The type of the mapping from a key to an <see cref="int"/>.</typeparam>
         /// <typeparam name="TValueList">The type of the backing list.</typeparam>
-        /// <typeparam name="TAbsence">The type that provides a method for distinguishing missing elements.</typeparam>
+        /// <typeparam name="TEquatable">The type that provides a method for distinguishing missing elements.</typeparam>
         /// <returns>
         /// An <see cref="Int32IndirectReadOnlyDictionary{TKey, TValue, TKeyToIndexMap, TIndexToValueMap}"/>
         /// that contains the specified values.
         /// </returns>
         public static Int32IndirectReadOnlyDictionary<
-                TKey, TValue, TKeyToIndexMap, Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>>
-            CreateFromListWithAbsence<TKeyToIndexMap, TValueList, TAbsence>(
-                TKeyToIndexMap indexByKey, TValueList values, TAbsence absence)
+                TKey, TValue, TKeyToIndexMap, Int32ReadOnlyDictionary<TValue, TValueList, TEquatable>>
+            CreateFromListWithAbsence<TKeyToIndexMap, TValueList, TEquatable>(
+                TKeyToIndexMap indexByKey, TValueList values, TEquatable absenceEquatable)
             where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
             where TValueList : IReadOnlyList<TValue>
-            where TAbsence : IEquatable<TValue>
+            where TEquatable : IEquatable<TValue>
         {
             if (indexByKey is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
-            if (absence is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(absence));
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> valueByIndex = new(values, absence);
+            if (absenceEquatable is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceEquatable));
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> valueByIndex = new(values, absenceEquatable);
             return new(indexByKey, valueByIndex);
         }
 
