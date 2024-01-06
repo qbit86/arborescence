@@ -76,8 +76,6 @@ namespace Arborescence
         {
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
-            if (absence is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(absence));
             if (absenceComparer is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
             ComparerEquatable<TValue, TComparer> comparerEquatable = new(absence, absenceComparer);
