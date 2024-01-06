@@ -47,7 +47,7 @@ namespace Arborescence
             return new(values, absenceEquatable);
         }
 
-        public static Int32ReadOnlyDictionary<TValue, TValueList, ComparerEquatable<TValue?, TComparer>>
+        public static Int32ReadOnlyDictionary<TValue, TValueList, EqualityComparerEquatable<TValue?, TComparer>>
             CreateWithAbsence<TValueList, TComparer>(TValueList values, TValue? absence, TComparer absenceComparer)
             where TValueList : IReadOnlyList<TValue>
             where TComparer : IEqualityComparer<TValue?>
@@ -56,7 +56,7 @@ namespace Arborescence
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absenceComparer is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
-            ComparerEquatable<TValue?, TComparer> absenceEquatable = new(absence, absenceComparer);
+            EqualityComparerEquatable<TValue?, TComparer> absenceEquatable = new(absence, absenceComparer);
             return new(values, absenceEquatable);
         }
 
