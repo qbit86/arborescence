@@ -6,7 +6,7 @@ namespace Arborescence
     /// <summary>
     /// Provides a set of initialization methods for instances of the
     /// <see cref="Int32ReadOnlyDictionary{TKey, TValueList}"/>
-    /// and <see cref="Int32ReadOnlyDictionary{TKey, TValueList, TAbsence}"/>
+    /// and <see cref="Int32ReadOnlyDictionary{TKey, TValueList, TEquatable}"/>
     /// types.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in this dictionary.</typeparam>
@@ -29,13 +29,13 @@ namespace Arborescence
         }
 
         /// <summary>
-        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
-        /// where <c>TAbsence</c> is <see cref="DefaultAbsence{TValue}"/>.
+        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
+        /// where <c>TEquatable</c> is <see cref="DefaultAbsence{TValue}"/>.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
         /// <returns>
-        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/> that contains the specified values.
+        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
         /// </returns>
         public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsence<TValue>>
             CreateWithAbsence<TValueList>(TValueList values)
@@ -47,7 +47,7 @@ namespace Arborescence
         }
 
         /// <summary>
-        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
+        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
         /// with the specified list of values and the absence object.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
@@ -55,7 +55,7 @@ namespace Arborescence
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
         /// <typeparam name="TEquatable">The type that provides a method for distinguishing missing elements.</typeparam>
         /// <returns>
-        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/> that contains the specified values.
+        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
         /// </returns>
         public static Int32ReadOnlyDictionary<TValue, TValueList, TEquatable>
             CreateWithAbsence<TValueList, TEquatable>(TValueList values, TEquatable absenceEquatable)

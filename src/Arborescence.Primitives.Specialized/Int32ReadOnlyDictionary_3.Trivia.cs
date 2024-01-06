@@ -6,7 +6,7 @@ namespace Arborescence
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>
+    partial struct Int32ReadOnlyDictionary<TValue, TValueList, TEquatable>
     {
         /// <inheritdoc/>
         public IEnumerable<int> Keys
@@ -27,7 +27,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
             return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -42,35 +42,35 @@ namespace Arborescence
             for (int key = 0; key < count; ++key)
             {
                 TValue value = values[key];
-                if (!_absence.Equals(value))
+                if (!_absenceEquatable.Equals(value))
                     yield return new(key, value);
             }
         }
 
         /// <inheritdoc/>
-        public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> other)
+        public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> other)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
             return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
-                EqualityComparer<TAbsence>.Default.Equals(self._absence, other._absence);
+                EqualityComparer<TEquatable>.Default.Equals(self._absenceEquatable, other._absenceEquatable);
         }
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> other && Equals(other);
+            obj is Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
             return HashCode.Combine(
                 EqualityComparer<TValueList>.Default.GetHashCode(self._values),
-                EqualityComparer<TAbsence>.Default.GetHashCode(self._absence));
+                EqualityComparer<TEquatable>.Default.GetHashCode(self._absenceEquatable));
         }
 
         /// <summary>
         /// Indicates whether two
-        /// <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
+        /// <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
         /// structures are equal.
         /// </summary>
         /// <param name="left">The instance to the left of the operator.</param>
@@ -80,12 +80,12 @@ namespace Arborescence
         /// <see langword="false"/> otherwise.
         /// </returns>
         public static bool operator ==(
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> left,
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> right) => left.Equals(right);
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> left,
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> right) => left.Equals(right);
 
         /// <summary>
         /// Indicates whether two
-        /// <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
+        /// <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
         /// structures are not equal.
         /// </summary>
         /// <param name="left">The instance to the left of the operator.</param>
@@ -95,7 +95,7 @@ namespace Arborescence
         /// <see langword="false"/> otherwise.
         /// </returns>
         public static bool operator !=(
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> left,
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> right) => !left.Equals(right);
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> left,
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> right) => !left.Equals(right);
     }
 }

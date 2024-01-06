@@ -13,20 +13,20 @@ namespace Arborescence
     /// </summary>
     /// <typeparam name="TValue">The type of the values in this dictionary.</typeparam>
     /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
-    /// <typeparam name="TAbsence">The type that provides a method for distinguishing missing elements.</typeparam>
-    public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> :
+    /// <typeparam name="TEquatable">The type that provides a method for distinguishing missing elements.</typeparam>
+    public readonly partial struct Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> :
         IReadOnlyDictionary<int, TValue>,
-        IEquatable<Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>>
+        IEquatable<Int32ReadOnlyDictionary<TValue, TValueList, TEquatable>>
         where TValueList : IReadOnlyList<TValue>
-        where TAbsence : IEquatable<TValue>
+        where TEquatable : IEquatable<TValue>
     {
         private readonly TValueList _values;
-        private readonly TAbsence _absence;
+        private readonly TEquatable _absenceEquatable;
 
-        internal Int32ReadOnlyDictionary(TValueList values, TAbsence absence)
+        internal Int32ReadOnlyDictionary(TValueList values, TEquatable absenceEquatable)
         {
             _values = values;
-            _absence = absence;
+            _absenceEquatable = absenceEquatable;
         }
 
         /// <inheritdoc/>
@@ -35,10 +35,10 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool ContainsKey(int key)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
             if (self._values is not { } values)
                 return false;
-            return unchecked((uint)key < (uint)values.Count) && !self._absence.Equals(values[key]);
+            return unchecked((uint)key < (uint)values.Count) && !self._absenceEquatable.Equals(values[key]);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Arborescence
         /// otherwise, the value is unspecified.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if the <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
+        /// <see langword="true"/> if the <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
         /// contains an element that has the specified key;
         /// otherwise, <see langword="false"/>.
         /// </returns>
@@ -59,14 +59,14 @@ namespace Arborescence
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TAbsence> self = this;
+            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
             if (self._values is not { } values)
                 return None(out value);
             if (unchecked((uint)key >= (uint)values.Count))
                 return None(out value);
 
             value = values[key];
-            return !self._absence.Equals(value);
+            return !self._absenceEquatable.Equals(value);
         }
 
         /// <inheritdoc/>
