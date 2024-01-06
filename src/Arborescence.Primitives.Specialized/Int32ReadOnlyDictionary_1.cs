@@ -51,22 +51,37 @@ namespace Arborescence
         /// with the specified list of values and the absence object.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
-        /// <param name="absence">The object that provides a method for distinguishing missing elements.</param>
+        /// <param name="absenceEquatable">The object that provides a method for distinguishing missing elements.</param>
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
-        /// <typeparam name="TAbsence">The type that provides a method for distinguishing missing elements.</typeparam>
+        /// <typeparam name="TEquatable">The type that provides a method for distinguishing missing elements.</typeparam>
         /// <returns>
         /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/> that contains the specified values.
         /// </returns>
-        public static Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>
-            CreateWithAbsence<TValueList, TAbsence>(TValueList values, TAbsence absence)
+        public static Int32ReadOnlyDictionary<TValue, TValueList, TEquatable>
+            CreateWithAbsence<TValueList, TEquatable>(TValueList values, TEquatable absenceEquatable)
             where TValueList : IReadOnlyList<TValue>
-            where TAbsence : IEquatable<TValue>
+            where TEquatable : IEquatable<TValue>
+        {
+            if (values is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
+            if (absenceEquatable is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceEquatable));
+            return new(values, absenceEquatable);
+        }
+
+        public static Int32ReadOnlyDictionary<TValue, TValueList, ComparerEquatable<TValue, TComparer>>
+            CreateWithAbsence<TValueList, TComparer>(TValueList values, TValue absence, TComparer absenceComparer)
+            where TValueList : IReadOnlyList<TValue>
+            where TComparer : IEqualityComparer<TValue>
         {
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absence is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(absence));
-            return new(values, absence);
+            if (absenceComparer is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
+            ComparerEquatable<TValue, TComparer> comparerEquatable = new(absence, absenceComparer);
+            return new(values, comparerEquatable);
         }
     }
 }
