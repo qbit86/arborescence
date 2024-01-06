@@ -31,7 +31,7 @@ namespace Arborescence.Models
 
         private static void UncheckedGrow<T>(ref ArraySegment<T> arraySegment, int size, bool clearArray)
         {
-            Debug.Assert(arraySegment.Count < size, "arrayPrefix.Count < size");
+            Debug.Assert(arraySegment.Count < size);
 
             int capacity = arraySegment.Array is { } array ? array.Length : 0;
             if (capacity < size)
@@ -45,7 +45,7 @@ namespace Arborescence.Models
         private static void UncheckedAdd<T>(ref ArraySegment<T> arraySegment, T item)
         {
             T[] array = arraySegment.Array!;
-            Debug.Assert(arraySegment.Count < array.Length, "arrayPrefix.Count < array.Length");
+            Debug.Assert(arraySegment.Count < array.Length);
 
             array[arraySegment.Count] = item;
             arraySegment = new(array, 0, arraySegment.Count + 1);
