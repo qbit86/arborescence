@@ -5,7 +5,7 @@ namespace Arborescence
     /// <summary>
     /// Provides a set of initialization methods for instances
     /// of the <see cref="Int32Dictionary{TValue, TValueList}"/>
-    /// and the <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+    /// and the <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>
     /// types.
     /// </summary>
     /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
@@ -35,7 +35,7 @@ namespace Arborescence
         /// <param name="absenceMarker">The object to use as the absence marker.</param>
         /// <typeparam name="TValueList">The type of the backing list.</typeparam>
         /// <returns>
-        /// A <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/> that contains the specified values.
+        /// A <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/> that contains the specified values.
         /// </returns>
         public static Int32Dictionary<TValue, TValueList, EqualityComparer<TValue>> CreateWithAbsence<TValueList>(
             TValueList values, TValue? absenceMarker = default)
@@ -54,15 +54,15 @@ namespace Arborescence
         /// <param name="absenceComparer">The comparer to compare the values with the absence marker.</param>
         /// <param name="absenceMarker">The object to use as the absence marker.</param>
         /// <typeparam name="TValueList">The type of the backing list.</typeparam>
-        /// <typeparam name="TAbsenceComparer">The type that provides a method to distinguish missing elements.</typeparam>
+        /// <typeparam name="TComparer">The type that provides a method to distinguish missing elements.</typeparam>
         /// <returns>
-        /// A <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/> that contains the specified values.
+        /// A <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/> that contains the specified values.
         /// </returns>
-        public static Int32Dictionary<TValue, TValueList, TAbsenceComparer>
-            CreateWithAbsence<TValueList, TAbsenceComparer>(
-                TValueList values, TAbsenceComparer absenceComparer, TValue? absenceMarker = default)
+        public static Int32Dictionary<TValue, TValueList, TComparer>
+            CreateWithAbsence<TValueList, TComparer>(
+                TValueList values, TComparer absenceComparer, TValue? absenceMarker = default)
             where TValueList : IList<TValue>
-            where TAbsenceComparer : IEqualityComparer<TValue>
+            where TComparer : IEqualityComparer<TValue>
         {
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));

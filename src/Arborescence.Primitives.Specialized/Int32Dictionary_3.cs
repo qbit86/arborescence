@@ -9,22 +9,22 @@ namespace Arborescence
 
     /// <summary>
     /// Provides a dictionary to use when the key is an <see cref="int"/> from a contiguous range
-    /// and <typeparamref name="TAbsenceComparer"/> is used to distinguish missing elements.
+    /// and <typeparamref name="TComparer"/> is used to distinguish missing elements.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
     /// <typeparam name="TValueList">The type of the backing list.</typeparam>
-    /// <typeparam name="TAbsenceComparer">The type that provides a method to distinguish missing elements.</typeparam>
-    public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer> :
+    /// <typeparam name="TComparer">The type that provides a method to distinguish missing elements.</typeparam>
+    public readonly partial struct Int32Dictionary<TValue, TValueList, TComparer> :
         IReadOnlyDictionary<int, TValue>, IDictionary<int, TValue>,
-        IEquatable<Int32Dictionary<TValue, TValueList, TAbsenceComparer>>
+        IEquatable<Int32Dictionary<TValue, TValueList, TComparer>>
         where TValueList : IList<TValue>
-        where TAbsenceComparer : IEqualityComparer<TValue>
+        where TComparer : IEqualityComparer<TValue>
     {
         private readonly TValueList _values;
-        private readonly TAbsenceComparer _absenceComparer;
+        private readonly TComparer _absenceComparer;
         private readonly TValue? _absenceMarker;
 
-        internal Int32Dictionary(TValueList values, TAbsenceComparer absenceComparer, TValue? absenceMarker)
+        internal Int32Dictionary(TValueList values, TComparer absenceComparer, TValue? absenceMarker)
         {
             _values = values;
             _absenceComparer = absenceComparer;
@@ -33,19 +33,19 @@ namespace Arborescence
 
         /// <summary>
         /// Gets the maximum number of elements contained in the
-        /// <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>.
+        /// <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>.
         /// </summary>
         public int MaxCount => (_values?.Count).GetValueOrDefault();
 
         /// <summary>
         /// Computes the number of elements in the dictionary taking into account
-        /// the <typeparamref name="TAbsenceComparer"/>.
+        /// the <typeparamref name="TComparer"/>.
         /// </summary>
         /// <remarks>Retrieving the number of elements is an O(n) operation.</remarks>
         /// <returns>The number of elements in the dictionary.</returns>
         public int GetCount()
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             if (self._values is not { } values)
                 return 0;
             int count = values.Count;
@@ -62,7 +62,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public void Add(int key, TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             TValueList values = self._values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
@@ -78,7 +78,7 @@ namespace Arborescence
         /// <inheritdoc cref="IReadOnlyDictionary{TKey, TValue}.ContainsKey"/>
         public bool ContainsKey(int key)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             if (self._values is not { } values)
                 return false;
             return unchecked((uint)key < (uint)values.Count) && !self.IsAbsence(values[key]);
@@ -93,7 +93,7 @@ namespace Arborescence
         /// otherwise, the value is unspecified.
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if the <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// <see langword="true"/> if the <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>
         /// contains an element that has the specified key;
         /// otherwise, <see langword="false"/>.
         /// </returns>
@@ -102,7 +102,7 @@ namespace Arborescence
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             if (self._values is not { } values)
                 return None(out value);
             if (unchecked((uint)key >= (uint)values.Count))
@@ -114,7 +114,7 @@ namespace Arborescence
 
         private void Put(int key, TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             TValueList values = self._values;
             int count = values.Count;
             if (key < 0)
@@ -146,7 +146,7 @@ namespace Arborescence
 
         private bool IsAbsence(TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             return self._absenceComparer.Equals(value, self._absenceMarker!);
         }
     }
