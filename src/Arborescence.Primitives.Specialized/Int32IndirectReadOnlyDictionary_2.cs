@@ -50,7 +50,8 @@ namespace Arborescence
         /// that contains the specified values.
         /// </returns>
         public static Int32IndirectReadOnlyDictionary<
-                TKey, TValue, TKeyToIndexMap, Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsence<TValue>>>
+                TKey, TValue, TKeyToIndexMap,
+                Int32ReadOnlyDictionary<TValue, TValueList, DefaultComparerEquatable<TValue?>>>
             CreateFromListWithAbsence<TKeyToIndexMap, TValueList>(
                 TKeyToIndexMap indexByKey, TValueList values)
             where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
@@ -60,8 +61,9 @@ namespace Arborescence
                 ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
-            Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsence<TValue>> valueByIndex =
-                new(values, default);
+            DefaultComparerEquatable<TValue?> absenceEquatable = default;
+            Int32ReadOnlyDictionary<TValue, TValueList, DefaultComparerEquatable<TValue?>> valueByIndex =
+                new(values, absenceEquatable);
             return new(indexByKey, valueByIndex);
         }
 
