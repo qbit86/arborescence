@@ -2,5 +2,5 @@
 dotnet_diagnostic.CA1028.severity = suggestion # Enum Storage should be Int32
 dotnet_diagnostic.CS1591.severity = suggestion # Missing XML comment for publicly visible type or member
 
-[{ComparerEquatable.cs,DefaultAbsence.cs}]
+[{*ComparerEquatable.cs,DefaultAbsence.cs}]
 dotnet_diagnostic.CA1815.severity = none # Override equals and operator equals on value types
