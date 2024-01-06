@@ -105,7 +105,7 @@ namespace Arborescence.Search.Specialized
             if (unchecked((uint)source >= vertexCount))
                 yield break;
 
-            var dummy = new DummyEqualityComparer<TCost, TCostComparer>(infinity, _costComparer);
+            var dummy = new ComparerEquatable<TCost, TCostComparer>(infinity, _costComparer);
             var aStar = new EnumerableAStar<TGraph, int, TEdge, TEdgeEnumerator, TCost, TCostComparer, TCostMonoid>(
                 _costComparer, _costMonoid);
 
@@ -119,9 +119,9 @@ namespace Arborescence.Search.Specialized
             Fill(indexByVertexFromPool, -1, 0, vertexCount);
             try
             {
-                var costByVertex = new IndexedDictionary<TCost, DummyEqualityComparer<TCost, TCostComparer>>(
+                var costByVertex = new IndexedDictionary<TCost, ComparerEquatable<TCost, TCostComparer>>(
                     costByVertexFromPool, dummy);
-                var distanceByVertex = new IndexedDictionary<TCost, DummyEqualityComparer<TCost, TCostComparer>>(
+                var distanceByVertex = new IndexedDictionary<TCost, ComparerEquatable<TCost, TCostComparer>>(
                     distanceByVertexFromPool, dummy);
                 var colorByVertex = new IndexedColorDictionary(colorByVertexFromPool);
                 var indexByVertex = new IndexedDictionary<int>(indexByVertexFromPool);
