@@ -20,7 +20,7 @@ public class QueueGenericSearchEnumerateVerticesTest
     {
         // Arrange
 
-        int vertexCount = graph.VertexCount;
+        int vertexCount = graph.TailCount;
         if (vertexCount is 0)
             return;
 
@@ -34,10 +34,10 @@ public class QueueGenericSearchEnumerateVerticesTest
 
         if (multipleSource)
         {
-            if (graph.VertexCount < 3)
+            if (graph.TailCount < 3)
                 return;
 
-            int sourceCount = graph.VertexCount / 3;
+            int sourceCount = graph.TailCount / 3;
             IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
@@ -49,7 +49,7 @@ public class QueueGenericSearchEnumerateVerticesTest
         }
         else
         {
-            int source = graph.VertexCount >> 1;
+            int source = graph.TailCount >> 1;
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, vertexCount, bfsHandler);
             IEnumerable<int> vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, source, frontier, vertexCount);

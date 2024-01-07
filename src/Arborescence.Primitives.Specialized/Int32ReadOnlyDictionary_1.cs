@@ -6,7 +6,7 @@ namespace Arborescence
     /// <summary>
     /// Provides a set of initialization methods for instances of the
     /// <see cref="Int32ReadOnlyDictionary{TKey, TValueList}"/>
-    /// and <see cref="Int32ReadOnlyDictionary{TKey, TValueList, TAbsence}"/>
+    /// and <see cref="Int32ReadOnlyDictionary{TKey, TValueList, TEquatable}"/>
     /// types.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in this dictionary.</typeparam>
@@ -29,44 +29,71 @@ namespace Arborescence
         }
 
         /// <summary>
-        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
-        /// where <c>TAbsence</c> is <see cref="DefaultAbsence{TValue}"/>.
+        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
+        /// where <c>TEquatable</c> is <see cref="DefaultEqualityComparerEquatable{T}"/>.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
         /// <returns>
-        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/> that contains the specified values.
+        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
         /// </returns>
-        public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultAbsence<TValue>>
+        public static Int32ReadOnlyDictionary<TValue, TValueList, DefaultEqualityComparerEquatable<TValue?>>
             CreateWithAbsence<TValueList>(TValueList values)
             where TValueList : IReadOnlyList<TValue>
         {
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
-            return new(values, default);
+            DefaultEqualityComparerEquatable<TValue?> absenceEquatable = default;
+            return new(values, absenceEquatable);
         }
 
         /// <summary>
-        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/>
-        /// with the specified list of values and the absence object.
+        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
+        /// with the specified list of values, the absence object, and the absence comparer.
         /// </summary>
         /// <param name="values">The underlying list of the values.</param>
-        /// <param name="absence">The object that provides a method for distinguishing missing elements.</param>
+        /// <param name="absenceMarker">The object to use as the absence marker.</param>
+        /// <param name="absenceComparer">The comparer to compare the values with the absence marker.</param>
         /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
-        /// <typeparam name="TAbsence">The type that provides a method for distinguishing missing elements.</typeparam>
+        /// <typeparam name="TComparer">The type that provides a method to distinguish missing elements.</typeparam>
         /// <returns>
-        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TAbsence}"/> that contains the specified values.
+        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
         /// </returns>
-        public static Int32ReadOnlyDictionary<TValue, TValueList, TAbsence>
-            CreateWithAbsence<TValueList, TAbsence>(TValueList values, TAbsence absence)
+        public static Int32ReadOnlyDictionary<TValue, TValueList, EqualityComparerEquatable<TValue?, TComparer>>
+            CreateWithAbsence<TValueList, TComparer>(
+                TValueList values, TValue? absenceMarker, TComparer absenceComparer)
             where TValueList : IReadOnlyList<TValue>
-            where TAbsence : IEquatable<TValue>
+            where TComparer : IEqualityComparer<TValue?>
         {
             if (values is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
-            if (absence is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(absence));
-            return new(values, absence);
+            if (absenceComparer is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
+            EqualityComparerEquatable<TValue?, TComparer> absenceEquatable = new(absenceMarker, absenceComparer);
+            return new(values, absenceEquatable);
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/>
+        /// with the specified list of values and the absence object.
+        /// </summary>
+        /// <param name="values">The underlying list of the values.</param>
+        /// <param name="absenceEquatable">The object that provides a method for distinguishing missing elements.</param>
+        /// <typeparam name="TValueList">The type of the underlying list of the values.</typeparam>
+        /// <typeparam name="TEquatable">The type that provides a method for distinguishing missing elements.</typeparam>
+        /// <returns>
+        /// A <see cref="Int32ReadOnlyDictionary{TValue, TValueList, TEquatable}"/> that contains the specified values.
+        /// </returns>
+        public static Int32ReadOnlyDictionary<TValue, TValueList, TEquatable>
+            CreateWithAbsence<TValueList, TEquatable>(TValueList values, TEquatable absenceEquatable)
+            where TValueList : IReadOnlyList<TValue>
+            where TEquatable : IEquatable<TValue>
+        {
+            if (values is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(values));
+            if (absenceEquatable is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(absenceEquatable));
+            return new(values, absenceEquatable);
         }
     }
 }

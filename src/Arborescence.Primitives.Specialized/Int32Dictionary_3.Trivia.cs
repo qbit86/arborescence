@@ -7,7 +7,7 @@ namespace Arborescence
     using System.Linq;
     using Primitives;
 
-    public readonly partial struct Int32Dictionary<TValue, TValueList, TAbsenceComparer>
+    public readonly partial struct Int32Dictionary<TValue, TValueList, TComparer>
     {
         int IReadOnlyCollection<KeyValuePair<int, TValue>>.Count => GetCount();
 
@@ -20,7 +20,7 @@ namespace Arborescence
         {
             get
             {
-                Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+                Int32Dictionary<TValue, TValueList, TComparer> self = this;
                 if (self._values is not { Count: > 0 } values)
                     return Enumerable.Empty<int>();
                 return values.Select((value, index) => new KeyValuePair<int, TValue>(index, value))
@@ -32,7 +32,7 @@ namespace Arborescence
         {
             get
             {
-                Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+                Int32Dictionary<TValue, TValueList, TComparer> self = this;
                 return self._values is not { Count: > 0 } values
                     ? Enumerable.Empty<TValue>()
                     : values.Where(value => !self.IsAbsence(value));
@@ -49,7 +49,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -59,7 +59,7 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             TValueList values = self._values;
             int count = values.Count;
             for (int key = 0; key < count; ++key)
@@ -92,7 +92,7 @@ namespace Arborescence
             if (unchecked((uint)arrayIndex > (uint)array.Length))
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(arrayIndex));
 
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             if (self._values is not { } values)
                 return;
             Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
@@ -113,7 +113,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             if (_values is not { } values)
                 return false;
             int key = item.Key;
@@ -131,7 +131,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(int key)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             if (self._values is not { } values)
                 return false;
             int count = values.Count;
@@ -147,55 +147,55 @@ namespace Arborescence
             TryGetValueCore(key, out value!);
 
         /// <inheritdoc/>
-        public bool Equals(Int32Dictionary<TValue, TValueList, TAbsenceComparer> other)
+        public bool Equals(Int32Dictionary<TValue, TValueList, TComparer> other)
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
-                EqualityComparer<TAbsenceComparer>.Default.Equals(self._absenceComparer, other._absenceComparer) &&
+                EqualityComparer<TComparer>.Default.Equals(self._absenceComparer, other._absenceComparer) &&
                 EqualityComparer<TValue>.Default.Equals(self._absenceMarker!, other._absenceMarker!);
         }
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Int32Dictionary<TValue, TValueList, TAbsenceComparer> other && Equals(other);
+            obj is Int32Dictionary<TValue, TValueList, TComparer> other && Equals(other);
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> self = this;
+            Int32Dictionary<TValue, TValueList, TComparer> self = this;
             return HashCode.Combine(EqualityComparer<TValueList>.Default.GetHashCode(self._values),
-                EqualityComparer<TAbsenceComparer>.Default.GetHashCode(self._absenceComparer),
+                EqualityComparer<TComparer>.Default.GetHashCode(self._absenceComparer),
                 EqualityComparer<TValue>.Default.GetHashCode(self._absenceMarker!));
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>
         /// structures are equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the equality operator.</param>
         /// <param name="right">The structure on the right side of the equality operator.</param>
         /// <returns>
         /// <see langword="true"/> if the two
-        /// <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>
         /// structures are equal; otherwise, <see langword="false"/>.
         /// </returns>
         public static bool operator ==(
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> right) => left.Equals(right);
+            Int32Dictionary<TValue, TValueList, TComparer> left,
+            Int32Dictionary<TValue, TValueList, TComparer> right) => left.Equals(right);
 
         /// <summary>
-        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// Indicates whether two <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>
         /// structures are not equal.
         /// </summary>
         /// <param name="left">The structure on the left side of the inequality operator.</param>
         /// <param name="right">The structure on the right side of the inequality operator.</param>
         /// <returns>
         /// <see langword="true"/> if the two
-        /// <see cref="Int32Dictionary{TValue, TValueList, TAbsenceComparer}"/>
+        /// <see cref="Int32Dictionary{TValue, TValueList, TComparer}"/>
         /// structures are not equal; otherwise, <see langword="false"/>.
         /// </returns>
         public static bool operator !=(
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> left,
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> right) => !left.Equals(right);
+            Int32Dictionary<TValue, TValueList, TComparer> left,
+            Int32Dictionary<TValue, TValueList, TComparer> right) => !left.Equals(right);
     }
 }

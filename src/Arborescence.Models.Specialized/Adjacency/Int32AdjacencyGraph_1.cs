@@ -54,10 +54,10 @@ namespace Arborescence.Models.Specialized
             where TMultimap : IReadOnlyDictionary<int, TNeighborCollection>
         {
             int vertexCount = neighborsByVertex.Count;
-            ArrayPrefix<int> data = new();
-            data = ArrayPrefixBuilder.Add(data, vertexCount, false);
-            data = ArrayPrefixBuilder.Add(data, 0, false);
-            data = ArrayPrefixBuilder.EnsureSize(data, data.Count + vertexCount, false);
+            ArraySegment<int> data = new();
+            data = ArraySegmentBuilder.Add(data, vertexCount, false);
+            data = ArraySegmentBuilder.Add(data, 0, false);
+            data = ArraySegmentBuilder.EnsureSize(data, data.Count + vertexCount, false);
             Span<int> upperBoundByVertex = data.Array.AsSpan(2, vertexCount);
             int offset = 2 + vertexCount;
             for (int key = 0; key < vertexCount; ++key)
@@ -75,7 +75,7 @@ namespace Arborescence.Models.Specialized
                     continue;
                 }
 
-                data = ArrayPrefixBuilder.EnsureSize(data, data.Count + neighborCount, false);
+                data = ArraySegmentBuilder.EnsureSize(data, data.Count + neighborCount, false);
                 neighbors.CopyTo(data.Array!, offset);
                 offset += neighborCount;
                 upperBoundByVertex[key] = offset;

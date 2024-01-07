@@ -75,19 +75,19 @@ namespace Arborescence
         /// <param name="absenceMarker">The object to use as the absence marker.</param>
         /// <typeparam name="TKeyToIndexMap">The type of the mapping from a key to an <see cref="int"/>.</typeparam>
         /// <typeparam name="TValueList">The type of the backing list.</typeparam>
-        /// <typeparam name="TAbsenceComparer">The type that provides a method to distinguish missing elements.</typeparam>
+        /// <typeparam name="TComparer">The type that provides a method to distinguish missing elements.</typeparam>
         /// <returns>
         /// A <see cref="Int32IndirectDictionary{TKey, TValue, TKeyToIndexMap, TIndexToValueMap}"/>
         /// that contains the specified values.
         /// </returns>
         public static Int32IndirectDictionary<
-                TKey, TValue, TKeyToIndexMap, Int32Dictionary<TValue, TValueList, TAbsenceComparer>>
-            CreateFromListWithAbsence<TKeyToIndexMap, TValueList, TAbsenceComparer>(
-                TKeyToIndexMap indexByKey, TValueList values, TAbsenceComparer absenceComparer,
+                TKey, TValue, TKeyToIndexMap, Int32Dictionary<TValue, TValueList, TComparer>>
+            CreateFromListWithAbsence<TKeyToIndexMap, TValueList, TComparer>(
+                TKeyToIndexMap indexByKey, TValueList values, TComparer absenceComparer,
                 TValue? absenceMarker = default)
             where TKeyToIndexMap : IReadOnlyDictionary<TKey, int>
             where TValueList : IList<TValue>
-            where TAbsenceComparer : IEqualityComparer<TValue>
+            where TComparer : IEqualityComparer<TValue>
         {
             if (indexByKey is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(indexByKey));
@@ -95,7 +95,7 @@ namespace Arborescence
                 ArgumentNullExceptionHelpers.Throw(nameof(values));
             if (absenceComparer is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(absenceComparer));
-            Int32Dictionary<TValue, TValueList, TAbsenceComparer> valueByIndex =
+            Int32Dictionary<TValue, TValueList, TComparer> valueByIndex =
                 new(values, absenceComparer, absenceMarker);
             return new(indexByKey, valueByIndex);
         }
