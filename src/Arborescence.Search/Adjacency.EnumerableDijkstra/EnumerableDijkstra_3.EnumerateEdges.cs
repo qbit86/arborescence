@@ -6,7 +6,36 @@ namespace Arborescence.Search.Adjacency
 
     public static partial class EnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>
     {
-        // ReSharper disable once UnusedMember.Local
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
+            TGraph, TWeightMap, TWeightMonoid>(
+            TGraph graph, TVertex source, TWeightMap weightByEdge,
+            TWeightMonoid weightMonoid)
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
+            where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
+            where TWeightMonoid : IMonoid<TWeight> =>
+            EnumerateEdgesChecked(graph, source, weightByEdge, weightMonoid);
+
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
+            TGraph, TWeightMap, TDistanceMap, TWeightMonoid>(
+            TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
+            TWeightMonoid weightMonoid)
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
+            where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
+            where TDistanceMap : IDictionary<TVertex, TWeight>
+            where TWeightMonoid : IMonoid<TWeight> =>
+            EnumerateEdgesChecked(graph, source, weightByEdge, distanceByVertex, weightMonoid);
+
+        public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
+            TGraph, TWeightMap, TDistanceMap, TWeightMonoid, TWeightComparer>(
+            TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
+            TWeightMonoid weightMonoid, TWeightComparer weightComparer)
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
+            where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
+            where TDistanceMap : IDictionary<TVertex, TWeight>
+            where TWeightMonoid : IMonoid<TWeight>
+            where TWeightComparer : IComparer<TWeight> =>
+            EnumerateEdgesChecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
+
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TWeightMap, TWeightMonoid>(
             TGraph graph, TVertex source, TWeightMap weightByEdge,
@@ -29,7 +58,6 @@ namespace Arborescence.Search.Adjacency
             return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
-        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TWeightMap, TDistanceMap, TWeightMonoid>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
@@ -55,7 +83,6 @@ namespace Arborescence.Search.Adjacency
             return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
-        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TWeightMap, TDistanceMap, TWeightMonoid, TWeightComparer>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
