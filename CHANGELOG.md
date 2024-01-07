@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased] - 2024-01-07
+
+### Added
+
+- Search: `Adjacency.AdditiveEnumerableDijkstra<TVertex, TWeight>`, `Adjacency.AdditiveEnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>`
+- Search: `Adjacency.EnumerableDijkstra<TVertex, TWeight>`, `Adjacency.EnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>`
+
 ## [0.16.5] - 2024-01-07
 
 ### Added
