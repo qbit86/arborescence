@@ -14,7 +14,6 @@ Commonly used types:
   <PropertyGroup>
     <AssemblyVersion>0.16</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <NoWarn Condition="'$(Configuration)' == 'Debug' OR '$(VersionSuffix)' != ''">$(NoWarn);CS1591</NoWarn>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
