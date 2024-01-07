@@ -7,23 +7,26 @@
     b [label=Primitives]
     c [label=Models]
     d [label=Traversal]
+    e [label=Search]
   }
   subgraph Specialized {
     node [width=3.0 style=filled]
-    e [label="Primitives.Specialized"]
-    f [label="Models.Specialized"]
-    g [label="Traversal.Specialized"]
+    f [label="Primitives.Specialized"]
+    g [label="Models.Specialized"]
+    h [label="Traversal.Specialized"]
   }
   c -> a
   c -> b
   d -> a
   d -> b
+  e -> a
   e -> b
-  f -> a
-  f -> c
-  f -> e
+  f -> b
   g -> a
-  g -> b
-  g -> d
-  g -> e
+  g -> c
+  g -> f
+  h -> a
+  h -> b
+  h -> d
+  h -> f
 }
