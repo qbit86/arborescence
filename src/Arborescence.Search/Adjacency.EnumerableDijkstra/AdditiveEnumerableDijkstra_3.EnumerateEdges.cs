@@ -28,7 +28,7 @@ namespace Arborescence.Search.Adjacency
             where TWeightComparer : IComparer<TWeight> =>
             EnumerateEdgesChecked(graph, source, weightByEdge, distanceByVertex, weightComparer);
 
-        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TWeightMap>(
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TWeightMap>(
             TGraph graph, TVertex source, TWeightMap weightByEdge)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
@@ -45,7 +45,7 @@ namespace Arborescence.Search.Adjacency
                 graph, source, weightByEdge, distanceByVertex, weightComparer);
         }
 
-        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TWeightMap, TDistanceMap>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
@@ -66,7 +66,7 @@ namespace Arborescence.Search.Adjacency
                 graph, source, weightByEdge, distanceByVertex, weightComparer);
         }
 
-        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
+        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TWeightMap, TDistanceMap, TWeightComparer>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
             TWeightComparer weightComparer)
