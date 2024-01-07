@@ -4,7 +4,6 @@
 
 ### Added
 
-- Primitives: `EqualityComparerEquatable<T, TComparer>`, `DefaultEqualityComparerEquatable<T>`
 - Primitives.Specialized: Another overload of `Int32ReadOnlyDictionary<TValue>.CreateWithAbsence<TValueList, TComparer>()`
 
 ### Changed
@@ -15,8 +14,17 @@
 
 ### Removed
 
-- Primitives: `DefaultAbsence<T>`
 - Primitives.Specialized: `ArrayPrefix<T>`
+
+## [0.16.5] - 2024-01-07
+
+### Added
+
+- Primitives: `EqualityComparerEquatable<T, TComparer>`, `DefaultEqualityComparerEquatable<T>`
+
+### Removed
+
+- Primitives: `DefaultAbsence<T>`
 
 ## [0.16.4] - 2024-01-02
 
@@ -473,7 +481,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.4...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.5...HEAD
+
+[0.16.5]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.4...arborescence-0.16.5
 
 [0.16.4]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.3...arborescence-0.16.4
 
