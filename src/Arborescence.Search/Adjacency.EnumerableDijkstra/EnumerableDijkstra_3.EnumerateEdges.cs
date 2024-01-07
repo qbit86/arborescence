@@ -24,22 +24,20 @@ namespace Arborescence.Search.Adjacency
             if (weightMonoid is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
-            PriorityQueue<TVertex, TWeight> frontier = new();
             Dictionary<TVertex, TWeight> distanceByVertex = new();
             Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
-            return EnumerateEdgesIterator(
-                graph, source, weightByEdge, frontier, distanceByVertex, weightMonoid, weightComparer);
+            return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
-            TGraph, TWeightMap, TWeightMonoid, TWeightComparer>(
-            TGraph graph, TVertex source, TWeightMap weightByEdge,
-            TWeightMonoid weightMonoid, TWeightComparer weightComparer)
+            TGraph, TWeightMap, TDistanceMap, TWeightMonoid>(
+            TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
+            TWeightMonoid weightMonoid)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
+            where TDistanceMap : IDictionary<TVertex, TWeight>
             where TWeightMonoid : IMonoid<TWeight>
-            where TWeightComparer : IComparer<TWeight>
         {
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
@@ -47,16 +45,14 @@ namespace Arborescence.Search.Adjacency
             if (weightByEdge is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
+            if (distanceByVertex is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
             if (weightMonoid is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
-            if (weightComparer is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
-            PriorityQueue<TVertex, TWeight> frontier = new();
-            Dictionary<TVertex, TWeight> distanceByVertex = new();
-            return EnumerateEdgesIterator(
-                graph, source, weightByEdge, frontier, distanceByVertex, weightMonoid, weightComparer);
+            Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
+            return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
         // ReSharper disable once UnusedMember.Local
@@ -85,16 +81,12 @@ namespace Arborescence.Search.Adjacency
             if (weightComparer is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
-            PriorityQueue<TVertex, TWeight> frontier = new();
-            return EnumerateEdgesIterator(
-                graph, source, weightByEdge, frontier, distanceByVertex, weightMonoid, weightComparer);
+            return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
-        // ReSharper disable once UnusedMember.Local
-        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
+        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesUnchecked<
             TGraph, TWeightMap, TDistanceMap, TWeightMonoid, TWeightComparer>(
-            TGraph graph, TVertex source, TWeightMap weightByEdge,
-            PriorityQueue<TVertex, TWeight> frontier, TDistanceMap distanceByVertex,
+            TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
             TWeightMonoid weightMonoid, TWeightComparer weightComparer)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
@@ -102,24 +94,7 @@ namespace Arborescence.Search.Adjacency
             where TWeightMonoid : IMonoid<TWeight>
             where TWeightComparer : IComparer<TWeight>
         {
-            if (graph is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
-            if (weightByEdge is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
-            if (frontier is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
-            if (distanceByVertex is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
-            if (weightMonoid is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
-            if (weightComparer is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
-
+            PriorityQueue<TVertex, TWeight> frontier = new();
             return EnumerateEdgesIterator(
                 graph, source, weightByEdge, frontier, distanceByVertex, weightMonoid, weightComparer);
         }
