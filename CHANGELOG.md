@@ -1,33 +1,22 @@
 # Changelog
 
-## [Unreleased] - 2024-01-07
-
-### Added
-
-- Primitives.Specialized: Another overload of `Int32ReadOnlyDictionary<TValue>.CreateWithAbsence<TValueList, TComparer>()`
-
-### Changed
-
-- Primitives.Specialized: Changed signature of `Int32ReadOnlyDictionary<TValue>.CreateWithAbsence<TValueList>()` to use `DefaultComparerEquatable<TValue?>` instead of `DefaultAbsence<T>`.
-- Primitives.Specialized: Changed signature of `Int32IndirectReadOnlyDictionary<TKey, TValue>.CreateFromListWithAbsence<TKeyToIndexMap, TValueList>()` to use `DefaultComparerEquatable<TValue?>` instead of `DefaultAbsence<T>`.
-
-### Removed
-
-- Primitives.Specialized: `ArrayPrefix<T>`
-
 ## [0.16.5] - 2024-01-07
 
 ### Added
 
 - Primitives: `EqualityComparerEquatable<T, TComparer>`, `DefaultEqualityComparerEquatable<T>`
+- Primitives.Specialized: Another overload of `Int32ReadOnlyDictionary<TValue>.CreateWithAbsence<TValueList, TComparer>()`
 
 ### Changed
 
 - Models: Renamed `VertexCount` to `TailCount` in some graph types.
+- Primitives.Specialized: Changed signature of `Int32ReadOnlyDictionary<TValue>.CreateWithAbsence<TValueList>()` to use `DefaultComparerEquatable<TValue?>` instead of `DefaultAbsence<T>`.
+- Primitives.Specialized: Changed signature of `Int32IndirectReadOnlyDictionary<TKey, TValue>.CreateFromListWithAbsence<TKeyToIndexMap, TValueList>()` to use `DefaultComparerEquatable<TValue?>` instead of `DefaultAbsence<T>`.
 
 ### Removed
 
 - Primitives: `DefaultAbsence<T>`
+- Primitives.Specialized: `ArrayPrefix<T>`
 
 ## [0.16.4] - 2024-01-02
 
