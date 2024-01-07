@@ -160,6 +160,7 @@ namespace Arborescence.Search.Adjacency
                             weightComparer.Compare(neighborDistanceCandidate, neighborDistance) < 0)
                         {
                             yield return edge;
+                            distanceByVertex[neighbor] = neighborDistanceCandidate;
                             frontier.Enqueue(neighbor, neighborDistanceCandidate);
                         }
                     }
