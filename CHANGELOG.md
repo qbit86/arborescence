@@ -8,7 +8,6 @@
 
 ### Changed
 
-- Models: Renamed `VertexCount` to `TailCount` in some graph types.
 - Primitives.Specialized: Changed signature of `Int32ReadOnlyDictionary<TValue>.CreateWithAbsence<TValueList>()` to use `DefaultComparerEquatable<TValue?>` instead of `DefaultAbsence<T>`.
 - Primitives.Specialized: Changed signature of `Int32IndirectReadOnlyDictionary<TKey, TValue>.CreateFromListWithAbsence<TKeyToIndexMap, TValueList>()` to use `DefaultComparerEquatable<TValue?>` instead of `DefaultAbsence<T>`.
 
@@ -21,6 +20,10 @@
 ### Added
 
 - Primitives: `EqualityComparerEquatable<T, TComparer>`, `DefaultEqualityComparerEquatable<T>`
+
+### Changed
+
+- Models: Renamed `VertexCount` to `TailCount` in some graph types.
 
 ### Removed
 
