@@ -9,6 +9,31 @@ namespace Arborescence.Search.Adjacency
     {
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
+            TGraph, TWeightMap, TWeightMonoid>(
+            TGraph graph, TVertex source, TWeightMap weightByEdge,
+            TWeightMonoid weightMonoid)
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
+            where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight>
+            where TWeightMonoid : IMonoid<TWeight>
+        {
+            if (graph is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            if (weightByEdge is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            if (weightMonoid is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            PriorityQueue<TVertex, TWeight> frontier = new();
+            Dictionary<TVertex, TWeight> distanceByVertex = new();
+            Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
+            return EnumerateEdgesIterator(
+                graph, source, weightByEdge, frontier, distanceByVertex, weightMonoid, weightComparer);
+        }
+
+        // ReSharper disable once UnusedMember.Local
+        private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
             TGraph, TWeightMap, TWeightMonoid, TWeightComparer>(
             TGraph graph, TVertex source, TWeightMap weightByEdge,
             TWeightMonoid weightMonoid, TWeightComparer weightComparer)
