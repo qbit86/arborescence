@@ -11,7 +11,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;dijkstra;search;traversal</PackageTags>
     <Title>Graph search algorithms</Title>
-    <VersionPrefix>0.16.6</VersionPrefix>
+    <VersionPrefix>0.16.7</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
