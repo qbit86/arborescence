@@ -11,11 +11,12 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;dijkstra;search;traversal</PackageTags>
     <Title>Graph search algorithms</Title>
+    <VersionPrefix>0.16.6</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <AssemblyVersion>0.16.6</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion Condition="'$(TargetFramework)' == 'net7.0'">11</LangVersion>
     <RootNamespace>Arborescence.Search</RootNamespace>
