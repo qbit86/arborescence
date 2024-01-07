@@ -76,6 +76,9 @@ namespace Arborescence.Search.Adjacency
             if (weightByEdge is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
+            if (distanceByVertex is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
             if (weightMonoid is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
@@ -103,6 +106,12 @@ namespace Arborescence.Search.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (weightByEdge is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            if (frontier is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            if (distanceByVertex is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (weightMonoid is null)
