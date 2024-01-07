@@ -1,8 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
+    <Description>Graph search algorithms: Dijkstra.
+Commonly used types:
+- Adjacency.AdditiveEnumerableDijkstra&lt;TVertex, TWeight&gt;
+- Adjacency.AdditiveEnumerableDijkstra&lt;TVertex, TNeighborEnumerator, TWeight&gt;
+- Adjacency.EnumerableDijkstra&lt;TVertex, TWeight&gt;
+- Adjacency.EnumerableDijkstra&lt;TVertex, TNeighborEnumerator, TWeight&gt;</Description>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>graph;dijkstra;search;traversal</PackageTags>
+    <Title>Graph search algorithms</Title>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
+
   <PropertyGroup>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
@@ -10,21 +21,26 @@
     <RootNamespace>Arborescence.Search</RootNamespace>
     <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
+
   <PropertyGroup>
     <DefineConstants Condition="'$(Configuration)' == 'Debug'">ASTAR_SUPPORTED</DefineConstants>
     <NoWarn Condition="'$(Configuration)' == 'Debug' OR '$(VersionSuffix)' != ''">$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
     <PackageReference Include="System.Memory" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
