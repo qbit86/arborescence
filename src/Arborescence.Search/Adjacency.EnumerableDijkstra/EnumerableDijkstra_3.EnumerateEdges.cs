@@ -19,10 +19,10 @@ namespace Arborescence.Search.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (weightByEdge is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             if (weightMonoid is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightMonoid));
 
             Dictionary<TVertex, TWeight> distanceByVertex = new();
             Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
@@ -43,13 +43,13 @@ namespace Arborescence.Search.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (weightByEdge is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             if (distanceByVertex is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(distanceByVertex));
 
             if (weightMonoid is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightMonoid));
 
             Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
             return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
@@ -70,16 +70,16 @@ namespace Arborescence.Search.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             if (weightByEdge is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             if (distanceByVertex is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(distanceByVertex));
 
             if (weightMonoid is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightMonoid));
 
             if (weightComparer is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+                ArgumentNullExceptionHelpers.Throw(nameof(weightComparer));
 
             return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
