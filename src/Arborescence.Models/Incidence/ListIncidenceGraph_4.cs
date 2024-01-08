@@ -3,7 +3,6 @@ namespace Arborescence.Models
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.CompilerServices;
 
     /// <summary>
     /// Implements an incidence graph as a dictionary that maps vertices of type <typeparamref name="TVertex"/>
@@ -24,7 +23,7 @@ namespace Arborescence.Models
                 List<TEdge>.Enumerator>>,
         IEquatable<ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>>
         where TEndpointMap : IDictionary<TEdge, TVertex>
-        where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
+        where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>
     {
         private static ListMultimapConcept<TEdgeMultimap, TVertex, TEdge> MultimapConcept => default;
 
@@ -47,7 +46,7 @@ namespace Arborescence.Models
             get
             {
                 TEdgeMultimap? outEdgesByVertex = _outEdgesByVertex;
-                return outEdgesByVertex is null ? 0 : GetCountUnchecked(outEdgesByVertex);
+                return outEdgesByVertex is null ? 0 : outEdgesByVertex.Count;
             }
         }
 
@@ -100,18 +99,19 @@ namespace Arborescence.Models
             if (!self._tailByEdge.TryAddStrict(edge, tail))
                 return false;
 
-            if (TryGetValue(self._outEdgesByVertex, tail, out List<TEdge>? outEdges))
+            TEdgeMultimap outEdgesByVertex = self._outEdgesByVertex;
+            if (outEdgesByVertex.TryGetValue(tail, out List<TEdge>? outEdges))
             {
                 outEdges.Add(edge);
             }
             else
             {
                 outEdges = new(1) { edge };
-                self._outEdgesByVertex.Add(tail, outEdges);
+                outEdgesByVertex.Add(tail, outEdges);
             }
 
-            if (!ContainsKey(self._outEdgesByVertex, head))
-                self._outEdgesByVertex.Add(head, new());
+            if (!outEdgesByVertex.ContainsKey(head))
+                outEdgesByVertex.Add(head, new());
 
             // ReSharper disable once PossibleStructMemberModificationOfNonVariableStruct
             self._headByEdge[edge] = head;
@@ -130,25 +130,10 @@ namespace Arborescence.Models
         public bool TryAddVertex(TVertex vertex)
         {
             TEdgeMultimap outEdgesByVertex = _outEdgesByVertex;
-            if (ContainsKey(outEdgesByVertex, vertex))
+            if (outEdgesByVertex.ContainsKey(vertex))
                 return false;
             outEdgesByVertex.Add(vertex, new());
             return true;
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryGetValue<TDictionary>(
-            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TEdge>? value)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> =>
-            dictionary.TryGetValue(vertex, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool ContainsKey<TDictionary>(TDictionary dictionary, TVertex vertex)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> =>
-            dictionary.ContainsKey(vertex);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TEdge>> => dictionary.Count;
     }
 }

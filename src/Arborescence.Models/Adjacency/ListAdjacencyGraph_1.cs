@@ -51,7 +51,7 @@ namespace Arborescence.Models
         /// </returns>
         public static ListAdjacencyGraph<TVertex, TVertexMultimap> Create<TVertexMultimap>(
             TVertexMultimap neighborsByVertex)
-            where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
+            where TVertexMultimap : IDictionary<TVertex, List<TVertex>>
         {
             if (neighborsByVertex is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(neighborsByVertex));

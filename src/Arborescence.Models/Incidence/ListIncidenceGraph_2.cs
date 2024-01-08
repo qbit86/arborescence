@@ -75,8 +75,8 @@ namespace Arborescence.Models
         public static ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>
             CreateUnchecked<TEndpointMap, TEdgeMultimap>(
                 TEndpointMap tailByEdge, TEndpointMap headByEdge, TEdgeMultimap outEdgesByVertex)
-            where TEndpointMap : IDictionary<TEdge, TVertex>, IReadOnlyDictionary<TEdge, TVertex>
-            where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>, IReadOnlyDictionary<TVertex, List<TEdge>>
+            where TEndpointMap : IDictionary<TEdge, TVertex>
+            where TEdgeMultimap : IDictionary<TVertex, List<TEdge>>
         {
             if (tailByEdge is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(tailByEdge));

@@ -1,9 +1,11 @@
 namespace Arborescence.Models
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
-    internal static class DictionaryExtensions
+    internal static class DictionaryHelpers
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryAddStrict<TKey, TValue, TDictionary>(
             this TDictionary dictionary, TKey key, TValue value)
             where TDictionary : IDictionary<TKey, TValue>
