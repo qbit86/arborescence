@@ -5,7 +5,6 @@ namespace Arborescence.Search
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Arborescence;
 
     // https://boost.org/doc/libs/1_81_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_81_0/libs/graph/doc/AStarHeuristic.html
