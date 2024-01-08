@@ -30,7 +30,7 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of vertices that can have out-neighbors.
         /// </summary>
-        public int TailCount
+        public int MinVertexCount
         {
             get
             {

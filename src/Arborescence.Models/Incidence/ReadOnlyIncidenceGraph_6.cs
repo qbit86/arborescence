@@ -47,7 +47,7 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of vertices that can have out-edges.
         /// </summary>
-        public int TailCount
+        public int MinVertexCount
         {
             get
             {
