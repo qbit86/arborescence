@@ -5,7 +5,7 @@ namespace Arborescence.Search
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.CompilerServices;
+    using Arborescence;
 
     // https://boost.org/doc/libs/1_81_0/libs/graph/doc/astar_search.html
     // https://boost.org/doc/libs/1_81_0/libs/graph/doc/AStarHeuristic.html
@@ -178,7 +178,7 @@ namespace Arborescence.Search
                                 yield return e;
                             }
 
-                            Color vColor = GetColorOrDefault(colorByVertex, v);
+                            Color vColor = colorByVertex.GetValueOrDefault(v, Color.None);
                             switch (vColor)
                             {
                                 case Color.None:
@@ -243,11 +243,6 @@ namespace Arborescence.Search
             distanceByVertex[head] = relaxedHeadDistance;
             return true;
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
-            where TColorMap : IDictionary<TVertex, Color> =>
-            colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }
 
