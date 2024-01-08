@@ -9,7 +9,7 @@ namespace Arborescence
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryGetValue<TKey, TValue, TReadOnlyDictionary>(
-            TReadOnlyDictionary dictionary, TKey key, [MaybeNullWhen(false)] out TValue value)
+            this TReadOnlyDictionary dictionary, TKey key, [MaybeNullWhen(false)] out TValue value)
             where TReadOnlyDictionary : IReadOnlyDictionary<TKey, TValue> =>
             dictionary.TryGetValue(key, out value);
     }

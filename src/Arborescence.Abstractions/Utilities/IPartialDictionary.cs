@@ -4,6 +4,12 @@ namespace Arborescence
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Provides a formal implementation for the <see cref="IDictionary{TKey,TValue}"/> methods
+    /// that are not used in the algorithms.
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the read-only dictionary.</typeparam>
+    /// <typeparam name="TValue">The type of values in the read-only dictionary.</typeparam>
     public interface IPartialDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
     {
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) => Add(item.Key, item.Value);
@@ -107,6 +113,11 @@ namespace Arborescence
 
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => DictionaryHelpers<TKey, TValue>.GetValues(this);
 
+        /// <summary>
+        /// Sets the element with the specified key.
+        /// </summary>
+        /// <param name="key">The key of the element to set.</param>
+        /// <param name="value">The element with the specified key.</param>
         void Put(TKey key, TValue value);
     }
 }
