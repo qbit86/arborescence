@@ -1,7 +1,6 @@
 namespace Arborescence.Traversal.Incidence
 {
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using System.Threading;
 #if DEBUG
     using System.Diagnostics;
@@ -27,7 +26,7 @@ namespace Arborescence.Traversal.Incidence
             while (queue.TryTake(out TVertex current))
             {
 #if DEBUG
-                Debug.Assert(GetColorOrDefault(colorByVertex, current) != default);
+                Debug.Assert(colorByVertex.GetValueOrDefault(current, Color.None) != default);
 #endif
                 handler.OnExamineVertex(graph, current);
                 TEdgeEnumerator outEdges = graph.EnumerateOutEdges(current);
@@ -40,7 +39,7 @@ namespace Arborescence.Traversal.Incidence
                             continue;
 
                         handler.OnExamineEdge(graph, edge);
-                        Color neighborColor = GetColorOrDefault(colorByVertex, neighbor);
+                        Color neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         switch (neighborColor)
                         {
                             case Color.None or Color.White:
@@ -74,10 +73,5 @@ namespace Arborescence.Traversal.Incidence
                 handler.OnFinishVertex(graph, current);
             }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
-            where TColorMap : IDictionary<TVertex, Color> =>
-            colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }

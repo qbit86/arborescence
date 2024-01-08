@@ -1,7 +1,6 @@
 namespace Arborescence.Traversal.Incidence
 {
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using System.Threading;
 
     /// <summary>
@@ -56,7 +55,7 @@ namespace Arborescence.Traversal.Incidence
                             continue;
 
                         handler.OnExamineEdge(graph, edge);
-                        Color color = GetColorOrDefault(colorByVertex, neighbor);
+                        Color color = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         if (color is Color.None or Color.White)
                         {
                             handler.OnTreeEdge(graph, edge);
@@ -93,11 +92,6 @@ namespace Arborescence.Traversal.Incidence
                 stack.Dispose();
             }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
-            where TColorMap : IDictionary<TVertex, Color> =>
-            colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
 
         private readonly struct StackFrame
         {
