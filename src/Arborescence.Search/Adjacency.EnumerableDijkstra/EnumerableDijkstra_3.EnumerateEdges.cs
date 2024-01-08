@@ -159,8 +159,10 @@ namespace Arborescence.Search.Adjacency
                         if (!distanceByVertex.TryGetValue(neighbor, out TWeight? neighborDistance) ||
                             weightComparer.Compare(neighborDistanceCandidate, neighborDistance) < 0)
                         {
-                            yield return edge;
+                            // In traversal algorithms, we raise the “tree edge” event before updating the color map.
                             distanceByVertex[neighbor] = neighborDistanceCandidate;
+                            // But in search algorithms, we raise the “relaxed edge” event after updating the distance map.
+                            yield return edge;
                             frontier.Enqueue(neighbor, neighborDistanceCandidate);
                         }
                     }
