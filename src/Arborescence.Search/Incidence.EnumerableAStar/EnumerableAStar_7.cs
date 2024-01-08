@@ -142,7 +142,7 @@ namespace Arborescence.Search
             where TIndexMap : IDictionary<TVertex, int>
         {
             distanceByVertex[source] = _costMonoid.Identity;
-            SetCost(costByVertex, source, heuristic(source));
+            costByVertex.Put(source, heuristic(source));
 
             var queue = new MinHeap<TVertex, TCost, TCostMap, TIndexMap, TCostComparer>(
                 costByVertex, indexByVertex, _costComparer);
@@ -174,7 +174,7 @@ namespace Arborescence.Search
                             if (decreased)
                             {
                                 TCost vCost = _costMonoid.Combine(relaxedHeadDistance!, heuristic(v));
-                                SetCost(costByVertex, v, vCost);
+                                costByVertex.Put(v, vCost);
                                 yield return e;
                             }
 
@@ -243,14 +243,6 @@ namespace Arborescence.Search
             distanceByVertex[head] = relaxedHeadDistance;
             return true;
         }
-
-        // Ambiguous indexer:
-        // TCost this[TVertex] (in interface IDictionary<TVertex,TCost>)
-        // TCost this[TVertex] (in interface IReadOnlyDictionary<TVertex,TCost>)
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetCost<TCostMap>(TCostMap costByVertex, TVertex vertex, TCost cost)
-            where TCostMap : IDictionary<TVertex, TCost> =>
-            costByVertex[vertex] = cost;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
