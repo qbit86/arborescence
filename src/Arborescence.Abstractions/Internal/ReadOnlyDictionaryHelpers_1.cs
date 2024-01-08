@@ -13,6 +13,11 @@ namespace Arborescence
             dictionary.ContainsKey(key);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static TValue GetValue<TKey, TReadOnlyDictionary>(TReadOnlyDictionary dictionary, TKey key)
+            where TReadOnlyDictionary : IReadOnlyDictionary<TKey, TValue> =>
+            dictionary[key];
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool TryGetValue<TKey, TReadOnlyDictionary>(
             TReadOnlyDictionary dictionary, TKey key, [MaybeNullWhen(false)] out TValue value)
             where TReadOnlyDictionary : IReadOnlyDictionary<TKey, TValue> =>
