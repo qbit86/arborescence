@@ -15,13 +15,13 @@ Commonly used types:
 • Incidence.EagerDfs&lt;TEdge, TEdgeEnumerator&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>graph;traversal;bfs;dfs;search</PackageTags>
+    <PackageTags>bfs;dfs;graph;search;traversal</PackageTags>
     <Title>Specialized graph traversal algorithms</Title>
-    <VersionPrefix>0.16.5</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16.5</AssemblyVersion>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <RootNamespace>Arborescence.Traversal.Specialized</RootNamespace>
     <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
