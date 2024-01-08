@@ -8,13 +8,13 @@ Commonly used types:
 • IOutNeighborsAdjacency&lt;TVertex, TNeighbors&gt;
 • IMonoid&lt;T&gt;</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>graph;abstraction</PackageTags>
+    <PackageTags>abstraction;graph</PackageTags>
     <Title>Graph abstractions</Title>
-    <VersionPrefix>0.16.3</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16</AssemblyVersion>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
