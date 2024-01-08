@@ -11,13 +11,13 @@ Commonly used types:
 • ListEnumeratorProvider&lt;T&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>graph;model;adjacency;incidence</PackageTags>
+    <PackageTags>adjacency;graph;incidence;model</PackageTags>
     <Title>Generic graph models</Title>
-    <VersionPrefix>0.16.5</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16.5</AssemblyVersion>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion Condition="'$(TargetFramework)' == 'net7.0' OR '$(TargetFramework)' == 'net8.0'">11</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
