@@ -1,7 +1,6 @@
 #if NET6_0_OR_GREATER
 namespace Arborescence.Search.Adjacency
 {
-    using System;
     using System.Collections.Generic;
 
     public static partial class EnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>
@@ -143,7 +142,7 @@ namespace Arborescence.Search.Adjacency
             while (frontier.TryDequeue(out TVertex? current, out TWeight? priority))
             {
                 if (!distanceByVertex.TryGetValue(current, out TWeight? currentDistance))
-                    throw new InvalidOperationException(nameof(distanceByVertex));
+                    ThrowHelper<TVertex>.ThrowVertexNotFoundException(current);
                 if (weightComparer.Compare(priority, currentDistance) > 0)
                     continue;
                 TNeighborEnumerator neighbors = graph.EnumerateOutNeighbors(current);
@@ -154,7 +153,7 @@ namespace Arborescence.Search.Adjacency
                         TVertex neighbor = neighbors.Current;
                         Endpoints<TVertex> edge = new(current, neighbor);
                         if (!weightByEdge.TryGetValue(edge, out TWeight? weight))
-                            throw new InvalidOperationException(nameof(weightByEdge));
+                            continue;
                         TWeight neighborDistanceCandidate = weightMonoid.Combine(currentDistance, weight);
                         if (!distanceByVertex.TryGetValue(neighbor, out TWeight? neighborDistance) ||
                             weightComparer.Compare(neighborDistanceCandidate, neighborDistance) < 0)
