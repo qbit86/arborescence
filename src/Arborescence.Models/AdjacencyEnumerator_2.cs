@@ -5,28 +5,27 @@ namespace Arborescence.Models
     /// <summary>
     /// Provides support for creating <see cref="AdjacencyEnumerator{TVertex, TEdge, TGraph, TEdgeEnumerator}"/> objects.
     /// </summary>
-    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    public static class AdjacencyEnumerator<TVertex, TEdge>
+    /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
+    public static class AdjacencyEnumerator<TEdge, TEdgeEnumerator>
+        where TEdgeEnumerator : IEnumerator<TEdge>
     {
         /// <summary>
         /// Creates a <see cref="AdjacencyEnumerator{TVertex, TEdge, TGraph, TEdgeEnumerator}"/>.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="edgeEnumerator">The enumerator for the collection of edges.</param>
+        /// <param name="vertex">The vertex whose out-edges are to be enumerated.</param>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
         /// <typeparam name="TGraph">The type of the graph.</typeparam>
-        /// <typeparam name="TEdgeEnumerator">The type of the edge enumerator.</typeparam>
         /// <returns>The enumerator for the heads of given edges.</returns>
-        public static AdjacencyEnumerator<TVertex, TEdge, TGraph, TEdgeEnumerator> Create<TGraph, TEdgeEnumerator>(
-            TGraph graph, TEdgeEnumerator edgeEnumerator)
-            where TGraph : IHeadIncidence<TVertex, TEdge>
-            where TEdgeEnumerator : IEnumerator<TEdge>
+        public static AdjacencyEnumerator<TVertex, TEdge, TGraph, TEdgeEnumerator> Create<TVertex, TGraph>(
+            TGraph graph, TVertex vertex)
+            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
         {
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
-            if (edgeEnumerator is null)
-                ArgumentNullExceptionHelpers.Throw(nameof(edgeEnumerator));
 
+            TEdgeEnumerator edgeEnumerator = graph.EnumerateOutEdges(vertex);
             return new(graph, edgeEnumerator);
         }
     }

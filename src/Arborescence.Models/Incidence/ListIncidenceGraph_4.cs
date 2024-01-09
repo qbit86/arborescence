@@ -77,12 +77,8 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public AdjacencyEnumerator<
                 TVertex, TEdge, ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap>, List<TEdge>.Enumerator>
-            EnumerateOutNeighbors(TVertex vertex)
-        {
-            ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
-            List<TEdge>.Enumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
-            return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
-        }
+            EnumerateOutNeighbors(TVertex vertex) =>
+            AdjacencyEnumerator<TEdge, List<TEdge>.Enumerator>.Create(this, vertex);
 
         /// <summary>
         /// Adds the edge to the graph with the specified tail and head.
