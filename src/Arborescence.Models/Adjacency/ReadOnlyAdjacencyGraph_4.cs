@@ -54,11 +54,8 @@ namespace Arborescence.Models
             Some(edge.Head, out head);
 
         /// <inheritdoc/>
-        public IncidenceEnumerator<TVertex, TNeighborEnumerator> EnumerateOutEdges(TVertex vertex)
-        {
-            TNeighborEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
-            return IncidenceEnumerator.Create(vertex, neighborEnumerator);
-        }
+        public IncidenceEnumerator<TVertex, TNeighborEnumerator> EnumerateOutEdges(TVertex vertex) =>
+            IncidenceEnumerator<TVertex, TNeighborEnumerator>.Create(this, vertex);
 
         /// <inheritdoc/>
         public TNeighborEnumerator EnumerateOutNeighbors(TVertex vertex)
