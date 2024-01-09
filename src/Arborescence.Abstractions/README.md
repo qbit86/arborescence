@@ -237,17 +237,17 @@ Expected output is:
     IST
 
 [^DG]: Directed graph  
-  https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
+https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)#Directed_graph
 
 [^EVA]: EVA Air introduces special flight to nowhere  
-  https://edition.cnn.com/travel/article/eva-air-hello-kitty-fathers-day-flight/index.html  
-  https://flightaware.com/live/flight/EVA5288
+https://edition.cnn.com/travel/article/eva-air-hello-kitty-fathers-day-flight/index.html  
+https://flightaware.com/live/flight/EVA5288
 
 [^EWI]: Edges with own identity  
-  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
 
 [^EWO]: Edges without own identity  
-  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
 
 [^Q]: Quiver<br />
-  https://en.wikipedia.org/wiki/Quiver_(mathematics)
+https://en.wikipedia.org/wiki/Quiver_(mathematics)

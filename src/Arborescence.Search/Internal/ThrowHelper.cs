@@ -8,6 +8,5 @@ namespace Arborescence.Search
         [DoesNotReturn]
         internal static void ThrowVertexNotFoundException(string? vertex) =>
             throw new InvalidOperationException($"The given vertex '{vertex}' was not present in the distance map.");
-
     }
 }

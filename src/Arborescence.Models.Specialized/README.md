@@ -59,13 +59,13 @@ while (edgeEnumerator.MoveNext())
 }
 ```
 
-The expected output — all the neighbors of vertex 2:
+The expected output — all the neighbors of vertex 2:
 
     1
     3
 
 [^EWI]: Edges with own identity  
-  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
+https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)
 
 [^EWO]: Edges without own identity  
-  https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
+https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_without_own_identity)
