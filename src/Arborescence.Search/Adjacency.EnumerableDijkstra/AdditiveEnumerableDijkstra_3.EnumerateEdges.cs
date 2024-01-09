@@ -2,15 +2,18 @@
 namespace Arborescence.Search.Adjacency
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     public static partial class AdditiveEnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TWeightMap>(
             TGraph graph, TVertex source, TWeightMap weightByEdge)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
             where TWeightMap : IReadOnlyDictionary<Endpoints<TVertex>, TWeight> =>
             EnumerateEdgesChecked(graph, source, weightByEdge);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<TGraph, TWeightMap, TDistanceMap>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex)
             where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
@@ -18,6 +21,7 @@ namespace Arborescence.Search.Adjacency
             where TDistanceMap : IDictionary<TVertex, TWeight> =>
             EnumerateEdgesChecked(graph, source, weightByEdge, distanceByVertex);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
             TGraph, TWeightMap, TDistanceMap, TWeightComparer>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
@@ -91,6 +95,7 @@ namespace Arborescence.Search.Adjacency
                 graph, source, weightByEdge, distanceByVertex, weightComparer);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static IEnumerable<Endpoints<TVertex>> EnumerateEdgesUnchecked<
             TGraph, TWeightMap, TDistanceMap, TWeightComparer>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
