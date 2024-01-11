@@ -1,0 +1,5 @@
+[IPartial*Dictionary.cs]
+dotnet_diagnostic.CA1033.severity = none # Interface methods should be callable by child types
+
+[IPartialDictionary.cs]
+resharper_possible_interface_member_ambiguity_highlighting = none # PossibleInterfaceMemberAmbiguity

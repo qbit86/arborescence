@@ -102,12 +102,8 @@ namespace Arborescence.Models.Specialized
         }
 
         /// <inheritdoc/>
-        public NeighborEnumerator EnumerateOutNeighbors(int vertex)
-        {
-            Int32IncidenceGraph self = this;
-            EdgeEnumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
-            return AdjacencyEnumerator<int, int>.Create(self, edgeEnumerator);
-        }
+        public NeighborEnumerator EnumerateOutNeighbors(int vertex) =>
+            AdjacencyEnumerator<int, EdgeEnumerator>.Create(this, vertex);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetHeadByEdge()

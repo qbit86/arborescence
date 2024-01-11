@@ -107,16 +107,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Traversal.Specialized.BasicUsage", "samples\Samples.Traversal.Specialized.BasicUsage\Samples.Traversal.Specialized.BasicUsage.csproj", "{72FD93D1-A12F-4244-A25C-AE1564936CE0}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		src\Arborescence.Collections\Arborescence.Collections.projitems*{59271da1-4b19-4804-962c-df2791d123a2}*SharedItemsImports = 5
-		src\Arborescence.Collections\Arborescence.Collections.projitems*{625cae8b-4025-45e6-a282-693d067febf8}*SharedItemsImports = 13
-		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{1fe04d46-b1ca-4801-a399-d3d351bea8dd}*SharedItemsImports = 13
-		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
-		src\Shared\ArrayPrefixBuilder\ArrayPrefixBuilder.projitems*{cb3deaad-9869-45c9-82d5-7d5ee7ad5cee}*SharedItemsImports = 5
-		tests\Tests.Shared\Tests.Shared.projitems*{096764f1-8ef8-4961-9ae9-d419fd6b4d29}*SharedItemsImports = 13
-		tests\Tests.Shared\Tests.Shared.projitems*{68408e95-6d55-47ef-97d7-c766613c8ca2}*SharedItemsImports = 5
-		tests\Tests.Shared\Tests.Shared.projitems*{fcc994d6-1fae-469f-9c1e-9712d46b9ea8}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

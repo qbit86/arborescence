@@ -170,7 +170,7 @@ namespace Arborescence.Traversal.Adjacency
             while (sourceEnumerator.MoveNext())
             {
                 TVertex source = sourceEnumerator.Current;
-                Color color = GetColorOrDefault(colorByVertex, source);
+                Color color = colorByVertex.GetValueOrDefault(source, Color.None);
                 if (color is not (Color.None or Color.White))
                     continue;
                 handler.OnStartVertex(graph, source);

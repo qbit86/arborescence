@@ -47,7 +47,7 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of vertices that can have out-edges.
         /// </summary>
-        public int TailCount
+        public int MinVertexCount
         {
             get
             {
@@ -81,13 +81,8 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public AdjacencyEnumerator<TVertex, TEdge,
             ReadOnlyIncidenceGraph<TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept>,
-            TEdgeEnumerator> EnumerateOutNeighbors(TVertex vertex)
-        {
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
-            TEdgeEnumerator edgeEnumerator = self.EnumerateOutEdges(vertex);
-            return AdjacencyEnumerator<TVertex, TEdge>.Create(self, edgeEnumerator);
-        }
+            TEdgeEnumerator> EnumerateOutNeighbors(TVertex vertex) =>
+            AdjacencyEnumerator<TEdge, TEdgeEnumerator>.Create(this, vertex);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetCountUnchecked()

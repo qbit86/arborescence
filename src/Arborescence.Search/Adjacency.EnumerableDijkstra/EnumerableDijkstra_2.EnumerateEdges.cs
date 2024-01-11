@@ -1,9 +1,11 @@
 namespace Arborescence.Search.Adjacency
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     public static partial class EnumerableDijkstra<TVertex, TWeight>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
             TGraph, TWeightMap, TWeightMonoid>(
             TGraph graph, TVertex source, TWeightMap weightByEdge,
@@ -14,6 +16,7 @@ namespace Arborescence.Search.Adjacency
             EnumerableDijkstra<TVertex, IEnumerator<TVertex>, TWeight>.EnumerateEdgesChecked(
                 graph, source, weightByEdge, weightMonoid);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
             TGraph, TWeightMap, TDistanceMap, TWeightMonoid>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,
@@ -25,6 +28,7 @@ namespace Arborescence.Search.Adjacency
             EnumerableDijkstra<TVertex, IEnumerator<TVertex>, TWeight>.EnumerateEdgesChecked(
                 graph, source, weightByEdge, distanceByVertex, weightMonoid);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Endpoints<TVertex>> EnumerateEdges<
             TGraph, TWeightMap, TDistanceMap, TWeightMonoid, TWeightComparer>(
             TGraph graph, TVertex source, TWeightMap weightByEdge, TDistanceMap distanceByVertex,

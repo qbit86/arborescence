@@ -66,11 +66,7 @@ namespace Arborescence.Models.Specialized
         }
 
         /// <inheritdoc/>
-        public EdgeEnumerator EnumerateOutEdges(int vertex)
-        {
-            NeighborEnumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
-            return IncidenceEnumerator.Create(vertex, neighborEnumerator);
-        }
+        public EdgeEnumerator EnumerateOutEdges(int vertex) => EdgeEnumerator.Create(this, vertex);
 
         /// <inheritdoc/>
         public NeighborEnumerator EnumerateOutNeighbors(int vertex)

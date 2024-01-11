@@ -3,7 +3,6 @@ namespace Arborescence.Models
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.CompilerServices;
     using static TryHelpers;
 
     /// <summary>
@@ -20,7 +19,7 @@ namespace Arborescence.Models
         IOutEdgesIncidence<TVertex, IncidenceEnumerator<TVertex, List<TVertex>.Enumerator>>,
         IOutNeighborsAdjacency<TVertex, List<TVertex>.Enumerator>,
         IEquatable<ListAdjacencyGraph<TVertex, TVertexMultimap>>
-        where TVertexMultimap : IDictionary<TVertex, List<TVertex>>, IReadOnlyDictionary<TVertex, List<TVertex>>
+        where TVertexMultimap : IDictionary<TVertex, List<TVertex>>
     {
         private static ListMultimapConcept<TVertexMultimap, TVertex> MultimapConcept => default;
 
@@ -31,12 +30,12 @@ namespace Arborescence.Models
         /// <summary>
         /// Gets the number of vertices that can have out-neighbors.
         /// </summary>
-        public int TailCount
+        public int MinVertexCount
         {
             get
             {
                 TVertexMultimap? neighborsByVertex = _neighborsByVertex;
-                return neighborsByVertex is null ? 0 : GetCountUnchecked(neighborsByVertex);
+                return neighborsByVertex is null ? 0 : neighborsByVertex.Count;
             }
         }
 
@@ -67,7 +66,7 @@ namespace Arborescence.Models
         public void AddEdge(TVertex tail, TVertex head)
         {
             TVertexMultimap neighborsByVertex = _neighborsByVertex;
-            if (TryGetValue(neighborsByVertex, tail, out List<TVertex>? neighbors))
+            if (neighborsByVertex.TryGetValue(tail, out List<TVertex>? neighbors))
             {
                 neighbors.Add(head);
             }
@@ -77,7 +76,7 @@ namespace Arborescence.Models
                 neighborsByVertex.Add(tail, neighbors);
             }
 
-            if (!ContainsKey(neighborsByVertex, head))
+            if (!neighborsByVertex.ContainsKey(head))
                 neighborsByVertex.Add(head, new());
         }
 
@@ -93,25 +92,10 @@ namespace Arborescence.Models
         public bool TryAddVertex(TVertex vertex)
         {
             TVertexMultimap neighborsByVertex = _neighborsByVertex;
-            if (ContainsKey(neighborsByVertex, vertex))
+            if (neighborsByVertex.ContainsKey(vertex))
                 return false;
             neighborsByVertex.Add(vertex, new());
             return true;
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryGetValue<TDictionary>(
-            TDictionary dictionary, TVertex vertex, [NotNullWhen(true)] out List<TVertex>? value)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
-            dictionary.TryGetValue(vertex, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool ContainsKey<TDictionary>(TDictionary dictionary, TVertex vertex)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> =>
-            dictionary.ContainsKey(vertex);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static int GetCountUnchecked<TDictionary>(TDictionary dictionary)
-            where TDictionary : IReadOnlyDictionary<TVertex, List<TVertex>> => dictionary.Count;
     }
 }

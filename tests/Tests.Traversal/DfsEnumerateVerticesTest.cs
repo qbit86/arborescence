@@ -18,33 +18,33 @@ public sealed class DfsEnumerateVerticesTest
     {
         // Arrange
 
-        if (graph.TailCount == 0)
+        if (graph.MinVertexCount == 0)
             return;
 
-        using Rist<int> eagerSteps = new(graph.TailCount);
-        using Rist<int> enumerableSteps = new(graph.TailCount);
+        using Rist<int> eagerSteps = new(graph.MinVertexCount);
+        using Rist<int> enumerableSteps = new(graph.MinVertexCount);
         DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
         if (multipleSource)
         {
-            if (graph.TailCount < 3)
+            if (graph.MinVertexCount < 3)
                 return;
 
-            int sourceCount = graph.TailCount / 3;
+            int sourceCount = graph.MinVertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
-            EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, graph.TailCount, dfsHandler);
+            EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, graph.MinVertexCount, dfsHandler);
             IEnumerable<int> vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
-                graph, sources, graph.TailCount);
+                graph, sources, graph.MinVertexCount);
             enumerableSteps.AddRange(vertices);
         }
         else
         {
-            int source = graph.TailCount - 1;
-            EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, graph.TailCount, dfsHandler);
+            int source = graph.MinVertexCount - 1;
+            EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, graph.MinVertexCount, dfsHandler);
             IEnumerable<int> vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
-                graph, source, graph.TailCount);
+                graph, source, graph.MinVertexCount);
             enumerableSteps.AddRange(vertices);
         }
 

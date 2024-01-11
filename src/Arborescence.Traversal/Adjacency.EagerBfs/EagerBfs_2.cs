@@ -1,7 +1,6 @@
 namespace Arborescence.Traversal.Adjacency
 {
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using System.Threading;
 #if DEBUG
     using System.Diagnostics;
@@ -26,7 +25,7 @@ namespace Arborescence.Traversal.Adjacency
             while (queue.TryTake(out TVertex current))
             {
 #if DEBUG
-                Debug.Assert(GetColorOrDefault(colorByVertex, current) != default);
+                Debug.Assert(colorByVertex.GetValueOrDefault(current, Color.None) != default);
 #endif
                 handler.OnExamineVertex(graph, current);
                 TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(current);
@@ -37,7 +36,7 @@ namespace Arborescence.Traversal.Adjacency
                         TVertex neighbor = outNeighbors.Current!;
                         var edge = Endpoints.Create(current, neighbor);
                         handler.OnExamineEdge(graph, edge);
-                        Color neighborColor = GetColorOrDefault(colorByVertex, neighbor);
+                        Color neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         switch (neighborColor)
                         {
                             case Color.None or Color.White:
@@ -71,10 +70,5 @@ namespace Arborescence.Traversal.Adjacency
                 handler.OnFinishVertex(graph, current);
             }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color GetColorOrDefault<TColorMap>(TColorMap colorByVertex, TVertex vertex)
-            where TColorMap : IDictionary<TVertex, Color> =>
-            colorByVertex.TryGetValue(vertex, out Color result) ? result : Color.None;
     }
 }

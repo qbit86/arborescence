@@ -21,6 +21,23 @@ namespace Arborescence.Models
             _neighborEnumerator = neighborEnumerator;
         }
 
+        /// <summary>
+        /// Creates a <see cref="IncidenceEnumerator{TVertex,TNeighborEnumerator}"/>.
+        /// </summary>
+        /// <param name="graph">The graph.</param>
+        /// <param name="vertex">The vertex whose neighbors are to be enumerated.</param>
+        /// <typeparam name="TGraph">The type of the graph.</typeparam>
+        /// <returns>The enumerator for the endpoints of the out-edges of a given vertex.</returns>
+        public static IncidenceEnumerator<TVertex, TNeighborEnumerator> Create<TGraph>(TGraph graph, TVertex vertex)
+            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
+        {
+            if (graph is null)
+                ArgumentNullExceptionHelpers.Throw(nameof(graph));
+
+            TNeighborEnumerator neighborEnumerator = graph.EnumerateOutNeighbors(vertex);
+            return new(vertex, neighborEnumerator);
+        }
+
         /// <inheritdoc/>
         public Endpoints<TVertex> Current => new(_vertex, _neighborEnumerator.Current);
 

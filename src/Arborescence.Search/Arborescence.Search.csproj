@@ -9,14 +9,14 @@ Commonly used types:
 - Adjacency.EnumerableDijkstra&lt;TVertex, TNeighborEnumerator, TWeight&gt;</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>graph;dijkstra;search;traversal</PackageTags>
+    <PackageTags>dijkstra;graph;search;traversal</PackageTags>
     <Title>Graph search algorithms</Title>
-    <VersionPrefix>0.16.7</VersionPrefix>
+    <VersionPrefix>0.17.0</VersionPrefix>
     <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16.6</AssemblyVersion>
+    <AssemblyVersion>0.17</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion Condition="'$(TargetFramework)' == 'net7.0'">11</LangVersion>
     <RootNamespace>Arborescence.Search</RootNamespace>

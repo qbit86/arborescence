@@ -7,13 +7,13 @@ Commonly used types:
 • Int32IncidenceGraph</Description>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>graph;model;adjacency;incidence</PackageTags>
+    <PackageTags>adjacency;graph;incidence;model</PackageTags>
     <Title>Specialized graph models</Title>
-    <VersionPrefix>0.16.5</VersionPrefix>
+    <VersionPrefix>0.17.0</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16.5</AssemblyVersion>
+    <AssemblyVersion>0.17</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
     <RootNamespace>Arborescence.Models</RootNamespace>
