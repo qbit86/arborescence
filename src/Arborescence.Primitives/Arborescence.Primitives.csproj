@@ -3,16 +3,17 @@
   <PropertyGroup>
     <Description>Basic blocks for building algorithms and data structures.
 Commonly used types:
-• Endpoints&lt;TVertex&gt;
-• Color</Description>
+- Color
+- Endpoints&lt;TVertex&gt;
+- EqualityComparerEquatable&lt;T, TComparer&gt;</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>graph;primitive</PackageTags>
     <Title>Stable primitive types</Title>
-    <VersionPrefix>0.16.5</VersionPrefix>
+    <VersionPrefix>0.17.0</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>0.16.5</AssemblyVersion>
+    <AssemblyVersion>0.17</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
