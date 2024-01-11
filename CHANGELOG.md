@@ -1,11 +1,12 @@
 # Changelog
 
-## [Unreleased] - 2024-01-11
+## [0.17.0] - 2024-01-11
 
 ### Added
 
 - Abstractions: `IPartialDictionary<TKey, TValue>`, `IReadOnlyDictionary<TKey, TValue>`
 - Models: Factory method `IncidenceEnumerator<TVertex, TNeighborEnumerator>.Create<TGraph>(TGraph graph, TVertex vertex)`
+
 - Search: `Incidence.AdditiveEnumerableDijkstra<TVertex, TWeight>`, `Incidence.AdditiveEnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>`
 - Search: `Incidence.EnumerableDijkstra<TVertex, TWeight>`, `Incidence.EnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>`
 
@@ -496,7 +497,9 @@
 
 - Abstractions: The interface for graphs to be examined in a data-structure agnostic fashion.
 
-[Unreleased]: https://github.com/qbit86/arborescence/compare/search-0.16.7-preview...HEAD
+[Unreleased]: https://github.com/qbit86/arborescence/compare/arborescence-0.17.0...HEAD
+
+[0.17.0]: https://github.com/qbit86/arborescence/compare/search-0.16.7-preview...arborescence-0.17.0
 
 [0.16.7-preview]: https://github.com/qbit86/arborescence/compare/arborescence-0.16.5...search-0.16.7-preview
 

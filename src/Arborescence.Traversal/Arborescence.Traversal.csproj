@@ -17,11 +17,11 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>bfs;dfs;graph;search;traversal</PackageTags>
     <Title>Graph traversal algorithms</Title>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionPrefix>0.17.0</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <AssemblyVersion>0.17</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
