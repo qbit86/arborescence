@@ -4,15 +4,11 @@
 
 ### Added
 
-- Models: Factory method `IncidenceEnumerator<TVertex, TNeighborEnumerator>.Create<TGraph>(TGraph graph, TVertex vertex)`
 - Search: `Incidence.AdditiveEnumerableDijkstra<TVertex, TWeight>`, `Incidence.AdditiveEnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>`
 - Search: `Incidence.EnumerableDijkstra<TVertex, TWeight>`, `Incidence.EnumerableDijkstra<TVertex, TNeighborEnumerator, TWeight>`
 
 ## Changed
 
-- Models: Removed requirement of `IReadOnlyDictionary<TVertex, List<TVertex>>` for `List*Graph<>` in favor of just `IDictionary<TVertex, List<TVertex>>`.
-- Models: Renamed `TailCount` to `MinVertexCount` in `List*Graph<>` and `ReadOnly*Graph<>`.
-- Models: Changed factory type from `AdjacencyEnumerator<TVertex, TEdge>` to `AdjacencyEnumerator<TEdge, TEdgeEnumerator>`.
 - Search: Reordered relaxed edge event after distance map update.
 
 ## [0.17.0] - 2024-01-11
@@ -20,6 +16,13 @@
 ### Added
 
 - Abstractions: `IPartialDictionary<TKey, TValue>`, `IReadOnlyDictionary<TKey, TValue>`
+- Models: Factory method `IncidenceEnumerator<TVertex, TNeighborEnumerator>.Create<TGraph>(TGraph graph, TVertex vertex)`
+
+## Changed
+
+- Models: Removed requirement of `IReadOnlyDictionary<TVertex, List<TVertex>>` for `List*Graph<>` in favor of just `IDictionary<TVertex, List<TVertex>>`.
+- Models: Renamed `TailCount` to `MinVertexCount` in `List*Graph<>` and `ReadOnly*Graph<>`.
+- Models: Changed factory type from `AdjacencyEnumerator<TVertex, TEdge>` to `AdjacencyEnumerator<TEdge, TEdgeEnumerator>`.
 
 ## [0.16.7-preview] - 2024-01-07
 
