@@ -23,7 +23,7 @@ public sealed class DfsEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(graph.MinVertexCount);
         using Rist<int> enumerableSteps = new(graph.MinVertexCount);
-        DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
+        var dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
@@ -35,7 +35,7 @@ public sealed class DfsEnumerateVerticesTest
             int sourceCount = graph.MinVertexCount / 3;
             IndexEnumerator sources = new(sourceCount);
             EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, graph.MinVertexCount, dfsHandler);
-            IEnumerable<int> vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
+            var vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
                 graph, sources, graph.MinVertexCount);
             enumerableSteps.AddRange(vertices);
         }
@@ -43,7 +43,7 @@ public sealed class DfsEnumerateVerticesTest
         {
             int source = graph.MinVertexCount - 1;
             EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, graph.MinVertexCount, dfsHandler);
-            IEnumerable<int> vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
+            var vertices = EnumerableDfs<int, EdgeEnumerator>.EnumerateVertices(
                 graph, source, graph.MinVertexCount);
             enumerableSteps.AddRange(vertices);
         }

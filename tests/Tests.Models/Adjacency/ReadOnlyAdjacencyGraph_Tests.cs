@@ -13,7 +13,7 @@ public sealed class ReadOnlyAdjacencyGraph_Tests
         Dictionary<string, List<string>> neighborsByVertex = new();
         foreach (string neighbor in expectedNeighbors)
         {
-            if (neighborsByVertex.TryGetValue(vertex, out List<string>? neighbors))
+            if (neighborsByVertex.TryGetValue(vertex, out var neighbors))
                 neighbors.Add(neighbor);
             else
                 neighborsByVertex.Add(vertex, [neighbor]);
@@ -21,7 +21,7 @@ public sealed class ReadOnlyAdjacencyGraph_Tests
 
         var graph = ReadOnlyAdjacencyGraph<string>.FromLists(neighborsByVertex);
 
-        List<string>.Enumerator actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
+        var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
         while (actualNeighborEnumerator.MoveNext())
             actualNeighbors.Add(actualNeighborEnumerator.Current);

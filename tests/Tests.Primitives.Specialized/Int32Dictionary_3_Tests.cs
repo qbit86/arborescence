@@ -12,7 +12,7 @@ public sealed class Int32Dictionary_3_Tests
     [Fact]
     public void TryGetValue_ForAbsenceMarker_ShouldReturnFalse()
     {
-        Int32Dictionary<string, List<string>, StringComparer> dictionary = CreateSparseDictionary();
+        var dictionary = CreateSparseDictionary();
         Assert.False(dictionary.TryGetValue(1, out _));
         Assert.False(dictionary.TryGetValue(3, out _));
     }
@@ -20,7 +20,7 @@ public sealed class Int32Dictionary_3_Tests
     [Fact]
     public void ContainsKey_ForAbsenceMarker_ShouldReturnFalse()
     {
-        Int32Dictionary<string, List<string>, StringComparer> dictionary = CreateSparseDictionary();
+        var dictionary = CreateSparseDictionary();
         Assert.False(dictionary.ContainsKey(1));
         Assert.False(dictionary.ContainsKey(3));
     }
@@ -28,7 +28,7 @@ public sealed class Int32Dictionary_3_Tests
     [Fact]
     public void GetCount_ForSparseDictionary_ShouldBeLessThanMaxCount()
     {
-        Int32Dictionary<string, List<string>, StringComparer> dictionary = CreateSparseDictionary();
+        var dictionary = CreateSparseDictionary();
         int count = dictionary.GetCount();
         int maxCount = dictionary.MaxCount;
         Assert.True(count <= maxCount);

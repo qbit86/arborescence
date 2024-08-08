@@ -1,6 +1,5 @@
 namespace Arborescence.Models.Specialized;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -15,21 +14,21 @@ public sealed partial class Int32IncidenceGraphTests
 #if NET5_0_OR_GREATER
         var edges = p.Edges.ToList();
 #else
-        Endpoints<int>[] edges = p.Edges.ToArray();
+        var edges = p.Edges.ToArray();
 #endif
         var graph = Int32IncidenceGraph.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
         Assert.Equal(p.Edges.Count, graph.EdgeCount);
-        ILookup<int, int> expectedNeighborsByVertex = p.Edges.ToLookup(it => it.Tail, it => it.Head);
+        var expectedNeighborsByVertex = p.Edges.ToLookup(it => it.Tail, it => it.Head);
 
         for (int vertex = 0; vertex < graph.VertexCount; ++vertex)
         {
-            AdjacencyEnumerator<int, int, Int32IncidenceGraph, ArraySegment<int>.Enumerator> neighborEnumerator =
+            var neighborEnumerator =
                 graph.EnumerateOutNeighbors(vertex);
             List<int> actualNeighbors = new();
             while (neighborEnumerator.MoveNext())
                 actualNeighbors.Add(neighborEnumerator.Current);
-            IEnumerable<int> expectedNeighborsRaw = expectedNeighborsByVertex[vertex];
+            var expectedNeighborsRaw = expectedNeighborsByVertex[vertex];
             if (expectedNeighborsRaw is not IList<int> expectedNeighbors)
                 expectedNeighbors = expectedNeighborsRaw.ToList();
             if (expectedNeighbors.Count != actualNeighbors.Count)
@@ -57,12 +56,12 @@ public sealed partial class Int32IncidenceGraphTests
     [ClassData(typeof(RandomGraphDefinitionCollection))]
     internal void TryGetEndpoints_AllEdges_ReturnsSameEndpoints(GraphDefinitionParameter p)
     {
-        IReadOnlyList<Endpoints<int>> expectedEndpointsByEdge = p.Edges;
+        var expectedEndpointsByEdge = p.Edges;
         int edgeCount = expectedEndpointsByEdge.Count;
 #if NET5_0_OR_GREATER
         var edges = expectedEndpointsByEdge.ToList();
 #else
-        Endpoints<int>[] edges = expectedEndpointsByEdge.ToArray();
+        var edges = expectedEndpointsByEdge.ToArray();
 #endif
         var graph = Int32IncidenceGraph.FromEdges(edges);
         Assert.Equal(p.VertexCount, graph.VertexCount);
@@ -74,7 +73,7 @@ public sealed partial class Int32IncidenceGraphTests
                 Assert.Fail($"{nameof(edge)}: {edge}, {nameof(graph.TryGetTail)}: false");
             if (!graph.TryGetHead(edge, out int actualHead))
                 Assert.Fail($"{nameof(edge)}: {edge}, {nameof(graph.TryGetHead)}: false");
-            Endpoints<int> expectedEndpoints = expectedEndpointsByEdge[edge];
+            var expectedEndpoints = expectedEndpointsByEdge[edge];
             if (expectedEndpoints.Tail != actualTail)
             {
                 Assert.Fail(

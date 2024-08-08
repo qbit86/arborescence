@@ -23,7 +23,6 @@ public sealed class ListIncidenceGraph_Tests
         foreach (string neighbor in expectedNeighbors)
             Assert.True(graph.TryAddEdge(graph.EdgeCount, vertex, neighbor));
 
-        // ReSharper disable once SuggestVarOrType_Elsewhere
         var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
         while (actualNeighborEnumerator.MoveNext())

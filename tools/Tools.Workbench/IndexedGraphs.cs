@@ -14,7 +14,7 @@ namespace Arborescence.Workbench
             if (shortName is null)
                 throw new ArgumentNullException(nameof(shortName));
 
-            Stream? stream = typeof(IndexedGraphs).GetTypeInfo().Assembly
+            var stream = typeof(IndexedGraphs).GetTypeInfo().Assembly
                 .GetManifestResourceStream($"Arborescence.Workbench.IndexedGraphs.{shortName}.gv");
             if (stream is null)
                 return TextReader.Null;

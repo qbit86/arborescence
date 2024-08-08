@@ -1,7 +1,6 @@
 namespace Arborescence.Traversal.Adjacency;
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Models.Specialized;
 using Workbench;
@@ -13,8 +12,8 @@ public sealed class EnumerableBfs_Tests
     public void EnumerateEdges_SingleSource_ReturnsCorrectEdgesInOrder()
     {
         // Arrange
-        using TextReader textReader = IndexedGraphs.GetTextReader("08");
-        Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
+        using var textReader = IndexedGraphs.GetTextReader("08");
+        var edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
         var adjacencyGraph = Int32AdjacencyGraph.FromEdges(edges);
@@ -38,7 +37,7 @@ public sealed class EnumerableBfs_Tests
             .Select(it => Endpoints.Create(V(it.Tail), V(it.Head))).ToList();
 
         // Act
-        IEnumerable<Endpoints<int>> arrows =
+        var arrows =
             EnumerableBfs<int, System.ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, V("d"));
         var actual = arrows.ToList();
 

@@ -1,7 +1,6 @@
 namespace Arborescence.Traversal.Adjacency;
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Models.Specialized;
 using Workbench;
@@ -13,8 +12,8 @@ public sealed class EnumerableDfs_Tests
     public void EnumerateEdges_MultipleSource_ReturnsCorrectEdgesInOrder()
     {
         // Arrange
-        using TextReader textReader = IndexedGraphs.GetTextReader("08");
-        Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
+        using var textReader = IndexedGraphs.GetTextReader("08");
+        var edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
         var adjacencyGraph = Int32AdjacencyGraph.FromEdges(edges);
@@ -43,7 +42,7 @@ public sealed class EnumerableDfs_Tests
 
         // Act
         List<int> sources = new(3) { V("a"), V("d"), V("b") };
-        IEnumerable<Endpoints<int>> arrows =
+        var arrows =
             EnumerableDfs<int, System.ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, sources);
         var actual = arrows.ToList();
 

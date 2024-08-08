@@ -19,7 +19,7 @@ internal sealed class GraphDefinitionCollection : IEnumerable<object[]>
         {
             string testCase = Invariant($"{i:D2}");
 
-            using TextReader textReader = IndexedGraphs.GetTextReader(testCase);
+            using var textReader = IndexedGraphs.GetTextReader(testCase);
             if (textReader == TextReader.Null)
                 continue;
 

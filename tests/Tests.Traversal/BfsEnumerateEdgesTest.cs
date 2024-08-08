@@ -21,7 +21,7 @@ public sealed class BfsEnumerateEdgesTest
 
         using Rist<Endpoints<int>> eagerSteps = new(vertexCount);
         using Rist<Endpoints<int>> enumerableSteps = new(vertexCount);
-        BfsHandler<int, Endpoints<int>, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
+        var bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -31,11 +31,11 @@ public sealed class BfsEnumerateEdgesTest
                 return;
 
             int sourceCount = graph.VertexCount / 3;
-            IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
+            var sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, vertexCount, bfsHandler);
-            IEnumerable<Endpoints<int>> edges = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
+            var edges = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, sources, vertexCount);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(edges);
@@ -44,7 +44,7 @@ public sealed class BfsEnumerateEdgesTest
         {
             int source = graph.VertexCount >> 1;
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, vertexCount, bfsHandler);
-            IEnumerable<Endpoints<int>> edges = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
+            var edges = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateEdges(
                 graph, source, vertexCount);
             enumerableSteps.AddRange(edges);
         }
@@ -57,8 +57,8 @@ public sealed class BfsEnumerateEdgesTest
 
         for (int i = 0; i < eagerStepCount; ++i)
         {
-            Endpoints<int> eagerStep = eagerSteps[i];
-            Endpoints<int> enumerableStep = enumerableSteps[i];
+            var eagerStep = eagerSteps[i];
+            var enumerableStep = enumerableSteps[i];
 
             if (eagerStep == enumerableStep)
                 continue;

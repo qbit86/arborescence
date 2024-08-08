@@ -24,19 +24,19 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
         for (int i = LowerBound; i < UpperBound; ++i)
         {
             string testCase = i.ToString("D2", CultureInfo.InvariantCulture);
-            TGraphBuilder builder = CreateGraphBuilder(0);
+            var builder = CreateGraphBuilder(0);
 
-            using (TextReader textReader = IndexedGraphs.GetTextReader(testCase))
+            using (var textReader = IndexedGraphs.GetTextReader(testCase))
             {
                 if (textReader == TextReader.Null)
                     continue;
 
-                IEnumerable<Endpoints<int>> edges = Base32EdgeListParser.ParseEdges(textReader);
-                foreach (Endpoints<int> edge in edges)
+                var edges = Base32EdgeListParser.ParseEdges(textReader);
+                foreach (var edge in edges)
                     builder.TryAdd(edge.Tail, edge.Head, out _);
             }
 
-            TGraph graph = builder.ToGraph();
+            var graph = builder.ToGraph();
             string description = $"{{{nameof(testCase)}: {testCase}}}";
             var graphParameter = GraphParameter.Create(graph, description);
             yield return new object[] { graphParameter };
@@ -45,10 +45,10 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
         {
             const int vertexCount = 1;
             const double densityPower = 1.0;
-            TGraphBuilder builder = CreateGraphBuilder(1);
+            var builder = CreateGraphBuilder(1);
             GraphHelpers.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                 builder, vertexCount, densityPower);
-            TGraph graph = builder.ToGraph();
+            var graph = builder.ToGraph();
             string description =
                 $"{{{nameof(vertexCount)}: {vertexCount.ToString(P)}, {nameof(densityPower)}: {densityPower.ToString(P)}}}";
             var graphParameter = GraphParameter.Create(graph, description);
@@ -61,10 +61,10 @@ internal abstract class GraphCollection<TGraph, TEdge, TEdges, TGraphBuilder> : 
             int vertexCount = (int)Math.Ceiling(Math.Pow(10.0, power));
             foreach (double densityPower in GraphHelpers.DensityPowers)
             {
-                TGraphBuilder builder = CreateGraphBuilder(1);
+                var builder = CreateGraphBuilder(1);
                 GraphHelpers.PopulateIncidenceGraphBuilder<TGraph, TEdge, TEdges, TGraphBuilder>(
                     builder, vertexCount, densityPower);
-                TGraph graph = builder.ToGraph();
+                var graph = builder.ToGraph();
                 string description =
                     $"{{{nameof(vertexCount)}: {vertexCount.ToString(P)}, {nameof(densityPower)}: {densityPower.ToString(P)}}}";
                 var graphParameter = GraphParameter.Create(graph, description);
@@ -128,7 +128,7 @@ internal sealed class Int32AdjacencyGraphBuilder : IGraphBuilder<Int32AdjacencyG
 
     public Int32AdjacencyGraph ToGraph()
     {
-        Endpoints<int>[] edges = _edges.ToArray();
+        var edges = _edges.ToArray();
         _edges.Clear();
         return Int32AdjacencyGraph.FromEdges(edges);
     }
@@ -175,7 +175,7 @@ internal sealed class Int32IncidenceGraphBuilder : IGraphBuilder<Int32IncidenceG
 
     public Int32IncidenceGraph ToGraph()
     {
-        Endpoints<int>[] endpointsByEdge = _endpointsByEdge.ToArray();
+        var endpointsByEdge = _endpointsByEdge.ToArray();
         _endpointsByEdge.Clear();
         return Int32IncidenceGraph.FromEdges(endpointsByEdge);
     }

@@ -21,7 +21,7 @@ public sealed class BfsEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(vertexCount);
         using Rist<int> enumerableSteps = new(vertexCount);
-        BfsHandler<int, Endpoints<int>, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
+        var bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -31,11 +31,11 @@ public sealed class BfsEnumerateVerticesTest
                 return;
 
             int sourceCount = graph.VertexCount / 3;
-            IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
+            var sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, vertexCount, bfsHandler);
-            IEnumerable<int> vertices = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
+            var vertices = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, sources, vertexCount);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
@@ -44,7 +44,7 @@ public sealed class BfsEnumerateVerticesTest
         {
             int source = graph.VertexCount >> 1;
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, vertexCount, bfsHandler);
-            IEnumerable<int> vertices = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
+            var vertices = EnumerableBfs<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, source, vertexCount);
             enumerableSteps.AddRange(vertices);
         }

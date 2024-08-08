@@ -29,7 +29,7 @@
                 }
             }
 
-            Span<char> span = buffer.Slice(0, length);
+            var span = buffer.Slice(0, length);
             span.Reverse();
             return span.ToString();
         }
@@ -39,7 +39,7 @@
 
         public static bool TryParse(ReadOnlySpan<char> value, out int result)
         {
-            ReadOnlySpan<char> input = value.Length > MaxLength
+            var input = value.Length > MaxLength
                 ? value.Slice(value.Length - MaxLength, MaxLength)
                 : value;
 

@@ -20,7 +20,7 @@ public sealed class ReadOnlyIncidenceGraph_Tests
             int edge = tailByEdge.Count;
             tailByEdge.Add(vertex);
             headByEdge.Add(neighbor);
-            if (outEdgesByVertex.TryGetValue(vertex, out List<int>? outEdges))
+            if (outEdgesByVertex.TryGetValue(vertex, out var outEdges))
                 outEdges.Add(edge);
             else
                 outEdgesByVertex.Add(vertex, [edge]);
@@ -31,7 +31,6 @@ public sealed class ReadOnlyIncidenceGraph_Tests
             Int32ReadOnlyDictionary<string>.Create(headByEdge),
             outEdgesByVertex);
 
-        // ReSharper disable once SuggestVarOrType_Elsewhere
         var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
         while (actualNeighborEnumerator.MoveNext())

@@ -28,7 +28,7 @@ public class QueueGenericSearchEnumerateVerticesTest
 
         using Rist<int> eagerSteps = new(vertexCount);
         using Rist<int> enumerableSteps = new(vertexCount);
-        BfsHandler<int, Endpoints<int>, Graph> bfsHandler = CreateBfsHandler(eagerSteps);
+        var bfsHandler = CreateBfsHandler(eagerSteps);
 
         // Act
 
@@ -38,11 +38,11 @@ public class QueueGenericSearchEnumerateVerticesTest
                 return;
 
             int sourceCount = graph.MinVertexCount / 3;
-            IEnumerable<int> sources = Enumerable.Range(0, sourceCount);
+            var sources = Enumerable.Range(0, sourceCount);
 
             // ReSharper disable PossibleMultipleEnumeration
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, sources, vertexCount, bfsHandler);
-            IEnumerable<int> vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
+            var vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, sources, frontier, vertexCount);
             // ReSharper restore PossibleMultipleEnumeration
             enumerableSteps.AddRange(vertices);
@@ -51,7 +51,7 @@ public class QueueGenericSearchEnumerateVerticesTest
         {
             int source = graph.MinVertexCount >> 1;
             EagerBfs<Endpoints<int>, EdgeEnumerator>.Traverse(graph, source, vertexCount, bfsHandler);
-            IEnumerable<int> vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
+            var vertices = EnumerableGenericSearch<Endpoints<int>, EdgeEnumerator>.EnumerateVertices(
                 graph, source, frontier, vertexCount);
             enumerableSteps.AddRange(vertices);
         }

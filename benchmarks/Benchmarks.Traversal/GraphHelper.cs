@@ -14,7 +14,7 @@ internal sealed class GraphHelper
     {
         _graphCache ??= new();
 
-        if (_graphCache.TryGetValue(vertexCount, out Int32IncidenceGraph result))
+        if (_graphCache.TryGetValue(vertexCount, out var result))
             return result;
 
         result = CreateIncidenceGraph(vertexCount);

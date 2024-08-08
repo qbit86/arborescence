@@ -20,7 +20,7 @@ public sealed class DfsEnumerateEdgesTest
 
         using Rist<int> eagerSteps = new(vertexCount);
         using Rist<int> enumerableSteps = new(vertexCount);
-        DfsHandler<int, int, Graph> dfsHandler = CreateDfsHandler(eagerSteps);
+        var dfsHandler = CreateDfsHandler(eagerSteps);
 
         // Act
 
@@ -33,14 +33,14 @@ public sealed class DfsEnumerateEdgesTest
             IndexEnumerator sources = new(sourceCount);
 
             EagerDfs<int, EdgeEnumerator>.Traverse(graph, sources, vertexCount, dfsHandler);
-            IEnumerable<int> edges = EnumerableDfs<int, EdgeEnumerator>.EnumerateEdges(graph, sources, vertexCount);
+            var edges = EnumerableDfs<int, EdgeEnumerator>.EnumerateEdges(graph, sources, vertexCount);
             enumerableSteps.AddRange(edges);
         }
         else
         {
             int source = graph.VertexCount >> 1;
             EagerDfs<int, EdgeEnumerator>.Traverse(graph, source, vertexCount, dfsHandler);
-            IEnumerable<int> edges = EnumerableDfs<int, EdgeEnumerator>.EnumerateEdges(graph, source, vertexCount);
+            var edges = EnumerableDfs<int, EdgeEnumerator>.EnumerateEdges(graph, source, vertexCount);
             enumerableSteps.AddRange(edges);
         }
 

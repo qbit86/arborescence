@@ -2,7 +2,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models.Specialized;
 using Traversal.Incidence;
@@ -52,7 +51,7 @@ public abstract class BfsBenchmark
     public int EnumerableBfsEdges()
     {
         Array.Clear(_exploredSet, 0, _exploredSet.Length);
-        using IEnumerator<int> steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateEdges(
+        using var steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateEdges(
             Graph, 0, new Int32Set(_exploredSet)).GetEnumerator();
         int count = 0;
         while (steps.MoveNext())
@@ -65,7 +64,7 @@ public abstract class BfsBenchmark
     public int EnumerableBfsVertices()
     {
         Array.Clear(_exploredSet, 0, _exploredSet.Length);
-        using IEnumerator<int> steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateVertices(
+        using var steps = EnumerableBfs<int, int, EdgeEnumerator>.EnumerateVertices(
             Graph, 0, new Int32Set(_exploredSet)).GetEnumerator();
         int count = 0;
         while (steps.MoveNext())

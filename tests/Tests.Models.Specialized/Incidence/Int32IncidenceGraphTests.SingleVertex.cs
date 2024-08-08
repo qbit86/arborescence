@@ -1,8 +1,6 @@
 namespace Arborescence.Models.Specialized;
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Workbench;
 using Xunit;
@@ -13,12 +11,12 @@ public sealed partial class Int32IncidenceGraphTests
     internal void EnumerateOutNeighbors_ExistingVertex_ReturnsKnownVertices()
     {
         // Arrange
-        using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        IEnumerable<Endpoints<int>> rawEdges = Base32EdgeListParser.ParseEdges(textReader);
+        using var textReader = IndexedGraphs.GetTextReader("09");
+        var rawEdges = Base32EdgeListParser.ParseEdges(textReader);
 #if NET5_0_OR_GREATER
         var edges = rawEdges.ToList();
 #else
-        Endpoints<int>[] edges = rawEdges.ToArray();
+        var edges = rawEdges.ToArray();
 #endif
         int vertex = Base32.Parse("p");
         var expectedNeighbors = new HashSet<int>
@@ -26,8 +24,7 @@ public sealed partial class Int32IncidenceGraphTests
 
         // Act
         var graph = Int32IncidenceGraph.FromEdges(edges);
-        AdjacencyEnumerator<int, int, Int32IncidenceGraph, ArraySegment<int>.Enumerator> neighborEnumerator =
-            graph.EnumerateOutNeighbors(vertex);
+        var neighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         HashSet<int> actualNeighbors = new(4);
         while (neighborEnumerator.MoveNext())
             actualNeighbors.Add(neighborEnumerator.Current);
@@ -40,19 +37,19 @@ public sealed partial class Int32IncidenceGraphTests
     internal void EnumerateOutEdges_ExistingVertex_ReturnsKnownEdges()
     {
         // Arrange
-        using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        IEnumerable<Endpoints<int>> rawEdges = Base32EdgeListParser.ParseEdges(textReader);
+        using var textReader = IndexedGraphs.GetTextReader("09");
+        var rawEdges = Base32EdgeListParser.ParseEdges(textReader);
 #if NET5_0_OR_GREATER
         var edges = rawEdges.ToList();
 #else
-        Endpoints<int>[] edges = rawEdges.ToArray();
+        var edges = rawEdges.ToArray();
 #endif
         int vertex = Base32.Parse("p");
         var expectedEdges = new HashSet<int> { 6, 8, 23, 25 };
 
         // Act
         var graph = Int32IncidenceGraph.FromEdges(edges);
-        ArraySegment<int>.Enumerator edgeEnumerator = graph.EnumerateOutEdges(vertex);
+        var edgeEnumerator = graph.EnumerateOutEdges(vertex);
         HashSet<int> actualEdges = new(4);
         while (edgeEnumerator.MoveNext())
             actualEdges.Add(edgeEnumerator.Current);

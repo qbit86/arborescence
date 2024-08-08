@@ -22,10 +22,10 @@ public sealed class RecursiveDfsTest
             return;
 
         using Rist<(string, int)> eagerSteps = new(vertexCount);
-        DfsHandler<int, int, Graph> eagerHandler = CreateDfsHandler(eagerSteps);
+        var eagerHandler = CreateDfsHandler(eagerSteps);
 
         using Rist<(string, int)> recursiveSteps = new(vertexCount);
-        DfsHandler<int, int, Graph> recursiveHandler = CreateDfsHandler(recursiveSteps);
+        var recursiveHandler = CreateDfsHandler(recursiveSteps);
 
         // Act
 
@@ -56,8 +56,8 @@ public sealed class RecursiveDfsTest
         int count = eagerStepCount;
         for (int i = 0; i < count; ++i)
         {
-            (string, int) eagerStep = eagerSteps[i];
-            (string, int) recursiveStep = recursiveSteps[i];
+            var eagerStep = eagerSteps[i];
+            var recursiveStep = recursiveSteps[i];
 
             if (eagerStep == recursiveStep)
                 continue;

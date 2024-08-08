@@ -23,7 +23,7 @@ public sealed class ListAdjacencyGraph_Tests
         foreach (string neighbor in expectedNeighbors)
             graph.AddEdge(vertex, neighbor);
 
-        List<string>.Enumerator actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
+        var actualNeighborEnumerator = graph.EnumerateOutNeighbors(vertex);
         List<string> actualNeighbors = new(expectedNeighbors.Length);
         while (actualNeighborEnumerator.MoveNext())
             actualNeighbors.Add(actualNeighborEnumerator.Current);

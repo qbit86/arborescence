@@ -2,7 +2,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Models.Specialized;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
@@ -40,7 +39,7 @@ public abstract class CompactSetBenchmark
     public int Fast()
     {
         Array.Clear(_fastExploredSet, 0, _fastExploredSet.Length);
-        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new Int32Set(_fastExploredSet));
+        var steps = EnumerableDfs.EnumerateEdges(Graph, 0, new Int32Set(_fastExploredSet));
         int count = 0;
         foreach (int _ in steps)
             ++count;
@@ -52,7 +51,7 @@ public abstract class CompactSetBenchmark
     public int Compact()
     {
         Array.Clear(_compactExploredSet, 0, _compactExploredSet.Length);
-        IEnumerable<int> steps = EnumerableDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
+        var steps = EnumerableDfs.EnumerateEdges(Graph, 0, new CompactSet(_compactExploredSet));
         int count = 0;
         foreach (int _ in steps)
             ++count;
