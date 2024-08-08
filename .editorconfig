@@ -134,6 +134,7 @@ csharp_style_var_for_built_in_types = false:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
 csharp_using_directive_placement = inside_namespace:suggestion
 resharper_align_multiline_binary_expressions_chain = false
+resharper_arrange_object_creation_when_type_not_evident_highlighting = none # ArrangeObjectCreationWhenTypeNotEvident
 resharper_autodetect_indent_settings = false
 resharper_braces_for_for = required_for_multiline
 resharper_braces_for_foreach = required_for_multiline
