@@ -4,9 +4,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using Models;
 using Models.Specialized;
 using Workbench;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<
@@ -18,15 +16,15 @@ internal static class Program
 
     private static void Main()
     {
-        using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        Endpoints<int>[] edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
+        using var textReader = IndexedGraphs.GetTextReader("09");
+        var edges = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
         var graph = Int32AdjacencyGraph.FromEdges(edges);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
         Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 
-        TextWriter w = Console.Out;
+        var w = Console.Out;
 
         w.WriteLine($"digraph \"{nameof(EnumerableDfs)}\" {{");
         w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -45,8 +43,8 @@ internal static class Program
         Array.Clear(setBackingStore, 0, setBackingStore.Length);
         Int32Set enumerableExploredSet = new(setBackingStore);
         HashSet<Endpoints<int>> treeEdges = new(graph.EdgeCount);
-        IEnumerable<Endpoints<int>> steps = EnumerableDfs.EnumerateEdges(graph, sources, enumerableExploredSet);
-        foreach (Endpoints<int> e in steps)
+        var steps = EnumerableDfs.EnumerateEdges(graph, sources, enumerableExploredSet);
+        foreach (var e in steps)
         {
             w.WriteLine($"  {E(graph, e)} [style=bold]");
             treeEdges.Add(e);
@@ -66,10 +64,10 @@ internal static class Program
         w.WriteLine();
         for (int v = 0; v < graph.VertexCount; ++v)
         {
-            IncidenceEnumerator<int, ArraySegment<int>.Enumerator> outEdges = graph.EnumerateOutEdges(v);
+            var outEdges = graph.EnumerateOutEdges(v);
             while (outEdges.MoveNext())
             {
-                Endpoints<int> e = outEdges.Current;
+                var e = outEdges.Current;
                 if (treeEdges.Contains(e))
                     continue;
 

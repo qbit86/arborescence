@@ -11,9 +11,9 @@ internal static partial class Program
     {
         AdjacencyGraph adjacencyGraph = new();
         Node source = new(3);
-        IEnumerable<Node> nodes =
-            EnumerableBfs<Node>.EnumerateVertices(adjacencyGraph, source);
-        foreach (Node node in nodes)
+        var nodes = EnumerableBfs<Node>
+            .EnumerateVertices(adjacencyGraph, source);
+        foreach (var node in nodes)
             Console.WriteLine(node);
     }
 }

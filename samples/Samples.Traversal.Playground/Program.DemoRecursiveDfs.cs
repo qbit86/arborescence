@@ -14,13 +14,13 @@ internal static partial class Program
     {
         const int vertexCount = 1000;
         const double densityPower = 1.5;
-        Int32IncidenceGraph graph = GenerateIncidenceGraph(vertexCount, densityPower);
+        var graph = GenerateIncidenceGraph(vertexCount, densityPower);
 
         byte[] backingStore = ArrayPool<byte>.Shared.Rent(vertexCount);
         Array.Clear(backingStore, 0, backingStore.Length);
         Int32ColorDictionary colorByVertex = new(backingStore);
         List<int> steps = new();
-        DfsHandler<int, int, Int32IncidenceGraph> dfsHandler = CreateDfsHandler(steps);
+        var dfsHandler = CreateDfsHandler(steps);
 
         RecursiveDfs<int, int, EdgeEnumerator>.Traverse(graph, 0, colorByVertex, dfsHandler);
         Console.WriteLine(steps.Count);

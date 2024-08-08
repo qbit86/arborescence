@@ -11,7 +11,7 @@ using EdgeEnumerator = Models.IncidenceEnumerator<int, System.ArraySegment<int>.
 
 public sealed class BfsEnumerateEdgesTest
 {
-    private static void EnumerateEdgesCore(Models.Specialized.Int32AdjacencyGraph graph, bool multipleSource)
+    private static void EnumerateEdgesCore(Graph graph, bool multipleSource)
     {
         // Arrange
 

@@ -17,15 +17,15 @@ internal static class Program
 
     private static void Main()
     {
-        using TextReader textReader = IndexedGraphs.GetTextReader("09");
-        Endpoints<int>[] endpointsByEdge = Base32EdgeListParser.ParseEdges(textReader).ToArray();
+        using var textReader = IndexedGraphs.GetTextReader("09");
+        var endpointsByEdge = Base32EdgeListParser.ParseEdges(textReader).ToArray();
         textReader.Close();
 
         var graph = Int32IncidenceGraph.FromEdges(endpointsByEdge);
         Console.Write($"{nameof(graph.VertexCount)}: {graph.VertexCount.ToString(P)}");
         Console.WriteLine($", {nameof(graph.EdgeCount)}: {graph.EdgeCount.ToString(P)}");
 
-        TextWriter w = Console.Out;
+        var w = Console.Out;
 
         w.WriteLine($"digraph \"{nameof(EagerBfs<int, int, ArraySegment<int>.Enumerator>)}\" {{");
         w.WriteLine("  node [shape=circle style=dashed fontname=\"Times-Italic\"]");
@@ -44,7 +44,7 @@ internal static class Program
         Array.Clear(backingStore, 0, backingStore.Length);
         Int32ColorDictionary colorByVertex = new(backingStore);
         HashSet<int> examinedEdges = new(graph.EdgeCount);
-        BfsHandler<int, int, Int32IncidenceGraph> handler = CreateHandler(w, examinedEdges);
+        var handler = CreateHandler(w, examinedEdges);
         EagerBfs<int, int, ArraySegment<int>.Enumerator>.Traverse(graph, sources, colorByVertex, handler);
         ArrayPool<byte>.Shared.Return(backingStore);
 
@@ -57,7 +57,7 @@ internal static class Program
         w.WriteLine();
         for (int v = 0; v < graph.VertexCount; ++v)
         {
-            ArraySegment<int>.Enumerator outEdges = graph.EnumerateOutEdges(v);
+            var outEdges = graph.EnumerateOutEdges(v);
             while (outEdges.MoveNext())
             {
                 int e = outEdges.Current;

@@ -1,5 +1,6 @@
 namespace Arborescence.Traversal.Adjacency;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Models.Specialized;
@@ -38,7 +39,7 @@ public sealed class EnumerableBfs_Tests
 
         // Act
         var arrows =
-            EnumerableBfs<int, System.ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, V("d"));
+            EnumerableBfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, V("d"));
         var actual = arrows.ToList();
 
         // Assert

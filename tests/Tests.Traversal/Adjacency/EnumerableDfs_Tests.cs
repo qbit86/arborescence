@@ -1,5 +1,6 @@
 namespace Arborescence.Traversal.Adjacency;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Models.Specialized;
@@ -43,7 +44,7 @@ public sealed class EnumerableDfs_Tests
         // Act
         List<int> sources = new(3) { V("a"), V("d"), V("b") };
         var arrows =
-            EnumerableDfs<int, System.ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, sources);
+            EnumerableDfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(adjacencyGraph, sources);
         var actual = arrows.ToList();
 
         // Assert

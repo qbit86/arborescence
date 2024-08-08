@@ -1,7 +1,6 @@
 ﻿namespace Arborescence;
 
 using System;
-using System.Collections.Generic;
 using Models.Specialized;
 using Traversal.Adjacency;
 
@@ -21,10 +20,9 @@ internal static class Program
         };
         var graph = Int32AdjacencyGraph.FromEdges(edges);
 
-        IEnumerable<Endpoints<int>> treeEdges =
-            EnumerableBfs<int, ArraySegment<int>.Enumerator>.EnumerateEdges(
-                graph, source: 3);
-        foreach (Endpoints<int> edge in treeEdges)
+        var treeEdges = EnumerableBfs<int, ArraySegment<int>.Enumerator>
+            .EnumerateEdges(graph, 3);
+        foreach (var edge in treeEdges)
             Console.WriteLine(edge);
     }
 }

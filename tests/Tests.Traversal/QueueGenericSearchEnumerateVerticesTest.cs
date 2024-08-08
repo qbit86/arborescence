@@ -9,8 +9,7 @@ using Specialized.Incidence;
 using Xunit;
 using Graph = Models.ListAdjacencyGraph<
     int,
-    Int32Dictionary<
-        System.Collections.Generic.List<int>,
+    Int32Dictionary<System.Collections.Generic.List<int>,
         System.Collections.Generic.List<System.Collections.Generic.List<int>>>>;
 using EdgeEnumerator = Models.IncidenceEnumerator<int, System.Collections.Generic.List<int>.Enumerator>;
 

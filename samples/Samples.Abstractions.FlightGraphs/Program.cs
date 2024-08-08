@@ -1,10 +1,8 @@
 ﻿using System;
 using Arborescence;
-using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
-using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
 var adjacencyGraph = FlightAdjacencyGraph.Create();
-NeighborEnumerator istanbulNeighborEnumerator =
+var istanbulNeighborEnumerator =
     adjacencyGraph.EnumerateOutNeighbors("IST");
 while (istanbulNeighborEnumerator.MoveNext())
     Console.WriteLine(istanbulNeighborEnumerator.Current);
@@ -12,7 +10,7 @@ while (istanbulNeighborEnumerator.MoveNext())
 Console.WriteLine();
 
 var incidenceGraph = FlightIncidenceGraph.Create();
-EdgeEnumerator istanbulFlightEnumerator =
+var istanbulFlightEnumerator =
     incidenceGraph.EnumerateOutEdges("IST");
 while (istanbulFlightEnumerator.MoveNext())
     Console.WriteLine(istanbulFlightEnumerator.Current);

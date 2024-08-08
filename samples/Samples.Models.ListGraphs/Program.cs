@@ -26,8 +26,7 @@ internal static class Program
         graph.AddEdge("IST", "TPE");
         graph.AddEdge("TPE", "TPE");
 
-        IncidenceEnumerator<string, List<string>.Enumerator> flightsFromIstanbul =
-            graph.EnumerateOutEdges("IST");
+        var flightsFromIstanbul = graph.EnumerateOutEdges("IST");
         while (flightsFromIstanbul.MoveNext())
             Console.WriteLine(flightsFromIstanbul.Current);
     }
@@ -42,8 +41,7 @@ internal static class Program
         _ = graph.TryAddEdge(24, "IST", "TPE");
         _ = graph.TryAddEdge(5288, "TPE", "TPE");
 
-        List<int>.Enumerator flightsFromIstanbul =
-            graph.EnumerateOutEdges("IST");
+        var flightsFromIstanbul = graph.EnumerateOutEdges("IST");
         while (flightsFromIstanbul.MoveNext())
             Console.WriteLine(flightsFromIstanbul.Current);
     }
