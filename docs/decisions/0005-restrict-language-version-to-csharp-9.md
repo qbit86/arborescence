@@ -13,7 +13,7 @@ Which language version should we prefer? Should we restrict the version at all?
 * Target-typed new expressions and improved pattern matching
 * Binary compatible with Unity 2021.3
 * Source compatible with Unity 2021.3
-* Source compatible with online coding platforms: CodinGame[^CG], LeetCode[^LC], HackerRank[^HR]
+* Source compatible with online coding platforms: CodinGame[^CG], LeetCode[^LC], HackerRank[^HR], Codeforces[^CF]
 
 ## Considered Options
 
@@ -70,6 +70,8 @@ This is specified in one of the _Directory.Build.props_ files:
     https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-10
 [^C11]: What's new in C# 11  
     https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-11
+[^CF]: Codeforces Command Lines  
+    https://codeforces.com/blog/entry/121114
 [^CG]: CodinGame - Languages Versions  
     https://codingame.com/playgrounds/40701/help-center/languages-versions
 [^HR]: HackerRank - Execution Environment and Samples  
