@@ -54,7 +54,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public TValue this[int key] => TryGetValueCore(key, out TValue? value)
+        public TValue this[int key] => TryGetValueCore(key, out var value)
             ? value
             : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
     }

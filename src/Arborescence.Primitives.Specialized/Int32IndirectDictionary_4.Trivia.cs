@@ -33,7 +33,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             return self._indexByKey is null || self._valueByIndex is null
                 ? Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -43,10 +43,10 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumeratorIterator()
         {
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
-            foreach ((TKey key, int index) in self._indexByKey)
+            var self = this;
+            foreach ((var key, int index) in self._indexByKey)
             {
-                if (self._valueByIndex.TryGetValue(index, out TValue? value))
+                if (self._valueByIndex.TryGetValue(index, out var value))
                     yield return new(key, value);
             }
         }
@@ -59,7 +59,7 @@ namespace Arborescence
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<TKey, TValue> item) =>
-            TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
+            TryGetValueCore(item.Key, out var value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
         /// <inheritdoc/>
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
@@ -73,15 +73,15 @@ namespace Arborescence
             if (unchecked((uint)arrayIndex > (uint)array.Length))
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(arrayIndex));
 
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             if (self._indexByKey is not { } indexByKey || self._valueByIndex is not { } valueByIndex)
                 return;
-            Span<KeyValuePair<TKey, TValue>> destination = array.AsSpan(arrayIndex);
+            var destination = array.AsSpan(arrayIndex);
             int destinationLength = destination.Length;
             int destinationIndex = 0;
-            foreach (TKey key in indexByKey.Keys)
+            foreach (var key in indexByKey.Keys)
             {
-                if (!indexByKey.TryGetValue(key, out int index) || !valueByIndex.TryGetValue(index, out TValue? value))
+                if (!indexByKey.TryGetValue(key, out int index) || !valueByIndex.TryGetValue(index, out var value))
                     continue;
                 if (destinationIndex < destinationLength)
                     destination[destinationIndex++] = new(key, value);
@@ -93,7 +93,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             return self._indexByKey.TryGetValue(item.Key, out int index) &&
                 self._valueByIndex.Remove(new KeyValuePair<int, TValue>(index, item.Value));
         }
@@ -101,7 +101,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(TKey key)
         {
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             return self._indexByKey.TryGetValue(key, out int index) && self._valueByIndex.Remove(index);
         }
 
@@ -113,7 +113,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Equals(Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> other)
         {
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             return EqualityComparer<TKeyToIndexMap>.Default.Equals(self._indexByKey, other._indexByKey) &&
                 EqualityComparer<TIndexToValueMap>.Default.Equals(self._valueByIndex, other._valueByIndex);
         }
@@ -125,7 +125,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            Int32IndirectDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             return HashCode.Combine(
                 EqualityComparer<TKeyToIndexMap>.Default.GetHashCode(self._indexByKey),
                 EqualityComparer<TIndexToValueMap>.Default.GetHashCode(self._valueByIndex));

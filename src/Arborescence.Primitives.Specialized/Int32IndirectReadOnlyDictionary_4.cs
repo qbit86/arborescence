@@ -36,7 +36,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool ContainsKey(TKey key)
         {
-            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             if (self._indexByKey is not { } indexByKey || self._valueByIndex is not { } valueByIndex)
                 return false;
             return indexByKey.TryGetValue(key, out int index) && valueByIndex.ContainsKey(index);
@@ -61,7 +61,7 @@ namespace Arborescence
 
         private bool TryGetValueCore(TKey key, [MaybeNullWhen(false)] out TValue value)
         {
-            Int32IndirectReadOnlyDictionary<TKey, TValue, TKeyToIndexMap, TIndexToValueMap> self = this;
+            var self = this;
             if (self._indexByKey is not { } indexByKey || self._valueByIndex is not { } valueByIndex)
                 return None(out value);
             return indexByKey.TryGetValue(key, out int index)
@@ -76,7 +76,7 @@ namespace Arborescence
             {
                 if (key is null)
                     return ThrowHelper.ThrowArgumentNullException<TValue>(nameof(key));
-                return TryGetValueCore(key, out TValue? value)
+                return TryGetValueCore(key, out var value)
                     ? value
                     : ThrowHelper.ThrowKeyNotFoundException<TValue>();
             }

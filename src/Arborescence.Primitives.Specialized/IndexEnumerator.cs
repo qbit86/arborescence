@@ -27,7 +27,7 @@ namespace Arborescence
         /// <returns>An enumerator for the range of elements.</returns>
         public readonly IndexEnumerator GetEnumerator()
         {
-            IndexEnumerator ator = this;
+            var ator = this;
             ator._current = -1;
             return ator;
         }

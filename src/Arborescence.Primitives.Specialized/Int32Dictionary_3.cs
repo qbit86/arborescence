@@ -45,7 +45,7 @@ namespace Arborescence
         /// <returns>The number of elements in the dictionary.</returns>
         public int GetCount()
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return 0;
             int count = values.Count;
@@ -62,8 +62,8 @@ namespace Arborescence
         /// <inheritdoc/>
         public void Add(int key, TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
-            TValueList values = self._values;
+            var self = this;
+            var values = self._values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
@@ -78,7 +78,7 @@ namespace Arborescence
         /// <inheritdoc cref="IReadOnlyDictionary{TKey, TValue}.ContainsKey"/>
         public bool ContainsKey(int key)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return false;
             return unchecked((uint)key < (uint)values.Count) && !self.IsAbsence(values[key]);
@@ -102,7 +102,7 @@ namespace Arborescence
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return None(out value);
             if (unchecked((uint)key >= (uint)values.Count))
@@ -114,8 +114,8 @@ namespace Arborescence
 
         private void Put(int key, TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
-            TValueList values = self._values;
+            var self = this;
+            var values = self._values;
             int count = values.Count;
             if (key < 0)
             {
@@ -138,7 +138,7 @@ namespace Arborescence
         /// <inheritdoc cref="Dictionary{TKey, TValue}.this"/>
         public TValue this[int key]
         {
-            get => TryGetValueCore(key, out TValue? value)
+            get => TryGetValueCore(key, out var value)
                 ? value
                 : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
             set => Put(key, value);
@@ -146,7 +146,7 @@ namespace Arborescence
 
         private bool IsAbsence(TValue value)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             return self._absenceComparer.Equals(value, self._absenceMarker!);
         }
     }

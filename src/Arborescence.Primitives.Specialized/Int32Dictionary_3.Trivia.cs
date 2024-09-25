@@ -20,7 +20,7 @@ namespace Arborescence
         {
             get
             {
-                Int32Dictionary<TValue, TValueList, TComparer> self = this;
+                var self = this;
                 if (self._values is not { Count: > 0 } values)
                     return Enumerable.Empty<int>();
                 return values.Select((value, index) => new KeyValuePair<int, TValue>(index, value))
@@ -32,7 +32,7 @@ namespace Arborescence
         {
             get
             {
-                Int32Dictionary<TValue, TValueList, TComparer> self = this;
+                var self = this;
                 return self._values is not { Count: > 0 } values
                     ? Enumerable.Empty<TValue>()
                     : values.Where(value => !self.IsAbsence(value));
@@ -49,7 +49,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -59,12 +59,12 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
-            TValueList values = self._values;
+            var self = this;
+            var values = self._values;
             int count = values.Count;
             for (int key = 0; key < count; ++key)
             {
-                TValue value = values[key];
+                var value = values[key];
                 if (!self.IsAbsence(value))
                     yield return new(key, values[key]);
             }
@@ -78,7 +78,7 @@ namespace Arborescence
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) =>
-            TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
+            TryGetValueCore(item.Key, out var value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
         /// <inheritdoc/>
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
@@ -92,15 +92,15 @@ namespace Arborescence
             if (unchecked((uint)arrayIndex > (uint)array.Length))
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(arrayIndex));
 
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return;
-            Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
+            var destination = array.AsSpan(arrayIndex);
             int sourceCount = values.Count;
             int destinationLength = destination.Length;
             for (int sourceIndex = 0, destinationIndex = 0; sourceIndex < sourceCount; ++sourceIndex)
             {
-                TValue value = values[sourceIndex];
+                var value = values[sourceIndex];
                 if (IsAbsence(value))
                     continue;
                 if (destinationIndex < destinationLength)
@@ -113,14 +113,14 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(KeyValuePair<int, TValue> item)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             if (_values is not { } values)
                 return false;
             int key = item.Key;
             int count = values.Count;
             if (unchecked((uint)key >= (uint)count))
                 return false;
-            TValue existingValue = values[key];
+            var existingValue = values[key];
             if (self._absenceComparer.Equals(existingValue, self._absenceMarker!) ||
                 !EqualityComparer<TValue>.Default.Equals(existingValue, item.Value))
                 return false;
@@ -131,7 +131,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Remove(int key)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return false;
             int count = values.Count;
@@ -149,7 +149,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Equals(Int32Dictionary<TValue, TValueList, TComparer> other)
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
                 EqualityComparer<TComparer>.Default.Equals(self._absenceComparer, other._absenceComparer) &&
                 EqualityComparer<TValue>.Default.Equals(self._absenceMarker!, other._absenceMarker!);
@@ -162,7 +162,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            Int32Dictionary<TValue, TValueList, TComparer> self = this;
+            var self = this;
             return HashCode.Combine(EqualityComparer<TValueList>.Default.GetHashCode(self._values),
                 EqualityComparer<TComparer>.Default.GetHashCode(self._absenceComparer),
                 EqualityComparer<TValue>.Default.GetHashCode(self._absenceMarker!));

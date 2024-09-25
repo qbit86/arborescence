@@ -27,7 +27,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public void Add(int key, TValue value)
         {
-            TValueList values = _values;
+            var values = _values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
@@ -67,7 +67,7 @@ namespace Arborescence
 
         private void Put(int key, TValue value)
         {
-            TValueList values = _values;
+            var values = _values;
             int count = values.Count;
             if (unchecked((uint)key > (uint)count))
                 ArgumentOutOfRangeExceptionHelpers.Throw(nameof(key));
@@ -80,7 +80,7 @@ namespace Arborescence
         /// <inheritdoc cref="Dictionary{TKey, TValue}.this"/>
         public TValue this[int key]
         {
-            get => TryGetValueCore(key, out TValue? value)
+            get => TryGetValueCore(key, out var value)
                 ? value
                 : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
             set => Put(key, value);

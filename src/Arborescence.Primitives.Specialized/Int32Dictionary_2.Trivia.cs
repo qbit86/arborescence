@@ -54,7 +54,7 @@ namespace Arborescence
 
         /// <inheritdoc/>
         public bool Contains(KeyValuePair<int, TValue> item) =>
-            TryGetValueCore(item.Key, out TValue? value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
+            TryGetValueCore(item.Key, out var value) && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 
         /// <inheritdoc/>
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
@@ -70,7 +70,7 @@ namespace Arborescence
 
             if (_values is not { } values)
                 return;
-            Span<KeyValuePair<int, TValue>> destination = array.AsSpan(arrayIndex);
+            var destination = array.AsSpan(arrayIndex);
             int count = values.Count;
             if (destination.Length < count)
                 ThrowHelper.ThrowDestinationArrayTooSmallException();

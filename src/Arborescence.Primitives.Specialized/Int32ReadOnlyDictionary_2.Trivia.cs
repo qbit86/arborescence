@@ -26,7 +26,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList> self = this;
+            var self = this;
             return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -36,7 +36,7 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            TValueList values = _values;
+            var values = _values;
             int count = values.Count;
             for (int key = 0; key < count; ++key)
                 yield return new(key, values[key]);

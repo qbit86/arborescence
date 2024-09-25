@@ -33,7 +33,7 @@ namespace Arborescence
         /// <returns>An enumerator for the range of elements.</returns>
         public readonly RangeEnumerator GetEnumerator()
         {
-            RangeEnumerator ator = this;
+            var ator = this;
             ator._current = _start - 1;
             return ator;
         }

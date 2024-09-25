@@ -35,7 +35,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool ContainsKey(int key)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return false;
             return unchecked((uint)key < (uint)values.Count) && !self._absenceEquatable.Equals(values[key]);
@@ -59,7 +59,7 @@ namespace Arborescence
 
         private bool TryGetValueCore(int key, [MaybeNullWhen(false)] out TValue value)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
+            var self = this;
             if (self._values is not { } values)
                 return None(out value);
             if (unchecked((uint)key >= (uint)values.Count))
@@ -70,7 +70,7 @@ namespace Arborescence
         }
 
         /// <inheritdoc/>
-        public TValue this[int key] => TryGetValueCore(key, out TValue? value)
+        public TValue this[int key] => TryGetValueCore(key, out var value)
             ? value
             : ThrowHelper.ThrowKeyNotFoundException<TValue>(key);
     }

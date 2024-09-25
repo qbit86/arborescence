@@ -27,7 +27,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
+            var self = this;
             return self._values is not { Count: > 0 }
                 ? Enumerable.Empty<KeyValuePair<int, TValue>>().GetEnumerator()
                 : self.GetEnumeratorIterator();
@@ -37,11 +37,11 @@ namespace Arborescence
 
         private IEnumerator<KeyValuePair<int, TValue>> GetEnumeratorIterator()
         {
-            TValueList values = _values;
+            var values = _values;
             int count = values.Count;
             for (int key = 0; key < count; ++key)
             {
-                TValue value = values[key];
+                var value = values[key];
                 if (!_absenceEquatable.Equals(value))
                     yield return new(key, value);
             }
@@ -50,7 +50,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public bool Equals(Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> other)
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
+            var self = this;
             return EqualityComparer<TValueList>.Default.Equals(self._values, other._values) &&
                 EqualityComparer<TEquatable>.Default.Equals(self._absenceEquatable, other._absenceEquatable);
         }
@@ -62,7 +62,7 @@ namespace Arborescence
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            Int32ReadOnlyDictionary<TValue, TValueList, TEquatable> self = this;
+            var self = this;
             return HashCode.Combine(
                 EqualityComparer<TValueList>.Default.GetHashCode(self._values),
                 EqualityComparer<TEquatable>.Default.GetHashCode(self._absenceEquatable));
