@@ -159,7 +159,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableGenericSearch<int, TNeighborEnumerator>
+                    var vertices = EnumerableGenericSearch<int, TNeighborEnumerator>
                         .EnumerateVerticesIterator(graph, source, frontier, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -201,7 +201,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableGenericSearch<int, TNeighborEnumerator>
+                    var vertices = EnumerableGenericSearch<int, TNeighborEnumerator>
                         .EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -239,9 +239,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<Endpoints<int>> edges = EnumerableGenericSearch<int, TNeighborEnumerator>
+                    var edges = EnumerableGenericSearch<int, TNeighborEnumerator>
                         .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-                    foreach (Endpoints<int> edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally
@@ -281,9 +281,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<Endpoints<int>> edges = EnumerableGenericSearch<int, TNeighborEnumerator>
+                    var edges = EnumerableGenericSearch<int, TNeighborEnumerator>
                         .EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
-                    foreach (Endpoints<int> edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally

@@ -120,7 +120,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableBfs<int, TNeighborEnumerator>
+                    var vertices = EnumerableBfs<int, TNeighborEnumerator>
                         .EnumerateVerticesIterator(graph, source, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -158,7 +158,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableBfs<int, TNeighborEnumerator>
+                    var vertices = EnumerableBfs<int, TNeighborEnumerator>
                         .EnumerateVerticesIterator(graph, sources, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -192,9 +192,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<Endpoints<int>> edges = EnumerableBfs<int, TNeighborEnumerator>
+                    var edges = EnumerableBfs<int, TNeighborEnumerator>
                         .EnumerateEdgesIterator(graph, source, exploredSet);
-                    foreach (Endpoints<int> edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally
@@ -230,9 +230,9 @@ namespace Arborescence.Traversal.Specialized.Adjacency
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<Endpoints<int>> edges = EnumerableBfs<int, TNeighborEnumerator>
+                    var edges = EnumerableBfs<int, TNeighborEnumerator>
                         .EnumerateEdgesIterator(graph, sources, exploredSet);
-                    foreach (Endpoints<int> edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally

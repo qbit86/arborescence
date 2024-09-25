@@ -160,7 +160,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
+                    var vertices = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
                         .EnumerateVerticesIterator(graph, source, frontier, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -202,7 +202,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
+                    var vertices = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
                         .EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -240,9 +240,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<TEdge> edges = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
+                    var edges = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
                         .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally
@@ -283,9 +283,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<TEdge> edges = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
+                    var edges = EnumerableGenericSearch<int, TEdge, TEdgeEnumerator>
                         .EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally

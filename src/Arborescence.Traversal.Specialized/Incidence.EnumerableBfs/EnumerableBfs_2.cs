@@ -119,7 +119,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateVerticesIterator(
+                    var vertices = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateVerticesIterator(
                         graph, source, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -157,7 +157,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<int> vertices = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateVerticesIterator(
+                    var vertices = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateVerticesIterator(
                         graph, sources, exploredSet);
                     foreach (int vertex in vertices)
                         yield return vertex;
@@ -190,9 +190,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<TEdge> edges = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateEdgesIterator(
+                    var edges = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateEdgesIterator(
                         graph, source, exploredSet);
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally
@@ -228,9 +228,9 @@ namespace Arborescence.Traversal.Specialized.Incidence
                 try
                 {
                     Int32Set exploredSet = new(arrayFromPool);
-                    IEnumerable<TEdge> edges = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateEdgesIterator(
+                    var edges = EnumerableBfs<int, TEdge, TEdgeEnumerator>.EnumerateEdgesIterator(
                         graph, sources, exploredSet);
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
                 }
                 finally
