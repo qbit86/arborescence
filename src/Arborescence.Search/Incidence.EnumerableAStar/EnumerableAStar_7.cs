@@ -149,9 +149,9 @@ namespace Arborescence.Search
             {
                 colorByVertex[source] = Color.Gray;
                 queue.Add(source);
-                while (queue.TryTake(out TVertex? u))
+                while (queue.TryTake(out var u))
                 {
-                    TEdgeEnumerator outEdges = graph.EnumerateOutEdges(u);
+                    var outEdges = graph.EnumerateOutEdges(u);
                     try
                     {
                         while (outEdges.MoveNext())
@@ -159,25 +159,25 @@ namespace Arborescence.Search
                             if (!(outEdges.Current is { } e))
                                 continue;
 
-                            if (!graph.TryGetHead(e, out TVertex? v))
+                            if (!graph.TryGetHead(e, out var v))
                                 continue;
 
                             // examine_edge
-                            if (!weightByEdge.TryGetValue(e, out TCost? weight))
+                            if (!weightByEdge.TryGetValue(e, out var weight))
                                 continue;
 
                             if (_costComparer.Compare(weight, _costMonoid.Identity) < 0)
-                                AStarHelper.ThrowInvalidOperationException_NegativeWeight();
+                                AStarHelpers.ThrowInvalidOperationException_NegativeWeight();
 
-                            bool decreased = Relax(u, v, weight, distanceByVertex, out TCost? relaxedHeadDistance);
+                            bool decreased = Relax(u, v, weight, distanceByVertex, out var relaxedHeadDistance);
                             if (decreased)
                             {
-                                TCost vCost = _costMonoid.Combine(relaxedHeadDistance!, heuristic(v));
+                                var vCost = _costMonoid.Combine(relaxedHeadDistance!, heuristic(v));
                                 costByVertex.Put(v, vCost);
                                 yield return e;
                             }
 
-                            Color vColor = colorByVertex.GetValueOrDefault(v, Color.None);
+                            var vColor = colorByVertex.GetValueOrDefault(v, Color.None);
                             switch (vColor)
                             {
                                 case Color.None:
@@ -228,14 +228,14 @@ namespace Arborescence.Search
             [MaybeNullWhen(false)] out TCost relaxedHeadDistance)
             where TDistanceMap : IDictionary<TVertex, TCost>
         {
-            if (!distanceByVertex.TryGetValue(tail, out TCost? tailDistance))
+            if (!distanceByVertex.TryGetValue(tail, out var tailDistance))
             {
                 relaxedHeadDistance = default;
                 return false;
             }
 
             relaxedHeadDistance = _costMonoid.Combine(tailDistance, weight);
-            if (distanceByVertex.TryGetValue(head, out TCost? currentHeadDistance) &&
+            if (distanceByVertex.TryGetValue(head, out var currentHeadDistance) &&
                 _costComparer.Compare(relaxedHeadDistance, currentHeadDistance) >= 0)
                 return false;
 

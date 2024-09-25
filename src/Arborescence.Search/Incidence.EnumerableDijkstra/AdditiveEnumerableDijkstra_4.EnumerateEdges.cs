@@ -40,7 +40,7 @@ namespace Arborescence.Search.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(weightByEdge));
 
             Dictionary<TVertex, TWeight> distanceByVertex = new();
-            Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
+            var weightComparer = Comparer<TWeight>.Default;
             return EnumerateEdgesUnchecked(
                 graph, source, weightByEdge, distanceByVertex, weightComparer);
         }
@@ -61,7 +61,7 @@ namespace Arborescence.Search.Incidence
             if (distanceByVertex is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(distanceByVertex));
 
-            Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
+            var weightComparer = Comparer<TWeight>.Default;
             return EnumerateEdgesUnchecked(
                 graph, source, weightByEdge, distanceByVertex, weightComparer);
         }

@@ -52,7 +52,7 @@ namespace Arborescence.Search.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(weightMonoid));
 
             Dictionary<TVertex, TWeight> distanceByVertex = new();
-            Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
+            var weightComparer = Comparer<TWeight>.Default;
             return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
@@ -77,7 +77,7 @@ namespace Arborescence.Search.Incidence
             if (weightMonoid is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(weightMonoid));
 
-            Comparer<TWeight> weightComparer = Comparer<TWeight>.Default;
+            var weightComparer = Comparer<TWeight>.Default;
             return EnumerateEdgesUnchecked(graph, source, weightByEdge, distanceByVertex, weightMonoid, weightComparer);
         }
 
@@ -138,24 +138,24 @@ namespace Arborescence.Search.Incidence
             distanceByVertex[source] = weightMonoid.Identity;
             frontier.Enqueue(source, weightMonoid.Identity);
 
-            while (frontier.TryDequeue(out TVertex? current, out TWeight? priority))
+            while (frontier.TryDequeue(out var current, out var priority))
             {
-                if (!distanceByVertex.TryGetValue(current, out TWeight? currentDistance))
+                if (!distanceByVertex.TryGetValue(current, out var currentDistance))
                     ThrowHelper<TVertex>.ThrowVertexNotFoundException(current);
                 if (weightComparer.Compare(priority, currentDistance) > 0)
                     continue;
-                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(current);
+                var outEdges = graph.EnumerateOutEdges(current);
                 try
                 {
                     while (outEdges.MoveNext())
                     {
-                        TEdge edge = outEdges.Current;
-                        if (!weightByEdge.TryGetValue(edge, out TWeight? weight))
+                        var edge = outEdges.Current;
+                        if (!weightByEdge.TryGetValue(edge, out var weight))
                             continue;
-                        TWeight neighborDistanceCandidate = weightMonoid.Combine(currentDistance, weight);
-                        if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                        var neighborDistanceCandidate = weightMonoid.Combine(currentDistance, weight);
+                        if (!graph.TryGetHead(edge, out var neighbor))
                             continue;
-                        if (!distanceByVertex.TryGetValue(neighbor, out TWeight? neighborDistance) ||
+                        if (!distanceByVertex.TryGetValue(neighbor, out var neighborDistance) ||
                             weightComparer.Compare(neighborDistanceCandidate, neighborDistance) < 0)
                         {
                             // In traversal algorithms, we raise the “tree edge” event before updating the color map.

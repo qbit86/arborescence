@@ -52,7 +52,7 @@ namespace Arborescence.Search
 
         public void Dispose()
         {
-            TElement[] arrayFromPool = _arrayFromPool;
+            var arrayFromPool = _arrayFromPool;
             this = default;
             if (arrayFromPool != null)
                 Pool.Return(arrayFromPool, ShouldClear());
@@ -89,7 +89,7 @@ namespace Arborescence.Search
                 return false;
             }
 
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             Debug.Assert(array.Length > 0, "array.Length > 0");
 
             element = array[0];
@@ -150,7 +150,7 @@ namespace Arborescence.Search
 
         private readonly TPriority GetPriorityOrThrow(TElement element)
         {
-            if (_priorityByElement.TryGetValue(element, out TPriority? priority))
+            if (_priorityByElement.TryGetValue(element, out var priority))
                 return priority;
 
             throw new InvalidOperationException("Priority was not found for the given element.");
@@ -159,7 +159,7 @@ namespace Arborescence.Search
         private void AddUnchecked(TElement element)
         {
             int count = _count;
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             Debug.Assert((uint)count < (uint)array.Length, "(uint)count < (uint)array.Length");
 
             array[count] = element;
@@ -171,12 +171,12 @@ namespace Arborescence.Search
         private void GrowUnchecked()
         {
             int count = _count;
-            TElement[] arrayFromPool = _arrayFromPool;
+            var arrayFromPool = _arrayFromPool;
             Debug.Assert((uint)count == (uint)arrayFromPool.Length, "(uint)count == (uint)arrayFromPool.Length");
 
             const int defaultCapacity = 4;
             int newCapacity = count > 0 ? count << 1 : defaultCapacity;
-            TElement[] newArrayFromPool = Pool.Rent(newCapacity);
+            var newArrayFromPool = Pool.Rent(newCapacity);
             if (count > 0)
                 Array.Copy(arrayFromPool, newArrayFromPool, count);
 
@@ -186,7 +186,7 @@ namespace Arborescence.Search
 
         private void EnsureCapacity()
         {
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             int count = _count;
             Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
@@ -200,14 +200,14 @@ namespace Arborescence.Search
 
         private void Swap(int leftIndex, int rightIndex)
         {
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             int count = _count;
             Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
             Debug.Assert((uint)leftIndex < (uint)count, "(uint)leftIndex < (uint)count");
             Debug.Assert((uint)rightIndex < (uint)count, "(uint)rightIndex < (uint)count");
 
-            TElement left = array[leftIndex];
-            TElement right = array[rightIndex];
+            var left = array[leftIndex];
+            var right = array[rightIndex];
             array[leftIndex] = right;
             array[rightIndex] = left;
             _indexInHeapByElement[left] = rightIndex;
@@ -216,8 +216,8 @@ namespace Arborescence.Search
 
         private readonly int Compare(TElement left, TElement right)
         {
-            bool hasLeft = _priorityByElement.TryGetValue(left, out TPriority? leftPriority);
-            bool hasRight = _priorityByElement.TryGetValue(right, out TPriority? rightPriority);
+            bool hasLeft = _priorityByElement.TryGetValue(left, out var leftPriority);
+            bool hasRight = _priorityByElement.TryGetValue(right, out var rightPriority);
             if (!hasLeft)
                 return hasRight ? 1 : 0;
 
@@ -229,7 +229,7 @@ namespace Arborescence.Search
 
         private void HeapifyUp(int index)
         {
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             int count = _count;
             Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
@@ -239,15 +239,15 @@ namespace Arborescence.Search
             if (index >= count)
                 return;
 
-            TElement currentlyBeingMovedElement = array[index];
-            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+            var currentlyBeingMovedElement = array[index];
+            var currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
 
             int levelMovedCount = 0;
             for (int ascendingIndex = index; ascendingIndex != 0;)
             {
                 int parentIndex = GetParentIndex(ascendingIndex);
-                TElement parentElement = array[parentIndex];
-                TPriority parentPriority = GetPriorityOrThrow(parentElement);
+                var parentElement = array[parentIndex];
+                var parentPriority = GetPriorityOrThrow(parentElement);
                 if (_priorityComparer.Compare(currentlyBeingMovedPriority, parentPriority) < 0)
                 {
                     ++levelMovedCount;
@@ -264,7 +264,7 @@ namespace Arborescence.Search
             for (int i = 0; i < levelMovedCount; ++i)
             {
                 int parentIndex = GetParentIndex(topIndex);
-                TElement parentElement = array[parentIndex];
+                var parentElement = array[parentIndex];
                 _indexInHeapByElement[parentElement] = topIndex;
                 array[topIndex] = parentElement;
                 topIndex = parentIndex;
@@ -276,7 +276,7 @@ namespace Arborescence.Search
 
         private void HeapifyDown()
         {
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             int count = _count;
             Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 
@@ -284,8 +284,8 @@ namespace Arborescence.Search
                 return;
 
             int currentlyBeingMovedIndex = 0;
-            TElement currentlyBeingMovedElement = array[currentlyBeingMovedIndex];
-            TPriority currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
+            var currentlyBeingMovedElement = array[currentlyBeingMovedIndex];
+            var currentlyBeingMovedPriority = GetPriorityOrThrow(currentlyBeingMovedElement);
             while (true)
             {
                 int childrenOffset = GetFirstChildIndex(currentlyBeingMovedIndex);
@@ -295,11 +295,11 @@ namespace Arborescence.Search
 
                 var children = new Span<TElement>(array, childrenOffset, childCount);
                 int smallestChildIndex = 0;
-                TPriority smallestChildPriority = GetPriorityOrThrow(children[smallestChildIndex]);
+                var smallestChildPriority = GetPriorityOrThrow(children[smallestChildIndex]);
                 for (int i = 1; i < childCount; ++i)
                 {
-                    TElement child = children[i];
-                    TPriority priority = GetPriorityOrThrow(child);
+                    var child = children[i];
+                    var priority = GetPriorityOrThrow(child);
                     if (_priorityComparer.Compare(priority, smallestChildPriority) < 0)
                     {
                         smallestChildIndex = i;
@@ -321,7 +321,7 @@ namespace Arborescence.Search
         [Conditional("DEBUG")]
         private readonly void VerifyHeap()
         {
-            TElement[] array = _arrayFromPool;
+            var array = _arrayFromPool;
             int count = _count;
             Debug.Assert((uint)count <= (uint)array.Length, "(uint)count <= (uint)array.Length");
 

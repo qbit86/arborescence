@@ -21,7 +21,7 @@
 
         public void Dispose()
         {
-            T[]? arrayFromPool = _arrayFromPool;
+            var arrayFromPool = _arrayFromPool;
             this = default;
             if (arrayFromPool is null)
                 return;
@@ -63,7 +63,7 @@
             }
 
             int head = _head;
-            T[] array = _arrayFromPool ?? Array.Empty<T>();
+            var array = _arrayFromPool ?? Array.Empty<T>();
             result = array[head];
             if (ShouldClear())
                 array[head] = default!;
@@ -99,8 +99,8 @@
         {
             Debug.Assert(capacity > 0, nameof(capacity) + " > 0");
 
-            T[] arrayFromPool = _arrayFromPool!;
-            T[] newArray = Pool.Rent(capacity);
+            var arrayFromPool = _arrayFromPool!;
+            var newArray = Pool.Rent(capacity);
             if (_size > 0)
             {
                 if (_head < _tail)

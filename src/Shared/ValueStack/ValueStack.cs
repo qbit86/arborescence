@@ -19,7 +19,7 @@
 
         public void Dispose()
         {
-            T[]? arrayFromPool = _arrayFromPool;
+            var arrayFromPool = _arrayFromPool;
             this = default;
             if (arrayFromPool is null)
                 return;
@@ -32,7 +32,7 @@
             _arrayFromPool ??= Pool.Rent(DefaultCapacity);
 
             int count = _count;
-            T[] array = _arrayFromPool;
+            var array = _arrayFromPool;
 
             if (unchecked((uint)count < (uint)array.Length))
             {
@@ -58,7 +58,7 @@
         public bool TryTake(out T result)
         {
             int newCount = _count - 1;
-            T[] array = _arrayFromPool ?? Array.Empty<T>();
+            var array = _arrayFromPool ?? Array.Empty<T>();
 
             if (unchecked((uint)newCount >= (uint)array.Length))
             {
@@ -89,12 +89,12 @@
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void ResizeThenAdd(T item)
         {
-            T[] arrayFromPool = _arrayFromPool!;
+            var arrayFromPool = _arrayFromPool!;
             Debug.Assert(arrayFromPool.Length > 0, "arrayFromPool.Length > 0");
 
             int count = _count;
             int newCapacity = count << 1;
-            T[] newArray = Pool.Rent(newCapacity);
+            var newArray = Pool.Rent(newCapacity);
             Array.Copy(arrayFromPool, newArray, count);
             newArray[count] = item;
 
