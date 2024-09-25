@@ -1,4 +1,5 @@
 [*.cs]
+csharp_style_var_elsewhere = false:suggestion
 dotnet_diagnostic.CA1000.severity = none # Do not declare static members on generic types
 
 [Concepts/*.cs]
