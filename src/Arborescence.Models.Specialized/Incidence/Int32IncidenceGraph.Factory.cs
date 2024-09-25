@@ -82,7 +82,7 @@ namespace Arborescence.Models.Specialized
                 return 0;
 
             int maxVertex = -1;
-            foreach (Endpoints<int> endpoints in endpointsByEdge)
+            foreach (var endpoints in endpointsByEdge)
                 maxVertex = Math.Max(maxVertex, Math.Max(endpoints.Tail, endpoints.Head));
 
             return maxVertex + 1;
@@ -202,7 +202,7 @@ namespace Arborescence.Models.Specialized
             if (endpointsByEdge is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(endpointsByEdge));
 
-            Span<Endpoints<int>> endpointsByEdgeSpan = CollectionsMarshal.AsSpan(endpointsByEdge);
+            var endpointsByEdgeSpan = CollectionsMarshal.AsSpan(endpointsByEdge);
             int vertexCount = DeduceVertexCount(endpointsByEdgeSpan);
             if (vertexCount is 0)
                 return default;
@@ -253,20 +253,20 @@ namespace Arborescence.Models.Specialized
             int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
             data[0] = vertexCount;
             data[1] = edgeCount;
-            Span<int> edgesOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
-            Span<int> headByEdge = data.AsSpan(2 + vertexCount + edgeCount, edgeCount);
-            Span<int> tailByEdge = data.AsSpan(2 + vertexCount + edgeCount + edgeCount, edgeCount);
+            var edgesOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
+            var headByEdge = data.AsSpan(2 + vertexCount + edgeCount, edgeCount);
+            var tailByEdge = data.AsSpan(2 + vertexCount + edgeCount + edgeCount, edgeCount);
             for (int i = 0; i < edgeCount; ++i)
             {
                 edgesOrderedByTail[i] = i;
-                Endpoints<int> endpoints = endpointsByEdge[i];
+                var endpoints = endpointsByEdge[i];
                 headByEdge[i] = endpoints.Head;
                 tailByEdge[i] = endpoints.Tail;
             }
 
             endpointsByEdge.Sort(edgesOrderedByTail, EdgeComparer.Instance);
 
-            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            var upperBoundByVertex = data.AsSpan(2, vertexCount);
             PopulateUpperBoundByVertex(vertexCount, edgeCount, edgesOrderedByTail, tailByEdge, upperBoundByVertex);
 
             return new(data);

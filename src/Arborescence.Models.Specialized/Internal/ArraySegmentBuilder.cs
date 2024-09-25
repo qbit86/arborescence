@@ -44,7 +44,7 @@ namespace Arborescence.Models
 
         private static void UncheckedAdd<T>(ref ArraySegment<T> arraySegment, T item)
         {
-            T[] array = arraySegment.Array!;
+            var array = arraySegment.Array!;
             Debug.Assert(arraySegment.Count < array.Length);
 
             array[arraySegment.Count] = item;
@@ -63,7 +63,7 @@ namespace Arborescence.Models
 
             nextCapacity = Math.Max(nextCapacity, minimum);
 
-            T[] next = ArrayPool<T>.Shared.Rent(nextCapacity);
+            var next = ArrayPool<T>.Shared.Rent(nextCapacity);
             if (arraySegment.Count > 0)
             {
                 Array.Copy(arraySegment.Array!, 0, next, 0, arraySegment.Count);

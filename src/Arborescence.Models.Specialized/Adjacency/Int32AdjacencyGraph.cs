@@ -39,7 +39,7 @@ namespace Arborescence.Models.Specialized
         {
             get
             {
-                Int32AdjacencyGraph self = this;
+                var self = this;
                 return self._data is null ? 0 : self.VertexCountUnchecked;
             }
         }
@@ -71,7 +71,7 @@ namespace Arborescence.Models.Specialized
         /// <inheritdoc/>
         public NeighborEnumerator EnumerateOutNeighbors(int vertex)
         {
-            Int32AdjacencyGraph self = this;
+            var self = this;
             if (self._data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -80,7 +80,7 @@ namespace Arborescence.Models.Specialized
             if (unchecked((uint)vertex >= (uint)vertexCount))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            ReadOnlySpan<int> upperBoundByVertex = self.GetUpperBoundByVertexUnchecked();
+            var upperBoundByVertex = self.GetUpperBoundByVertexUnchecked();
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -95,7 +95,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetUpperBoundByVertexUnchecked()
         {
-            Int32AdjacencyGraph self = this;
+            var self = this;
             Debug.Assert(self._data.Length >= 2, "_data.Length >= 2");
             return self._data.AsSpan(2, self.VertexCountUnchecked);
         }

@@ -58,11 +58,11 @@ namespace Arborescence.Models.Specialized
             data = ArraySegmentBuilder.Add(data, vertexCount, false);
             data = ArraySegmentBuilder.Add(data, 0, false);
             data = ArraySegmentBuilder.EnsureSize(data, data.Count + vertexCount, false);
-            Span<int> upperBoundByVertex = data.Array.AsSpan(2, vertexCount);
+            var upperBoundByVertex = data.Array.AsSpan(2, vertexCount);
             int offset = 2 + vertexCount;
             for (int key = 0; key < vertexCount; ++key)
             {
-                if (!neighborsByVertex.TryGetValue(key, out TNeighborCollection? neighbors) || neighbors is null)
+                if (!neighborsByVertex.TryGetValue(key, out var neighbors) || neighbors is null)
                 {
                     upperBoundByVertex[key] = offset;
                     continue;

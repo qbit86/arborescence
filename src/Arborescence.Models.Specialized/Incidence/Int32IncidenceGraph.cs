@@ -42,7 +42,7 @@ namespace Arborescence.Models.Specialized
         {
             get
             {
-                Int32IncidenceGraph self = this;
+                var self = this;
                 return self._data is null ? 0 : self.VertexCountUnchecked;
             }
         }
@@ -56,7 +56,7 @@ namespace Arborescence.Models.Specialized
         {
             get
             {
-                Int32IncidenceGraph self = this;
+                var self = this;
                 return self._data is null ? 0 : self.EdgeCountUnchecked;
             }
         }
@@ -66,21 +66,21 @@ namespace Arborescence.Models.Specialized
         /// <inheritdoc/>
         public bool TryGetHead(int edge, out int head)
         {
-            ReadOnlySpan<int> headByEdge = GetHeadByEdge();
+            var headByEdge = GetHeadByEdge();
             return unchecked((uint)edge < (uint)headByEdge.Length) ? Some(headByEdge[edge], out head) : None(out head);
         }
 
         /// <inheritdoc/>
         public bool TryGetTail(int edge, out int tail)
         {
-            ReadOnlySpan<int> tailByEdge = GetTailByEdge();
+            var tailByEdge = GetTailByEdge();
             return unchecked((uint)edge < (uint)tailByEdge.Length) ? Some(tailByEdge[edge], out tail) : None(out tail);
         }
 
         /// <inheritdoc/>
         public EdgeEnumerator EnumerateOutEdges(int vertex)
         {
-            Int32IncidenceGraph self = this;
+            var self = this;
             if (self._data is null)
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -89,7 +89,7 @@ namespace Arborescence.Models.Specialized
             if (unchecked((uint)vertex >= (uint)vertexCount))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
-            ReadOnlySpan<int> upperBoundByVertex = self.GetUpperBoundByVertexUnchecked();
+            var upperBoundByVertex = self.GetUpperBoundByVertexUnchecked();
             if (unchecked((uint)vertex >= (uint)upperBoundByVertex.Length))
                 return ArraySegment<int>.Empty.GetEnumerator();
 
@@ -108,7 +108,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetHeadByEdge()
         {
-            Int32IncidenceGraph self = this;
+            var self = this;
             if (self._data is null)
                 return ReadOnlySpan<int>.Empty;
             int n = self.VertexCountUnchecked;
@@ -119,7 +119,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetTailByEdge()
         {
-            Int32IncidenceGraph self = this;
+            var self = this;
             if (self._data is null)
                 return ReadOnlySpan<int>.Empty;
             int n = self.VertexCountUnchecked;
@@ -130,7 +130,7 @@ namespace Arborescence.Models.Specialized
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ReadOnlySpan<int> GetUpperBoundByVertexUnchecked()
         {
-            Int32IncidenceGraph self = this;
+            var self = this;
             return self._data.AsSpan(2, self.VertexCountUnchecked);
         }
     }

@@ -9,7 +9,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>adjacency;graph;incidence;model</PackageTags>
     <Title>Specialized graph models</Title>
-    <VersionPrefix>0.17.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>

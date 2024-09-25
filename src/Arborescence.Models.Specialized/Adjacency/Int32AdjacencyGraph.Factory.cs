@@ -69,8 +69,8 @@ namespace Arborescence.Models.Specialized
             bool shouldOrder = false;
             int maxTail = edges[0].Tail;
             int maxVertex = Math.Max(maxTail, edges[0].Head);
-            ReadOnlySpan<Edge> remainingEdges = edges[1..];
-            foreach (Endpoints<int> edge in remainingEdges)
+            var remainingEdges = edges[1..];
+            foreach (var edge in remainingEdges)
             {
                 if (edge.Tail < maxTail)
                 {
@@ -99,11 +99,11 @@ namespace Arborescence.Models.Specialized
             int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
             data[0] = vertexCount;
             data[1] = edgeCount;
-            Span<int> neighborsOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
+            var neighborsOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
             for (int i = 0; i < edgeCount; ++i)
                 neighborsOrderedByTail[i] = edgesOrderedByTail[i].Head;
 
-            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            var upperBoundByVertex = data.AsSpan(2, vertexCount);
             int offset = 2 + vertexCount;
             for (int lower = 0, expectedTail = 0; lower < edgeCount;)
             {
@@ -212,7 +212,7 @@ namespace Arborescence.Models.Specialized
             if (edges is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(edges));
 
-            Span<Edge> edgeSpan = CollectionsMarshal.AsSpan(edges);
+            var edgeSpan = CollectionsMarshal.AsSpan(edges);
 #pragma warning disable CA1062
             if (ShouldOrderByTail(edgeSpan, out int vertexCount))
                 edges.Sort(EdgeComparer.Instance);
