@@ -144,18 +144,18 @@ namespace Arborescence.Traversal.Incidence
                 yield break;
             frontier.AddOrThrow(source);
 
-            while (frontier.TryTake(out TVertex? current))
+            while (frontier.TryTake(out var current))
             {
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(current));
 #endif
-                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(current);
+                var outEdges = graph.EnumerateOutEdges(current);
                 try
                 {
                     while (outEdges.MoveNext())
                     {
-                        TEdge edge = outEdges.Current;
-                        if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                        var edge = outEdges.Current;
+                        if (!graph.TryGetHead(edge, out var neighbor))
                             continue;
                         if (exploredSet.Contains(neighbor))
                             continue;

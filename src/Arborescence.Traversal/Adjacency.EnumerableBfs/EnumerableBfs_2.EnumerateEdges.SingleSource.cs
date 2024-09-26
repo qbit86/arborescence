@@ -100,9 +100,9 @@ namespace Arborescence.Traversal.Adjacency
             where TExploredSet : ISet<TVertex>
         {
             using Traversal.Queue<TVertex> frontier = new();
-            IEnumerable<Endpoints<TVertex>> edges = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
+            var edges = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
                 .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-            foreach (Endpoints<TVertex> edge in edges)
+            foreach (var edge in edges)
                 yield return edge;
         }
     }

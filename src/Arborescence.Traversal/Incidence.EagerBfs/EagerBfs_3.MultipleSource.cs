@@ -169,10 +169,10 @@ namespace Arborescence.Traversal.Incidence
             var queue = new ValueQueue<TVertex>();
             try
             {
-                using IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
+                using var sourceEnumerator = sources.GetEnumerator();
                 while (sourceEnumerator.MoveNext())
                 {
-                    TVertex source = sourceEnumerator.Current;
+                    var source = sourceEnumerator.Current;
                     colorByVertex[source] = Color.Gray;
                     handler.OnDiscoverVertex(graph, source);
                     if (cancellationToken.IsCancellationRequested)

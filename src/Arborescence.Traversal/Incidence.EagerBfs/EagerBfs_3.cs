@@ -23,23 +23,23 @@ namespace Arborescence.Traversal.Incidence
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TVertex, TEdge, TGraph>
         {
-            while (queue.TryTake(out TVertex current))
+            while (queue.TryTake(out var current))
             {
 #if DEBUG
                 Debug.Assert(colorByVertex.GetValueOrDefault(current, Color.None) != default);
 #endif
                 handler.OnExamineVertex(graph, current);
-                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(current);
+                var outEdges = graph.EnumerateOutEdges(current);
                 try
                 {
                     while (outEdges.MoveNext())
                     {
-                        TEdge edge = outEdges.Current;
-                        if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                        var edge = outEdges.Current;
+                        if (!graph.TryGetHead(edge, out var neighbor))
                             continue;
 
                         handler.OnExamineEdge(graph, edge);
-                        Color neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
+                        var neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         switch (neighborColor)
                         {
                             case Color.None or Color.White:

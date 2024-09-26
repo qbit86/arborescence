@@ -144,17 +144,17 @@ namespace Arborescence.Traversal.Adjacency
                 yield break;
             frontier.AddOrThrow(source);
 
-            while (frontier.TryTake(out TVertex? current))
+            while (frontier.TryTake(out var current))
             {
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(current));
 #endif
-                TNeighborEnumerator neighbors = graph.EnumerateOutNeighbors(current);
+                var neighbors = graph.EnumerateOutNeighbors(current);
                 try
                 {
                     while (neighbors.MoveNext())
                     {
-                        TVertex neighbor = neighbors.Current;
+                        var neighbor = neighbors.Current;
                         if (exploredSet.Contains(neighbor))
                             continue;
 

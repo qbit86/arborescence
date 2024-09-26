@@ -29,15 +29,15 @@ namespace Arborescence.Traversal.Adjacency
                 return;
             }
 
-            TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(vertex);
+            var outNeighbors = graph.EnumerateOutNeighbors(vertex);
             try
             {
                 while (outNeighbors.MoveNext())
                 {
-                    TVertex neighbor = outNeighbors.Current!;
+                    var neighbor = outNeighbors.Current!;
                     var edge = Endpoints.Create(vertex, neighbor);
                     handler.OnExamineEdge(graph, edge);
-                    Color neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
+                    var neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                     switch (neighborColor)
                     {
                         case Color.None or Color.White:

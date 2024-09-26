@@ -124,9 +124,9 @@ namespace Arborescence.Traversal.Incidence
             where TExploredSet : ISet<TVertex>
         {
             using Traversal.Queue<TVertex> frontier = new();
-            IEnumerable<TEdge> edges = EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
+            var edges = EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
                 .EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 yield return edge;
         }
     }

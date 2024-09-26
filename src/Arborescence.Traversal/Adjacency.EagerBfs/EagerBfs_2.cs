@@ -22,21 +22,21 @@ namespace Arborescence.Traversal.Adjacency
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
-            while (queue.TryTake(out TVertex current))
+            while (queue.TryTake(out var current))
             {
 #if DEBUG
                 Debug.Assert(colorByVertex.GetValueOrDefault(current, Color.None) != default);
 #endif
                 handler.OnExamineVertex(graph, current);
-                TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(current);
+                var outNeighbors = graph.EnumerateOutNeighbors(current);
                 try
                 {
                     while (outNeighbors.MoveNext())
                     {
-                        TVertex neighbor = outNeighbors.Current!;
+                        var neighbor = outNeighbors.Current!;
                         var edge = Endpoints.Create(current, neighbor);
                         handler.OnExamineEdge(graph, edge);
-                        Color neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
+                        var neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         switch (neighborColor)
                         {
                             case Color.None or Color.White:

@@ -164,12 +164,12 @@ namespace Arborescence.Traversal.Adjacency
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
+            var sourceEnumerator = sources.GetEnumerator();
             try
             {
                 while (sourceEnumerator.MoveNext())
                 {
-                    TVertex source = sourceEnumerator.Current;
+                    var source = sourceEnumerator.Current;
                     if (!exploredSet.Add(source))
                         continue;
                     yield return source;
@@ -181,17 +181,17 @@ namespace Arborescence.Traversal.Adjacency
                 sourceEnumerator.Dispose();
             }
 
-            while (frontier.TryTake(out TVertex? current))
+            while (frontier.TryTake(out var current))
             {
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(current));
 #endif
-                TNeighborEnumerator neighbors = graph.EnumerateOutNeighbors(current);
+                var neighbors = graph.EnumerateOutNeighbors(current);
                 try
                 {
                     while (neighbors.MoveNext())
                     {
-                        TVertex neighbor = neighbors.Current;
+                        var neighbor = neighbors.Current;
                         if (!exploredSet.Add(neighbor))
                             continue;
                         yield return neighbor;

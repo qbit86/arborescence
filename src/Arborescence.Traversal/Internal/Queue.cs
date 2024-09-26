@@ -45,7 +45,7 @@ namespace Arborescence.Traversal
         public bool TryTake(out T item)
         {
             int head = _head;
-            T[] array = _arrayFromPool;
+            var array = _arrayFromPool;
 
             if (_size == 0)
             {
@@ -75,8 +75,8 @@ namespace Arborescence.Traversal
         private void SetCapacity(int capacity)
         {
             Debug.Assert(capacity > 0, nameof(capacity) + " > 0");
-            T[] arrayFromPool = _arrayFromPool;
-            T[] newArrayFromPool = Pool.Rent(capacity);
+            var arrayFromPool = _arrayFromPool;
+            var newArrayFromPool = Pool.Rent(capacity);
             if (_size > 0)
             {
                 if (_head < _tail)
@@ -125,7 +125,7 @@ namespace Arborescence.Traversal
         {
             if (_arrayFromPool.Length == 0)
                 return;
-            T[] arrayFromPool = _arrayFromPool;
+            var arrayFromPool = _arrayFromPool;
             _arrayFromPool = Array.Empty<T>();
             Pool.Return(arrayFromPool, ShouldClear());
         }

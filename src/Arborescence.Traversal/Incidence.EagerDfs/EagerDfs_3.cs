@@ -32,16 +32,16 @@ namespace Arborescence.Traversal.Incidence
             var stack = new ValueStack<StackFrame>();
             try
             {
-                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
+                var outEdges = graph.EnumerateOutEdges(vertex);
                 stack.Add(new(vertex, outEdges));
 
-                while (stack.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out var stackFrame))
                 {
                     vertex = stackFrame.Vertex;
-                    if (stackFrame.TryGetEdge(out TEdge inEdge))
+                    if (stackFrame.TryGetEdge(out var inEdge))
                         handler.OnFinishEdge(graph, inEdge);
 
-                    TEdgeEnumerator edges = stackFrame.EdgeEnumerator;
+                    var edges = stackFrame.EdgeEnumerator;
                     while (true)
                     {
                         if (!edges.MoveNext())
@@ -50,12 +50,12 @@ namespace Arborescence.Traversal.Incidence
                             break;
                         }
 
-                        TEdge edge = edges.Current;
-                        if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                        var edge = edges.Current;
+                        if (!graph.TryGetHead(edge, out var neighbor))
                             continue;
 
                         handler.OnExamineEdge(graph, edge);
-                        Color color = colorByVertex.GetValueOrDefault(neighbor, Color.None);
+                        var color = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         if (color is Color.None or Color.White)
                         {
                             handler.OnTreeEdge(graph, edge);
@@ -87,7 +87,7 @@ namespace Arborescence.Traversal.Incidence
             }
             finally
             {
-                while (stack.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out var stackFrame))
                     stackFrame.EdgeEnumerator.Dispose();
                 stack.Dispose();
             }

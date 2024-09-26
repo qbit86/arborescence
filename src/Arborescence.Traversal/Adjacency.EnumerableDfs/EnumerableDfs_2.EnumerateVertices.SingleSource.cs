@@ -105,7 +105,7 @@ namespace Arborescence.Traversal.Adjacency
             {
                 stack.Add(graph.EnumerateOutNeighbors(source));
 
-                while (stack.TryTake(out TNeighborEnumerator neighborEnumerator))
+                while (stack.TryTake(out var neighborEnumerator))
                 {
                     if (!neighborEnumerator.MoveNext())
                     {
@@ -113,7 +113,7 @@ namespace Arborescence.Traversal.Adjacency
                         continue;
                     }
 
-                    TVertex neighbor = neighborEnumerator.Current;
+                    var neighbor = neighborEnumerator.Current;
                     stack.Add(neighborEnumerator);
                     if (!exploredSet.Add(neighbor))
                         continue;
@@ -123,7 +123,7 @@ namespace Arborescence.Traversal.Adjacency
             }
             finally
             {
-                while (stack.TryTake(out TNeighborEnumerator stackFrame))
+                while (stack.TryTake(out var stackFrame))
                     stackFrame.Dispose();
                 stack.Dispose();
             }

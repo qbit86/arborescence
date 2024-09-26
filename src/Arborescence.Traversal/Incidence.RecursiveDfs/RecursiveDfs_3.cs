@@ -30,17 +30,17 @@ namespace Arborescence.Traversal.Incidence
                 return;
             }
 
-            TEdgeEnumerator outEdges = graph.EnumerateOutEdges(vertex);
+            var outEdges = graph.EnumerateOutEdges(vertex);
             try
             {
                 while (outEdges.MoveNext())
                 {
-                    TEdge edge = outEdges.Current;
-                    if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                    var edge = outEdges.Current;
+                    if (!graph.TryGetHead(edge, out var neighbor))
                         continue;
 
                     handler.OnExamineEdge(graph, edge);
-                    Color neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
+                    var neighborColor = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                     switch (neighborColor)
                     {
                         case Color.None or Color.White:

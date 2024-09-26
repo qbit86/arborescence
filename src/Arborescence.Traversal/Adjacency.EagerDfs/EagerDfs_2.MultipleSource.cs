@@ -166,11 +166,11 @@ namespace Arborescence.Traversal.Adjacency
             where TColorMap : IDictionary<TVertex, Color>
             where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
         {
-            using IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
+            using var sourceEnumerator = sources.GetEnumerator();
             while (sourceEnumerator.MoveNext())
             {
-                TVertex source = sourceEnumerator.Current;
-                Color color = colorByVertex.GetValueOrDefault(source, Color.None);
+                var source = sourceEnumerator.Current;
+                var color = colorByVertex.GetValueOrDefault(source, Color.None);
                 if (color is not (Color.None or Color.White))
                     continue;
                 handler.OnStartVertex(graph, source);

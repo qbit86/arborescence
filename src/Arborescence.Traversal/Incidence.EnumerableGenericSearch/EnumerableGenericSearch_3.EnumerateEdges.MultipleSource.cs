@@ -167,12 +167,12 @@ namespace Arborescence.Traversal.Incidence
             where TFrontier : IProducerConsumerCollection<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
+            var sourceEnumerator = sources.GetEnumerator();
             try
             {
                 while (sourceEnumerator.MoveNext())
                 {
-                    TVertex source = sourceEnumerator.Current;
+                    var source = sourceEnumerator.Current;
                     if (!exploredSet.Add(source))
                         continue;
                     frontier.AddOrThrow(source);
@@ -183,18 +183,18 @@ namespace Arborescence.Traversal.Incidence
                 sourceEnumerator.Dispose();
             }
 
-            while (frontier.TryTake(out TVertex? current))
+            while (frontier.TryTake(out var current))
             {
 #if DEBUG
                 Debug.Assert(exploredSet.Contains(current));
 #endif
-                TEdgeEnumerator outEdges = graph.EnumerateOutEdges(current);
+                var outEdges = graph.EnumerateOutEdges(current);
                 try
                 {
                     while (outEdges.MoveNext())
                     {
-                        TEdge edge = outEdges.Current;
-                        if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                        var edge = outEdges.Current;
+                        if (!graph.TryGetHead(edge, out var neighbor))
                             continue;
                         if (exploredSet.Contains(neighbor))
                             continue;

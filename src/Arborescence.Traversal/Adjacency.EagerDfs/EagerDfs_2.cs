@@ -31,16 +31,16 @@ namespace Arborescence.Traversal.Adjacency
             var stack = new ValueStack<StackFrame>();
             try
             {
-                TNeighborEnumerator outNeighbors = graph.EnumerateOutNeighbors(vertex);
+                var outNeighbors = graph.EnumerateOutNeighbors(vertex);
                 stack.Add(new(vertex, outNeighbors));
 
-                while (stack.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out var stackFrame))
                 {
                     vertex = stackFrame.Vertex;
-                    if (stackFrame.TryGetNeighbor(out TVertex inNeighbor))
+                    if (stackFrame.TryGetNeighbor(out var inNeighbor))
                         handler.OnFinishEdge(graph, Endpoints.Create(inNeighbor, vertex));
 
-                    TNeighborEnumerator neighbors = stackFrame.NeighborEnumerator;
+                    var neighbors = stackFrame.NeighborEnumerator;
                     while (true)
                     {
                         if (!neighbors.MoveNext())
@@ -49,10 +49,10 @@ namespace Arborescence.Traversal.Adjacency
                             break;
                         }
 
-                        TVertex neighbor = neighbors.Current!;
+                        var neighbor = neighbors.Current!;
                         var edge = Endpoints.Create(vertex, neighbor);
                         handler.OnExamineEdge(graph, edge);
-                        Color color = colorByVertex.GetValueOrDefault(neighbor, Color.None);
+                        var color = colorByVertex.GetValueOrDefault(neighbor, Color.None);
                         if (color is Color.None or Color.White)
                         {
                             handler.OnTreeEdge(graph, edge);
@@ -84,7 +84,7 @@ namespace Arborescence.Traversal.Adjacency
             }
             finally
             {
-                while (stack.TryTake(out StackFrame stackFrame))
+                while (stack.TryTake(out var stackFrame))
                     stackFrame.NeighborEnumerator.Dispose();
                 stack.Dispose();
             }

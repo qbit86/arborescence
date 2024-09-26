@@ -9,6 +9,6 @@ namespace Arborescence
         internal static TValue GetValueOrDefault<TKey, TValue, TDictionary>(
             this TDictionary dictionary, TKey key, TValue defaultValue)
             where TDictionary : IDictionary<TKey, TValue> =>
-            dictionary.TryGetValue(key, out TValue? value) ? value : defaultValue;
+            dictionary.TryGetValue(key, out var value) ? value : defaultValue;
     }
 }

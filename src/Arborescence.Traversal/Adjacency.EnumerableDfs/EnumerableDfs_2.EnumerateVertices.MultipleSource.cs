@@ -121,19 +121,19 @@ namespace Arborescence.Traversal.Adjacency
             where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
+            var sourceEnumerator = sources.GetEnumerator();
             var stack = new ValueStack<TNeighborEnumerator>();
             try
             {
                 while (sourceEnumerator.MoveNext())
                 {
-                    TVertex source = sourceEnumerator.Current;
+                    var source = sourceEnumerator.Current;
                     if (!exploredSet.Add(source))
                         continue;
                     yield return source;
                     stack.Add(graph.EnumerateOutNeighbors(source));
 
-                    while (stack.TryTake(out TNeighborEnumerator neighborEnumerator))
+                    while (stack.TryTake(out var neighborEnumerator))
                     {
                         if (!neighborEnumerator.MoveNext())
                         {
@@ -141,7 +141,7 @@ namespace Arborescence.Traversal.Adjacency
                             continue;
                         }
 
-                        TVertex neighbor = neighborEnumerator.Current;
+                        var neighbor = neighborEnumerator.Current;
                         stack.Add(neighborEnumerator);
                         if (!exploredSet.Add(neighbor))
                             continue;
@@ -152,7 +152,7 @@ namespace Arborescence.Traversal.Adjacency
             }
             finally
             {
-                while (stack.TryTake(out TNeighborEnumerator stackFrame))
+                while (stack.TryTake(out var stackFrame))
                     stackFrame.Dispose();
                 stack.Dispose();
                 sourceEnumerator.Dispose();

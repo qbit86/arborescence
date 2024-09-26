@@ -121,19 +121,19 @@ namespace Arborescence.Traversal.Incidence
             where TSourceCollection : IEnumerable<TVertex>
             where TExploredSet : ISet<TVertex>
         {
-            IEnumerator<TVertex> sourceEnumerator = sources.GetEnumerator();
+            var sourceEnumerator = sources.GetEnumerator();
             var stack = new ValueStack<TEdgeEnumerator>();
             try
             {
                 while (sourceEnumerator.MoveNext())
                 {
-                    TVertex source = sourceEnumerator.Current;
+                    var source = sourceEnumerator.Current;
                     if (!exploredSet.Add(source))
                         continue;
                     yield return source;
                     stack.Add(graph.EnumerateOutEdges(source));
 
-                    while (stack.TryTake(out TEdgeEnumerator edgeEnumerator))
+                    while (stack.TryTake(out var edgeEnumerator))
                     {
                         if (!edgeEnumerator.MoveNext())
                         {
@@ -141,10 +141,10 @@ namespace Arborescence.Traversal.Incidence
                             continue;
                         }
 
-                        TEdge edge = edgeEnumerator.Current;
+                        var edge = edgeEnumerator.Current;
                         stack.Add(edgeEnumerator);
 
-                        if (!graph.TryGetHead(edge, out TVertex? neighbor))
+                        if (!graph.TryGetHead(edge, out var neighbor))
                             continue;
 
                         if (!exploredSet.Add(neighbor))
@@ -156,7 +156,7 @@ namespace Arborescence.Traversal.Incidence
             }
             finally
             {
-                while (stack.TryTake(out TEdgeEnumerator stackFrame))
+                while (stack.TryTake(out var stackFrame))
                     stackFrame.Dispose();
                 stack.Dispose();
                 sourceEnumerator.Dispose();
