@@ -70,7 +70,7 @@
         /// <inheritdoc/>
         public override string ToString()
         {
-            Endpoints<TVertex> self = this;
+            var self = this;
             return Endpoints.ToString(self.Tail?.ToString(), self.Head?.ToString());
         }
 
@@ -82,7 +82,7 @@
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void Deconstruct(out TVertex tail, out TVertex head)
         {
-            Endpoints<TVertex> self = this;
+            var self = this;
             tail = self.Tail;
             head = self.Head;
         }
@@ -90,7 +90,7 @@
         /// <inheritdoc/>
         public bool Equals(Endpoints<TVertex> other)
         {
-            Endpoints<TVertex> self = this;
+            var self = this;
             return C.Equals(self.Tail, other.Tail) && C.Equals(self.Head, other.Head);
         }
 
@@ -101,7 +101,7 @@
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            Endpoints<TVertex> self = this;
+            var self = this;
             return unchecked(C.GetHashCode(self.Tail) * 397) ^ C.GetHashCode(self.Head);
         }
 
