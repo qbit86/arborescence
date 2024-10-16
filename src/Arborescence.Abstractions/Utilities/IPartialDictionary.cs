@@ -103,7 +103,7 @@ namespace Arborescence
         {
             get
             {
-                if (!ReadOnlyDictionaryHelpers<TValue>.TryGetValue(this, key, out TValue? value))
+                if (!ReadOnlyDictionaryHelpers<TValue>.TryGetValue(this, key, out var value))
                     ThrowHelper.ThrowKeyNotFoundException();
                 return value!;
             }

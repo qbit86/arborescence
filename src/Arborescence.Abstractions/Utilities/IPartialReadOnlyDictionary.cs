@@ -39,7 +39,7 @@ namespace Arborescence
         {
             get
             {
-                if (!TryGetValue(key, out TValue? value))
+                if (!TryGetValue(key, out var value))
                     ThrowHelper.ThrowKeyNotFoundException();
                 return value;
             }
