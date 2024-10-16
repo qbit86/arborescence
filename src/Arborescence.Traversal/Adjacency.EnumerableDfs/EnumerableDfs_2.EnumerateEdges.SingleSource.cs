@@ -108,7 +108,7 @@ namespace Arborescence.Traversal.Adjacency
 
                 while (stack.TryTake(out var stackFrame))
                 {
-                    (var current, var neighborEnumerator) = stackFrame;
+                    var (current, neighborEnumerator) = stackFrame;
                     if (!neighborEnumerator.MoveNext())
                     {
                         neighborEnumerator.Dispose();
