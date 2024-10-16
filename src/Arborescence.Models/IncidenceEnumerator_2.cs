@@ -34,7 +34,7 @@ namespace Arborescence.Models
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
-            TNeighborEnumerator neighborEnumerator = graph.EnumerateOutNeighbors(vertex);
+            var neighborEnumerator = graph.EnumerateOutNeighbors(vertex);
             return new(vertex, neighborEnumerator);
         }
 

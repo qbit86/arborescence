@@ -11,8 +11,7 @@ namespace Arborescence.Models
         public bool Equals(ReadOnlyIncidenceGraph<
             TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> other)
         {
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
+            var self = this;
             return EqualityComparer<TEndpointMap>.Default.Equals(self._tailByEdge, other._tailByEdge) &&
                 EqualityComparer<TEndpointMap>.Default.Equals(self._headByEdge, other._headByEdge) &&
                 EqualityComparer<TEdgeMultimap>.Default.Equals(self._outEdgesByVertex, other._outEdgesByVertex) &&
@@ -29,8 +28,7 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
+            var self = this;
             return HashCode.Combine(
                 EqualityComparer<TEndpointMap>.Default.GetHashCode(self._tailByEdge),
                 EqualityComparer<TEndpointMap>.Default.GetHashCode(self._headByEdge),

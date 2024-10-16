@@ -16,7 +16,7 @@ namespace Arborescence.Models
 
         public void Add(TMultimap dictionary, T key, T value)
         {
-            if (dictionary.TryGetValue(key, out List<T>? values))
+            if (dictionary.TryGetValue(key, out var values))
                 values.Add(value);
             else
                 dictionary.Add(key, new() { value });

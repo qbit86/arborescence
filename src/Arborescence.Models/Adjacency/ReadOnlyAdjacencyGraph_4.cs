@@ -39,8 +39,7 @@ namespace Arborescence.Models
         {
             get
             {
-                ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept> self =
-                    this;
+                var self = this;
                 return self._neighborsByVertex is null ? 0 : self.GetCountUnchecked();
             }
         }
@@ -60,14 +59,14 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public TNeighborEnumerator EnumerateOutNeighbors(TVertex vertex)
         {
-            ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
+            var self = this;
             return self._vertexMultimapConcept.EnumerateValues(self._neighborsByVertex, vertex);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetCountUnchecked()
         {
-            ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
+            var self = this;
             return self._vertexMultimapConcept.GetCount(self._neighborsByVertex);
         }
     }

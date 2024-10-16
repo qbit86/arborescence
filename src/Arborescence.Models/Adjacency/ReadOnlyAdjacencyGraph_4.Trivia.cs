@@ -10,7 +10,7 @@ namespace Arborescence.Models
         public bool Equals(
             ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept> other)
         {
-            ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
+            var self = this;
             return EqualityComparer<TVertexMultimap>.Default.Equals(
                     self._neighborsByVertex, other._neighborsByVertex) &&
                 EqualityComparer<TVertexMultimapConcept>.Default.Equals(
@@ -26,7 +26,7 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            ReadOnlyAdjacencyGraph<TVertex, TNeighborEnumerator, TVertexMultimap, TVertexMultimapConcept> self = this;
+            var self = this;
             return HashCode.Combine(EqualityComparer<TVertexMultimap>.Default.GetHashCode(self._neighborsByVertex!),
                 EqualityComparer<TVertexMultimapConcept>.Default.GetHashCode(self._vertexMultimapConcept));
         }

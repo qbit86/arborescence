@@ -25,7 +25,7 @@ namespace Arborescence.Models
             if (graph is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
-            TEdgeEnumerator edgeEnumerator = graph.EnumerateOutEdges(vertex);
+            var edgeEnumerator = graph.EnumerateOutEdges(vertex);
             return new(graph, edgeEnumerator);
         }
     }

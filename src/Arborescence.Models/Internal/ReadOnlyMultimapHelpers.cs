@@ -8,7 +8,7 @@ namespace Arborescence.Models
             TMultimap multimap, TKey key, TEnumeratorProvider enumeratorProvider)
             where TMultimap : IReadOnlyDictionary<TKey, TValueCollection>
             where TEnumeratorProvider : IEnumeratorProvider<TValueCollection, TValueEnumerator> =>
-            multimap.TryGetValue(key, out TValueCollection? values)
+            multimap.TryGetValue(key, out var values)
                 ? enumeratorProvider.GetEnumerator(values)
                 : enumeratorProvider.GetEmptyEnumerator();
     }

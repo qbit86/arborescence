@@ -34,7 +34,7 @@ namespace Arborescence.Models
         {
             get
             {
-                TVertexMultimap? neighborsByVertex = _neighborsByVertex;
+                var neighborsByVertex = _neighborsByVertex;
                 return neighborsByVertex is null ? 0 : neighborsByVertex.Count;
             }
         }
@@ -50,7 +50,7 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public IncidenceEnumerator<TVertex, List<TVertex>.Enumerator> EnumerateOutEdges(TVertex vertex)
         {
-            List<TVertex>.Enumerator neighborEnumerator = EnumerateOutNeighbors(vertex);
+            var neighborEnumerator = EnumerateOutNeighbors(vertex);
             return new(vertex, neighborEnumerator);
         }
 
@@ -65,8 +65,8 @@ namespace Arborescence.Models
         /// <param name="head">The head of the edge to add.</param>
         public void AddEdge(TVertex tail, TVertex head)
         {
-            TVertexMultimap neighborsByVertex = _neighborsByVertex;
-            if (neighborsByVertex.TryGetValue(tail, out List<TVertex>? neighbors))
+            var neighborsByVertex = _neighborsByVertex;
+            if (neighborsByVertex.TryGetValue(tail, out var neighbors))
             {
                 neighbors.Add(head);
             }
@@ -91,7 +91,7 @@ namespace Arborescence.Models
         /// </returns>
         public bool TryAddVertex(TVertex vertex)
         {
-            TVertexMultimap neighborsByVertex = _neighborsByVertex;
+            var neighborsByVertex = _neighborsByVertex;
             if (neighborsByVertex.ContainsKey(vertex))
                 return false;
             neighborsByVertex.Add(vertex, new());

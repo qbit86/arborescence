@@ -51,8 +51,7 @@ namespace Arborescence.Models
         {
             get
             {
-                ReadOnlyIncidenceGraph<
-                    TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
+                var self = this;
                 return self._outEdgesByVertex is null ? 0 : self.GetCountUnchecked();
             }
         }
@@ -73,8 +72,7 @@ namespace Arborescence.Models
         /// <inheritdoc/>
         public TEdgeEnumerator EnumerateOutEdges(TVertex vertex)
         {
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
+            var self = this;
             return self._edgeMultimapConcept.EnumerateValues(self._outEdgesByVertex, vertex);
         }
 
@@ -87,8 +85,7 @@ namespace Arborescence.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetCountUnchecked()
         {
-            ReadOnlyIncidenceGraph<
-                TVertex, TEdge, TEdgeEnumerator, TEndpointMap, TEdgeMultimap, TEdgeMultimapConcept> self = this;
+            var self = this;
             return self._edgeMultimapConcept.GetCount(self._outEdgesByVertex);
         }
     }

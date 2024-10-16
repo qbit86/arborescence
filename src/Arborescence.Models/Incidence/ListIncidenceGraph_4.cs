@@ -45,7 +45,7 @@ namespace Arborescence.Models
         {
             get
             {
-                TEdgeMultimap? outEdgesByVertex = _outEdgesByVertex;
+                var outEdgesByVertex = _outEdgesByVertex;
                 return outEdgesByVertex is null ? 0 : outEdgesByVertex.Count;
             }
         }
@@ -57,7 +57,7 @@ namespace Arborescence.Models
         {
             get
             {
-                TEndpointMap? headByEdge = _headByEdge;
+                var headByEdge = _headByEdge;
                 return headByEdge is null ? 0 : headByEdge.Count;
             }
         }
@@ -91,12 +91,12 @@ namespace Arborescence.Models
         /// </returns>
         public bool TryAddEdge(TEdge edge, TVertex tail, TVertex head)
         {
-            ListIncidenceGraph<TVertex, TEdge, TEndpointMap, TEdgeMultimap> self = this;
+            var self = this;
             if (!self._tailByEdge.TryAddStrict(edge, tail))
                 return false;
 
-            TEdgeMultimap outEdgesByVertex = self._outEdgesByVertex;
-            if (outEdgesByVertex.TryGetValue(tail, out List<TEdge>? outEdges))
+            var outEdgesByVertex = self._outEdgesByVertex;
+            if (outEdgesByVertex.TryGetValue(tail, out var outEdges))
             {
                 outEdges.Add(edge);
             }
@@ -125,7 +125,7 @@ namespace Arborescence.Models
         /// </returns>
         public bool TryAddVertex(TVertex vertex)
         {
-            TEdgeMultimap outEdgesByVertex = _outEdgesByVertex;
+            var outEdgesByVertex = _outEdgesByVertex;
             if (outEdgesByVertex.ContainsKey(vertex))
                 return false;
             outEdgesByVertex.Add(vertex, new());

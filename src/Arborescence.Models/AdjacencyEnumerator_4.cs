@@ -41,7 +41,7 @@ namespace Arborescence.Models
             {
                 if (!_edgeEnumerator.MoveNext())
                     return false;
-                if (!_graph.TryGetHead(_edgeEnumerator.Current, out TVertex? neighbor))
+                if (!_graph.TryGetHead(_edgeEnumerator.Current, out var neighbor))
                     continue;
                 _current = neighbor;
                 return true;
