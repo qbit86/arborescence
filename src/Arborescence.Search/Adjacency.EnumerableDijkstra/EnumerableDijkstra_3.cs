@@ -3,7 +3,7 @@ namespace Arborescence.Search.Adjacency
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents Dijkstra's algorithm for solving the single source shortest paths problem.
+    /// Represents Dijkstra's algorithm for solving the single-source shortest path problem.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TNeighborEnumerator">The type of the neighbor enumerator.</typeparam>

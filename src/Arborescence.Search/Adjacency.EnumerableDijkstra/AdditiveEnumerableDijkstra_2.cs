@@ -4,7 +4,7 @@ namespace Arborescence.Search.Adjacency
     using System.Numerics;
 
     /// <summary>
-    /// Represents Dijkstra's algorithm for solving the single source shortest paths problem
+    /// Represents Dijkstra's algorithm for solving the single-source shortest path problem
     /// when the weight has the usual additive semantics.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
