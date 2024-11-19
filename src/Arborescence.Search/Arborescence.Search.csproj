@@ -31,7 +31,7 @@ Commonly used types:
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
     <PackageReference Include="System.Memory" />
   </ItemGroup>
@@ -45,7 +45,7 @@ Commonly used types:
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
   <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
   <Import Project="..\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.projitems" Label="Shared" />
 
