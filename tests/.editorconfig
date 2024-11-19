@@ -9,5 +9,6 @@ dotnet_diagnostic.CA1812.severity = suggestion # Avoid uninstantiated internal c
 dotnet_diagnostic.CA1510.severity = none # Use 'ArgumentNullException.ThrowIfNull'
 
 [*{Test,Tests}.cs]
+dotnet_diagnostic.CA1515.severity = none # Consider making public types internal
 dotnet_diagnostic.CA1707.severity = none # Identifiers should not contain underscores
 resharper_inconsistent_naming_highlighting = none # InconsistentNaming
