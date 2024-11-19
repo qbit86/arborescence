@@ -16,7 +16,7 @@ Commonly used types:
   <PropertyGroup>
     <AssemblyVersion>0.17</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <TargetFrameworks>net461;netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(DebugType)' == 'portable'">
@@ -32,6 +32,6 @@ Commonly used types:
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
 
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
 
 </Project>

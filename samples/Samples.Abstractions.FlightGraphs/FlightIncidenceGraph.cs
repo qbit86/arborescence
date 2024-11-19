@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using EdgeEnumerator = System.ArraySegment<int>.Enumerator;
 
-public sealed class FlightIncidenceGraph :
+internal sealed class FlightIncidenceGraph :
     IGraph<string, int>, IForwardIncidence<string, int, EdgeEnumerator>
 {
     private static readonly int[] s_lhrFlights = { 676, 1980 };

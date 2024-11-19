@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using NeighborEnumerator = System.ArraySegment<string>.Enumerator;
 
-public sealed class FlightAdjacencyGraph :
+internal sealed class FlightAdjacencyGraph :
     IOutNeighborsAdjacency<string, NeighborEnumerator>
 {
     private static readonly string[] s_lhrNeighbors = { "IST", "IST" };

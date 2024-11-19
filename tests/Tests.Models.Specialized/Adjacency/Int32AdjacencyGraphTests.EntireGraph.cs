@@ -28,8 +28,7 @@ public sealed partial class Int32AdjacencyGraphTests
             while (neighborEnumerator.MoveNext())
                 actualNeighbors.Add(neighborEnumerator.Current);
             var expectedNeighborsRaw = expectedNeighborsByVertex[vertex];
-            if (expectedNeighborsRaw is not IList<int> expectedNeighbors)
-                expectedNeighbors = expectedNeighborsRaw.ToList();
+            var expectedNeighbors = expectedNeighborsRaw as IList<int> ?? expectedNeighborsRaw.ToList();
             if (expectedNeighbors.Count != actualNeighbors.Count)
             {
                 Assert.Fail(
