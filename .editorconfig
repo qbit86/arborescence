@@ -157,6 +157,7 @@ resharper_xmldoc_wrap_lines = false
 
 [AssemblyInfo.cs]
 generated_code = true
+ij_formatter_enabled = false
 
 [*.{cs,vb}]
 dotnet_naming_rule.enums_should_be_pascalcase.severity = suggestion
