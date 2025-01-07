@@ -54,10 +54,8 @@ public sealed partial class Int32AdjacencyGraphTests
             Create("p", "r")
         };
 
-        static Endpoints<int> Create(ReadOnlySpan<char> tail, ReadOnlySpan<char> head)
-        {
-            return Endpoints.Create(Base32.Parse(tail), Base32.Parse(head));
-        }
+        static Endpoints<int> Create(ReadOnlySpan<char> tail, ReadOnlySpan<char> head) =>
+            Endpoints.Create(Base32.Parse(tail), Base32.Parse(head));
 
         // Act
         var graph = Int32AdjacencyGraph.FromEdges(edges);
