@@ -1,35 +1,36 @@
 ---
-status: superseded by [ADR-0006](0006-restrict-language-version-to-csharp-10)
-date: 2022-11-16
+status: accepted
+date: 2025-06-02
 ---
-# Restrict language version to C# 9
+# Restrict language version to C# 10
 
 ## Context and Problem Statement
 
-Which language version should we prefer? Should we restrict the version at all?
+Which language version should we prefer?
+Should we restrict the version at all?
 
 ## Decision Drivers
 
-* Target-typed new expressions and improved pattern matching
-* Binary compatible with Unity 2021.3
-* Source compatible with Unity 2021.3
-* Source compatible with online coding platforms: CodinGame[^CG], LeetCode[^LC], HackerRank[^HR], Codeforces[^CF]
+- Improved pattern matching and record types enhancements
+- Binary compatible with Unity 6
+- Source compatible with Unity 6
+- Source compatible with online coding platforms: CodinGame[^CG], LeetCode[^LC], HackerRank[^HR], Codeforces[^CF]
 
 ## Considered Options
 
-* C# 8[^C8]
-* C# 9[^C9]
-* C# 10[^C10]
-* C# 11[^C11]
+- C# 9[^C9]
+- C# 10[^C10]
+- C# 11[^C11]
+- C# 12[^C12]
 
 ## Decision Outcome
 
-Chosen option: “C# 9”.
+Chosen option: "C# 10".
 This is specified in one of the _Directory.Build.props_ files:
 ```xml
 <Project>
   <PropertyGroup>
-    <LangVersion>9</LangVersion>
+    <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
@@ -37,23 +38,25 @@ This is specified in one of the _Directory.Build.props_ files:
 
 ### Consequences
 
-* Good, because C# 9 is supported by the most popular online coding platforms.
-* Good, because C# 9 is both binary (via .NET Standard 2.1) and source code compatible with Unity 2021.3.
+- Good, because C# 10 is supported by all the popular online coding platforms.
+- Good, because C# 10 is both binary and source code compatible with Unity 6.
 
 ## Pros and Cons of the Options
 
-### C# 8
+### C# 9
 
-* Bad, because is too outdated.
+- Bad, because Unity 6 partially supports C# 10, so we can leverage newer features.
 
 ### C# 10
 
-* Good, because is supported by the most popular online coding platforms.
-* Bad, because is not supported by Unity 2021.3.
+- Good, because is supported by Unity 6.
+- Good, because is supported by all the popular online coding platforms.
 
 ### C# 11
 
-* Bad, because is not supported by some popular online coding platforms as of November 2022.
+- Good, because provides additional language improvements.
+- Bad, because is not supported by Unity 6.
+- Bad, because is not supported by Codeforces[^CF] as of June 2025.
 
 ## More Information
 
@@ -62,14 +65,14 @@ This is specified in one of the _Directory.Build.props_ files:
 - .NET Standard  
     https://docs.microsoft.com/en-us/dotnet/standard/net-standard
 
-[^C8]: What's new in C# 8.0  
-    https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history#c-version-80
 [^C9]: What's new in C# 9.0  
     https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-9
 [^C10]: What's new in C# 10  
     https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-10
 [^C11]: What's new in C# 11  
     https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-11
+[^C12]: What's new in C# 12  
+    https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12
 [^CF]: Codeforces Command Lines  
     https://codeforces.com/blog/entry/121114
 [^CG]: CodinGame - Languages Versions  
