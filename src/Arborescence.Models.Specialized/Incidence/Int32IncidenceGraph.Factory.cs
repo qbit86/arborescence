@@ -1,6 +1,7 @@
 namespace Arborescence.Models.Specialized
 {
     using System;
+    using System.Buffers;
     using System.Diagnostics;
 #if NET5_0_OR_GREATER
     using System.Collections.Generic;
@@ -282,23 +283,23 @@ namespace Arborescence.Models.Specialized
             int[] data = ArrayHelpers.AllocateUninitializedArray<int>(dataLength);
             data[0] = vertexCount;
             data[1] = edgeCount;
-            int[] edgesOrderedByTailBuffer = System.Buffers.ArrayPool<int>.Shared.Rent(edgeCount);
-            Span<int> headByEdge = data.AsSpan(2 + vertexCount + edgeCount, edgeCount);
-            Span<int> tailByEdge = data.AsSpan(2 + vertexCount + edgeCount + edgeCount, edgeCount);
+            int[] edgesOrderedByTailBuffer = ArrayPool<int>.Shared.Rent(edgeCount);
+            var headByEdge = data.AsSpan(2 + vertexCount + edgeCount, edgeCount);
+            var tailByEdge = data.AsSpan(2 + vertexCount + edgeCount + edgeCount, edgeCount);
             for (int i = 0; i < edgeCount; ++i)
             {
                 edgesOrderedByTailBuffer[i] = i;
-                Endpoints<int> endpoints = endpointsByEdge[i];
+                var endpoints = endpointsByEdge[i];
                 headByEdge[i] = endpoints.Head;
                 tailByEdge[i] = endpoints.Tail;
             }
 
             Array.Sort(endpointsByEdge, edgesOrderedByTailBuffer, EdgeComparer.Instance);
-            Span<int> edgesOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
+            var edgesOrderedByTail = data.AsSpan(2 + vertexCount, edgeCount);
             edgesOrderedByTailBuffer.AsSpan(0, edgeCount).CopyTo(edgesOrderedByTail);
-            System.Buffers.ArrayPool<int>.Shared.Return(edgesOrderedByTailBuffer);
+            ArrayPool<int>.Shared.Return(edgesOrderedByTailBuffer);
 
-            Span<int> upperBoundByVertex = data.AsSpan(2, vertexCount);
+            var upperBoundByVertex = data.AsSpan(2, vertexCount);
             PopulateUpperBoundByVertex(vertexCount, edgeCount, edgesOrderedByTail, tailByEdge, upperBoundByVertex);
 
             return new(data);
