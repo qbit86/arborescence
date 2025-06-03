@@ -23,7 +23,6 @@ Commonly used types:
   <PropertyGroup>
     <AssemblyVersion>0.17</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <LangVersion>10</LangVersion>
     <RootNamespace>Arborescence.Traversal</RootNamespace>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
