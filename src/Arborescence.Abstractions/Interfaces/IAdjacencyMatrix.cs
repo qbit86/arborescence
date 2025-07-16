@@ -18,7 +18,7 @@ namespace Arborescence
         /// <param name="tail">The tail of the edge to get.</param>
         /// <param name="head">The head of the edge to get.</param>
         /// <param name="edge">
-        /// When this method returns, contains the edge with the specified endpoints, if the edge is found;
+        /// When this method returns, contains the edge with the specified endpoints if the edge is found;
         /// otherwise, the unspecified value.
         /// </param>
         /// <returns>A value indicating whether the edge was found successfully.</returns>

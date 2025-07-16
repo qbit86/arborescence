@@ -15,13 +15,13 @@ namespace Arborescence
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
             ThrowHelper.ThrowNotSupportedException();
-            return default;
+            return null;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             ThrowHelper.ThrowNotSupportedException();
-            return default;
+            return null;
         }
 
         int IReadOnlyCollection<KeyValuePair<TKey, TValue>>.Count
@@ -29,7 +29,7 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return 0;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return null;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return null;
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Arborescence
         /// <summary>
         /// Enumerates the out-neighbors of the vertex.
         /// </summary>
-        /// <param name="vertex">The vertex which out-neighbours to enumerate.</param>
+        /// <param name="vertex">The vertex which out-neighbors to enumerate.</param>
         /// <returns>An enumeration of out-neighbors of the specified vertex.</returns>
         TNeighbors EnumerateOutNeighbors(TVertex vertex);
     }

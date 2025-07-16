@@ -19,7 +19,7 @@ namespace Arborescence
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
         {
             ThrowHelper.ThrowNotSupportedException();
-            return default;
+            return false;
         }
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
@@ -28,7 +28,7 @@ namespace Arborescence
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
             ThrowHelper.ThrowNotSupportedException();
-            return default;
+            return false;
         }
 
         int ICollection<KeyValuePair<TKey, TValue>>.Count =>
@@ -39,7 +39,7 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return false;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Arborescence
         bool IDictionary<TKey, TValue>.Remove(TKey key)
         {
             ThrowHelper.ThrowNotSupportedException();
-            return default;
+            return false;
         }
 
         bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) =>
@@ -66,7 +66,7 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return null;
             }
         }
 
@@ -75,14 +75,14 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return null;
             }
         }
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
             ThrowHelper.ThrowNotSupportedException();
-            return default;
+            return null;
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -92,7 +92,7 @@ namespace Arborescence
             get
             {
                 ThrowHelper.ThrowNotSupportedException();
-                return default;
+                return 0;
             }
         }
 

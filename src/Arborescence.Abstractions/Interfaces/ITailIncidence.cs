@@ -3,7 +3,7 @@ namespace Arborescence
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Represents a notion of incidence — an access to the tail of each edge.
+    /// Represents a notion of incidence — access to the tail of each edge.
     /// </summary>
     /// <seealso href="https://en.wikipedia.org/wiki/Incidence_(graph)"/>
     /// <seealso href="https://en.wikipedia.org/wiki/Multigraph#Directed_multigraph_(edges_with_own_identity)"/>
@@ -16,7 +16,7 @@ namespace Arborescence
         /// </summary>
         /// <param name="edge">The out-edge of the vertex to get.</param>
         /// <param name="tail">
-        /// When this method returns, contains the tail of the specified edge, if the edge is found;
+        /// When this method returns, contains the tail of the specified edge if the edge is found;
         /// otherwise, the unspecified value.
         /// </param>
         /// <returns>A value indicating whether the edge was found successfully.</returns>
