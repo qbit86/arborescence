@@ -83,11 +83,14 @@ Each sentence should start from a new line.
 ## Italics/Emphasis
 
 Use single underscores (`_text_`) for italics/emphasis instead of single asterisks (`*text*`).
+Keep double asterisks (`**text**`) for bold formatting intact - do not change them to underscores.
 
 ✔️ Correct:
 
 ```markdown
 This is _correct emphasis_.
+This is **correct bold formatting**.
+This text has both _emphasis_ and **bold** formatting.
 ```
 
 ❌ Incorrect:
