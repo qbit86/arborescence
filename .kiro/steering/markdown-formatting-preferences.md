@@ -1,7 +1,6 @@
 ---
-description: Specifies formatting preferences for Markdown content
-globs: *.md,*.mdc
-alwaysApply: false
+inclusion: fileMatch
+fileMatchPattern: "*.md,*.mdc"
 ---
 # Markdown Formatting Preferences
 
