@@ -6,14 +6,13 @@ The Arborescence solution follows a clear modular structure with separation by p
 
 ```
 Arborescence/
+├── assets/                 # Icons, diagrams, signing keys
+├── benchmarks/             # Performance benchmarks
+├── docs/                   # Documentation
+├── samples/                # Example applications
 ├── src/                    # Main library code
 ├── tests/                  # Unit tests
-├── samples/                # Example applications
-├── benchmarks/             # Performance benchmarks
-├── tools/                  # Development utilities
-├── docs/                   # Documentation
-├── assets/                 # Icons, diagrams, signing keys
-└── memory-bank/            # Project context files
+└── tools/                  # Development utilities
 ```
 
 ## Source Code Structure (`src/`)
@@ -34,7 +33,7 @@ Arborescence/
 
 ### Shared Code
 
-- **src/Shared/**: Contains shared projects (.shproj files) for common utilities
+- **src/Shared/**: Contains shared projects (`.shproj` files) for common utilities
     - NullableAttributes, TryHelpers, ValueStack, ValueQueue, etc.
 
 ## Test Structure (`tests/`)
@@ -67,5 +66,6 @@ Arborescence/
 - **Namespaces**: Follow `Arborescence.[Component]` pattern
 - **Projects**: Use full namespace as project name
 - **Specialized**: Append `.Specialized` for optimized implementations
-- **Tests**: Prefix with `Tests.` followed by component name
+- **Benchmarks**: Prefix with `Benchmarks.` followed by component name
 - **Samples**: Prefix with `Samples.` followed by component and purpose
+- **Tests**: Prefix with `Tests.` followed by component name

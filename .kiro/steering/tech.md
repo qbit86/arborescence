@@ -2,16 +2,16 @@
 
 ## Build System & Framework
 
-- **.NET 9.0**: Target framework (SDK version 9.0.100)
+- **.NET 10.0**: SDK version 10.0.100
 - **MSBuild**: Project system with SDK-style .csproj files
 - **Central Package Management**: Uses Directory.Packages.props for version management
 - **Artifacts Output**: Uses modern artifacts output structure
 
 ## Development Tools
 
-- **xUnit**: Testing framework (v2.6.5)
-- **BenchmarkDotNet**: Performance benchmarking (v0.13.12)
-- **Microsoft.NET.Test.Sdk**: Test runner (v17.8.0)
+- **xUnit**: Testing framework
+- **BenchmarkDotNet**: Performance benchmarking
+- **Microsoft.NET.Test.Sdk**: Test runner
 - **SourceLink**: Source debugging support
 
 ## Code Quality & Analysis

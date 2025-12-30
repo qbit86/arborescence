@@ -12,13 +12,14 @@ It provides efficient implementations for graph representation, traversal, and s
 
 ## Package Architecture
 
-The library is organized into 7 main NuGet packages:
+The library is organized into the following main packages:
 
 - **Abstractions**: Interfaces and concepts for examining graphs and collections
 - **Models**: Generic graph structures implementing the core interfaces
 - **Models.Specialized**: Efficient adjacency/incidence graphs for integer vertices
 - **Primitives**: Building blocks for data structures and APIs
 - **Primitives.Specialized**: Efficient specializations for different vocabulary types
+- **Search**: Search algorithms (Dijkstra, A*)
 - **Traversal**: Graph traversal algorithms (BFS, DFS)
 - **Traversal.Specialized**: Traversal algorithms specialized for integer vertices
 
