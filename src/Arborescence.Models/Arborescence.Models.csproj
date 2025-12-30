@@ -13,7 +13,7 @@ Commonly used types:
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>adjacency;graph;incidence;model</PackageTags>
     <Title>Generic graph models</Title>
-    <VersionPrefix>0.17.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,7 +21,7 @@ Commonly used types:
     <FileVersion>$(VersionPrefix)</FileVersion>
     <LangVersion Condition="'$(TargetFramework)' == 'net7.0' OR '$(TargetFramework)' == 'net8.0'">11</LangVersion>
     <RootNamespace>Arborescence.Models</RootNamespace>
-    <TargetFrameworks>net461;net7.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net462;net7.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,7 +32,7 @@ Commonly used types:
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.HashCode" />
   </ItemGroup>
 
@@ -41,7 +41,7 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
   </ItemGroup>
 
-  <Import Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
   <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
   <Import Project="..\Shared\TryHelpers\TryHelpers.projitems" Label="Shared" />
 
