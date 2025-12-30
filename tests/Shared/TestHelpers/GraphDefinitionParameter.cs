@@ -9,8 +9,7 @@ internal sealed class GraphDefinitionParameter
 
     internal GraphDefinitionParameter(int vertexCount, IReadOnlyList<Endpoints<int>> edges, string description)
     {
-        if (vertexCount < 0)
-            throw new ArgumentOutOfRangeException(nameof(vertexCount));
+        ArgumentOutOfRangeException.ThrowIfNegative(vertexCount);
 
         VertexCount = vertexCount;
         Edges = edges;
