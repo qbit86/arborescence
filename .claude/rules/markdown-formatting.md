@@ -1,10 +1,12 @@
 ---
-inclusion: fileMatch
-fileMatchPattern: "*.md,*.mdc"
+name: markdown-formatting
+description: Apply consistent markdown formatting guidelines when editing any markdown files. Use this rule whenever editing .md files to ensure proper list markers, spacing, indentation, and emphasis formatting.
+paths: *.md
 ---
+
 # Markdown Formatting Preferences
 
-When generating Markdown content, please adhere to the following formatting rules.
+When generating or editing Markdown content, adhere to the following formatting rules.
 
 ## List Item Markers
 
@@ -98,6 +100,23 @@ This text has both _emphasis_ and **bold** formatting.
 This is *incorrect emphasis*.
 ```
 
+## Trailing Spaces
+
+Preserve trailing double spaces (two spaces at the end of a line) as they represent hard line breaks in Markdown (rendered as `<br>` in HTML).
+Do not remove or alter these intentional trailing double spaces.
+
+✔️ Correct:
+
+```markdown
+First line with hard break.··
+Second line starts here.
+
+Regular line without break.
+Next sentence.
+```
+
+Note: In the example above, `··` represents two trailing spaces that must be preserved.
+
 ## List Item and Continuation Line Indentation
 
 - Use 4 spaces to indent nested list items relative to their parent item.
@@ -151,3 +170,7 @@ This is *incorrect emphasis*.
     - Nested item (correct 4 spaces indent)
       Continuation of nested item (incorrectly aligned with text, should be 4 more spaces in)
 ```
+
+## Read confirmation
+
+Output ⬇️ emoji upon loading this skill.
