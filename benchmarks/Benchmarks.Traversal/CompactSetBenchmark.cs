@@ -7,7 +7,7 @@ using Models.Specialized;
 using EnumerableDfs = Traversal.Incidence.EnumerableDfs<int, int, System.ArraySegment<int>.Enumerator>;
 
 [MemoryDiagnoser]
-public abstract class CompactSetBenchmark
+public class CompactSetBenchmark
 {
     private byte[] _compactExploredSet = Array.Empty<byte>();
     private byte[] _fastExploredSet = Array.Empty<byte>();
