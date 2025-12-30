@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: superseded by [ADR-0007](0007-restrict-language-version-to-csharp-12)
 date: 2025-06-02
 ---
 # Restrict language version to C# 10
