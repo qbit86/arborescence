@@ -2,7 +2,7 @@
   <Import Project="../Directory.Build.props" />
   <PropertyGroup>
     <Authors>Viktor Tselov</Authors>
-    <Copyright>Copyright (c) Viktor Tselov 2025</Copyright>
+    <Copyright>Copyright (c) 2017-2026 Viktor Tselov</Copyright>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
