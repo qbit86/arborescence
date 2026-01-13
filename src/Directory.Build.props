@@ -9,7 +9,6 @@
     <PackageReleaseNotes>https://github.com/qbit86/arborescence/blob/develop/CHANGELOG.md</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/qbit86/arborescence</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <VersionPrefix>0.18.0</VersionPrefix>
   </PropertyGroup>
