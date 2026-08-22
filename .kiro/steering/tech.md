@@ -2,7 +2,7 @@
 
 ## Build System & Framework
 
-- **.NET 10.0**: SDK version 10.0.100
+- **.NET**: @global.json
 - **MSBuild**: Project system with SDK-style .csproj files
 - **Central Package Management**: Uses Directory.Packages.props for version management
 - **Artifacts Output**: Uses modern artifacts output structure
