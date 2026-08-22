@@ -1,24 +1,43 @@
 # Product Overview
 
-Arborescence is a generic .NET library for graph algorithms and data structures.
-It provides efficient implementations for graph representation, traversal, and search operations.
+Arborescence is a generic .NET library of graph data structures and algorithms.
+The interfaces stay data-structure-agnostic, so a caller keeps its own graph representation.
 
-## Core Purpose
+## Packages
 
-- Generic graph structures that implement data-structure-agnostic interfaces
-- Widely used graph traversal algorithms (BFS, DFS)
-- Specialized implementations optimized for integer vertices from contiguous ranges
-- Building blocks for creating various graph-based data structures and APIs
+Every package name carries the `Arborescence.` prefix.
 
-## Package Architecture
+- **Abstractions** — interfaces and concepts for examining graphs and collections.
+- **Primitives** — building blocks for data structures and APIs.
+- **Models** — generic graph structures that implement the interfaces.
+- **Traversal** — BFS and DFS.
+- **Search** — Dijkstra; preview.
+- **Primitives.Specialized**, **Models.Specialized**, **Traversal.Specialized** — `Int32` counterparts of the base package, for vertices and keys from a contiguous range.
 
-The library is organized into the following main packages:
+```mermaid
+flowchart BT
+    Abstractions
+    Primitives
+    Models
+    PrimitivesSpecialized["Primitives.Specialized"]
+    Traversal
+    ModelsSpecialized["Models.Specialized"]
+    TraversalSpecialized["Traversal.Specialized"]
 
-- **Abstractions**: Interfaces and concepts for examining graphs and collections
-- **Models**: Generic graph structures implementing the core interfaces
-- **Models.Specialized**: Efficient adjacency/incidence graphs for integer vertices
-- **Primitives**: Building blocks for data structures and APIs
-- **Primitives.Specialized**: Efficient specializations for different vocabulary types
-- **Search**: Search algorithms (Dijkstra, A*)
-- **Traversal**: Graph traversal algorithms (BFS, DFS)
-- **Traversal.Specialized**: Traversal algorithms specialized for integer vertices
+    Models --> Abstractions
+    Models --> Primitives
+    PrimitivesSpecialized --> Primitives
+    Traversal --> Abstractions
+    Traversal --> Primitives
+    ModelsSpecialized --> Abstractions
+    ModelsSpecialized --> Models
+    ModelsSpecialized --> PrimitivesSpecialized
+    TraversalSpecialized --> PrimitivesSpecialized
+    TraversalSpecialized --> Abstractions
+    TraversalSpecialized --> Primitives
+    TraversalSpecialized --> Traversal
+
+    classDef default fill:white,stroke:black,color:black
+    classDef specialized fill:grey,stroke:black,color:black
+    class PrimitivesSpecialized,ModelsSpecialized,TraversalSpecialized specialized
+```

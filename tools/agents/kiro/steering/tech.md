@@ -1,64 +1,29 @@
 # Technology Stack
 
-## Build System & Framework
+## Platform
 
-- **.NET**: @global.json
-- **MSBuild**: Project system with SDK-style .csproj files
-- **Central Package Management**: Uses Directory.Packages.props for version management
-- **Artifacts Output**: Uses modern artifacts output structure
+- **SDK**: @global.json
+- **Target frameworks**: `src/` projects multi-target down to `net462` and `netstandard2.0`.
+    Read the `.csproj` before you use a recent API, and polyfill it in `src/Shared/` instead of raising the floor.
+- **Language**: C# 12 in `src/`, C# 14 in `tests/` and `benchmarks/`.
+- **Nullable reference types**: enabled everywhere.
 
-## Development Tools
+## Rules
 
-- **xUnit**: Testing framework
-- **BenchmarkDotNet**: Performance benchmarking
-- **Microsoft.NET.Test.Sdk**: Test runner
-- **SourceLink**: Source debugging support
+- Declare package versions in `Directory.Packages.props` only, never in a `.csproj`.
+- Document every public API; `GenerateDocumentationFile` reports a missing comment as a warning.
+- Fix analyzer warnings instead of suppressing them: `AnalysisMode` is `All`.
+- Place using directives inside the namespace.
+- Keep the sections of `.editorconfig` sorted alphabetically.
+- Record a notable decision as an ADR in `docs/decisions/`.
 
-## Code Quality & Analysis
+## Tools
 
-- **Nullable Reference Types**: Enabled project-wide
-- **Code Analysis**: Latest analysis level with all analyzers enabled
-- **Deterministic Builds**: Enabled for reproducible builds
-- **EditorConfig**: Comprehensive code style enforcement
-
-## Common Commands
-
-### Building
-
-```bash
-dotnet build
-dotnet build --configuration Release
-```
-
-### Testing
-
-```bash
-dotnet test
-dotnet test --configuration Release
-```
-
-### Packaging
-
-```bash
-dotnet pack
-dotnet pack --configuration Release
-```
-
-### Benchmarking
-
-```bash
-dotnet run --project benchmarks/Benchmarks.Traversal --configuration Release
-```
-
-### Running Samples
-
-```bash
-dotnet run --project samples/Samples.Traversal.BasicUsage
-```
-
-## Project Configuration
-
-- **Root Namespace**: Arborescence
-- **Neutral Language**: en-US
-- **Assembly Signing**: Uses arborescence.snk key file
-- **NuGet Configuration**: Custom nuget.config for package sources
+- **xUnit** for tests.
+- **BenchmarkDotNet** for benchmarks.
+    Run them in Release:
+    ```bash
+    dotnet run --project benchmarks/Benchmarks.Traversal --configuration Release
+    ```
+- **DotNet.ReproducibleBuilds** for deterministic builds.
+    `src/` assemblies are signed with `assets/arborescence.snk`, and the build writes to `.artifacts/`.
