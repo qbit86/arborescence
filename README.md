@@ -20,7 +20,33 @@ Arborescence is a generic .NET library for dealing with graphs.
 - [Traversal] — widely used graph traversal algorithms such as BFS and DFS.
 - [Traversal.Specialized] — traversal algorithms specialized for integer vertices from a contiguous range.
 
-![](/assets/dependencies.svg)
+```mermaid
+flowchart BT
+    Abstractions
+    Primitives
+    Models
+    PrimitivesSpecialized["Primitives.Specialized"]
+    Traversal
+    ModelsSpecialized["Models.Specialized"]
+    TraversalSpecialized["Traversal.Specialized"]
+
+    Models --> Abstractions
+    Models --> Primitives
+    PrimitivesSpecialized --> Primitives
+    Traversal --> Abstractions
+    Traversal --> Primitives
+    ModelsSpecialized --> Abstractions
+    ModelsSpecialized --> Models
+    ModelsSpecialized --> PrimitivesSpecialized
+    TraversalSpecialized --> PrimitivesSpecialized
+    TraversalSpecialized --> Abstractions
+    TraversalSpecialized --> Primitives
+    TraversalSpecialized --> Traversal
+
+    classDef default fill:white,stroke:black,color:black
+    classDef specialized fill:grey,stroke:black,color:black
+    class PrimitivesSpecialized,ModelsSpecialized,TraversalSpecialized specialized
+```
 
 ## Installation
 
