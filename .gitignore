@@ -1,4 +1,5 @@
 .artifacts/
+.claude/settings.local.json
 .idea/**/riderMarkupCache.xml
 .vs/
 .vscode/
