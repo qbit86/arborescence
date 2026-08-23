@@ -79,7 +79,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateEdgesIterator(graph, sources, exploredSet);
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TSourceCollection>(
@@ -94,7 +95,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateEdgesIterator(graph, sources, exploredSet);
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateEdgesIterator(graph, sources, exploredSet);
         }
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<
@@ -113,21 +115,8 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateEdgesIterator(graph, sources, exploredSet);
-        }
-
-        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<
-            TGraph, TSourceCollection, TExploredSet>(
-            TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceCollection : IEnumerable<TVertex>
-            where TExploredSet : ISet<TVertex>
-        {
-            using Traversal.Queue<TVertex> frontier = new();
-            var edges = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
-                .EnumerateEdgesIterator(graph, sources, frontier, exploredSet);
-            foreach (var edge in edges)
-                yield return edge;
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateEdgesIterator(graph, sources, exploredSet);
         }
     }
 }

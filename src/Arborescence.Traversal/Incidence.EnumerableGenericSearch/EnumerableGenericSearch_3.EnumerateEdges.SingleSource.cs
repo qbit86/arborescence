@@ -3,9 +3,6 @@ namespace Arborescence.Traversal.Incidence
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-#if DEBUG
-    using System.Diagnostics;
-#endif
 
     public static partial class EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
     {
@@ -98,7 +95,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
+            return Internal.Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
         }
 
         internal static IEnumerable<TEdge> EnumerateEdgesChecked<TGraph, TFrontier>(
@@ -113,7 +111,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
+            return Internal.Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
         }
 
         internal static IEnumerable<TEdge> EnumerateEdgesChecked<
@@ -131,45 +130,8 @@ namespace Arborescence.Traversal.Incidence
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-        }
-
-        internal static IEnumerable<TEdge> EnumerateEdgesIterator<
-            TGraph, TFrontier, TExploredSet>(TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
-            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
-            where TFrontier : IProducerConsumerCollection<TVertex>
-            where TExploredSet : ISet<TVertex>
-        {
-            if (!exploredSet.Add(source))
-                yield break;
-            frontier.AddOrThrow(source);
-
-            while (frontier.TryTake(out var current))
-            {
-#if DEBUG
-                Debug.Assert(exploredSet.Contains(current));
-#endif
-                var outEdges = graph.EnumerateOutEdges(current);
-                try
-                {
-                    while (outEdges.MoveNext())
-                    {
-                        var edge = outEdges.Current;
-                        if (!graph.TryGetHead(edge, out var neighbor))
-                            continue;
-                        if (exploredSet.Contains(neighbor))
-                            continue;
-
-                        yield return edge;
-                        exploredSet.Add(neighbor);
-                        frontier.AddOrThrow(neighbor);
-                    }
-                }
-                finally
-                {
-                    outEdges.Dispose();
-                }
-            }
+            return Internal.Incidence.EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
         }
     }
 }

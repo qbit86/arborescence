@@ -27,6 +27,10 @@ Commonly used types:
     <TargetFrameworks>net462;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeTraversalInternalInPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
@@ -35,7 +39,6 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Abstractions\Arborescence.Abstractions.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
-    <ProjectReference Include="..\Arborescence.Traversal\Arborescence.Traversal.csproj" />
     <ProjectReference Include="..\Internal\Arborescence.Traversal.Internal\Arborescence.Traversal.Internal.csproj" PrivateAssets="All" />
   </ItemGroup>
 
@@ -47,6 +50,14 @@ Commonly used types:
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
+  <Import Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
+  <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
   <Import Project="..\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.projitems" Label="Shared" />
+
+  <Target Name="IncludeTraversalInternalInPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Arborescence.Traversal.Internal.dll'" />
+    </ItemGroup>
+  </Target>
 
 </Project>

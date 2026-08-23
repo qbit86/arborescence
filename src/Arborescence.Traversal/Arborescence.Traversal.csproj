@@ -27,6 +27,10 @@ Commonly used types:
     <TargetFrameworks>net462;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeTraversalInternalInPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
@@ -37,6 +41,7 @@ Commonly used types:
     <ProjectReference Include="..\Internal\Arborescence.Traversal.Internal\Arborescence.Traversal.Internal.csproj" PrivateAssets="All" />
   </ItemGroup>
 
+  <!-- Arborescence.Traversal.Internal ships inside this package, so its own dependency has to be declared here. -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
@@ -45,13 +50,13 @@ Commonly used types:
     <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup>
-    <InternalsVisibleTo Include="Arborescence.Traversal.Specialized, PublicKey=0024000004800000940000000602000000240000525341310004000001000100dd071aad0619a7f0f4efe751b7dacafd2320b256d39904fed1493a401cc48faebe6101e81fd2c2da86a45ef2bf0c2d0122d8578c8bafa3170096a9132b9d50c39ad5021e6d5ed4c0cf150dedbd41f4debc88e315519a4cd96b5cf420b07699daee4405ce4513cedb6802e007bf54138cc00572ec1990d83dc52cb0948210aebe" />
-  </ItemGroup>
-
   <Import Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
   <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
-  <Import Project="..\Shared\ValueQueue\ValueQueue.projitems" Label="Shared" />
-  <Import Project="..\Shared\ValueStack\ValueStack.projitems" Label="Shared" />
+
+  <Target Name="IncludeTraversalInternalInPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Arborescence.Traversal.Internal.dll'" />
+    </ItemGroup>
+  </Target>
 
 </Project>

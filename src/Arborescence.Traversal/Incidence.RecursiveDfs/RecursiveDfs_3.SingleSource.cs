@@ -105,7 +105,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new();
-            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
+            Internal.Incidence.RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>.TraverseUnchecked(
+                graph, source, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, THandler>(
@@ -124,7 +125,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new(comparer);
-            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
+            Internal.Incidence.RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>.TraverseUnchecked(
+                graph, source, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TColorMap, THandler>(
@@ -146,21 +148,8 @@ namespace Arborescence.Traversal.Incidence
             if (handler is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
-            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
-        }
-
-        internal static void TraverseUnchecked<TGraph, TColorMap, THandler>(
-            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
-            CancellationToken cancellationToken)
-            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
-            where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IDfsHandler<TVertex, TEdge, TGraph>
-        {
-            var color = colorByVertex.GetValueOrDefault(source, Color.None);
-            if (color is not (Color.None or Color.White))
-                return;
-            handler.OnStartVertex(graph, source);
-            Visit(graph, source, colorByVertex, handler, cancellationToken);
+            Internal.Incidence.RecursiveDfs<TVertex, TEdge, TEdgeEnumerator>.TraverseUnchecked(
+                graph, source, colorByVertex, handler, cancellationToken);
         }
     }
 }

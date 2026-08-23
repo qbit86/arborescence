@@ -64,7 +64,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateVerticesIterator(graph, source, exploredSet);
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph>(
@@ -75,7 +76,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateVerticesIterator(graph, source, exploredSet);
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TExploredSet>(
@@ -89,19 +91,8 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, source, exploredSet);
-        }
-
-        internal static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
-            TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TExploredSet : ISet<TVertex>
-        {
-            using Traversal.Queue<TVertex> frontier = new();
-            var vertices = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
-                .EnumerateVerticesIterator(graph, source, frontier, exploredSet);
-            foreach (var vertex in vertices)
-                yield return vertex;
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
     }
 }

@@ -105,7 +105,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new();
-            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
+            Internal.Adjacency.EagerDfs<TVertex, TNeighborEnumerator>.TraverseUnchecked(
+                graph, source, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, THandler>(
@@ -124,7 +125,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new(comparer);
-            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
+            Internal.Adjacency.EagerDfs<TVertex, TNeighborEnumerator>.TraverseUnchecked(
+                graph, source, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TColorMap, THandler>(
@@ -146,18 +148,8 @@ namespace Arborescence.Traversal.Adjacency
             if (handler is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
-            TraverseUnchecked(graph, source, colorByVertex, handler, cancellationToken);
-        }
-
-        internal static void TraverseUnchecked<TGraph, TColorMap, THandler>(
-            TGraph graph, TVertex source, TColorMap colorByVertex, THandler handler,
-            CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IDfsHandler<TVertex, Endpoints<TVertex>, TGraph>
-        {
-            handler.OnStartVertex(graph, source);
-            TraverseCore(graph, source, colorByVertex, handler, cancellationToken);
+            Internal.Adjacency.EagerDfs<TVertex, TNeighborEnumerator>.TraverseUnchecked(
+                graph, source, colorByVertex, handler, cancellationToken);
         }
     }
 }

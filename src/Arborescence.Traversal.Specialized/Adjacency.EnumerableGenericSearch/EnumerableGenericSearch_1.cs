@@ -5,7 +5,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using Traversal.Adjacency;
+    using Internal.Adjacency;
 
     /// <summary>
     /// Represents the generic search algorithm — traversal of the graph

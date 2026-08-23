@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- Abstractions: Moved `IBfsHandler<TVertex, TEdge, TGraph>` and `IDfsHandler<TVertex, TEdge, TGraph>` here from Traversal.
+    The namespace stays `Arborescence.Traversal`, and Traversal forwards both types, so existing code keeps working.
+- Traversal, Traversal.Specialized: Moved the shared generic implementation to the internal assembly `Arborescence.Traversal.Internal`, which both packages embed.
+    Traversal.Specialized no longer depends on Traversal.
+
 ## [0.17.0] - 2024-01-11
 
 ### Added

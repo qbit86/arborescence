@@ -64,7 +64,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateVerticesIterator(graph, source, exploredSet);
+            return Internal.Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph>(
@@ -75,7 +76,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateVerticesIterator(graph, source, exploredSet);
+            return Internal.Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TExploredSet>(
@@ -89,48 +91,8 @@ namespace Arborescence.Traversal.Incidence
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, source, exploredSet);
-        }
-
-        internal static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
-            TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
-            where TExploredSet : ISet<TVertex>
-        {
-            if (!exploredSet.Add(source))
-                yield break;
-            yield return source;
-            var stack = new ValueStack<TEdgeEnumerator>();
-            try
-            {
-                stack.Add(graph.EnumerateOutEdges(source));
-
-                while (stack.TryTake(out var edgeEnumerator))
-                {
-                    if (!edgeEnumerator.MoveNext())
-                    {
-                        edgeEnumerator.Dispose();
-                        continue;
-                    }
-
-                    var edge = edgeEnumerator.Current;
-                    stack.Add(edgeEnumerator);
-
-                    if (!graph.TryGetHead(edge, out var neighbor))
-                        continue;
-
-                    if (!exploredSet.Add(neighbor))
-                        continue;
-                    yield return neighbor;
-                    stack.Add(graph.EnumerateOutEdges(neighbor));
-                }
-            }
-            finally
-            {
-                while (stack.TryTake(out var stackFrame))
-                    stackFrame.Dispose();
-                stack.Dispose();
-            }
+            return Internal.Incidence.EnumerableDfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
     }
 }
