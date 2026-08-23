@@ -36,6 +36,7 @@ Commonly used types:
     <ProjectReference Include="..\Arborescence.Primitives\Arborescence.Primitives.csproj" />
     <ProjectReference Include="..\Arborescence.Primitives.Specialized\Arborescence.Primitives.Specialized.csproj" />
     <ProjectReference Include="..\Arborescence.Traversal\Arborescence.Traversal.csproj" />
+    <ProjectReference Include="..\Internal\Arborescence.Traversal.Internal\Arborescence.Traversal.Internal.csproj" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'">
