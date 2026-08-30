@@ -112,7 +112,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new();
-            TraverseUnchecked(graph, sources, colorByVertex, handler, cancellationToken);
+            Internal.Incidence.EagerDfs<TVertex, TEdge, TEdgeEnumerator>.TraverseUnchecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TSourceCollection, THandler>(
@@ -132,7 +133,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new(comparer);
-            TraverseUnchecked(graph, sources, colorByVertex, handler, cancellationToken);
+            Internal.Incidence.EagerDfs<TVertex, TEdge, TEdgeEnumerator>.TraverseUnchecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TSourceCollection, TColorMap, THandler>(
@@ -155,27 +157,8 @@ namespace Arborescence.Traversal.Incidence
             if (handler is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
-            TraverseUnchecked(graph, sources, colorByVertex, handler, cancellationToken);
-        }
-
-        internal static void TraverseUnchecked<TGraph, TVertexCollection, TColorMap, THandler>(
-            TGraph graph, TVertexCollection sources, TColorMap colorByVertex, THandler handler,
-            CancellationToken cancellationToken)
-            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
-            where TVertexCollection : IEnumerable<TVertex>
-            where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IDfsHandler<TVertex, TEdge, TGraph>
-        {
-            using var sourceEnumerator = sources.GetEnumerator();
-            while (sourceEnumerator.MoveNext())
-            {
-                var source = sourceEnumerator.Current;
-                var color = colorByVertex.GetValueOrDefault(source, Color.None);
-                if (color is not (Color.None or Color.White))
-                    continue;
-                handler.OnStartVertex(graph, source);
-                TraverseCore(graph, source, colorByVertex, handler, cancellationToken);
-            }
+            Internal.Incidence.EagerDfs<TVertex, TEdge, TEdgeEnumerator>.TraverseUnchecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
         }
     }
 }
