@@ -41,6 +41,7 @@ Commonly used types:
     <ProjectReference Include="..\Internal\Arborescence.Traversal.Internal\Arborescence.Traversal.Internal.csproj" PrivateAssets="All" />
   </ItemGroup>
 
+  <!-- Arborescence.Traversal.Internal ships inside this package, so its own dependency has to be declared here. -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Buffers" />
   </ItemGroup>
@@ -55,8 +56,6 @@ Commonly used types:
 
   <Import Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'" Project="..\Shared\NullableAttributes\NullableAttributes.projitems" Label="Shared" />
   <Import Project="..\Shared\ArgumentNullExceptionHelpers\ArgumentNullExceptionHelpers.projitems" Label="Shared" />
-  <Import Project="..\Shared\ValueQueue\ValueQueue.projitems" Label="Shared" />
-  <Import Project="..\Shared\ValueStack\ValueStack.projitems" Label="Shared" />
 
   <Target Name="IncludeTraversalInternalInPackage" DependsOnTargets="ResolveReferences">
     <ItemGroup>
