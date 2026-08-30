@@ -4,7 +4,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
     using System.Buffers;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using Traversal.Incidence;
+    using Internal.Incidence;
 
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph — implemented as iterator.
