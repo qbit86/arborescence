@@ -5,7 +5,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using Traversal.Incidence;
+    using Internal.Incidence;
 
     /// <summary>
     /// Represents the generic search algorithm — traversal of the graph

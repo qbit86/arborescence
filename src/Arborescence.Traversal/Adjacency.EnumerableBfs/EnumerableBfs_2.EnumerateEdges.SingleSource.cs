@@ -66,7 +66,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateEdgesIterator(graph, source, exploredSet);
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateEdgesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph>(
@@ -77,7 +78,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateEdgesIterator(graph, source, exploredSet);
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateEdgesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesChecked<TGraph, TExploredSet>(
@@ -91,19 +93,8 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateEdgesIterator(graph, source, exploredSet);
-        }
-
-        internal static IEnumerable<Endpoints<TVertex>> EnumerateEdgesIterator<TGraph, TExploredSet>(
-            TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TExploredSet : ISet<TVertex>
-        {
-            using Traversal.Queue<TVertex> frontier = new();
-            var edges = EnumerableGenericSearch<TVertex, TNeighborEnumerator>
-                .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-            foreach (var edge in edges)
-                yield return edge;
+            return Internal.Adjacency.EnumerableBfs<TVertex, TNeighborEnumerator>
+                .EnumerateEdgesIterator(graph, source, exploredSet);
         }
     }
 }
