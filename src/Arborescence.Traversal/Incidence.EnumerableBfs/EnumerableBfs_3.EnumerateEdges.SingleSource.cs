@@ -66,7 +66,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateEdgesIterator(graph, source, exploredSet);
+            return Internal.Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateEdgesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TEdge> EnumerateEdgesChecked<TGraph>(
@@ -77,7 +78,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateEdgesIterator(graph, source, exploredSet);
+            return Internal.Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateEdgesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TEdge> EnumerateEdgesChecked<TGraph, TExploredSet>(
@@ -91,19 +93,8 @@ namespace Arborescence.Traversal.Incidence
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateEdgesIterator(graph, source, exploredSet);
-        }
-
-        internal static IEnumerable<TEdge> EnumerateEdgesIterator<TGraph, TExploredSet>(
-            TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
-            where TExploredSet : ISet<TVertex>
-        {
-            using Traversal.Queue<TVertex> frontier = new();
-            var edges = EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
-                .EnumerateEdgesIterator(graph, source, frontier, exploredSet);
-            foreach (var edge in edges)
-                yield return edge;
+            return Internal.Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateEdgesIterator(graph, source, exploredSet);
         }
     }
 }

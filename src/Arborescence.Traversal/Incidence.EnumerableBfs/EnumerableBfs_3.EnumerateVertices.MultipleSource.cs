@@ -79,7 +79,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateVerticesIterator(graph, sources, exploredSet);
+            return Internal.Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateVerticesIterator(graph, sources, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceCollection>(
@@ -94,7 +95,8 @@ namespace Arborescence.Traversal.Incidence
                 ArgumentNullExceptionHelpers.Throw(nameof(sources));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateVerticesIterator(graph, sources, exploredSet);
+            return Internal.Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateVerticesIterator(graph, sources, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TSourceCollection, TExploredSet>(
@@ -112,20 +114,8 @@ namespace Arborescence.Traversal.Incidence
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, sources, exploredSet);
-        }
-
-        internal static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TSourceCollection, TExploredSet>(
-            TGraph graph, TSourceCollection sources, TExploredSet exploredSet)
-            where TGraph : IHeadIncidence<TVertex, TEdge>, IOutEdgesIncidence<TVertex, TEdgeEnumerator>
-            where TSourceCollection : IEnumerable<TVertex>
-            where TExploredSet : ISet<TVertex>
-        {
-            using Traversal.Queue<TVertex> frontier = new();
-            var vertices = EnumerableGenericSearch<TVertex, TEdge, TEdgeEnumerator>
-                .EnumerateVerticesIterator(graph, sources, frontier, exploredSet);
-            foreach (var vertex in vertices)
-                yield return vertex;
+            return Internal.Incidence.EnumerableBfs<TVertex, TEdge, TEdgeEnumerator>
+                .EnumerateVerticesIterator(graph, sources, exploredSet);
         }
     }
 }

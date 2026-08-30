@@ -3,9 +3,6 @@ namespace Arborescence.Traversal.Adjacency
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-#if DEBUG
-    using System.Diagnostics;
-#endif
 
     public static partial class EnumerableGenericSearch<TVertex, TNeighborEnumerator>
     {
@@ -98,7 +95,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateVerticesIterator(graph, source, frontier, exploredSet);
+            return Internal.Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, frontier, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TFrontier>(
@@ -113,7 +111,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(frontier));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateVerticesIterator(graph, source, frontier, exploredSet);
+            return Internal.Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, frontier, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TFrontier, TExploredSet>(
@@ -131,42 +130,8 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, source, frontier, exploredSet);
-        }
-
-        internal static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TFrontier, TExploredSet>(
-            TGraph graph, TVertex source, TFrontier frontier, TExploredSet exploredSet)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TFrontier : IProducerConsumerCollection<TVertex>
-            where TExploredSet : ISet<TVertex>
-        {
-            if (!exploredSet.Add(source))
-                yield break;
-            yield return source;
-            frontier.AddOrThrow(source);
-
-            while (frontier.TryTake(out var current))
-            {
-#if DEBUG
-                Debug.Assert(exploredSet.Contains(current));
-#endif
-                var neighbors = graph.EnumerateOutNeighbors(current);
-                try
-                {
-                    while (neighbors.MoveNext())
-                    {
-                        var neighbor = neighbors.Current;
-                        if (!exploredSet.Add(neighbor))
-                            continue;
-                        yield return neighbor;
-                        frontier.AddOrThrow(neighbor);
-                    }
-                }
-                finally
-                {
-                    neighbors.Dispose();
-                }
-            }
+            return Internal.Adjacency.EnumerableGenericSearch<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, frontier, exploredSet);
         }
     }
 }
