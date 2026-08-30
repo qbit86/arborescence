@@ -14,12 +14,17 @@ Every package name carries the `Arborescence.` prefix.
 - **Search** — Dijkstra; preview.
 - **Primitives.Specialized**, **Models.Specialized**, **Traversal.Specialized** — `Int32` counterparts of the base package, for vertices and keys from a contiguous range.
 
+**Traversal.Internal** is not a package.
+It holds the internal generic implementation that Traversal and Traversal.Specialized share.
+Both packages embed its assembly, so neither one depends on the other.
+
 ```mermaid
 flowchart BT
     Abstractions
     Primitives
     Models
     PrimitivesSpecialized["Primitives.Specialized"]
+    TraversalInternal["Traversal.Internal"]
     Traversal
     ModelsSpecialized["Models.Specialized"]
     TraversalSpecialized["Traversal.Specialized"]
@@ -27,17 +32,22 @@ flowchart BT
     Models --> Abstractions
     Models --> Primitives
     PrimitivesSpecialized --> Primitives
+    TraversalInternal --> Abstractions
+    TraversalInternal --> Primitives
     Traversal --> Abstractions
     Traversal --> Primitives
+    Traversal --> TraversalInternal
     ModelsSpecialized --> Abstractions
     ModelsSpecialized --> Models
     ModelsSpecialized --> PrimitivesSpecialized
     TraversalSpecialized --> PrimitivesSpecialized
     TraversalSpecialized --> Abstractions
     TraversalSpecialized --> Primitives
-    TraversalSpecialized --> Traversal
+    TraversalSpecialized --> TraversalInternal
 
     classDef default fill:white,stroke:black,color:black
     classDef specialized fill:grey,stroke:black,color:black
+    classDef internal fill:white,stroke:black,color:black,stroke-dasharray:4 3
     class PrimitivesSpecialized,ModelsSpecialized,TraversalSpecialized specialized
+    class TraversalInternal internal
 ```
