@@ -5,7 +5,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
-    using Traversal.Incidence;
+    using Internal.Incidence;
 
     /// <summary>
     /// Represents the BFS algorithm — breadth-first traversal of the graph.
