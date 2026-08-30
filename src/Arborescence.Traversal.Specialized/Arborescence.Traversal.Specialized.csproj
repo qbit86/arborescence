@@ -27,6 +27,10 @@ Commonly used types:
     <TargetFrameworks>net462;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeTraversalInternalInPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
@@ -48,5 +52,11 @@ Commonly used types:
   </ItemGroup>
 
   <Import Project="..\Shared\ArgumentOutOfRangeExceptionHelpers\ArgumentOutOfRangeExceptionHelpers.projitems" Label="Shared" />
+
+  <Target Name="IncludeTraversalInternalInPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Arborescence.Traversal.Internal.dll'" />
+    </ItemGroup>
+  </Target>
 
 </Project>
