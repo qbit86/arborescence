@@ -5,7 +5,7 @@ namespace Arborescence.Traversal.Specialized.Incidence
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
-    using Traversal.Incidence;
+    using Internal.Incidence;
 
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph in a recursive manner using the program stack.
