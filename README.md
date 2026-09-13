@@ -42,8 +42,9 @@ flowchart BT
     TraversalSpecialized --> Abstractions
     TraversalSpecialized --> Primitives
 
-    classDef default fill:white,stroke:black,color:black
-    classDef specialized fill:grey,stroke:black,color:black
+    classDef base fill:white,color:black
+    classDef specialized fill:grey,color:black
+    class Abstractions,Primitives,Models,Traversal base
     class PrimitivesSpecialized,ModelsSpecialized,TraversalSpecialized specialized
 ```
 
