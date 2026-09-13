@@ -112,7 +112,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new();
-            TraverseUnchecked(graph, sources, colorByVertex, handler, cancellationToken);
+            Internal.Adjacency.EagerBfs<TVertex, TNeighborEnumerator>.TraverseUnchecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TSourceCollection, THandler>(
@@ -132,7 +133,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
             Dictionary<TVertex, Color> colorByVertex = new(comparer);
-            TraverseUnchecked(graph, sources, colorByVertex, handler, cancellationToken);
+            Internal.Adjacency.EagerBfs<TVertex, TNeighborEnumerator>.TraverseUnchecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
         }
 
         internal static void TraverseChecked<TGraph, TSourceCollection, TColorMap, THandler>(
@@ -155,43 +157,8 @@ namespace Arborescence.Traversal.Adjacency
             if (handler is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(handler));
 
-            TraverseUnchecked(graph, sources, colorByVertex, handler, cancellationToken);
-        }
-
-        internal static void TraverseUnchecked<TGraph, TSourceCollection, TColorMap, THandler>(
-            TGraph graph, TSourceCollection sources, TColorMap colorByVertex, THandler handler,
-            CancellationToken cancellationToken)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TSourceCollection : IEnumerable<TVertex>
-            where TColorMap : IDictionary<TVertex, Color>
-            where THandler : IBfsHandler<TVertex, Endpoints<TVertex>, TGraph>
-        {
-            var queue = new ValueQueue<TVertex>();
-            try
-            {
-                using var sourceEnumerator = sources.GetEnumerator();
-                while (sourceEnumerator.MoveNext())
-                {
-                    var source = sourceEnumerator.Current;
-                    colorByVertex[source] = Color.Gray;
-                    handler.OnDiscoverVertex(graph, source);
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        colorByVertex[source] = Color.Black;
-                        handler.OnFinishVertex(graph, source);
-                        return;
-                    }
-
-                    queue.Add(source);
-                }
-
-                Traverse(graph, ref queue, colorByVertex, handler, cancellationToken);
-            }
-            finally
-            {
-                // The Dispose call will happen on the original value of the local if it is the argument to a using statement.
-                queue.Dispose();
-            }
+            Internal.Adjacency.EagerBfs<TVertex, TNeighborEnumerator>.TraverseUnchecked(
+                graph, sources, colorByVertex, handler, cancellationToken);
         }
     }
 }

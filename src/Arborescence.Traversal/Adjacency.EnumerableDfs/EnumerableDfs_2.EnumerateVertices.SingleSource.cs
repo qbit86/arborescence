@@ -64,7 +64,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new();
-            return EnumerateVerticesIterator(graph, source, exploredSet);
+            return Internal.Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph>(
@@ -75,7 +76,8 @@ namespace Arborescence.Traversal.Adjacency
                 ArgumentNullExceptionHelpers.Throw(nameof(graph));
 
             HashSet<TVertex> exploredSet = new(comparer);
-            return EnumerateVerticesIterator(graph, source, exploredSet);
+            return Internal.Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
 
         internal static IEnumerable<TVertex> EnumerateVerticesChecked<TGraph, TExploredSet>(
@@ -89,44 +91,8 @@ namespace Arborescence.Traversal.Adjacency
             if (exploredSet is null)
                 ArgumentNullExceptionHelpers.Throw(nameof(exploredSet));
 
-            return EnumerateVerticesIterator(graph, source, exploredSet);
-        }
-
-        internal static IEnumerable<TVertex> EnumerateVerticesIterator<TGraph, TExploredSet>(
-            TGraph graph, TVertex source, TExploredSet exploredSet)
-            where TGraph : IOutNeighborsAdjacency<TVertex, TNeighborEnumerator>
-            where TExploredSet : ISet<TVertex>
-        {
-            if (!exploredSet.Add(source))
-                yield break;
-            yield return source;
-            var stack = new ValueStack<TNeighborEnumerator>();
-            try
-            {
-                stack.Add(graph.EnumerateOutNeighbors(source));
-
-                while (stack.TryTake(out var neighborEnumerator))
-                {
-                    if (!neighborEnumerator.MoveNext())
-                    {
-                        neighborEnumerator.Dispose();
-                        continue;
-                    }
-
-                    var neighbor = neighborEnumerator.Current;
-                    stack.Add(neighborEnumerator);
-                    if (!exploredSet.Add(neighbor))
-                        continue;
-                    yield return neighbor;
-                    stack.Add(graph.EnumerateOutNeighbors(neighbor));
-                }
-            }
-            finally
-            {
-                while (stack.TryTake(out var stackFrame))
-                    stackFrame.Dispose();
-                stack.Dispose();
-            }
+            return Internal.Adjacency.EnumerableDfs<TVertex, TNeighborEnumerator>
+                .EnumerateVerticesIterator(graph, source, exploredSet);
         }
     }
 }

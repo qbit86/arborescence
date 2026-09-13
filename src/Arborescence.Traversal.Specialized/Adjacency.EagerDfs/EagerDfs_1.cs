@@ -5,7 +5,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
-    using Traversal.Adjacency;
+    using Internal.Adjacency;
 
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph in a non-recursive manner.

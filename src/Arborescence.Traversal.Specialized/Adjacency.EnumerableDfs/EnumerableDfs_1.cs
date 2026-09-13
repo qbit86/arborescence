@@ -4,7 +4,7 @@ namespace Arborescence.Traversal.Specialized.Adjacency
     using System.Buffers;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using Traversal.Adjacency;
+    using Internal.Adjacency;
 
     /// <summary>
     /// Represents the DFS algorithm — depth-first traversal of the graph — implemented as iterator.
