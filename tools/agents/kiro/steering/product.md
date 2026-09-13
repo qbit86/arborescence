@@ -36,14 +36,14 @@ flowchart BT
     TraversalInternal --> Primitives
     Traversal --> Abstractions
     Traversal --> Primitives
-    Traversal --> TraversalInternal
+    Traversal -.-> TraversalInternal
     ModelsSpecialized --> Abstractions
     ModelsSpecialized --> Models
     ModelsSpecialized --> PrimitivesSpecialized
     TraversalSpecialized --> PrimitivesSpecialized
+    TraversalSpecialized -.-> TraversalInternal
     TraversalSpecialized --> Abstractions
     TraversalSpecialized --> Primitives
-    TraversalSpecialized --> TraversalInternal
 
     classDef default fill:white,stroke:black,color:black
     classDef specialized fill:grey,stroke:black,color:black
